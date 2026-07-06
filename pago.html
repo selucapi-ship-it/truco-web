@@ -500,6 +500,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 
 
 <script>
+// Al crear cada Stripe Payment Link real, configura su redirección tras el pago
+// a bienvenida.html?plan=<clave> (ej. bienvenida.html?plan=arranque-lite) para
+// que el cliente llegue directo a agendar su reunión de bienvenida prioritaria.
 const PROJECTS={esencial:{name:'Web Esencial',base:499},web:{name:'Web Profesional',base:790},digital:{name:'Digitaliza tu Empresa',base:590}};
 const DIRECT={'arranque-lite':{name:'Departamento Tecnológico Lite™',arranque:'lite'},'arranque-pro':{name:'Departamento Tecnológico Pro™',arranque:'pro'}};
 const ARRANQUES={lite:{name:'Lite™',monthlyAfter:199},pro:{name:'Pro™',monthlyAfter:399}};
