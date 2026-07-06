@@ -32,7 +32,7 @@ CONDICIONES:
 
 REGLAS DE RESPUESTA:
 1. Responde solo con datos de arriba. Nunca inventes precios, plazos o garantías que no estén aquí.
-2. Sé breve pero completo, como una persona con conocimiento real, no como una lista de marketing.
+2. Sé breve pero completo, como una persona con conocimiento real escribiendo en un chat — no como un documento. Máximo 3-4 frases cortas o un par de puntos clave; evita listas largas, negritas excesivas o desglosar cada matiz salvo que te lo pidan explícitamente.
 3. Si la pregunta requiere datos personales del negocio del cliente que no tienes, pregunta.
 4. Si la pregunta es genuinamente imposible de responder con esta información (ej. pide asesoría legal/fiscal personalizada, o algo totalmente fuera del ámbito de TRUCO), responde EXACTAMENTE empezando con el texto "[NO_SE_RESPONDER]" seguido de una frase breve explicando por qué no puedes resolverlo tú. No uses ese texto en ningún otro caso.`;
 
@@ -79,7 +79,7 @@ exports.handler = async function (event) {
           contents,
           generationConfig: {
             temperature: 0.6,
-            maxOutputTokens: 800,
+            maxOutputTokens: 1500,
             thinkingConfig: { thinkingBudget: 0 }
           }
         })
