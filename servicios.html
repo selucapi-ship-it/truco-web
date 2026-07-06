@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Servicios — TRUCO technology | Tu Departamento Tecnológico</title>
+<meta name="description" content="Proyectos tecnológicos y Departamento Tecnológico para empresas. Implantamos, mantenemos y optimizamos toda la tecnología de tu empresa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e14;--bg-panel:#10151d;--bg-card:#141c28;
+  --blue:#2f7bff;--blue-soft:#1b3a66;--blue-dim:rgba(47,123,255,.1);
+  --gold:#e9b949;--gold-dim:rgba(233,185,73,.1);
+  --white:#f4f6f9;--grey:#8d97a6;--grey-line:#1d2430;
+  --green:#22c55e;--green-dim:rgba(34,197,94,.1);
+  --font-d:'Playfair Display',Georgia,serif;
+  --font-b:'DM Sans',sans-serif;
+  --font-m:'JetBrains Mono',monospace;
+  --tr:0.22s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:var(--font-b);line-height:1.6;overflow-x:hidden;}
+h1,h2,h3,h4{font-family:var(--font-d);line-height:1.15;letter-spacing:-.01em;}
+a{color:inherit;text-decoration:none;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--blue-soft);}
+.container{max-width:1120px;margin:0 auto;padding:0 32px;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);height:66px;background:rgba(10,14,20,.95);border-bottom:1px solid var(--grey-line);backdrop-filter:blur(18px);}
+.nav-logo{display:flex;align-items:center;gap:12px;}
+.t-mark{width:40px;height:40px;border:1.5px solid var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Georgia',serif;color:var(--gold);font-size:22px;font-weight:700;background:linear-gradient(160deg,var(--bg-panel),var(--bg));}
+.nav-brand{font-family:var(--font-d);font-size:1rem;font-weight:700;}
+.nav-brand span{color:var(--blue);}
+.nav-sub{font-family:var(--font-m);font-size:.45rem;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin-top:1px;}
+.nav-right{display:flex;align-items:center;gap:20px;}
+.nav-back{font-size:.85rem;color:var(--grey);transition:color var(--tr);}
+.nav-back:hover{color:var(--white);}
+.nav-cta{background:var(--blue);color:#fff;padding:9px 20px;border-radius:7px;font-size:.85rem;font-weight:600;}
+
+/* PAGE HEADER */
+.page-hero{padding:120px 0 64px;border-bottom:1px solid var(--grey-line);background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(47,123,255,.05) 0%,transparent 70%);}
+.ph-tag{font-family:var(--font-m);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;}
+.ph-tag::before,.ph-tag::after{content:'';width:20px;height:1px;background:var(--gold);}
+.page-hero h1{font-size:clamp(2rem,4vw,3.2rem);font-weight:700;margin-bottom:14px;}
+.page-hero p{font-size:1rem;color:var(--grey);max-width:620px;line-height:1.75;}
+
+/* PROMISE */
+.promise-block{background:var(--bg-panel);border-top:1px solid var(--grey-line);border-bottom:1px solid var(--grey-line);padding:40px 0;}
+.promise-inner{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;}
+.promise-item{padding:0 32px;border-right:1px solid var(--grey-line);}
+.promise-item:first-child{padding-left:0;}
+.promise-item:last-child{border-right:none;}
+.pi-no{font-size:.8rem;color:var(--grey);line-height:1.6;margin-bottom:4px;}
+.pi-no span{color:#ef4444;font-weight:700;}
+.pi-yes{font-size:.9rem;color:var(--white);font-weight:600;line-height:1.6;}
+.pi-yes span{color:var(--green);font-weight:700;}
+@media(max-width:768px){.promise-inner{grid-template-columns:1fr;}.promise-item{border-right:none;border-bottom:1px solid var(--grey-line);padding:20px 0;}.promise-item:last-child{border-bottom:none;}}
+
+/* RULE OF GOLD */
+.gold-rule{background:linear-gradient(135deg,rgba(233,185,73,.08),var(--bg-panel));border:1px solid rgba(233,185,73,.2);border-radius:14px;padding:28px 32px;margin:48px 0;}
+.gr-title{font-family:var(--font-m);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.gr-steps{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.gr-step{font-size:.9rem;color:var(--white);font-weight:600;padding:8px 16px;background:rgba(233,185,73,.1);border:1px solid rgba(233,185,73,.2);border-radius:8px;}
+.gr-arrow{color:var(--gold);font-size:1.2rem;}
+
+/* SECTION HEADERS */
+.section-block{padding:80px 0;}
+.section-divider{display:flex;align-items:center;gap:16px;margin-bottom:48px;}
+.sd-tag{font-family:var(--font-m);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:20px;}
+.sd-tag.project{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(233,185,73,.3);}
+.sd-tag.depto{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(47,123,255,.3);}
+.sd-line{flex:1;height:1px;background:var(--grey-line);}
+.sd-desc{font-size:.85rem;color:var(--grey);}
+
+/* SERVICE CARDS */
+.service-card{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:18px;margin-bottom:24px;overflow:hidden;}
+.service-card.featured{border-color:var(--blue);}
+.sc-header{padding:28px 32px;border-bottom:1px solid var(--grey-line);}
+.sc-header-inner{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start;}
+.sc-cat{font-family:var(--font-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:8px;}
+.sc-cat.gold{color:var(--gold);}
+.sc-cat.blue{color:var(--blue);}
+.sc-badge{display:inline-block;font-family:var(--font-m);font-size:.6rem;padding:3px 12px;border-radius:20px;margin-bottom:10px;}
+.sc-badge.gold{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(233,185,73,.25);}
+.sc-badge.blue{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(47,123,255,.25);}
+.sc-badge.green{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.25);}
+.sc-badge.featured{background:var(--blue);color:#fff;}
+.sc-title{font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:700;margin-bottom:10px;}
+.sc-desc{font-size:.92rem;color:var(--grey);line-height:1.7;max-width:560px;}
+.sc-price{text-align:right;flex-shrink:0;}
+.sc-price-main{font-family:var(--font-d);font-size:2.2rem;font-weight:700;line-height:1;}
+.sc-price-main sub{font-size:.9rem;font-weight:500;color:var(--grey);vertical-align:bottom;}
+.sc-price-vat{font-size:.75rem;color:var(--grey);margin-top:4px;}
+.sc-price-total{font-size:.75rem;color:var(--grey);margin-top:2px;}
+.sc-price-annual{font-size:.75rem;color:var(--gold);margin-top:6px;}
+.sc-body{padding:0;}
+
+/* COLS */
+.sc-cols{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--grey-line);}
+.sc-col{padding:24px 24px;}
+.sc-col:not(:last-child){border-right:1px solid var(--grey-line);}
+.sc-col-title{font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.sc-col-title::before{content:'';width:14px;height:1px;background:currentColor;}
+.sc-list{list-style:none;}
+.sc-list li{font-size:.87rem;color:var(--grey);padding:5px 0 5px 20px;position:relative;border-bottom:1px solid var(--grey-line);}
+.sc-list li:last-child{border-bottom:none;}
+.sc-list li::before{content:'✓';position:absolute;left:0;color:var(--blue);font-weight:700;}
+.sc-list li.gold::before{color:var(--gold);}
+.sc-list li b{color:var(--white);}
+.sc-list li a{color:var(--blue);}
+@media(max-width:768px){.sc-cols{grid-template-columns:1fr;}.sc-col{border-right:none !important;border-bottom:1px solid var(--grey-line);}.sc-col:last-child{border-bottom:none;}.sc-header-inner{grid-template-columns:1fr;}.sc-price{text-align:left;}}
+
+/* DIGITALIZA SOLUTIONS GRID */
+.solutions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:24px;border-top:1px solid var(--grey-line);}
+.solution-chip{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:10px;padding:14px 16px;transition:border-color var(--tr);}
+.solution-chip:hover{border-color:var(--blue);}
+.solution-chip .sc-icon{font-size:1.2rem;margin-bottom:8px;}
+.solution-chip h5{font-size:.88rem;font-weight:700;margin-bottom:4px;color:var(--white);}
+.solution-chip .sol-price{display:block;font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:6px;}
+.solution-chip p{font-size:.75rem;color:var(--grey);line-height:1.4;}
+@media(max-width:640px){.solutions-grid{grid-template-columns:1fr 1fr;}}
+
+/* DIGITALIZA INCLUDES */
+.digitaliza-includes{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--grey-line);}
+.di-item{padding:16px 20px;border-right:1px solid var(--grey-line);font-size:.82rem;color:var(--grey);display:flex;align-items:flex-start;gap:8px;}
+.di-item:last-child{border-right:none;}
+.di-item::before{content:'✔';color:var(--blue);font-weight:700;flex-shrink:0;}
+@media(max-width:640px){.digitaliza-includes{grid-template-columns:1fr 1fr;}.di-item:nth-child(2n){border-right:none;}.di-item{border-bottom:1px solid var(--grey-line);}}
+
+/* 90 DAYS BLOCK */
+.period-block{background:linear-gradient(135deg,rgba(47,123,255,.06),var(--bg-card));border:1px solid rgba(47,123,255,.2);border-radius:12px;padding:20px 24px;margin:0 24px 24px;}
+.pb-title{font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;}
+.pb-text{font-size:.86rem;color:var(--grey);line-height:1.65;}
+.pb-text b{color:var(--white);}
+.pb-months{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
+.pb-month{padding:6px 14px;border-radius:8px;font-size:.78rem;font-weight:600;}
+.pb-month.included{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3);}
+.pb-month.service{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(47,123,255,.3);}
+.pb-month.after{background:var(--bg-panel);color:var(--grey);border:1px solid var(--grey-line);}
+
+/* SOLUTION WHAT IS */
+.what-is-block{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:28px 32px;margin:48px 0;}
+.wib-title{font-family:var(--font-d);font-size:1.2rem;font-weight:700;margin-bottom:8px;}
+.wib-sub{font-size:.9rem;color:var(--grey);margin-bottom:20px;line-height:1.6;}
+.wib-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.wib-item{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:12px 14px;font-size:.82rem;color:var(--grey);}
+.wib-item b{display:block;color:var(--white);margin-bottom:3px;font-size:.85rem;}
+@media(max-width:640px){.wib-grid{grid-template-columns:1fr 1fr;}}
+
+/* CÓMO TRABAJAMOS */
+.como-section{padding:80px 0;background:var(--bg-panel);border-top:1px solid var(--grey-line);border-bottom:1px solid var(--grey-line);}
+.como-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;margin-top:40px;}
+.como-steps::before{content:'';position:absolute;top:24px;left:5%;right:5%;height:1px;background:var(--grey-line);}
+.como-step{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px;}
+.cs-num{width:48px;height:48px;border-radius:50%;background:var(--bg-panel);border:1px solid var(--blue);color:var(--blue);font-family:var(--font-d);font-size:1.1rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative;z-index:1;}
+.cs-num.highlight{background:var(--blue);color:#fff;border-color:var(--blue);}
+.cs-title{font-size:.9rem;font-weight:700;margin-bottom:6px;color:var(--white);}
+.cs-desc{font-size:.78rem;color:var(--grey);line-height:1.5;}
+@media(max-width:768px){.como-steps{grid-template-columns:1fr;}.como-steps::before{display:none;}.como-step{flex-direction:row;text-align:left;gap:16px;padding:16px 0;border-bottom:1px solid var(--grey-line);}.como-step:last-child{border-bottom:none;}.cs-num{flex-shrink:0;margin-bottom:0;}}
+
+/* SC FOOTER */
+.sc-footer{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-top:1px solid var(--grey-line);background:rgba(255,255,255,.02);flex-wrap:wrap;gap:14px;}
+.sc-footer-left{font-size:.83rem;color:var(--grey);max-width:500px;line-height:1.55;}
+.sc-footer-left b{color:var(--white);}
+.sc-cta{display:flex;gap:10px;flex-shrink:0;}
+.btn-primary{background:var(--blue);color:#fff;padding:11px 22px;border-radius:8px;font-weight:600;font-size:.87rem;white-space:nowrap;transition:opacity var(--tr);}
+.btn-primary:hover{opacity:.85;}
+.btn-ghost{border:1px solid var(--grey-line);color:var(--white);padding:11px 22px;border-radius:8px;font-weight:600;font-size:.87rem;white-space:nowrap;transition:border-color var(--tr);}
+.btn-ghost:hover{border-color:var(--blue);}
+
+/* FAQ */
+.faq-section{padding:80px 0;}
+.faq-list{max-width:800px;}
+.faq-item{border-bottom:1px solid var(--grey-line);}
+.faq-q{width:100%;background:none;border:none;color:var(--white);display:flex;justify-content:space-between;align-items:center;padding:20px 0;font-family:var(--font-d);font-size:.95rem;font-weight:700;cursor:pointer;text-align:left;gap:16px;transition:color var(--tr);}
+.faq-q:hover{color:var(--blue);}
+.faq-icon{flex-shrink:0;width:24px;height:24px;border:1px solid var(--grey-line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all var(--tr);}
+.faq-item.open .faq-icon{background:var(--blue);border-color:var(--blue);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;}
+.faq-item.open .faq-a{max-height:400px;padding-bottom:20px;}
+.faq-a p{font-size:.9rem;color:var(--grey);line-height:1.75;}
+.faq-a p b{color:var(--white);}
+
+/* CTA */
+.cta-section{padding:80px 0;}
+.cta-inner{background:linear-gradient(135deg,var(--blue-soft),var(--bg-panel));border:1px solid var(--blue-soft);border-radius:18px;padding:48px;display:flex;justify-content:space-between;align-items:center;gap:40px;}
+.cta-inner h2{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;max-width:440px;line-height:1.3;}
+.cta-inner p{font-size:.92rem;color:var(--grey);margin-top:10px;line-height:1.6;}
+.cta-btns{display:flex;gap:12px;flex-shrink:0;flex-wrap:wrap;}
+@media(max-width:768px){.cta-inner{flex-direction:column;align-items:flex-start;padding:32px;}}
+
+footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:28px 0;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--grey);flex-wrap:wrap;gap:10px;}
+.footer-bottom a{transition:color .22s;}
+.footer-bottom a:hover{color:var(--white);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="t-mark">T</div>
+    <div><div class="nav-brand">TRUCO<span>technology</span></div><div class="nav-sub">Tu Departamento Tecnológico</div></div>
+  </a>
+  <div class="nav-right">
+    <a class="nav-back" href="index.html">← Inicio</a>
+    <a class="nav-cta" href="pago.html">Contratar servicio</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container" style="text-align:center;">
+    <div class="ph-tag">Servicios TRUCO technology</div>
+    <h1>Nos convertimos en el Departamento<br>Tecnológico de tu empresa.</h1>
+    <p>Implantamos la tecnología que necesitas, la mantenemos, la optimizamos y te acompañamos para que puedas centrarte únicamente en hacer crecer tu negocio.</p>
+  </div>
+</div>
+
+<!-- PROMISE -->
+<div class="promise-block">
+  <div class="container">
+    <div class="promise-inner">
+      <div class="promise-item"><div class="pi-no"><span>✗</span> No vendemos herramientas.</div><div class="pi-no"><span>✗</span> No vendemos programas.</div><div class="pi-no"><span>✗</span> No vendemos licencias.</div></div>
+      <div class="promise-item"><div class="pi-yes"><span>✔</span> Implantamos la tecnología.</div><div class="pi-yes"><span>✔</span> La mantenemos y optimizamos.</div><div class="pi-yes"><span>✔</span> Te acompañamos siempre.</div></div>
+      <div class="promise-item"><div class="pi-yes" style="font-size:1rem;font-family:var(--font-d);font-style:italic;color:var(--grey);">"Un único interlocutor para toda la tecnología de tu empresa. Tú solo te preocupas de hacer crecer tu negocio."</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- GOLD RULE -->
+<div class="container">
+  <div class="gold-rule">
+    <div class="gr-title">⚡ La regla de TRUCO</div>
+    <div class="gr-steps">
+      <div class="gr-step">Todo proyecto implanta tecnología</div>
+      <div class="gr-arrow">→</div>
+      <div class="gr-step">El Departamento Tecnológico la mantiene</div>
+      <div class="gr-arrow">→</div>
+      <div class="gr-step">Cuando necesitas algo nuevo, se crea un nuevo proyecto</div>
+      <div class="gr-arrow">→</div>
+      <div class="gr-step">Que pasa a formar parte de tu Departamento</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ DEPARTAMENTO TECNOLÓGICO ═══════ -->
+<div class="section-block" style="padding-top:0;background:var(--bg-panel);border-top:1px solid var(--grey-line);border-bottom:1px solid var(--grey-line);">
+  <div class="container" style="padding-top:64px;">
+    <div class="section-divider">
+      <div class="sd-tag depto">Tu Departamento Tecnológico · El servicio principal</div>
+      <div class="sd-line"></div>
+      <div class="sd-desc">Tu equipo tecnológico externo, desde el primer día. Si ya tienes tecnología, empezamos directamente.</div>
+    </div>
+
+    <!-- WHAT IS SOLUTION -->
+        <!-- BLOQUE ONBOARDING DIRECTO -->
+    <div style="background:linear-gradient(135deg,rgba(47,123,255,.06),var(--bg-panel));border:1px solid rgba(47,123,255,.2);border-radius:14px;padding:28px 32px;margin-bottom:32px;">
+      <div style="font-family:var(--font-m);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:flex;align-items:center;gap:8px;"><span>→</span> Si ya tienes tecnología, esto es para ti</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+        <div>
+          <h3 style="font-family:var(--font-d);font-size:1.1rem;font-weight:700;margin-bottom:10px;">¿Tienes web, CRM, WhatsApp de empresa o cualquier herramienta digital activa?</h3>
+          <p style="font-size:.88rem;color:var(--grey);line-height:1.7;">No hace falta empezar desde cero. <b style="color:var(--white);">Auditamos lo que ya tienes</b>, lo incorporamos a tu Departamento Tecnológico y empezamos a mantenerlo desde el primer día. Tú solo dinos con qué trabajas.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:flex-start;gap:10px;">
+            <div style="width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0;">1</div>
+            <div style="font-size:.84rem;color:var(--grey);">Contratas el Departamento Lite™ o Pro™</div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px;">
+            <div style="width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0;">2</div>
+            <div style="font-size:.84rem;color:var(--grey);">En 48h te contactamos y hacemos una auditoría gratuita de lo que ya tienes</div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px;">
+            <div style="width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0;">3</div>
+            <div style="font-size:.84rem;color:var(--grey);">Incorporamos tu tecnología al departamento y empezamos a cuidarla</div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px;">
+            <div style="width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0;">✓</div>
+            <div style="font-size:.84rem;color:var(--white);font-weight:600;">Tú te olvidas de la tecnología. Nosotros no.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="what-is-block">
+      <h3 class="wib-title">¿Qué es una solución tecnológica?</h3>
+      <p class="wib-sub">Cada sistema implantado que requiere mantenimiento periódico. El Lite mantiene hasta 2. El Pro mantiene hasta 6. Cuando creces y añades nueva tecnología, evolucionamos contigo.</p>
+      <div class="wib-grid">
+        <div class="wib-item"><b>IA para WhatsApp</b>Atención automática activa</div>
+        <div class="wib-item"><b>IA Web</b>Sistema de atención en tu web</div>
+        <div class="wib-item"><b>IA Correo</b>Gestión automática de emails</div>
+        <div class="wib-item"><b>CRM</b>Base de datos de clientes</div>
+        <div class="wib-item"><b>Automatización</b>Flujos automáticos activos</div>
+        <div class="wib-item"><b>Sistema de reservas</b>Agenda online integrada</div>
+        <div class="wib-item"><b>Integraciones</b>Conexiones entre herramientas</div>
+        <div class="wib-item"><b>Más soluciones</b>Cualquier sistema implantado por TRUCO</div>
+      </div>
+    </div>
+
+    <!-- TIERS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+
+      <!-- LITE -->
+      <div class="service-card" id="lite">
+        <div class="sc-header">
+          <div>
+            <div class="sc-cat blue">Departamento Tecnológico Mensual</div>
+            <span class="sc-badge green">Para pequeñas empresas y autónomos</span>
+            <h2 class="sc-title" style="font-size:1.4rem;">Departamento Tecnológico Lite™</h2>
+            <p class="sc-desc" style="font-size:.85rem;">¿Ya tienes web, alguna herramienta o automatización funcionando? <b style="color:var(--white);">Nos hacemos cargo de todo.</b> Mantenimiento, seguridad, actualizaciones e incidencias resueltas. Tú sigues con tu negocio. Nosotros vigilamos que la tecnología nunca te dé problemas.</p>
+          </div>
+        </div>
+        <div style="padding:20px 24px;border-top:1px solid var(--grey-line);">
+          <div style="font-size:2rem;font-weight:700;font-family:var(--font-d);">199 €<span style="font-size:.9rem;font-weight:500;color:var(--grey);">/mes</span></div>
+          <div style="font-size:.73rem;color:var(--grey);margin-bottom:4px;">+ IVA (240,79 €/mes con IVA)</div>
+          <div style="font-size:.73rem;color:var(--gold);">Anual: 2.149,20 € + IVA · 179,10 €/mes · Ahorras 10%</div>
+        </div>
+        <div style="padding:0 24px 16px;">
+          <div class="sc-col-title">Incluye</div>
+          <ul class="sc-list">
+            <li><b>Asistente de soporte tecnológico</b> disponible en todo momento</li>
+            <li><b>Mantenimiento web</b> — actualizaciones, seguridad y rendimiento</li>
+            <li><b>Copias de seguridad</b> periódicas y verificadas</li>
+            <li><b>Resolución de incidencias</b> técnicas sin coste adicional</li>
+            <li><b>Soporte tecnológico</b> para tu equipo</li>
+            <li><b>Reunión mensual</b> de revisión y asesoramiento (30 min)</li>
+            <li><b>Asesoramiento tecnológico</b> continuo</li>
+            <li class="gold"><b>Mantenimiento de hasta 2 soluciones tecnológicas</b> implantadas por TRUCO</li>
+          </ul>
+        </div>
+        <div class="sc-footer">
+          <div class="sc-footer-left" style="font-size:.78rem;">Sin compromiso mensual. Cancela cuando quieras con 7 días de antelación.</div>
+          <a class="btn-primary" href="pago.html?plan=arranque-lite">Contratar Lite™</a>
+        </div>
+      </div>
+
+      <!-- PRO -->
+      <div class="service-card featured" id="pro">
+        <div class="sc-header" style="background:linear-gradient(135deg,rgba(47,123,255,.06),var(--bg-panel));">
+          <div>
+            <div class="sc-cat blue">Departamento Tecnológico Mensual</div>
+            <span class="sc-badge featured">Para empresas en crecimiento</span>
+            <h2 class="sc-title" style="font-size:1.4rem;">Departamento Tecnológico Pro™</h2>
+            <p class="sc-desc" style="font-size:.85rem;">El departamento tecnológico completo. Mantiene hasta 6 soluciones tecnológicas con optimización continua, mayor prioridad y revisiones avanzadas.</p>
+          </div>
+        </div>
+        <div style="padding:20px 24px;border-top:1px solid var(--grey-line);">
+          <div style="font-size:2rem;font-weight:700;font-family:var(--font-d);">399 €<span style="font-size:.9rem;font-weight:500;color:var(--grey);">/mes</span></div>
+          <div style="font-size:.73rem;color:var(--grey);margin-bottom:4px;">+ IVA (482,79 €/mes con IVA)</div>
+          <div style="font-size:.73rem;color:var(--gold);">Anual: 4.309,20 € + IVA · 359,10 €/mes · Ahorras 10%</div>
+        </div>
+        <div style="padding:0 24px 16px;">
+          <div class="sc-col-title">Todo lo incluido en Lite™, más:</div>
+          <ul class="sc-list">
+            <li class="gold"><b>Mantenimiento de hasta 6 soluciones tecnológicas</b></li>
+            <li><b>Optimización continua</b> de todas las soluciones activas</li>
+            <li><b>Adaptaciones y ajustes</b> según evoluciona tu empresa</li>
+            <li><b>Revisión avanzada</b> mensual de rendimiento</li>
+            <li><b>Mayor prioridad</b> en incidencias y resolución</li>
+            <li><b>Reunión mensual</b> de revisión y estrategia tecnológica (45 min)</li>
+          </ul>
+        </div>
+        <div class="sc-footer">
+          <div class="sc-footer-left" style="font-size:.78rem;">Sin compromiso mensual. Cancela cuando quieras con 7 días de antelación.</div>
+          <a class="btn-primary" href="pago.html?plan=arranque-pro">Contratar Pro™</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ PROYECTOS ═══════ -->
+<div class="section-block">
+  <div class="container">
+    <div class="section-divider">
+      <div class="sd-tag project">Proyectos de entrada · Pago único</div>
+      <div class="sd-line"></div>
+      <div class="sd-desc">¿Necesitas construir algo primero? Implantamos y después mantenemos.</div>
+    </div>
+
+    <!-- WEB ESENCIAL -->
+    <div class="service-card" id="web-esencial">
+      <div class="sc-header">
+        <div class="sc-header-inner">
+          <div>
+            <div class="sc-cat gold">Proyecto único · Entrega en 7-10 días</div>
+            <span class="sc-badge gold">Para empresas sin presencia digital</span>
+            <h2 class="sc-title">Web Esencial</h2>
+            <p class="sc-desc">Tu primera presencia digital profesional, lista en días. Diseñada para que tus clientes te encuentren y puedan contactarte. Sin complicaciones técnicas para ti: llave en mano.</p>
+          </div>
+          <div class="sc-price">
+            <div class="sc-price-main">499 €<sub> + IVA</sub></div>
+            <div class="sc-price-vat">603,79 € con IVA · Pago único</div>
+            <div class="sc-price-vat" style="margin-top:4px;">+ 199 € el mes 2 del Departamento Lite™ · mes 1 gratis (total: 698 € + IVA)</div>
+          </div>
+        </div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-cols">
+          <div class="sc-col">
+            <div class="sc-col-title">Qué incluye</div>
+            <ul class="sc-list">
+              <li><b>Diseño profesional</b> adaptado a tu imagen de marca</li>
+              <li><b>Desarrollo completo</b> — hasta 5 páginas</li>
+              <li><b>Responsive</b> — perfecta en móvil, tablet y escritorio</li>
+              <li><b>SEO básico</b> configurado desde el primer día</li>
+              <li><b>Formulario de contacto</b> conectado a tu Google Drive</li>
+              <li><b>Botón de WhatsApp</b> directo a tu número</li>
+              <li><b>Entrega llave en mano</b> con código fuente incluido</li>
+            </ul>
+          </div>
+          <div class="sc-col">
+            <div class="sc-col-title">Para quién es</div>
+            <ul class="sc-list">
+              <li>Autónomos y pequeñas empresas sin web</li>
+              <li>Negocios locales que necesitan presencia digital ya</li>
+              <li>Quien quiere lanzar rápido con algo profesional</li>
+              <li>Comercios, profesionales independientes, servicios locales</li>
+            </ul>
+            <div class="sc-col-title" style="margin-top:20px;">Importante</div>
+            <ul class="sc-list">
+              <li>El cliente recibe el <b>código fuente completo</b> al entregar</li>
+              <li>Dominio y hosting: <b>responsabilidad y coste del cliente</b></li>
+              <li>El acompañamiento posterior requiere Departamento Tecnológico</li>
+            </ul>
+          </div>
+          <div class="sc-col">
+            <div class="sc-col-title">Periodo de supervisión incluido</div>
+            <div class="period-block" style="margin:0 0 0 0;">
+              <div class="pb-title">Período de implantación — 60 días</div>
+              <div class="pb-text">El primer mes supervisamos tu web y realizamos ajustes. El segundo mes lo afinamos contigo. Al terminar, entra en tu Departamento Tecnológico de forma natural.</div>
+              <div class="pb-months">
+                <div class="pb-month included">Mes 1 · Gratis</div>
+                <div class="pb-month service">Mes 2 · 199 € + IVA</div>
+                <div class="pb-month after">Mes 3+ · 199 €/mes · Sin compromiso</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-footer">
+          <div class="sc-footer-left"><b>Al entregar recibes el código fuente completo.</b> La web es tuya desde el primer día. Dominio y hosting se contratan directamente por el cliente.</div>
+          <div class="sc-cta">
+            <a class="btn-ghost" href="index.html#chat-section">Preguntar al asistente</a>
+            <a class="btn-primary" href="pago.html?plan=esencial">Contratar Web Esencial</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEB PROFESIONAL -->
+    <div class="service-card featured" id="web-profesional">
+      <div class="sc-header" style="background:linear-gradient(135deg,rgba(47,123,255,.06),var(--bg-panel));">
+        <div class="sc-header-inner">
+          <div>
+            <div class="sc-cat blue">Proyecto único · La más elegida</div>
+            <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+              <span class="sc-badge featured">⭐ MÁS ELEGIDA</span>
+              <span class="sc-badge blue">Mejor relación calidad-precio</span>
+            </div>
+            <h2 class="sc-title">Web Profesional</h2>
+            <p class="sc-desc">Una web diseñada para convertir visitas en clientes. Diseño completamente a medida, tecnología integrada y optimizada para que trabaje por ti desde el primer día.</p>
+          </div>
+          <div class="sc-price">
+            <div class="sc-price-main">790 €<sub> + IVA</sub></div>
+            <div class="sc-price-vat">955,90 € con IVA · Pago único</div>
+            <div class="sc-price-vat" style="margin-top:4px;">+ 199 € el mes 2 del Departamento Lite™ · mes 1 gratis (total: 989 € + IVA)</div>
+          </div>
+        </div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-cols">
+          <div class="sc-col">
+            <div class="sc-col-title">Todo lo de Web Esencial, más:</div>
+            <ul class="sc-list">
+              <li><b>Diseño completamente a medida</b> desde cero</li>
+              <li><b>Páginas ilimitadas</b> según necesidades</li>
+              <li><b>SEO avanzado</b> con Google Analytics configurado</li>
+              <li><b>Funcionalidades avanzadas</b> personalizadas</li>
+              <li><b>Mayor personalización</b> visual y de contenido</li>
+              <li><b>Integración tecnológica</b> — IA, reservas, formularios inteligentes</li>
+              <li><b>Entrega llave en mano</b> con formación incluida</li>
+            </ul>
+          </div>
+          <div class="sc-col">
+            <div class="sc-col-title">Integraciones tecnológicas disponibles</div>
+            <ul class="sc-list">
+              <li>Sistema de atención automática en web</li>
+              <li>Conexión con WhatsApp Business</li>
+              <li>Agenda y reservas online</li>
+              <li>Formularios inteligentes de captación</li>
+              <li>Pasarela de pago integrada</li>
+              <li>CRM básico de gestión de leads</li>
+            </ul>
+          </div>
+          <div class="sc-col">
+            <div class="sc-col-title">Periodo de supervisión incluido</div>
+            <div class="period-block" style="margin:0;">
+              <div class="pb-title">Período de implantación — 60 días</div>
+              <div class="pb-text">El primer mes ajustamos todas las integraciones y verificamos que todo funciona con datos reales. El segundo mes lo perfeccionamos. Al terminar, tu tecnología pasa a ser mantenida por el Departamento.</div>
+              <div class="pb-months">
+                <div class="pb-month included">Mes 1 · Gratis</div>
+                <div class="pb-month service">Mes 2 · 199 € + IVA</div>
+                <div class="pb-month after">Mes 3+ · 199 €/mes · Sin compromiso</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-footer">
+          <div class="sc-footer-left"><b>Código fuente completo entregado al cliente.</b> Dominio y hosting, responsabilidad y coste del cliente. El mantenimiento posterior requiere Departamento Tecnológico.</div>
+          <div class="sc-cta">
+            <a class="btn-ghost" href="index.html#chat-section">Preguntar al asistente</a>
+            <a class="btn-primary" href="pago.html?plan=web">Solicitar presupuesto</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIGITALIZA -->
+    <div class="service-card" id="digitaliza">
+      <div class="sc-header">
+        <div class="sc-header-inner">
+          <div>
+            <div class="sc-cat gold">Proyecto único · Soluciones tecnológicas</div>
+            <span class="sc-badge gold">Para empresas que quieren implantar tecnología</span>
+            <h2 class="sc-title">Digitaliza tu Empresa</h2>
+            <p class="sc-desc">Dinos qué problema quieres resolver — nosotros analizamos tu empresa, diseñamos la solución correcta y la implantamos desde cero. Sin que tengas que saber qué herramienta necesitas.</p>
+            <p class="sc-desc" style="color:var(--gold);margin-top:6px;">💡 Se puede combinar con Web Esencial o Web Profesional en la misma compra.</p>
+          </div>
+          <div class="sc-price">
+            <div class="sc-price-main">590 €<sub> + IVA</sub></div>
+            <div class="sc-price-vat">Precio según soluciones elegidas</div>
+            <div class="sc-price-vat" style="margin-top:4px;">+ Departamento Lite™ (199 €/mes) o Pro™ (399 €/mes) según soluciones · mes 1 gratis</div>
+          </div>
+        </div>
+      </div>
+      <div class="sc-body">
+        <!-- Solutions grid -->
+        <div style="padding:24px 24px 0;border-top:1px solid var(--grey-line);">
+          <div class="sc-col-title">Ejemplos de soluciones que implantamos</div>
+        </div>
+        <div class="solutions-grid">
+          <div class="solution-chip"><div class="sc-icon">💬</div><h5>IA para WhatsApp</h5><span class="sol-price">590 € + IVA</span><p>Atención automática, agenda y gestión de conversaciones vía WhatsApp Business.</p></div>
+          <div class="solution-chip"><div class="sc-icon">🌐</div><h5>IA para tu Web</h5><span class="sol-price">350 € + IVA</span><p>Sistema de atención inteligente integrado en tu web actual.</p></div>
+          <div class="solution-chip"><div class="sc-icon">📧</div><h5>IA para Correo</h5><span class="sol-price">350 € + IVA</span><p>Clasificación y respuesta automática de correos de clientes.</p></div>
+          <div class="solution-chip"><div class="sc-icon">⚙️</div><h5>Automatizaciones</h5><span class="sol-price">400 € + IVA</span><p>Flujos automáticos que eliminan tareas repetitivas de tu equipo.</p></div>
+          <div class="solution-chip"><div class="sc-icon">👥</div><h5>CRM</h5><span class="sol-price">400 € + IVA</span><p>Sistema de gestión de clientes adaptado a tu sector y flujo de trabajo.</p></div>
+          <div class="solution-chip"><div class="sc-icon">📅</div><h5>Reservas y Agenda</h5><span class="sol-price">350 € + IVA</span><p>Sistema de citas online integrado con tu calendario actual.</p></div>
+          <div class="solution-chip"><div class="sc-icon">🔗</div><h5>Integraciones</h5><span class="sol-price">350 € + IVA</span><p>Conexión entre todas las herramientas que ya usas en tu empresa.</p></div>
+          <div class="solution-chip"><div class="sc-icon">📁</div><h5>Gestión Documental</h5><span class="sol-price">400 € + IVA</span><p>Organización y automatización de documentos y contratos.</p></div>
+          <div class="solution-chip"><div class="sc-icon">✍️</div><h5>Firma Digital</h5><span class="sol-price">300 € + IVA</span><p>Sistema de firma digital para contratos y documentos legales.</p></div>
+        </div>
+        <!-- What we do -->
+        <div class="sc-col-title" style="padding:20px 24px 12px;">Lo que hacemos en cada proyecto</div>
+        <div class="digitaliza-includes">
+          <div class="di-item">Estudio previo de tu empresa y necesidades</div>
+          <div class="di-item">Configuración e integración completa</div>
+          <div class="di-item">Entrenamiento de la solución con datos reales</div>
+          <div class="di-item">Pruebas exhaustivas antes de activar</div>
+          <div class="di-item">Formación a tu equipo</div>
+          <div class="di-item">Optimización durante el periodo inicial</div>
+          <div class="di-item">Soporte técnico durante la implantación</div>
+          <div class="di-item">Documentación completa entregada</div>
+        </div>
+        <!-- 90 days block -->
+        <div style="padding:24px;">
+          <div class="period-block" style="margin:0;">
+            <div class="pb-title">Periodo de Implantación y Optimización — 90 días</div>
+            <div class="pb-text">Toda implantación incluye 90 días de supervisión real, optimización con datos de tu empresa y ajustes hasta dejarlo perfecto. El Departamento inicial varía según el número de soluciones implantadas:</div>
+            <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:12px 14px;">
+                <div style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:6px;">1 o 2 soluciones → Departamento Lite™</div>
+                <div style="font-size:.82rem;color:var(--white);font-weight:600;margin-bottom:4px;">Primer mes del Departamento, gratis</div>
+                <div style="font-size:.75rem;color:var(--grey);">Mes 2 a 199€ · Desde el mes 3: 199€/mes sin compromisos.</div>
+              </div>
+              <div style="background:rgba(47,123,255,.08);border:1px solid rgba(47,123,255,.2);border-radius:8px;padding:12px 14px;">
+                <div style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;">3 soluciones → Departamento Pro™</div>
+                <div style="font-size:.82rem;color:var(--white);font-weight:600;margin-bottom:4px;">Primer mes del Departamento, gratis</div>
+                <div style="font-size:.75rem;color:var(--grey);">Mes 2 a 399€ · Desde el mes 3: 399€/mes sin compromisos.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sc-footer">
+          <div class="sc-footer-left"><b>El cliente no busca proveedores. TRUCO se encarga absolutamente de todo.</b> Elegimos, implantamos, configuramos y mantenemos. Un único interlocutor para toda tu tecnología.</div>
+          <div class="sc-cta">
+            <a class="btn-ghost" href="index.html#chat-section">Preguntar al asistente</a>
+            <a class="btn-primary" href="pago.html?plan=digital">Solicitar presupuesto</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CÓMO TRABAJAMOS -->
+<div class="como-section" id="como-trabajamos">
+  <div class="container">
+    <div style="text-align:center;">
+      <div class="ph-tag" style="justify-content:center;">Cómo trabajamos</div>
+      <h2 style="font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;margin-bottom:10px;">Un proceso claro, sin sorpresas.</h2>
+      <p style="font-size:.95rem;color:var(--grey);max-width:520px;margin:0 auto;">Desde el primer análisis hasta el mantenimiento continuo, sabes en todo momento qué estamos haciendo y por qué.</p>
+    </div>
+    <div class="como-steps">
+      <div class="como-step">
+        <div class="cs-num">1</div>
+        <div><div class="cs-title">Analizamos tu empresa</div><div class="cs-desc">Entendemos tu negocio, tus procesos y qué tecnología necesitas realmente.</div></div>
+      </div>
+      <div class="como-step">
+        <div class="cs-num highlight">2</div>
+        <div><div class="cs-title">Implantamos la solución</div><div class="cs-desc">Configuramos, integramos y ponemos en marcha la tecnología diseñada para tu empresa.</div></div>
+      </div>
+      <div class="como-step">
+        <div class="cs-num highlight">3</div>
+        <div><div class="cs-title">90 días de optimización</div><div class="cs-desc">Supervisamos el funcionamiento real, ajustamos y perfeccionamos hasta que funcione exactamente como necesitas.</div></div>
+      </div>
+      <div class="como-step">
+        <div class="cs-num highlight">4</div>
+        <div><div class="cs-title">Tu Departamento activo</div><div class="cs-desc">Tu equipo tecnológico mantiene y supervisa todo. Tú solo te preocupas de tu negocio.</div></div>
+      </div>
+      <div class="como-step">
+        <div class="cs-num">5</div>
+        <div><div class="cs-title">Seguimos contigo</div><div class="cs-desc">Cuando necesitas nueva tecnología, creamos un nuevo proyecto que pasa al Departamento.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <div class="container">
+    <div class="ph-tag">Preguntas frecuentes</div>
+    <h2 style="font-size:clamp(1.4rem,2.5vw,2rem);font-weight:700;margin-bottom:32px;">Todo lo que necesitas saber</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Tengo que contratar diferentes empresas para cada herramienta? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>No. TRUCO se encarga de elegir, implantar, configurar y mantener toda la tecnología necesaria para tu empresa. <b>Tú solo tendrás un único interlocutor.</b> Sin gestionar proveedores, sin coordinar equipos técnicos, sin preocuparte por nada tecnológico.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Y si ya tengo herramientas instaladas? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>No es necesario empezar desde cero. Podemos <b>auditar, adaptar y mantener cualquier solución tecnológica existente</b> para integrarla dentro de tu Departamento Tecnológico. Si ya tienes un CRM, una web o cualquier otra herramienta, la incorporamos al sistema.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Qué diferencia hay entre un Proyecto y el Departamento Tecnológico? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Son dos servicios completamente distintos. <b>Un Proyecto implanta tecnología nueva</b> — es un trabajo puntual con un precio fijo y una fecha de entrega. <b>El Departamento Tecnológico mantiene</b> esa tecnología funcionando correctamente — es un servicio mensual de supervisión y soporte. Uno construye, el otro cuida.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Qué son los 90 días de implantación? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Es el periodo inicial tras implantar cualquier solución tecnológica. Durante 90 días supervisamos el funcionamiento real del sistema, lo optimizamos con datos reales, realizamos ajustes y adaptamos todo a las necesidades específicas de tu empresa. Es el tiempo que necesitamos para dejar la tecnología perfectamente calibrada. <b>Los primeros meses de Departamento están incluidos sin coste adicional</b> en todos los proyectos.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿El dominio y el hosting son vuestros? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>No. El dominio y el hosting son <b>siempre responsabilidad y coste del cliente</b>. Los contratas y pagas directamente con el proveedor que prefieras. Nosotros te asesoramos en la elección y nos encargamos de toda la configuración técnica. Si en algún momento decides no continuar con nosotros, todo es tuyo sin complicaciones.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Hay compromiso de permanencia? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Los primeros 90 días son el periodo de implantación, el tiempo necesario para dejar todo funcionando correctamente. A partir del día 91, <b>continúas solo si estás satisfecho</b>. Sin compromisos adicionales, sin penalizaciones.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si necesito una nueva herramienta después? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Se crea un nuevo Proyecto de implantación. Al finalizar, la nueva solución tecnológica pasa a formar parte de tu Departamento Tecnológico y queda mantenida dentro de tu plan mensual. Si tienes el plan Lite y necesitas mantener más de 2 soluciones activas, el Pro es el siguiente paso.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="container">
+    <div class="cta-inner">
+      <div>
+        <h2>¿Por qué gestionar tú la tecnología<br>cuando puedes tener un departamento propio?</h2>
+        <p>Consultoría gratuita · Sin compromiso · Te decimos exactamente qué necesita tu empresa y cuánto costaría.</p>
+      </div>
+      <div class="cta-btns">
+        <a class="btn-primary" href="index.html#chat-section">Hablar con el asistente</a>
+        <a class="btn-ghost" href="index.html">Volver al inicio</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© 2026 TRUCOtechnology — Todos los derechos reservados.</span>
+      <span style="display:flex;gap:14px;flex-wrap:wrap;">
+        <a href="aviso-legal.html">Aviso Legal</a>
+        <a href="privacidad.html">Privacidad</a>
+        <a href="cookies.html">Cookies</a>
+        <a href="terminos.html">Términos</a>
+        <a href="index.html" onclick="try{localStorage.removeItem('cookie_consent');}catch(e){}">Gestionar cookies</a>
+      </span>
+      <span>www.trucotechnology.com</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');
+  const icon=btn.querySelector('.faq-icon');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el=>{
+    el.classList.remove('open');
+    const ic=el.querySelector('.faq-icon');
+    if(ic)ic.textContent='+';
+  });
+  if(!isOpen){item.classList.add('open');icon.textContent='−';}
+}
+</script>
+</body>
+</html>
