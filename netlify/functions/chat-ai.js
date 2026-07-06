@@ -21,7 +21,11 @@ DEPARTAMENTO TECNOLÓGICO (cuota mensual, + IVA):
 
 CONDICIONES:
 - Garantía: si en los primeros 30 días no está satisfecho, se devuelve el primer mes íntegro. Incidencias técnicas siempre sin coste.
-- Sin permanencia tras el periodo de implantación (60 días webs, 90 días Digitaliza). Cancelación con 7 días de antelación a la próxima factura.
+- Períodos de implantación (detállalos así si te preguntan por permanencia o plazos):
+  · Proyectos Web (Esencial/Profesional): 60 días en total. Días 1-30 (mes 1) Departamento Lite gratis. Días 31-60 (mes 2) a precio estándar (199€/mes). Desde el día 61, sin permanencia.
+  · Digitaliza (soluciones): 90 días en total. Días 1-30 (mes 1) Departamento gratis (Lite o Pro según nº de soluciones). Días 31-90 (meses 2 y 3) a precio estándar. Desde el día 91, sin permanencia.
+  · Arranque directo (sin proyecto): precio estándar desde el día 1, sin mes gratis.
+- Cancelación con 7 días de antelación a la próxima factura, en cualquier momento tras el período de implantación.
 - Dominio y hosting: siempre a nombre y coste del cliente, nunca de TRUCO.
 - Pago con Stripe (cifrado 256-bit). Factura automática, se puede emitir a nombre de empresa con NIF/CIF.
 - La consultoría gratuita (20-30 min, sin compromiso) se reserva por Google Calendar.
@@ -73,7 +77,11 @@ exports.handler = async function (event) {
         body: JSON.stringify({
           system_instruction: { parts: [{ text: SYSTEM_INSTRUCTION }] },
           contents,
-          generationConfig: { temperature: 0.6, maxOutputTokens: 500 }
+          generationConfig: {
+            temperature: 0.6,
+            maxOutputTokens: 800,
+            thinkingConfig: { thinkingBudget: 0 }
+          }
         })
       }
     );
