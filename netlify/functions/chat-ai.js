@@ -89,7 +89,7 @@ exports.handler = async function (event) {
       return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'empty_response' }) };
     }
 
-    if (rawText.startsWith('[NO_SE_RESPONDER]')) {
+    if (rawText.includes('[NO_SE_RESPONDER]')) {
       return {
         statusCode: 200,
         body: JSON.stringify({

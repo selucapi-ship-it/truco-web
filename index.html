@@ -1720,13 +1720,15 @@ function sendMsg() {
     showTyping();
     askTrucoPro(text, chatHistory).then((aiResp) => {
       hideTyping();
-      if (!aiResp.unresolved && aiResp.text) {
+      if (!aiResp.unresolved) {
+        // TRUCO PRO lo resuelve directamente.
         addMsg('bot', aiResp.text, 'Asistente TRUCO PRO');
         chatHistory.push({ role: 'bot', text: aiResp.text });
       } else {
-        // Ni TRUCO PRO ha podido resolverlo: la cita es el último paso.
-        const msg = 'Esta es una duda muy específica — prefiero que alguien del equipo te lo confirme en persona en vez de arriesgarme a darte un dato incorrecto.';
-        addMsg('bot', msg);
+        // Ni TRUCO PRO ha podido resolverlo del todo: muestra su explicación
+        // (si la hay) y la cita queda como último paso.
+        const msg = aiResp.text || 'Esta es una duda muy específica — prefiero que alguien del equipo te lo confirme en persona en vez de arriesgarme a darte un dato incorrecto.';
+        addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null);
         chatHistory.push({ role: 'bot', text: msg });
         if (!chatCtaOffered) {
           chatCtaOffered = true;
