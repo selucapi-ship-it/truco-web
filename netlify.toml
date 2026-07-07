@@ -2,6 +2,12 @@
   publish = "."
   functions = "netlify/functions"
 
+[build.environment]
+  # SUPABASE_URL no es un dato sensible (es la URL pública del proyecto, protegida
+  # por RLS igual que la anon key) y aparece intencionadamente en admin/panel.html.
+  # Sin esto, el escáner de secretos de Netlify bloquea el build al encontrarla ahí.
+  SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL"
+
 [[headers]]
   for = "/*"
   [headers.values]
