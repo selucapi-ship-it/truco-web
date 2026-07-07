@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root{
     --blue:#2f7bff; --blue-dim:#e8f0ff;
@@ -37,105 +37,110 @@
   /* ── HEADER ── */
   .head{
     display:flex;align-items:center;justify-content:space-between;
-    padding:11mm 14mm 6mm;
+    padding:10mm 14mm 0;
   }
   .brand{display:flex;align-items:center;gap:10px;}
   .brand-mark{
-    width:38px;height:38px;border:2px solid var(--gold);border-radius:9px;
+    width:36px;height:36px;border:2px solid var(--gold);border-radius:9px;
     display:flex;align-items:center;justify-content:center;
-    font-family:var(--font-d);font-weight:800;font-size:1.25rem;color:var(--navy);
+    font-family:var(--font-d);font-weight:800;font-size:1.2rem;color:var(--navy);
     flex-shrink:0;
   }
-  .brand-name{font-family:var(--font-d);font-weight:800;font-size:1.32rem;color:var(--navy);line-height:1;}
+  .brand-name{font-family:var(--font-d);font-weight:800;font-size:1.22rem;color:var(--navy);line-height:1;}
   .brand-name span{color:var(--blue);}
-  .brand-sub{font-family:var(--font-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-top:3px;}
+  .brand-sub{font-family:var(--font-m);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-top:3px;}
   .head-tag{
-    font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--blue);border:1px solid var(--blue);border-radius:20px;padding:6px 14px;
+    font-family:var(--font-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--blue);border:1px solid var(--blue);border-radius:20px;padding:5px 13px;
   }
 
   /* ── HERO ── */
-  .hero{padding:2mm 14mm 6mm;}
+  .hero{padding:7mm 14mm 0;}
   .hero h1{
-    font-family:var(--font-d);font-weight:800;font-size:2rem;line-height:1.12;letter-spacing:-.01em;
-    color:var(--navy);max-width:150mm;
+    font-family:var(--font-d);font-weight:800;font-size:2.5rem;line-height:1.08;letter-spacing:-.015em;
+    color:var(--navy);max-width:170mm;
   }
   .hero h1 em{font-style:italic;color:var(--blue);}
-  .hero p{font-size:.92rem;color:var(--grey);line-height:1.55;margin-top:8px;max-width:150mm;}
+  .hero p{font-size:1rem;color:var(--grey);line-height:1.5;margin-top:10px;max-width:150mm;}
+
+  /* ── PAIN POINTS ── */
+  .pains{padding:6mm 14mm 0;}
+  .pains-title{font-family:var(--font-m);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;}
+  .pains-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px 16px;}
+  .pain{display:flex;gap:9px;align-items:flex-start;font-size:.86rem;color:var(--navy);font-weight:500;line-height:1.35;}
+  .pain b{color:var(--blue);font-size:1rem;flex-shrink:0;}
+
+  /* ── PRICING CARDS ── */
+  .pricing{display:flex;gap:12px;padding:8mm 14mm 0;}
+  .pc{
+    flex:1;border-radius:16px;padding:16px 18px;position:relative;
+  }
+  .pc.main{background:var(--navy);color:#fff;}
+  .pc.alt{background:var(--blue-dim);color:var(--navy);}
+  .pc-badge{
+    font-family:var(--font-m);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;
+    display:inline-block;margin-bottom:6px;
+  }
+  .pc.main .pc-badge{color:var(--gold);}
+  .pc.alt .pc-badge{color:var(--blue);}
+  .pc-name{font-family:var(--font-d);font-weight:800;font-size:1.28rem;line-height:1.1;margin-bottom:8px;}
+  .pc-price{font-family:var(--font-d);font-weight:800;font-size:1.7rem;line-height:1;}
+  .pc.main .pc-price{color:var(--gold);}
+  .pc.alt .pc-price{color:var(--blue);}
+  .pc-price small{font-family:var(--font-b);font-weight:600;font-size:.62rem;}
+  .pc-vat{font-family:var(--font-m);font-size:.6rem;margin-top:3px;opacity:.75;}
+  .pc-desc{font-size:.76rem;line-height:1.45;margin-top:9px;}
+  .pc.main .pc-desc{color:#c3cad6;}
+  .pc.alt .pc-desc{color:var(--grey);}
 
   /* ── SERVICES ── */
   .services{
     display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
-    padding:2mm 14mm;
+    padding:8mm 14mm 0;
   }
   .svc{
-    border:1px solid var(--line);border-radius:12px;padding:12px 11px;
-    display:flex;flex-direction:column;gap:5px;
+    border:1px solid var(--line);border-radius:12px;padding:11px 10px;
+    display:flex;flex-direction:column;gap:4px;
   }
-  .svc .ic{font-size:1.3rem;}
-  .svc h4{font-family:var(--font-d);font-weight:700;font-size:.82rem;color:var(--navy);}
-  .svc p{font-size:.68rem;color:var(--grey);line-height:1.35;}
+  .svc .ic{font-size:1.25rem;}
+  .svc h4{font-family:var(--font-d);font-weight:700;font-size:.8rem;color:var(--navy);}
+  .svc p{font-size:.66rem;color:var(--grey);line-height:1.3;}
 
   /* ── HOW IT WORKS ── */
-  .how{padding:7mm 14mm 3mm;}
-  .how-title{font-family:var(--font-m);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
-  .how-title::before{content:'';width:20px;height:1px;background:var(--blue);}
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-  .step{display:flex;gap:9px;align-items:flex-start;}
+  .how{padding:6mm 14mm 0;display:flex;align-items:center;gap:14px;}
+  .steps{display:flex;flex:1;gap:12px;}
+  .step{display:flex;gap:8px;align-items:center;flex:1;}
   .step-n{
-    width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;
-    font-family:var(--font-m);font-size:.72rem;font-weight:700;
+    width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;
+    font-family:var(--font-m);font-size:.68rem;font-weight:700;
     display:flex;align-items:center;justify-content:center;flex-shrink:0;
   }
-  .step b{font-size:.78rem;color:var(--navy);display:block;margin-bottom:2px;}
-  .step span{font-size:.7rem;color:var(--grey);line-height:1.4;display:block;}
+  .step span{font-size:.72rem;color:var(--navy);font-weight:600;line-height:1.3;}
 
-  /* ── PRICING BAND ── */
-  .pricing{
-    margin:7mm 14mm 0;padding:12px 16px;border-radius:14px;
-    background:var(--navy);color:#fff;
-    display:flex;align-items:center;justify-content:space-between;gap:10px;
+  /* ── TRUST STRIP ── */
+  .trust{
+    margin:6mm 14mm 0;padding:9px 14px;border-radius:10px;background:var(--gold-dim);
+    display:flex;justify-content:space-between;gap:8px;
   }
-  .pr-item{text-align:center;flex:1;}
-  .pr-item .n{font-family:var(--font-d);font-weight:800;font-size:1.15rem;color:var(--gold);}
-  .pr-item .l{font-family:var(--font-m);font-size:.56rem;letter-spacing:.05em;text-transform:uppercase;color:#b8c0cc;margin-top:2px;}
-  .pr-sep{width:1px;height:30px;background:rgba(255,255,255,.15);}
-
-  /* ── TRUST ── */
-  .trust{display:flex;gap:10px;padding:6mm 14mm 0;}
-  .tr-item{
-    flex:1;border:1px solid var(--line);border-radius:10px;padding:9px 12px;
-    display:flex;gap:8px;align-items:flex-start;
-  }
-  .tr-item .ic{font-size:.95rem;color:var(--green);}
-  .tr-item span{font-size:.7rem;color:var(--navy);line-height:1.35;}
-  .tr-item b{color:var(--navy);}
-
-  /* ── SECTORS ── */
-  .sectors{padding:6mm 14mm 0;}
-  .sectors-title{font-family:var(--font-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:6px;}
-  .sect-chips{display:flex;flex-wrap:wrap;gap:6px;}
-  .sect-chip{
-    font-family:var(--font-m);font-size:.6rem;color:var(--navy);background:var(--blue-dim);
-    border-radius:14px;padding:4px 11px;
-  }
+  .trust span{font-size:.72rem;color:var(--navy);font-weight:600;}
+  .trust b{color:#8a5c0a;}
 
   /* ── CTA FOOTER ── */
   .cta{
     margin-top:auto;background:linear-gradient(120deg,var(--navy) 55%,#152036 100%);
-    color:#fff;padding:9mm 14mm;display:flex;align-items:center;justify-content:space-between;gap:14px;
+    color:#fff;padding:10mm 14mm;display:flex;align-items:center;justify-content:space-between;gap:16px;
   }
-  .cta-left b{font-family:var(--font-d);font-size:1.2rem;display:block;margin-bottom:4px;}
-  .cta-left span{font-size:.78rem;color:#c3cad6;display:block;line-height:1.5;}
+  .cta-left b{font-family:var(--font-d);font-size:1.4rem;display:block;margin-bottom:5px;}
+  .cta-left span{font-size:.82rem;color:#c3cad6;display:block;line-height:1.5;}
   .cta-web{
-    display:inline-block;margin-top:9px;font-family:var(--font-m);font-size:.82rem;font-weight:500;
-    color:var(--navy);background:var(--gold);padding:8px 18px;border-radius:20px;
+    display:inline-block;margin-top:11px;font-family:var(--font-m);font-size:.86rem;font-weight:500;
+    color:var(--navy);background:var(--gold);padding:9px 20px;border-radius:20px;
   }
   .cta-qr{
     background:#fff;border-radius:10px;padding:6px;flex-shrink:0;text-align:center;
   }
-  .cta-qr img{width:82px;height:82px;display:block;}
-  .cta-qr span{display:block;font-family:var(--font-m);font-size:.52rem;color:var(--navy);margin-top:4px;letter-spacing:.03em;}
+  .cta-qr img{width:88px;height:88px;display:block;}
+  .cta-qr span{display:block;font-family:var(--font-m);font-size:.54rem;color:var(--navy);margin-top:4px;letter-spacing:.03em;}
 </style>
 </head>
 <body>
@@ -154,72 +159,71 @@
 
   <div class="hero">
     <h1>¿Cuántos clientes pierdes por no responder <em>a tiempo</em>?</h1>
-    <p>TRUCO technology es tu Departamento Tecnológico externalizado: implantamos la tecnología que tu negocio necesita — IA para WhatsApp, web, reservas, CRM — y la mantenemos cada mes. Sin que tengas que entender nada de tecnología.</p>
+    <p>Implantamos la tecnología que tu negocio necesita — IA para WhatsApp, web, reservas, CRM — y la mantenemos cada mes. Sin que tengas que entender nada de tecnología.</p>
+  </div>
+
+  <div class="pains">
+    <div class="pains-title">¿Es esto para ti?</div>
+    <div class="pains-grid">
+      <div class="pain"><b>→</b> Se te acumulan mensajes de WhatsApp sin responder</div>
+      <div class="pain"><b>→</b> Pierdes citas por llamadas que no coges a tiempo</div>
+      <div class="pain"><b>→</b> No tienes web, o no te trae ni un cliente</div>
+      <div class="pain"><b>→</b> Pierdes horas cada semana en tareas repetitivas</div>
+    </div>
+  </div>
+
+  <div class="pricing">
+    <div class="pc main">
+      <div class="pc-badge">Proyecto único</div>
+      <div class="pc-name">Web Esencial</div>
+      <div class="pc-price">698 € <small>+ IVA</small></div>
+      <div class="pc-vat">844,58 € con IVA · 1º y 2º mes incluidos</div>
+      <div class="pc-desc">Web de 5 páginas lista en 7-10 días + los 2 primeros meses de tu Departamento Tecnológico Lite™ (el primero, totalmente gratis).</div>
+    </div>
+    <div class="pc alt">
+      <div class="pc-badge">Cuota mensual</div>
+      <div class="pc-name">Departamento Tecnológico</div>
+      <div class="pc-price">199 € <small>/mes + IVA</small></div>
+      <div class="pc-vat">240,79 €/mes con IVA</div>
+      <div class="pc-desc">Mantenimiento, seguridad, soporte e incidencias sin coste. Primer mes siempre gratis. Sin permanencia después.</div>
+    </div>
   </div>
 
   <div class="services">
     <div class="svc">
       <div class="ic">💬</div>
       <h4>IA para WhatsApp</h4>
-      <p>Responde a tus clientes 24 horas, agenda citas y filtra lo urgente.</p>
+      <p>Responde 24 h, agenda citas y filtra lo urgente.</p>
     </div>
     <div class="svc">
       <div class="ic">🌐</div>
       <h4>Web profesional</h4>
-      <p>Presencia digital lista en días, pensada para convertir visitas en clientes.</p>
+      <p>Presencia digital que convierte visitas en clientes.</p>
     </div>
     <div class="svc">
       <div class="ic">📅</div>
       <h4>Reservas online</h4>
-      <p>Citas y mesas sin llamadas perdidas, conectadas a tu agenda actual.</p>
+      <p>Citas sin llamadas perdidas, tu agenda siempre al día.</p>
     </div>
     <div class="svc">
       <div class="ic">👥</div>
       <h4>CRM y automatización</h4>
-      <p>Seguimiento de clientes y tareas repetitivas resueltas solas.</p>
+      <p>Seguimiento de clientes y tareas resueltas solas.</p>
     </div>
   </div>
 
   <div class="how">
-    <div class="how-title">Cómo funciona</div>
     <div class="steps">
-      <div class="step">
-        <div class="step-n">1</div>
-        <div><b>Consultoría gratuita</b><span>Analizamos tu negocio, sin compromiso, 20-30 min.</span></div>
-      </div>
-      <div class="step">
-        <div class="step-n">2</div>
-        <div><b>Implantamos</b><span>Configuramos la solución a medida para tu negocio.</span></div>
-      </div>
-      <div class="step">
-        <div class="step-n">3</div>
-        <div><b>Mantenemos cada mes</b><span>Tú a tu negocio. Nosotros, de la tecnología.</span></div>
-      </div>
+      <div class="step"><div class="step-n">1</div><span>Consultoría gratuita, 20-30 min</span></div>
+      <div class="step"><div class="step-n">2</div><span>Implantamos la solución a medida</span></div>
+      <div class="step"><div class="step-n">3</div><span>La mantenemos cada mes</span></div>
     </div>
-  </div>
-
-  <div class="pricing">
-    <div class="pr-item"><div class="n">698 € + IVA</div><div class="l">Web Esencial · 2 meses (mes 1 gratis)</div></div>
-    <div class="pr-sep"></div>
-    <div class="pr-item"><div class="n">Desde 199€/mes</div><div class="l">Departamento Tecnológico</div></div>
-    <div class="pr-sep"></div>
-    <div class="pr-item"><div class="n">1er mes gratis</div><div class="l">En todos los proyectos</div></div>
   </div>
 
   <div class="trust">
-    <div class="tr-item"><span class="ic">✓</span><span><b>Garantía de Ajuste:</b> ajustamos hasta que funcione, sin coste extra.</span></div>
-    <div class="tr-item"><span class="ic">✓</span><span><b>Sin permanencia</b> una vez pasada la implantación.</span></div>
-    <div class="tr-item"><span class="ic">✓</span><span><b>Un único interlocutor</b> para toda tu tecnología.</span></div>
-  </div>
-
-  <div class="sectors">
-    <div class="sectors-title">¿Es esto para ti?</div>
-    <div class="sect-chips">
-      <span class="sect-chip">Se te acumulan mensajes de WhatsApp sin responder</span>
-      <span class="sect-chip">Pierdes citas por llamadas que no coges a tiempo</span>
-      <span class="sect-chip">No tienes web o no te trae clientes</span>
-      <span class="sect-chip">Pierdes tiempo en tareas repetitivas cada semana</span>
-    </div>
+    <span><b>Garantía de Ajuste™</b> — ajustamos hasta que funcione, sin coste extra</span>
+    <span><b>Sin permanencia</b> tras la implantación</span>
+    <span><b>Un único interlocutor</b> para toda tu tecnología</span>
   </div>
 
   <div class="cta">
