@@ -732,8 +732,10 @@ async function handlePay(){
     return;
   }
   const plan=getActivePlan();if(!plan)return;
-  if(plan.customQuote){alert('Con más de 3 soluciones elaboramos un presupuesto personalizado. Te contactamos en menos de 24h. Mientras tanto, escríbenos por WhatsApp o reserva una consultoría gratuita.');return;}
-  if(!plan.stripe||plan.stripe.startsWith('REEMPLAZA')){alert('Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');return;}
+
+  // Guardamos el lead en cuanto sabemos qué plan quiere, pase lo que pase después
+  // (presupuesto personalizado, Stripe aún no disponible, o pago normal): es el
+  // momento en que sabemos que es un cliente real interesado.
   try{
     const nif=document.getElementById('f-nif'),msg=document.getElementById('f-mensaje');
     await fetch('/.netlify/functions/save-lead',{
@@ -746,6 +748,9 @@ async function handlePay(){
       })
     });
   }catch(err){/* nunca bloquear el pago por un fallo al guardar el lead */}
+
+  if(plan.customQuote){alert('Con más de 3 soluciones elaboramos un presupuesto personalizado. Te contactamos en menos de 24h. Mientras tanto, escríbenos por WhatsApp o reserva una consultoría gratuita.');return;}
+  if(!plan.stripe||plan.stripe.startsWith('REEMPLAZA')){alert('Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');return;}
   window.location.href=plan.stripe;
 }
 
