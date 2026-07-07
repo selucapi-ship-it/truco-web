@@ -1,0 +1,7 @@
+{
+  "name": "truco-web",
+  "private": true,
+  "dependencies": {
+    "livekit-server-sdk": "^2.9.2"
+  }
+}

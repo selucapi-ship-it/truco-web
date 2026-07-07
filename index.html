@@ -322,6 +322,12 @@ img{display:block;max-width:100%;}
 .chat-input::placeholder{color:var(--grey);}
 .chat-send{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:10px 16px;cursor:pointer;font-size:.85rem;font-weight:600;transition:opacity var(--tr);}
 .chat-send:hover{opacity:.85;}
+.voice-agent-row{padding:10px 14px 14px;border-top:1px solid var(--grey-line);display:flex;flex-direction:column;gap:8px;}
+.voice-agent-btn{background:var(--bg-card);border:1px solid var(--grey-line);color:var(--white);padding:9px 14px;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;transition:all var(--tr);display:flex;align-items:center;justify-content:center;gap:6px;width:100%;}
+.voice-agent-btn:hover{border-color:var(--blue);}
+.voice-agent-btn.active{background:var(--green-dim);border-color:var(--green);color:var(--green);}
+.voice-agent-btn:disabled{opacity:.6;cursor:not-allowed;}
+.voice-agent-status{font-size:.76rem;color:var(--grey);text-align:center;}
 @media(max-width:900px){.chat-inner{grid-template-columns:1fr;}.chat-box{height:420px;}}
 
 /* ── CTA FINAL ── */
@@ -483,6 +489,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 <body>
 <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
 <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+<script src="https://cdn.jsdelivr.net/npm/livekit-client/dist/livekit-client.umd.min.js"></script>
 
 <!-- ── NAVBAR ── -->
 <nav id="nav">
@@ -1004,6 +1011,10 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="chat-input-row">
             <input class="chat-input" id="chatIn" type="text" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendMsg()">
             <button class="chat-send" onclick="sendMsg()">Enviar</button>
+          </div>
+          <div class="voice-agent-row">
+            <button class="voice-agent-btn" id="voiceAgentBtn" onclick="toggleVoiceAgent()">🎙️ Hablar con un agente</button>
+            <div class="voice-agent-status" id="voiceAgentStatus" style="display:none;"></div>
           </div>
         </div>
       </div>
@@ -1763,6 +1774,70 @@ function sendMsg() {
 function sendSug(btn) {
   document.getElementById('chatIn').value = btn.textContent;
   sendMsg();
+}
+
+// ── AGENTE DE VOZ (LiveKit + Gemini) ──
+let voiceRoom = null;
+let voiceActive = false;
+
+async function toggleVoiceAgent() {
+  if (voiceActive) { endVoiceAgent(); return; }
+
+  const btn = document.getElementById('voiceAgentBtn');
+  const status = document.getElementById('voiceAgentStatus');
+  btn.textContent = '⏳ Conectando...';
+  btn.disabled = true;
+  status.style.display = 'block';
+  status.textContent = 'Pidiendo acceso al micrófono...';
+
+  try {
+    const resp = await fetch('/.netlify/functions/livekit-token', { method: 'POST' });
+    const data = await resp.json();
+    if (!data.token) throw new Error('no token');
+
+    const room = new LivekitClient.Room();
+    voiceRoom = room;
+
+    room.on(LivekitClient.RoomEvent.TrackSubscribed, (track) => {
+      if (track.kind === LivekitClient.Track.Kind.Audio) {
+        const el = track.attach();
+        el.id = 'voiceAgentAudio';
+        document.body.appendChild(el);
+      }
+    });
+    room.on(LivekitClient.RoomEvent.Disconnected, resetVoiceUI);
+
+    status.textContent = 'Conectando con el agente...';
+    await room.connect(data.url, data.token);
+    await room.localParticipant.setMicrophoneEnabled(true);
+
+    voiceActive = true;
+    btn.textContent = '🔴 Colgar';
+    btn.classList.add('active');
+    btn.disabled = false;
+    status.textContent = '🎙️ Hablando con el Asistente TRUCO PRO — habla con normalidad';
+  } catch (e) {
+    status.textContent = 'No se pudo conectar. Inténtalo de nuevo o escríbenos por WhatsApp.';
+    btn.textContent = '🎙️ Hablar con un agente';
+    btn.disabled = false;
+  }
+}
+
+function endVoiceAgent() {
+  if (voiceRoom) { voiceRoom.disconnect(); voiceRoom = null; }
+  resetVoiceUI();
+}
+
+function resetVoiceUI() {
+  voiceActive = false;
+  const btn = document.getElementById('voiceAgentBtn');
+  const status = document.getElementById('voiceAgentStatus');
+  btn.textContent = '🎙️ Hablar con un agente';
+  btn.classList.remove('active');
+  btn.disabled = false;
+  status.style.display = 'none';
+  const audioEl = document.getElementById('voiceAgentAudio');
+  if (audioEl) audioEl.remove();
 }
 
 // Bienvenida inicial

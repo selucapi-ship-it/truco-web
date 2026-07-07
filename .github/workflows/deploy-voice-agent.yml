@@ -1,0 +1,47 @@
+name: Deploy Voice Agent
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'voice-agent/**'
+      - '.github/workflows/deploy-voice-agent.yml'
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: 'Operation to run'
+        required: true
+        default: 'create'
+        type: choice
+        options:
+          - create
+          - deploy
+          - status
+
+concurrency:
+  group: deploy-voice-agent
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy LiveKit agent
+        uses: livekit/deploy-action@v2.12.1
+        with:
+          OPERATION: ${{ github.event.inputs.operation || 'create' }}
+          WORKING_DIRECTORY: voice-agent
+        env:
+          LIVEKIT_URL: ${{ secrets.LIVEKIT_URL }}
+          LIVEKIT_API_KEY: ${{ secrets.LIVEKIT_API_KEY }}
+          LIVEKIT_API_SECRET: ${{ secrets.LIVEKIT_API_SECRET }}
+          SECRET_LIST: GOOGLE_API_KEY=${{ secrets.GEMINI_API_KEY }}
