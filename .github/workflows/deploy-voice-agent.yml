@@ -11,7 +11,7 @@ on:
       operation:
         description: 'Operation to run'
         required: true
-        default: 'create'
+        default: 'deploy'
         type: choice
         options:
           - create
@@ -38,7 +38,7 @@ jobs:
       - name: Deploy LiveKit agent
         uses: livekit/deploy-action@v2.12.1
         with:
-          OPERATION: ${{ github.event.inputs.operation || 'create' }}
+          OPERATION: ${{ github.event.inputs.operation || 'deploy' }}
           WORKING_DIRECTORY: voice-agent
         env:
           LIVEKIT_URL: ${{ secrets.LIVEKIT_URL }}
