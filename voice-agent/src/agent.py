@@ -193,6 +193,12 @@ async def entrypoint(ctx: agents.JobContext):
             model="gemini-2.5-flash-native-audio-preview-12-2025",
             voice="Kore",
             thinking_config=types.ThinkingConfig(thinking_budget=0),
+            realtime_input_config=types.RealtimeInputConfig(
+                automatic_activity_detection=types.AutomaticActivityDetection(
+                    silence_duration_ms=500,
+                    prefix_padding_ms=20,
+                )
+            ),
         ),
     )
 
