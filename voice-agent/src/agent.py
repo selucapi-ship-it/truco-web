@@ -203,11 +203,11 @@ async def entrypoint(ctx: agents.JobContext):
     session = AgentSession(
         llm=google.realtime.RealtimeModel(
             model="gemini-2.5-flash-native-audio-preview-12-2025",
-            voice="Kore",
+            voice="Sulafat",
             thinking_config=types.ThinkingConfig(thinking_budget=0),
             realtime_input_config=types.RealtimeInputConfig(
                 automatic_activity_detection=types.AutomaticActivityDetection(
-                    silence_duration_ms=500,
+                    silence_duration_ms=200,
                     prefix_padding_ms=20,
                 )
             ),
