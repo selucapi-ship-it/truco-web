@@ -33,14 +33,19 @@ exports.handler = async function (event) {
     p_nota: payload.nota ? String(payload.nota).slice(0, 2000) : null,
   };
 
+  // Las claves nuevas de Supabase (sb_secret_...) solo van en "apikey": si además
+  // se manda en "Authorization: Bearer", la plataforma la intenta leer como JWT y
+  // falla con "Invalid JWT". Las claves antiguas (service_role, un JWT eyJ...)
+  // sí necesitan ambos headers.
+  const headers = { 'Content-Type': 'application/json', apikey: serviceKey };
+  if (!serviceKey.startsWith('sb_secret_') && !serviceKey.startsWith('sb_publishable_')) {
+    headers.Authorization = `Bearer ${serviceKey}`;
+  }
+
   try {
     const resp = await fetch(`${supabaseUrl}/rest/v1/rpc/log_interaction`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: serviceKey,
-        Authorization: `Bearer ${serviceKey}`,
-      },
+      headers,
       body: JSON.stringify(body),
     });
     if (!resp.ok) {

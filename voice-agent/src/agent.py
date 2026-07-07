@@ -49,14 +49,17 @@ def _log_crm_interaction(nombre=None, email=None, telefono=None, nota=None):
     service_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
     if not supabase_url or not service_key:
         return
+    # Las claves nuevas de Supabase (sb_secret_...) solo van en "apikey": si además
+    # se manda en "Authorization: Bearer", la plataforma la intenta leer como JWT y
+    # falla con "Invalid JWT". Las claves antiguas (service_role, un JWT eyJ...) sí
+    # necesitan ambos headers.
+    headers = {"apikey": service_key, "Content-Type": "application/json"}
+    if not service_key.startswith("sb_secret_") and not service_key.startswith("sb_publishable_"):
+        headers["Authorization"] = f"Bearer {service_key}"
     try:
         requests.post(
             f"{supabase_url}/rest/v1/rpc/log_interaction",
-            headers={
-                "apikey": service_key,
-                "Authorization": f"Bearer {service_key}",
-                "Content-Type": "application/json",
-            },
+            headers=headers,
             json={
                 "p_source": "voice",
                 "p_nombre": nombre,
