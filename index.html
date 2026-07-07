@@ -424,6 +424,14 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 .footer-bottom a{transition:color var(--tr);}
 .footer-bottom a:hover{color:var(--white);}
 @media(max-width:768px){.footer-inner{grid-template-columns:1fr;gap:32px;}}
+.process-steps-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;}
+@media(max-width:900px){
+  .process-steps-grid{grid-template-columns:repeat(2,1fr);gap:32px 12px;}
+  .process-steps-connector{display:none;}
+}
+@media(max-width:480px){
+  .process-steps-grid{grid-template-columns:1fr;gap:28px;}
+}
 </style>
 <!-- Open Graph -->
 <meta property="og:title" content="TRUCO technology — Tu Departamento Tecnológico">
@@ -858,8 +866,8 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <h2 class="section-h2" style="margin:12px auto 10px;text-align:center;">Un proceso claro, sin sorpresas.</h2>
       <p style="font-size:.95rem;color:var(--grey);max-width:500px;margin:0 auto;line-height:1.7;">Desde el primer análisis hasta el mantenimiento continuo, en todo momento sabes qué hacemos y por qué.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;">
-      <div style="position:absolute;top:24px;left:5%;right:5%;height:1px;background:var(--grey-line);"></div>
+    <div class="process-steps-grid" style="position:relative;">
+      <div class="process-steps-connector" style="position:absolute;top:24px;left:5%;right:5%;height:1px;background:var(--grey-line);"></div>
       <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 12px;">
         <div style="width:48px;height:48px;border-radius:50%;background:var(--bg-panel);border:1px solid var(--blue-soft);color:var(--blue);font-family:var(--font-display);font-size:1.1rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative;z-index:1;">1</div>
         <div style="font-family:var(--font-display);font-size:.9rem;font-weight:700;margin-bottom:6px;color:var(--white);">Analizamos tu empresa</div>

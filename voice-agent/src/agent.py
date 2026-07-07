@@ -1,5 +1,6 @@
 import logging
 from dotenv import load_dotenv
+from google.genai import types
 from livekit import agents
 from livekit.agents import AgentServer, AgentSession, Agent
 from livekit.plugins import google
@@ -50,7 +51,8 @@ async def entrypoint(ctx: agents.JobContext):
     session = AgentSession(
         llm=google.realtime.RealtimeModel(
             model="gemini-2.5-flash-native-audio-preview-12-2025",
-            voice="Aoede",
+            voice="Kore",
+            thinking_config=types.ThinkingConfig(thinking_budget=0),
         ),
     )
 
