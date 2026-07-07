@@ -1,3 +1,4 @@
+import base64
 import datetime
 import json
 import logging
@@ -24,14 +25,15 @@ CALENDAR_ID = os.environ.get("GOOGLE_CALENDAR_ID", "primary")
 
 def _get_calendar_service():
     """Crea el cliente de la API de Google Calendar a partir de una cuenta de servicio.
-    Requiere las variables de entorno GOOGLE_SERVICE_ACCOUNT_JSON y GOOGLE_CALENDAR_ID."""
+    Requiere las variables de entorno GOOGLE_SERVICE_ACCOUNT_JSON_B64 (la clave de la
+    cuenta de servicio en JSON, codificada en base64) y GOOGLE_CALENDAR_ID."""
     from google.oauth2 import service_account
     from googleapiclient.discovery import build
 
-    raw = os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON")
-    if not raw:
+    raw_b64 = os.environ.get("GOOGLE_SERVICE_ACCOUNT_JSON_B64")
+    if not raw_b64:
         return None
-    info = json.loads(raw)
+    info = json.loads(base64.b64decode(raw_b64))
     creds = service_account.Credentials.from_service_account_info(
         info, scopes=["https://www.googleapis.com/auth/calendar"]
     )
