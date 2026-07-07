@@ -40,7 +40,7 @@ def _get_calendar_service():
     return build("calendar", "v3", credentials=creds)
 
 
-def _find_free_slots(service, max_slots=2, days_ahead=7):
+def _find_free_slots(service, max_slots=2, days_ahead=7, min_lead_minutes=60):
     now = datetime.datetime.now(MADRID_TZ)
     window_end = now + datetime.timedelta(days=days_ahead)
     busy = service.freebusy().query(
@@ -54,33 +54,43 @@ def _find_free_slots(service, max_slots=2, days_ahead=7):
     busy_ranges = busy["calendars"][CALENDAR_ID]["busy"]
     busy_ranges = [
         (
-            datetime.datetime.fromisoformat(b["start"]),
-            datetime.datetime.fromisoformat(b["end"]),
+            datetime.datetime.fromisoformat(b["start"]).astimezone(MADRID_TZ),
+            datetime.datetime.fromisoformat(b["end"]).astimezone(MADRID_TZ),
         )
         for b in busy_ranges
     ]
 
+    earliest_bookable = now + datetime.timedelta(minutes=min_lead_minutes)
     slots = []
-    day = now.replace(hour=BUSINESS_HOURS[0], minute=0, second=0, microsecond=0)
-    if day < now:
-        day += datetime.timedelta(days=1)
-        day = day.replace(hour=BUSINESS_HOURS[0], minute=0)
+    day_date = now.date()
+    days_checked = 0
 
-    while len(slots) < max_slots and day < window_end:
-        if day.weekday() < 5:  # lunes a viernes
-            slot_start = day
-            while slot_start.hour < BUSINESS_HOURS[1] and len(slots) < max_slots:
+    while len(slots) < max_slots and days_checked <= days_ahead:
+        day_start = datetime.datetime.combine(
+            day_date, datetime.time(BUSINESS_HOURS[0], 0), tzinfo=MADRID_TZ
+        )
+        day_end = datetime.datetime.combine(
+            day_date, datetime.time(BUSINESS_HOURS[1], 0), tzinfo=MADRID_TZ
+        )
+        if day_date.weekday() < 5:  # lunes a viernes
+            slot_start = max(day_start, earliest_bookable)
+            # redondear al siguiente múltiplo de SLOT_MINUTES
+            minutes_over = slot_start.minute % SLOT_MINUTES
+            if minutes_over or slot_start.second or slot_start.microsecond:
+                slot_start += datetime.timedelta(minutes=SLOT_MINUTES - minutes_over)
+                slot_start = slot_start.replace(second=0, microsecond=0)
+
+            while slot_start + datetime.timedelta(minutes=SLOT_MINUTES) <= day_end and len(slots) < max_slots:
                 slot_end = slot_start + datetime.timedelta(minutes=SLOT_MINUTES)
                 overlaps = any(
                     slot_start < b_end and slot_end > b_start
                     for b_start, b_end in busy_ranges
                 )
-                if not overlaps and slot_start > now:
+                if not overlaps:
                     slots.append(slot_start)
                 slot_start += datetime.timedelta(minutes=SLOT_MINUTES)
-        day = (day + datetime.timedelta(days=1)).replace(
-            hour=BUSINESS_HOURS[0], minute=0, second=0, microsecond=0
-        )
+        day_date += datetime.timedelta(days=1)
+        days_checked += 1
     return slots
 
 SYSTEM_INSTRUCTIONS = """Eres el "Asistente TRUCO PRO", el operador telefónico de TRUCO technology. Hablas en español de España, con voz cercana y natural, como una persona real del departamento tecnológico — nunca suenas como un robot ni con frases genéricas. Como es una llamada de voz, responde en frases cortas y naturales, sin listas, sin markdown, sin leer símbolos en voz alta.
