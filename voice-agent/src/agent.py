@@ -207,7 +207,7 @@ async def entrypoint(ctx: agents.JobContext):
             thinking_config=types.ThinkingConfig(thinking_budget=0),
             realtime_input_config=types.RealtimeInputConfig(
                 automatic_activity_detection=types.AutomaticActivityDetection(
-                    silence_duration_ms=200,
+                    silence_duration_ms=300,
                     prefix_padding_ms=20,
                 )
             ),
