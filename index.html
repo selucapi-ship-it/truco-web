@@ -283,11 +283,9 @@ img{display:block;max-width:100%;}
 
 /* ── CHAT SECTION ── */
 #chat-section{background:var(--bg-panel);border-top:1px solid var(--grey-line);}
-.chat-inner{display:grid;grid-template-columns:1fr 480px;gap:64px;align-items:start;}
+.chat-inner{display:grid;grid-template-columns:480px 1fr;gap:64px;align-items:start;}
 .chat-intro .section-h2{max-width:420px;}
 .chat-intro p{font-size:.95rem;color:var(--grey);line-height:1.75;margin-bottom:24px;}
-.chat-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;}
-.chat-tag{font-size:.78rem;background:var(--blue-dim);color:var(--blue);padding:5px 12px;border-radius:20px;border:1px solid rgba(47,123,255,.2);}
 .chat-box{
   background:var(--bg);border:1px solid var(--grey-line);border-radius:16px;
   overflow:hidden;height:520px;display:flex;flex-direction:column;
@@ -313,9 +311,6 @@ img{display:block;max-width:100%;}
 .msg-typing span:nth-child(2){animation-delay:.2s;}
 .msg-typing span:nth-child(3){animation-delay:.4s;}
 @keyframes blink{0%,80%,100%{opacity:.2;}40%{opacity:1;}}
-.chat-suggests{display:flex;flex-wrap:wrap;gap:6px;padding:10px 18px;border-top:1px solid var(--grey-line);}
-.sug-btn{font-size:.75rem;border:1px solid var(--grey-line);background:none;color:var(--grey);padding:5px 10px;border-radius:20px;cursor:pointer;transition:all var(--tr);}
-.sug-btn:hover{border-color:var(--blue);color:var(--blue);}
 .chat-input-row{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--grey-line);}
 .chat-input{flex:1;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:8px;padding:10px 14px;color:var(--white);font-family:var(--font-body);font-size:.85rem;outline:none;transition:border-color var(--tr);}
 .chat-input:focus{border-color:var(--blue);}
@@ -440,15 +435,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 <meta property="og:url" content="https://www.trucotechnology.com">
 <meta name="theme-color" content="#0a0e14">
 <style>
-/* WHATSAPP FLOAT */
-.wa-float{
-  position:fixed;bottom:88px;right:24px;z-index:800;
-  width:52px;height:52px;border-radius:50%;
-  background:#25D366;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 20px rgba(37,211,102,.4);
-  transition:transform .2s;text-decoration:none;font-size:1.5rem;
-}
-.wa-float:hover{transform:scale(1.1);}
 /* MOBILE MENU */
 .mobile-nav{
   display:none;flex-direction:column;gap:0;
@@ -987,22 +973,9 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="section">
     <div class="container">
       <div class="chat-inner">
-        <div class="chat-intro">
-          <div class="section-tag">Asistente TRUCO</div>
-          <h2 class="section-h2">Habla con nuestro asistente ahora mismo</h2>
-          <p>Pregúntale cualquier cosa: precios, servicios, cómo empezar, si somos la opción correcta para tu negocio. Nuestro asistente está disponible ahora mismo para resolver todas tus dudas.</p>
-          <div class="chat-tags">
-            <span class="chat-tag">¿Cuánto cuesta?</span>
-            <span class="chat-tag">¿Qué incluye?</span>
-            <span class="chat-tag">¿Cómo empiezo?</span>
-            <span class="chat-tag">¿Tenéis garantía?</span>
-            <span class="chat-tag">¿Es para mi negocio?</span>
-          </div>
-          <a class="btn-primary" href="https://wa.me/34000000000" target="_blank">También por WhatsApp →</a>
-        </div>
         <div class="chat-box" id="chatBox">
           <div class="chat-header">
-            <div class="chat-avatar">🤖</div>
+            <div class="chat-avatar">🧑‍💼</div>
             <div>
               <div class="chat-hname">Asistente TRUCO</div>
               <div class="chat-hsub">Departamento Tecnológico</div>
@@ -1010,12 +983,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
             <div class="chat-status"></div>
           </div>
           <div class="chat-msgs" id="chatMsgs"></div>
-          <div class="chat-suggests" id="chatSugs">
-            <button class="sug-btn" onclick="sendSug(this)">¿Qué diferencia hay entre Lite y Pro?</button>
-            <button class="sug-btn" onclick="sendSug(this)">¿Qué es Digitaliza tu Empresa?</button>
-            <button class="sug-btn" onclick="sendSug(this)">Ya tengo herramientas instaladas, ¿me sirve?</button>
-            <button class="sug-btn" onclick="sendSug(this)">No sé qué necesita mi negocio, ¿por dónde empiezo?</button>
-          </div>
           <div class="chat-input-row">
             <input class="chat-input" id="chatIn" type="text" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendMsg()">
             <button class="chat-send" onclick="sendMsg()">Enviar</button>
@@ -1024,6 +991,11 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
             <button class="voice-agent-btn" id="voiceAgentBtn" onclick="toggleVoiceAgent()">🎙️ Hablar con un agente</button>
             <div class="voice-agent-status" id="voiceAgentStatus" style="display:none;"></div>
           </div>
+        </div>
+        <div class="chat-intro">
+          <div class="section-tag">Asistente TRUCO</div>
+          <h2 class="section-h2">Habla con nuestro asistente ahora mismo</h2>
+          <p>Pregúntale cualquier cosa: precios, servicios, cómo empezar, si somos la opción correcta para tu negocio. Nuestro asistente está disponible ahora mismo para resolver todas tus dudas.</p>
         </div>
       </div>
     </div>
@@ -1685,7 +1657,6 @@ function showBookingCard() {
     <div style="font-size:.82rem;font-weight:700;color:var(--white);margin-bottom:8px;">📅 Reserva tu consultoría gratuita</div>
     <div style="font-size:.76rem;color:var(--grey);margin-bottom:12px;line-height:1.5;">20-30 minutos · Sin compromiso · Te decimos exactamente qué necesita tu negocio.</div>
     <div class="gcal-booking-btn" style="margin-bottom:8px;"></div>
-    <div style="font-size:.72rem;color:var(--grey);text-align:center;">O escríbenos por <a href="https://wa.me/34TUNUMERO" target="_blank" style="color:var(--green);">WhatsApp</a></div>
   `;
   document.getElementById('chatMsgs').appendChild(card);
   document.getElementById('chatMsgs').scrollTop = 99999;
@@ -1727,7 +1698,6 @@ function sendMsg() {
   const text = inp.value.trim();
   if (!text) return;
   inp.value = '';
-  document.getElementById('chatSugs').style.display = 'none';
   addMsg('user', text);
   chatHistory.push({ role: 'user', text });
 
@@ -1777,11 +1747,6 @@ function sendMsg() {
       setTimeout(() => showBookingCard(), 400);
     }
   }, delay);
-}
-
-function sendSug(btn) {
-  document.getElementById('chatIn').value = btn.textContent;
-  sendMsg();
 }
 
 // ── AGENTE DE VOZ (LiveKit + Gemini) ──
@@ -1850,11 +1815,9 @@ function resetVoiceUI() {
 
 // Bienvenida inicial
 setTimeout(() => {
-  addMsg('bot', '¡Hola! 👋 Soy el asistente de <b>TRUCO technology</b>.<br><br>Cuéntame tu negocio y te digo sin rodeos si podemos ayudarte, qué te costaría y cómo empezaríamos. ¿A qué te dedicas?');
+  addMsg('bot', 'Hola, soy el asistente de <b>TRUCOtechnology</b>. ¿En qué te puedo ayudar?');
 }, 600);
 </script>
-<!-- WHATSAPP FLOAT -->
-<a class="wa-float" href="https://wa.me/34TUNUMERO" target="_blank" rel="noopener" title="Escríbenos por WhatsApp">💬</a>
 
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
