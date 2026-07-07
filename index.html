@@ -187,6 +187,7 @@ img{display:block;max-width:100%;}
 .entry-card h4{font-family:var(--font-display);font-size:1.05rem;font-weight:800;margin-bottom:8px;color:var(--white);}
 .entry-card p{font-size:.88rem;color:var(--grey);line-height:1.6;margin-bottom:14px;flex:1;}
 .entry-price{display:inline-block;color:var(--blue);font-weight:700;font-size:.9rem;background:var(--blue-dim);padding:5px 14px;border-radius:20px;}
+.entry-price-real{font-size:.74rem;color:var(--grey);margin-top:8px;}
 .entry-gift{
   flex:0 0 260px;
   background:linear-gradient(135deg,var(--gold),#c98f1f);
@@ -629,20 +630,23 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <p class="section-sub">El proyecto inicial no es un servicio aparte: es la puerta de entrada a tu departamento tecnológico.</p>
     <div class="entry-strip">
       <div class="entry-steps">
-        <div class="entry-card">
+        <div class="entry-card" onclick="location.href='servicios.html#web-esencial'" style="cursor:pointer;">
           <h4>Empieza desde cero, rápido.</h4>
           <p>Web Esencial: 5 páginas, sistema de atención automática de FAQ. Lista en 7-10 días, sin complicaciones.</p>
           <span class="entry-price">Web Esencial · 499 € + IVA · 603,79 € con IVA</span>
+          <div class="entry-price-real">Coste real 2 primeros meses (con mes 2 de Departamento Lite™ incluido): 698 € + IVA · 844,58 € con IVA</div>
         </div>
-        <div class="entry-card">
+        <div class="entry-card" onclick="location.href='servicios.html#web-profesional'" style="cursor:pointer;">
           <h4>Web completa con automatización.</h4>
           <p>Diseño a medida, WhatsApp IA y agenda automática. La que convierte visitas en clientes.</p>
           <span class="entry-price">Web Profesional · 790 € + IVA · 955,90 € con IVA</span>
+          <div class="entry-price-real">Coste real 2 primeros meses (con mes 2 de Departamento Lite™ incluido): 989 € + IVA · 1.196,69 € con IVA</div>
         </div>
-        <div class="entry-card">
+        <div class="entry-card" onclick="location.href='servicios.html#digitaliza'" style="cursor:pointer;">
           <h4>¿Ya tienes web pero no convierte?</h4>
           <p>La transformamos con IA, WhatsApp y automatización sin cambiar tu dominio ni hosting.</p>
           <span class="entry-price">Digitaliza desde 590 € + IVA</span>
+          <div class="entry-price-real">Coste real incluye el mes 2 del Departamento (Lite™ o Pro™, según nº de soluciones)</div>
         </div>
       </div>
       <div class="entry-gift">
@@ -660,12 +664,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="section-tag">Departamento Tecnológico TRUCO™</div>
     <h2 class="section-h2">Elige el tamaño de departamento que necesita tu negocio</h2>
     <div class="tiers-grid">
-      <div class="tier-card">
+      <div class="tier-card" onclick="location.href='servicios.html#lite'" style="cursor:pointer;">
         <span class="tier-badge">Para autónomos y pequeños negocios</span>
         <div class="tier-name">Departamento Tecnológico Lite™</div>
         <div class="tier-role">Tu Responsable Tecnológico externo. ¿Ya tienes web o alguna herramienta digital? Nos hacemos cargo de todo. Mantenimiento, seguridad, actualizaciones e incidencias. Tu tecnología en buenas manos desde el primer día.</div>
         <div class="tier-price">199 €<sub>/mes</sub></div>
-        <div class="tier-vat">+ IVA</div>
+        <div class="tier-vat">+ IVA · 240,79 € con IVA</div>
         <div class="tier-annual">o 179,10 €/mes pagando anual <span>· ahorras 10%</span></div>
         <ul class="tier-list">
           <li>Asistente de soporte tecnológico disponible en todo momento</li>
@@ -677,12 +681,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         </ul>
         <div class="tier-footer">Primer mes gratis en todos los proyectos</div>
       </div>
-      <div class="tier-card featured">
+      <div class="tier-card featured" onclick="location.href='servicios.html#pro'" style="cursor:pointer;">
         <span class="tier-badge">Para negocios que quieren escalar</span>
         <div class="tier-name">Departamento Tecnológico Pro™</div>
         <div class="tier-role">Para empresas con más tecnología activa. Hasta 6 soluciones mantenidas, optimización continua y máxima prioridad. El equipo técnico completo que siempre necesitaste.</div>
         <div class="tier-price">399 €<sub>/mes</sub></div>
-        <div class="tier-vat">+ IVA</div>
+        <div class="tier-vat">+ IVA · 482,79 € con IVA</div>
         <div class="tier-annual">o 359,10 €/mes pagando anual <span>· ahorras 10%</span></div>
         <ul class="tier-list">
           <li>Todo lo incluido en Departamento Tecnológico Lite™</li>
@@ -1314,7 +1318,7 @@ const KB = {
   permanencia: {
     patterns: ['permanencia','compromiso','atarme','cuánto tiempo','mínimo','puedo irme','baja','salir','me puedo dar de baja'],
     responses: [
-      'Depende de si contratas un proyecto o solo una solución:\n\n🌐 <b>Proyecto (Web Esencial o Profesional):</b> 60 días de implantación en total — los primeros 30 días (mes 1) son completamente gratis, y los 30 siguientes (mes 2) a precio estándar.\n\n🔧 <b>Digitaliza / soluciones tecnológicas:</b> 90 días de implantación en total — los primeros 30 días (mes 1) son completamente gratis, y los 60 siguientes (meses 2 y 3) a precio estándar.\n\nEn ambos casos, a partir de ese período: <b>continúas solo si estás satisfecho</b>, sin compromisos adicionales. Y si en los primeros 30 días no estás satisfecho, te devolvemos el mes íntegro.',
+      'Depende de si contratas un proyecto o solo una solución:\n\n🌐 <b>Proyecto (Web Esencial o Profesional):</b> 60 días de implantación en total — los primeros 30 días (mes 1) son completamente gratis, y los 30 siguientes (mes 2) a precio estándar.\n\n🔧 <b>Digitaliza / soluciones tecnológicas:</b> 90 días de implantación en total — los primeros 30 días (mes 1) son completamente gratis, y los 60 siguientes (meses 2 y 3) a precio estándar.\n\nEn ambos casos, a partir de ese período: <b>continúas solo si estás satisfecho</b>, sin compromisos adicionales. Y durante todo ese período, ajustamos lo que haga falta sin coste adicional para que funcione de verdad.',
       'No hay compromisos adicionales tras el período de implantación. Ese primer mes es siempre gratis (tanto en proyectos web como en Digitaliza), y existe porque configurar bien la tecnología de una empresa lleva tiempo — no queremos entregarte algo a medias. Una vez pasado (60 días si es un proyecto web, 90 si son soluciones de Digitaliza), la decisión de continuar es siempre tuya.'
     ]
   },
@@ -1336,7 +1340,7 @@ const KB = {
   garantia: {
     patterns: ['garantía','si no funciona','dinero de vuelta','qué pasa si','y si no me gusta','qué garantías','riesgo','me devolvéis el dinero','reembolso'],
     responses: [
-      'Garantía de Rendimiento TRUCO™:\n\n✓ Si en los primeros 30 días no estás satisfecho con lo implantado, <b>devolvemos el primer mes íntegro</b>.\n\n✓ Incidencias técnicas: las resolvemos sin coste adicional, siempre.\n\nNo queremos clientes que se queden sin estar contentos. Si algo no funciona como esperabas, lo arreglamos. Y si no podemos, devolvemos.'
+      'Garantía de Ajuste TRUCO™:\n\n✓ Durante todo el período de implantación, ajustamos y perfeccionamos la solución las veces que haga falta hasta que funcione como acordamos, sin coste adicional.\n\n✓ Incidencias técnicas: las resolvemos sin coste adicional, siempre.\n\n✓ Sin permanencia una vez pasada la implantación: si no es lo que necesitas, simplemente no continúas, sin penalización.\n\nLos pagos ya realizados no son reembolsables, pero tampoco te dejamos a medias: seguimos ajustando hasta dejarlo funcionando de verdad.'
     ]
   },
 
@@ -1393,7 +1397,7 @@ const KB = {
   por_que_vosotros: {
     patterns: ['por qué contrataros','por qué elegiros','qué os diferencia','por qué vosotros y no otra empresa','sois mejores que'],
     responses: [
-      'Buena pregunta. La diferencia principal es que no somos una agencia que entrega un proyecto y desaparece, ni una herramienta de software que tienes que aprender a usar tú. Somos tu departamento tecnológico completo: implantamos Y mantenemos, con un único interlocutor, garantía de devolución a 30 días, y sin permanencia forzosa después de la implantación. La mayoría de agencias no ofrecen soporte continuo, y la mayoría de softwares no se implantan ni configuran por ti. ¿Qué es lo que más te frena a la hora de decidirte?'
+      'Buena pregunta. La diferencia principal es que no somos una agencia que entrega un proyecto y desaparece, ni una herramienta de software que tienes que aprender a usar tú. Somos tu departamento tecnológico completo: implantamos Y mantenemos, con un único interlocutor, ajustamos lo que haga falta durante la implantación sin coste adicional, y sin permanencia forzosa después. La mayoría de agencias no ofrecen soporte continuo, y la mayoría de softwares no se implantan ni configuran por ti. ¿Qué es lo que más te frena a la hora de decidirte?'
     ]
   },
 
@@ -1539,7 +1543,7 @@ const KB = {
   experiencia_referencias: {
     patterns: ['tenéis clientes','tenéis referencias','casos de éxito','tenéis experiencia','cuánto tiempo lleváis','sois nuevos'],
     responses: [
-      'Trabajamos precisamente con la filosofía de un departamento tecnológico serio: garantía de devolución a 30 días, sin permanencia forzosa, y un único interlocutor para todo. Preferimos que lo compruebes tú mismo con poco riesgo antes que prometerte cifras — por eso existe la garantía. ¿Quieres que analicemos tu caso concreto en una consultoría gratuita?'
+      'Trabajamos precisamente con la filosofía de un departamento tecnológico serio: ajustamos la implantación las veces que haga falta sin coste adicional, sin permanencia forzosa, y un único interlocutor para todo. Preferimos que lo compruebes tú mismo con poco riesgo antes que prometerte cifras. ¿Quieres que analicemos tu caso concreto en una consultoría gratuita?'
     ]
   },
 

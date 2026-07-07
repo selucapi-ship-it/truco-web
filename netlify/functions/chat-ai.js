@@ -20,7 +20,7 @@ DEPARTAMENTO TECNOLÓGICO (cuota mensual, + IVA):
 - Se puede acceder directo al Departamento sin proyecto previo (mismo precio, sin mes gratis).
 
 CONDICIONES:
-- Garantía: si en los primeros 30 días no está satisfecho, se devuelve el primer mes íntegro. Incidencias técnicas siempre sin coste.
+- Garantía de Ajuste TRUCO™: durante todo el período de implantación, se ajusta y perfecciona la solución las veces que haga falta sin coste adicional hasta que funcione según lo acordado. Incidencias técnicas siempre sin coste. Los pagos ya realizados no son reembolsables; el verdadero colchón es que, pasado el período de implantación, no hay permanencia.
 - Períodos de implantación (detállalos así si te preguntan por permanencia o plazos):
   · Proyectos Web (Esencial/Profesional): 60 días en total. Días 1-30 (mes 1) Departamento Lite gratis. Días 31-60 (mes 2) a precio estándar (199€/mes). Desde el día 61, sin permanencia.
   · Digitaliza (soluciones): 90 días en total. Días 1-30 (mes 1) Departamento gratis (Lite o Pro según nº de soluciones). Días 31-90 (meses 2 y 3) a precio estándar. Desde el día 91, sin permanencia.
