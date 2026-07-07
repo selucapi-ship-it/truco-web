@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>TRUCO technology — Folleto para comercios</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#2f7bff; --blue-dim:#e8f0ff;
+    --gold:#e9b949; --gold-dim:#fdf5e3;
+    --green:#178a4c;
+    --navy:#0a0e14;
+    --grey:#5b6472;
+    --line:#e3e7ee;
+    --font-d:'Playfair Display',Georgia,serif;
+    --font-b:'DM Sans',sans-serif;
+    --font-m:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  @page{ size:A4; margin:0; }
+  html,body{background:#f3f5f8;}
+  body{font-family:var(--font-b);color:var(--navy);-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .page{
+    width:210mm;height:297mm;margin:10mm auto;background:#fff;
+    box-shadow:0 4px 30px rgba(0,0,0,.12);
+    position:relative;overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+  @media print{
+    body{background:#fff;}
+    .page{margin:0;box-shadow:none;}
+  }
+
+  /* ── HEADER ── */
+  .head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:11mm 14mm 6mm;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{
+    width:38px;height:38px;border:2px solid var(--gold);border-radius:9px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-d);font-weight:800;font-size:1.25rem;color:var(--navy);
+    flex-shrink:0;
+  }
+  .brand-name{font-family:var(--font-d);font-weight:800;font-size:1.32rem;color:var(--navy);line-height:1;}
+  .brand-name span{color:var(--blue);}
+  .brand-sub{font-family:var(--font-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-top:3px;}
+  .head-tag{
+    font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--blue);border:1px solid var(--blue);border-radius:20px;padding:6px 14px;
+  }
+
+  /* ── HERO ── */
+  .hero{padding:2mm 14mm 6mm;}
+  .hero h1{
+    font-family:var(--font-d);font-weight:800;font-size:2rem;line-height:1.12;letter-spacing:-.01em;
+    color:var(--navy);max-width:150mm;
+  }
+  .hero h1 em{font-style:italic;color:var(--blue);}
+  .hero p{font-size:.92rem;color:var(--grey);line-height:1.55;margin-top:8px;max-width:150mm;}
+
+  /* ── SERVICES ── */
+  .services{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+    padding:2mm 14mm;
+  }
+  .svc{
+    border:1px solid var(--line);border-radius:12px;padding:12px 11px;
+    display:flex;flex-direction:column;gap:5px;
+  }
+  .svc .ic{font-size:1.3rem;}
+  .svc h4{font-family:var(--font-d);font-weight:700;font-size:.82rem;color:var(--navy);}
+  .svc p{font-size:.68rem;color:var(--grey);line-height:1.35;}
+
+  /* ── HOW IT WORKS ── */
+  .how{padding:7mm 14mm 3mm;}
+  .how-title{font-family:var(--font-m);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+  .how-title::before{content:'';width:20px;height:1px;background:var(--blue);}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .step{display:flex;gap:9px;align-items:flex-start;}
+  .step-n{
+    width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;
+    font-family:var(--font-m);font-size:.72rem;font-weight:700;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .step b{font-size:.78rem;color:var(--navy);display:block;margin-bottom:2px;}
+  .step span{font-size:.7rem;color:var(--grey);line-height:1.4;display:block;}
+
+  /* ── PRICING BAND ── */
+  .pricing{
+    margin:7mm 14mm 0;padding:12px 16px;border-radius:14px;
+    background:var(--navy);color:#fff;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+  }
+  .pr-item{text-align:center;flex:1;}
+  .pr-item .n{font-family:var(--font-d);font-weight:800;font-size:1.15rem;color:var(--gold);}
+  .pr-item .l{font-family:var(--font-m);font-size:.56rem;letter-spacing:.05em;text-transform:uppercase;color:#b8c0cc;margin-top:2px;}
+  .pr-sep{width:1px;height:30px;background:rgba(255,255,255,.15);}
+
+  /* ── TRUST ── */
+  .trust{display:flex;gap:10px;padding:6mm 14mm 0;}
+  .tr-item{
+    flex:1;border:1px solid var(--line);border-radius:10px;padding:9px 12px;
+    display:flex;gap:8px;align-items:flex-start;
+  }
+  .tr-item .ic{font-size:.95rem;color:var(--green);}
+  .tr-item span{font-size:.7rem;color:var(--navy);line-height:1.35;}
+  .tr-item b{color:var(--navy);}
+
+  /* ── SECTORS ── */
+  .sectors{padding:6mm 14mm 0;}
+  .sectors-title{font-family:var(--font-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:6px;}
+  .sect-chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .sect-chip{
+    font-family:var(--font-m);font-size:.6rem;color:var(--navy);background:var(--blue-dim);
+    border-radius:14px;padding:4px 11px;
+  }
+
+  /* ── CTA FOOTER ── */
+  .cta{
+    margin-top:auto;background:linear-gradient(120deg,var(--navy) 55%,#152036 100%);
+    color:#fff;padding:9mm 14mm;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  }
+  .cta-left b{font-family:var(--font-d);font-size:1.2rem;display:block;margin-bottom:4px;}
+  .cta-left span{font-size:.78rem;color:#c3cad6;display:block;line-height:1.5;}
+  .cta-web{
+    display:inline-block;margin-top:9px;font-family:var(--font-m);font-size:.82rem;font-weight:500;
+    color:var(--navy);background:var(--gold);padding:8px 18px;border-radius:20px;
+  }
+  .cta-qr{
+    background:#fff;border-radius:10px;padding:6px;flex-shrink:0;text-align:center;
+  }
+  .cta-qr img{width:82px;height:82px;display:block;}
+  .cta-qr span{display:block;font-family:var(--font-m);font-size:.52rem;color:var(--navy);margin-top:4px;letter-spacing:.03em;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="head">
+    <div class="brand">
+      <div class="brand-mark">T</div>
+      <div>
+        <div class="brand-name">TRUCO<span>technology</span></div>
+        <div class="brand-sub">Tu Departamento Tecnológico</div>
+      </div>
+    </div>
+    <div class="head-tag">España · 100% externalizado</div>
+  </div>
+
+  <div class="hero">
+    <h1>¿Cuántos clientes pierdes por no responder <em>a tiempo</em>?</h1>
+    <p>TRUCO technology es tu Departamento Tecnológico externalizado: implantamos la tecnología que tu negocio necesita — IA para WhatsApp, web, reservas, CRM — y la mantenemos cada mes. Sin que tengas que entender nada de tecnología.</p>
+  </div>
+
+  <div class="services">
+    <div class="svc">
+      <div class="ic">💬</div>
+      <h4>IA para WhatsApp</h4>
+      <p>Responde a tus clientes 24 horas, agenda citas y filtra lo urgente.</p>
+    </div>
+    <div class="svc">
+      <div class="ic">🌐</div>
+      <h4>Web profesional</h4>
+      <p>Presencia digital lista en días, pensada para convertir visitas en clientes.</p>
+    </div>
+    <div class="svc">
+      <div class="ic">📅</div>
+      <h4>Reservas online</h4>
+      <p>Citas y mesas sin llamadas perdidas, conectadas a tu agenda actual.</p>
+    </div>
+    <div class="svc">
+      <div class="ic">👥</div>
+      <h4>CRM y automatización</h4>
+      <p>Seguimiento de clientes y tareas repetitivas resueltas solas.</p>
+    </div>
+  </div>
+
+  <div class="how">
+    <div class="how-title">Cómo funciona</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div><b>Consultoría gratuita</b><span>Analizamos tu negocio, sin compromiso, 20-30 min.</span></div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div><b>Implantamos</b><span>Configuramos la solución a medida para tu negocio.</span></div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div><b>Mantenemos cada mes</b><span>Tú a tu negocio. Nosotros, de la tecnología.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pricing">
+    <div class="pr-item"><div class="n">Desde 499€</div><div class="l">Proyecto Web</div></div>
+    <div class="pr-sep"></div>
+    <div class="pr-item"><div class="n">Desde 199€/mes</div><div class="l">Departamento Tecnológico</div></div>
+    <div class="pr-sep"></div>
+    <div class="pr-item"><div class="n">1er mes gratis</div><div class="l">En todos los proyectos</div></div>
+  </div>
+
+  <div class="trust">
+    <div class="tr-item"><span class="ic">✓</span><span><b>Garantía de Ajuste:</b> ajustamos hasta que funcione, sin coste extra.</span></div>
+    <div class="tr-item"><span class="ic">✓</span><span><b>Sin permanencia</b> una vez pasada la implantación.</span></div>
+    <div class="tr-item"><span class="ic">✓</span><span><b>Un único interlocutor</b> para toda tu tecnología.</span></div>
+  </div>
+
+  <div class="sectors">
+    <div class="sectors-title">Ya trabajamos con</div>
+    <div class="sect-chips">
+      <span class="sect-chip">Restaurantes y hostelería</span>
+      <span class="sect-chip">Clínicas y centros de salud</span>
+      <span class="sect-chip">Tiendas y comercio</span>
+      <span class="sect-chip">Inmobiliarias</span>
+      <span class="sect-chip">Estética y belleza</span>
+      <span class="sect-chip">Autónomos y oficios</span>
+      <span class="sect-chip">Gimnasios</span>
+      <span class="sect-chip">Academias</span>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="cta-left">
+      <b>Habla ahora con nuestro asistente</b>
+      <span>Resuelve tus dudas al instante y reserva tu consultoría gratuita, sin compromiso.</span>
+      <a class="cta-web" href="https://www.trucotechnology.com">www.trucotechnology.com</a>
+    </div>
+    <div class="cta-qr">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://www.trucotechnology.com" alt="QR TRUCO technology">
+      <span>ESCANEA</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
