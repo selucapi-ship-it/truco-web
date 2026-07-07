@@ -6,6 +6,7 @@ import os
 import zoneinfo
 from typing import Annotated
 
+import requests
 from dotenv import load_dotenv
 from google.genai import types
 from livekit import agents
@@ -38,6 +39,35 @@ def _get_calendar_service():
         info, scopes=["https://www.googleapis.com/auth/calendar"]
     )
     return build("calendar", "v3", credentials=creds)
+
+
+def _log_crm_interaction(nombre=None, email=None, telefono=None, nota=None):
+    """Registra al cliente y la nota en el CRM (Supabase). Requiere las variables
+    de entorno SUPABASE_URL y SUPABASE_SERVICE_ROLE_KEY. Nunca lanza excepción:
+    un fallo aquí no debe interrumpir la llamada de voz."""
+    supabase_url = os.environ.get("SUPABASE_URL")
+    service_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+    if not supabase_url or not service_key:
+        return
+    try:
+        requests.post(
+            f"{supabase_url}/rest/v1/rpc/log_interaction",
+            headers={
+                "apikey": service_key,
+                "Authorization": f"Bearer {service_key}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "p_source": "voice",
+                "p_nombre": nombre,
+                "p_email": email,
+                "p_telefono": telefono,
+                "p_nota": nota,
+            },
+            timeout=5,
+        )
+    except Exception:
+        logger.exception("Error registrando en el CRM")
 
 
 def _find_free_slots(service, max_slots=2, days_ahead=7, min_lead_minutes=60):
@@ -213,6 +243,12 @@ class TrucoAgent(Agent):
         except Exception:
             logger.exception("Error creando la reserva")
             return "No se pudo confirmar la reserva. Ofrece que alguien del equipo le llame."
+        _log_crm_interaction(
+            nombre=nombre,
+            email=email,
+            telefono=telefono,
+            nota=f"Reservó consultoría por voz para el {start.strftime('%A %d de %B a las %H:%M')}.",
+        )
         return f"Reserva confirmada para {nombre} el {start.strftime('%A %d de %B a las %H:%M')}. Confírmaselo al cliente."
 
 

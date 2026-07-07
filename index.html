@@ -1686,6 +1686,23 @@ function loadGoogleBookingButton(target, attempts) {
 
 let chatHistory = [];
 
+function trucoSessionId() {
+  let id = localStorage.getItem('truco_session_id');
+  if (!id) {
+    id = (crypto.randomUUID ? crypto.randomUUID() : 'sess-' + Date.now() + '-' + Math.random().toString(36).slice(2));
+    localStorage.setItem('truco_session_id', id);
+  }
+  return id;
+}
+
+function logChatQuestion(text) {
+  fetch('/.netlify/functions/save-lead', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ source: 'chat', session_id: trucoSessionId(), nota: text.slice(0, 500) })
+  }).catch(() => {});
+}
+
 async function askTrucoPro(message, history) {
   try {
     const resp = await fetch('/.netlify/functions/chat-ai', {
@@ -1713,6 +1730,7 @@ function sendMsg() {
 
   if (intentKey === 'fallback') {
     // El asistente básico no lo tiene claro — pasa con TRUCO PRO (IA).
+    logChatQuestion(text);
     showTyping();
     askTrucoPro(text, chatHistory).then((aiResp) => {
       hideTyping();

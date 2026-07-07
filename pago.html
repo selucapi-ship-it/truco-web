@@ -707,7 +707,13 @@ function updateBtn(){
   if(t&&t.checked)t.parentElement.style.outline='';
 }
 
-function handlePay(){
+function trucoSessionId(){
+  let id=localStorage.getItem('truco_session_id');
+  if(!id){id=(crypto.randomUUID?crypto.randomUUID():'sess-'+Date.now()+'-'+Math.random().toString(36).slice(2));localStorage.setItem('truco_session_id',id);}
+  return id;
+}
+
+async function handlePay(){
   const n=document.getElementById('f-nombre'),e=document.getElementById('f-email'),p=document.getElementById('f-telefono'),b=document.getElementById('f-negocio'),s=document.getElementById('f-tipo');
   const r=document.getElementById('ch-rgpd'),t=document.getElementById('ch-terminos');
   let ok=true;
@@ -728,6 +734,18 @@ function handlePay(){
   const plan=getActivePlan();if(!plan)return;
   if(plan.customQuote){alert('Con más de 3 soluciones elaboramos un presupuesto personalizado. Te contactamos en menos de 24h. Mientras tanto, escríbenos por WhatsApp o reserva una consultoría gratuita.');return;}
   if(!plan.stripe||plan.stripe.startsWith('REEMPLAZA')){alert('Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');return;}
+  try{
+    const nif=document.getElementById('f-nif'),msg=document.getElementById('f-mensaje');
+    await fetch('/.netlify/functions/save-lead',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        source:'checkout',session_id:trucoSessionId(),
+        nombre:n.value.trim(),email:e.value.trim(),telefono:p.value.trim(),
+        negocio:b.value.trim(),tipo:s.value.trim(),nif:nif?nif.value.trim():null,
+        nota:'Inició compra: '+plan.name+(msg&&msg.value.trim()?' — Mensaje: '+msg.value.trim():'')
+      })
+    });
+  }catch(err){/* nunca bloquear el pago por un fallo al guardar el lead */}
   window.location.href=plan.stripe;
 }
 

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Panel CRM — TRUCO technology</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<style>
+  :root{
+    --bg:#0a0e14; --bg-panel:#10151d; --bg-card:#151b25;
+    --blue:#2f7bff; --blue-dim:rgba(47,123,255,.12);
+    --gold:#e9b949; --green:#22c55e; --red:#ef4444;
+    --grey:#8d97a6; --grey-line:#1f2733; --white:#f4f6f9;
+    --font-d:'Playfair Display',Georgia,serif;
+    --font-b:'DM Sans',sans-serif;
+    --font-m:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--white);font-family:var(--font-b);min-height:100vh;}
+  a{color:var(--blue);}
+
+  /* ── LOGIN ── */
+  #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .login-box{width:100%;max-width:340px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;padding:32px;}
+  .login-box .mark{width:44px;height:44px;border:2px solid var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:800;font-size:1.4rem;margin-bottom:16px;}
+  .login-box h1{font-family:var(--font-d);font-size:1.3rem;margin:0 0 4px;}
+  .login-box p{color:var(--grey);font-size:.85rem;margin:0 0 20px;}
+  .login-box input{width:100%;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:11px 13px;color:var(--white);font-family:var(--font-b);font-size:.9rem;margin-bottom:10px;outline:none;}
+  .login-box input:focus{border-color:var(--blue);}
+  .login-box button{width:100%;background:var(--blue);border:none;border-radius:8px;color:#fff;padding:12px;font-size:.9rem;font-weight:600;cursor:pointer;margin-top:6px;}
+  .login-box button:hover{opacity:.9;}
+  .login-error{color:var(--red);font-size:.8rem;margin-top:10px;display:none;}
+  .login-config-warn{background:rgba(239,68,68,.1);border:1px solid var(--red);border-radius:8px;padding:10px 12px;font-size:.75rem;color:var(--white);margin-bottom:16px;display:none;line-height:1.5;}
+
+  /* ── APP SHELL ── */
+  #app-screen{display:none;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid var(--grey-line);background:var(--bg-panel);}
+  .topbar-brand{display:flex;align-items:center;gap:10px;}
+  .topbar-brand .mark{width:30px;height:30px;border:1.5px solid var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:800;font-size:1rem;}
+  .topbar-brand b{font-family:var(--font-d);font-size:1.02rem;}
+  .topbar-brand span{font-family:var(--font-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);display:block;}
+  #logout-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;}
+  #logout-btn:hover{border-color:var(--red);color:var(--red);}
+
+  .layout{display:grid;grid-template-columns:1fr 380px;gap:0;min-height:calc(100vh - 63px);}
+  @media(max-width:900px){.layout{grid-template-columns:1fr;}}
+
+  /* ── LIST PANEL ── */
+  .list-panel{padding:20px 24px;border-right:1px solid var(--grey-line);}
+  .list-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;}
+  .list-head h2{font-family:var(--font-d);font-size:1.15rem;margin:0;}
+  #search{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 12px;color:var(--white);font-size:.85rem;width:220px;outline:none;}
+  #search:focus{border-color:var(--blue);}
+  table{width:100%;border-collapse:collapse;font-size:.82rem;}
+  th{text-align:left;color:var(--grey);font-family:var(--font-m);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;padding:8px 10px;border-bottom:1px solid var(--grey-line);}
+  td{padding:11px 10px;border-bottom:1px solid var(--grey-line);}
+  tbody tr{cursor:pointer;transition:background .15s;}
+  tbody tr:hover{background:var(--bg-panel);}
+  tbody tr.active{background:var(--blue-dim);}
+  .status-badge{font-family:var(--font-m);font-size:.62rem;padding:3px 9px;border-radius:12px;text-transform:uppercase;letter-spacing:.03em;}
+  .status-nuevo{background:rgba(47,123,255,.15);color:var(--blue);}
+  .status-contactado{background:rgba(233,185,73,.15);color:var(--gold);}
+  .status-cliente{background:rgba(34,197,94,.15);color:var(--green);}
+  .status-descartado{background:rgba(141,151,166,.15);color:var(--grey);}
+  #empty-state, #loading-state{color:var(--grey);font-size:.85rem;padding:20px 0;}
+
+  .anon-section{margin-top:28px;}
+  .anon-item{border:1px solid var(--grey-line);border-radius:10px;padding:10px 13px;margin-bottom:8px;font-size:.78rem;}
+  .anon-item .q{color:var(--white);margin-bottom:4px;}
+  .anon-item .meta{color:var(--grey);font-size:.68rem;font-family:var(--font-m);}
+
+  /* ── FICHA PANEL ── */
+  .ficha-panel{padding:20px 24px;}
+  #ficha-empty{color:var(--grey);font-size:.85rem;text-align:center;margin-top:60px;}
+  .ficha-name{font-family:var(--font-d);font-size:1.3rem;margin:0 0 4px;}
+  .ficha-negocio{color:var(--grey);font-size:.85rem;margin-bottom:16px;}
+  .ficha-row{display:flex;justify-content:space-between;font-size:.82rem;padding:8px 0;border-bottom:1px solid var(--grey-line);}
+  .ficha-row span:first-child{color:var(--grey);}
+  select#status-select{background:var(--bg-card);border:1px solid var(--grey-line);color:var(--white);font-family:var(--font-m);font-size:.75rem;padding:5px 8px;border-radius:6px;}
+  .timeline-title{font-family:var(--font-m);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin:22px 0 10px;}
+  .tl-item{border-left:2px solid var(--grey-line);padding:2px 0 14px 14px;margin-left:4px;position:relative;}
+  .tl-item::before{content:'';position:absolute;left:-5px;top:4px;width:8px;height:8px;border-radius:50%;background:var(--blue);}
+  .tl-item .nota{font-size:.82rem;color:var(--white);line-height:1.45;}
+  .tl-item .meta{font-size:.68rem;color:var(--grey);font-family:var(--font-m);margin-top:3px;}
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-box">
+    <div class="mark">T</div>
+    <h1>Panel CRM</h1>
+    <p>Acceso privado — TRUCO technology</p>
+    <div class="login-config-warn" id="config-warn">Falta configurar SUPABASE_URL y SUPABASE_ANON_KEY en este archivo (busca "REEMPLAZA_" al principio del script).</div>
+    <input type="email" id="login-email" placeholder="tu@email.com" autocomplete="username">
+    <input type="password" id="login-pass" placeholder="Contraseña" autocomplete="current-password">
+    <button onclick="doLogin()">Entrar</button>
+    <div class="login-error" id="login-error"></div>
+  </div>
+</div>
+
+<div id="app-screen">
+  <div class="topbar">
+    <div class="topbar-brand">
+      <div class="mark">T</div>
+      <div><b>TRUCO<span style="color:var(--blue);">technology</span></b><span>Panel CRM</span></div>
+    </div>
+    <button id="logout-btn" onclick="doLogout()">Cerrar sesión</button>
+  </div>
+  <div class="layout">
+    <div class="list-panel">
+      <div class="list-head">
+        <h2>Clientes</h2>
+        <input type="text" id="search" placeholder="Buscar por nombre, email, negocio..." oninput="renderClients()">
+      </div>
+      <div id="loading-state">Cargando...</div>
+      <div id="empty-state" style="display:none;">Todavía no hay ningún cliente registrado.</div>
+      <table id="clients-table" style="display:none;">
+        <thead>
+          <tr><th>Nombre</th><th>Negocio</th><th>Contacto</th><th>Sector</th><th>Status</th><th>Interacciones</th></tr>
+        </thead>
+        <tbody id="clients-tbody"></tbody>
+      </table>
+
+      <div class="anon-section">
+        <div class="timeline-title">Sesiones de chat sin identificar</div>
+        <div id="anon-list"></div>
+      </div>
+    </div>
+
+    <div class="ficha-panel">
+      <div id="ficha-empty">Selecciona un cliente para ver su ficha.</div>
+      <div id="ficha-content" style="display:none;">
+        <div class="ficha-name" id="ficha-nombre"></div>
+        <div class="ficha-negocio" id="ficha-negocio"></div>
+        <div class="ficha-row"><span>Email</span><span id="ficha-email"></span></div>
+        <div class="ficha-row"><span>Teléfono</span><span id="ficha-telefono"></span></div>
+        <div class="ficha-row"><span>Sector</span><span id="ficha-tipo"></span></div>
+        <div class="ficha-row"><span>NIF/CIF</span><span id="ficha-nif"></span></div>
+        <div class="ficha-row">
+          <span>Status</span>
+          <select id="status-select" onchange="updateStatus()">
+            <option value="nuevo">Nuevo</option>
+            <option value="contactado">Contactado</option>
+            <option value="cliente">Cliente</option>
+            <option value="descartado">Descartado</option>
+          </select>
+        </div>
+        <div class="ficha-row"><span>Cliente desde</span><span id="ficha-desde"></span></div>
+        <div class="timeline-title">Historial</div>
+        <div id="ficha-timeline"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CONFIGURACIÓN ──
+// Sustituye estos dos valores por los de tu proyecto Supabase
+// (Project Settings → API → Project URL / anon public key).
+// La anon key NO es secreta, está pensada para usarse en el navegador.
+const SUPABASE_URL = 'REEMPLAZA_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'REEMPLAZA_SUPABASE_ANON_KEY';
+
+let sb = null;
+let allClients = [];
+let selectedClientId = null;
+
+function isConfigured() {
+  return !SUPABASE_URL.startsWith('REEMPLAZA_') && !SUPABASE_ANON_KEY.startsWith('REEMPLAZA_');
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!isConfigured()) {
+    document.getElementById('config-warn').style.display = 'block';
+    return;
+  }
+  sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) showApp(); else showLogin();
+});
+
+function showLogin() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('app-screen').style.display = 'none';
+}
+
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app-screen').style.display = 'block';
+  loadClients();
+  loadAnonymousSessions();
+}
+
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('login-error');
+  errEl.style.display = 'none';
+  if (!email || !password) return;
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  if (error) {
+    errEl.textContent = 'Credenciales incorrectas.';
+    errEl.style.display = 'block';
+    return;
+  }
+  showApp();
+}
+
+async function doLogout() {
+  await sb.auth.signOut();
+  showLogin();
+}
+
+async function loadClients() {
+  const { data, error } = await sb
+    .from('clients')
+    .select('*, interactions(count)')
+    .order('updated_at', { ascending: false });
+  document.getElementById('loading-state').style.display = 'none';
+  if (error || !data) {
+    document.getElementById('empty-state').textContent = 'No se pudo cargar la lista de clientes.';
+    document.getElementById('empty-state').style.display = 'block';
+    return;
+  }
+  allClients = data;
+  renderClients();
+}
+
+function renderClients() {
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const filtered = !q ? allClients : allClients.filter(c =>
+    [c.nombre, c.email, c.negocio, c.telefono, c.tipo].some(v => (v || '').toLowerCase().includes(q))
+  );
+  const tbody = document.getElementById('clients-tbody');
+  const table = document.getElementById('clients-table');
+  const empty = document.getElementById('empty-state');
+  if (!filtered.length) {
+    table.style.display = 'none';
+    empty.style.display = 'block';
+    empty.textContent = allClients.length ? 'Ningún cliente coincide con la búsqueda.' : 'Todavía no hay ningún cliente registrado.';
+    return;
+  }
+  empty.style.display = 'none';
+  table.style.display = 'table';
+  tbody.innerHTML = filtered.map(c => {
+    const count = (c.interactions && c.interactions[0] && c.interactions[0].count) || 0;
+    return `<tr class="${c.id === selectedClientId ? 'active' : ''}" onclick="openFicha('${c.id}')">
+      <td>${escapeHtml(c.nombre || '—')}</td>
+      <td>${escapeHtml(c.negocio || '—')}</td>
+      <td>${escapeHtml(c.email || c.telefono || '—')}</td>
+      <td>${escapeHtml(c.tipo || '—')}</td>
+      <td><span class="status-badge status-${c.status}">${c.status}</span></td>
+      <td>${count}</td>
+    </tr>`;
+  }).join('');
+}
+
+async function openFicha(id) {
+  selectedClientId = id;
+  renderClients();
+  const client = allClients.find(c => c.id === id);
+  if (!client) return;
+  document.getElementById('ficha-empty').style.display = 'none';
+  document.getElementById('ficha-content').style.display = 'block';
+  document.getElementById('ficha-nombre').textContent = client.nombre || 'Sin nombre';
+  document.getElementById('ficha-negocio').textContent = client.negocio || '';
+  document.getElementById('ficha-email').textContent = client.email || '—';
+  document.getElementById('ficha-telefono').textContent = client.telefono || '—';
+  document.getElementById('ficha-tipo').textContent = client.tipo || '—';
+  document.getElementById('ficha-nif').textContent = client.nif || '—';
+  document.getElementById('ficha-desde').textContent = new Date(client.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+  document.getElementById('status-select').value = client.status;
+
+  const { data: interactions } = await sb
+    .from('interactions')
+    .select('*')
+    .eq('client_id', id)
+    .order('created_at', { ascending: false });
+
+  const icons = { checkout: '🛒', chat: '💬', voice: '🎙️' };
+  document.getElementById('ficha-timeline').innerHTML = (interactions || []).map(i => `
+    <div class="tl-item">
+      <div class="nota">${icons[i.source] || '•'} ${escapeHtml(i.nota || '(sin nota)')}</div>
+      <div class="meta">${new Date(i.created_at).toLocaleString('es-ES')}</div>
+    </div>
+  `).join('') || '<div style="color:var(--grey);font-size:.8rem;">Sin interacciones registradas.</div>';
+}
+
+async function updateStatus() {
+  if (!selectedClientId) return;
+  const status = document.getElementById('status-select').value;
+  await sb.from('clients').update({ status }).eq('id', selectedClientId);
+  const client = allClients.find(c => c.id === selectedClientId);
+  if (client) client.status = status;
+  renderClients();
+}
+
+async function loadAnonymousSessions() {
+  const { data } = await sb
+    .from('interactions')
+    .select('*')
+    .is('client_id', null)
+    .order('created_at', { ascending: false })
+    .limit(60);
+  const list = document.getElementById('anon-list');
+  if (!data || !data.length) {
+    list.innerHTML = '<div style="color:var(--grey);font-size:.78rem;">Ninguna todavía.</div>';
+    return;
+  }
+  list.innerHTML = data.map(i => `
+    <div class="anon-item">
+      <div class="q">${escapeHtml(i.nota || '(sin texto)')}</div>
+      <div class="meta">${new Date(i.created_at).toLocaleString('es-ES')} · sesión ${escapeHtml((i.session_id || '').slice(0, 8))}</div>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+}
+</script>
+</body>
+</html>
