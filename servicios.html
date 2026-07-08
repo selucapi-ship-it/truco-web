@@ -11,10 +11,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#141a24;--bg-panel:#1e2735;--bg-card:#293445;
+  --bg:#16151a;--bg-panel:#201f24;--bg-card:#2b2a30;
   --blue:#2f7bff;--blue-soft:#1b3a66;--blue-dim:rgba(47,123,255,.1);
-  --gold:#e9b949;--gold-dim:rgba(233,185,73,.1);
-  --white:#f4f6f9;--grey:#8d97a6;--grey-line:#3a4759;
+  --gold:#d9a83f;--gold-dim:rgba(217,168,63,.1);
+  --white:#f2f0ea;--grey:#9a96a0;--grey-line:#3d3b42;
   --green:#22c55e;--green-dim:rgba(34,197,94,.1);
   --font-d:'Playfair Display',Georgia,serif;
   --font-b:'DM Sans',sans-serif;
@@ -31,7 +31,7 @@ a{color:inherit;text-decoration:none;}
 .container{max-width:1120px;margin:0 auto;padding:0 32px;}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);height:66px;background:rgba(20,26,36,.95);border-bottom:1px solid var(--grey-line);backdrop-filter:blur(18px);}
+nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);height:66px;background:rgba(22,21,26,.95);border-bottom:1px solid var(--grey-line);backdrop-filter:blur(18px);}
 .nav-logo{display:flex;align-items:center;gap:12px;}
 .t-mark{width:40px;height:40px;border:1.5px solid var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Georgia',serif;color:var(--gold);font-size:22px;font-weight:700;background:linear-gradient(160deg,var(--bg-panel),var(--bg));}
 .nav-brand{font-family:var(--font-d);font-size:1rem;font-weight:700;}
@@ -62,17 +62,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 @media(max-width:768px){.promise-inner{grid-template-columns:1fr;}.promise-item{border-right:none;border-bottom:1px solid var(--grey-line);padding:20px 0;}.promise-item:last-child{border-bottom:none;}}
 
 /* RULE OF GOLD */
-.gold-rule{background:linear-gradient(135deg,rgba(233,185,73,.08),var(--bg-panel));border:1px solid rgba(233,185,73,.2);border-radius:14px;padding:28px 32px;margin:48px 0;}
+.gold-rule{background:linear-gradient(135deg,rgba(217,168,63,.08),var(--bg-panel));border:1px solid rgba(217,168,63,.2);border-radius:14px;padding:28px 32px;margin:48px 0;}
 .gr-title{font-family:var(--font-m);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
 .gr-steps{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.gr-step{font-size:.9rem;color:var(--white);font-weight:600;padding:8px 16px;background:rgba(233,185,73,.1);border:1px solid rgba(233,185,73,.2);border-radius:8px;}
+.gr-step{font-size:.9rem;color:var(--white);font-weight:600;padding:8px 16px;background:rgba(217,168,63,.1);border:1px solid rgba(217,168,63,.2);border-radius:8px;}
 .gr-arrow{color:var(--gold);font-size:1.2rem;}
 
 /* SECTION HEADERS */
 .section-block{padding:80px 0;}
 .section-divider{display:flex;align-items:center;gap:16px;margin-bottom:48px;}
 .sd-tag{font-family:var(--font-m);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:20px;}
-.sd-tag.project{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(233,185,73,.3);}
+.sd-tag.project{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(217,168,63,.3);}
 .sd-tag.depto{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(47,123,255,.3);}
 .sd-line{flex:1;height:1px;background:var(--grey-line);}
 .sd-desc{font-size:.85rem;color:var(--grey);}
@@ -86,7 +86,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .sc-cat.gold{color:var(--gold);}
 .sc-cat.blue{color:var(--blue);}
 .sc-badge{display:inline-block;font-family:var(--font-m);font-size:.6rem;padding:3px 12px;border-radius:20px;margin-bottom:10px;}
-.sc-badge.gold{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(233,185,73,.25);}
+.sc-badge.gold{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(217,168,63,.25);}
 .sc-badge.blue{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(47,123,255,.25);}
 .sc-badge.green{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.25);}
 .sc-badge.featured{background:var(--blue);color:#fff;}

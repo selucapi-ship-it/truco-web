@@ -12,10 +12,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#141a24;--bg-panel:#1e2735;--bg-card:#293445;
+  --bg:#16151a;--bg-panel:#201f24;--bg-card:#2b2a30;
   --blue:#2f7bff;--blue-soft:#1b3a66;--blue-dim:rgba(47,123,255,.1);
-  --gold:#e9b949;--gold-dim:rgba(233,185,73,.1);
-  --white:#f4f6f9;--grey:#8d97a6;--grey-line:#3a4759;
+  --gold:#d9a83f;--gold-dim:rgba(217,168,63,.1);
+  --white:#f2f0ea;--grey:#9a96a0;--grey-line:#3d3b42;
   --green:#22c55e;--green-dim:rgba(34,197,94,.12);
   --red:#ef4444;
   --font-d:'Playfair Display',Georgia,serif;
@@ -39,10 +39,10 @@ a{color:inherit;text-decoration:none;}
 .billing-btn{flex:1;text-align:center;padding:9px 16px;border-radius:7px;font-size:.85rem;font-weight:600;color:var(--grey);cursor:pointer;transition:all var(--tr);}
 .billing-btn.active{background:var(--blue);color:#fff;}
 .billing-save-tag{font-size:.68rem;color:var(--gold);font-family:var(--font-m);margin-left:5px;}
-.annual-highlight{background:rgba(233,185,73,.08);border:1px solid rgba(233,185,73,.2);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:.78rem;color:var(--gold);line-height:1.6;}
+.annual-highlight{background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.2);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:.78rem;color:var(--gold);line-height:1.6;}
 .annual-highlight b{color:var(--white);}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
-nav{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);height:64px;background:rgba(20,26,36,.97);border-bottom:1px solid var(--grey-line);position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);}
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);height:64px;background:rgba(22,21,26,.97);border-bottom:1px solid var(--grey-line);position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);}
 .t-mark{width:38px;height:38px;border:1.5px solid var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Georgia',serif;color:var(--gold);font-size:20px;font-weight:700;background:linear-gradient(160deg,var(--bg-panel),var(--bg));}
 .nav-logo{display:flex;align-items:center;gap:11px;}
 .nav-brand{font-family:var(--font-d);font-size:1rem;font-weight:700;}
@@ -117,7 +117,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .tl-steps::before{content:'';position:absolute;top:11px;left:11px;right:11px;height:1px;background:var(--grey-line);z-index:0;}
 .tl-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;z-index:1;}
 .tl-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;font-family:var(--font-m);}
-.tl-dot.project{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(233,185,73,.4);}
+.tl-dot.project{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(217,168,63,.4);}
 .tl-dot.free{background:var(--green-dim);color:var(--green);border:1px solid var(--green);}
 .tl-dot.paid{background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue);}
 .tl-dot.cont{background:var(--bg-card);color:var(--grey);border:1px solid var(--grey-line);}
@@ -388,7 +388,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
     </div><!-- /step 1 -->
 
   <!-- NOTA DOMINIO/HOSTING -->
-  <div id="hosting-note" style="display:none;background:rgba(233,185,73,.06);border:1px solid rgba(233,185,73,.2);border-radius:10px;padding:14px 18px;margin-bottom:28px;font-size:.82rem;color:var(--grey);line-height:1.65;">
+  <div id="hosting-note" style="display:none;background:rgba(217,168,63,.06);border:1px solid rgba(217,168,63,.2);border-radius:10px;padding:14px 18px;margin-bottom:28px;font-size:.82rem;color:var(--grey);line-height:1.65;">
     <b style="color:var(--gold);">⚠ Dominio y hosting: tu responsabilidad, no la nuestra.</b> El dominio (tu dirección web, ej. <em>tunegocio.com</em>) y el hosting (el servidor donde vive tu web) los contratas y pagas tú directamente con el proveedor que elijas. TRUCO technology te asesora y configura todo, pero la titularidad y el coste son siempre tuyos. Coste estimado: dominio desde 10-15 €/año · hosting desde 5-15 €/mes según proveedor.
   </div>
 
@@ -593,7 +593,7 @@ function updateSolutions(){
   }else if(count>3){
     priceEl.innerHTML='Consultar<sub> presupuesto</sub>';
     resultEl.style.display='block';
-    resultEl.style.background='rgba(233,185,73,.08)';resultEl.style.border='1px solid rgba(233,185,73,.2)';
+    resultEl.style.background='rgba(217,168,63,.08)';resultEl.style.border='1px solid rgba(217,168,63,.2)';
     resultEl.innerHTML='<b style="color:var(--gold);">⚠ '+count+' soluciones seleccionadas</b> — Elaboramos presupuesto personalizado. <b style="color:var(--white);">Continúa y te contactamos en 24h.</b>';
     selectedDigitalPlan='pro';digitalTotalPrice=0;
   }else{
