@@ -104,3 +104,7 @@ create policy "authenticated delete clients" on clients
 drop policy if exists "authenticated insert manual interactions" on interactions;
 create policy "authenticated insert manual interactions" on interactions
   for insert with check (auth.role() = 'authenticated' and source = 'manual');
+
+drop policy if exists "authenticated delete interactions" on interactions;
+create policy "authenticated delete interactions" on interactions
+  for delete using (auth.role() = 'authenticated');
