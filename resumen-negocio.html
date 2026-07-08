@@ -63,6 +63,17 @@
   .built-card p{font-size:.82rem;color:var(--grey);margin:0;}
   .built-card .status{display:block;margin-top:8px;}
 
+  .proj-card{border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:20px;}
+  .proj-card .proj-info{flex:1;}
+  .proj-card h4{font-family:var(--font-d);font-size:1.05rem;margin:0 0 4px;}
+  .proj-card p{font-size:.83rem;color:var(--grey);margin:0;line-height:1.5;}
+  .proj-card .proj-price{flex-shrink:0;text-align:right;border-left:1px solid var(--line);padding-left:20px;min-width:160px;}
+  .proj-card .pp-label{font-family:var(--font-m);font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;color:var(--grey);}
+  .proj-card .pp-base{font-size:.95rem;color:var(--navy);margin:2px 0 8px;}
+  .proj-card .pp-total{font-family:var(--font-d);font-weight:800;font-size:1.3rem;color:var(--navy);}
+  .proj-card .pp-total small{font-family:var(--font-b);font-weight:500;font-size:.68rem;color:var(--grey);display:block;margin-top:2px;}
+  @media(max-width:520px){.proj-card{flex-direction:column;align-items:stretch;}.proj-card .proj-price{border-left:none;border-top:1px solid var(--line);padding-left:0;padding-top:12px;text-align:left;}}
+
   .todo-list{list-style:none;margin:0;padding:0;}
   .todo-list li{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.87rem;}
   .todo-list li:last-child{border-bottom:none;}
@@ -106,16 +117,45 @@
     <h2 class="section-title">Servicios y precios</h2>
 
     <p><b>Proyectos (pago único, + IVA 21%)</b></p>
-    <p class="note" style="margin-bottom:2px;">El precio del proyecto no es lo único que paga el cliente: el mes 1 del Departamento es gratis, pero el <b style="color:var(--navy);font-style:normal;">mes 2 se cobra sí o sí</b> antes de quedar libre de compromiso. La columna "Lo que paga en total" es el coste real de esos 2 primeros meses juntos.</p>
-    <table>
-      <thead><tr><th>Proyecto</th><th>Qué incluye</th><th>Precio proyecto</th><th>Lo que paga en total<br>(proyecto + mes 2)</th></tr></thead>
-      <tbody>
-        <tr><td><b>Web Esencial</b></td><td>5 páginas, responsive, SEO básico. Entrega 7-10 días. Mes 1 de Depto. Lite gratis, mes 2 ya a precio estándar.</td><td class="num">499 €</td><td class="num">698 € <span style="color:var(--grey);font-weight:400;">(844,58 € IVA incl.)</span></td></tr>
-        <tr><td><b>Web Profesional</b></td><td>Diseño a medida, páginas ilimitadas, integraciones, IA si hace falta. Entrega 2-4 semanas. Mismo esquema de mes 1 gratis + mes 2 estándar.</td><td class="num">desde 790 €</td><td class="num">desde 989 € <span style="color:var(--grey);font-weight:400;">(1.196,69 € IVA incl.)</span></td></tr>
-        <tr><td><b>Digitaliza tu Empresa</b></td><td>Implantación de soluciones tecnológicas a medida. 90 días de implantación. Mes 1 gratis, meses 2 y 3 ya a precio estándar.</td><td class="num">desde 590 €</td><td class="num">desde 590 € <span style="color:var(--grey);font-weight:400;">+ mes 2 (199 € Lite o 399 € Pro, según nº de soluciones)</span></td></tr>
-      </tbody>
-    </table>
-    <p class="note">Todos los precios de la tabla son sin IVA salvo donde se indica. Los proyectos web y Digitaliza se pueden combinar en la misma compra.</p>
+    <p class="note" style="margin-bottom:12px;">El precio del proyecto no es lo único que paga el cliente: el mes 1 del Departamento es gratis, pero el <b style="color:var(--navy);font-style:normal;">mes 2 se cobra sí o sí</b> antes de quedar libre de compromiso. "Coste real" es lo que paga en total esos 2 primeros meses.</p>
+
+    <div class="proj-card">
+      <div class="proj-info">
+        <h4>Web Esencial</h4>
+        <p>5 páginas, responsive, SEO básico. Entrega 7-10 días. Mes 1 de Departamento Lite gratis, mes 2 ya a precio estándar.</p>
+      </div>
+      <div class="proj-price">
+        <div class="pp-label">Precio proyecto</div>
+        <div class="pp-base">499 €</div>
+        <div class="pp-total">698 € <small>Coste real 2 meses · 844,58 € IVA incl.</small></div>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-info">
+        <h4>Web Profesional</h4>
+        <p>Diseño a medida, páginas ilimitadas, integraciones, IA si hace falta. Entrega 2-4 semanas. Mismo esquema: mes 1 gratis + mes 2 estándar.</p>
+      </div>
+      <div class="proj-price">
+        <div class="pp-label">Precio proyecto</div>
+        <div class="pp-base">desde 790 €</div>
+        <div class="pp-total">desde 989 € <small>Coste real 2 meses · 1.196,69 € IVA incl.</small></div>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-info">
+        <h4>Digitaliza tu Empresa</h4>
+        <p>Implantación de soluciones tecnológicas a medida. 90 días de implantación. Mes 1 gratis, meses 2 y 3 ya a precio estándar.</p>
+      </div>
+      <div class="proj-price">
+        <div class="pp-label">Precio proyecto</div>
+        <div class="pp-base">desde 590 €</div>
+        <div class="pp-total">+ mes 2 <small>199 € Lite o 399 € Pro, según nº de soluciones</small></div>
+      </div>
+    </div>
+
+    <p class="note">Todos los precios son + IVA salvo donde se indica "IVA incl.". Los proyectos web y Digitaliza se pueden combinar en la misma compra.</p>
 
     <p style="margin-top:20px;"><b>Soluciones individuales de Digitaliza (+ IVA)</b></p>
     <table>
