@@ -20,7 +20,7 @@ create table if not exists interactions (
   id uuid primary key default gen_random_uuid(),
   client_id uuid references clients(id) on delete set null,
   session_id text,
-  source text not null check (source in ('checkout','chat','voice')),
+  source text not null check (source in ('checkout','chat','voice','manual')),
   nota text,
   created_at timestamptz not null default now()
 );
@@ -93,3 +93,14 @@ create policy "authenticated update clients" on clients
 drop policy if exists "authenticated read interactions" on interactions;
 create policy "authenticated read interactions" on interactions
   for select using (auth.role() = 'authenticated');
+
+-- El panel también puede borrar un cliente (con confirmación en pantalla)
+-- y añadir notas manuales propias — pero solo con source='manual', para que
+-- el navegador nunca pueda fabricar una interacción de checkout/chat/voice.
+drop policy if exists "authenticated delete clients" on clients;
+create policy "authenticated delete clients" on clients
+  for delete using (auth.role() = 'authenticated');
+
+drop policy if exists "authenticated insert manual interactions" on interactions;
+create policy "authenticated insert manual interactions" on interactions
+  for insert with check (auth.role() = 'authenticated' and source = 'manual');
