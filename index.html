@@ -1079,6 +1079,17 @@ window.addEventListener('scroll',()=>{
   document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
 });
 
+/* ── OCULTAR EL BOTÓN FLOTANTE DE CHAT MIENTRAS EL CHAT YA ESTÁ VISIBLE ── */
+(function(){
+  const floatChat=document.getElementById('float-chat');
+  const chatSection=document.getElementById('chat-section');
+  if(floatChat&&chatSection&&'IntersectionObserver' in window){
+    new IntersectionObserver((entries)=>{
+      floatChat.style.display=entries[0].isIntersecting?'none':'';
+    },{threshold:0.15}).observe(chatSection);
+  }
+})();
+
 /* ── MOBILE MENU ── */
 function toggleMenu(){
   const nl=document.querySelector('.nav-links');

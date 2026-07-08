@@ -51,6 +51,12 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .nav-mid{display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--grey);}
 .nav-mid .dot{width:8px;height:8px;border-radius:50%;background:var(--green);}
 .nav-back{font-size:.82rem;color:var(--grey);transition:color var(--tr);}
+@media(max-width:600px){
+  .nav-sub{display:none;}
+  .nav-mid{display:none;}
+  .nav-back{font-size:.78rem;white-space:nowrap;}
+  .t-mark{width:32px;height:32px;font-size:17px;}
+}
 .nav-back:hover{color:var(--white);}
 
 .page-header{text-align:center;padding:52px 24px 40px;border-bottom:1px solid var(--grey-line);background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(47,123,255,.05) 0%,transparent 70%);}
@@ -67,14 +73,20 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .step-num{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-family:var(--font-m);font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .step-hd h2{font-size:1.05rem;font-weight:700;}
 
-.cat-label{font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);display:flex;align-items:center;gap:10px;margin-bottom:14px;}
-.cat-label::before{content:'';width:20px;height:1px;background:currentColor;}
-.cat-label::after{content:'';flex:1;height:1px;background:var(--grey-line);}
+.cat-label{font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.cat-label::before{content:'';width:20px;height:1px;background:currentColor;flex-shrink:0;}
+.cat-label::after{content:'';flex:1;height:1px;background:var(--grey-line);min-width:16px;}
+@media(max-width:480px){.cat-label::after{display:none;}}
 
 /* PROJECT CARDS — 2 col */
 .project-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
 @media(max-width:440px){.project-grid{grid-template-columns:1fr;}}
 @media(max-width:480px){.solutions-grid-el{grid-template-columns:1fr!important;}}
+
+.onboarding-direct-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.impl-months-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+@media(max-width:600px){.onboarding-direct-grid{grid-template-columns:1fr;}}
+@media(max-width:440px){.impl-months-grid{grid-template-columns:1fr;}}
 
 .plan-card{border:1.5px solid var(--grey-line);border-radius:14px;padding:0;cursor:pointer;overflow:hidden;transition:border-color var(--tr),transform var(--tr);position:relative;}
 .plan-card:hover{border-color:var(--blue-soft);transform:translateY(-1px);}
@@ -254,7 +266,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       <!-- ONBOARDING DIRECTO — aparece al seleccionar Departamento -->
       <div id="onboarding-direct" style="display:none;background:rgba(47,123,255,.06);border:1px solid rgba(47,123,255,.2);border-radius:12px;padding:16px 20px;margin-bottom:16px;animation:fadeIn .22s ease;">
         <div style="font-family:var(--font-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;">→ ¿Cómo empezamos?</div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+        <div class="onboarding-direct-grid">
           <div style="font-size:.78rem;color:var(--grey);padding:10px 12px;background:rgba(255,255,255,.03);border-radius:8px;line-height:1.5;">
             <b style="color:var(--white);display:block;margin-bottom:4px;">En 48h te contactamos</b>
             Hacemos una auditoría gratuita de tu web, herramientas y sistemas actuales.
@@ -337,7 +349,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         <!-- WEBS: 60 días automático -->
         <div id="web-implantacion" style="display:none;background:var(--bg-panel);border:1.5px solid var(--blue-soft);border-radius:14px;padding:20px;animation:fadeIn .22s ease;">
           <div style="font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;">⏱ Período de implantación — 60 días · Departamento Lite™</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+          <div class="impl-months-grid">
             <div style="background:var(--green-dim);border:1px solid rgba(34,197,94,.3);border-radius:12px;padding:18px;text-align:center;">
               <div style="font-family:var(--font-m);font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--green);margin-bottom:8px;">Mes 1</div>
               <div style="font-size:1rem;font-weight:700;color:var(--white);margin-bottom:4px;">Departamento Lite™</div>

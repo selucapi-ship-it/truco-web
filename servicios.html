@@ -40,6 +40,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .nav-right{display:flex;align-items:center;gap:20px;}
 .nav-back{font-size:.85rem;color:var(--grey);transition:color var(--tr);}
 .nav-back:hover{color:var(--white);}
+@media(max-width:600px){
+  .nav-sub{display:none;}
+  .nav-back{display:none;}
+  .nav-cta{padding:8px 14px;font-size:.78rem;}
+  .t-mark{width:34px;height:34px;font-size:18px;}
+}
 .nav-cta{background:var(--blue);color:#fff;padding:9px 20px;border-radius:7px;font-size:.85rem;font-weight:600;}
 
 /* PAGE HEADER */
@@ -70,12 +76,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 
 /* SECTION HEADERS */
 .section-block{padding:80px 0;}
-.section-divider{display:flex;align-items:center;gap:16px;margin-bottom:48px;}
-.sd-tag{font-family:var(--font-m);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:20px;}
+.section-divider{display:flex;align-items:center;gap:16px;margin-bottom:48px;flex-wrap:wrap;}
+.sd-tag{font-family:var(--font-m);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
 .sd-tag.project{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(217,168,63,.3);}
 .sd-tag.depto{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(47,123,255,.3);}
-.sd-line{flex:1;height:1px;background:var(--grey-line);}
+.sd-line{flex:1;height:1px;background:var(--grey-line);min-width:24px;}
 .sd-desc{font-size:.85rem;color:var(--grey);}
+@media(max-width:600px){
+  .section-divider{flex-direction:column;align-items:flex-start;gap:10px;}
+  .sd-line{display:none;}
+  .sd-tag{white-space:normal;max-width:100%;}
+}
 
 /* SERVICE CARDS */
 .service-card{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:18px;margin-bottom:24px;overflow:hidden;}
@@ -162,6 +173,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .cs-title{font-size:.9rem;font-weight:700;margin-bottom:6px;color:var(--white);}
 .cs-desc{font-size:.78rem;color:var(--grey);line-height:1.5;}
 @media(max-width:768px){.como-steps{grid-template-columns:1fr;}.como-steps::before{display:none;}.como-step{flex-direction:row;text-align:left;gap:16px;padding:16px 0;border-bottom:1px solid var(--grey-line);}.como-step:last-child{border-bottom:none;}.cs-num{flex-shrink:0;margin-bottom:0;}}
+
+.onboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.tiers-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.impl-period-grid{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:768px){.onboard-grid,.tiers-cols,.impl-period-grid{grid-template-columns:1fr;}}
 
 /* SC FOOTER */
 .sc-footer{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-top:1px solid var(--grey-line);background:rgba(255,255,255,.02);flex-wrap:wrap;gap:14px;}
@@ -262,7 +278,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <!-- BLOQUE ONBOARDING DIRECTO -->
     <div style="background:linear-gradient(135deg,rgba(47,123,255,.06),var(--bg-panel));border:1px solid rgba(47,123,255,.2);border-radius:14px;padding:28px 32px;margin-bottom:32px;">
       <div style="font-family:var(--font-m);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:flex;align-items:center;gap:8px;"><span>→</span> Si ya tienes tecnología, esto es para ti</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+      <div class="onboard-grid">
         <div>
           <h3 style="font-family:var(--font-d);font-size:1.1rem;font-weight:700;margin-bottom:10px;">¿Tienes web, CRM, WhatsApp de empresa o cualquier herramienta digital activa?</h3>
           <p style="font-size:.88rem;color:var(--grey);line-height:1.7;">No hace falta empezar desde cero. <b style="color:var(--white);">Auditamos lo que ya tienes</b>, lo incorporamos a tu Departamento Tecnológico y empezamos a mantenerlo desde el primer día. Tú solo dinos con qué trabajas.</p>
@@ -304,7 +320,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     </div>
 
     <!-- TIERS -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+    <div class="tiers-cols">
 
       <!-- LITE -->
       <div class="service-card" id="lite" onclick="if(!event.target.closest('.sc-footer'))location.href='pago.html?plan=arranque-lite'" style="cursor:pointer;">
@@ -573,7 +589,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="period-block" style="margin:0;">
             <div class="pb-title">Periodo de Implantación y Optimización — 90 días</div>
             <div class="pb-text">Toda implantación incluye 90 días de supervisión real, optimización con datos de tu empresa y ajustes hasta dejarlo perfecto. El Departamento inicial varía según el número de soluciones implantadas:</div>
-            <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div class="impl-period-grid">
               <div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:12px 14px;">
                 <div style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:6px;">1 o 2 soluciones → Departamento Lite™</div>
                 <div style="font-size:.82rem;color:var(--white);font-weight:600;margin-bottom:4px;">Primer mes del Departamento, gratis</div>
