@@ -74,27 +74,22 @@ img{display:block;max-width:100%;}
 .nav-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
 .nav-toggle span{width:22px;height:2px;background:var(--white);border-radius:2px;transition:all var(--tr);}
 @keyframes navPackPulse{
-  0%,100%{box-shadow:0 3px 14px rgba(217,168,63,.45);transform:translate(-50%,-50%) scale(1);}
-  50%{box-shadow:0 3px 22px rgba(217,168,63,.75);transform:translate(-50%,-50%) scale(1.045);}
+  0%,100%{box-shadow:0 2px 10px rgba(217,168,63,.4);transform:scale(1);}
+  50%{box-shadow:0 2px 16px rgba(217,168,63,.7);transform:scale(1.04);}
 }
-.nav-pack-cta{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  display:flex;align-items:center;gap:6px;
-  background:linear-gradient(90deg,#f2c14e,var(--gold) 55%,#c98f1f);
-  color:#1a1206;font-weight:800;font-size:.85rem;
-  padding:10px 20px;border-radius:30px;
+.nav-links-pack{
+  display:flex;align-items:center;gap:5px;
+  background:linear-gradient(90deg,#f2c14e,var(--gold) 55%,#c98f1f)!important;
+  color:#1a1206!important;font-weight:800;
+  padding:7px 16px;border-radius:30px;
   animation:navPackPulse 2.2s ease-in-out infinite;
   transition:filter var(--tr);
   white-space:nowrap;
 }
-.nav-pack-cta:hover{filter:brightness(1.08);}
-.nav-pack-cta b{font-family:var(--font-display);}
+.nav-links-pack:hover{filter:brightness(1.08);color:#1a1206!important;}
 @media(max-width:1180px){
   .nav-links,.nav-cta{display:none;}
   .nav-toggle{display:flex;}
-}
-@media(max-width:640px){
-  .nav-pack-cta{display:none;}
 }
 
 /* ── HERO ── */
@@ -352,6 +347,35 @@ img{display:block;max-width:100%;}
 .cta-btns{display:flex;gap:12px;flex-shrink:0;flex-wrap:wrap;}
 @media(max-width:768px){.cta-inner{flex-direction:column;align-items:flex-start;}}
 
+/* ── FLOATING CHAT ── */
+@keyframes floatPulse{
+  0%,100%{box-shadow:0 4px 20px rgba(47,123,255,.45),0 0 0 0 rgba(47,123,255,.5);}
+  50%{box-shadow:0 4px 26px rgba(47,123,255,.65),0 0 0 10px rgba(47,123,255,0);}
+}
+#float-chat{position:fixed;bottom:24px;right:24px;z-index:800;display:flex;align-items:center;gap:10px;}
+.float-label{
+  background:var(--bg-panel);border:1px solid var(--blue-soft);color:var(--white);
+  font-size:.82rem;font-weight:600;padding:10px 16px;border-radius:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,.35);
+  opacity:0;transform:translateX(8px);pointer-events:none;
+  transition:opacity .4s ease,transform .4s ease;
+  white-space:nowrap;
+}
+.float-label.show{opacity:1;transform:translateX(0);pointer-events:auto;}
+.float-btn{
+  position:relative;width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),#1f5fd6);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;cursor:pointer;border:none;flex-shrink:0;
+  animation:floatPulse 2.4s ease-in-out infinite;
+  transition:transform var(--tr);
+}
+.float-btn:hover{transform:scale(1.08);}
+.float-notif{
+  position:absolute;top:-4px;right:-4px;width:18px;height:18px;
+  background:#ef4444;border-radius:50%;border:2px solid var(--bg);
+  display:none;
+}
 
 /* ── FOOTER ── */
 /* SECTORES */
@@ -492,13 +516,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="nav-sub">Tu Departamento Tecnológico</div>
     </div>
   </a>
-  <a class="nav-pack-cta" href="#packs-descuento">🎁 Packs Empresa <b>-15%</b></a>
   <ul class="nav-links">
     <li><a href="servicios.html">Servicios</a></li>
     <li><a href="#como-empezamos">Cómo empezamos</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#sectores">¿Es esto para ti?</a></li>
-    <li><a href="#packs-descuento" style="color:var(--gold);font-weight:700;">🎁 Packs -15%</a></li>
+    <li><a class="nav-links-pack" href="#packs-descuento">🎁 Packs -15%</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#chat-section">Hablar con el asistente</a></li>
   </ul>
@@ -1068,19 +1091,31 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </footer>
 
+<!-- ── FLOAT CHAT BTN ── -->
+<div id="float-chat">
+  <div class="float-label" id="floatLabel">💬 ¿Hablamos?</div>
+  <button class="float-btn" onclick="scrollToChat()" title="Hablar con el asistente">
+    💬
+    <span class="float-notif" id="floatNotif"></span>
+  </button>
+</div>
+
 <script>
 /* ── NAVBAR SCROLL ── */
 window.addEventListener('scroll',()=>{
   document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
 });
 
-/* ── MOBILE MENU ── */
-function toggleMenu(){
-  const nl=document.querySelector('.nav-links');
-  const nc=document.querySelector('.nav-cta');
-  if(nl.style.display==='flex'){nl.style.display='';nc.style.display='';}
-  else{nl.style.display='flex';nl.style.flexDirection='column';nl.style.position='absolute';nl.style.top='66px';nl.style.left='0';nl.style.right='0';nl.style.background='rgba(22,21,26,.97)';nl.style.padding='20px 32px';nc.style.display='none';}
-}
+/* ── OCULTAR EL BOTÓN FLOTANTE DE CHAT MIENTRAS EL CHAT YA ESTÁ VISIBLE ── */
+(function(){
+  const floatChat=document.getElementById('float-chat');
+  const chatSection=document.getElementById('chat-section');
+  if(floatChat&&chatSection&&'IntersectionObserver' in window){
+    new IntersectionObserver((entries)=>{
+      floatChat.style.display=entries[0].isIntersecting?'none':'';
+    },{threshold:0.15}).observe(chatSection);
+  }
+})();
 
 /* ── FAQ ACCORDION ── */
 function toggleFaq(btn){
@@ -1097,6 +1132,13 @@ function toggleFaq(btn){
     icon.textContent='−';
   }
 }
+
+/* ── FLOAT CHAT ── */
+function scrollToChat(){document.getElementById('chat-section').scrollIntoView({behavior:'smooth'});}
+setTimeout(()=>{
+  document.getElementById('floatNotif').style.display='block';
+  document.getElementById('floatLabel').classList.add('show');
+},4000);
 
 /* ── AI CHAT ── */
 // ══════════════════════════════════════════
