@@ -130,6 +130,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .solutions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:24px;border-top:1px solid var(--grey-line);}
 .solution-chip{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:10px;padding:14px 16px;transition:border-color var(--tr);}
 .solution-chip:hover{border-color:var(--blue);}
+a.solution-chip{display:block;color:inherit;}
 .solution-chip .sc-icon{font-size:1.2rem;margin-bottom:8px;}
 .solution-chip h5{font-size:.88rem;font-weight:700;margin-bottom:4px;color:var(--white);}
 .solution-chip .sol-price{display:block;font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:6px;}
@@ -555,6 +556,33 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         </div>
       </div>
       <div class="sc-body">
+        <!-- Packs por sector -->
+        <div style="padding:24px 24px 0;border-top:1px solid var(--grey-line);">
+          <div class="sc-col-title">¿No sabes por dónde empezar? Elige tu sector</div>
+          <p style="font-size:.82rem;color:var(--grey);margin:6px 0 16px;">Cada pack trae 3 soluciones ya pensadas para tu tipo de negocio — puedes quitar o añadir las que quieras al contratar, no van cerradas.</p>
+        </div>
+        <div class="solutions-grid" style="grid-template-columns:repeat(2,1fr);">
+          <a class="solution-chip" href="pago.html?plan=digital&pack=servicios" style="text-decoration:none;cursor:pointer;">
+            <div class="sc-icon">🔧</div><h5>Pack Servicios</h5>
+            <p style="color:var(--grey);font-size:.78rem;">Fontaneros, electricistas, autónomos de oficios, clínicas, centros de estética, gimnasios, academias…</p>
+            <p style="font-size:.75rem;color:var(--white);margin-top:6px;">💬 IA WhatsApp · 📅 Reservas · ⚙️ Automatizaciones</p>
+          </a>
+          <a class="solution-chip" href="pago.html?plan=digital&pack=despachos" style="text-decoration:none;cursor:pointer;">
+            <div class="sc-icon">💼</div><h5>Pack Despachos</h5>
+            <p style="color:var(--grey);font-size:.78rem;">Abogados, asesorías, gestorías, inmobiliarias, servicios profesionales…</p>
+            <p style="font-size:.75rem;color:var(--white);margin-top:6px;">👥 CRM · ✍️ Firma digital · 📁 Gestión documental</p>
+          </a>
+          <a class="solution-chip" href="pago.html?plan=digital&pack=hosteleria" style="text-decoration:none;cursor:pointer;">
+            <div class="sc-icon">🍽️</div><h5>Pack Hostelería</h5>
+            <p style="color:var(--grey);font-size:.78rem;">Restaurantes, salones de celebración…</p>
+            <p style="font-size:.75rem;color:var(--white);margin-top:6px;">📅 Reservas · 💬 IA WhatsApp · ⚙️ Automatizaciones</p>
+          </a>
+          <a class="solution-chip" href="pago.html?plan=digital&pack=empresas" style="text-decoration:none;cursor:pointer;">
+            <div class="sc-icon">🏢</div><h5>Pack Empresas</h5>
+            <p style="color:var(--grey);font-size:.78rem;">Pymes en general, sin un sector concreto.</p>
+            <p style="font-size:.75rem;color:var(--white);margin-top:6px;">👥 CRM · ⚙️ Automatizaciones · 🔗 Integraciones</p>
+          </a>
+        </div>
         <!-- Solutions grid -->
         <div style="padding:24px 24px 0;border-top:1px solid var(--grey-line);">
           <div class="sc-col-title">Ejemplos de soluciones que implantamos</div>

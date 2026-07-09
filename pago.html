@@ -35,6 +35,12 @@ a{color:inherit;text-decoration:none;}
 .sol-chip:has(input:checked){background:var(--blue-dim);border-color:var(--blue);color:var(--white);}
 .sol-chip input{width:13px;height:13px;accent-color:var(--blue);flex-shrink:0;}
 .sol-chip span{pointer-events:none;}
+@keyframes packPulse{0%,100%{box-shadow:0 0 0 0 rgba(217,168,63,.45);}50%{box-shadow:0 0 0 5px rgba(217,168,63,0);}}
+.sol-chip.sol-suggested{border-color:var(--gold)!important;animation:packPulse 1.8s ease-in-out infinite;}
+#pack-badge{display:none;margin:0 20px 12px;padding:11px 14px;border-radius:8px;background:rgba(47,123,255,.08);border:1px solid rgba(47,123,255,.25);font-size:.76rem;color:var(--grey);line-height:1.55;}
+#pack-badge b{color:var(--white);}
+#pack-security-tip{display:none;margin:0 20px 14px;padding:10px 14px;border-radius:8px;background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.3);font-size:.76rem;color:var(--grey);line-height:1.55;}
+#pack-security-tip b{color:var(--gold);}
 .billing-toggle{display:flex;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:10px;padding:4px;margin-bottom:16px;}
 .billing-btn{flex:1;text-align:center;padding:9px 16px;border-radius:7px;font-size:.85rem;font-weight:600;color:var(--grey);cursor:pointer;transition:all var(--tr);}
 .billing-btn.active{background:var(--blue);color:#fff;}
@@ -364,6 +370,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div style="font-size:.75rem;color:var(--grey);">El precio y el departamento se asignan automáticamente según tu selección</div>
             <div style="font-size:.72rem;color:var(--grey);margin-top:6px;">💬🌐📧 Las soluciones con IA (WhatsApp, Web, Correo) incluyen 1.000 interacciones/mes · exceso 0,02 €/interacción</div>
           </div>
+          <div id="pack-badge"></div>
+          <div id="pack-security-tip"></div>
           <div class="solutions-grid-el" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:16px 20px;" id="solutions-grid">
             <label class="sol-chip" data-price="590"><input type="checkbox" value="whatsapp" onchange="updateSolutions()"><span>💬 IA para WhatsApp — 590 € + IVA</span></label>
             <label class="sol-chip" data-price="350"><input type="checkbox" value="web-ia" onchange="updateSolutions()"><span>🌐 IA para Web — 350 € + IVA</span></label>
@@ -421,7 +429,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       </div>
       <div class="form-field">
         <label>Sector <span class="req">*</span></label>
-        <select id="f-tipo" onchange="vField(this)">
+        <select id="f-tipo" onchange="vField(this);applyPackForSector(this.value)">
           <option value="">Selecciona tu sector</option>
             <option value="dental">Clínica dental</option>
           <option>Clínica / Centro médico</option>
@@ -508,6 +516,57 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 // que el cliente llegue directo a agendar su reunión de bienvenida prioritaria.
 const PROJECTS={esencial:{name:'Web Esencial',base:649},web:{name:'Web Profesional',base:940},digital:{name:'Digitaliza tu Empresa',base:590}};
 const DIGITAL_BUYOUT=300;
+
+const PACKS={
+  servicios:{name:'Pack Servicios',sub:'fontaneros, electricistas, autónomos de oficios, clínicas, centros de estética, gimnasios, academias…',sols:['whatsapp','reservas','automatizaciones']},
+  despachos:{name:'Pack Despachos',sub:'abogados, asesorías, gestorías, inmobiliarias, servicios profesionales…',sols:['crm','firma','docs'],security:true},
+  hosteleria:{name:'Pack Hostelería',sub:'restaurantes, salones de celebración…',sols:['reservas','whatsapp','automatizaciones']},
+  empresas:{name:'Pack Empresas',sub:'pymes en general',sols:['crm','automatizaciones','integraciones'],security:true}
+};
+const SECTOR_PACKS={
+  'dental':'servicios','Clínica / Centro médico':'servicios','autonomo':'servicios',
+  'Centro de estética / Belleza':'servicios','Gimnasio / Deportes':'servicios','Formación / Academia':'servicios',
+  'Despacho / Consultoría':'despachos','Inmobiliaria':'despachos','Servicios profesionales':'despachos',
+  'Restaurante / Hostelería':'hosteleria',
+  'Comercio / Tienda':'empresas','Otro':'empresas'
+};
+
+function applyPackForSector(sectorValue){
+  const packKey=SECTOR_PACKS[sectorValue];
+  const badge=document.getElementById('pack-badge');
+  const secTip=document.getElementById('pack-security-tip');
+  if(!packKey){
+    if(badge)badge.style.display='none';
+    if(secTip)secTip.style.display='none';
+    return;
+  }
+  applyPack(packKey);
+}
+
+function applyPack(packKey){
+  const pack=PACKS[packKey];
+  const badge=document.getElementById('pack-badge');
+  const secTip=document.getElementById('pack-security-tip');
+  if(!pack)return;
+  if(!digitalAddon)toggleDigitalAddon();
+  document.querySelectorAll('#solutions-grid input').forEach(cb=>{cb.checked=pack.sols.includes(cb.value);});
+  document.querySelectorAll('#solutions-grid .sol-chip').forEach(chip=>chip.classList.remove('sol-suggested'));
+  updateSolutions();
+  if(badge){
+    badge.innerHTML='🎯 <b>'+pack.name+'</b> recomendado para tu sector ('+pack.sub+') — ya hemos marcado las soluciones más habituales, puedes quitar o añadir las que quieras.';
+    badge.style.display='block';
+  }
+  if(secTip){
+    if(pack.security){
+      const ciberInput=document.querySelector('#solutions-grid input[value="ciberseguridad"]');
+      if(ciberInput)ciberInput.closest('.sol-chip').classList.add('sol-suggested');
+      secTip.innerHTML='🔒 <b>Muy recomendado para tu sector:</b> añade Ciberseguridad Pyme — proteges los datos y contratos de tus clientes (no la hemos marcado, decides tú).';
+      secTip.style.display='block';
+    }else{
+      secTip.style.display='none';
+    }
+  }
+}
 const DIRECT={'arranque-lite':{name:'Departamento Tecnológico Lite™',arranque:'lite'},'arranque-pro':{name:'Departamento Tecnológico Pro™',arranque:'pro'}};
 const ARRANQUES={lite:{name:'Lite™',monthlyAfter:199},pro:{name:'Pro™',monthlyAfter:399}};
 const STRIPE={'esencial-lite':'REEMPLAZA_ESENCIAL','web-lite':'REEMPLAZA_WEB_PRO','digital-lite':'REEMPLAZA_DIGITAL_LITE','digital-pro':'REEMPLAZA_DIGITAL_PRO','arranque-lite':'REEMPLAZA_LITE_MES','arranque-pro':'REEMPLAZA_PRO_MES','arranque-lite-a':'REEMPLAZA_LITE_ANUAL','arranque-pro-a':'REEMPLAZA_PRO_ANUAL','esencial-solutions-lite':'REEMPLAZA_ESENCIAL_SOL_LITE','esencial-solutions-pro':'REEMPLAZA_ESENCIAL_SOL_PRO','web-solutions-lite':'REEMPLAZA_WEB_SOL_LITE','web-solutions-pro':'REEMPLAZA_WEB_SOL_PRO'};
@@ -603,11 +662,11 @@ function updateSolutions(){
   }else{
     priceEl.innerHTML=(total+DIGITAL_BUYOUT)+' €<sub> + IVA</sub>';
     resultEl.style.display='block';
-    const desglose='<div style="font-size:.72rem;color:var(--grey);margin-bottom:6px;">'+total+' € solución'+(count>1?'es':'')+' elegida'+(count>1?'s':'')+' + <b style="color:var(--white);">300 € alta e integración de Departamento</b></div>';
+    const desglose='<div style="font-size:.72rem;color:var(--grey);margin-bottom:6px;">'+total+' € '+(count>1?'soluciones elegidas':'solución elegida')+' + <b style="color:var(--white);">300 € alta e integración de Departamento</b></div>';
     if(count<=2){
       selectedDigitalPlan='lite';
       resultEl.style.background='rgba(34,197,94,.08)';resultEl.style.border='1px solid rgba(34,197,94,.25)';
-      resultEl.innerHTML=desglose+'<b style="color:var(--green);">✓ '+count+' solución'+(count>1?'es':'')+'</b> — <b style="color:var(--white);">Departamento Lite™</b> · 90 días de regalo, luego 199€/mes.';
+      resultEl.innerHTML=desglose+'<b style="color:var(--green);">✓ '+count+' '+(count>1?'soluciones':'solución')+'</b> — <b style="color:var(--white);">Departamento Lite™</b> · 90 días de regalo, luego 199€/mes.';
     }else{
       selectedDigitalPlan='pro';
       resultEl.style.background='rgba(47,123,255,.08)';resultEl.style.border='1px solid rgba(47,123,255,.25)';
@@ -654,7 +713,7 @@ function getActivePlan(){
       return{key,name:wn+' + Digitaliza tu Empresa · '+sols+' soluciones',sub:'Proyecto combinado · Presupuesto personalizado',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'Soluciones ('+sols+')',v:'Presupuesto a medida'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'}],monthlyAfter:dm,stripe:null,timeline:key,customQuote:true,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
     }
     const tb=proj.base+digitalTotalPrice+DIGITAL_BUYOUT;const iva=tb*0.21;
-    return{key,name:wn+' + Digitaliza · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto combinado · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'Solución'+(sols>1?'es':'')+' elegida'+(sols>1?'s':'')+' ('+sols+')',v:digitalTotalPrice.toFixed(2).replace('.',',')+' €'},{l:'Alta e integración de Departamento',v:DIGITAL_BUYOUT.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE[key],timeline:key,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
+    return{key,name:wn+' + Digitaliza · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto combinado · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:(sols>1?'Soluciones elegidas':'Solución elegida')+' ('+sols+')',v:digitalTotalPrice.toFixed(2).replace('.',',')+' €'},{l:'Alta e integración de Departamento',v:DIGITAL_BUYOUT.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE[key],timeline:key,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
   }
 
   if(hasSolutions){
@@ -663,7 +722,7 @@ function getActivePlan(){
       return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+' soluciones',sub:'Proyecto · Presupuesto personalizado',arranqueType:dp,breakdown:[{l:'Implantación ('+sols+' sol.)',v:'Presupuesto a medida'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'}],monthlyAfter:dm,stripe:null,timeline:'digital-'+dp,customQuote:true,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
     }
     const pb=digitalTotalPrice;const tb=pb+DIGITAL_BUYOUT;const iva=tb*0.21;
-    return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[{l:'Solución'+(sols>1?'es':'')+' elegida'+(sols>1?'s':'')+' ('+sols+')',v:pb.toFixed(2).replace('.',',')+' €'},{l:'Alta e integración de Departamento',v:DIGITAL_BUYOUT.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE['digital-'+dp],timeline:'digital-'+dp,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
+    return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[{l:(sols>1?'Soluciones elegidas':'Solución elegida')+' ('+sols+')',v:pb.toFixed(2).replace('.',',')+' €'},{l:'Alta e integración de Departamento',v:DIGITAL_BUYOUT.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE['digital-'+dp],timeline:'digital-'+dp,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
   }
 
   if(selectedProject){
@@ -769,11 +828,13 @@ function toggleFaq(btn){
 }
 
 (function preselectFromUrl(){
-  const plan=new URLSearchParams(location.search).get('plan');
-  if(!plan)return;
+  const params=new URLSearchParams(location.search);
+  const plan=params.get('plan');
   if(plan==='arranque-lite'||plan==='arranque-pro')selectDirect(plan);
   else if(plan==='esencial'||plan==='web')selectProject(plan);
   else if(plan==='digital')toggleDigitalAddon();
+  const pack=params.get('pack');
+  if(pack&&PACKS[pack])applyPack(pack);
 })();
 </script>
 </body>
