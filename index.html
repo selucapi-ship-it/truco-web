@@ -73,9 +73,28 @@ img{display:block;max-width:100%;}
 .nav-cta:hover{opacity:.85;}
 .nav-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
 .nav-toggle span{width:22px;height:2px;background:var(--white);border-radius:2px;transition:all var(--tr);}
+@keyframes navPackPulse{
+  0%,100%{box-shadow:0 3px 14px rgba(217,168,63,.45);transform:translate(-50%,-50%) scale(1);}
+  50%{box-shadow:0 3px 22px rgba(217,168,63,.75);transform:translate(-50%,-50%) scale(1.045);}
+}
+.nav-pack-cta{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  display:flex;align-items:center;gap:6px;
+  background:linear-gradient(90deg,#f2c14e,var(--gold) 55%,#c98f1f);
+  color:#1a1206;font-weight:800;font-size:.85rem;
+  padding:10px 20px;border-radius:30px;
+  animation:navPackPulse 2.2s ease-in-out infinite;
+  transition:filter var(--tr);
+  white-space:nowrap;
+}
+.nav-pack-cta:hover{filter:brightness(1.08);}
+.nav-pack-cta b{font-family:var(--font-display);}
 @media(max-width:1180px){
   .nav-links,.nav-cta{display:none;}
   .nav-toggle{display:flex;}
+}
+@media(max-width:640px){
+  .nav-pack-cta{display:none;}
 }
 
 /* ── HERO ── */
@@ -488,11 +507,13 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="nav-sub">Tu Departamento Tecnológico</div>
     </div>
   </a>
+  <a class="nav-pack-cta" href="#packs-descuento">🎁 Packs Empresa <b>-15%</b></a>
   <ul class="nav-links">
     <li><a href="servicios.html">Servicios</a></li>
     <li><a href="#como-empezamos">Cómo empezamos</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#sectores">¿Es esto para ti?</a></li>
+    <li><a href="#packs-descuento" style="color:var(--gold);font-weight:700;">🎁 Packs -15%</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#chat-section">Hablar con el asistente</a></li>
   </ul>
@@ -1863,6 +1884,7 @@ setTimeout(() => {
   <a href="servicios.html#como-empezamos">Cómo empezamos</a>
   <a href="#nosotros">Nosotros</a>
   <a href="#sectores">¿Es esto para ti?</a>
+  <a href="#packs-descuento" style="color:var(--gold);font-weight:700;">🎁 Packs Empresa -15%</a>
   <a href="#faq">FAQ</a>
   <a href="#chat-section">Hablar con el asistente →</a>
 </div>
