@@ -602,14 +602,15 @@ function updateSolutions(){
   }else{
     priceEl.innerHTML=(total+DIGITAL_BUYOUT)+' €<sub> + IVA</sub>';
     resultEl.style.display='block';
+    const desglose='<div style="font-size:.72rem;color:var(--grey);margin-bottom:6px;">'+total+' € solución'+(count>1?'es':'')+' elegida'+(count>1?'s':'')+' + <b style="color:var(--white);">300 € alta e integración de Departamento</b></div>';
     if(count<=2){
       selectedDigitalPlan='lite';
       resultEl.style.background='rgba(34,197,94,.08)';resultEl.style.border='1px solid rgba(34,197,94,.25)';
-      resultEl.innerHTML='<b style="color:var(--green);">✓ '+count+' solución'+(count>1?'es':'')+'</b> — <b style="color:var(--white);">Departamento Lite™</b> · 90 días de regalo, luego 199€/mes.';
+      resultEl.innerHTML=desglose+'<b style="color:var(--green);">✓ '+count+' solución'+(count>1?'es':'')+'</b> — <b style="color:var(--white);">Departamento Lite™</b> · 90 días de regalo, luego 199€/mes.';
     }else{
       selectedDigitalPlan='pro';
       resultEl.style.background='rgba(47,123,255,.08)';resultEl.style.border='1px solid rgba(47,123,255,.25)';
-      resultEl.innerHTML='<b style="color:var(--blue);">⚡ 3 soluciones</b> — <b style="color:var(--white);">Departamento Pro™</b> · 90 días de regalo, luego 399€/mes.';
+      resultEl.innerHTML=desglose+'<b style="color:var(--blue);">⚡ 3 soluciones</b> — <b style="color:var(--white);">Departamento Pro™</b> · 90 días de regalo, luego 399€/mes.';
     }
     digitalTotalPrice=total;
   }
@@ -652,7 +653,7 @@ function getActivePlan(){
       return{key,name:wn+' + Digitaliza tu Empresa · '+sols+' soluciones',sub:'Proyecto combinado · Presupuesto personalizado',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'Soluciones ('+sols+')',v:'Presupuesto a medida'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'}],monthlyAfter:dm,stripe:null,timeline:key,customQuote:true,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
     }
     const tb=proj.base+digitalTotalPrice+DIGITAL_BUYOUT;const iva=tb*0.21;
-    return{key,name:wn+' + Digitaliza · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto combinado · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'Soluciones ('+sols+')',v:digitalTotalPrice.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE[key],timeline:key,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
+    return{key,name:wn+' + Digitaliza · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto combinado · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'Solución'+(sols>1?'es':'')+' elegida'+(sols>1?'s':'')+' ('+sols+')',v:digitalTotalPrice.toFixed(2).replace('.',',')+' €'},{l:'Alta e integración de Departamento',v:DIGITAL_BUYOUT.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE[key],timeline:key,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
   }
 
   if(hasSolutions){
@@ -661,7 +662,7 @@ function getActivePlan(){
       return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+' soluciones',sub:'Proyecto · Presupuesto personalizado',arranqueType:dp,breakdown:[{l:'Implantación ('+sols+' sol.)',v:'Presupuesto a medida'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'}],monthlyAfter:dm,stripe:null,timeline:'digital-'+dp,customQuote:true,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
     }
     const pb=digitalTotalPrice;const tb=pb+DIGITAL_BUYOUT;const iva=tb*0.21;
-    return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[{l:'Implantación ('+sols+' sol.)',v:pb.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE['digital-'+dp],timeline:'digital-'+dp,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
+    return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[{l:'Solución'+(sols>1?'es':'')+' elegida'+(sols>1?'s':'')+' ('+sols+')',v:pb.toFixed(2).replace('.',',')+' €'},{l:'Alta e integración de Departamento',v:DIGITAL_BUYOUT.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE['digital-'+dp],timeline:'digital-'+dp,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
   }
 
   if(selectedProject){
