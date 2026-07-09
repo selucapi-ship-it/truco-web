@@ -352,21 +352,6 @@ img{display:block;max-width:100%;}
 .cta-btns{display:flex;gap:12px;flex-shrink:0;flex-wrap:wrap;}
 @media(max-width:768px){.cta-inner{flex-direction:column;align-items:flex-start;}}
 
-/* ── FLOATING CHAT ── */
-#float-chat{position:fixed;bottom:24px;right:24px;z-index:800;}
-.float-btn{
-  width:56px;height:56px;border-radius:50%;background:var(--blue);
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.4rem;cursor:pointer;border:none;
-  box-shadow:0 4px 20px rgba(47,123,255,.4);
-  transition:transform var(--tr);
-}
-.float-btn:hover{transform:scale(1.08);}
-.float-notif{
-  position:absolute;top:-4px;right:-4px;width:18px;height:18px;
-  background:#ef4444;border-radius:50%;border:2px solid var(--bg);
-  display:none;
-}
 
 /* ── FOOTER ── */
 /* SECTORES */
@@ -1083,28 +1068,11 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </footer>
 
-<!-- ── FLOAT CHAT BTN ── -->
-<div id="float-chat">
-  <button class="float-btn" onclick="scrollToChat()" title="Hablar con el asistente">💬</button>
-  <div class="float-notif" id="floatNotif"></div>
-</div>
-
 <script>
 /* ── NAVBAR SCROLL ── */
 window.addEventListener('scroll',()=>{
   document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
 });
-
-/* ── OCULTAR EL BOTÓN FLOTANTE DE CHAT MIENTRAS EL CHAT YA ESTÁ VISIBLE ── */
-(function(){
-  const floatChat=document.getElementById('float-chat');
-  const chatSection=document.getElementById('chat-section');
-  if(floatChat&&chatSection&&'IntersectionObserver' in window){
-    new IntersectionObserver((entries)=>{
-      floatChat.style.display=entries[0].isIntersecting?'none':'';
-    },{threshold:0.15}).observe(chatSection);
-  }
-})();
 
 /* ── MOBILE MENU ── */
 function toggleMenu(){
@@ -1129,10 +1097,6 @@ function toggleFaq(btn){
     icon.textContent='−';
   }
 }
-
-/* ── FLOAT CHAT ── */
-function scrollToChat(){document.getElementById('chat-section').scrollIntoView({behavior:'smooth'});}
-setTimeout(()=>{document.getElementById('floatNotif').style.display='block';},4000);
 
 /* ── AI CHAT ── */
 // ══════════════════════════════════════════
