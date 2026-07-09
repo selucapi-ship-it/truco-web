@@ -21,6 +21,7 @@ DEPARTAMENTO TECNOLÓGICO (cuota mensual, + IVA):
 
 CONDICIONES:
 - Garantía de Ajuste TRUCO™: durante todo el período de implantación, se ajusta y perfecciona la solución las veces que haga falta sin coste adicional hasta que funcione según lo acordado. Incidencias técnicas siempre sin coste. Los pagos ya realizados no son reembolsables; el verdadero colchón es que, pasado el período de implantación, no hay permanencia.
+- Límites de uso de las soluciones de IA (WhatsApp, Web, Correo): incluyen 1.000 interacciones/mes por solución activa. Exceso a 0,02€ + IVA por interacción adicional, facturado el mes siguiente. Esto cubre casi cualquier uso real de un negocio normal; solo entra en juego con picos anómalos de volumen (spam, ataques). Si el uso se dispara muy por encima de lo normal, TRUCO puede pausar temporalmente esa solución de IA concreta (sin afectar al resto del Departamento) avisando al cliente.
 - Períodos de implantación — el Departamento va COMPLETAMENTE DE REGALO durante todo el período, sin ningún cobro oculto (detállalo así si te preguntan por permanencia o plazos):
   · Proyectos Web (Esencial/Profesional): 30 días de implantación, con el Departamento Lite de regalo durante esos 30 días. Desde el día 31, renovación automática mensual a precio estándar (199€/mes), sin permanencia.
   · Digitaliza (soluciones): 90 días de implantación, con el Departamento (Lite o Pro según nº de soluciones) de regalo durante esos 90 días. Desde el día 91, renovación automática mensual a precio estándar, sin permanencia.
