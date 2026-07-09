@@ -13,7 +13,7 @@ PROYECTOS (pago único, + IVA 21%):
 SOLUCIONES INDIVIDUALES DE DIGITALIZA (+ IVA):
 IA para WhatsApp 590€ · IA para Web 350€ · IA para Correo 350€ · CRM 400€ · Reservas online 350€ · Automatizaciones 400€ · Integraciones 350€ · Gestión documental 400€ · Firma digital 300€ · Ciberseguridad Pyme 450€ (auditoría inicial básica, activación de 2FA en plataformas críticas, gestor de contraseñas seguro, copias de seguridad automáticas en la nube, formación preventiva de 30 min — no incluye respuesta a incidentes de hackeo previos ni auditoría de código avanzada).
 
-PACKS RECOMENDADOS POR SECTOR (dentro de Digitaliza — son un punto de partida orientativo, el cliente puede quitar o añadir cualquier solución, no van cerrados):
+PACKS RECOMENDADOS POR SECTOR (dentro de Digitaliza — 15% de descuento en las soluciones si se llevan las 3 tal cual; son un punto de partida orientativo, el cliente puede quitar o añadir cualquier solución, no van cerrados, pero el descuento solo aplica mientras sean exactamente esas 3):
 - Pack Servicios (fontaneros, electricistas, autónomos de oficios, clínicas, centros de estética, gimnasios, academias): IA para WhatsApp + Reservas online + Automatizaciones.
 - Pack Despachos (abogados, asesorías, gestorías, inmobiliarias, servicios profesionales): CRM + Firma digital + Gestión documental. Recomienda también Ciberseguridad Pyme para este sector — manejan datos y contratos sensibles.
 - Pack Hostelería (restaurantes, salones de celebración): Reservas online + IA para WhatsApp + Automatizaciones.
