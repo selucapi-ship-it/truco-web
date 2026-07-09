@@ -41,6 +41,12 @@ a{color:inherit;text-decoration:none;}
 #pack-badge b{color:var(--white);}
 #pack-security-tip{display:none;margin:0 20px 14px;padding:10px 14px;border-radius:8px;background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.3);font-size:.76rem;color:var(--grey);line-height:1.55;}
 #pack-security-tip b{color:var(--gold);}
+.quick-sector-box{padding:16px 20px;border-bottom:1px solid var(--grey-line);background:rgba(47,123,255,.05);}
+.quick-sector-box label{display:block;font-size:.82rem;color:var(--white);font-weight:700;margin-bottom:2px;}
+.quick-sector-box .qsb-sub{font-size:.72rem;color:var(--grey);margin-bottom:8px;}
+.quick-sector-box select{width:100%;background:var(--bg-panel);border:1px solid var(--blue-soft);border-radius:8px;padding:11px 14px;color:var(--white);font-family:var(--font-b);font-size:.88rem;outline:none;-webkit-appearance:none;cursor:pointer;}
+.quick-sector-box select:focus{border-color:var(--blue);}
+.quick-sector-box select option{background:var(--bg-panel);}
 .billing-toggle{display:flex;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:10px;padding:4px;margin-bottom:16px;}
 .billing-btn{flex:1;text-align:center;padding:9px 16px;border-radius:7px;font-size:.85rem;font-weight:600;color:var(--grey);cursor:pointer;transition:all var(--tr);}
 .billing-btn.active{background:var(--blue);color:#fff;}
@@ -370,6 +376,54 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div style="font-size:.75rem;color:var(--grey);">El precio y el departamento se asignan automáticamente según tu selección</div>
             <div style="font-size:.72rem;color:var(--grey);margin-top:6px;">💬🌐📧 Las soluciones con IA (WhatsApp, Web, Correo) incluyen 1.000 interacciones/mes · exceso 0,02 €/interacción</div>
           </div>
+          <div class="quick-sector-box">
+            <label for="quick-sector">🎯 Elige tu sector y nosotros seleccionamos lo que necesitas</label>
+            <div class="qsb-sub">Marcamos las soluciones habituales de tu sector — tú decides si las mantienes, quitas o añades más.</div>
+            <select id="quick-sector" onchange="quickSectorSelect(this.value)">
+              <option value="">Selecciona tu oficio o negocio…</option>
+              <optgroup label="Servicios y citas">
+                <option value="peluqueria">Peluquería / Barbería</option>
+                <option value="estetica">Centro de estética / Belleza</option>
+                <option value="dental">Clínica dental</option>
+                <option value="medica">Clínica médica / Centro de salud</option>
+                <option value="fisio">Fisioterapia</option>
+                <option value="psicologia">Psicología / Terapia</option>
+                <option value="veterinaria">Veterinaria</option>
+                <option value="gimnasio">Gimnasio / Centro deportivo</option>
+                <option value="academia">Academia / Centro de formación</option>
+                <option value="autoescuela">Autoescuela</option>
+                <option value="fontanero">Fontanero</option>
+                <option value="electricista">Electricista</option>
+                <option value="cerrajero">Cerrajero</option>
+                <option value="pintor">Pintor / Reformas</option>
+                <option value="carpintero">Carpintero</option>
+                <option value="taller">Taller mecánico</option>
+              </optgroup>
+              <optgroup label="Despachos y gestión">
+                <option value="abogado">Abogado / Bufete</option>
+                <option value="asesoria">Asesoría</option>
+                <option value="gestoria">Gestoría</option>
+                <option value="consultoria">Consultoría</option>
+                <option value="inmobiliaria">Inmobiliaria</option>
+                <option value="arquitecto">Arquitecto</option>
+                <option value="notaria">Notaría</option>
+              </optgroup>
+              <optgroup label="Hostelería">
+                <option value="restaurante">Restaurante</option>
+                <option value="bar">Bar / Cafetería</option>
+                <option value="eventos">Salón de celebraciones / Eventos</option>
+                <option value="catering">Catering</option>
+              </optgroup>
+              <optgroup label="Comercio y otros">
+                <option value="tienda">Tienda / Comercio</option>
+                <option value="ecommerce">Ecommerce</option>
+                <option value="ferreteria">Ferretería</option>
+                <option value="floristeria">Floristería</option>
+                <option value="panaderia">Panadería / Pastelería</option>
+                <option value="otro">Otro negocio</option>
+              </optgroup>
+            </select>
+          </div>
           <div id="pack-badge"></div>
           <div id="pack-security-tip"></div>
           <div class="solutions-grid-el" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:16px 20px;" id="solutions-grid">
@@ -530,7 +584,14 @@ const SECTOR_PACKS={
   'Restaurante / Hostelería':'hosteleria',
   'Comercio / Tienda':'empresas','Otro':'empresas'
 };
+const TRADE_PACKS={
+  peluqueria:'servicios',estetica:'servicios',dental:'servicios',medica:'servicios',fisio:'servicios',psicologia:'servicios',veterinaria:'servicios',gimnasio:'servicios',academia:'servicios',autoescuela:'servicios',fontanero:'servicios',electricista:'servicios',cerrajero:'servicios',pintor:'servicios',carpintero:'servicios',taller:'servicios',
+  abogado:'despachos',asesoria:'despachos',gestoria:'despachos',consultoria:'despachos',inmobiliaria:'despachos',arquitecto:'despachos',notaria:'despachos',
+  restaurante:'hosteleria',bar:'hosteleria',eventos:'hosteleria',catering:'hosteleria',
+  tienda:'empresas',ecommerce:'empresas',ferreteria:'empresas',floristeria:'empresas',panaderia:'empresas',otro:'empresas'
+};
 const PACK_DISCOUNT=0.15;
+let sectorEngaged=false;
 function matchingPackKey(){
   const checked=Array.from(document.querySelectorAll('#solutions-grid input:checked')).map(cb=>cb.value).sort();
   for(const k in PACKS){
@@ -544,14 +605,33 @@ function sumCheckedSolutions(){
   document.querySelectorAll('#solutions-grid input:checked').forEach(c=>{t+=parseInt(c.closest('.sol-chip').dataset.price||0);});
   return t;
 }
+function getPackDiscountInfo(count){
+  if(!sectorEngaged||count!==3)return{applies:false};
+  const exact=matchingPackKey();
+  return{applies:true,key:exact,label:exact?PACKS[exact].name+' completo':'3 soluciones de tu sector'};
+}
 
 function applyPackForSector(sectorValue){
   const packKey=SECTOR_PACKS[sectorValue];
-  const badge=document.getElementById('pack-badge');
-  const secTip=document.getElementById('pack-security-tip');
   if(!packKey){
+    sectorEngaged=false;
+    const badge=document.getElementById('pack-badge');const secTip=document.getElementById('pack-security-tip');
     if(badge)badge.style.display='none';
     if(secTip)secTip.style.display='none';
+    updateAll();
+    return;
+  }
+  applyPack(packKey);
+}
+
+function quickSectorSelect(tradeValue){
+  const packKey=TRADE_PACKS[tradeValue];
+  if(!packKey){
+    sectorEngaged=false;
+    const badge=document.getElementById('pack-badge');const secTip=document.getElementById('pack-security-tip');
+    if(badge)badge.style.display='none';
+    if(secTip)secTip.style.display='none';
+    updateAll();
     return;
   }
   applyPack(packKey);
@@ -562,12 +642,13 @@ function applyPack(packKey){
   const badge=document.getElementById('pack-badge');
   const secTip=document.getElementById('pack-security-tip');
   if(!pack)return;
+  sectorEngaged=true;
   if(!digitalAddon)toggleDigitalAddon();
   document.querySelectorAll('#solutions-grid input').forEach(cb=>{cb.checked=pack.sols.includes(cb.value);});
   document.querySelectorAll('#solutions-grid .sol-chip').forEach(chip=>chip.classList.remove('sol-suggested'));
   updateSolutions();
   if(badge){
-    badge.innerHTML='🎯 <b>'+pack.name+'</b> recomendado para tu sector ('+pack.sub+') — ya hemos marcado las soluciones más habituales, con <b style="color:var(--gold);">15% de descuento</b> por llevarlas juntas. Puedes quitar o añadir las que quieras (el descuento aplica mientras mantengas exactamente estas 3).';
+    badge.innerHTML='🎯 <b>'+pack.name+'</b> recomendado para tu sector ('+pack.sub+') — ya hemos marcado las soluciones más habituales, con <b style="color:var(--gold);">15% de descuento</b> por llevarlas juntas. Puedes quitar o añadir las que quieras: el descuento se mantiene mientras tengas 3 soluciones activas.';
     badge.style.display='block';
   }
   if(secTip){
@@ -674,16 +755,17 @@ function updateSolutions(){
     resultEl.innerHTML='<b style="color:var(--gold);">⚠ '+count+' soluciones seleccionadas</b> — Elaboramos presupuesto personalizado. <b style="color:var(--white);">Continúa y te contactamos en 24h.</b>';
     selectedDigitalPlan='pro';digitalTotalPrice=0;
   }else{
-    const packKey=matchingPackKey();
-    const discounted=packKey?Math.round(total*(1-PACK_DISCOUNT)*100)/100:total;
-    priceEl.innerHTML=(packKey?'<s style="color:var(--grey);font-size:.7em;">'+(total+DIGITAL_BUYOUT)+' €</s> ':'')+(discounted+DIGITAL_BUYOUT)+' €<sub> + IVA</sub>';
+    const discInfo=getPackDiscountInfo(count);
+    const discounted=discInfo.applies?Math.round(total*(1-PACK_DISCOUNT)*100)/100:total;
+    priceEl.innerHTML=(discInfo.applies?'<s style="color:var(--grey);font-size:.7em;">'+(total+DIGITAL_BUYOUT)+' €</s> ':'')+(discounted+DIGITAL_BUYOUT)+' €<sub> + IVA</sub>';
     resultEl.style.display='block';
-    const packLine=packKey?'<div style="font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:4px;">🎁 '+PACKS[packKey].name+' completo: -15% en soluciones (ahorras '+(total-discounted).toFixed(2).replace('.',',')+' €)</div>':'';
-    const desglose=packLine+'<div style="font-size:.72rem;color:var(--grey);margin-bottom:6px;">'+(packKey?'<s>'+total+' €</s> '+discounted.toFixed(2).replace('.',',')+' €':total+' €')+' '+(count>1?'soluciones elegidas':'solución elegida')+' + <b style="color:var(--white);">300 € alta e integración de Departamento</b></div>';
+    const packLine=discInfo.applies?'<div style="font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:4px;">🎁 '+discInfo.label+': -15% en soluciones (ahorras '+(total-discounted).toFixed(2).replace('.',',')+' €)</div>':'';
+    const desglose=packLine+'<div style="font-size:.72rem;color:var(--grey);margin-bottom:6px;">'+(discInfo.applies?'<s>'+total+' €</s> '+discounted.toFixed(2).replace('.',',')+' €':total+' €')+' '+(count>1?'soluciones elegidas':'solución elegida')+' + <b style="color:var(--white);">300 € alta e integración de Departamento</b></div>';
     if(count<=2){
       selectedDigitalPlan='lite';
       resultEl.style.background='rgba(34,197,94,.08)';resultEl.style.border='1px solid rgba(34,197,94,.25)';
-      resultEl.innerHTML=desglose+'<b style="color:var(--green);">✓ '+count+' '+(count>1?'soluciones':'solución')+'</b> — <b style="color:var(--white);">Departamento Lite™</b> · 90 días de regalo, luego 199€/mes.';
+      const nudge=sectorEngaged?'<div style="font-size:.72rem;color:var(--gold);font-weight:600;margin-top:6px;">🔥 Añade '+(3-count)+' solución'+(3-count>1?'es':'')+' más y desbloqueas un 15% de descuento.</div>':'';
+      resultEl.innerHTML=desglose+'<b style="color:var(--green);">✓ '+count+' '+(count>1?'soluciones':'solución')+'</b> — <b style="color:var(--white);">Departamento Lite™</b> · 90 días de regalo, luego 199€/mes.'+nudge;
     }else{
       selectedDigitalPlan='pro';
       resultEl.style.background='rgba(47,123,255,.08)';resultEl.style.border='1px solid rgba(47,123,255,.25)';
@@ -729,10 +811,10 @@ function getActivePlan(){
     if(customQuote){
       return{key,name:wn+' + Digitaliza tu Empresa · '+sols+' soluciones',sub:'Proyecto combinado · Presupuesto personalizado',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'Soluciones ('+sols+')',v:'Presupuesto a medida'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'}],monthlyAfter:dm,stripe:null,timeline:key,customQuote:true,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
     }
-    const packKey1=matchingPackKey();const rawTotal1=sumCheckedSolutions();const discAmt1=packKey1?Math.round(rawTotal1*PACK_DISCOUNT*100)/100:0;
+    const discInfo1=getPackDiscountInfo(sols);const rawTotal1=sumCheckedSolutions();const discAmt1=discInfo1.applies?Math.round(rawTotal1*PACK_DISCOUNT*100)/100:0;
     const tb=proj.base+digitalTotalPrice+DIGITAL_BUYOUT;const iva=tb*0.21;
     const solLines1=[{l:(sols>1?'Soluciones elegidas':'Solución elegida')+' ('+sols+')',v:rawTotal1.toFixed(2).replace('.',',')+' €'}];
-    if(packKey1)solLines1.push({l:'🎁 Descuento '+PACKS[packKey1].name+' (-15%)',v:'-'+discAmt1.toFixed(2).replace('.',',')+' €',cls:'free'});
+    if(discInfo1.applies)solLines1.push({l:'🎁 Descuento '+discInfo1.label+' (-15%)',v:'-'+discAmt1.toFixed(2).replace('.',',')+' €',cls:'free'});
     return{key,name:wn+' + Digitaliza · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto combinado · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},...solLines1,{l:'Alta e integración de Departamento',v:DIGITAL_BUYOUT.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE[key],timeline:key,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
   }
 
@@ -741,10 +823,10 @@ function getActivePlan(){
     if(customQuote){
       return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+' soluciones',sub:'Proyecto · Presupuesto personalizado',arranqueType:dp,breakdown:[{l:'Implantación ('+sols+' sol.)',v:'Presupuesto a medida'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'}],monthlyAfter:dm,stripe:null,timeline:'digital-'+dp,customQuote:true,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
     }
-    const packKey2=matchingPackKey();const rawTotal2=sumCheckedSolutions();const discAmt2=packKey2?Math.round(rawTotal2*PACK_DISCOUNT*100)/100:0;
+    const discInfo2=getPackDiscountInfo(sols);const rawTotal2=sumCheckedSolutions();const discAmt2=discInfo2.applies?Math.round(rawTotal2*PACK_DISCOUNT*100)/100:0;
     const pb=digitalTotalPrice;const tb=pb+DIGITAL_BUYOUT;const iva=tb*0.21;
     const solLines2=[{l:(sols>1?'Soluciones elegidas':'Solución elegida')+' ('+sols+')',v:rawTotal2.toFixed(2).replace('.',',')+' €'}];
-    if(packKey2)solLines2.push({l:'🎁 Descuento '+PACKS[packKey2].name+' (-15%)',v:'-'+discAmt2.toFixed(2).replace('.',',')+' €',cls:'free'});
+    if(discInfo2.applies)solLines2.push({l:'🎁 Descuento '+discInfo2.label+' (-15%)',v:'-'+discAmt2.toFixed(2).replace('.',',')+' €',cls:'free'});
     return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[...solLines2,{l:'Alta e integración de Departamento',v:DIGITAL_BUYOUT.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE['digital-'+dp],timeline:'digital-'+dp,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
   }
 
