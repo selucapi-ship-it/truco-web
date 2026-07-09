@@ -251,19 +251,9 @@ img{display:block;max-width:100%;}
 .founder-sig b{color:var(--gold);font-weight:500;}
 @media(max-width:768px){.founder-inner{grid-template-columns:1fr;}.founder-photo-wrap{max-width:280px;}}
 
-/* ── CREDIBILIDAD ── */
-.cred-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-.cred-card{
-  background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;
-  overflow:hidden;transition:border-color var(--tr);
-}
-.cred-card:hover{border-color:var(--blue-soft);}
-.cred-thumb{aspect-ratio:16/9;background:var(--bg-card);display:flex;align-items:center;justify-content:center;font-size:2.5rem;}
-.cred-body{padding:16px;}
-.cred-tag{font-family:var(--font-mono);font-size:.62rem;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;}
-.cred-body h4{font-family:var(--font-display);font-size:.95rem;font-weight:700;margin-bottom:4px;}
-.cred-body p{font-size:.8rem;color:var(--grey);line-height:1.5;}
-@media(max-width:768px){.cred-grid{grid-template-columns:1fr;}}
+/* ── PACKS EMPRESA CON DESCUENTO ── */
+#packs-descuento .pd-grid a:hover{border-color:var(--gold)!important;}
+@media(max-width:768px){#packs-descuento .pd-grid{grid-template-columns:1fr!important;}}
 
 /* ── FAQ ── */
 .faq-list{max-width:760px;}
@@ -890,38 +880,43 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </section>
 
-<!-- ── CREDIBILIDAD ── -->
-<section id="credibilidad" class="section">
+<!-- ── PACKS EMPRESA CON DESCUENTO ── -->
+<section id="packs-descuento" class="section">
   <div class="container">
-    <div class="section-tag">Antes de contratarnos, aprende lo básico. Gratis.</div>
-    <h2 class="section-h2">Más de 20.000 personas ya<br>confían en lo que compartimos.</h2>
-    <p class="section-sub">Tecnología e IA explicadas para negocios reales, sin tecnicismos. Compartimos todo lo que sabemos porque estamos convencidos de que cuando lo veas aplicado, querrás que lo apliquemos en tu empresa.</p>
-    <div class="cred-grid">
-      <div class="cred-card">
-        <div class="cred-thumb">🌐</div>
-        <div class="cred-body">
-          <div class="cred-tag">Video gratuito</div>
-          <h4>Cómo registrar tu dominio paso a paso</h4>
-          <p>Todo lo que necesitas saber para tener tu propio dominio. Sin complicaciones, sin letra pequeña.</p>
-        </div>
-      </div>
-      <div class="cred-card">
-        <div class="cred-thumb">🖥️</div>
-        <div class="cred-body">
-          <div class="cred-tag">Video gratuito</div>
-          <h4>Qué hosting elegir para tu negocio</h4>
-          <p>Comparativa honesta de los mejores alojamientos según el tamaño y tipo de tu negocio.</p>
-        </div>
-      </div>
-      <div class="cred-card">
-        <div class="cred-thumb">⚡</div>
-        <div class="cred-body">
-          <div class="cred-tag">Video gratuito</div>
-          <h4>Por qué tener tu propio departamento tecnológico</h4>
-          <p>Lo que cambia en tu negocio cuando dejas de gestionarlo todo tú solo y tienes un equipo técnico detrás.</p>
-        </div>
-      </div>
+    <div class="section-tag">Packs por sector</div>
+    <h2 class="section-h2">Packs Empresa con descuento</h2>
+    <p class="section-sub">Por confiar en nuestro Departamento Tecnológico, queremos obsequiarte con un <b style="color:var(--white);">15% de descuento</b> en nuestros packs. Cada uno trae 3 soluciones ya pensadas para tu tipo de negocio — puedes quitar o añadir las que quieras al contratar, no van cerradas.</p>
+    <div class="pd-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:18px;">
+      <a href="pago.html?plan=digital&pack=servicios" style="text-decoration:none;color:inherit;position:relative;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:12px;padding:20px;transition:border-color var(--tr);display:block;">
+        <span style="position:absolute;top:-11px;right:16px;background:linear-gradient(90deg,var(--gold),#c98f1f);color:#1a1206;font-size:.74rem;font-weight:800;padding:5px 12px;border-radius:20px;box-shadow:0 3px 10px rgba(217,168,63,.45);">🔥 -15%</span>
+        <div style="font-size:1.3rem;margin-bottom:8px;">🔧</div>
+        <h4 style="font-family:var(--font-display);font-size:.95rem;font-weight:700;margin-bottom:4px;">Pack Servicios</h4>
+        <p style="font-size:.78rem;color:var(--grey);line-height:1.5;">Fontaneros, electricistas, autónomos de oficios, clínicas, centros de estética, gimnasios, academias…</p>
+        <p style="font-size:.75rem;color:var(--white);margin-top:8px;">💬 IA WhatsApp · 📅 Reservas · ⚙️ Automatizaciones</p>
+      </a>
+      <a href="pago.html?plan=digital&pack=despachos" style="text-decoration:none;color:inherit;position:relative;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:12px;padding:20px;transition:border-color var(--tr);display:block;">
+        <span style="position:absolute;top:-11px;right:16px;background:linear-gradient(90deg,var(--gold),#c98f1f);color:#1a1206;font-size:.74rem;font-weight:800;padding:5px 12px;border-radius:20px;box-shadow:0 3px 10px rgba(217,168,63,.45);">🔥 -15%</span>
+        <div style="font-size:1.3rem;margin-bottom:8px;">💼</div>
+        <h4 style="font-family:var(--font-display);font-size:.95rem;font-weight:700;margin-bottom:4px;">Pack Despachos</h4>
+        <p style="font-size:.78rem;color:var(--grey);line-height:1.5;">Abogados, asesorías, gestorías, inmobiliarias, servicios profesionales…</p>
+        <p style="font-size:.75rem;color:var(--white);margin-top:8px;">👥 CRM · ✍️ Firma digital · 📁 Gestión documental</p>
+      </a>
+      <a href="pago.html?plan=digital&pack=hosteleria" style="text-decoration:none;color:inherit;position:relative;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:12px;padding:20px;transition:border-color var(--tr);display:block;">
+        <span style="position:absolute;top:-11px;right:16px;background:linear-gradient(90deg,var(--gold),#c98f1f);color:#1a1206;font-size:.74rem;font-weight:800;padding:5px 12px;border-radius:20px;box-shadow:0 3px 10px rgba(217,168,63,.45);">🔥 -15%</span>
+        <div style="font-size:1.3rem;margin-bottom:8px;">🍽️</div>
+        <h4 style="font-family:var(--font-display);font-size:.95rem;font-weight:700;margin-bottom:4px;">Pack Hostelería</h4>
+        <p style="font-size:.78rem;color:var(--grey);line-height:1.5;">Restaurantes, salones de celebración…</p>
+        <p style="font-size:.75rem;color:var(--white);margin-top:8px;">📅 Reservas · 💬 IA WhatsApp · ⚙️ Automatizaciones</p>
+      </a>
+      <a href="pago.html?plan=digital&pack=empresas" style="text-decoration:none;color:inherit;position:relative;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:12px;padding:20px;transition:border-color var(--tr);display:block;">
+        <span style="position:absolute;top:-11px;right:16px;background:linear-gradient(90deg,var(--gold),#c98f1f);color:#1a1206;font-size:.74rem;font-weight:800;padding:5px 12px;border-radius:20px;box-shadow:0 3px 10px rgba(217,168,63,.45);">🔥 -15%</span>
+        <div style="font-size:1.3rem;margin-bottom:8px;">🏢</div>
+        <h4 style="font-family:var(--font-display);font-size:.95rem;font-weight:700;margin-bottom:4px;">Pack Empresas</h4>
+        <p style="font-size:.78rem;color:var(--grey);line-height:1.5;">Pymes en general, sin un sector concreto.</p>
+        <p style="font-size:.75rem;color:var(--white);margin-top:8px;">👥 CRM · ⚙️ Automatizaciones · 🔗 Integraciones</p>
+      </a>
     </div>
+    <p style="font-size:.78rem;color:var(--grey);margin-top:20px;">¿No ves tu oficio en la lista? En el propio checkout puedes elegir tu sector entre más de 30 opciones y te marcamos las soluciones recomendadas al momento.</p>
   </div>
 </section>
 
