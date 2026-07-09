@@ -5,26 +5,26 @@ DATOS REALES DE TRUCO technology (no inventes nada fuera de esto; si no lo sabes
 QUÉ ES: Departamento Tecnológico externalizado para pymes y autónomos en España. Implantan tecnología (proyectos) y luego la mantienen cada mes (Departamento Tecnológico).
 
 PROYECTOS (pago único, + IVA 21%):
-- Web Esencial: 499€ (603,79€ con IVA). 5 páginas, responsive, SEO básico, lista en 7-10 días. Incluye 1 mes de Departamento Lite gratis.
-- Web Profesional: desde 790€ (955,90€ con IVA). Diseño a medida, páginas ilimitadas, integraciones, IA si se necesita. Entrega en 2-4 semanas. Incluye 1 mes de Departamento Lite gratis.
-- Digitaliza tu Empresa: desde 590€, precio según soluciones elegidas. Implantación de 90 días. 1 mes de Departamento (Lite si 1-2 soluciones, Pro si 3+) gratis, desde el mes 2 precio estándar. Más de 3 soluciones = presupuesto personalizado.
-- Web Esencial o Profesional + Digitaliza se pueden combinar en la misma compra.
+- Web Esencial: 649€ (785,29€ con IVA). 5 páginas, responsive, SEO básico, lista en 7-10 días. Incluye 30 días de Departamento Lite completamente de regalo.
+- Web Profesional: desde 940€ (1.137,40€ con IVA). Diseño a medida, páginas ilimitadas, integraciones, IA si se necesita. Entrega en 2-4 semanas. Incluye 30 días de Departamento Lite completamente de regalo.
+- Digitaliza tu Empresa: desde 600€ (soluciones elegidas + 300€ de Departamento incluido). Implantación de 90 días, con el Departamento (Lite si 1-2 soluciones, Pro si 3+) completamente de regalo durante todo ese período. Más de 3 soluciones = presupuesto personalizado.
+- Web Esencial o Profesional + Digitaliza se pueden combinar en la misma compra (mismo esquema: proyecto + soluciones + 300€ de Departamento incluido, 90 días de regalo).
 
 SOLUCIONES INDIVIDUALES DE DIGITALIZA (+ IVA):
-IA para WhatsApp 590€ · IA para Web 350€ · IA para Correo 350€ · CRM 400€ · Reservas online 350€ · Automatizaciones 400€ · Integraciones 350€ · Gestión documental 400€ · Firma digital 300€.
+IA para WhatsApp 590€ · IA para Web 350€ · IA para Correo 350€ · CRM 400€ · Reservas online 350€ · Automatizaciones 400€ · Integraciones 350€ · Gestión documental 400€ · Firma digital 300€ · Ciberseguridad Pyme 450€ (auditoría inicial básica, activación de 2FA en plataformas críticas, gestor de contraseñas seguro, copias de seguridad automáticas en la nube, formación preventiva de 30 min — no incluye respuesta a incidentes de hackeo previos ni auditoría de código avanzada).
 
 DEPARTAMENTO TECNOLÓGICO (cuota mensual, + IVA):
 - Lite™: 199€/mes. Hasta 2 soluciones tecnológicas. Mantenimiento, seguridad, copias de seguridad, incidencias sin coste, reunión mensual de 30 min.
 - Pro™: 399€/mes. Hasta 6 soluciones. Todo lo de Lite + optimización continua, mayor prioridad, reunión de 45 min.
 - Pago anual: 10% de descuento (Lite 2.149,20€/año, Pro 4.309,20€/año).
-- Se puede acceder directo al Departamento sin proyecto previo (mismo precio, sin mes gratis).
+- Se puede acceder directo al Departamento sin proyecto previo (mismo precio, sin período de regalo — el regalo solo aplica cuando hay un Proyecto de implantación).
 
 CONDICIONES:
 - Garantía de Ajuste TRUCO™: durante todo el período de implantación, se ajusta y perfecciona la solución las veces que haga falta sin coste adicional hasta que funcione según lo acordado. Incidencias técnicas siempre sin coste. Los pagos ya realizados no son reembolsables; el verdadero colchón es que, pasado el período de implantación, no hay permanencia.
-- Períodos de implantación (detállalos así si te preguntan por permanencia o plazos):
-  · Proyectos Web (Esencial/Profesional): 60 días en total. Días 1-30 (mes 1) Departamento Lite gratis. Días 31-60 (mes 2) a precio estándar (199€/mes). Desde el día 61, sin permanencia.
-  · Digitaliza (soluciones): 90 días en total. Días 1-30 (mes 1) Departamento gratis (Lite o Pro según nº de soluciones). Días 31-90 (meses 2 y 3) a precio estándar. Desde el día 91, sin permanencia.
-  · Arranque directo (sin proyecto): precio estándar desde el día 1, sin mes gratis.
+- Períodos de implantación — el Departamento va COMPLETAMENTE DE REGALO durante todo el período, sin ningún cobro oculto (detállalo así si te preguntan por permanencia o plazos):
+  · Proyectos Web (Esencial/Profesional): 30 días de implantación, con el Departamento Lite de regalo durante esos 30 días. Desde el día 31, renovación automática mensual a precio estándar (199€/mes), sin permanencia.
+  · Digitaliza (soluciones): 90 días de implantación, con el Departamento (Lite o Pro según nº de soluciones) de regalo durante esos 90 días. Desde el día 91, renovación automática mensual a precio estándar, sin permanencia.
+  · Arranque directo (sin proyecto): precio estándar desde el día 1, sin período de regalo.
 - Cancelación con 7 días de antelación a la próxima factura, en cualquier momento tras el período de implantación.
 - Dominio y hosting: siempre a nombre y coste del cliente, nunca de TRUCO.
 - Pago con Stripe (cifrado 256-bit). Factura automática, se puede emitir a nombre de empresa con NIF/CIF.

@@ -84,9 +84,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 @media(max-width:480px){.solutions-grid-el{grid-template-columns:1fr!important;}}
 
 .onboarding-direct-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-.impl-months-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
 @media(max-width:600px){.onboarding-direct-grid{grid-template-columns:1fr;}}
-@media(max-width:440px){.impl-months-grid{grid-template-columns:1fr;}}
 
 .plan-card{border:1.5px solid var(--grey-line);border-radius:14px;padding:0;cursor:pointer;overflow:hidden;transition:border-color var(--tr),transform var(--tr);position:relative;}
 .plan-card:hover{border-color:var(--blue-soft);transform:translateY(-1px);}
@@ -304,11 +302,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
           <input type="radio" name="plan" value="esencial" style="display:none">
           <div class="pc-check-box"></div>
           <div class="pc-top">
-            <div class="pc-tag">Proyecto único · 60 días · Rápido</div>
+            <div class="pc-tag">Proyecto único · 30 días · Rápido</div>
             <div class="pc-name">Web Esencial</div>
-            <div class="pc-base-price">698 €<sub> + IVA</sub></div>
-            <div class="pc-vat">844,58 € con IVA · Todo incluido</div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--grey);">Web 499€ + Mes 2 Lite™ 199€ · <b style="color:var(--green);">Primer mes gratis</b></div>
+            <div class="pc-base-price">649 €<sub> + IVA</sub></div>
+            <div class="pc-vat">785,29 € con IVA · Todo incluido</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--grey);">🎁 <b style="color:var(--green);">30 días de Departamento Lite™ de regalo</b></div>
           </div>
         </label>
 
@@ -318,11 +316,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
           <input type="radio" name="plan" value="web" style="display:none">
           <div class="pc-check-box"></div>
           <div class="pc-top" style="padding-top:28px;">
-            <div class="pc-tag" style="color:var(--blue);">Proyecto único · 60 días · Con automatización</div>
+            <div class="pc-tag" style="color:var(--blue);">Proyecto único · 30 días · Con automatización</div>
             <div class="pc-name">Web Profesional</div>
-            <div class="pc-base-price">989 €<sub> + IVA</sub></div>
-            <div class="pc-vat">1.196,69 € con IVA · Todo incluido</div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--grey);">Web 790€ + Mes 2 Lite™ 199€ · <b style="color:var(--green);">Primer mes gratis</b></div>
+            <div class="pc-base-price">940 €<sub> + IVA</sub></div>
+            <div class="pc-vat">1.137,40 € con IVA · Todo incluido</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--grey);">🎁 <b style="color:var(--green);">30 días de Departamento Lite™ de regalo</b></div>
           </div>
         </label>
 
@@ -336,7 +334,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
           <div class="pc-top">
             <div class="pc-tag">Se añade a tu compra · 90 días de implantación</div>
             <div class="pc-name">Digitaliza tu Empresa</div>
-            <div class="pc-base-price" id="digital-price-display">desde 590 €<sub> + IVA</sub></div>
+            <div class="pc-base-price" id="digital-price-display">desde 600 €<sub> + IVA</sub></div>
             <div class="pc-vat">Precio según soluciones elegidas · también puedes contratarla sola</div>
             <div class="pc-includes" style="margin-top:8px;">Elige las <span>soluciones que necesitas</span> abajo</div>
           </div>
@@ -346,25 +344,16 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       <!-- PANEL DINÁMICO — aparece al seleccionar proyecto -->
       <div id="project-panel" style="display:none;margin-bottom:20px;">
 
-        <!-- WEBS: 60 días automático -->
+        <!-- WEBS: 30 días automático -->
         <div id="web-implantacion" style="display:none;background:var(--bg-panel);border:1.5px solid var(--blue-soft);border-radius:14px;padding:20px;animation:fadeIn .22s ease;">
-          <div style="font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;">⏱ Período de implantación — 60 días · Departamento Lite™</div>
-          <div class="impl-months-grid">
-            <div style="background:var(--green-dim);border:1px solid rgba(34,197,94,.3);border-radius:12px;padding:18px;text-align:center;">
-              <div style="font-family:var(--font-m);font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--green);margin-bottom:8px;">Mes 1</div>
-              <div style="font-size:1rem;font-weight:700;color:var(--white);margin-bottom:4px;">Departamento Lite™</div>
-              <div style="font-size:.82rem;color:var(--green);font-weight:700;">¡Gratis!</div>
-              <div style="font-size:.72rem;color:var(--grey);margin-top:4px;">Supervisión y ajustes</div>
-            </div>
-            <div style="background:var(--blue-dim);border:1px solid rgba(47,123,255,.25);border-radius:12px;padding:18px;text-align:center;">
-              <div style="font-family:var(--font-m);font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:8px;">Mes 2</div>
-              <div style="font-size:1rem;font-weight:700;color:var(--white);margin-bottom:4px;">Departamento Lite™</div>
-              <div style="font-size:.82rem;color:var(--blue);font-weight:700;">199 € + IVA</div>
-              <div style="font-size:.72rem;color:var(--grey);margin-top:4px;">240,79 € con IVA</div>
-            </div>
+          <div style="font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;">⏱ Período de implantación — 30 días</div>
+          <div style="background:var(--green-dim);border:1px solid rgba(34,197,94,.3);border-radius:12px;padding:18px;text-align:center;margin-bottom:14px;">
+            <div style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:4px;">🎁 Departamento Lite™ — 30 días de regalo</div>
+            <div style="font-size:.82rem;color:var(--green);font-weight:700;">Incluido en el precio, sin coste aparte</div>
+            <div style="font-size:.72rem;color:var(--grey);margin-top:4px;">Supervisión, ajustes y soporte durante toda la implantación</div>
           </div>
           <div style="font-size:.78rem;color:var(--grey);background:rgba(255,255,255,.03);border-radius:8px;padding:10px 14px;">
-            <b style="color:var(--white);">Departamento Lite™ asignado automáticamente.</b> Desde el día 61, continúa a 199 €/mes + IVA o cancela sin compromisos.
+            <b style="color:var(--white);">Desde el día 31</b>, si quieres seguir, renovación automática a 199 €/mes + IVA. Si no, cancelas sin más avisando con 7 días — sin compromisos ocultos.
           </div>
         </div>
 
@@ -384,6 +373,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <label class="sol-chip" data-price="350"><input type="checkbox" value="integraciones" onchange="updateSolutions()"><span>🔗 Integraciones — 350 € + IVA</span></label>
             <label class="sol-chip" data-price="400"><input type="checkbox" value="docs" onchange="updateSolutions()"><span>📁 Gestión documental — 400 € + IVA</span></label>
             <label class="sol-chip" data-price="300"><input type="checkbox" value="firma" onchange="updateSolutions()"><span>✍️ Firma digital — 300 € + IVA</span></label>
+            <label class="sol-chip" data-price="450"><input type="checkbox" value="ciberseguridad" onchange="updateSolutions()"><span>🛡️ Ciberseguridad Pyme — 450 € + IVA</span></label>
           </div>
           <div id="solutions-result" style="margin:0 20px 16px;padding:12px 14px;border-radius:8px;font-size:.8rem;line-height:1.55;display:none;"></div>
           <div id="digital-90d" style="display:none;margin:0 20px 16px;background:rgba(255,255,255,.03);border:1px solid var(--grey-line);border-radius:8px;padding:12px 14px;font-size:.78rem;color:var(--grey);line-height:1.6;"></div>
@@ -515,19 +505,20 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 // Al crear cada Stripe Payment Link real, configura su redirección tras el pago
 // a bienvenida.html?plan=<clave> (ej. bienvenida.html?plan=arranque-lite) para
 // que el cliente llegue directo a agendar su reunión de bienvenida prioritaria.
-const PROJECTS={esencial:{name:'Web Esencial',base:499},web:{name:'Web Profesional',base:790},digital:{name:'Digitaliza tu Empresa',base:590}};
+const PROJECTS={esencial:{name:'Web Esencial',base:649},web:{name:'Web Profesional',base:940},digital:{name:'Digitaliza tu Empresa',base:590}};
+const DIGITAL_BUYOUT=300;
 const DIRECT={'arranque-lite':{name:'Departamento Tecnológico Lite™',arranque:'lite'},'arranque-pro':{name:'Departamento Tecnológico Pro™',arranque:'pro'}};
 const ARRANQUES={lite:{name:'Lite™',monthlyAfter:199},pro:{name:'Pro™',monthlyAfter:399}};
 const STRIPE={'esencial-lite':'REEMPLAZA_ESENCIAL','web-lite':'REEMPLAZA_WEB_PRO','digital-lite':'REEMPLAZA_DIGITAL_LITE','digital-pro':'REEMPLAZA_DIGITAL_PRO','arranque-lite':'REEMPLAZA_LITE_MES','arranque-pro':'REEMPLAZA_PRO_MES','arranque-lite-a':'REEMPLAZA_LITE_ANUAL','arranque-pro-a':'REEMPLAZA_PRO_ANUAL','esencial-solutions-lite':'REEMPLAZA_ESENCIAL_SOL_LITE','esencial-solutions-pro':'REEMPLAZA_ESENCIAL_SOL_PRO','web-solutions-lite':'REEMPLAZA_WEB_SOL_LITE','web-solutions-pro':'REEMPLAZA_WEB_SOL_PRO'};
 const FEATURES={lite:['Asistente de soporte tecnológico en todo momento','Mantenimiento web — actualizaciones y rendimiento','Seguridad y copias de seguridad periódicas','Resolución de incidencias técnicas sin coste adicional','Reunión mensual de revisión y asesoramiento (30 min)','Mantenimiento de hasta 2 soluciones tecnológicas'],pro:['Todo lo incluido en Departamento Lite™','Mantenimiento de hasta 6 soluciones tecnológicas','Optimización continua de todas las soluciones activas','Adaptaciones y ajustes según crece tu empresa','Revisión avanzada mensual de rendimiento','Mayor prioridad en incidencias y resolución','Reunión mensual de revisión y estrategia (45 min)']};
-const TIMELINES={'esencial-lite':[{l:'Web Esencial lista',v:'Días 7-10',c:'gold'},{l:'Mes 1 — Departamento Lite™',v:'GRATIS',c:'green'},{l:'Mes 2 — Departamento Lite™',v:'199 €',c:'blue'},{l:'Mes 3+',v:'199 €/mes · Sin compromisos',c:'grey'}],'web-lite':[{l:'Entrega Web Profesional',v:'Semana 2-4',c:'gold'},{l:'Mes 1 — Departamento Lite™',v:'GRATIS',c:'green'},{l:'Mes 2 — Departamento Lite™',v:'199 €',c:'blue'},{l:'Mes 3+',v:'199 €/mes · Sin compromisos',c:'grey'}],'digital-lite':[{l:'Implantación completa',v:'90 días',c:'gold'},{l:'Mes 1 — Departamento Lite™',v:'GRATIS',c:'green'},{l:'Mes 2 — Departamento Lite™',v:'199 €',c:'blue'},{l:'Mes 3+',v:'199 €/mes · Sin compromisos',c:'grey'}],'digital-pro':[{l:'Implantación completa',v:'90 días',c:'gold'},{l:'Mes 1 — Departamento Pro™',v:'GRATIS',c:'green'},{l:'Mes 2 — Departamento Pro™',v:'399 €',c:'blue'},{l:'Mes 3+',v:'399 €/mes · Sin compromisos',c:'grey'}],'arranque':[{l:'Mes 1',v:'199 €',c:'blue'},{l:'Mes 2',v:'199 €',c:'blue'},{l:'Mes 3+',v:'199 €/mes · Renueva o cancela',c:'grey'}],'arranque-pro':[{l:'Mes 1',v:'399 €',c:'blue'},{l:'Mes 2',v:'399 €',c:'blue'},{l:'Mes 3+',v:'399 €/mes · Renueva o cancela',c:'grey'}],'esencial-solutions-lite':[{l:'Web Esencial + soluciones listas',v:'90 días',c:'gold'},{l:'Mes 1 — Departamento Lite™',v:'GRATIS',c:'green'},{l:'Mes 2 — Departamento Lite™',v:'199 €',c:'blue'},{l:'Mes 3+',v:'199 €/mes · Sin compromisos',c:'grey'}],'esencial-solutions-pro':[{l:'Web Esencial + soluciones listas',v:'90 días',c:'gold'},{l:'Mes 1 — Departamento Pro™',v:'GRATIS',c:'green'},{l:'Mes 2 — Departamento Pro™',v:'399 €',c:'blue'},{l:'Mes 3+',v:'399 €/mes · Sin compromisos',c:'grey'}],'web-solutions-lite':[{l:'Web Profesional + soluciones listas',v:'90 días',c:'gold'},{l:'Mes 1 — Departamento Lite™',v:'GRATIS',c:'green'},{l:'Mes 2 — Departamento Lite™',v:'199 €',c:'blue'},{l:'Mes 3+',v:'199 €/mes · Sin compromisos',c:'grey'}],'web-solutions-pro':[{l:'Web Profesional + soluciones listas',v:'90 días',c:'gold'},{l:'Mes 1 — Departamento Pro™',v:'GRATIS',c:'green'},{l:'Mes 2 — Departamento Pro™',v:'399 €',c:'blue'},{l:'Mes 3+',v:'399 €/mes · Sin compromisos',c:'grey'}]};
+const TIMELINES={'esencial-lite':[{l:'Web Esencial lista',v:'Días 7-10',c:'gold'},{l:'30 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:'199 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'web-lite':[{l:'Entrega Web Profesional',v:'Semana 2-4',c:'gold'},{l:'30 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:'199 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'digital-lite':[{l:'Implantación completa',v:'90 días',c:'gold'},{l:'90 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:'199 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'digital-pro':[{l:'Implantación completa',v:'90 días',c:'gold'},{l:'90 días — Departamento Pro™',v:'REGALO',c:'green'},{l:'Después',v:'399 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'arranque':[{l:'Mes 1',v:'199 €',c:'blue'},{l:'Mes 2',v:'199 €',c:'blue'},{l:'Mes 3+',v:'199 €/mes · Renueva o cancela',c:'grey'}],'arranque-pro':[{l:'Mes 1',v:'399 €',c:'blue'},{l:'Mes 2',v:'399 €',c:'blue'},{l:'Mes 3+',v:'399 €/mes · Renueva o cancela',c:'grey'}],'esencial-solutions-lite':[{l:'Web Esencial + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:'199 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'esencial-solutions-pro':[{l:'Web Esencial + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Pro™',v:'REGALO',c:'green'},{l:'Después',v:'399 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'web-solutions-lite':[{l:'Web Profesional + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:'199 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'web-solutions-pro':[{l:'Web Profesional + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Pro™',v:'REGALO',c:'green'},{l:'Después',v:'399 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}]};
 
 let selectedProject=null,selectedDirect=null,directBilling='arranque',selectedDigitalPlan=null,digitalTotalPrice=590,digitalAddon=false;
 
 function resetDigitalAddon(){
   digitalAddon=false;
   document.querySelectorAll('#solutions-grid input:checked').forEach(cb=>cb.checked=false);
-  const priceEl=document.getElementById('digital-price-display');if(priceEl)priceEl.innerHTML='desde 590 €<sub> + IVA</sub>';
+  const priceEl=document.getElementById('digital-price-display');if(priceEl)priceEl.innerHTML='desde 600 €<sub> + IVA</sub>';
   const resultEl=document.getElementById('solutions-result');if(resultEl)resultEl.style.display='none';
   const d90=document.getElementById('digital-90d');if(d90)d90.style.display='none';
   const dp=document.getElementById('digital-implantacion');if(dp)dp.style.display='none';
@@ -574,7 +565,7 @@ function toggleDigitalAddon(){
     if(dp)dp.style.display='block';
   }else{
     document.querySelectorAll('#solutions-grid input:checked').forEach(cb=>cb.checked=false);
-    document.getElementById('digital-price-display').innerHTML='desde 590 €<sub> + IVA</sub>';
+    document.getElementById('digital-price-display').innerHTML='desde 600 €<sub> + IVA</sub>';
     document.getElementById('solutions-result').style.display='none';
     document.getElementById('digital-90d').style.display='none';
     selectedDigitalPlan=null;digitalTotalPrice=590;
@@ -600,7 +591,7 @@ function updateSolutions(){
   let total=0;checks.forEach(c=>{total+=parseInt(c.closest('.sol-chip').dataset.price||0);});
   const priceEl=document.getElementById('digital-price-display');
   if(count===0){
-    priceEl.innerHTML='desde 590 €<sub> + IVA</sub>';
+    priceEl.innerHTML='desde 600 €<sub> + IVA</sub>';
     resultEl.style.display='none';selectedDigitalPlan=null;
   }else if(count>3){
     priceEl.innerHTML='Consultar<sub> presupuesto</sub>';
@@ -609,16 +600,16 @@ function updateSolutions(){
     resultEl.innerHTML='<b style="color:var(--gold);">⚠ '+count+' soluciones seleccionadas</b> — Elaboramos presupuesto personalizado. <b style="color:var(--white);">Continúa y te contactamos en 24h.</b>';
     selectedDigitalPlan='pro';digitalTotalPrice=0;
   }else{
-    priceEl.innerHTML=total+' €<sub> + IVA</sub>';
+    priceEl.innerHTML=(total+DIGITAL_BUYOUT)+' €<sub> + IVA</sub>';
     resultEl.style.display='block';
     if(count<=2){
       selectedDigitalPlan='lite';
       resultEl.style.background='rgba(34,197,94,.08)';resultEl.style.border='1px solid rgba(34,197,94,.25)';
-      resultEl.innerHTML='<b style="color:var(--green);">✓ '+count+' solución'+(count>1?'es':'')+'</b> — <b style="color:var(--white);">Departamento Lite™</b> · Primer mes gratis · Mes 2 a 199€/mes.';
+      resultEl.innerHTML='<b style="color:var(--green);">✓ '+count+' solución'+(count>1?'es':'')+'</b> — <b style="color:var(--white);">Departamento Lite™</b> · 90 días de regalo, luego 199€/mes.';
     }else{
       selectedDigitalPlan='pro';
       resultEl.style.background='rgba(47,123,255,.08)';resultEl.style.border='1px solid rgba(47,123,255,.25)';
-      resultEl.innerHTML='<b style="color:var(--blue);">⚡ 3 soluciones</b> — <b style="color:var(--white);">Departamento Pro™</b> · Primer mes gratis · Mes 2 a 399€/mes.';
+      resultEl.innerHTML='<b style="color:var(--blue);">⚡ 3 soluciones</b> — <b style="color:var(--white);">Departamento Pro™</b> · 90 días de regalo, luego 399€/mes.';
     }
     digitalTotalPrice=total;
   }
@@ -626,7 +617,7 @@ function updateSolutions(){
   if(d90&&count>0){
     const dn=count>=3?'Pro™':'Lite™';const dp2=count>=3?399:199;
     d90.style.display='block';
-    d90.innerHTML='<b style="color:var(--white);">⏱ 90 días de implantación:</b> Primer mes del Departamento '+dn+' <span style="color:var(--green);font-weight:600;">gratis</span> · Mes 2 a '+dp2+'€/mes + IVA · Desde el mes 3, sin compromisos.';
+    d90.innerHTML='<b style="color:var(--white);">🎁 90 días de implantación:</b> el Departamento '+dn+' va <span style="color:var(--green);font-weight:600;">completamente de regalo</span> durante esos 90 días · después, renovación automática a '+dp2+'€/mes + IVA · cancela cuando quieras avisando con 7 días.';
   }else if(d90){d90.style.display='none';}
   if(digitalAddon)updateAll();
 }
@@ -658,26 +649,26 @@ function getActivePlan(){
     const dp=sols>=3?'pro':'lite';const dn=dp==='lite'?'Lite™':'Pro™';const dm=dp==='lite'?199:399;
     const key=selectedProject+'-solutions-'+dp;
     if(customQuote){
-      return{key,name:wn+' + Digitaliza tu Empresa · '+sols+' soluciones',sub:'Proyecto combinado · Presupuesto personalizado',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'Soluciones ('+sols+')',v:'Presupuesto a medida'},{l:'Mes 1 — Dpto. '+dn,v:'GRATIS',cls:'free'},{l:'Mes 2 — Dpto. '+dn,v:dm.toFixed(2).replace('.',',')+' €'}],monthlyAfter:dm,stripe:null,timeline:key,customQuote:true,renewalMsg:'Renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') a partir del <span class="renewal-date">'+getRenewalDate(90)+'</span> · Sin compromisos adicionales'};
+      return{key,name:wn+' + Digitaliza tu Empresa · '+sols+' soluciones',sub:'Proyecto combinado · Presupuesto personalizado',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'Soluciones ('+sols+')',v:'Presupuesto a medida'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'}],monthlyAfter:dm,stripe:null,timeline:key,customQuote:true,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
     }
-    const tb=proj.base+digitalTotalPrice+dm;const iva=tb*0.21;
-    return{key,name:wn+' + Digitaliza · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto combinado · 90 días implantación · Departamento '+dn,arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'Soluciones ('+sols+')',v:digitalTotalPrice.toFixed(2).replace('.',',')+' €'},{l:'Mes 1 — Dpto. '+dn,v:'GRATIS',cls:'free'},{l:'Mes 2 — Dpto. '+dn,v:dm.toFixed(2).replace('.',',')+' €'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total proyecto + implantación',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE[key],timeline:key,renewalMsg:'Renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') a partir del <span class="renewal-date">'+getRenewalDate(90)+'</span> · Sin compromisos adicionales'};
+    const tb=proj.base+digitalTotalPrice+DIGITAL_BUYOUT;const iva=tb*0.21;
+    return{key,name:wn+' + Digitaliza · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto combinado · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'Soluciones ('+sols+')',v:digitalTotalPrice.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE[key],timeline:key,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
   }
 
   if(hasSolutions){
     const dp=sols>=3?'pro':'lite';const dn=dp==='lite'?'Lite™':'Pro™';const dm=dp==='lite'?199:399;
     if(customQuote){
-      return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+' soluciones',sub:'Proyecto · Presupuesto personalizado',arranqueType:dp,breakdown:[{l:'Implantación ('+sols+' sol.)',v:'Presupuesto a medida'},{l:'Mes 1 — Dpto. '+dn,v:'GRATIS',cls:'free'},{l:'Mes 2 — Dpto. '+dn,v:dm.toFixed(2).replace('.',',')+' €'}],monthlyAfter:dm,stripe:null,timeline:'digital-'+dp,customQuote:true,renewalMsg:'Renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') a partir del <span class="renewal-date">'+getRenewalDate(90)+'</span> · Sin compromisos adicionales'};
+      return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+' soluciones',sub:'Proyecto · Presupuesto personalizado',arranqueType:dp,breakdown:[{l:'Implantación ('+sols+' sol.)',v:'Presupuesto a medida'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'}],monthlyAfter:dm,stripe:null,timeline:'digital-'+dp,customQuote:true,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
     }
-    const pb=digitalTotalPrice;const tb=pb+dm;const iva=tb*0.21;
-    return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto · 90 días implantación · Departamento '+dn,arranqueType:dp,breakdown:[{l:'Implantación ('+sols+' sol.)',v:pb.toFixed(2).replace('.',',')+' €'},{l:'Mes 1 — Dpto. '+dn,v:'GRATIS',cls:'free'},{l:'Mes 2 — Dpto. '+dn,v:dm.toFixed(2).replace('.',',')+' €'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total proyecto + implantación',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE['digital-'+dp],timeline:'digital-'+dp,renewalMsg:'Renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') a partir del <span class="renewal-date">'+getRenewalDate(90)+'</span> · Sin compromisos adicionales'};
+    const pb=digitalTotalPrice;const tb=pb+DIGITAL_BUYOUT;const iva=tb*0.21;
+    return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[{l:'Implantación ('+sols+' sol.)',v:pb.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE['digital-'+dp],timeline:'digital-'+dp,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
   }
 
   if(selectedProject){
     const proj=PROJECTS[selectedProject];
-    const dm2=199;const base=proj.base+dm2;const iva=base*0.21;
+    const base=proj.base;const iva=base*0.21;
     const wn=selectedProject==='web'?'Web Profesional':'Web Esencial';
-    return{key:selectedProject+'-lite',name:wn+' · 60 días implantación',sub:'Proyecto único · Primer mes del Departamento Lite™ gratis',arranqueType:'lite',breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'Mes 1 — Departamento Lite™',v:'GRATIS',cls:'free'},{l:'Mes 2 — Departamento Lite™',v:'199,00 €'},{divider:true},{l:'Base imponible',v:base.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(base+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm2,stripe:STRIPE[selectedProject+'-lite'],timeline:selectedProject==='web'?'web-lite':'esencial-lite'};
+    return{key:selectedProject+'-lite',name:wn+' · 30 días implantación',sub:'Proyecto único · 30 días de Departamento Lite™ de regalo',arranqueType:'lite',breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'30 días de Departamento Lite™',v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:base.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(base+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:199,stripe:STRIPE[selectedProject+'-lite'],timeline:selectedProject==='web'?'web-lite':'esencial-lite'};
   }
   return null;
 }
@@ -693,11 +684,13 @@ function updateSummary(plan){
   const isCombined=plan.timeline&&plan.timeline.includes('-solutions-');
   const isWeb=!isCombined&&plan.timeline&&(plan.timeline.startsWith('esencial')||plan.timeline==='web-lite');
   const isDig=!isCombined&&plan.timeline&&plan.timeline.startsWith('digital');
-  const days=isCombined?90:isWeb?60:isDig?90:30;
+  const hasGift=isCombined||isWeb||isDig;
+  const days=isCombined?90:isWeb?30:isDig?90:30;
   const renewDate=getRenewalDate(days);
   if(plan.renewalMsg){re.innerHTML=plan.renewalMsg;}
   else if(plan.renewalNote==='anual'){const da=new Date();da.setFullYear(da.getFullYear()+1);re.innerHTML='Renovación automática anual a partir del <span class="renewal-date">'+da.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'})+'</span> · Renueva o cancela al vencer el año';}
-  else{re.innerHTML='Renovación automática de 1 mes a <span class="renewal-amount">'+plan.monthlyAfter.toFixed(2).replace('.',',')+' €&nbsp;+&nbsp;IVA</span> a partir del <span class="renewal-date">'+renewDate+'</span> · Sin compromisos adicionales';}
+  else if(hasGift){re.innerHTML='Pasados los '+days+' días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+plan.monthlyAfter.toFixed(2).replace('.',',')+' €&nbsp;+&nbsp;IVA</span> a partir del <span class="renewal-date">'+renewDate+'</span> · Cancela cuando quieras avisando con 7 días';}
+  else{re.innerHTML='Renovación automática de 1 mes a <span class="renewal-amount">'+plan.monthlyAfter.toFixed(2).replace('.',',')+' €&nbsp;+&nbsp;IVA</span> a partir del <span class="renewal-date">'+renewDate+'</span> · Cancela cuando quieras avisando con 7 días';}
   re.style.display='block';
   const tl=TIMELINES[plan.timeline];
   if(tl&&tsteps&&tbox){const cols={gold:'var(--gold)',green:'var(--green)',blue:'var(--blue)',grey:'var(--grey)'};tsteps.innerHTML=tl.map(s=>`<div class="tl-step"><div class="tl-dot" style="background:${cols[s.c]||'var(--grey)'}"></div><div class="tl-info"><div class="tl-label">${s.l}</div><div class="tl-val" style="color:${cols[s.c]||'var(--grey)'}">${s.v}</div></div></div>`).join('');tbox.style.display='block';}
