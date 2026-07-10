@@ -1347,6 +1347,13 @@ const KB = {
     ]
   },
 
+  packs_sectoriales: {
+    patterns: ['pack','packs','descuento en los packs','pack empresa','pack servicios','pack despachos','pack hosteleria','packs con descuento','oferta en los packs','15% de descuento','packs empresa'],
+    responses: [
+      'Tenemos 4 packs por sector dentro de Digitaliza, cada uno con <b>15% de descuento</b> si te quedas con 3 soluciones:\n\n📦 <b>Pack Servicios</b> — fontaneros, electricistas, clínicas, estética, gimnasios, academias\n📦 <b>Pack Despachos</b> — abogados, asesorías, gestorías, inmobiliarias\n📦 <b>Pack Hostelería</b> — restaurantes, salones de celebración\n📦 <b>Pack Empresas</b> — pymes en general\n\nCada uno trae 3 soluciones ya pensadas para tu sector, pero puedes quitar o añadir las que quieras — no van cerrados. <a href="pago.html?plan=digital" target="_blank">Elige tu sector directamente en el checkout →</a>\n\n¿A qué te dedicas? Así te digo qué pack encaja mejor contigo.'
+    ]
+  },
+
   arranque: {
     patterns: ['arranque','pack arranque','acceso directo','sin proyecto','solo el departamento','solo mantenimiento','ya tengo todo implantado'],
     responses: [
@@ -1364,7 +1371,7 @@ const KB = {
   },
 
   cancelacion: {
-    patterns: ['cómo cancelo','cómo doy de baja','proceso de cancelación','quiero cancelar','dejar de pagar'],
+    patterns: ['cómo cancelo','cómo doy de baja','proceso de cancelación','quiero cancelar','dejar de pagar','puedo cancelar','como cancelar','darme de baja'],
     responses: [
       'Cancelar es sencillo: nos avisas con un mínimo de 7 días de antelación a tu próxima fecha de facturación y no se te cobra el mes siguiente. Sin preguntas incómodas ni permanencia oculta. ¿Es algo que te preocupa por una experiencia anterior con otro proveedor?'
     ]
@@ -1620,17 +1627,24 @@ function normalizeTxt(s) {
 
 function detectIntent(text) {
   const t = normalizeTxt(text);
-  let bestKey = 'fallback', bestScore = 0;
+  let bestKey = 'fallback', bestScore = 0, bestSpecificity = 0, saludoMatched = false;
   for (const key in KB) {
     if (key === 'fallback') continue;
     const patterns = KB[key].patterns;
     if (!patterns) continue;
-    let score = 0;
+    let score = 0, specificity = 0;
     for (const pattern of patterns) {
-      if (t.includes(normalizeTxt(pattern))) score++;
+      const np = normalizeTxt(pattern);
+      if (t.includes(np)) { score++; specificity += np.length; }
     }
-    if (score > bestScore) { bestScore = score; bestKey = key; }
+    // El saludo no compite: un "buenos días" no debe secuestrar la respuesta
+    // cuando el mensaje trae una pregunta real detrás. Solo se usa como último recurso.
+    if (key === 'saludo') { saludoMatched = score > 0; continue; }
+    if (score > bestScore || (score === bestScore && specificity > bestSpecificity)) {
+      bestScore = score; bestSpecificity = specificity; bestKey = key;
+    }
   }
+  if (bestKey === 'fallback' && saludoMatched) return 'saludo';
   return bestKey;
 }
 
