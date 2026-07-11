@@ -66,6 +66,15 @@ h1{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;margin-bottom:14px;text-al
 footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:22px;text-align:center;font-size:.78rem;color:var(--grey);}
 footer a{color:var(--grey);transition:color var(--tr);}
 footer a:hover{color:var(--white);}
+
+/* ── TRANSICIÓN ENTRE PÁGINAS (sobria, sin efectismos) ── */
+@view-transition{navigation:auto;}
+@media(prefers-reduced-motion:no-preference){
+  ::view-transition-old(root){animation:pageOut .25s ease both;}
+  ::view-transition-new(root){animation:pageIn .32s ease both;}
+}
+@keyframes pageOut{to{opacity:0;}}
+@keyframes pageIn{from{opacity:0;}}
 </style>
 </head>
 <body>

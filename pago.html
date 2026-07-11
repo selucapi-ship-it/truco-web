@@ -204,6 +204,15 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .pay-btn:hover:not(:disabled){opacity:.85;}
 .pay-btn:disabled{opacity:.38;cursor:not-allowed;}
 .sb-secure{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 22px 16px;font-size:.72rem;color:var(--grey);}
+
+/* ── TRANSICIÓN ENTRE PÁGINAS (sobria, sin efectismos) ── */
+@view-transition{navigation:auto;}
+@media(prefers-reduced-motion:no-preference){
+  ::view-transition-old(root){animation:pageOut .25s ease both;}
+  ::view-transition-new(root){animation:pageIn .32s ease both;}
+}
+@keyframes pageOut{to{opacity:0;}}
+@keyframes pageIn{from{opacity:0;}}
 </style>
 </head>
 <body>

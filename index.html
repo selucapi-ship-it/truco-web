@@ -517,6 +517,17 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 .nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
 .nav-toggle.open span:nth-child(2){opacity:0;}
 .nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px);}
+
+/* ── TRANSICIÓN ENTRE PÁGINAS Y REVELADO AL SCROLL (sobrio, sin efectismos) ── */
+@view-transition{navigation:auto;}
+@media(prefers-reduced-motion:no-preference){
+  ::view-transition-old(root){animation:pageOut .25s ease both;}
+  ::view-transition-new(root){animation:pageIn .32s ease both;}
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+}
+@keyframes pageOut{to{opacity:0;}}
+@keyframes pageIn{from{opacity:0;}}
 </style>
 <script type="application/ld+json">
 {
@@ -687,7 +698,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </div>
 
 <!-- ── CÓMO EMPEZAMOS ── -->
-<section id="como-empezamos" class="section">
+<section id="como-empezamos" class="section reveal">
   <div class="container">
     <div class="section-tag">Cómo empezamos</div>
     <h2 class="section-h2">Empezamos por donde tu negocio lo necesite</h2>
@@ -723,7 +734,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </section>
 
 <!-- ── SERVICIOS ── -->
-<section id="servicios" class="section" style="padding-top:0;">
+<section id="servicios" class="section reveal" style="padding-top:0;">
   <div class="container">
     <div class="section-tag">Departamento Tecnológico TRUCO™</div>
     <h2 class="section-h2">Elige el tamaño de departamento que necesita tu negocio</h2>
@@ -770,7 +781,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </section>
 
 <!-- ── FOUNDER ── -->
-<section id="nosotros">
+<section id="nosotros" class="reveal">
   <div id="founder" class="section">
     <div class="container">
       <div class="founder-inner">
@@ -793,7 +804,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </section>
 
 <!-- ── SECTORES ── -->
-<section id="sectores">
+<section id="sectores" class="reveal">
   <div class="container">
     <div class="sectores-intro">
       <div class="s-tag">¿Es esto para ti?</div>
@@ -916,7 +927,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </section>
 
 <!-- ── CÓMO TRABAJAMOS ── -->
-<section style="padding:80px 0;background:var(--bg-panel);border-top:1px solid var(--grey-line);border-bottom:1px solid var(--grey-line);">
+<section class="reveal" style="padding:80px 0;background:var(--bg-panel);border-top:1px solid var(--grey-line);border-bottom:1px solid var(--grey-line);">
   <div class="container">
     <div style="text-align:center;margin-bottom:48px;">
       <div class="section-tag" style="justify-content:center;display:inline-flex;">Cómo trabajamos</div>
@@ -955,7 +966,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </section>
 
 <!-- ── PACKS EMPRESA CON DESCUENTO ── -->
-<section id="packs-descuento" class="section">
+<section id="packs-descuento" class="section reveal">
   <div class="container">
     <div class="section-tag gold">🎁 Packs por sector</div>
     <h2 class="section-h2">Packs Empresa con descuento</h2>
@@ -995,7 +1006,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </section>
 
 <!-- ── FAQ ── -->
-<section id="faq" class="section" style="padding-top:0;">
+<section id="faq" class="section reveal" style="padding-top:0;">
   <div class="container">
     <div class="section-tag">Preguntas frecuentes</div>
     <h2 class="section-h2">Todo lo que necesitas saber antes de empezar</h2>
@@ -1045,7 +1056,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </section>
 
 <!-- ── CHAT IA ── -->
-<section id="chat-section">
+<section id="chat-section" class="reveal">
   <div class="section">
     <div class="container">
       <div class="chat-inner">
@@ -1079,7 +1090,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </section>
 
 <!-- ── CTA FINAL ── -->
-<section id="cta-final">
+<section id="cta-final" class="reveal">
   <div class="container">
     <div class="cta-inner">
       <div>
@@ -2012,6 +2023,19 @@ function loadGA(){
   gtag('js', new Date());
   gtag('config', 'G-XXXXXXXXXX');
 }
+</script>
+<script>
+(function(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var els=document.querySelectorAll('.reveal');
+  if(!els.length||!('IntersectionObserver' in window)) return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in-view'); io.unobserve(e.target); }
+    });
+  },{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+  els.forEach(function(el){ io.observe(el); });
+})();
 </script>
 </body>
 </html>
