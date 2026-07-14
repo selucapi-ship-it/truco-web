@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-<title>TruKi — TRUCO technology</title>
-<meta name="description" content="Describe el trabajo por chat y TruKi te genera la factura o el presupuesto al instante.">
+<title>TruKi — Factura, cobra y firma desde el chat | TRUCO technology</title>
+<meta name="description" content="TruKi convierte lo que describes por chat o voz en factura o presupuesto al instante: calcula con tu catálogo, controla quién te debe dinero, recoge la firma del cliente y manda el informe trimestral a tu gestoría solo.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -122,8 +122,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .problem-card:hover{transform:translateY(-5px);border-color:var(--blue);box-shadow:0 14px 34px rgba(0,0,0,.35);}
 .problem-grid.in-view .problem-card:hover{transform:translateY(-5px);}
 .problem-card p{font-size:.9rem;color:var(--grey);line-height:1.65;}
+.problem-card h4{font-family:var(--font-d);font-size:.98rem;font-weight:700;color:var(--white);}
 @media(max-width:768px){.problem-grid{grid-template-columns:1fr;}}
 @media(prefers-reduced-motion:reduce){.problem-card{opacity:1;transform:none;transition:none;}}
+
+/* FEATURE GRID (4 cols) */
+.feature-grid-4{grid-template-columns:repeat(4,1fr);}
+.feature-grid-4 .problem-card:nth-child(4){transition-delay:.36s;}
+.feature-grid-4 .problem-card:nth-child(5){transition-delay:.06s;}
+.feature-grid-4 .problem-card:nth-child(6){transition-delay:.18s;}
+.feature-grid-4 .problem-card:nth-child(7){transition-delay:.3s;}
+.feature-grid-4 .problem-card:nth-child(8){transition-delay:.42s;}
+@media(max-width:900px){.feature-grid-4{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.feature-grid-4{grid-template-columns:1fr;}}
 
 /* BENEFITS LIST */
 .benefits-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
@@ -205,10 +216,11 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div>
         <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 1z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg> Solución · Digitaliza tu Empresa</div>
         <h1>TruKi</h1>
-        <p>Describe el trabajo por chat y TruKi te genera la factura o el presupuesto al instante, listo para el cliente.</p>
+        <p>Describe el trabajo por chat o por voz: TruKi calcula con tu catálogo, factura o presupuesta al instante, controla quién te ha pagado y recoge la firma del cliente ahí mismo, en la tablet o el móvil.</p>
         <div class="hero-stats">
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Factura al instante</span></div>
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/></svg><span>Legal desde el día 1</span></div>
+          <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg><span>Firma del cliente incluida</span></div>
         </div>
       </div>
       <div class="truki-wrap">
@@ -287,14 +299,49 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag depto">Beneficios</span><div class="sd-line"></div></div>
-    <ul class="benefits-list">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Facturas y presupuestos generados al instante, por chat</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Cumplimiento legal desde el primer día (Verifactu, modo local)</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Todo queda guardado, sin carpetas ni papeles sueltos</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Convierte presupuestos aceptados en facturas con un clic</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Pensado para el día a día de un autónomo u oficio, no de un contable</li>
-    </ul>
+    <div class="section-divider"><span class="sd-tag depto">Todo lo que incluye</span><div class="sd-line"></div></div>
+    <div class="problem-grid feature-grid-4">
+      <div class="problem-card">
+        <div class="icon-badge blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h4>Describe el trabajo por chat o voz</h4>
+        <p>Materiales, cantidades y horas — cuéntaselo con tus palabras y TruKi las convierte en líneas de factura, con el precio autocompletado desde tu propio catálogo.</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+        <h4>De presupuesto a factura en un clic</h4>
+        <p>Manda el presupuesto y, en cuanto el cliente lo acepte, conviértelo en factura sin volver a escribir ni un solo concepto.</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon-badge gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+        <h4>Sabes quién te debe dinero</h4>
+        <p>Cada factura se marca como Cobrada o Pendiente — un vistazo al historial y sabes exactamente qué cobros tienes abiertos, sin repasar carpetas.</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon-badge blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+        <h4>Firma de conformidad al momento</h4>
+        <p>El cliente firma con el dedo en tu tablet o móvil dando el trabajo por recibido. Queda en el PDF junto a la fecha, sin tocar el documento fiscal original.</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <h4>Informes listos para tu gestoría</h4>
+        <p>Un botón por trimestre (o el rango de fechas que quieras) genera el Excel del periodo y, si quieres, lo envía por email directamente.</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon-badge gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+        <h4>Tu catálogo y tus trabajos habituales</h4>
+        <p>Guarda tus precios de materiales y las combinaciones de trabajo que repites — la próxima vez, cárgalas con un toque en vez de describirlas otra vez.</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon-badge blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+        <h4>Copia de seguridad completa</h4>
+        <p>Exporta toda tu actividad a Excel cuando quieras — tus datos nunca dependen de un único dispositivo ni de que no se te rompa el móvil.</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+        <h4>Se instala como una app</h4>
+        <p>Añádela a la pantalla de inicio del móvil y ábrela como cualquier otra app — sin tiendas de aplicaciones ni espacio de descarga.</p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -314,6 +361,14 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <button class="faq-q" onclick="toggleFaq(this)">¿Puedo hacer presupuestos y convertirlos en factura después? <span class="faq-icon">+</span></button>
         <div class="faq-a"><p>Sí, se guardan y puedes convertir cualquier presupuesto aceptado en factura con un clic.</p></div>
       </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿La firma del cliente tiene validez legal plena? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Es una firma de conformidad de recepción del trabajo — una prueba sólida frente a cualquier reclamación sobre si el cliente recibió lo acordado. No sustituye a una firma electrónica cualificada (eIDAS) para otros efectos legales, y así se indica en el propio documento.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Puedo instalarlo como una app en el móvil? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Sí. Se añade a la pantalla de inicio de Android o iPhone y se abre igual que cualquier otra app, sin pasar por ninguna tienda de aplicaciones.</p></div>
+      </div>
     </div>
   </div>
 </div>
@@ -322,7 +377,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="container">
     <div class="cta-inner">
       <div>
-        <h2>¿Listo para dejar de acumular facturas pendientes?</h2>
+        <h2>¿Listo para dejar el papeleo atrás y facturar en el momento?</h2>
         <p>550 € + IVA de implantación. Se mantiene después dentro de tu Departamento Tecnológico.</p>
       </div>
       <div class="cta-btns">
