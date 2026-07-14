@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>Pack Despachos — TRUCO technology</title>
+<meta name="description" content="Para abogados, asesorías, gestorías, inmobiliarias y servicios profesionales. CRM, Firma Digital y Gestión Documental trabajando juntas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#16151a;--bg-panel:#201f24;--bg-card:#2b2a30;
+  --blue:#2f7bff;--blue-soft:#1b3a66;--blue-dim:rgba(47,123,255,.1);
+  --gold:#d9a83f;--gold-dim:rgba(217,168,63,.1);
+  --white:#f2f0ea;--grey:#b5b2bc;--grey-line:#3d3b42;
+  --green:#22c55e;--green-dim:rgba(34,197,94,.1);
+  --red:#ef4444;--red-dim:rgba(239,68,68,.1);
+  --font-d:'Playfair Display',Georgia,serif;
+  --font-b:'DM Sans',sans-serif;
+  --font-m:'JetBrains Mono',monospace;
+  --tr:0.22s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:var(--font-b);line-height:1.6;overflow-x:hidden;}
+h1,h2,h3,h4{font-family:var(--font-d);line-height:1.15;letter-spacing:-.01em;}
+a{color:inherit;text-decoration:none;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--blue-soft);}
+.container{max-width:1120px;margin:0 auto;padding:0 32px;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);height:66px;background:rgba(22,21,26,.95);border-bottom:1px solid var(--grey-line);backdrop-filter:blur(18px);}
+.nav-logo{display:flex;align-items:center;gap:12px;}
+.t-mark{width:40px;height:40px;border:1.5px solid var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Georgia',serif;color:var(--gold);font-size:22px;font-weight:700;background:linear-gradient(160deg,var(--bg-panel),var(--bg));}
+.nav-brand{font-family:var(--font-d);font-size:1rem;font-weight:700;}
+.nav-brand span{color:var(--blue);}
+.nav-sub{font-family:var(--font-m);font-size:.45rem;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin-top:1px;}
+.nav-right{display:flex;align-items:center;gap:20px;}
+.nav-back{font-size:.85rem;color:var(--grey);transition:color var(--tr);display:flex;align-items:center;gap:6px;}
+.nav-back svg{width:14px;height:14px;}
+.nav-back:hover{color:var(--white);}
+@media(max-width:600px){.nav-sub{display:none;}.nav-back{display:none;}.nav-cta{padding:8px 14px;font-size:.78rem;}.t-mark{width:34px;height:34px;font-size:18px;}}
+.nav-cta{background:var(--blue);color:#fff;padding:9px 20px;border-radius:7px;font-size:.85rem;font-weight:600;}
+
+/* ICON SYSTEM */
+.icon-badge{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.icon-badge svg{width:23px;height:23px;}
+.icon-badge.gold{background:var(--gold-dim);color:var(--gold);}
+.icon-badge.blue{background:var(--blue-dim);color:var(--blue);}
+.icon-badge.green{background:var(--green-dim);color:var(--green);}
+.icon-badge.sm{width:34px;height:34px;border-radius:9px;}
+.icon-badge.sm svg{width:17px;height:17px;}
+
+/* HERO */
+.page-hero{position:relative;padding:130px 0 64px;border-bottom:1px solid var(--grey-line);background:radial-gradient(ellipse 70% 90% at 15% 0%,rgba(47,123,255,.07) 0%,transparent 60%);overflow:hidden;text-align:center;}
+.hero-glow{position:absolute;border-radius:50%;filter:blur(50px);pointer-events:none;z-index:0;}
+.hero-glow.blue{width:520px;height:520px;background:radial-gradient(circle,rgba(47,123,255,.20),transparent 70%);top:-220px;right:-140px;animation:heroFloat1 14s ease-in-out infinite alternate;}
+.hero-glow.gold{width:380px;height:380px;background:radial-gradient(circle,rgba(217,168,63,.15),transparent 70%);bottom:-160px;left:-120px;animation:heroFloat2 18s ease-in-out infinite alternate;}
+@keyframes heroFloat1{0%{transform:translate(0,0) scale(1);}100%{transform:translate(-50px,40px) scale(1.12);}}
+@keyframes heroFloat2{0%{transform:translate(0,0) scale(1);}100%{transform:translate(40px,-30px) scale(1.08);}}
+.page-hero .container{position:relative;z-index:1;}
+.ph-tag{font-family:var(--font-m);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:9px;margin-bottom:16px;}
+.ph-tag svg{width:15px;height:15px;animation:iconPulse 2.4s ease-in-out infinite;}
+@keyframes iconPulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.15);opacity:.75;}}
+@media(prefers-reduced-motion:reduce){.hero-glow{animation:none;}.ph-tag svg{animation:none;}}
+.page-hero h1{font-size:clamp(2rem,4vw,3.2rem);font-weight:700;margin-bottom:14px;}
+.page-hero p{font-size:1.05rem;color:var(--grey);max-width:640px;line-height:1.75;margin:0 auto;}
+.ph-stack{display:flex;justify-content:center;margin-top:24px;}
+.ph-stack .icon-badge{margin-left:-10px;border:3px solid var(--bg);}
+.ph-stack .icon-badge:first-child{margin-left:0;}
+.ph-badge{display:inline-flex;align-items:center;gap:6px;margin-top:18px;background:linear-gradient(90deg,var(--gold),#c98f1f);color:#1a1206;font-size:.8rem;font-weight:800;padding:7px 16px;border-radius:20px;box-shadow:0 3px 10px rgba(217,168,63,.45);letter-spacing:.02em;}
+.ph-badge svg{width:14px;height:14px;}
+
+/* FLOW (cómo trabajan juntas) */
+.flow-wrap-h{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;max-width:760px;margin:0 auto;}
+.flow-node-h{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:20px;width:180px;text-align:center;opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease,border-color .3s;}
+.flow-node-h.show{opacity:1;transform:translateY(0);}
+.flow-node-h.done{border-color:var(--green);}
+.flow-node-h .icon-badge{margin:0 auto 10px;}
+.flow-node-h h5{font-size:.88rem;font-weight:700;margin-bottom:4px;}
+.flow-node-h p{font-size:.76rem;color:var(--grey);line-height:1.4;}
+.flow-arrow-h{color:var(--grey-line);width:32px;height:20px;flex-shrink:0;transition:color .3s;}
+.flow-arrow-h.active{color:var(--blue);}
+@media(max-width:700px){.flow-wrap-h{flex-direction:column;}.flow-arrow-h{transform:rotate(90deg);}}
+
+/* SECTIONS */
+.section-block{padding:64px 0;}
+.section-divider{display:flex;align-items:center;gap:16px;margin-bottom:32px;flex-wrap:wrap;}
+.sd-tag{font-family:var(--font-m);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+.sd-tag.depto{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(47,123,255,.3);}
+.sd-tag.green{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3);}
+.sd-tag.gold{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(217,168,63,.3);}
+.sd-line{flex:1;height:1px;background:var(--grey-line);min-width:24px;}
+@media(max-width:600px){.section-divider{flex-direction:column;align-items:flex-start;gap:10px;}.sd-line{display:none;}}
+
+.lead-text{font-size:1rem;color:var(--grey);line-height:1.8;max-width:760px;}
+
+.included-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.included-card{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:10px;
+  opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease,border-color .22s;}
+.included-grid.in-view .included-card{opacity:1;transform:translateY(0);}
+.included-grid .included-card:nth-child(1){transition-delay:0s;}
+.included-grid .included-card:nth-child(2){transition-delay:.1s;}
+.included-grid .included-card:nth-child(3){transition-delay:.2s;}
+.included-card:hover{border-color:var(--blue);transform:translateY(-4px);}
+.included-grid.in-view .included-card:hover{transform:translateY(-4px);}
+.included-card h5{font-size:.98rem;font-weight:700;}
+.included-card p{font-size:.83rem;color:var(--grey);line-height:1.55;flex:1;}
+.included-card a.btn-ghost{align-self:flex-start;padding:9px 16px;font-size:.78rem;margin-top:4px;}
+@media(max-width:768px){.included-grid{grid-template-columns:1fr;}}
+
+.upsell-note{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:12px;padding:18px 22px;margin-top:16px;font-size:.86rem;color:var(--grey);line-height:1.6;}
+.upsell-note a{color:var(--blue);font-weight:600;}
+
+.example-block{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--grey-line);border-radius:14px;overflow:hidden;}
+.example-col{padding:28px 32px;}
+.example-col.before{background:var(--bg-panel);border-right:1px solid var(--grey-line);}
+.example-col.after{background:linear-gradient(135deg,rgba(34,197,94,.08),var(--bg-panel));}
+.example-label{font-family:var(--font-m);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px;display:inline-block;padding:4px 12px;border-radius:20px;}
+.example-label.before{background:var(--red-dim);color:#ef4444;}
+.example-label.after{background:var(--green-dim);color:var(--green);}
+.example-col p{font-size:.9rem;color:var(--grey);line-height:1.7;}
+@media(max-width:768px){.example-block{grid-template-columns:1fr;}.example-col.before{border-right:none;border-bottom:1px solid var(--grey-line);}}
+
+.benefits-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.benefits-list li{font-size:.92rem;color:var(--white);padding:14px 18px 14px 16px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:10px;line-height:1.5;display:flex;align-items:flex-start;gap:12px;
+  opacity:0;transform:translateX(-14px);transition:opacity .45s ease,transform .45s ease,border-color .22s;}
+.benefits-list.in-view li{opacity:1;transform:translateX(0);}
+.benefits-list li:nth-child(1){transition-delay:0s;}
+.benefits-list li:nth-child(2){transition-delay:.08s;}
+.benefits-list li:nth-child(3){transition-delay:.16s;}
+.benefits-list li:nth-child(4){transition-delay:.24s;}
+.benefits-list li:nth-child(5){transition-delay:.32s;}
+.benefits-list li:hover{border-color:var(--green);transform:translateX(4px);}
+.benefits-list.in-view li:hover{transform:translateX(4px);}
+.benefits-list li svg{width:18px;height:18px;color:var(--green);flex-shrink:0;margin-top:1px;}
+@media(max-width:640px){.benefits-list{grid-template-columns:1fr;}}
+
+.cta-section{padding:64px 0 96px;}
+.cta-inner{background:linear-gradient(135deg,var(--blue-soft),var(--bg-panel));border:1px solid var(--blue-soft);border-radius:18px;padding:48px;display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;}
+.cta-inner h2{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;max-width:440px;line-height:1.3;}
+.cta-inner p{font-size:.92rem;color:var(--grey);margin-top:10px;line-height:1.6;}
+.cta-btns{display:flex;gap:12px;flex-shrink:0;flex-wrap:wrap;}
+.btn-primary{position:relative;overflow:hidden;background:var(--blue);color:#fff;padding:13px 24px;border-radius:8px;font-weight:600;font-size:.9rem;white-space:nowrap;transition:opacity var(--tr),transform var(--tr);display:inline-flex;align-items:center;gap:8px;}
+.btn-primary:hover{opacity:.92;transform:translateY(-2px);}
+.btn-primary::after{content:'';position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-20deg);transition:left .65s ease;}
+.btn-primary:hover::after{left:130%;}
+.btn-ghost{border:1px solid var(--grey-line);color:var(--white);padding:13px 24px;border-radius:8px;font-weight:600;font-size:.9rem;white-space:nowrap;transition:border-color var(--tr),transform var(--tr);display:inline-block;}
+.btn-ghost:hover{border-color:var(--blue);transform:translateY(-2px);}
+@media(max-width:768px){.cta-inner{flex-direction:column;align-items:flex-start;padding:32px;}}
+
+footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:28px 0;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--grey);flex-wrap:wrap;gap:10px;}
+.footer-bottom a{transition:color .22s;}
+.footer-bottom a:hover{color:var(--white);}
+
+@view-transition{navigation:auto;}
+@media(prefers-reduced-motion:no-preference){
+  ::view-transition-old(root){animation:pageOut .25s ease both;}
+  ::view-transition-new(root){animation:pageIn .32s ease both;}
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+}
+@keyframes pageOut{to{opacity:0;}}
+@keyframes pageIn{from{opacity:0;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html">
+    <div class="t-mark">T</div>
+    <div><div class="nav-brand">TRUCO<span>technology</span></div><div class="nav-sub">Tu Departamento Tecnológico</div></div>
+  </a>
+  <div class="nav-right">
+    <a class="nav-back" href="../servicios.html#digitaliza"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Digitaliza tu Empresa</a>
+    <a class="nav-cta" href="../pago.html">Contratar servicio</a>
+  </div>
+</nav>
+
+<div class="page-hero reveal">
+  <div class="hero-glow blue"></div>
+  <div class="hero-glow gold"></div>
+  <div class="container">
+    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M6 21V10l6-6 6 6v11"/></svg> Pack · Digitaliza tu Empresa</div>
+    <h1>Pack Despachos</h1>
+    <p>Para abogados, asesorías, gestorías, inmobiliarias y servicios profesionales — despachos donde la relación con el cliente y los documentos son el corazón del negocio.</p>
+    <div class="ph-stack">
+      <div class="icon-badge blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+      <div class="icon-badge gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></div>
+      <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
+    </div>
+    <span class="ph-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> -15% al combinar las 3 soluciones</span>
+  </div>
+</div>
+
+<div class="section-block reveal">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag depto">Qué problema resuelve</span><div class="sd-line"></div></div>
+    <p class="lead-text">Gestionáis información sensible de vuestros clientes repartida entre correos, papeles y varios programas — y cada proceso administrativo se alarga más de lo necesario. Este Pack está pensado para que la gestión de clientes, la firma de documentos y el archivo dejen de ser un cuello de botella.</p>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-top:0;">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag green">Para qué empresas está pensado</span><div class="sd-line"></div></div>
+    <p class="lead-text">Despachos profesionales donde la relación con el cliente, los documentos y los contratos son el corazón del negocio: abogados, asesorías, gestorías, inmobiliarias y servicios profesionales en general.</p>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-top:0;">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Qué soluciones incluye</span><div class="sd-line"></div></div>
+    <div class="included-grid">
+      <div class="included-card">
+        <div class="icon-badge blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+        <h5>CRM</h5>
+        <p>Toda la información de cada cliente centralizada, con seguimiento claro de cada expediente u oportunidad.</p>
+        <a class="btn-ghost" href="../soluciones/crm.html">Ver cómo funciona</a>
+      </div>
+      <div class="included-card">
+        <div class="icon-badge gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></div>
+        <h5>Firma Digital</h5>
+        <p>Cierra acuerdos y contratos en minutos, sin imprimir, escanear ni esperar a que el cliente pase por la oficina.</p>
+        <a class="btn-ghost" href="../soluciones/firma.html">Ver cómo funciona</a>
+      </div>
+      <div class="included-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
+        <h5>Gestión Documental</h5>
+        <p>Cualquier documento localizable en segundos, con control claro de quién accede a cada archivo.</p>
+        <a class="btn-ghost" href="../soluciones/docs.html">Ver cómo funciona</a>
+      </div>
+    </div>
+    <div class="upsell-note">También recomendamos añadir <a href="../soluciones/ciberseguridad.html">Ciberseguridad Pyme →</a> a este Pack — gestionáis datos y contratos sensibles de vuestros clientes, y merecen protección extra.</div>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-top:0;">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag depto">Cómo trabajan juntas</span><div class="sd-line"></div></div>
+    <div class="flow-wrap-h" id="workFlow">
+      <div class="flow-node-h" data-fn>
+        <div class="icon-badge blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+        <h5>Expediente en el CRM</h5><p>Toda la info del cliente centralizada</p>
+      </div>
+      <svg class="flow-arrow-h" data-fa viewBox="0 0 32 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="10" x2="26" y2="10"/><polyline points="20 4 26 10 20 16"/></svg>
+      <div class="flow-node-h" data-fn>
+        <div class="icon-badge gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></div>
+        <h5>Firma en segundos</h5><p>El contrato se envía y firma online</p>
+      </div>
+      <svg class="flow-arrow-h" data-fa viewBox="0 0 32 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="10" x2="26" y2="10"/><polyline points="20 4 26 10 20 16"/></svg>
+      <div class="flow-node-h" data-fn>
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
+        <h5>Archivado solo</h5><p>Queda guardado y localizable al instante</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-top:0;">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Ejemplo práctico</span><div class="sd-line"></div></div>
+    <div class="example-block">
+      <div class="example-col before"><span class="example-label before">Antes</span><p>Una gestoría necesita la firma de un cliente para presentar un trámite con plazo. El cliente no puede pasar por la oficina y el trámite se retrasa una semana.</p></div>
+      <div class="example-col after"><span class="example-label after">Después</span><p>Le envían el documento para firma digital, el cliente firma desde el móvil en dos minutos, y el trámite se presenta el mismo día.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-top:0;">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag depto">Qué beneficios obtiene la empresa</span><div class="sd-line"></div></div>
+    <ul class="benefits-list">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Toda la información de clientes en un único sitio</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Contratos cerrados en minutos, no en días</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Archivo siempre organizado y accesible</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Menos riesgo de perder documentos sensibles</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Descuento del 15% al combinar las 3 soluciones</li>
+    </ul>
+  </div>
+</div>
+
+<div class="cta-section reveal">
+  <div class="container">
+    <div class="cta-inner">
+      <div>
+        <h2>¿Listo para que la gestión de clientes y documentos deje de ser un cuello de botella?</h2>
+        <p>Desde 600 € + IVA de implantación (soluciones elegidas + 300 € de Departamento incluido).</p>
+      </div>
+      <div class="cta-btns">
+        <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>
+        <a class="btn-primary" href="../pago.html?plan=digital&pack=despachos">Quiero implantar el Pack Despachos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© 2026 TRUCOtechnology — Todos los derechos reservados.</span>
+      <span style="display:flex;gap:14px;flex-wrap:wrap;">
+        <a href="../aviso-legal.html">Aviso Legal</a>
+        <a href="../privacidad.html">Privacidad</a>
+        <a href="../cookies.html">Cookies</a>
+        <a href="../terminos.html">Términos</a>
+      </span>
+      <span>www.trucotechnology.com</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els=document.querySelectorAll('.reveal, .included-grid, .benefits-list');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in-view'); io.unobserve(e.target); }
+      });
+    },{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  var nodes = document.querySelectorAll('[data-fn]');
+  var arrows = document.querySelectorAll('[data-fa]');
+  if(reduced){
+    nodes.forEach(function(n){ n.classList.add('show','done'); });
+    arrows.forEach(function(a){ a.classList.add('active'); });
+    return;
+  }
+  var flow = document.getElementById('workFlow');
+  if(flow){
+    var fio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          nodes.forEach(function(n, i){
+            setTimeout(function(){
+              n.classList.add('show');
+              if(arrows[i]) arrows[i].classList.add('active');
+              setTimeout(function(){ n.classList.add('done'); }, 350);
+            }, i*550);
+          });
+          fio.unobserve(e.target);
+        }
+      });
+    },{threshold:.4});
+    fio.observe(flow);
+  }
+})();
+</script>
+</body>
+</html>

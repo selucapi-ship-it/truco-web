@@ -241,25 +241,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       <div class="cat-label">Departamento Tecnológico · Suscripción mensual</div>
       <div class="pack-grid" style="margin-bottom:16px;">
 
-        <label class="plan-card" id="card-arranque-lite" onclick="selectDirect('arranque-lite')">
-          <input type="radio" name="plan" value="arranque-lite" style="display:none">
-          <div class="pc-check-box"></div>
-          <div class="pc-top">
-            <div class="pc-tag">Suscripción mensual · Para quien ya tiene tecnología</div>
-            <div class="pc-name">Departamento Lite™</div>
-            <div class="pc-base-price">199 €<sub>/mes + IVA</sub></div>
-            <div class="pc-vat">240,79 €/mes con IVA · Sin compromisos</div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--gold);">Anual: 2.149,20 € + IVA · Ahorras 10%</div>
-          </div>
-          <div class="pc-breakdown">
-            <div class="pb-row"><span class="pb-label">Hasta 2 soluciones tecnológicas</span><span class="pb-val">✓</span></div>
-            <div class="pb-row"><span class="pb-label">Mantenimiento web y seguridad</span><span class="pb-val">✓</span></div>
-            <div class="pb-row"><span class="pb-label">Resolución de incidencias</span><span class="pb-val">✓</span></div>
-            <div class="pb-divider"></div>
-            <div class="pb-row"><span class="pb-label">Reunión mensual</span><span class="pb-val">30 min</span></div>
-          </div>
-        </label>
-
         <label class="plan-card pro-card" id="card-arranque-pro" onclick="selectDirect('arranque-pro')">
           <div class="pc-ribbon">PRO</div>
           <input type="radio" name="plan" value="arranque-pro" style="display:none">
@@ -277,6 +258,25 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pb-row"><span class="pb-label">Mayor prioridad incidencias</span><span class="pb-val">✓</span></div>
             <div class="pb-divider"></div>
             <div class="pb-row"><span class="pb-label">Reunión mensual</span><span class="pb-val">45 min</span></div>
+          </div>
+        </label>
+
+        <label class="plan-card" id="card-arranque-lite" onclick="selectDirect('arranque-lite')">
+          <input type="radio" name="plan" value="arranque-lite" style="display:none">
+          <div class="pc-check-box"></div>
+          <div class="pc-top">
+            <div class="pc-tag">Suscripción mensual · Para quien ya tiene tecnología</div>
+            <div class="pc-name">Departamento Lite™</div>
+            <div class="pc-base-price">199 €<sub>/mes + IVA</sub></div>
+            <div class="pc-vat">240,79 €/mes con IVA · Sin compromisos</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--gold);">Anual: 2.149,20 € + IVA · Ahorras 10%</div>
+          </div>
+          <div class="pc-breakdown">
+            <div class="pb-row"><span class="pb-label">Hasta 2 soluciones tecnológicas</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Mantenimiento web y seguridad</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Resolución de incidencias</span><span class="pb-val">✓</span></div>
+            <div class="pb-divider"></div>
+            <div class="pb-row"><span class="pb-label">Reunión mensual</span><span class="pb-val">30 min</span></div>
           </div>
         </label>
 
@@ -327,13 +327,13 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pc-name">Web Esencial</div>
             <div class="pc-base-price">649 €<sub> + IVA</sub></div>
             <div class="pc-vat">785,29 € con IVA · Todo incluido</div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--grey);">🎁 <b style="color:var(--green);">30 días de Departamento Lite™ de regalo</b></div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--grey);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> <b style="color:var(--green);">30 días de Departamento Lite™ de regalo</b></div>
           </div>
         </label>
 
         <!-- 2: WEB PROFESIONAL — destacada -->
         <label class="plan-card" id="card-web" onclick="selectProject('web')" style="border-color:var(--blue);">
-          <div class="pc-ribbon" style="background:linear-gradient(90deg,var(--gold),#c98f1f);color:#1a1206;">⭐ MÁS ELEGIDA</div>
+          <div class="pc-ribbon" style="background:linear-gradient(90deg,var(--gold),#c98f1f);color:#1a1206;">MÁS ELEGIDA</div>
           <input type="radio" name="plan" value="web" style="display:none">
           <div class="pc-check-box"></div>
           <div class="pc-top" style="padding-top:28px;">
@@ -341,7 +341,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pc-name">Web Profesional</div>
             <div class="pc-base-price">940 €<sub> + IVA</sub></div>
             <div class="pc-vat">1.137,40 € con IVA · Todo incluido</div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--grey);">🎁 <b style="color:var(--green);">30 días de Departamento Lite™ de regalo</b></div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--grey);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> <b style="color:var(--green);">30 días de Departamento Lite™ de regalo</b></div>
           </div>
         </label>
 
@@ -369,7 +369,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         <div id="web-implantacion" style="display:none;background:var(--bg-panel);border:1.5px solid var(--blue-soft);border-radius:14px;padding:20px;animation:fadeIn .22s ease;">
           <div style="font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;">⏱ Período de implantación — 30 días</div>
           <div style="background:var(--green-dim);border:1px solid rgba(34,197,94,.3);border-radius:12px;padding:18px;text-align:center;margin-bottom:14px;">
-            <div style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:4px;">🎁 Departamento Lite™ — 30 días de regalo</div>
+            <div style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:4px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:3px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> Departamento Lite™ — 30 días de regalo</div>
             <div style="font-size:.82rem;color:var(--green);font-weight:700;">Incluido en el precio, sin coste aparte</div>
             <div style="font-size:.72rem;color:var(--grey);margin-top:4px;">Supervisión, ajustes y soporte durante toda la implantación</div>
           </div>
@@ -381,12 +381,12 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         <!-- DIGITALIZA: selector de soluciones + 90 días -->
         <div id="digital-implantacion" style="display:none;background:var(--bg-panel);border:1.5px solid var(--blue);border-radius:14px;overflow:hidden;animation:fadeIn .22s ease;">
           <div style="padding:18px 20px;border-bottom:1px solid var(--grey-line);">
-            <div style="font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:4px;">⚡ Selecciona las soluciones a implantar</div>
+            <div style="font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:4px;">Selecciona las soluciones a implantar</div>
             <div style="font-size:.75rem;color:var(--grey);">El precio y el departamento se asignan automáticamente según tu selección</div>
-            <div style="font-size:.72rem;color:var(--grey);margin-top:6px;">💬🌐📧 Las soluciones con IA (WhatsApp, Web, Correo) incluyen 1.000 interacciones/mes · exceso 0,02 €/interacción</div>
+            <div style="font-size:.72rem;color:var(--grey);margin-top:6px;">Las soluciones con IA (WhatsApp, Web, Correo) incluyen 1.000 interacciones/mes · exceso 0,02 €/interacción</div>
           </div>
           <div class="quick-sector-box">
-            <label for="quick-sector">🎯 Elige tu sector y nosotros seleccionamos lo que necesitas</label>
+            <label for="quick-sector">Elige tu sector y nosotros seleccionamos lo que necesitas</label>
             <div class="qsb-sub">Marcamos las soluciones habituales de tu sector — tú decides si las mantienes, quitas o añades más.</div>
             <select id="quick-sector" onchange="quickSectorSelect(this.value)">
               <option value="">Selecciona tu oficio o negocio…</option>
@@ -436,16 +436,17 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
           <div id="pack-badge"></div>
           <div id="pack-security-tip"></div>
           <div class="solutions-grid-el" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:16px 20px;" id="solutions-grid">
-            <label class="sol-chip" data-price="590"><input type="checkbox" value="whatsapp" onchange="updateSolutions()"><span>💬 IA para WhatsApp — 590 € + IVA</span></label>
-            <label class="sol-chip" data-price="350"><input type="checkbox" value="web-ia" onchange="updateSolutions()"><span>🌐 IA para Web — 350 € + IVA</span></label>
-            <label class="sol-chip" data-price="350"><input type="checkbox" value="email-ia" onchange="updateSolutions()"><span>📧 IA para Correo — 350 € + IVA</span></label>
-            <label class="sol-chip" data-price="400"><input type="checkbox" value="crm" onchange="updateSolutions()"><span>👥 CRM — 400 € + IVA</span></label>
-            <label class="sol-chip" data-price="350"><input type="checkbox" value="reservas" onchange="updateSolutions()"><span>📅 Reservas online — 350 € + IVA</span></label>
-            <label class="sol-chip" data-price="400"><input type="checkbox" value="automatizaciones" onchange="updateSolutions()"><span>⚙️ Automatizaciones — 400 € + IVA</span></label>
-            <label class="sol-chip" data-price="350"><input type="checkbox" value="integraciones" onchange="updateSolutions()"><span>🔗 Integraciones — 350 € + IVA</span></label>
-            <label class="sol-chip" data-price="400"><input type="checkbox" value="docs" onchange="updateSolutions()"><span>📁 Gestión documental — 400 € + IVA</span></label>
-            <label class="sol-chip" data-price="300"><input type="checkbox" value="firma" onchange="updateSolutions()"><span>✍️ Firma digital — 300 € + IVA</span></label>
-            <label class="sol-chip" data-price="450"><input type="checkbox" value="ciberseguridad" onchange="updateSolutions()"><span>🛡️ Ciberseguridad Pyme — 450 € + IVA</span></label>
+            <label class="sol-chip" data-price="590"><input type="checkbox" value="whatsapp" onchange="updateSolutions()"><span>IA para WhatsApp — 590 € + IVA</span></label>
+            <label class="sol-chip" data-price="350"><input type="checkbox" value="web-ia" onchange="updateSolutions()"><span>IA para Web — 350 € + IVA</span></label>
+            <label class="sol-chip" data-price="350"><input type="checkbox" value="email-ia" onchange="updateSolutions()"><span>IA para Correo — 350 € + IVA</span></label>
+            <label class="sol-chip" data-price="400"><input type="checkbox" value="crm" onchange="updateSolutions()"><span>CRM — 400 € + IVA</span></label>
+            <label class="sol-chip" data-price="350"><input type="checkbox" value="reservas" onchange="updateSolutions()"><span>Reservas online — 350 € + IVA</span></label>
+            <label class="sol-chip" data-price="400"><input type="checkbox" value="automatizaciones" onchange="updateSolutions()"><span>Automatizaciones — 400 € + IVA</span></label>
+            <label class="sol-chip" data-price="350"><input type="checkbox" value="integraciones" onchange="updateSolutions()"><span>Integraciones — 350 € + IVA</span></label>
+            <label class="sol-chip" data-price="400"><input type="checkbox" value="docs" onchange="updateSolutions()"><span>Gestión documental — 400 € + IVA</span></label>
+            <label class="sol-chip" data-price="300"><input type="checkbox" value="firma" onchange="updateSolutions()"><span>Firma digital — 300 € + IVA</span></label>
+            <label class="sol-chip" data-price="450"><input type="checkbox" value="ciberseguridad" onchange="updateSolutions()"><span>Ciberseguridad Pyme — 450 € + IVA</span></label>
+            <label class="sol-chip" data-price="550"><input type="checkbox" value="truki" onchange="updateSolutions()"><span>TruKi (facturas por chat) — 550 € + IVA</span></label>
           </div>
           <div id="solutions-result" style="margin:0 20px 16px;padding:12px 14px;border-radius:8px;font-size:.8rem;line-height:1.55;display:none;"></div>
           <div id="digital-90d" style="display:none;margin:0 20px 16px;background:rgba(255,255,255,.03);border:1px solid var(--grey-line);border-radius:8px;padding:12px 14px;font-size:.78rem;color:var(--grey);line-height:1.6;"></div>
@@ -463,7 +464,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 
   <!-- NOTA DOMINIO/HOSTING -->
   <div id="hosting-note" style="display:none;background:rgba(217,168,63,.06);border:1px solid rgba(217,168,63,.2);border-radius:10px;padding:14px 18px;margin-bottom:28px;font-size:.82rem;color:var(--grey);line-height:1.65;">
-    <b style="color:var(--gold);">⚠ Dominio y hosting: tu responsabilidad, no la nuestra.</b> El dominio (tu dirección web, ej. <em>tunegocio.com</em>) y el hosting (el servidor donde vive tu web) los contratas y pagas tú directamente con el proveedor que elijas. TRUCO technology te asesora y configura todo, pero la titularidad y el coste son siempre tuyos. Coste estimado: dominio desde 10-15 €/año · hosting desde 5-15 €/mes según proveedor.
+    <b style="color:var(--gold);">Dominio y hosting: tu responsabilidad, no la nuestra.</b> El dominio (tu dirección web, ej. <em>tunegocio.com</em>) y el hosting (el servidor donde vive tu web) los contratas y pagas tú directamente con el proveedor que elijas. TRUCO technology te asesora y configura todo, pero la titularidad y el coste son siempre tuyos. Coste estimado: dominio desde 10-15 €/año · hosting desde 5-15 €/mes según proveedor.
   </div>
 
   <!-- PASO 2 -->
@@ -555,17 +556,17 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
     <div id="sb-breakdown" class="sb-breakdown" style="display:none"></div>
     <div id="sb-renewal" class="sb-renewal" style="display:none"></div>
     <div class="trust-row">
-      <div class="trust-chip">🔒 SSL</div>
-      <div class="trust-chip">💳 Stripe</div>
+      <div class="trust-chip">SSL</div>
+      <div class="trust-chip">Stripe</div>
       <div class="trust-chip">🇪🇺 RGPD</div>
-      <div class="trust-chip">✓ Sin sorpresas</div>
+      <div class="trust-chip">Sin sorpresas</div>
     </div>
     <div class="sb-cta">
       <button class="pay-btn" id="payBtn" disabled onclick="handlePay()">
         <span id="btn-text">Selecciona un plan</span>
       </button>
     </div>
-    <div class="sb-secure">🔒 Procesado por Stripe · Cifrado 256-bit</div>
+    <div class="sb-secure">Procesado por Stripe · Cifrado 256-bit</div>
   </div>
 </div>
 
@@ -657,14 +658,14 @@ function applyPack(packKey){
   document.querySelectorAll('#solutions-grid .sol-chip').forEach(chip=>chip.classList.remove('sol-suggested'));
   updateSolutions();
   if(badge){
-    badge.innerHTML='🎯 <b>'+pack.name+'</b> recomendado para tu sector ('+pack.sub+') — ya hemos marcado las soluciones más habituales, con <b style="color:var(--gold);">15% de descuento</b> por llevarlas juntas. Puedes quitar o añadir las que quieras: el descuento se mantiene mientras tengas 3 soluciones activas.';
+    badge.innerHTML='<b>'+pack.name+'</b> recomendado para tu sector ('+pack.sub+') — ya hemos marcado las soluciones más habituales, con <b style="color:var(--gold);">15% de descuento</b> por llevarlas juntas. Puedes quitar o añadir las que quieras: el descuento se mantiene mientras tengas 3 soluciones activas.';
     badge.style.display='block';
   }
   if(secTip){
     if(pack.security){
       const ciberInput=document.querySelector('#solutions-grid input[value="ciberseguridad"]');
       if(ciberInput)ciberInput.closest('.sol-chip').classList.add('sol-suggested');
-      secTip.innerHTML='🔒 <b>Muy recomendado para tu sector:</b> añade Ciberseguridad Pyme — proteges los datos y contratos de tus clientes (no la hemos marcado, decides tú).';
+      secTip.innerHTML='<b>Muy recomendado para tu sector:</b> añade Ciberseguridad Pyme — proteges los datos y contratos de tus clientes (no la hemos marcado, decides tú).';
       secTip.style.display='block';
     }else{
       secTip.style.display='none';
@@ -761,24 +762,24 @@ function updateSolutions(){
     priceEl.innerHTML='Consultar<sub> presupuesto</sub>';
     resultEl.style.display='block';
     resultEl.style.background='rgba(217,168,63,.08)';resultEl.style.border='1px solid rgba(217,168,63,.2)';
-    resultEl.innerHTML='<b style="color:var(--gold);">⚠ '+count+' soluciones seleccionadas</b> — Elaboramos presupuesto personalizado. <b style="color:var(--white);">Continúa y te contactamos en 24h.</b>';
+    resultEl.innerHTML='<b style="color:var(--gold);">'+count+' soluciones seleccionadas</b> — Elaboramos presupuesto personalizado. <b style="color:var(--white);">Continúa y te contactamos en 24h.</b>';
     selectedDigitalPlan='pro';digitalTotalPrice=0;
   }else{
     const discInfo=getPackDiscountInfo(count);
     const discounted=discInfo.applies?Math.round(total*(1-PACK_DISCOUNT)*100)/100:total;
     priceEl.innerHTML=(discInfo.applies?'<s style="color:var(--grey);font-size:.7em;">'+(total+DIGITAL_BUYOUT)+' €</s> ':'')+(discounted+DIGITAL_BUYOUT)+' €<sub> + IVA</sub>';
     resultEl.style.display='block';
-    const packLine=discInfo.applies?'<div style="font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:4px;">🎁 '+discInfo.label+': -15% en soluciones (ahorras '+(total-discounted).toFixed(2).replace('.',',')+' €)</div>':'';
+    const packLine=discInfo.applies?'<div style="font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:4px;">'+discInfo.label+': -15% en soluciones (ahorras '+(total-discounted).toFixed(2).replace('.',',')+' €)</div>':'';
     const desglose=packLine+'<div style="font-size:.72rem;color:var(--grey);margin-bottom:6px;">'+(discInfo.applies?'<s>'+total+' €</s> '+discounted.toFixed(2).replace('.',',')+' €':total+' €')+' '+(count>1?'soluciones elegidas':'solución elegida')+' + <b style="color:var(--white);">300 € alta e integración de Departamento</b></div>';
     if(count<=2){
       selectedDigitalPlan='lite';
       resultEl.style.background='rgba(34,197,94,.08)';resultEl.style.border='1px solid rgba(34,197,94,.25)';
-      const nudge=sectorEngaged?'<div style="font-size:.72rem;color:var(--gold);font-weight:600;margin-top:6px;">🔥 Añade '+(3-count)+' solución'+(3-count>1?'es':'')+' más y desbloqueas un 15% de descuento.</div>':'';
-      resultEl.innerHTML=desglose+'<b style="color:var(--green);">✓ '+count+' '+(count>1?'soluciones':'solución')+'</b> — <b style="color:var(--white);">Departamento Lite™</b> · 90 días de regalo, luego 199€/mes.'+nudge;
+      const nudge=sectorEngaged?'<div style="font-size:.72rem;color:var(--gold);font-weight:600;margin-top:6px;">Añade '+(3-count)+' solución'+(3-count>1?'es':'')+' más y desbloqueas un 15% de descuento.</div>':'';
+      resultEl.innerHTML=desglose+'<b style="color:var(--green);">'+count+' '+(count>1?'soluciones':'solución')+'</b> — <b style="color:var(--white);">Departamento Lite™</b> · 90 días de regalo, luego 199€/mes.'+nudge;
     }else{
       selectedDigitalPlan='pro';
       resultEl.style.background='rgba(47,123,255,.08)';resultEl.style.border='1px solid rgba(47,123,255,.25)';
-      resultEl.innerHTML=desglose+'<b style="color:var(--blue);">⚡ 3 soluciones</b> — <b style="color:var(--white);">Departamento Pro™</b> · 90 días de regalo, luego 399€/mes.';
+      resultEl.innerHTML=desglose+'<b style="color:var(--blue);">3 soluciones</b> — <b style="color:var(--white);">Departamento Pro™</b> · 90 días de regalo, luego 399€/mes.';
     }
     digitalTotalPrice=discounted;
   }
@@ -786,7 +787,7 @@ function updateSolutions(){
   if(d90&&count>0){
     const dn=count>=3?'Pro™':'Lite™';const dp2=count>=3?399:199;
     d90.style.display='block';
-    d90.innerHTML='<b style="color:var(--white);">🎁 90 días de implantación:</b> el Departamento '+dn+' va <span style="color:var(--green);font-weight:600;">completamente de regalo</span> durante esos 90 días · después, renovación automática a '+dp2+'€/mes + IVA · cancela cuando quieras avisando con 7 días.';
+    d90.innerHTML='<b style="color:var(--white);">90 días de implantación:</b> el Departamento '+dn+' va <span style="color:var(--green);font-weight:600;">completamente de regalo</span> durante esos 90 días · después, renovación automática a '+dp2+'€/mes + IVA · cancela cuando quieras avisando con 7 días.';
   }else if(d90){d90.style.display='none';}
   if(digitalAddon)updateAll();
 }
@@ -823,7 +824,7 @@ function getActivePlan(){
     const discInfo1=getPackDiscountInfo(sols);const rawTotal1=sumCheckedSolutions();const discAmt1=discInfo1.applies?Math.round(rawTotal1*PACK_DISCOUNT*100)/100:0;
     const tb=proj.base+digitalTotalPrice+DIGITAL_BUYOUT;const iva=tb*0.21;
     const solLines1=[{l:(sols>1?'Soluciones elegidas':'Solución elegida')+' ('+sols+')',v:rawTotal1.toFixed(2).replace('.',',')+' €'}];
-    if(discInfo1.applies)solLines1.push({l:'🎁 Descuento '+discInfo1.label+' (-15%)',v:'-'+discAmt1.toFixed(2).replace('.',',')+' €',cls:'free'});
+    if(discInfo1.applies)solLines1.push({l:'Descuento '+discInfo1.label+' (-15%)',v:'-'+discAmt1.toFixed(2).replace('.',',')+' €',cls:'free'});
     return{key,name:wn+' + Digitaliza · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto combinado · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},...solLines1,{l:'Alta e integración de Departamento',v:DIGITAL_BUYOUT.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE[key],timeline:key,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
   }
 
@@ -835,7 +836,7 @@ function getActivePlan(){
     const discInfo2=getPackDiscountInfo(sols);const rawTotal2=sumCheckedSolutions();const discAmt2=discInfo2.applies?Math.round(rawTotal2*PACK_DISCOUNT*100)/100:0;
     const pb=digitalTotalPrice;const tb=pb+DIGITAL_BUYOUT;const iva=tb*0.21;
     const solLines2=[{l:(sols>1?'Soluciones elegidas':'Solución elegida')+' ('+sols+')',v:rawTotal2.toFixed(2).replace('.',',')+' €'}];
-    if(discInfo2.applies)solLines2.push({l:'🎁 Descuento '+discInfo2.label+' (-15%)',v:'-'+discAmt2.toFixed(2).replace('.',',')+' €',cls:'free'});
+    if(discInfo2.applies)solLines2.push({l:'Descuento '+discInfo2.label+' (-15%)',v:'-'+discAmt2.toFixed(2).replace('.',',')+' €',cls:'free'});
     return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[...solLines2,{l:'Alta e integración de Departamento',v:DIGITAL_BUYOUT.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE['digital-'+dp],timeline:'digital-'+dp,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
   }
 
@@ -949,6 +950,12 @@ function toggleFaq(btn){
   else if(plan==='digital')toggleDigitalAddon();
   const pack=params.get('pack');
   if(pack&&PACKS[pack])applyPack(pack);
+  const sol=params.get('sol');
+  if(sol){
+    if(!digitalAddon)toggleDigitalAddon();
+    const cb=document.querySelector('#solutions-grid input[value="'+sol+'"]');
+    if(cb){cb.checked=true;updateSolutions();}
+  }
 })();
 </script>
 </body>

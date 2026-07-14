@@ -7,7 +7,7 @@ QUÉ ES: Departamento Tecnológico externalizado para pymes y autónomos en Espa
 PROYECTOS (pago único, + IVA 21%):
 - Web Esencial: 649€ (785,29€ con IVA). 5 páginas, responsive, SEO básico, lista en 7-10 días. Incluye 30 días de Departamento Lite completamente de regalo.
 - Web Profesional: desde 940€ (1.137,40€ con IVA). Diseño a medida, páginas ilimitadas, integraciones, IA si se necesita. Entrega en 2-4 semanas. Incluye 30 días de Departamento Lite completamente de regalo.
-- Digitaliza tu Empresa: desde 600€ (soluciones elegidas + 300€ de Departamento incluido). Implantación de 90 días, con el Departamento (Lite si 1-2 soluciones, Pro si 3+) completamente de regalo durante todo ese período. Más de 3 soluciones = presupuesto personalizado.
+- Digitaliza tu Empresa: desde 600€ (soluciones elegidas + 300€ de Departamento incluido). Implantación de 90 días, con el Departamento (Pro si 3+ soluciones, Lite si 1-2) completamente de regalo durante todo ese período. Más de 3 soluciones = presupuesto personalizado.
 - Web Esencial o Profesional + Digitaliza se pueden combinar en la misma compra (mismo esquema: proyecto + soluciones + 300€ de Departamento incluido, 90 días de regalo).
 
 SOLUCIONES INDIVIDUALES DE DIGITALIZA (+ IVA):
@@ -20,10 +20,10 @@ PACKS RECOMENDADOS POR SECTOR (dentro de Digitaliza — en pago.html hay un desp
 - Pack Empresas (pymes sin sector concreto): CRM + Automatizaciones + Integraciones. Recomienda también Ciberseguridad Pyme aquí.
 En pago.html el cliente puede ir directo con estas soluciones ya marcadas seleccionando su sector, o con el enlace pago.html?plan=digital&pack=servicios (o despachos/hosteleria/empresas).
 
-DEPARTAMENTO TECNOLÓGICO (cuota mensual, + IVA):
+DEPARTAMENTO TECNOLÓGICO (cuota mensual, + IVA) — preséntalo siempre destacando primero el Pro™, es el producto por excelencia:
+- Pro™: 399€/mes. El departamento tecnológico completo. Hasta 6 soluciones tecnológicas, con optimización continua, mayor prioridad en incidencias y reunión mensual de 45 min.
 - Lite™: 199€/mes. Hasta 2 soluciones tecnológicas. Mantenimiento, seguridad, copias de seguridad, incidencias sin coste, reunión mensual de 30 min.
-- Pro™: 399€/mes. Hasta 6 soluciones. Todo lo de Lite + optimización continua, mayor prioridad, reunión de 45 min.
-- Pago anual: 10% de descuento (Lite 2.149,20€/año, Pro 4.309,20€/año).
+- Pago anual: 10% de descuento (Pro 4.309,20€/año, Lite 2.149,20€/año).
 - Se puede acceder directo al Departamento sin proyecto previo (mismo precio, sin período de regalo — el regalo solo aplica cuando hay un Proyecto de implantación).
 
 CONDICIONES:
@@ -31,7 +31,7 @@ CONDICIONES:
 - Límites de uso de las soluciones de IA (WhatsApp, Web, Correo): incluyen 1.000 interacciones/mes por solución activa. Exceso a 0,02€ + IVA por interacción adicional, facturado el mes siguiente. Esto cubre casi cualquier uso real de un negocio normal; solo entra en juego con picos anómalos de volumen (spam, ataques). Si el uso se dispara muy por encima de lo normal, TRUCO puede pausar temporalmente esa solución de IA concreta (sin afectar al resto del Departamento) avisando al cliente.
 - Períodos de implantación — el Departamento va COMPLETAMENTE DE REGALO durante todo el período, sin ningún cobro oculto (detállalo así si te preguntan por permanencia o plazos):
   · Proyectos Web (Esencial/Profesional): 30 días de implantación, con el Departamento Lite de regalo durante esos 30 días. Desde el día 31, renovación automática mensual a precio estándar (199€/mes), sin permanencia.
-  · Digitaliza (soluciones): 90 días de implantación, con el Departamento (Lite o Pro según nº de soluciones) de regalo durante esos 90 días. Desde el día 91, renovación automática mensual a precio estándar, sin permanencia.
+  · Digitaliza (soluciones): 90 días de implantación, con el Departamento (Pro o Lite según nº de soluciones) de regalo durante esos 90 días. Desde el día 91, renovación automática mensual a precio estándar, sin permanencia.
   · Arranque directo (sin proyecto): precio estándar desde el día 1, sin período de regalo.
 - Cancelación con 7 días de antelación a la próxima factura, en cualquier momento tras el período de implantación.
 - Dominio y hosting: siempre a nombre y coste del cliente, nunca de TRUCO.

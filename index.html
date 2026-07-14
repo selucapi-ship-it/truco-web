@@ -443,9 +443,13 @@ img{display:block;max-width:100%;}
 .sector-card:nth-child(4){--s-accent:#a855f7;}
 .sector-card:nth-child(5){--s-accent:#f97316;}
 .sector-card:nth-child(6){--s-accent:#ec4899;}
-.sc-icon{font-size:2rem;margin-bottom:12px;display:block;}
 .sc-title{font-family:var(--font-display);font-size:1.05rem;font-weight:700;margin-bottom:6px;color:var(--white);}
 .sc-sub{font-size:.78rem;color:var(--s-accent,var(--blue));font-family:var(--font-mono);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;}
+.sc-bg-art{position:absolute;bottom:-6%;left:50%;transform:translateX(-50%);width:100%;opacity:.07;color:var(--white);pointer-events:none;}
+.sc-bg-art svg{width:100%;height:auto;display:block;}
+.sc-header-center{position:relative;text-align:center;padding-top:2px;margin-bottom:16px;}
+.sc-header-center .sc-title{font-size:1.2rem;margin-bottom:5px;}
+.sc-header-center .sc-sub{margin-bottom:0;}
 .sc-pains{list-style:none;margin-bottom:16px;}
 .sc-pains li{font-size:.82rem;color:var(--grey);padding:4px 0 4px 16px;position:relative;border-bottom:1px solid var(--grey-line);}
 .sc-pains li:last-child{border-bottom:none;}
@@ -548,9 +552,9 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     {"@type": "Question", "name": "¿El dominio y el hosting son míos o de TRUCO?", "acceptedAnswer": {"@type": "Answer", "text": "Todo va siempre a tu nombre. El dominio, el hosting y las plataformas externas que usemos se registran y facturan directamente a ti. Si en algún momento decides dejar de trabajar con nosotros, te llevas todo sin ninguna complicación. Nunca tenemos posesión de lo que es tuyo."}},
     {"@type": "Question", "name": "¿Cuánto dura el período de implantación?", "acceptedAnswer": {"@type": "Answer", "text": "El período de implantación es de 30 días para proyectos web y 90 días para Digitaliza tu Empresa. Durante ese tiempo, el Departamento Tecnológico va completamente de regalo, incluido en el precio. Al terminar, el Departamento continúa mes a mes con renovación automática. Cancela cuando quieras avisando con 7 días."}},
     {"@type": "Question", "name": "¿Para qué sirve la videollamada mensual incluida?", "acceptedAnswer": {"@type": "Answer", "text": "Es tu reunión de departamento. Revisamos juntos los resultados del mes, analizamos qué ha funcionado bien y qué puede mejorar, y planificamos los cambios para el mes siguiente."}},
-    {"@type": "Question", "name": "¿Cuál es la diferencia entre Lite y Pro?", "acceptedAnswer": {"@type": "Answer", "text": "La diferencia está en cuántas soluciones tecnológicas mantiene cada plan. El Lite (199€/mes) mantiene hasta 2 soluciones. El Pro (399€/mes) mantiene hasta 6 soluciones, con optimización continua, adaptaciones, revisión avanzada y mayor prioridad."}},
+    {"@type": "Question", "name": "¿Cuál es la diferencia entre Lite y Pro?", "acceptedAnswer": {"@type": "Answer", "text": "La diferencia está en cuántas soluciones tecnológicas mantiene cada plan. El Pro (399€/mes) mantiene hasta 6 soluciones, con optimización continua, adaptaciones, revisión avanzada y mayor prioridad. El Lite (199€/mes) mantiene hasta 2 soluciones."}},
     {"@type": "Question", "name": "¿Puedo empezar con el proyecto web y luego pasar a la suscripción?", "acceptedAnswer": {"@type": "Answer", "text": "Sí, y de hecho es la forma más natural de empezar. Primero construimos o mejoramos tu web, y durante los 30 días de implantación el Departamento Tecnológico Lite va completamente de regalo, incluido en el precio."}},
-    {"@type": "Question", "name": "¿Hay descuento si pago anual?", "acceptedAnswer": {"@type": "Answer", "text": "Sí. Si prefieres pagar el año completo por adelantado, tienes un 10% de descuento: el Lite queda a 2.149,20 € + IVA/año y el Pro a 4.309,20 € + IVA/año."}},
+    {"@type": "Question", "name": "¿Hay descuento si pago anual?", "acceptedAnswer": {"@type": "Answer", "text": "Sí. Si prefieres pagar el año completo por adelantado, tienes un 10% de descuento: el Pro queda a 4.309,20 € + IVA/año y el Lite a 2.149,20 € + IVA/año."}},
     {"@type": "Question", "name": "¿Qué tipo de negocios se benefician más de vuestros servicios?", "acceptedAnswer": {"@type": "Answer", "text": "Cualquier empresa que use tecnología en su día a día y quiera tener un equipo técnico que la gestione sin tener que preocuparse de ella. Desde autónomos hasta pymes con equipo."}},
     {"@type": "Question", "name": "¿Tengo que contratar diferentes empresas para cada herramienta?", "acceptedAnswer": {"@type": "Answer", "text": "No. TRUCO se encarga de elegir, implantar, configurar y mantener toda la tecnología necesaria para tu empresa. Tú solo tendrás un único interlocutor."}},
     {"@type": "Question", "name": "¿Y si ya tengo herramientas instaladas?", "acceptedAnswer": {"@type": "Answer", "text": "No es necesario empezar desde cero. Podemos auditar, adaptar y mantener cualquier solución tecnológica existente para integrarla dentro de tu Departamento Tecnológico."}}
@@ -577,7 +581,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <li><a href="#como-empezamos">Cómo empezamos</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#sectores">¿Es esto para ti?</a></li>
-    <li><a class="nav-links-pack" href="#packs-descuento">🎁 Packs -15%</a></li>
+    <li><a class="nav-links-pack" href="#packs-descuento"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> Packs -15%</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#chat-section">Hablar con el asistente</a></li>
   </ul>
@@ -637,12 +641,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <div class="hcc-msgs">
           <div class="hm client">Buenas, ¿tenéis cita disponible para esta semana?</div>
           <div class="hm truco">
-            ¡Hola! Claro que sí 😊 Tenemos hueco el jueves a las 11h o el viernes a las 17h. ¿Cuál te viene mejor?
+            ¡Hola! Claro que sí, tenemos hueco el jueves a las 11h o el viernes a las 17h. ¿Cuál te viene mejor?
             <small>Ahora mismo · Asistente IA</small>
           </div>
           <div class="hm client">El viernes a las 17 perfecto</div>
           <div class="hm truco">
-            ¡Reservado! Te llega confirmación en un momento. Hasta el viernes 🗓
+            ¡Reservado! Te llega confirmación en un momento. Hasta el viernes.
             <small>Ahora mismo · Asistente IA</small>
           </div>
         </div>
@@ -675,27 +679,163 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 <div id="pillars">
   <div class="pillars-grid">
     <div class="pillar-item">
-      <div class="pillar-glyph">📞</div>
+      <div class="pillar-glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
       <h4>Clientes que nunca se pierden</h4>
       <p>Tus mensajes se atienden al instante mediante IA, en cualquier momento.</p>
     </div>
     <div class="pillar-item">
-      <div class="pillar-glyph">📅</div>
+      <div class="pillar-glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
       <h4>Citas que se agendan solas</h4>
       <p>Todo se agenda y confirma sin que muevas un dedo.</p>
     </div>
     <div class="pillar-item">
-      <div class="pillar-glyph">⚙️</div>
+      <div class="pillar-glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
       <h4>Tiempo que recuperas</h4>
       <p>Lo que hoy haces tú, mañana lo hace tu departamento.</p>
     </div>
     <div class="pillar-item">
-      <div class="pillar-glyph">🛡️</div>
+      <div class="pillar-glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
       <h4>Un equipo siempre ahí</h4>
       <p>Tu asistente IA está activo en todo momento, con escalado a persona si lo necesita.</p>
     </div>
   </div>
 </div>
+
+<!-- ── SECTORES ── -->
+<section id="sectores" class="reveal">
+  <div class="container">
+    <div class="sectores-intro">
+      <div class="s-tag">¿Es esto para ti?</div>
+      <h2>Si lo que describes te suena,<br>el Departamento Lite™ no es una opción.</h2>
+      <p>Es una necesidad. Hay profesiones donde perder un mensaje, olvidar una cita o tardar en responder tiene un coste real. Aquí van las más comunes.</p>
+    </div>
+    <div style="background:rgba(47,123,255,.06);border:1px solid rgba(47,123,255,.2);border-radius:12px;padding:16px 22px;margin-bottom:32px;font-size:.88rem;color:var(--grey);line-height:1.65;">
+      <b style="color:var(--white);">Importante:</b> No te vendemos un software nuevo que aprender. Si ya tienes tu programa de gestión, tu agenda o tu CRM — perfecto. Nosotros nos integramos con lo que ya tienes y nos encargamos de <b style="color:var(--white);">todo lo que llega antes de que el cliente entre en tu sistema:</b> el WhatsApp, el correo, la duda de las 22h, la cita que alguien quiere pedir el domingo. Tú descansas. El negocio no para.
+    </div>
+    <div class="sectores-grid">
+
+      <div class="sector-card">
+        <div class="sc-bg-art" aria-hidden="true"><svg viewBox="0 0 400 260" fill="currentColor"><polygon points="200,10 385,100 15,100"/><rect x="24" y="100" width="352" height="12"/><rect x="46" y="112" width="18" height="112"/><rect x="110" y="112" width="18" height="112"/><rect x="174" y="112" width="18" height="112"/><rect x="208" y="112" width="18" height="112"/><rect x="272" y="112" width="18" height="112"/><rect x="336" y="112" width="18" height="112"/><rect x="16" y="224" width="368" height="12"/><rect x="0" y="236" width="400" height="24"/></svg></div>
+        <div class="sc-header-center">
+          <div class="sc-title">Abogados y Bufetes</div>
+          <div class="sc-sub">El móvil no descansa nunca</div>
+        </div>
+        <ul class="sc-pains">
+          <li>Clientes que escriben a las 21h esperando respuesta inmediata</li>
+          <li>Mensajes de WhatsApp que se acumulan mientras estás en juicio</li>
+          <li>Consultas previas que ocupan horas que deberías dedicar a tus casos</li>
+          <li>Citas que se pierden porque nadie confirmó a tiempo</li>
+        </ul>
+        <div class="sc-solution">
+          <div class="sc-solution-title">Lo que hacemos nosotros</div>
+          <p>Tu asistente atiende cada consulta, filtra lo urgente de lo que puede esperar y agenda la primera reunión en tu calendario. <b>Tú apareces cuando el cliente ya sabe que eres su abogado.</b>
+        <a class="sc-card-cta" href="sectores/abogados.html">¿Es esto para ti? Descúbrelo →</a>
+        </div>
+      </div>
+
+      <div class="sector-card">
+        <div class="sc-bg-art" aria-hidden="true"><svg viewBox="0 0 200 260" fill="currentColor"><path d="M100,10 C60,10 40,40 40,70 C40,100 55,110 55,140 C55,170 45,200 45,220 C45,235 55,245 65,245 C78,245 80,210 90,190 C93,183 107,183 110,190 C120,210 122,245 135,245 C145,245 155,235 155,220 C155,200 145,170 145,140 C145,110 160,100 160,70 C160,40 140,10 100,10 Z"/></svg></div>
+        <div class="sc-header-center">
+          <div class="sc-title">Clínicas Dentales</div>
+          <div class="sc-sub">Huecos que cuestan dinero</div>
+        </div>
+        <ul class="sc-pains">
+          <li>Pacientes que llaman mientras estás en consulta y no vuelven a intentarlo</li>
+          <li>Citas que se olvidan porque nadie avisó con tiempo</li>
+          <li>WhatsApp lleno de preguntas de precio, seguros y disponibilidad</li>
+          <li>Recepción desbordada con llamadas que podrían gestionarse solas</li>
+        </ul>
+        <div class="sc-solution">
+          <div class="sc-solution-title">Lo que hacemos nosotros</div>
+          <p>Nos integramos con tu agenda actual. Tu asistente responde dudas, agenda citas y avisa a los pacientes antes de que se olviden. <b>Menos huecos, más pacientes atendidos.</b>
+        <a class="sc-card-cta" href="sectores/clinicas-dentales.html">¿Es esto para ti? Descúbrelo →</a>
+        </div>
+      </div>
+
+      <div class="sector-card">
+        <div class="sc-bg-art" aria-hidden="true"><svg viewBox="0 0 400 260" fill="currentColor"><polygon points="200,20 350,110 50,110"/><rect x="60" y="110" width="280" height="130"/><rect x="172" y="160" width="56" height="80"/><rect x="90" y="140" width="40" height="40"/><rect x="270" y="140" width="40" height="40"/></svg></div>
+        <div class="sc-header-center">
+          <div class="sc-title">Inmobiliarias y Agentes</div>
+          <div class="sc-sub">El que responde primero, vende</div>
+        </div>
+        <ul class="sc-pains">
+          <li>Interesados en un piso que escriben a las 23h y al día siguiente ya llamaron a otra agencia</li>
+          <li>Visitas que nadie confirmó y el cliente no apareció</li>
+          <li>Leads de portales que llegan y se enfrían esperando respuesta</li>
+          <li>Horas perdidas respondiendo siempre las mismas preguntas de precio y zona</li>
+        </ul>
+        <div class="sc-solution">
+          <div class="sc-solution-title">Lo que hacemos nosotros</div>
+          <p>Respuesta en segundos a cada consulta, confirmación de visitas y seguimiento automático. <b>El cliente siente que siempre hay alguien, aunque sean las 11 de la noche.</b>
+        <a class="sc-card-cta" href="sectores/inmobiliarias.html">¿Es esto para ti? Descúbrelo →</a>
+        </div>
+      </div>
+
+      <div class="sector-card">
+        <div class="sc-bg-art" aria-hidden="true"><svg viewBox="0 0 300 300" fill="currentColor"><ellipse cx="150" cy="70" rx="38" ry="75"/><ellipse cx="150" cy="230" rx="38" ry="75"/><ellipse cx="70" cy="150" rx="75" ry="38"/><ellipse cx="230" cy="150" rx="75" ry="38"/><circle cx="150" cy="150" r="30"/></svg></div>
+        <div class="sc-header-center">
+          <div class="sc-title">Centros de Estética y Belleza</div>
+          <div class="sc-sub">Reservas a cualquier hora</div>
+        </div>
+        <ul class="sc-pains">
+          <li>Clientes que preguntan disponibilidad por WhatsApp mientras estás atendiendo</li>
+          <li>Reservas que no se confirman y el hueco se queda vacío</li>
+          <li>Cancelaciones de última hora sin que nadie ocupe ese sitio</li>
+          <li>El teléfono que suena cuando tienes las manos ocupadas</li>
+        </ul>
+        <div class="sc-solution">
+          <div class="sc-solution-title">Lo que hacemos nosotros</div>
+          <p>Tu asistente recibe las consultas, enlaza con tu agenda actual y confirma cada reserva. <b>Tú trabajas. El negocio se llena solo.</b>
+        <a class="sc-card-cta" href="sectores/estetica.html">¿Es esto para ti? Descúbrelo →</a>
+        </div>
+      </div>
+
+      <div class="sector-card">
+        <div class="sc-bg-art" aria-hidden="true"><svg viewBox="0 0 300 300" fill="currentColor"><rect x="60" y="130" width="180" height="40" rx="20" transform="rotate(-35 150 150)"/><circle cx="80" cy="90" r="42"/><circle cx="80" cy="90" r="20" fill="var(--bg)"/><circle cx="220" cy="210" r="42"/><circle cx="220" cy="210" r="20" fill="var(--bg)"/></svg></div>
+        <div class="sc-header-center">
+          <div class="sc-title">Autónomos de oficios</div>
+          <div class="sc-sub">Electricistas, fontaneros, pintores...</div>
+        </div>
+        <ul class="sc-pains">
+          <li>Presupuestos que piden por WhatsApp mientras estás en obra y no puedes contestar</li>
+          <li>Clientes que llaman y como no coges se van al siguiente</li>
+          <li>Mensajes acumulados al terminar la jornada que ya no tienen sentido contestar</li>
+          <li>Citas de visita que se quedan sin confirmar y el cliente duda</li>
+        </ul>
+        <div class="sc-solution">
+          <div class="sc-solution-title">Lo que hacemos nosotros</div>
+          <p>Tu asistente recoge la solicitud, da una respuesta inmediata y agenda la visita de presupuesto. <b>Cuando acabas en obra, el cliente ya está esperando confirmación tuya.</b>
+        <a class="sc-card-cta" href="sectores/oficios.html">¿Es esto para ti? Descúbrelo →</a>
+        </div>
+      </div>
+
+      <div class="sector-card">
+        <div class="sc-bg-art" aria-hidden="true"><svg viewBox="0 0 300 300" fill="currentColor"><rect x="40" y="130" width="220" height="40" rx="10"/><rect x="20" y="100" width="35" height="100" rx="8"/><rect x="245" y="100" width="35" height="100" rx="8"/><rect x="0" y="115" width="20" height="70" rx="6"/><rect x="280" y="115" width="20" height="70" rx="6"/></svg></div>
+        <div class="sc-header-center">
+          <div class="sc-title">Gimnasios y Centros Deportivos</div>
+          <div class="sc-sub">Socios que no preguntan, socios que no entran</div>
+        </div>
+        <ul class="sc-pains">
+          <li>Interesados en apuntarse que preguntan por Instagram o WhatsApp y no reciben respuesta</li>
+          <li>Socios que se dan de baja porque nadie les prestó atención cuando tuvieron una duda</li>
+          <li>Preguntas de horarios y tarifas que responde siempre la misma persona</li>
+          <li>Clases con plazas libres que nadie ofertó a tiempo</li>
+        </ul>
+        <div class="sc-solution">
+          <div class="sc-solution-title">Lo que hacemos nosotros</div>
+          <p>Nos conectamos a lo que ya usas. Tu asistente atiende consultas, retiene socios y rellena plazas. <b>Tú entrenas a tus clientes. Nosotros cuidamos que no se vayan.</b></p>
+        </div>
+     
+        <a class="sc-card-cta" href="sectores/gimnasios.html">¿Es esto para ti? Descúbrelo →</a> </div>
+
+    </div>
+    <div class="sectores-cta">
+      <p><b>¿Tu sector no está aquí?</b> Si recibes mensajes de clientes y quieres que alguien los atienda por ti sin que tengas que comprar nada nuevo, el Departamento Tecnológico es para ti.</p>
+      <a class="btn-primary" href="#chat-section">Cuéntanos tu caso →</a>
+    </div>
+  </div>
+</section>
+
 
 <!-- ── CÓMO EMPEZAMOS ── -->
 <section id="como-empezamos" class="section reveal">
@@ -705,27 +845,27 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <p class="section-sub">El proyecto inicial no es un servicio aparte: es la puerta de entrada a tu departamento tecnológico.</p>
     <div class="entry-strip">
       <div class="entry-steps">
-        <div class="entry-card" onclick="location.href='servicios.html#web-esencial'" style="cursor:pointer;">
+        <div class="entry-card" onclick="location.href='proyectos/web-esencial.html'" style="cursor:pointer;">
           <h4>Empieza desde cero, rápido.</h4>
           <p>Web Esencial: 5 páginas, sistema de atención automática de FAQ. Lista en 7-10 días, sin complicaciones.</p>
           <span class="entry-price">Web Esencial · 649 € + IVA · 785,29 € con IVA</span>
-          <div class="entry-price-real">🎁 30 días de Departamento Lite™ de regalo — incluidos en el precio</div>
+          <div class="entry-price-real"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> 30 días de Departamento Lite™ de regalo — incluidos en el precio</div>
         </div>
-        <div class="entry-card" onclick="location.href='servicios.html#web-profesional'" style="cursor:pointer;">
+        <div class="entry-card" onclick="location.href='proyectos/web-profesional.html'" style="cursor:pointer;">
           <h4>Web completa con automatización.</h4>
           <p>Diseño a medida, WhatsApp IA y agenda automática. La que convierte visitas en clientes.</p>
           <span class="entry-price">Web Profesional · 940 € + IVA · 1.137,40 € con IVA</span>
-          <div class="entry-price-real">🎁 30 días de Departamento Lite™ de regalo — incluidos en el precio</div>
+          <div class="entry-price-real"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> 30 días de Departamento Lite™ de regalo — incluidos en el precio</div>
         </div>
         <div class="entry-card" onclick="location.href='servicios.html#digitaliza'" style="cursor:pointer;">
           <h4>¿Ya tienes web pero no convierte?</h4>
           <p>La transformamos con IA, WhatsApp y automatización sin cambiar tu dominio ni hosting.</p>
           <span class="entry-price">Digitaliza desde 600 € + IVA</span>
-          <div class="entry-price-real">🎁 90 días de Departamento (Lite™ o Pro™) de regalo — incluidos en el precio</div>
+          <div class="entry-price-real"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> 90 días de Departamento (Pro™ o Lite™) de regalo — incluidos en el precio</div>
         </div>
       </div>
       <div class="entry-gift">
-        <div class="gift-badge">🎁 Regalo incluido</div>
+        <div class="gift-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> Regalo incluido</div>
         <b>El Departamento Tecnológico va completamente de regalo</b>
         <p>Durante todo el periodo de implantación: <b style="display:inline;color:#1a1206;">30 días en webs</b>, <b style="display:inline;color:#1a1206;">90 días en Digitaliza</b>. Después, renovación automática — cancela cuando quieras avisando con 7 días.</p>
       </div>
@@ -739,24 +879,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="section-tag">Departamento Tecnológico TRUCO™</div>
     <h2 class="section-h2">Elige el tamaño de departamento que necesita tu negocio</h2>
     <div class="tiers-grid">
-      <div class="tier-card" onclick="location.href='servicios.html#lite'" style="cursor:pointer;">
-        <span class="tier-badge">Para autónomos y pequeños negocios</span>
-        <div class="tier-name">Departamento Tecnológico Lite™</div>
-        <div class="tier-role">Tu Responsable Tecnológico externo. ¿Ya tienes web o alguna herramienta digital? Nos hacemos cargo de todo. Mantenimiento, seguridad, actualizaciones e incidencias. Tu tecnología en buenas manos desde el primer día.</div>
-        <div class="tier-price">199 €<sub>/mes</sub></div>
-        <div class="tier-vat">+ IVA · 240,79 € con IVA</div>
-        <div class="tier-annual">o 179,10 €/mes pagando anual <span>· ahorras 10%</span></div>
-        <ul class="tier-list">
-          <li>Asistente de soporte tecnológico disponible en todo momento</li>
-          <li>Mantenimiento web — actualizaciones y rendimiento</li>
-          <li>Seguridad y copias de seguridad periódicas</li>
-          <li>Resolución de incidencias sin coste adicional</li>
-          <li>Reunión mensual de revisión y asesoramiento (30 min)</li>
-          <li>Mantenimiento de hasta 2 soluciones tecnológicas implantadas</li>
-        </ul>
-        <div class="tier-footer">Departamento de regalo durante la implantación de tu proyecto</div>
-      </div>
-      <div class="tier-card featured" onclick="location.href='servicios.html#pro'" style="cursor:pointer;">
+      <div class="tier-card featured" onclick="location.href='departamentos/pro.html'" style="cursor:pointer;">
         <span class="tier-badge">Para negocios que quieren escalar</span>
         <div class="tier-name">Departamento Tecnológico Pro™</div>
         <div class="tier-role">Para empresas con más tecnología activa. Hasta 6 soluciones mantenidas, optimización continua y máxima prioridad. El equipo técnico completo que siempre necesitaste.</div>
@@ -772,6 +895,23 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <li>Mayor prioridad en incidencias y resolución</li>
         </ul>
         <div class="tier-footer">Tu tecnología mantenida. Tú, a lo que importa.</div>
+      </div>
+      <div class="tier-card" onclick="location.href='departamentos/lite.html'" style="cursor:pointer;">
+        <span class="tier-badge">Para autónomos y pequeños negocios</span>
+        <div class="tier-name">Departamento Tecnológico Lite™</div>
+        <div class="tier-role">Tu Responsable Tecnológico externo. ¿Ya tienes web o alguna herramienta digital? Nos hacemos cargo de todo. Mantenimiento, seguridad, actualizaciones e incidencias. Tu tecnología en buenas manos desde el primer día.</div>
+        <div class="tier-price">199 €<sub>/mes</sub></div>
+        <div class="tier-vat">+ IVA · 240,79 € con IVA</div>
+        <div class="tier-annual">o 179,10 €/mes pagando anual <span>· ahorras 10%</span></div>
+        <ul class="tier-list">
+          <li>Asistente de soporte tecnológico disponible en todo momento</li>
+          <li>Mantenimiento web — actualizaciones y rendimiento</li>
+          <li>Seguridad y copias de seguridad periódicas</li>
+          <li>Resolución de incidencias sin coste adicional</li>
+          <li>Reunión mensual de revisión y asesoramiento (30 min)</li>
+          <li>Mantenimiento de hasta 2 soluciones tecnológicas implantadas</li>
+        </ul>
+        <div class="tier-footer">Departamento de regalo durante la implantación de tu proyecto</div>
       </div>
     </div>
     <div class="dedication-note">
@@ -802,130 +942,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     </div>
   </div>
 </section>
-
-<!-- ── SECTORES ── -->
-<section id="sectores" class="reveal">
-  <div class="container">
-    <div class="sectores-intro">
-      <div class="s-tag">¿Es esto para ti?</div>
-      <h2>Si lo que describes te suena,<br>el Departamento Lite™ no es una opción.</h2>
-      <p>Es una necesidad. Hay profesiones donde perder un mensaje, olvidar una cita o tardar en responder tiene un coste real. Aquí van las más comunes.</p>
-    </div>
-    <div style="background:rgba(47,123,255,.06);border:1px solid rgba(47,123,255,.2);border-radius:12px;padding:16px 22px;margin-bottom:32px;font-size:.88rem;color:var(--grey);line-height:1.65;">
-      <b style="color:var(--white);">Importante:</b> No te vendemos un software nuevo que aprender. Si ya tienes tu programa de gestión, tu agenda o tu CRM — perfecto. Nosotros nos integramos con lo que ya tienes y nos encargamos de <b style="color:var(--white);">todo lo que llega antes de que el cliente entre en tu sistema:</b> el WhatsApp, el correo, la duda de las 22h, la cita que alguien quiere pedir el domingo. Tú descansas. El negocio no para.
-    </div>
-    <div class="sectores-grid">
-
-      <div class="sector-card">
-        <span class="sc-icon">⚖️</span>
-        <div class="sc-title">Abogados y Bufetes</div>
-        <div class="sc-sub">El móvil no descansa nunca</div>
-        <ul class="sc-pains">
-          <li>Clientes que escriben a las 21h esperando respuesta inmediata</li>
-          <li>Mensajes de WhatsApp que se acumulan mientras estás en juicio</li>
-          <li>Consultas previas que ocupan horas que deberías dedicar a tus casos</li>
-          <li>Citas que se pierden porque nadie confirmó a tiempo</li>
-        </ul>
-        <div class="sc-solution">
-          <div class="sc-solution-title">Lo que hacemos nosotros</div>
-          <p>Tu asistente atiende cada consulta, filtra lo urgente de lo que puede esperar y agenda la primera reunión en tu calendario. <b>Tú apareces cuando el cliente ya sabe que eres su abogado.</b>
-        <a class="sc-card-cta" href="pago.html?plan=arranque-lite">Quiero que TRUCO se encargue →</a>
-        </div>
-      </div>
-
-      <div class="sector-card">
-        <span class="sc-icon">🦷</span>
-        <div class="sc-title">Clínicas Dentales</div>
-        <div class="sc-sub">Huecos que cuestan dinero</div>
-        <ul class="sc-pains">
-          <li>Pacientes que llaman mientras estás en consulta y no vuelven a intentarlo</li>
-          <li>Citas que se olvidan porque nadie avisó con tiempo</li>
-          <li>WhatsApp lleno de preguntas de precio, seguros y disponibilidad</li>
-          <li>Recepción desbordada con llamadas que podrían gestionarse solas</li>
-        </ul>
-        <div class="sc-solution">
-          <div class="sc-solution-title">Lo que hacemos nosotros</div>
-          <p>Nos integramos con tu agenda actual. Tu asistente responde dudas, agenda citas y avisa a los pacientes antes de que se olviden. <b>Menos huecos, más pacientes atendidos.</b>
-        <a class="sc-card-cta" href="pago.html?plan=arranque-lite">Quiero que TRUCO se encargue →</a>
-        </div>
-      </div>
-
-      <div class="sector-card">
-        <span class="sc-icon">🏡</span>
-        <div class="sc-title">Inmobiliarias y Agentes</div>
-        <div class="sc-sub">El que responde primero, vende</div>
-        <ul class="sc-pains">
-          <li>Interesados en un piso que escriben a las 23h y al día siguiente ya llamaron a otra agencia</li>
-          <li>Visitas que nadie confirmó y el cliente no apareció</li>
-          <li>Leads de portales que llegan y se enfrían esperando respuesta</li>
-          <li>Horas perdidas respondiendo siempre las mismas preguntas de precio y zona</li>
-        </ul>
-        <div class="sc-solution">
-          <div class="sc-solution-title">Lo que hacemos nosotros</div>
-          <p>Respuesta en segundos a cada consulta, confirmación de visitas y seguimiento automático. <b>El cliente siente que siempre hay alguien, aunque sean las 11 de la noche.</b>
-        <a class="sc-card-cta" href="pago.html?plan=arranque-lite">Quiero que TRUCO se encargue →</a>
-        </div>
-      </div>
-
-      <div class="sector-card">
-        <span class="sc-icon">💆</span>
-        <div class="sc-title">Centros de Estética y Belleza</div>
-        <div class="sc-sub">Reservas a cualquier hora</div>
-        <ul class="sc-pains">
-          <li>Clientes que preguntan disponibilidad por WhatsApp mientras estás atendiendo</li>
-          <li>Reservas que no se confirman y el hueco se queda vacío</li>
-          <li>Cancelaciones de última hora sin que nadie ocupe ese sitio</li>
-          <li>El teléfono que suena cuando tienes las manos ocupadas</li>
-        </ul>
-        <div class="sc-solution">
-          <div class="sc-solution-title">Lo que hacemos nosotros</div>
-          <p>Tu asistente recibe las consultas, enlaza con tu agenda actual y confirma cada reserva. <b>Tú trabajas. El negocio se llena solo.</b>
-        <a class="sc-card-cta" href="pago.html?plan=arranque-lite">Quiero que TRUCO se encargue →</a>
-        </div>
-      </div>
-
-      <div class="sector-card">
-        <span class="sc-icon">🔧</span>
-        <div class="sc-title">Autónomos de oficios</div>
-        <div class="sc-sub">Electricistas, fontaneros, pintores...</div>
-        <ul class="sc-pains">
-          <li>Presupuestos que piden por WhatsApp mientras estás en obra y no puedes contestar</li>
-          <li>Clientes que llaman y como no coges se van al siguiente</li>
-          <li>Mensajes acumulados al terminar la jornada que ya no tienen sentido contestar</li>
-          <li>Citas de visita que se quedan sin confirmar y el cliente duda</li>
-        </ul>
-        <div class="sc-solution">
-          <div class="sc-solution-title">Lo que hacemos nosotros</div>
-          <p>Tu asistente recoge la solicitud, da una respuesta inmediata y agenda la visita de presupuesto. <b>Cuando acabas en obra, el cliente ya está esperando confirmación tuya.</b>
-        <a class="sc-card-cta" href="pago.html?plan=arranque-lite">Quiero que TRUCO se encargue →</a>
-        </div>
-      </div>
-
-      <div class="sector-card">
-        <span class="sc-icon">🏋️</span>
-        <div class="sc-title">Gimnasios y Centros Deportivos</div>
-        <div class="sc-sub">Socios que no preguntan, socios que no entran</div>
-        <ul class="sc-pains">
-          <li>Interesados en apuntarse que preguntan por Instagram o WhatsApp y no reciben respuesta</li>
-          <li>Socios que se dan de baja porque nadie les prestó atención cuando tuvieron una duda</li>
-          <li>Preguntas de horarios y tarifas que responde siempre la misma persona</li>
-          <li>Clases con plazas libres que nadie ofertó a tiempo</li>
-        </ul>
-        <div class="sc-solution">
-          <div class="sc-solution-title">Lo que hacemos nosotros</div>
-          <p>Nos conectamos a lo que ya usas. Tu asistente atiende consultas, retiene socios y rellena plazas. <b>Tú entrenas a tus clientes. Nosotros cuidamos que no se vayan.</b></p>
-        </div>
-     
-        <a class="sc-card-cta" href="pago.html?plan=arranque-lite">Quiero que TRUCO se encargue →</a> </div>
-
-    </div>
-    <div class="sectores-cta">
-      <p><b>¿Tu sector no está aquí?</b> Si recibes mensajes de clientes y quieres que alguien los atienda por ti sin que tengas que comprar nada nuevo, el Departamento Tecnológico es para ti.</p>
-      <a class="btn-primary" href="#chat-section">Cuéntanos tu caso →</a>
-    </div>
-  </div>
-</section>
-
 <!-- ── CÓMO TRABAJAMOS ── -->
 <section class="reveal" style="padding:80px 0;background:var(--bg-panel);border-top:1px solid var(--grey-line);border-bottom:1px solid var(--grey-line);">
   <div class="container">
@@ -968,37 +984,37 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 <!-- ── PACKS EMPRESA CON DESCUENTO ── -->
 <section id="packs-descuento" class="section reveal">
   <div class="container">
-    <div class="section-tag gold">🎁 Packs por sector</div>
+    <div class="section-tag gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> Packs por sector</div>
     <h2 class="section-h2">Packs Empresa con descuento</h2>
     <p class="section-sub">Por confiar en nuestro Departamento Tecnológico, queremos obsequiarte con un <b style="color:var(--gold);">15% de descuento</b> en nuestros packs. Cada uno trae 3 soluciones ya pensadas para tu tipo de negocio — puedes quitar o añadir las que quieras al contratar, no van cerradas.</p>
     <div class="pd-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;">
-      <a href="pago.html?plan=digital&pack=servicios" class="pd-card">
-        <span class="pd-badge">🔥 -15%</span>
-        <div class="pd-icon">🔧</div>
+      <a href="packs/servicios.html" class="pd-card">
+        <span class="pd-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.1em;margin-right:2px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17a2.5 2.5 0 0 0 2.5-2.5c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7.5 7.5 0 1 1-15 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> -15%</span>
+        <div class="pd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M14.7 6.3a4 4 0 1 0-5.4 5.4L2 19l3 3 7.3-7.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2-2z"/></svg></div>
         <h4 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:5px;">Pack Servicios</h4>
         <p style="font-size:.78rem;color:var(--grey);line-height:1.5;">Fontaneros, electricistas, autónomos de oficios, clínicas, centros de estética, gimnasios, academias…</p>
-        <p style="font-size:.75rem;color:var(--white);margin-top:10px;">💬 IA WhatsApp · 📅 Reservas · ⚙️ Automatizaciones</p>
+        <p style="font-size:.75rem;color:var(--white);margin-top:10px;">IA WhatsApp · Reservas · Automatizaciones</p>
       </a>
-      <a href="pago.html?plan=digital&pack=despachos" class="pd-card">
-        <span class="pd-badge">🔥 -15%</span>
-        <div class="pd-icon">💼</div>
+      <a href="packs/despachos.html" class="pd-card">
+        <span class="pd-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.1em;margin-right:2px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17a2.5 2.5 0 0 0 2.5-2.5c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7.5 7.5 0 1 1-15 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> -15%</span>
+        <div class="pd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M3 21h18M6 21V10l6-6 6 6v11"/></svg></div>
         <h4 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:5px;">Pack Despachos</h4>
         <p style="font-size:.78rem;color:var(--grey);line-height:1.5;">Abogados, asesorías, gestorías, inmobiliarias, servicios profesionales…</p>
-        <p style="font-size:.75rem;color:var(--white);margin-top:10px;">👥 CRM · ✍️ Firma digital · 📁 Gestión documental</p>
+        <p style="font-size:.75rem;color:var(--white);margin-top:10px;">CRM · Firma digital · Gestión documental</p>
       </a>
-      <a href="pago.html?plan=digital&pack=hosteleria" class="pd-card">
-        <span class="pd-badge">🔥 -15%</span>
-        <div class="pd-icon">🍽️</div>
+      <a href="packs/hosteleria.html" class="pd-card">
+        <span class="pd-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.1em;margin-right:2px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17a2.5 2.5 0 0 0 2.5-2.5c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7.5 7.5 0 1 1-15 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> -15%</span>
+        <div class="pd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M3 2v7c0 1.1.9 2 2 2h1v11M7 2v20M11 2v7c0 1.1.9 2 2 2s2-.9 2-2V2M11 2v20M18 2c-2 3-2 6 0 9v11"/></svg></div>
         <h4 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:5px;">Pack Hostelería</h4>
         <p style="font-size:.78rem;color:var(--grey);line-height:1.5;">Restaurantes, salones de celebración…</p>
-        <p style="font-size:.75rem;color:var(--white);margin-top:10px;">📅 Reservas · 💬 IA WhatsApp · ⚙️ Automatizaciones</p>
+        <p style="font-size:.75rem;color:var(--white);margin-top:10px;">Reservas · IA WhatsApp · Automatizaciones</p>
       </a>
-      <a href="pago.html?plan=digital&pack=empresas" class="pd-card">
-        <span class="pd-badge">🔥 -15%</span>
-        <div class="pd-icon">🏢</div>
+      <a href="packs/empresas.html" class="pd-card">
+        <span class="pd-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.1em;margin-right:2px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17a2.5 2.5 0 0 0 2.5-2.5c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7.5 7.5 0 1 1-15 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> -15%</span>
+        <div class="pd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1m4 0h1m-6 4h1m4 0h1"/></svg></div>
         <h4 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:5px;">Pack Empresas</h4>
         <p style="font-size:.78rem;color:var(--grey);line-height:1.5;">Pymes en general, sin un sector concreto.</p>
-        <p style="font-size:.75rem;color:var(--white);margin-top:10px;">👥 CRM · ⚙️ Automatizaciones · 🔗 Integraciones</p>
+        <p style="font-size:.75rem;color:var(--white);margin-top:10px;">CRM · Automatizaciones · Integraciones</p>
       </a>
     </div>
     <p style="font-size:.78rem;color:var(--grey);margin-top:20px;">¿No ves tu oficio en la lista? En el propio checkout puedes elegir tu sector entre más de 30 opciones y te marcamos las soluciones recomendadas al momento.</p>
@@ -1029,7 +1045,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Cuál es la diferencia entre Lite y Pro? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>La diferencia está en cuántas soluciones tecnológicas mantiene cada plan. <b>El Lite (199€/mes)</b> mantiene hasta 2 soluciones: mantenimiento web, seguridad, copias de seguridad, resolución de incidencias y reunión mensual de 30 min. Perfecto para quien tiene web y una o dos herramientas activas. <b>El Pro (399€/mes)</b> mantiene hasta 6 soluciones, con optimización continua, adaptaciones, revisión avanzada y mayor prioridad. Para empresas con más tecnología activa.</p></div>
+        <div class="faq-a"><p>La diferencia está en cuántas soluciones tecnológicas mantiene cada plan. <b>El Pro (399€/mes)</b> mantiene hasta 6 soluciones, con optimización continua, adaptaciones, revisión avanzada y mayor prioridad. Para empresas con más tecnología activa. <b>El Lite (199€/mes)</b> mantiene hasta 2 soluciones: mantenimiento web, seguridad, copias de seguridad, resolución de incidencias y reunión mensual de 30 min. Perfecto para quien tiene web y una o dos herramientas activas.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Puedo empezar con el proyecto web y luego pasar a la suscripción? <span class="faq-icon">+</span></button>
@@ -1037,7 +1053,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Hay descuento si pago anual? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Sí. Si prefieres pagar el año completo por adelantado, tienes un 10% de descuento: el Lite queda a 2.149,20 € + IVA/año (equivale a 179,10 €/mes) y el Pro a 4.309,20 € + IVA/año (equivale a 359,10 €/mes). El pago anual es único y por adelantado.</p></div>
+        <div class="faq-a"><p>Sí. Si prefieres pagar el año completo por adelantado, tienes un 10% de descuento: el Pro queda a 4.309,20 € + IVA/año (equivale a 359,10 €/mes) y el Lite a 2.149,20 € + IVA/año (equivale a 179,10 €/mes). El pago anual es único y por adelantado.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Qué tipo de negocios se benefician más de vuestros servicios? <span class="faq-icon">+</span></button>
@@ -1067,7 +1083,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         </div>
         <div class="chat-box" id="chatBox">
           <div class="chat-header">
-            <div class="chat-avatar">🧑‍💼</div>
+            <div class="chat-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
             <div>
               <div class="chat-hname">Asistente TRUCO</div>
               <div class="chat-hsub">Departamento Tecnológico</div>
@@ -1080,7 +1096,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
             <button class="chat-send" onclick="sendMsg()">Enviar</button>
           </div>
           <div class="voice-agent-row">
-            <button class="voice-agent-btn" id="voiceAgentBtn" onclick="toggleVoiceAgent()">🎙️ Hablar con un agente</button>
+            <button class="voice-agent-btn" id="voiceAgentBtn" onclick="toggleVoiceAgent()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg> Hablar con un agente</button>
             <div class="voice-agent-status" id="voiceAgentStatus" style="display:none;"></div>
           </div>
         </div>
@@ -1149,9 +1165,9 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <!-- ── FLOAT CHAT BTN ── -->
 <div id="float-chat">
-  <div class="float-label" id="floatLabel">💬 ¿Hablamos?</div>
+  <div class="float-label" id="floatLabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:3px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> ¿Hablamos?</div>
   <button class="float-btn" onclick="scrollToChat()" title="Hablar con el asistente">
-    💬
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
     <span class="float-notif" id="floatNotif"></span>
   </button>
 </div>
@@ -1210,9 +1226,9 @@ const KB = {
   saludo: {
     patterns: ['hola','buenas','buenos días','buenas tardes','buenas noches','hey','qué tal','hi','hello','saludos','ey','buenas tengo una duda'],
     responses: [
-      '¡Hola! 👋 Soy el asistente de <b>TRUCO technology</b>. Cuéntame tu negocio y te digo sin rodeos si podemos ayudarte. ¿A qué te dedicas?',
+      '¡Hola! Soy el asistente de <b>TRUCO technology</b>. Cuéntame tu negocio y te digo sin rodeos si podemos ayudarte. ¿A qué te dedicas?',
       '¡Buenas! Encantado de tenerte por aquí. Soy el asistente de <b>TRUCO technology</b>. ¿En qué puedo ayudarte hoy?',
-      '¡Hola! Me alegra que hayas pasado por aquí 😊 ¿Tienes alguna duda sobre nuestros servicios o quieres que te cuente qué podemos hacer por tu empresa?',
+      '¡Hola! Me alegra que hayas pasado por aquí. ¿Tienes alguna duda sobre nuestros servicios o quieres que te cuente qué podemos hacer por tu empresa?',
       '¡Hola! ¿Qué tal? Dime qué tipo de negocio tienes y en dos minutos te digo si y cómo podemos ayudarte.'
     ]
   },
@@ -1220,7 +1236,7 @@ const KB = {
   como_estas: {
     patterns: ['cómo estás','qué tal estás','cómo va','cómo andas','todo bien'],
     responses: [
-      '¡Muy bien, gracias por preguntar! 😊 Aquí, listo para ayudarte con cualquier duda sobre tecnología para tu negocio. ¿Y tú, en qué andas?',
+      '¡Muy bien, gracias por preguntar! Aquí, listo para ayudarte con cualquier duda sobre tecnología para tu negocio. ¿Y tú, en qué andas?',
       'Todo genial por aquí. Cuéntame, ¿qué tipo de empresa tienes? Así te oriento mejor desde el principio.'
     ]
   },
@@ -1246,7 +1262,7 @@ const KB = {
   precio_general: {
     patterns: ['precio','cuánto cuesta','cuánto es','tarifa','presupuesto','cuánto cobráis','cuánto vale','qué precios tenéis','cuánto me costaría','precios'],
     responses: [
-      'Tenemos dos tipos de servicios con precios distintos:\n\n<b>PROYECTOS (pago único):</b>\n🌐 Web Esencial: 649€ + IVA\n🌐 Web Profesional: desde 940€ + IVA\n🔧 Digitaliza tu Empresa: desde 600€ + IVA (según soluciones)\n\n<b>DEPARTAMENTO TECNOLÓGICO (mensual):</b>\n📦 Lite™: 199€/mes + IVA — hasta 2 soluciones\n📦 Pro™: 399€/mes + IVA — hasta 6 soluciones\n\n🎁 Todos los proyectos incluyen el Departamento Tecnológico completamente de regalo durante todo el período de implantación (30 días en webs, 90 en Digitaliza).\n\n¿Cuál encaja con lo que necesitas?',
+      'Tenemos dos tipos de servicios con precios distintos:\n\n<b>PROYECTOS (pago único):</b>\nWeb Esencial: 649€ + IVA\nWeb Profesional: desde 940€ + IVA\nDigitaliza tu Empresa: desde 600€ + IVA (según soluciones)\n\n<b>DEPARTAMENTO TECNOLÓGICO (mensual):</b>\nPro™: 399€/mes + IVA — hasta 6 soluciones\nLite™: 199€/mes + IVA — hasta 2 soluciones\n\nTodos los proyectos incluyen el Departamento Tecnológico completamente de regalo durante todo el período de implantación (30 días en webs, 90 en Digitaliza).\n\n¿Cuál encaja con lo que necesitas?',
       'Depende de qué necesites. Si es tu primera web: desde 649€ + IVA (pago único, con 30 días de Departamento Lite™ de regalo). Si quieres implantar soluciones (WhatsApp IA, CRM, automatizaciones...): desde 600€ + IVA, según cuántas elijas, con 90 días de Departamento de regalo. Y si solo quieres el Departamento Tecnológico manteniendo lo que ya tienes: 199€ o 399€/mes, sin proyecto de por medio. ¿Cuál de las tres situaciones es la tuya?'
     ]
   },
@@ -1270,7 +1286,7 @@ const KB = {
   lite_vs_pro: {
     patterns: ['diferencia lite pro','lite o pro','cuál es mejor','lite vs pro','qué diferencia','qué plan','cuál elijo','cuál me conviene','cuál me recomiendas'],
     responses: [
-      'La diferencia está en el número de soluciones que mantienen:\n\n📦 <b>Lite (199€/mes):</b> Mantiene hasta 2 soluciones tecnológicas. Perfecto si tienes, por ejemplo, tu web y un WhatsApp IA.\n\n📦 <b>Pro (399€/mes):</b> Mantiene hasta 6 soluciones. Para empresas con mayor ecosistema tecnológico — CRM, automatizaciones, múltiples canales de comunicación...\n\nLa regla es simple: si después de implantar tienes 1-2 soluciones, Lite. Si tienes 3 o más, Pro.\n\n¿Cuántas soluciones tecnológicas tienes o planeas tener activas?'
+      'La diferencia está en el número de soluciones que mantienen:\n\n<b>Pro (399€/mes):</b> Mantiene hasta 6 soluciones. Para empresas con mayor ecosistema tecnológico — CRM, automatizaciones, múltiples canales de comunicación...\n\n<b>Lite (199€/mes):</b> Mantiene hasta 2 soluciones tecnológicas. Perfecto si tienes, por ejemplo, tu web y un WhatsApp IA.\n\nLa regla es simple: si tienes 3 o más soluciones, Pro. Si tienes 1-2, Lite.\n\n¿Cuántas soluciones tecnológicas tienes o planeas tener activas?'
     ]
   },
 
@@ -1284,14 +1300,14 @@ const KB = {
   cuantas_soluciones_incluye: {
     patterns: ['qué cuenta como solución','qué es una solución tecnológica','qué significa una solución','cuenta la web como solución'],
     responses: [
-      'Buena pregunta. Una "solución tecnológica" es cada herramienta activa que mantenemos: por ejemplo, tu web, una IA de WhatsApp, un CRM, un sistema de reservas, una automatización o una integración cuentan cada una como 1 solución. El Lite mantiene hasta 2, el Pro hasta 6. ¿Quieres que contemos juntos cuántas tendrías en tu caso?'
+      'Buena pregunta. Una "solución tecnológica" es cada herramienta activa que mantenemos: por ejemplo, tu web, una IA de WhatsApp, un CRM, un sistema de reservas, una automatización o una integración cuentan cada una como 1 solución. El Pro mantiene hasta 6, el Lite hasta 2. ¿Quieres que contemos juntos cuántas tendrías en tu caso?'
     ]
   },
 
   anual: {
     patterns: ['anual','año','pago anual','descuento anual','pagar el año','todo el año','12 meses'],
     responses: [
-      'Sí, tenemos pago anual con <b>10% de descuento</b>:\n\n📦 <b>Lite™ Anual:</b> 2.149,20€ + IVA — equivale a 179,10€/mes (ahorras 238,80€)\n📦 <b>Pro™ Anual:</b> 4.309,20€ + IVA — equivale a 359,10€/mes (ahorras 478,80€)\n\nPago único por adelantado. Renovación al año siguiente.\n\n¿Prefieres empezar con el mensual para conocernos y luego pasarte al anual?'
+      'Sí, tenemos pago anual con <b>10% de descuento</b>:\n\n<b>Pro™ Anual:</b> 4.309,20€ + IVA — equivale a 359,10€/mes (ahorras 478,80€)\n<b>Lite™ Anual:</b> 2.149,20€ + IVA — equivale a 179,10€/mes (ahorras 238,80€)\n\nPago único por adelantado. Renovación al año siguiente.\n\n¿Prefieres empezar con el mensual para conocernos y luego pasarte al anual?'
     ]
   },
 
@@ -1299,14 +1315,14 @@ const KB = {
   web_esencial: {
     patterns: ['web esencial','649','web sencilla','web simple','primera web','web básica','presencia','rápida'],
     responses: [
-      'La <b>Web Esencial</b> son 649€ + IVA (785,29€ con IVA).\n\nIncluye:\n✓ Diseño profesional adaptado a tu imagen\n✓ Hasta 5 páginas completas\n✓ Responsive — perfecta en móvil y escritorio\n✓ SEO básico desde el primer día\n✓ Formulario de contacto a tu Google Drive\n✓ Botón de WhatsApp directo\n✓ Lista en 7-10 días\n✓ <b>🎁 30 días de Departamento Lite™ de regalo</b>\n\nAl entregar recibes el código fuente completo. Es tuya.\n\n¿Necesitas solo presencia digital o también quieres automatización?'
+      'La <b>Web Esencial</b> son 649€ + IVA (785,29€ con IVA).\n\nIncluye:\n✓ Diseño profesional adaptado a tu imagen\n✓ Hasta 5 páginas completas\n✓ Responsive — perfecta en móvil y escritorio\n✓ SEO básico desde el primer día\n✓ Formulario de contacto a tu Google Drive\n✓ Botón de WhatsApp directo\n✓ Lista en 7-10 días\n✓ <b>30 días de Departamento Lite™ de regalo</b>\n\nAl entregar recibes el código fuente completo. Es tuya.\n\n¿Necesitas solo presencia digital o también quieres automatización?'
     ]
   },
 
   web_profesional: {
     patterns: ['web profesional','940','web completa','web a medida','web con ia','web automatizada'],
     responses: [
-      'La <b>Web Profesional</b> empieza desde 940€ + IVA.\n\nTodo lo de la Web Esencial más:\n✓ Diseño completamente a medida\n✓ Páginas ilimitadas\n✓ Funcionalidades avanzadas e integraciones\n✓ SEO avanzado + Google Analytics\n✓ IA integrada si la necesitas\n✓ <b>🎁 30 días de Departamento Lite™ de regalo</b>\n\nEl precio final depende de las funcionalidades específicas que necesites.\n\n¿Quieres que veamos qué encajaría mejor con tu negocio?'
+      'La <b>Web Profesional</b> empieza desde 940€ + IVA.\n\nTodo lo de la Web Esencial más:\n✓ Diseño completamente a medida\n✓ Páginas ilimitadas\n✓ Funcionalidades avanzadas e integraciones\n✓ SEO avanzado + Google Analytics\n✓ IA integrada si la necesitas\n✓ <b>30 días de Departamento Lite™ de regalo</b>\n\nEl precio final depende de las funcionalidades específicas que necesites.\n\n¿Quieres que veamos qué encajaría mejor con tu negocio?'
     ]
   },
 
@@ -1321,7 +1337,7 @@ const KB = {
   digitaliza: {
     patterns: ['digitalizar','digitaliza','600','soluciones tecnológicas','implantar','automatizar','digitalizar mi negocio','digitalizar mi empresa'],
     responses: [
-      '<b>Digitaliza tu Empresa</b> es nuestro servicio de implantación de soluciones tecnológicas. Precio: soluciones elegidas + 300€ de Departamento incluido.\n\nSoluciones disponibles:\n💬 IA para WhatsApp — 590€ + IVA\n🌐 IA para Web — 350€ + IVA\n📧 IA para Correo — 350€ + IVA\n👥 CRM — 400€ + IVA\n📅 Reservas online — 350€ + IVA\n⚙️ Automatizaciones — 400€ + IVA\n🔗 Integraciones — 350€ + IVA\n📁 Gestión documental — 400€ + IVA\n✍️ Firma digital — 300€ + IVA\n🛡️ Ciberseguridad Pyme — 450€ + IVA\n\n<b>🎁 Período de implantación (90 días):</b>\n• 1-2 soluciones → Departamento Lite™ completamente de regalo\n• 3+ soluciones → Departamento Pro™ completamente de regalo\n\n¿Sabías que puedes combinar Digitaliza con la Web Esencial o Web Profesional en la misma compra? Después del período de regalo, tu Departamento sigue manteniendo todo con renovación automática — cancela cuando quieras avisando con 7 días. ¿Qué soluciones necesita tu empresa?',
+      '<b>Digitaliza tu Empresa</b> es nuestro servicio de implantación de soluciones tecnológicas. Precio: soluciones elegidas + 300€ de Departamento incluido.\n\nSoluciones disponibles:\nIA para WhatsApp — 590€ + IVA\nIA para Web — 350€ + IVA\nIA para Correo — 350€ + IVA\nCRM — 400€ + IVA\nReservas online — 350€ + IVA\nAutomatizaciones — 400€ + IVA\nIntegraciones — 350€ + IVA\nGestión documental — 400€ + IVA\nFirma digital — 300€ + IVA\nCiberseguridad Pyme — 450€ + IVA\n\n<b>Período de implantación (90 días):</b>\n• 3+ soluciones → Departamento Pro™ completamente de regalo\n• 1-2 soluciones → Departamento Lite™ completamente de regalo\n\n¿Sabías que puedes combinar Digitaliza con la Web Esencial o Web Profesional en la misma compra? Después del período de regalo, tu Departamento sigue manteniendo todo con renovación automática — cancela cuando quieras avisando con 7 días. ¿Qué soluciones necesita tu empresa?',
       'Con Digitaliza implantamos cualquier solución tecnológica que necesite tu empresa. No tienes que saber qué herramienta necesitas — nos lo cuentas y nosotros diseñamos la solución correcta.\n\nEl precio parte de 600€ + IVA (la solución más económica + el Departamento incluido) y sube según las soluciones elegidas — con 90 días de Departamento completamente de regalo. ¿Cuál es el mayor problema que quieres resolver en tu empresa ahora mismo?'
     ]
   },
@@ -1406,14 +1422,14 @@ const KB = {
   packs_sectoriales: {
     patterns: ['pack','packs','descuento en los packs','pack empresa','pack servicios','pack despachos','pack hosteleria','packs con descuento','oferta en los packs','15% de descuento','packs empresa'],
     responses: [
-      'Tenemos 4 packs por sector dentro de Digitaliza, cada uno con <b>15% de descuento</b> si te quedas con 3 soluciones:\n\n📦 <b>Pack Servicios</b> — fontaneros, electricistas, clínicas, estética, gimnasios, academias\n📦 <b>Pack Despachos</b> — abogados, asesorías, gestorías, inmobiliarias\n📦 <b>Pack Hostelería</b> — restaurantes, salones de celebración\n📦 <b>Pack Empresas</b> — pymes en general\n\nCada uno trae 3 soluciones ya pensadas para tu sector, pero puedes quitar o añadir las que quieras — no van cerrados. <a href="pago.html?plan=digital" target="_blank">Elige tu sector directamente en el checkout →</a>\n\n¿A qué te dedicas? Así te digo qué pack encaja mejor contigo.'
+      'Tenemos 4 packs por sector dentro de Digitaliza, cada uno con <b>15% de descuento</b> si te quedas con 3 soluciones:\n\n<b>Pack Servicios</b> — fontaneros, electricistas, clínicas, estética, gimnasios, academias\n<b>Pack Despachos</b> — abogados, asesorías, gestorías, inmobiliarias\n<b>Pack Hostelería</b> — restaurantes, salones de celebración\n<b>Pack Empresas</b> — pymes en general\n\nCada uno trae 3 soluciones ya pensadas para tu sector, pero puedes quitar o añadir las que quieras — no van cerrados. <a href="pago.html?plan=digital" target="_blank">Elige tu sector directamente en el checkout →</a>\n\n¿A qué te dedicas? Así te digo qué pack encaja mejor contigo.'
     ]
   },
 
   arranque: {
     patterns: ['arranque','pack arranque','acceso directo','sin proyecto','solo el departamento','solo mantenimiento','ya tengo todo implantado'],
     responses: [
-      'Si no necesitas un proyecto nuevo y quieres acceder directamente al Departamento Tecnológico:\n\n📦 <b>Arranque Lite™: 199€/mes + IVA</b>\nSin permanencia · hasta 2 soluciones tecnológicas\n\n📦 <b>Arranque Pro™: 399€/mes + IVA</b>\nSin permanencia · hasta 6 soluciones tecnológicas\n\nAl no haber un proyecto de implantación previo, se factura desde el primer mes — el período de regalo aplica solo cuando contratas un Proyecto (Web o Digitaliza). ¿Cuántas soluciones tecnológicas necesitas mantener?'
+      'Si no necesitas un proyecto nuevo y quieres acceder directamente al Departamento Tecnológico:\n\n<b>Arranque Lite™: 199€/mes + IVA</b>\nSin permanencia · hasta 2 soluciones tecnológicas\n\n<b>Arranque Pro™: 399€/mes + IVA</b>\nSin permanencia · hasta 6 soluciones tecnológicas\n\nAl no haber un proyecto de implantación previo, se factura desde el primer mes — el período de regalo aplica solo cuando contratas un Proyecto (Web o Digitaliza). ¿Cuántas soluciones tecnológicas necesitas mantener?'
     ]
   },
 
@@ -1421,7 +1437,7 @@ const KB = {
   permanencia: {
     patterns: ['permanencia','compromiso','atarme','cuánto tiempo','mínimo','puedo irme','baja','salir','me puedo dar de baja'],
     responses: [
-      'Depende de si contratas un proyecto o solo una solución:\n\n🌐 <b>Proyecto (Web Esencial o Profesional):</b> 30 días de implantación — el Departamento Lite™ va <b>completamente de regalo</b> durante esos 30 días, incluido en el precio.\n\n🔧 <b>Digitaliza / soluciones tecnológicas:</b> 90 días de implantación — el Departamento (Lite™ o Pro™ según nº de soluciones) va <b>completamente de regalo</b> durante esos 90 días.\n\nEn ambos casos, al terminar el período de regalo entras en renovación automática mensual y <b>continúas solo si estás satisfecho</b>, cancelando cuando quieras avisando con 7 días. Y durante todo el período de implantación, ajustamos lo que haga falta sin coste adicional para que funcione de verdad.',
+      'Depende de si contratas un proyecto o solo una solución:\n\n<b>Proyecto (Web Esencial o Profesional):</b> 30 días de implantación — el Departamento Lite™ va <b>completamente de regalo</b> durante esos 30 días, incluido en el precio.\n\n<b>Digitaliza / soluciones tecnológicas:</b> 90 días de implantación — el Departamento (Pro™ o Lite™ según nº de soluciones) va <b>completamente de regalo</b> durante esos 90 días.\n\nEn ambos casos, al terminar el período de regalo entras en renovación automática mensual y <b>continúas solo si estás satisfecho</b>, cancelando cuando quieras avisando con 7 días. Y durante todo el período de implantación, ajustamos lo que haga falta sin coste adicional para que funcione de verdad.',
       'No hay compromisos adicionales tras el período de implantación. El Departamento va completamente de regalo durante todo ese período (tanto en proyectos web como en Digitaliza), y existe porque configurar bien la tecnología de una empresa lleva tiempo — no queremos entregarte algo a medias. Una vez pasado (30 días si es un proyecto web, 90 si son soluciones de Digitaliza), la decisión de continuar es siempre tuya, con renovación automática mensual cancelable cuando quieras avisando con 7 días.'
     ]
   },
@@ -1479,7 +1495,7 @@ const KB = {
   no_se_tecnologia: {
     patterns: ['no entiendo de tecnología','no sé nada de esto','soy negado con la tecnología','no soy de informática'],
     responses: [
-      'Y por eso mismo existe TRUCO 😊 No necesitas entender de tecnología — para eso estamos nosotros. Tú nos cuentas cómo funciona tu negocio y qué te da problemas, y nosotros nos encargamos de elegir, implantar y mantener la solución. Tu única tarea es dedicarte a tu negocio. ¿Qué es lo que más problemas te está dando ahora mismo?'
+      'Y por eso mismo existe TRUCO. No necesitas entender de tecnología — para eso estamos nosotros. Tú nos cuentas cómo funciona tu negocio y qué te da problemas, y nosotros nos encargamos de elegir, implantar y mantener la solución. Tu única tarea es dedicarte a tu negocio. ¿Qué es lo que más problemas te está dando ahora mismo?'
     ]
   },
 
@@ -1514,7 +1530,7 @@ const KB = {
   noventa_dias: {
     patterns: ['90 días','noventa días','implantación','cuánto tiempo tarda','cuándo funciona','primer mes','cuánto se tarda'],
     responses: [
-      'El período de implantación varía según qué contrates:\n\nPara proyectos <b>Web</b> (Esencial o Profesional): <b>30 días</b>\n🎁 Todo el período, el Departamento Lite™ va completamente de regalo, incluido en el precio\n• A partir del día 31: renovación automática mensual (199€/mes) — continúas solo si estás satisfecho\n\nPara <b>Digitaliza</b> (soluciones tecnológicas): <b>90 días</b>\n🎁 Todo el período, el Departamento (Lite™ si 1-2 soluciones, Pro™ si 3+) va completamente de regalo\n• A partir del día 91: renovación automática mensual — continúas solo si estás satisfecho\n\nEn ambos casos, cancela cuando quieras avisando con 7 días, sin compromisos adicionales.'
+      'El período de implantación varía según qué contrates:\n\nPara proyectos <b>Web</b> (Esencial o Profesional): <b>30 días</b>\nTodo el período, el Departamento Lite™ va completamente de regalo, incluido en el precio\n• A partir del día 31: renovación automática mensual (199€/mes) — continúas solo si estás satisfecho\n\nPara <b>Digitaliza</b> (soluciones tecnológicas): <b>90 días</b>\nTodo el período, el Departamento (Pro™ si 3+ soluciones, Lite™ si 1-2) va completamente de regalo\n• A partir del día 91: renovación automática mensual — continúas solo si estás satisfecho\n\nEn ambos casos, cancela cuando quieras avisando con 7 días, sin compromisos adicionales.'
     ]
   },
 
@@ -1615,7 +1631,7 @@ const KB = {
   quiero_contratar: {
     patterns: ['quiero contratar pero no sé qué elegir','quiero empezar pero no sé por dónde','quiero contratar algo','me interesa contratar','quiero dar el paso'],
     responses: [
-      '¡Me alegra mucho oír eso! 😊 Para no equivocarnos eligiendo, cuéntame: ¿ya tienes web y herramientas, o partes de cero? Con eso te digo en una frase qué plan o proyecto encaja mejor contigo.'
+      '¡Me alegra mucho oír eso! Para no equivocarnos eligiendo, cuéntame: ¿ya tienes web y herramientas, o partes de cero? Con eso te digo en una frase qué plan o proyecto encaja mejor contigo.'
     ]
   },
 
@@ -1623,7 +1639,7 @@ const KB = {
   reservar_cita: {
     patterns: ['reservar cita','reservar consultoría','quiero una consultoría','agendar una llamada','agendar cita','quiero una cita','resérvame','cómo contrato','quiero empezar ya','quiero reservar','consultoría gratuita','pedir cita'],
     responses: [
-      'Me alegra que quieras dar el paso 😊\n\nLa consultoría gratuita dura unos 20-30 minutos. Analizamos tu empresa, te decimos qué soluciones encajan y qué costaría. Sin compromiso.\n\n¿Prefieres elegir día y hora tú mismo o que te contactemos nosotros?',
+      'Me alegra que quieras dar el paso.\n\nLa consultoría gratuita dura unos 20-30 minutos. Analizamos tu empresa, te decimos qué soluciones encajan y qué costaría. Sin compromiso.\n\n¿Prefieres elegir día y hora tú mismo o que te contactemos nosotros?',
       '¡Perfecto! La consultoría es gratuita y sin compromiso. En 20-30 minutos te explicamos exactamente cómo encajaría TRUCO en tu empresa y qué inversión necesitarías. ¿Cuándo tienes disponibilidad?'
     ],
     action: 'MOSTRAR_CITA'
@@ -1661,8 +1677,8 @@ const KB = {
   despedida: {
     patterns: ['gracias','adiós','hasta luego','bye','hasta pronto','ok gracias','muchas gracias','perfecto gracias','genial gracias'],
     responses: [
-      '¡Gracias a ti! 😊 Cuando estés listo para dar el paso, la consultoría es gratuita y sin compromiso. ¡Mucho éxito con tu empresa!',
-      'Ha sido un placer. Aquí estaremos cuando quieras. ¡A seguir adelante! 🚀'
+      '¡Gracias a ti! Cuando estés listo para dar el paso, la consultoría es gratuita y sin compromiso. ¡Mucho éxito con tu empresa!',
+      'Ha sido un placer. Aquí estaremos cuando quieras. ¡A seguir adelante!'
     ]
   },
 
@@ -1753,7 +1769,7 @@ let chatCtaOffered = false;
 function addMsg(role, text, label) {
   const div = document.createElement('div');
   div.className = 'msg ' + role;
-  div.innerHTML = (label ? '<div style="font-size:.65rem;font-weight:700;letter-spacing:.04em;color:var(--gold);margin-bottom:5px;">✨ ' + label + '</div>' : '') + text;
+  div.innerHTML = (label ? '<div style="font-size:.65rem;font-weight:700;letter-spacing:.04em;color:var(--gold);margin-bottom:5px;">' + label + '</div>' : '') + text;
   document.getElementById('chatMsgs').appendChild(div);
   document.getElementById('chatMsgs').scrollTop = 99999;
 }
@@ -1771,7 +1787,7 @@ function showBookingCard() {
   const card = document.createElement('div');
   card.className = 'msg bot booking-card';
   card.innerHTML = `
-    <div style="font-size:.82rem;font-weight:700;color:var(--white);margin-bottom:8px;">📅 Reserva tu consultoría gratuita</div>
+    <div style="font-size:.82rem;font-weight:700;color:var(--white);margin-bottom:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Reserva tu consultoría gratuita</div>
     <div style="font-size:.76rem;color:var(--grey);margin-bottom:12px;line-height:1.5;">20-30 minutos · Sin compromiso · Te decimos exactamente qué necesita tu negocio.</div>
     <div class="gcal-booking-btn" style="margin-bottom:8px;"></div>
   `;
@@ -1893,7 +1909,7 @@ async function toggleVoiceAgent() {
 
   const btn = document.getElementById('voiceAgentBtn');
   const status = document.getElementById('voiceAgentStatus');
-  btn.textContent = '⏳ Conectando...';
+  btn.textContent = 'Conectando...';
   btn.disabled = true;
   status.style.display = 'block';
   status.textContent = 'Pidiendo acceso al micrófono...';
@@ -1920,13 +1936,13 @@ async function toggleVoiceAgent() {
     await room.localParticipant.setMicrophoneEnabled(true);
 
     voiceActive = true;
-    btn.textContent = '🔴 Colgar';
+    btn.textContent = 'Colgar';
     btn.classList.add('active');
     btn.disabled = false;
-    status.textContent = '🎙️ Hablando con el Asistente TRUCO PRO — habla con normalidad';
+    status.textContent = 'Hablando con el Asistente TRUCO PRO — habla con normalidad';
   } catch (e) {
     status.textContent = 'No se pudo conectar. Inténtalo de nuevo o escríbenos por WhatsApp.';
-    btn.textContent = '🎙️ Hablar con un agente';
+    btn.textContent = 'Hablar con un agente';
     btn.disabled = false;
   }
 }
@@ -1940,7 +1956,7 @@ function resetVoiceUI() {
   voiceActive = false;
   const btn = document.getElementById('voiceAgentBtn');
   const status = document.getElementById('voiceAgentStatus');
-  btn.textContent = '🎙️ Hablar con un agente';
+  btn.textContent = 'Hablar con un agente';
   btn.classList.remove('active');
   btn.disabled = false;
   status.style.display = 'none';
@@ -1960,7 +1976,7 @@ setTimeout(() => {
   <a href="servicios.html#como-empezamos">Cómo empezamos</a>
   <a href="#nosotros">Nosotros</a>
   <a href="#sectores">¿Es esto para ti?</a>
-  <a href="#packs-descuento" style="color:var(--gold);font-weight:700;">🎁 Packs Empresa -15%</a>
+  <a href="#packs-descuento" style="color:var(--gold);font-weight:700;">Packs Empresa -15%</a>
   <a href="#faq">FAQ</a>
   <a href="#chat-section">Hablar con el asistente →</a>
 </div>

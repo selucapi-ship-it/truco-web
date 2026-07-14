@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<title>Departamento Tecnológico Lite™ — TRUCO technology</title>
+<meta name="description" content="Tu Responsable Tecnológico externo. Mantenimiento, seguridad, actualizaciones e incidencias resueltas desde el primer día.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#16151a;--bg-panel:#201f24;--bg-card:#2b2a30;
+  --blue:#2f7bff;--blue-soft:#1b3a66;--blue-dim:rgba(47,123,255,.1);
+  --gold:#d9a83f;--gold-dim:rgba(217,168,63,.1);
+  --white:#f2f0ea;--grey:#b5b2bc;--grey-line:#3d3b42;
+  --green:#22c55e;--green-dim:rgba(34,197,94,.1);
+  --red:#ef4444;--red-dim:rgba(239,68,68,.1);
+  --font-d:'Playfair Display',Georgia,serif;
+  --font-b:'DM Sans',sans-serif;
+  --font-m:'JetBrains Mono',monospace;
+  --tr:0.22s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:var(--font-b);line-height:1.6;overflow-x:hidden;}
+h1,h2,h3,h4{font-family:var(--font-d);line-height:1.15;letter-spacing:-.01em;}
+a{color:inherit;text-decoration:none;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--blue-soft);}
+.container{max-width:1120px;margin:0 auto;padding:0 32px;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);height:66px;background:rgba(22,21,26,.95);border-bottom:1px solid var(--grey-line);backdrop-filter:blur(18px);}
+.nav-logo{display:flex;align-items:center;gap:12px;}
+.t-mark{width:40px;height:40px;border:1.5px solid var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Georgia',serif;color:var(--gold);font-size:22px;font-weight:700;background:linear-gradient(160deg,var(--bg-panel),var(--bg));}
+.nav-brand{font-family:var(--font-d);font-size:1rem;font-weight:700;}
+.nav-brand span{color:var(--blue);}
+.nav-sub{font-family:var(--font-m);font-size:.45rem;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin-top:1px;}
+.nav-right{display:flex;align-items:center;gap:20px;}
+.nav-back{font-size:.85rem;color:var(--grey);transition:color var(--tr);display:flex;align-items:center;gap:6px;}
+.nav-back svg{width:14px;height:14px;}
+.nav-back:hover{color:var(--white);}
+@media(max-width:600px){.nav-sub{display:none;}.nav-back{display:none;}.nav-cta{padding:8px 14px;font-size:.78rem;}.t-mark{width:34px;height:34px;font-size:18px;}}
+.nav-cta{background:var(--blue);color:#fff;padding:9px 20px;border-radius:7px;font-size:.85rem;font-weight:600;}
+
+.icon-badge{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.icon-badge svg{width:23px;height:23px;}
+.icon-badge.gold{background:var(--gold-dim);color:var(--gold);}
+.icon-badge.blue{background:var(--blue-dim);color:var(--blue);}
+.icon-badge.green{background:var(--green-dim);color:var(--green);}
+.icon-badge.red{background:var(--red-dim);color:var(--red);}
+.icon-badge.sm{width:34px;height:34px;border-radius:9px;}
+.icon-badge.sm svg{width:17px;height:17px;}
+
+.page-hero{position:relative;padding:130px 0 60px;border-bottom:1px solid var(--grey-line);background:radial-gradient(ellipse 70% 90% at 15% 0%,rgba(34,197,94,.07) 0%,transparent 60%);overflow:hidden;}
+.hero-glow{position:absolute;border-radius:50%;filter:blur(50px);pointer-events:none;z-index:0;}
+.hero-glow.blue{width:520px;height:520px;background:radial-gradient(circle,rgba(47,123,255,.18),transparent 70%);top:-220px;right:-140px;animation:heroFloat1 14s ease-in-out infinite alternate;}
+.hero-glow.gold{width:380px;height:380px;background:radial-gradient(circle,rgba(34,197,94,.14),transparent 70%);bottom:-160px;left:-120px;animation:heroFloat2 18s ease-in-out infinite alternate;}
+@keyframes heroFloat1{0%{transform:translate(0,0) scale(1);}100%{transform:translate(-50px,40px) scale(1.12);}}
+@keyframes heroFloat2{0%{transform:translate(0,0) scale(1);}100%{transform:translate(40px,-30px) scale(1.08);}}
+@media(prefers-reduced-motion:reduce){.hero-glow{animation:none;}}
+.ph-tag{font-family:var(--font-m);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--green);display:inline-flex;align-items:center;gap:9px;margin-bottom:18px;position:relative;z-index:1;}
+.ph-tag svg{width:15px;height:15px;}
+.page-hero h1{font-size:clamp(2.1rem,4vw,3.3rem);font-weight:700;margin-bottom:16px;max-width:760px;position:relative;z-index:1;}
+.page-hero p{font-size:1.05rem;color:var(--grey);line-height:1.75;max-width:620px;position:relative;z-index:1;}
+.hero-price-box{position:relative;z-index:1;margin-top:32px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;padding:28px 32px;display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap;}
+.hp-main{font-size:2.2rem;font-weight:700;font-family:var(--font-d);}
+.hp-main sub{font-size:.9rem;font-weight:500;color:var(--grey);}
+.hp-vat{font-size:.78rem;color:var(--grey);margin-top:2px;}
+.hp-annual{font-size:.78rem;color:var(--gold);margin-top:6px;}
+@media(max-width:768px){.hero-price-box{flex-direction:column;align-items:flex-start;}}
+
+.section-block{padding:60px 0;}
+.section-divider{display:flex;align-items:center;gap:16px;margin-bottom:32px;flex-wrap:wrap;}
+.sd-tag{font-family:var(--font-m);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+.sd-tag.gold{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(217,168,63,.3);}
+.sd-tag.blue{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(47,123,255,.3);}
+.sd-tag.green{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3);}
+.sd-line{flex:1;height:1px;background:var(--grey-line);min-width:24px;}
+@media(max-width:600px){.section-divider{flex-direction:column;align-items:flex-start;gap:10px;}.sd-line{display:none;}}
+
+.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+.feat-card{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:12px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start;
+  opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease,border-color .22s;}
+.feat-grid.in-view .feat-card{opacity:1;transform:translateY(0);}
+.feat-grid .feat-card:nth-child(1){transition-delay:0s;}
+.feat-grid .feat-card:nth-child(2){transition-delay:.06s;}
+.feat-grid .feat-card:nth-child(3){transition-delay:.12s;}
+.feat-grid .feat-card:nth-child(4){transition-delay:.18s;}
+.feat-grid .feat-card:nth-child(5){transition-delay:.24s;}
+.feat-grid .feat-card:nth-child(6){transition-delay:.30s;}
+.feat-grid .feat-card:nth-child(7){transition-delay:.36s;}
+.feat-grid .feat-card:nth-child(8){transition-delay:.42s;}
+.feat-card:hover{border-color:var(--green);}
+.feat-card svg{width:19px;height:19px;color:var(--green);flex-shrink:0;margin-top:2px;}
+.feat-card p{font-size:.88rem;color:var(--white);line-height:1.55;}
+.feat-card.gold svg{color:var(--gold);}
+.feat-card.gold:hover{border-color:var(--gold);}
+@media(max-width:768px){.feat-grid{grid-template-columns:1fr;}}
+
+.wib-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.wib-item{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:10px;padding:14px 16px;font-size:.78rem;color:var(--grey);}
+.wib-item b{display:block;color:var(--white);font-size:.85rem;margin-bottom:3px;}
+@media(max-width:900px){.wib-grid{grid-template-columns:repeat(2,1fr);}}
+
+.cross-nav{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:28px 32px;}
+.cross-nav-title{font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.cross-nav-items{display:flex;gap:12px;flex-wrap:wrap;}
+.cross-nav-chip{display:flex;align-items:center;gap:10px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:10px;padding:11px 16px;font-size:.85rem;font-weight:600;color:var(--white);transition:border-color var(--tr),transform var(--tr);}
+.cross-nav-chip:hover{border-color:var(--blue);transform:translateY(-3px);}
+.cross-nav-chip .arrow{color:var(--blue);width:15px;height:15px;transition:transform var(--tr);}
+.cross-nav-chip:hover .arrow{transform:translateX(3px);}
+
+.faq-section{padding:60px 0;}
+.faq-list{max-width:800px;}
+.faq-item{border-bottom:1px solid var(--grey-line);}
+.faq-q{width:100%;background:none;border:none;color:var(--white);display:flex;justify-content:space-between;align-items:center;padding:20px 0;font-family:var(--font-d);font-size:.95rem;font-weight:700;cursor:pointer;text-align:left;gap:16px;transition:color var(--tr);}
+.faq-q:hover{color:var(--blue);}
+.faq-icon{flex-shrink:0;width:24px;height:24px;border:1px solid var(--grey-line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all var(--tr);}
+.faq-item.open .faq-icon{background:var(--blue);border-color:var(--blue);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;}
+.faq-item.open .faq-a{max-height:400px;padding-bottom:20px;}
+.faq-a p{font-size:.9rem;color:var(--grey);line-height:1.75;}
+
+.cta-section{padding:60px 0 96px;}
+.cta-inner{background:linear-gradient(135deg,var(--green-dim),var(--bg-panel));border:1px solid rgba(34,197,94,.35);border-radius:18px;padding:48px;display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;}
+.cta-inner h2{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;max-width:440px;line-height:1.3;}
+.cta-inner p{font-size:.92rem;color:var(--grey);margin-top:10px;line-height:1.6;}
+.cta-btns{display:flex;gap:12px;flex-shrink:0;flex-wrap:wrap;}
+.btn-primary{position:relative;overflow:hidden;background:var(--blue);color:#fff;padding:13px 24px;border-radius:8px;font-weight:600;font-size:.9rem;white-space:nowrap;transition:opacity var(--tr),transform var(--tr);display:inline-flex;align-items:center;gap:8px;}
+.btn-primary:hover{opacity:.92;transform:translateY(-2px);}
+.btn-primary::after{content:'';position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-20deg);transition:left .65s ease;}
+.btn-primary:hover::after{left:130%;}
+.btn-primary svg{width:15px;height:15px;position:relative;}
+.btn-ghost{border:1px solid var(--grey-line);color:var(--white);padding:13px 24px;border-radius:8px;font-weight:600;font-size:.9rem;white-space:nowrap;transition:border-color var(--tr),transform var(--tr);display:inline-block;}
+.btn-ghost:hover{border-color:var(--blue);transform:translateY(-2px);}
+@media(max-width:768px){.cta-inner{flex-direction:column;align-items:flex-start;padding:32px;}}
+
+footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:28px 0;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--grey);flex-wrap:wrap;gap:10px;}
+.footer-bottom a{transition:color .22s;}
+.footer-bottom a:hover{color:var(--white);}
+
+@view-transition{navigation:auto;}
+@media(prefers-reduced-motion:no-preference){
+  ::view-transition-old(root){animation:pageOut .25s ease both;}
+  ::view-transition-new(root){animation:pageIn .32s ease both;}
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease;}
+  .reveal.in-view{opacity:1;transform:translateY(0);}
+}
+@keyframes pageOut{to{opacity:0;}}
+@keyframes pageIn{from{opacity:0;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html">
+    <div class="t-mark">T</div>
+    <div><div class="nav-brand">TRUCO<span>technology</span></div><div class="nav-sub">Tu Departamento Tecnológico</div></div>
+  </a>
+  <div class="nav-right">
+    <a class="nav-back" href="../index.html#servicios"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Departamento Tecnológico</a>
+    <a class="nav-cta" href="../pago.html?plan=arranque-lite">Contratar Lite™</a>
+  </div>
+</nav>
+
+<div class="page-hero reveal">
+  <div class="hero-glow blue"></div>
+  <div class="hero-glow gold"></div>
+  <div class="container">
+    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Para autónomos y pequeños negocios</div>
+    <h1>Departamento Tecnológico Lite™</h1>
+    <p>Tu Responsable Tecnológico externo. ¿Ya tienes web o alguna herramienta digital? Nos hacemos cargo de todo. Mantenimiento, seguridad, actualizaciones e incidencias. Tu tecnología en buenas manos desde el primer día.</p>
+    <div class="hero-price-box">
+      <div>
+        <div class="hp-main">199 €<sub>/mes</sub></div>
+        <div class="hp-vat">+ IVA · 240,79 €/mes con IVA</div>
+        <div class="hp-annual">o 179,10 €/mes pagando anual · ahorras 10%</div>
+      </div>
+      <a class="btn-primary" href="../pago.html?plan=arranque-lite">Contratar Lite™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+  </div>
+</div>
+
+<div class="section-block reveal">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag green">Incluye</span><div class="sd-line"></div></div>
+    <div class="feat-grid">
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><p><b>Asistente de soporte tecnológico</b> disponible en todo momento</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p><b>Mantenimiento web</b> — actualizaciones, seguridad y rendimiento</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><p><b>Copias de seguridad</b> periódicas y verificadas</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p><b>Resolución de incidencias</b> técnicas sin coste adicional</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg><p><b>Soporte tecnológico</b> para tu equipo</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p><b>Reunión mensual</b> de revisión y asesoramiento (30 min)</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg><p><b>Asesoramiento tecnológico</b> continuo</p></div>
+      <div class="feat-card gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><p><b>Mantenimiento de hasta 2 soluciones tecnológicas</b> implantadas por TRUCO</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-top:0;">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag blue">¿Qué es una solución tecnológica?</span><div class="sd-line"></div></div>
+    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:760px;margin-bottom:24px;">Cada sistema implantado que requiere mantenimiento periódico. El Lite™ mantiene hasta 2. Cuando creces y añades nueva tecnología, puedes subir a Pro™.</p>
+    <div class="wib-grid">
+      <div class="wib-item"><b>IA para WhatsApp</b>Atención automática activa</div>
+      <div class="wib-item"><b>IA Web</b>Sistema de atención en tu web</div>
+      <div class="wib-item"><b>IA Correo</b>Gestión automática de emails</div>
+      <div class="wib-item"><b>CRM</b>Base de datos de clientes</div>
+      <div class="wib-item"><b>Automatización</b>Flujos automáticos activos</div>
+      <div class="wib-item"><b>Reservas</b>Agenda online integrada</div>
+      <div class="wib-item"><b>Integraciones</b>Conexiones entre herramientas</div>
+      <div class="wib-item"><b>Más soluciones</b>Cualquier sistema implantado por TRUCO</div>
+    </div>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-top:0;">
+  <div class="container">
+    <div class="cross-nav">
+      <div class="cross-nav-title">Relacionado</div>
+      <div class="cross-nav-items">
+        <a class="cross-nav-chip" href="pro.html"><div class="icon-badge sm blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Pro™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="cross-nav-chip" href="../proyectos/web-esencial.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/></svg></div>Web Esencial <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="cross-nav-chip" href="../servicios.html#digitaliza"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>Digitaliza tu Empresa <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="faq-section reveal">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag green">Preguntas frecuentes</span><div class="sd-line"></div></div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Puedo contratar Lite™ sin haber contratado antes una web o proyecto? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Sí. Si ya tienes web, CRM, WhatsApp de empresa o cualquier herramienta digital activa, auditamos lo que tienes y empezamos a mantenerlo desde el primer día.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si necesito mantener más de 2 soluciones? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Puedes subir en cualquier momento al Departamento Pro™, que mantiene hasta 6 soluciones con optimización continua.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Hay compromiso de permanencia? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>No, es sin compromiso mensual. Puedes cancelar cuando quieras avisando con 7 días de antelación.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta-section reveal">
+  <div class="container">
+    <div class="cta-inner">
+      <div>
+        <h2>¿Listo para que tu tecnología esté en buenas manos?</h2>
+        <p>199 €/mes + IVA. Sin compromiso, cancela cuando quieras.</p>
+      </div>
+      <div class="cta-btns">
+        <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>
+        <a class="btn-primary" href="../pago.html?plan=arranque-lite">Contratar Lite™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© 2026 TRUCOtechnology — Todos los derechos reservados.</span>
+      <span style="display:flex;gap:14px;flex-wrap:wrap;">
+        <a href="../aviso-legal.html">Aviso Legal</a>
+        <a href="../privacidad.html">Privacidad</a>
+        <a href="../cookies.html">Cookies</a>
+        <a href="../terminos.html">Términos</a>
+      </span>
+      <span>www.trucotechnology.com</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');
+  const icon=btn.querySelector('.faq-icon');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el=>{el.classList.remove('open');const ic=el.querySelector('.faq-icon');if(ic)ic.textContent='+';});
+  if(!isOpen){item.classList.add('open');if(icon)icon.textContent='−';}
+}
+(function(){
+  var els=document.querySelectorAll('.reveal, .feat-grid');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in-view'); io.unobserve(e.target); }
+      });
+    },{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('in-view'); });
+  }
+})();
+</script>
+</body>
+</html>
