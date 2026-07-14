@@ -96,6 +96,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .feat-card p{font-size:.88rem;color:var(--white);line-height:1.55;}
 .feat-card.gold svg{color:var(--gold);}
 .feat-card.gold:hover{border-color:var(--gold);}
+.necessity-note{position:relative;z-index:1;background:linear-gradient(135deg,var(--blue-dim),var(--bg-panel));border:1px solid var(--blue-soft);border-left:3px solid var(--blue);border-radius:10px;padding:16px 20px;margin-top:20px;font-size:.85rem;color:var(--grey);line-height:1.6;}
+.necessity-note b{color:var(--white);}
+.compare-wrap{overflow-x:auto;}
+.compare-table{width:100%;border-collapse:collapse;min-width:520px;}
+.compare-table th,.compare-table td{padding:14px 16px;text-align:left;font-size:.85rem;border-bottom:1px solid var(--grey-line);}
+.compare-table th{font-family:var(--font-m);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);font-weight:600;}
+.compare-table td:not(:first-child),.compare-table th:not(:first-child){text-align:center;}
+.compare-table .col-pro{background:var(--blue-dim);}
+.compare-table th.col-pro{color:var(--blue);border-bottom:2px solid var(--blue);}
+.compare-table td.col-pro{border-bottom:1px solid rgba(47,123,255,.25);}
+.compare-table .cell-limit{color:var(--grey);font-size:.8rem;}
 @media(max-width:768px){.feat-grid{grid-template-columns:1fr;}}
 
 .wib-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
@@ -169,10 +180,10 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="hero-glow blue"></div>
   <div class="hero-glow gold"></div>
   <div class="container">
-    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Para empresas en crecimiento</div>
-    <span class="hero-badge">Para negocios que quieren escalar</span>
+    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Para empresas que no pueden permitirse fallos</div>
+    <span class="hero-badge">El nivel de fiabilidad que necesita tu empresa</span>
     <h1>Departamento Tecnológico Pro™</h1>
-    <p>El departamento tecnológico completo. Mantiene hasta 6 soluciones tecnológicas con optimización continua, mayor prioridad y revisiones avanzadas. El equipo técnico completo que siempre necesitaste.</p>
+    <p>Cuando tu negocio ya depende de varias herramientas a la vez, mantenerlas por separado deja de ser suficiente. El Pro™ mantiene hasta 6 soluciones, revisadas cada 15 días y con respuesta prioritaria en menos de 24h — la calidad que necesita una empresa que no puede permitirse que algo falle.</p>
     <div class="hero-price-box">
       <div>
         <div class="hp-main">399 €<sub>/mes</sub></div>
@@ -181,6 +192,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
       <a class="btn-primary" href="../pago.html?plan=arranque-pro">Contratar Pro™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </div>
+    <div class="necessity-note"><b>¿Cuándo necesitas Pro™?</b> En cuanto combinas 3 o más herramientas (WhatsApp IA, CRM, reservas, web...) o tu negocio ya no puede esperar días para resolver una incidencia.</div>
   </div>
 </div>
 
@@ -189,11 +201,32 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="section-divider"><span class="sd-tag blue">Todo lo incluido en Lite™, más</span><div class="sd-line"></div></div>
     <div class="feat-grid">
       <div class="feat-card gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><p><b>Mantenimiento de hasta 6 soluciones tecnológicas</b></p></div>
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg><p><b>Optimización continua</b> de todas las soluciones activas</p></div>
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10M18 20V4M6 20v-4"/></svg><p><b>Adaptaciones y ajustes</b> según evoluciona tu empresa</p></div>
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p><b>Revisión avanzada</b> mensual de rendimiento</p></div>
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><p><b>Mayor prioridad</b> en incidencias y resolución</p></div>
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p><b>Reunión mensual</b> de revisión y estrategia tecnológica (45 min)</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p><b>Revisión de rendimiento cada 15 días</b> de todas tus soluciones activas — frente a la revisión mensual básica de Lite™</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><p><b>Incidencias con prioridad alta</b> — respuesta en menos de 24h laborables, no por orden de llegada</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10M18 20V4M6 20v-4"/></svg><p><b>Ajustes y mejoras sin coste extra</b> cada vez que tu negocio cambia de proceso o añade una herramienta</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p><b>Reunión mensual de 45 min</b> con análisis de datos y recomendaciones estratégicas, no solo dudas puntuales</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-top:0;">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Lite™ vs Pro™ de un vistazo</span><div class="sd-line"></div></div>
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr><th>&nbsp;</th><th>Lite™ · 199 €/mes</th><th class="col-pro">Pro™ · 399 €/mes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Soluciones tecnológicas mantenidas</td><td class="cell-limit">Hasta 2</td><td class="col-pro"><b>Hasta 6</b></td></tr>
+          <tr><td>Mantenimiento web y seguridad</td><td>✓</td><td class="col-pro">✓</td></tr>
+          <tr><td>Copias de seguridad periódicas</td><td>✓</td><td class="col-pro">✓</td></tr>
+          <tr><td>Resolución de incidencias</td><td class="cell-limit">Por orden de llegada</td><td class="col-pro"><b>Prioridad alta, &lt;24h</b></td></tr>
+          <tr><td>Revisión de rendimiento</td><td class="cell-limit">Mensual básica</td><td class="col-pro"><b>Cada 15 días</b></td></tr>
+          <tr><td>Reunión de seguimiento</td><td class="cell-limit">30 min/mes</td><td class="col-pro"><b>45 min/mes + estrategia</b></td></tr>
+          <tr><td>Ideal para</td><td class="cell-limit">1 web + 1-2 herramientas</td><td class="col-pro"><b>3+ herramientas activas</b></td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
