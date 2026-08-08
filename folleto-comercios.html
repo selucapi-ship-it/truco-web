@@ -27,132 +27,98 @@
     box-shadow:0 4px 40px rgba(0,0,0,.45);
     position:relative;overflow:hidden;
     display:flex;flex-direction:column;
-    page-break-after:always;
   }
-  .page:last-child{page-break-after:auto;}
-  @media print{
-    body{background:#000;}
-    .page{margin:0;box-shadow:none;}
-  }
+  @media print{ body{background:#000;} .page{margin:0;box-shadow:none;} }
 
   /* ── HEADER ── */
-  .head{
-    display:flex;align-items:center;justify-content:space-between;
-    padding:9mm 14mm 0;
-  }
-  .brand{display:flex;align-items:center;gap:10px;}
-  .brand-mark{
-    width:32px;height:32px;border:1.5px solid var(--gold);border-radius:8px;
-    display:flex;align-items:center;justify-content:center;
-    font-family:var(--font-d);font-weight:800;font-size:1.05rem;color:var(--gold);
-    flex-shrink:0;
-  }
-  .brand-name{font-family:var(--font-d);font-weight:800;font-size:1.05rem;color:var(--white);line-height:1;}
+  .head{display:flex;align-items:center;justify-content:space-between;padding:8mm 13mm 0;}
+  .brand{display:flex;align-items:center;gap:9px;}
+  .brand-mark{width:28px;height:28px;border:1.5px solid var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:800;font-size:.95rem;color:var(--gold);flex-shrink:0;}
+  .brand-name{font-family:var(--font-d);font-weight:800;font-size:.98rem;color:var(--white);line-height:1;}
   .brand-name span{color:var(--blue);}
-  .brand-sub{font-family:var(--font-m);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-top:3px;}
-  .head-tag{
-    font-family:var(--font-m);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--grey);
-  }
+  .brand-sub{font-family:var(--font-m);font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-top:2px;}
+  .head-tag{font-family:var(--font-m);font-size:.54rem;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);}
   .head-tag b{color:var(--gold);}
 
-  /* ── HERO ── */
-  .hero{padding:6mm 14mm 0;}
-  .hero h1{
-    font-family:var(--font-d);font-weight:800;font-size:2.15rem;line-height:1.12;letter-spacing:-.015em;
-    color:var(--white);max-width:165mm;
-  }
+  /* ── HERO ROW ── */
+  .hero-row{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;padding:5mm 13mm 0;align-items:start;}
+  .hero h1{font-family:var(--font-d);font-weight:800;font-size:1.72rem;line-height:1.12;letter-spacing:-.015em;color:var(--white);}
   .hero h1 em{font-style:italic;color:var(--blue);}
-  .hero p{font-size:.92rem;color:var(--grey);line-height:1.55;margin-top:9px;max-width:145mm;}
-
-  .trust-row{display:flex;gap:22px;padding:5mm 14mm 0;flex-wrap:wrap;}
-  .trust-item{display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--grey);font-weight:500;}
-  .trust-item svg{width:15px;height:15px;color:var(--gold);flex-shrink:0;}
+  .hero p{font-size:.78rem;color:var(--grey);line-height:1.48;margin-top:7px;}
+  .trust-list{margin-top:11px;display:flex;flex-direction:column;gap:6px;}
+  .trust-item{display:flex;align-items:center;gap:7px;font-size:.68rem;color:var(--grey);font-weight:500;}
+  .trust-item svg{width:13px;height:13px;color:var(--gold);flex-shrink:0;}
   .trust-item b{color:var(--white);}
 
-  /* ── CHAT DEMO ── */
-  .chat-demo{margin:6mm 14mm 0;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:14px 16px;}
-  .chat-hd{display:flex;align-items:center;gap:9px;margin-bottom:11px;}
-  .chat-avatar{width:26px;height:26px;border-radius:50%;border:1.25px solid var(--gold);background:var(--gold-dim);color:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .chat-avatar svg{width:13px;height:13px;}
-  .chat-name{font-size:.78rem;font-weight:700;color:var(--white);}
-  .chat-status{font-size:.62rem;color:var(--green);}
-  .chat-msgs{display:flex;flex-direction:column;gap:7px;}
-  .cm{max-width:78%;font-size:.75rem;line-height:1.4;padding:7px 11px;border-radius:9px;}
-  .cm.client{background:var(--bg-card);color:var(--grey);align-self:flex-start;border-radius:3px 9px 9px 9px;}
-  .cm.truco{background:var(--blue);color:#fff;align-self:flex-end;border-radius:9px 3px 9px 9px;}
+  /* ── MINI CHAT ── */
+  .chat-demo{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:12px;padding:10px 12px;}
+  .chat-hd{display:flex;align-items:center;gap:7px;margin-bottom:8px;}
+  .chat-avatar{width:20px;height:20px;border-radius:50%;border:1px solid var(--gold);background:var(--gold-dim);color:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .chat-avatar svg{width:10px;height:10px;}
+  .chat-name{font-size:.66rem;font-weight:700;color:var(--white);}
+  .chat-status{font-size:.55rem;color:var(--green);}
+  .chat-msgs{display:flex;flex-direction:column;gap:5px;}
+  .cm{max-width:82%;font-size:.64rem;line-height:1.35;padding:5px 9px;border-radius:8px;}
+  .cm.client{background:var(--bg-card);color:var(--grey);align-self:flex-start;border-radius:2px 8px 8px 8px;}
+  .cm.truco{background:var(--blue);color:#fff;align-self:flex-end;border-radius:8px 2px 8px 8px;}
 
-  /* ── SOLUTIONS ── */
-  .sol-title{padding:6mm 14mm 0;font-family:var(--font-m);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);}
-  .sol-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:8px 14mm 0;}
-  .sol{border:1px solid var(--grey-line);border-radius:10px;padding:10px 8px;text-align:center;background:var(--bg-panel);}
-  .sol svg{width:19px;height:19px;color:var(--gold);margin-bottom:5px;}
-  .sol h4{font-size:.62rem;font-weight:700;color:var(--white);line-height:1.25;}
+  /* ── SOLUTIONS STRIP ── */
+  .sol-title{padding:5mm 13mm 0;font-family:var(--font-m);font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);}
+  .sol-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:6px 13mm 0;}
+  .sol{border:1px solid var(--grey-line);border-radius:9px;padding:7px 5px;text-align:center;background:var(--bg-panel);}
+  .sol svg{width:15px;height:15px;color:var(--gold);margin-bottom:3px;}
+  .sol h4{font-size:.54rem;font-weight:700;color:var(--white);line-height:1.2;}
 
   /* ── PROCESS ── */
-  .process{padding:7mm 14mm 0;}
-  .process-title{font-family:var(--font-d);font-weight:800;font-size:1.15rem;color:var(--white);margin-bottom:12px;max-width:150mm;}
-  .steps{display:flex;gap:10px;}
-  .step{flex:1;border-top:2px solid var(--gold);padding-top:9px;}
-  .step-n{font-family:var(--font-m);font-size:.62rem;color:var(--gold);margin-bottom:4px;}
-  .step p{font-size:.74rem;color:var(--grey);line-height:1.4;font-weight:500;}
+  .process{padding:5mm 13mm 0;}
+  .process-title{font-family:var(--font-d);font-weight:700;font-size:.92rem;color:var(--white);margin-bottom:8px;}
+  .steps{display:flex;gap:9px;}
+  .step{flex:1;border-top:2px solid var(--gold);padding-top:6px;}
+  .step-n{font-family:var(--font-m);font-size:.54rem;color:var(--gold);margin-bottom:2px;}
+  .step p{font-size:.62rem;color:var(--grey);line-height:1.3;font-weight:500;}
 
-  /* ── FOOTER STRIP (page 1) ── */
-  .foot-strip{margin-top:auto;padding:8mm 14mm;border-top:1px solid var(--grey-line);display:flex;align-items:center;justify-content:space-between;}
-  .foot-strip span{font-family:var(--font-m);font-size:.6rem;color:var(--grey);letter-spacing:.03em;}
-  .foot-strip b{color:var(--gold);}
-
-  /* ── PRICING (page 2) ── */
-  .pricing-head{padding:8mm 14mm 0;}
-  .pricing-head h2{font-family:var(--font-d);font-weight:800;font-size:1.5rem;color:var(--white);}
-  .pricing-head p{font-size:.82rem;color:var(--grey);margin-top:5px;max-width:150mm;}
-  .pricing{display:flex;gap:12px;padding:7mm 14mm 0;}
-  .pc{flex:1;border-radius:14px;padding:18px 18px;position:relative;border:1px solid var(--grey-line);background:var(--bg-panel);}
+  /* ── PRICING ── */
+  .pricing{display:flex;gap:10px;padding:5mm 13mm 0;}
+  .pc{flex:1;border-radius:12px;padding:12px 14px;position:relative;border:1px solid var(--grey-line);background:var(--bg-panel);}
   .pc.feat{background:linear-gradient(160deg,var(--bg-panel),#241f14);border-color:var(--gold);}
-  .pc-ribbon{position:absolute;top:-10px;right:16px;background:var(--gold);color:#1a1206;font-family:var(--font-m);font-size:.56rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:12px;}
-  .pc-badge{font-family:var(--font-m);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
-  .pc-name{font-family:var(--font-d);font-weight:800;font-size:1.3rem;color:var(--white);margin-bottom:4px;}
-  .pc-price{font-family:var(--font-d);font-weight:800;font-size:1.9rem;color:var(--white);line-height:1;}
-  .pc-price small{font-family:var(--font-b);font-weight:600;font-size:.62rem;color:var(--grey);}
-  .pc-old{font-size:.68rem;color:var(--grey);margin-top:3px;}
+  .pc-ribbon{position:absolute;top:-8px;right:12px;background:var(--gold);color:#1a1206;font-family:var(--font-m);font-size:.5rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:10px;}
+  .pc-name{font-family:var(--font-d);font-weight:800;font-size:.98rem;color:var(--white);}
+  .pc-price{font-family:var(--font-d);font-weight:800;font-size:1.4rem;color:var(--white);line-height:1;margin-top:3px;}
+  .pc-price small{font-family:var(--font-b);font-weight:600;font-size:.56rem;color:var(--grey);}
+  .pc-old{font-size:.6rem;color:var(--grey);margin-top:2px;}
   .pc-old s{color:#8a8790;}
-  .pc-list{margin-top:11px;display:flex;flex-direction:column;gap:6px;}
-  .pc-list li{list-style:none;font-size:.72rem;color:var(--grey);line-height:1.35;display:flex;gap:6px;}
+  .pc-list{margin-top:8px;display:flex;flex-direction:column;gap:4px;}
+  .pc-list li{list-style:none;font-size:.64rem;color:var(--grey);line-height:1.3;display:flex;gap:5px;}
   .pc-list li b{color:var(--white);}
-  .pc-list li svg{width:12px;height:12px;color:var(--green);flex-shrink:0;margin-top:2px;}
+  .pc-list li svg{width:10px;height:10px;color:var(--green);flex-shrink:0;margin-top:2px;}
 
-  .founding-band{margin:6mm 14mm 0;background:var(--gold-dim);border:1px solid var(--gold);border-radius:10px;padding:10px 14px;font-size:.74rem;color:var(--white);}
+  .founding-band{margin:4mm 13mm 0;background:var(--gold-dim);border:1px solid var(--gold);border-radius:9px;padding:7px 12px;font-size:.66rem;color:var(--white);}
   .founding-band b{color:var(--gold);}
+  .fine-note{padding:3mm 13mm 0;font-size:.6rem;color:var(--grey);line-height:1.4;}
+  .fine-note b{color:var(--white);}
 
-  .fine-note{padding:5mm 14mm 0;font-size:.66rem;color:var(--grey);line-height:1.5;max-width:170mm;}
-
-  /* ── FOUNDER ── */
-  .founder{display:flex;gap:16px;align-items:center;padding:7mm 14mm 0;}
-  .founder-photo{width:82px;height:82px;border-radius:12px;overflow:hidden;border:1.5px solid var(--gold);flex-shrink:0;}
+  /* ── FOUNDER + CTA ROW ── */
+  .bottom-row{margin-top:auto;border-top:1px solid var(--grey-line);padding:6mm 13mm 7mm;display:flex;align-items:center;gap:16px;}
+  .founder{display:flex;gap:11px;align-items:center;flex:1.3;}
+  .founder-photo{width:56px;height:56px;border-radius:10px;overflow:hidden;border:1.5px solid var(--gold);flex-shrink:0;}
   .founder-photo img{width:100%;height:100%;object-fit:cover;display:block;}
-  .founder-text b{font-family:var(--font-d);font-size:.98rem;color:var(--white);display:block;margin-bottom:3px;}
-  .founder-text p{font-size:.76rem;color:var(--grey);line-height:1.45;max-width:150mm;}
+  .founder-text b{font-family:var(--font-d);font-size:.76rem;color:var(--white);display:block;margin-bottom:2px;line-height:1.3;}
+  .founder-text span{font-size:.6rem;color:var(--grey);}
+  .cta-block{flex:1;display:flex;align-items:center;gap:12px;justify-content:flex-end;}
+  .cta-text b{font-family:var(--font-d);font-size:.92rem;color:var(--white);display:block;}
+  .cta-text span{font-size:.62rem;color:var(--grey);display:block;margin-top:2px;}
+  .cta-web{display:inline-block;margin-top:7px;font-family:var(--font-m);font-size:.66rem;font-weight:500;color:#1a1206;background:var(--gold);padding:6px 14px;border-radius:16px;}
+  .cta-qr{background:#fff;border-radius:8px;padding:5px;flex-shrink:0;text-align:center;}
+  .cta-qr img{width:56px;height:56px;display:block;}
+  .cta-qr span{display:block;font-family:var(--font-m);font-size:.44rem;color:#0a0e14;margin-top:3px;letter-spacing:.02em;}
 
-  /* ── CTA FOOTER (page 2) ── */
-  .cta{
-    margin-top:auto;background:linear-gradient(120deg,#0d0c10 55%,#1a1520 100%);
-    border-top:1px solid var(--grey-line);
-    padding:9mm 14mm;display:flex;align-items:center;justify-content:space-between;gap:16px;
-  }
-  .cta-left b{font-family:var(--font-d);font-size:1.35rem;color:var(--white);display:block;margin-bottom:5px;}
-  .cta-left span{font-size:.78rem;color:var(--grey);display:block;line-height:1.5;}
-  .cta-web{
-    display:inline-block;margin-top:11px;font-family:var(--font-m);font-size:.82rem;font-weight:500;
-    color:#1a1206;background:var(--gold);padding:9px 20px;border-radius:20px;
-  }
-  .cta-qr{background:#fff;border-radius:10px;padding:6px;flex-shrink:0;text-align:center;}
-  .cta-qr img{width:82px;height:82px;display:block;}
-  .cta-qr span{display:block;font-family:var(--font-m);font-size:.5rem;color:#0a0e14;margin-top:4px;letter-spacing:.03em;}
+  .foot{padding:0 13mm 5mm;display:flex;justify-content:space-between;}
+  .foot span{font-family:var(--font-m);font-size:.54rem;color:var(--grey);}
+  .foot b{color:var(--gold);}
 </style>
 </head>
 <body>
 
-<!-- ══════════ PÁGINA 1 ══════════ -->
 <div class="page">
 
   <div class="head">
@@ -163,128 +129,98 @@
         <div class="brand-sub">Tu Departamento Tecnológico</div>
       </div>
     </div>
-    <div class="head-tag">España · Externalizado &nbsp;·&nbsp; <b>1/2</b></div>
+    <div class="head-tag">España · Externalizado</div>
   </div>
 
-  <div class="hero">
-    <h1>Nos encargamos de toda la tecnología <em>para que tú te centres en tu negocio.</em></h1>
-    <p>Auditamos tu negocio, configuramos y entrenamos tus asistentes de IA, y los mantenemos activos cada mes. Nunca te entregamos un robot en blanco que tengas que enseñar tú — eso lo hacemos nosotros.</p>
-  </div>
-
-  <div class="trust-row">
-    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><b>Configurado y entrenado</b>&nbsp;por nosotros, no por ti</div>
-    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><b>Auditoría inicial gratuita</b>,&nbsp;sin compromiso</div>
-    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><b>Un único interlocutor</b>&nbsp;para toda tu tecnología</div>
-  </div>
-
-  <div class="chat-demo">
-    <div class="chat-hd">
-      <div class="chat-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-      <div><div class="chat-name">Tu asistente TRUCO</div><div class="chat-status">● En línea, ahora mismo</div></div>
+  <div class="hero-row">
+    <div class="hero">
+      <h1>Nos encargamos de toda la tecnología <em>para que tú te centres en tu negocio.</em></h1>
+      <p>Auditamos tu negocio, configuramos y entrenamos tus asistentes de IA, y los mantenemos activos cada mes. Nunca un robot en blanco que tengas que enseñar tú — eso lo hacemos nosotros.</p>
+      <div class="trust-list">
+        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><b>Configurado y entrenado</b> por nosotros, no por ti</span></div>
+        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span><b>Auditoría inicial gratuita</b>, sin compromiso</span></div>
+        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span><b>Un único interlocutor</b> para toda tu tecnología</span></div>
+      </div>
     </div>
-    <div class="chat-msgs">
-      <div class="cm client">Buenas, ¿tenéis cita disponible para esta semana?</div>
-      <div class="cm truco">¡Hola! Tenemos hueco el jueves a las 11h o el viernes a las 17h. ¿Cuál te viene mejor?</div>
-      <div class="cm client">El viernes a las 17 perfecto</div>
-      <div class="cm truco">¡Reservado! Te llega confirmación en un momento.</div>
+    <div class="chat-demo">
+      <div class="chat-hd">
+        <div class="chat-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <div><div class="chat-name">Tu asistente TRUCO</div><div class="chat-status">● En línea, ahora mismo</div></div>
+      </div>
+      <div class="chat-msgs">
+        <div class="cm client">¿Tenéis cita disponible esta semana?</div>
+        <div class="cm truco">¡Sí! Jueves 11h o viernes 17h. ¿Cuál prefieres?</div>
+        <div class="cm client">El viernes a las 17</div>
+        <div class="cm truco">¡Reservado! Confirmación en un momento.</div>
+      </div>
     </div>
   </div>
 
   <div class="sol-title">Lo que implantamos</div>
   <div class="sol-grid">
     <div class="sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><h4>IA WhatsApp</h4></div>
-    <div class="sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg><h4>IA para tu Web</h4></div>
+    <div class="sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg><h4>IA Web</h4></div>
     <div class="sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><h4>IA Llamadas</h4></div>
     <div class="sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg><h4>IA Correo</h4></div>
-    <div class="sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><h4>Reservas y Agenda</h4></div>
+    <div class="sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><h4>Reservas</h4></div>
     <div class="sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg><h4>Firma Digital</h4></div>
   </div>
 
   <div class="process">
     <div class="process-title">Un proceso simple: hablas, auditamos, montamos, mantenemos.</div>
     <div class="steps">
-      <div class="step"><div class="step-n">01</div><p>Auditamos tu negocio antes de montar nada — sin compromiso.</p></div>
-      <div class="step"><div class="step-n">02</div><p>Configuramos y entrenamos tus asistentes con tus propios datos.</p></div>
-      <div class="step"><div class="step-n">03</div><p>Lo implantamos y lo dejamos funcionando desde el primer día.</p></div>
-      <div class="step"><div class="step-n">04</div><p>¿Algo cambia? Nos escribes, y nosotros lo ajustamos.</p></div>
+      <div class="step"><div class="step-n">01</div><p>Auditamos tu negocio antes de montar nada.</p></div>
+      <div class="step"><div class="step-n">02</div><p>Configuramos y entrenamos con tus datos.</p></div>
+      <div class="step"><div class="step-n">03</div><p>Lo implantamos, funcionando desde el día 1.</p></div>
+      <div class="step"><div class="step-n">04</div><p>¿Algo cambia? Nos escribes, y ya está.</p></div>
     </div>
-  </div>
-
-  <div class="foot-strip">
-    <span>Más de <b>20.000 personas</b> siguen el trabajo que hacemos en redes</span>
-    <span>www.trucotechnology.com</span>
-  </div>
-
-</div>
-
-<!-- ══════════ PÁGINA 2 ══════════ -->
-<div class="page">
-
-  <div class="head">
-    <div class="brand">
-      <div class="brand-mark">T</div>
-      <div>
-        <div class="brand-name">TRUCO<span>technology</span></div>
-        <div class="brand-sub">Tu Departamento Tecnológico</div>
-      </div>
-    </div>
-    <div class="head-tag">España · Externalizado &nbsp;·&nbsp; <b>2/2</b></div>
-  </div>
-
-  <div class="pricing-head">
-    <h2>Elige el Departamento que mejor encaja con tu negocio</h2>
-    <p>Tu web y las soluciones que elijas van completamente gratis al contratar. Nosotros las mantenemos cada mes. A cambio, una permanencia mínima — sin ella no podríamos regalarte la instalación.</p>
   </div>
 
   <div class="pricing">
     <div class="pc">
-      <div class="pc-badge">Lite™</div>
       <div class="pc-name">Lite™</div>
       <div class="pc-price">199 € <small>/mes + IVA</small></div>
-      <div class="pc-old">Precio de fundador — antes <s>279 €/mes</s></div>
+      <div class="pc-old">Fundador — antes <s>279 €/mes</s></div>
       <ul class="pc-list">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Tu web (mejorada o nueva), <b>gratis</b></span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span><b>2 soluciones</b> de IA a elegir, gratis</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Mantenimiento de hasta 3 activas</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Reunión mensual de 30 min</span></li>
       </ul>
     </div>
     <div class="pc feat">
       <div class="pc-ribbon">Más elegido</div>
-      <div class="pc-badge">Pro™</div>
       <div class="pc-name">Pro™</div>
       <div class="pc-price">399 € <small>/mes + IVA</small></div>
-      <div class="pc-old">Precio de fundador — antes <s>549 €/mes</s></div>
+      <div class="pc-old">Fundador — antes <s>549 €/mes</s></div>
       <ul class="pc-list">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Web Profesional a medida, <b>gratis</b></span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span><b>3 soluciones</b> de IA a elegir, gratis</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Mantenimiento de hasta 6 activas</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Prioridad en incidencias &lt;24h</span></li>
       </ul>
     </div>
   </div>
 
   <div class="founding-band"><b>🏷 Programa Fundadores:</b> 20 plazas en total — 10 para Lite™ y 10 para Pro™ — con precio de fundador fijo mientras sigas siendo cliente.</div>
+  <div class="fine-note">¿Solo necesitas una cosa ya? <b>Basic™</b> desde 69€/mes: 1 solución gratis, sin web. Pago único con 12% dto. o SeQura. Permanencia de 6 a 12 meses según escalón — nunca facturación mensual directa sin avisar.</div>
 
-  <div class="fine-note">¿Solo necesitas una cosa ya? <b style="color:var(--white);">Basic™</b> desde 69€/mes: 1 solución gratis, sin web. Pago único con 12% de descuento, o fraccionado con SeQura. Permanencia de 6 a 12 meses según el escalón — nunca facturación mensual directa sin avisar.</div>
-
-  <div class="founder">
-    <div class="founder-photo"><img src="assets/founder.jpg" alt="Fundador de TRUCO technology"></div>
-    <div class="founder-text">
-      <b>"La tecnología debería ser una aliada, no una fuente de estrés."</b>
-      <p>Por eso creé TRUCO technology: un departamento que se encarga de todo lo técnico para que tú puedas dedicarte a hacer crecer tu negocio. — Fundador, TRUCO technology</p>
+  <div class="bottom-row">
+    <div class="founder">
+      <div class="founder-photo"><img src="assets/founder.jpg" alt="Fundador de TRUCO technology"></div>
+      <div class="founder-text">
+        <b>"La tecnología debería ser una aliada, no una fuente de estrés."</b>
+        <span>Fundador, TRUCO technology — más de 20.000 personas siguen nuestro trabajo en redes.</span>
+      </div>
     </div>
-  </div>
-
-  <div class="cta">
-    <div class="cta-left">
-      <b>Habla ahora con nuestro asistente</b>
-      <span>Resuelve tus dudas al instante y reserva tu consultoría gratuita, sin compromiso.</span>
-      <a class="cta-web" href="https://www.trucotechnology.com">www.trucotechnology.com</a>
-    </div>
-    <div class="cta-qr">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://www.trucotechnology.com" alt="QR TRUCO technology">
-      <span>ESCANEA</span>
+    <div class="cta-block">
+      <div class="cta-text">
+        <b>Habla con nuestro asistente</b>
+        <span>Consultoría gratuita, sin compromiso.</span>
+        <a class="cta-web" href="https://www.trucotechnology.com">www.trucotechnology.com</a>
+      </div>
+      <div class="cta-qr">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=https://www.trucotechnology.com" alt="QR TRUCO technology">
+        <span>ESCANEA</span>
+      </div>
     </div>
   </div>
 
