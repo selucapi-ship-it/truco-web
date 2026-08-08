@@ -2,148 +2,157 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>TRUCO technology — Folleto para comercios</title>
+<title>TRUCO technology — Folleto</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --blue:#2f7bff; --blue-dim:#e8f0ff;
-    --gold:#e9b949; --gold-dim:#fdf5e3;
-    --green:#178a4c;
-    --navy:#0a0e14;
-    --grey:#5b6472;
-    --line:#e3e7ee;
+    --bg:#16151a; --bg-panel:#201f24; --bg-card:#2b2a30;
+    --blue:#2f7bff; --blue-dim:rgba(47,123,255,.14);
+    --gold:#d9a83f; --gold-dim:rgba(217,168,63,.14);
+    --white:#f2f0ea; --grey:#b5b2bc; --grey-line:#3d3b42;
+    --green:#22c55e;
     --font-d:'Playfair Display',Georgia,serif;
     --font-b:'DM Sans',sans-serif;
     --font-m:'JetBrains Mono',monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   @page{ size:A4; margin:0; }
-  html,body{background:#f3f5f8;}
-  body{font-family:var(--font-b);color:var(--navy);-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  html,body{background:#0d0c10;}
+  body{font-family:var(--font-b);color:var(--white);-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   .page{
-    width:210mm;height:297mm;margin:10mm auto;background:#fff;
-    box-shadow:0 4px 30px rgba(0,0,0,.12);
+    width:210mm;height:297mm;margin:10mm auto;background:var(--bg);
+    box-shadow:0 4px 40px rgba(0,0,0,.45);
     position:relative;overflow:hidden;
     display:flex;flex-direction:column;
+    page-break-after:always;
   }
+  .page:last-child{page-break-after:auto;}
   @media print{
-    body{background:#fff;}
+    body{background:#000;}
     .page{margin:0;box-shadow:none;}
   }
 
   /* ── HEADER ── */
   .head{
     display:flex;align-items:center;justify-content:space-between;
-    padding:10mm 14mm 0;
+    padding:9mm 14mm 0;
   }
   .brand{display:flex;align-items:center;gap:10px;}
   .brand-mark{
-    width:36px;height:36px;border:2px solid var(--gold);border-radius:9px;
+    width:32px;height:32px;border:1.5px solid var(--gold);border-radius:8px;
     display:flex;align-items:center;justify-content:center;
-    font-family:var(--font-d);font-weight:800;font-size:1.2rem;color:var(--navy);
+    font-family:var(--font-d);font-weight:800;font-size:1.05rem;color:var(--gold);
     flex-shrink:0;
   }
-  .brand-name{font-family:var(--font-d);font-weight:800;font-size:1.22rem;color:var(--navy);line-height:1;}
+  .brand-name{font-family:var(--font-d);font-weight:800;font-size:1.05rem;color:var(--white);line-height:1;}
   .brand-name span{color:var(--blue);}
-  .brand-sub{font-family:var(--font-m);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-top:3px;}
+  .brand-sub{font-family:var(--font-m);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-top:3px;}
   .head-tag{
-    font-family:var(--font-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--blue);border:1px solid var(--blue);border-radius:20px;padding:5px 13px;
+    font-family:var(--font-m);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--grey);
   }
+  .head-tag b{color:var(--gold);}
 
   /* ── HERO ── */
-  .hero{padding:5mm 14mm 0;}
+  .hero{padding:6mm 14mm 0;}
   .hero h1{
-    font-family:var(--font-d);font-weight:800;font-size:2.5rem;line-height:1.08;letter-spacing:-.015em;
-    color:var(--navy);max-width:170mm;
+    font-family:var(--font-d);font-weight:800;font-size:2.15rem;line-height:1.12;letter-spacing:-.015em;
+    color:var(--white);max-width:165mm;
   }
   .hero h1 em{font-style:italic;color:var(--blue);}
-  .hero p{font-size:1rem;color:var(--grey);line-height:1.5;margin-top:10px;max-width:150mm;}
+  .hero p{font-size:.92rem;color:var(--grey);line-height:1.55;margin-top:9px;max-width:145mm;}
 
-  /* ── PAIN POINTS ── */
-  .pains{padding:4mm 14mm 0;}
-  .pains-title{font-family:var(--font-m);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;}
-  .pains-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px 16px;}
-  .pain{display:flex;gap:9px;align-items:flex-start;font-size:.86rem;color:var(--navy);font-weight:500;line-height:1.35;}
-  .pain b{color:var(--blue);font-size:1rem;flex-shrink:0;}
+  .trust-row{display:flex;gap:22px;padding:5mm 14mm 0;flex-wrap:wrap;}
+  .trust-item{display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--grey);font-weight:500;}
+  .trust-item svg{width:15px;height:15px;color:var(--gold);flex-shrink:0;}
+  .trust-item b{color:var(--white);}
 
-  /* ── PRICING CARDS ── */
-  .pricing{display:flex;gap:12px;padding:6mm 14mm 0;}
-  .pc{
-    flex:1;border-radius:16px;padding:16px 18px;position:relative;
-  }
-  .pc.main{background:var(--navy);color:#fff;}
-  .pc.alt{background:var(--blue-dim);color:var(--navy);}
-  .pc-badge{
-    font-family:var(--font-m);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;
-    display:inline-block;margin-bottom:6px;
-  }
-  .pc.main .pc-badge{color:var(--gold);}
-  .pc.alt .pc-badge{color:var(--blue);}
-  .pc-name{font-family:var(--font-d);font-weight:800;font-size:1.28rem;line-height:1.1;margin-bottom:8px;}
-  .pc-price{font-family:var(--font-d);font-weight:800;font-size:1.7rem;line-height:1;}
-  .pc.main .pc-price{color:var(--gold);}
-  .pc.alt .pc-price{color:var(--blue);}
-  .pc-price small{font-family:var(--font-b);font-weight:600;font-size:.62rem;}
-  .pc-vat{font-family:var(--font-m);font-size:.6rem;margin-top:3px;opacity:.75;}
-  .pc-desc{font-size:.76rem;line-height:1.45;margin-top:9px;}
-  .pc.main .pc-desc{color:#c3cad6;}
-  .pc.alt .pc-desc{color:var(--grey);}
+  /* ── CHAT DEMO ── */
+  .chat-demo{margin:6mm 14mm 0;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:14px 16px;}
+  .chat-hd{display:flex;align-items:center;gap:9px;margin-bottom:11px;}
+  .chat-avatar{width:26px;height:26px;border-radius:50%;border:1.25px solid var(--gold);background:var(--gold-dim);color:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .chat-avatar svg{width:13px;height:13px;}
+  .chat-name{font-size:.78rem;font-weight:700;color:var(--white);}
+  .chat-status{font-size:.62rem;color:var(--green);}
+  .chat-msgs{display:flex;flex-direction:column;gap:7px;}
+  .cm{max-width:78%;font-size:.75rem;line-height:1.4;padding:7px 11px;border-radius:9px;}
+  .cm.client{background:var(--bg-card);color:var(--grey);align-self:flex-start;border-radius:3px 9px 9px 9px;}
+  .cm.truco{background:var(--blue);color:#fff;align-self:flex-end;border-radius:9px 3px 9px 9px;}
 
-  /* ── SERVICES ── */
-  .services{
-    display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
-    padding:6mm 14mm 0;
-  }
-  .svc{
-    border:1px solid var(--line);border-radius:12px;padding:11px 10px;
-    display:flex;flex-direction:column;gap:4px;
-  }
-  .svc .ic{font-size:1.25rem;}
-  .svc h4{font-family:var(--font-d);font-weight:700;font-size:.8rem;color:var(--navy);}
-  .svc p{font-size:.66rem;color:var(--grey);line-height:1.3;}
+  /* ── SOLUTIONS ── */
+  .sol-title{padding:6mm 14mm 0;font-family:var(--font-m);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);}
+  .sol-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:8px 14mm 0;}
+  .sol{border:1px solid var(--grey-line);border-radius:10px;padding:10px 8px;text-align:center;background:var(--bg-panel);}
+  .sol svg{width:19px;height:19px;color:var(--gold);margin-bottom:5px;}
+  .sol h4{font-size:.62rem;font-weight:700;color:var(--white);line-height:1.25;}
 
-  /* ── HOW IT WORKS ── */
-  .how{padding:4mm 14mm 0;display:flex;align-items:center;gap:14px;}
-  .steps{display:flex;flex:1;gap:12px;}
-  .step{display:flex;gap:8px;align-items:center;flex:1;}
-  .step-n{
-    width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;
-    font-family:var(--font-m);font-size:.68rem;font-weight:700;
-    display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  }
-  .step span{font-size:.72rem;color:var(--navy);font-weight:600;line-height:1.3;}
+  /* ── PROCESS ── */
+  .process{padding:7mm 14mm 0;}
+  .process-title{font-family:var(--font-d);font-weight:800;font-size:1.15rem;color:var(--white);margin-bottom:12px;max-width:150mm;}
+  .steps{display:flex;gap:10px;}
+  .step{flex:1;border-top:2px solid var(--gold);padding-top:9px;}
+  .step-n{font-family:var(--font-m);font-size:.62rem;color:var(--gold);margin-bottom:4px;}
+  .step p{font-size:.74rem;color:var(--grey);line-height:1.4;font-weight:500;}
 
-  /* ── TRUST STRIP ── */
-  .trust{
-    margin:4mm 14mm 0;padding:9px 14px;border-radius:10px;background:var(--gold-dim);
-    display:flex;justify-content:space-between;gap:8px;
-  }
-  .trust span{font-size:.72rem;color:var(--navy);font-weight:600;}
-  .trust b{color:#8a5c0a;}
+  /* ── FOOTER STRIP (page 1) ── */
+  .foot-strip{margin-top:auto;padding:8mm 14mm;border-top:1px solid var(--grey-line);display:flex;align-items:center;justify-content:space-between;}
+  .foot-strip span{font-family:var(--font-m);font-size:.6rem;color:var(--grey);letter-spacing:.03em;}
+  .foot-strip b{color:var(--gold);}
 
-  /* ── CTA FOOTER ── */
+  /* ── PRICING (page 2) ── */
+  .pricing-head{padding:8mm 14mm 0;}
+  .pricing-head h2{font-family:var(--font-d);font-weight:800;font-size:1.5rem;color:var(--white);}
+  .pricing-head p{font-size:.82rem;color:var(--grey);margin-top:5px;max-width:150mm;}
+  .pricing{display:flex;gap:12px;padding:7mm 14mm 0;}
+  .pc{flex:1;border-radius:14px;padding:18px 18px;position:relative;border:1px solid var(--grey-line);background:var(--bg-panel);}
+  .pc.feat{background:linear-gradient(160deg,var(--bg-panel),#241f14);border-color:var(--gold);}
+  .pc-ribbon{position:absolute;top:-10px;right:16px;background:var(--gold);color:#1a1206;font-family:var(--font-m);font-size:.56rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:12px;}
+  .pc-badge{font-family:var(--font-m);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .pc-name{font-family:var(--font-d);font-weight:800;font-size:1.3rem;color:var(--white);margin-bottom:4px;}
+  .pc-price{font-family:var(--font-d);font-weight:800;font-size:1.9rem;color:var(--white);line-height:1;}
+  .pc-price small{font-family:var(--font-b);font-weight:600;font-size:.62rem;color:var(--grey);}
+  .pc-old{font-size:.68rem;color:var(--grey);margin-top:3px;}
+  .pc-old s{color:#8a8790;}
+  .pc-list{margin-top:11px;display:flex;flex-direction:column;gap:6px;}
+  .pc-list li{list-style:none;font-size:.72rem;color:var(--grey);line-height:1.35;display:flex;gap:6px;}
+  .pc-list li b{color:var(--white);}
+  .pc-list li svg{width:12px;height:12px;color:var(--green);flex-shrink:0;margin-top:2px;}
+
+  .founding-band{margin:6mm 14mm 0;background:var(--gold-dim);border:1px solid var(--gold);border-radius:10px;padding:10px 14px;font-size:.74rem;color:var(--white);}
+  .founding-band b{color:var(--gold);}
+
+  .fine-note{padding:5mm 14mm 0;font-size:.66rem;color:var(--grey);line-height:1.5;max-width:170mm;}
+
+  /* ── FOUNDER ── */
+  .founder{display:flex;gap:16px;align-items:center;padding:7mm 14mm 0;}
+  .founder-photo{width:82px;height:82px;border-radius:12px;overflow:hidden;border:1.5px solid var(--gold);flex-shrink:0;}
+  .founder-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .founder-text b{font-family:var(--font-d);font-size:.98rem;color:var(--white);display:block;margin-bottom:3px;}
+  .founder-text p{font-size:.76rem;color:var(--grey);line-height:1.45;max-width:150mm;}
+
+  /* ── CTA FOOTER (page 2) ── */
   .cta{
-    margin-top:auto;background:linear-gradient(120deg,var(--navy) 55%,#152036 100%);
-    color:#fff;padding:8mm 14mm;display:flex;align-items:center;justify-content:space-between;gap:16px;
+    margin-top:auto;background:linear-gradient(120deg,#0d0c10 55%,#1a1520 100%);
+    border-top:1px solid var(--grey-line);
+    padding:9mm 14mm;display:flex;align-items:center;justify-content:space-between;gap:16px;
   }
-  .cta-left b{font-family:var(--font-d);font-size:1.4rem;display:block;margin-bottom:5px;}
-  .cta-left span{font-size:.82rem;color:#c3cad6;display:block;line-height:1.5;}
+  .cta-left b{font-family:var(--font-d);font-size:1.35rem;color:var(--white);display:block;margin-bottom:5px;}
+  .cta-left span{font-size:.78rem;color:var(--grey);display:block;line-height:1.5;}
   .cta-web{
-    display:inline-block;margin-top:11px;font-family:var(--font-m);font-size:.86rem;font-weight:500;
-    color:var(--navy);background:var(--gold);padding:9px 20px;border-radius:20px;
+    display:inline-block;margin-top:11px;font-family:var(--font-m);font-size:.82rem;font-weight:500;
+    color:#1a1206;background:var(--gold);padding:9px 20px;border-radius:20px;
   }
-  .cta-qr{
-    background:#fff;border-radius:10px;padding:6px;flex-shrink:0;text-align:center;
-  }
-  .cta-qr img{width:88px;height:88px;display:block;}
-  .cta-qr span{display:block;font-family:var(--font-m);font-size:.54rem;color:var(--navy);margin-top:4px;letter-spacing:.03em;}
+  .cta-qr{background:#fff;border-radius:10px;padding:6px;flex-shrink:0;text-align:center;}
+  .cta-qr img{width:82px;height:82px;display:block;}
+  .cta-qr span{display:block;font-family:var(--font-m);font-size:.5rem;color:#0a0e14;margin-top:4px;letter-spacing:.03em;}
 </style>
 </head>
 <body>
+
+<!-- ══════════ PÁGINA 1 ══════════ -->
 <div class="page">
 
   <div class="head">
@@ -154,76 +163,117 @@
         <div class="brand-sub">Tu Departamento Tecnológico</div>
       </div>
     </div>
-    <div class="head-tag">España · 100% externalizado</div>
+    <div class="head-tag">España · Externalizado &nbsp;·&nbsp; <b>1/2</b></div>
   </div>
 
   <div class="hero">
-    <h1>Deja de perder clientes por no responder a tiempo. <em>Ahora tienes quien lo haga por ti.</em></h1>
-    <p>Somos tu Departamento Tecnológico externalizado: auditamos tu negocio, configuramos y entrenamos tus asistentes de IA, y los mantenemos activos cada mes — nunca un robot en blanco que tengas que enseñar tú.</p>
+    <h1>Nos encargamos de toda la tecnología <em>para que tú te centres en tu negocio.</em></h1>
+    <p>Auditamos tu negocio, configuramos y entrenamos tus asistentes de IA, y los mantenemos activos cada mes. Nunca te entregamos un robot en blanco que tengas que enseñar tú — eso lo hacemos nosotros.</p>
   </div>
 
-  <div class="pains">
-    <div class="pains-title">¿Es esto para ti?</div>
-    <div class="pains-grid">
-      <div class="pain"><b>→</b> Se te acumulan mensajes de WhatsApp sin responder</div>
-      <div class="pain"><b>→</b> Pierdes citas por llamadas que no coges a tiempo</div>
-      <div class="pain"><b>→</b> No tienes web, o no te trae ni un cliente</div>
-      <div class="pain"><b>→</b> Pierdes horas cada semana en tareas repetitivas</div>
+  <div class="trust-row">
+    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><b>Configurado y entrenado</b>&nbsp;por nosotros, no por ti</div>
+    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><b>Auditoría inicial gratuita</b>,&nbsp;sin compromiso</div>
+    <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><b>Un único interlocutor</b>&nbsp;para toda tu tecnología</div>
+  </div>
+
+  <div class="chat-demo">
+    <div class="chat-hd">
+      <div class="chat-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <div><div class="chat-name">Tu asistente TRUCO</div><div class="chat-status">● En línea, ahora mismo</div></div>
     </div>
+    <div class="chat-msgs">
+      <div class="cm client">Buenas, ¿tenéis cita disponible para esta semana?</div>
+      <div class="cm truco">¡Hola! Tenemos hueco el jueves a las 11h o el viernes a las 17h. ¿Cuál te viene mejor?</div>
+      <div class="cm client">El viernes a las 17 perfecto</div>
+      <div class="cm truco">¡Reservado! Te llega confirmación en un momento.</div>
+    </div>
+  </div>
+
+  <div class="sol-title">Lo que implantamos</div>
+  <div class="sol-grid">
+    <div class="sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><h4>IA WhatsApp</h4></div>
+    <div class="sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg><h4>IA para tu Web</h4></div>
+    <div class="sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><h4>IA Llamadas</h4></div>
+    <div class="sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg><h4>IA Correo</h4></div>
+    <div class="sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><h4>Reservas y Agenda</h4></div>
+    <div class="sol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg><h4>Firma Digital</h4></div>
+  </div>
+
+  <div class="process">
+    <div class="process-title">Un proceso simple: hablas, auditamos, montamos, mantenemos.</div>
+    <div class="steps">
+      <div class="step"><div class="step-n">01</div><p>Auditamos tu negocio antes de montar nada — sin compromiso.</p></div>
+      <div class="step"><div class="step-n">02</div><p>Configuramos y entrenamos tus asistentes con tus propios datos.</p></div>
+      <div class="step"><div class="step-n">03</div><p>Lo implantamos y lo dejamos funcionando desde el primer día.</p></div>
+      <div class="step"><div class="step-n">04</div><p>¿Algo cambia? Nos escribes, y nosotros lo ajustamos.</p></div>
+    </div>
+  </div>
+
+  <div class="foot-strip">
+    <span>Más de <b>20.000 personas</b> siguen el trabajo que hacemos en redes</span>
+    <span>www.trucotechnology.com</span>
+  </div>
+
+</div>
+
+<!-- ══════════ PÁGINA 2 ══════════ -->
+<div class="page">
+
+  <div class="head">
+    <div class="brand">
+      <div class="brand-mark">T</div>
+      <div>
+        <div class="brand-name">TRUCO<span>technology</span></div>
+        <div class="brand-sub">Tu Departamento Tecnológico</div>
+      </div>
+    </div>
+    <div class="head-tag">España · Externalizado &nbsp;·&nbsp; <b>2/2</b></div>
+  </div>
+
+  <div class="pricing-head">
+    <h2>Elige el Departamento que mejor encaja con tu negocio</h2>
+    <p>Tu web y las soluciones que elijas van completamente gratis al contratar. Nosotros las mantenemos cada mes. A cambio, una permanencia mínima — sin ella no podríamos regalarte la instalación.</p>
   </div>
 
   <div class="pricing">
-    <div class="pc main">
-      <div class="pc-badge">Proyecto único</div>
-      <div class="pc-name">Web Esencial</div>
-      <div class="pc-price">649 € <small>+ IVA</small></div>
-      <div class="pc-vat">785,29 € con IVA · <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> 30 días de Lite™ de regalo</div>
-      <div class="pc-desc">Web de 5 páginas lista en 7-10 días + 30 días de tu Departamento Tecnológico Lite™ completamente de regalo, incluidos en el precio.</div>
+    <div class="pc">
+      <div class="pc-badge">Lite™</div>
+      <div class="pc-name">Lite™</div>
+      <div class="pc-price">199 € <small>/mes + IVA</small></div>
+      <div class="pc-old">Precio de fundador — antes <s>279 €/mes</s></div>
+      <ul class="pc-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Tu web (mejorada o nueva), <b>gratis</b></span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span><b>2 soluciones</b> de IA a elegir, gratis</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Mantenimiento de hasta 3 activas</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Reunión mensual de 30 min</span></li>
+      </ul>
     </div>
-    <div class="pc alt">
-      <div class="pc-badge">Oferta de fundador · plazas limitadas</div>
-      <div class="pc-name">Departamento Tecnológico</div>
-      <div class="pc-price">Desde 69 € <small>/mes + IVA</small></div>
-      <div class="pc-vat">Basic™ 69€ · Lite™ 199€* · Pro™ 399€* /mes</div>
-      <div class="pc-desc">Web + soluciones completamente gratis al contratar — nosotros las mantenemos cada mes, con incidencias siempre sin coste. *Precio de fundador por tiempo limitado, plazas reducidas — precio estándar después Lite™ 279€/mes, Pro™ 549€/mes. Pago único o financiado con SeQura.</div>
-    </div>
-  </div>
-
-  <div class="services">
-    <div class="svc">
-      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-      <h4>IA para WhatsApp</h4>
-      <p>Responde 24 h, agenda citas y filtra lo urgente.</p>
-    </div>
-    <div class="svc">
-      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></div>
-      <h4>Web profesional</h4>
-      <p>Presencia digital que convierte visitas en clientes.</p>
-    </div>
-    <div class="svc">
-      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-      <h4>Reservas online</h4>
-      <p>Citas sin llamadas perdidas, tu agenda siempre al día.</p>
-    </div>
-    <div class="svc">
-      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-      <h4>IA para Llamadas</h4>
-      <p>Contesta el teléfono y agenda la cita sin que nadie lo coja.</p>
+    <div class="pc feat">
+      <div class="pc-ribbon">Más elegido</div>
+      <div class="pc-badge">Pro™</div>
+      <div class="pc-name">Pro™</div>
+      <div class="pc-price">399 € <small>/mes + IVA</small></div>
+      <div class="pc-old">Precio de fundador — antes <s>549 €/mes</s></div>
+      <ul class="pc-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Web Profesional a medida, <b>gratis</b></span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span><b>3 soluciones</b> de IA a elegir, gratis</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Mantenimiento de hasta 6 activas</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Prioridad en incidencias &lt;24h</span></li>
+      </ul>
     </div>
   </div>
 
-  <div class="how">
-    <div class="steps">
-      <div class="step"><div class="step-n">1</div><span>Auditamos tu negocio antes de montar nada</span></div>
-      <div class="step"><div class="step-n">2</div><span>Configuramos y entrenamos — no un robot en blanco</span></div>
-      <div class="step"><div class="step-n">3</div><span>¿Algo cambia? Nos escribes, y ya está</span></div>
-    </div>
-  </div>
+  <div class="founding-band"><b>🏷 Programa Fundadores:</b> 20 plazas en total — 10 para Lite™ y 10 para Pro™ — con precio de fundador fijo mientras sigas siendo cliente.</div>
 
-  <div class="trust">
-    <span><b>Garantía de Ajuste™</b> — ajustamos hasta que funcione, sin coste extra</span>
-    <span><b>Auditoría inicial gratuita</b>, sin compromiso</span>
-    <span><b>Un único interlocutor</b> para toda tu tecnología</span>
+  <div class="fine-note">¿Solo necesitas una cosa ya? <b style="color:var(--white);">Basic™</b> desde 69€/mes: 1 solución gratis, sin web. Pago único con 12% de descuento, o fraccionado con SeQura. Permanencia de 6 a 12 meses según el escalón — nunca facturación mensual directa sin avisar.</div>
+
+  <div class="founder">
+    <div class="founder-photo"><img src="assets/founder.jpg" alt="Fundador de TRUCO technology"></div>
+    <div class="founder-text">
+      <b>"La tecnología debería ser una aliada, no una fuente de estrés."</b>
+      <p>Por eso creé TRUCO technology: un departamento que se encarga de todo lo técnico para que tú puedas dedicarte a hacer crecer tu negocio. — Fundador, TRUCO technology</p>
+    </div>
   </div>
 
   <div class="cta">
@@ -239,5 +289,6 @@
   </div>
 
 </div>
+
 </body>
 </html>
