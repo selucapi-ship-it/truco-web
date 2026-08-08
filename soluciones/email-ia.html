@@ -147,6 +147,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 @media(max-width:640px){.benefits-list{grid-template-columns:1fr;}}
 @media(prefers-reduced-motion:reduce){.benefits-list li{opacity:1;transform:none;transition:none;}}
 
+/* SCOPE BOX */
+.scope-box{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;overflow:hidden;}
+.scope-row{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:18px 24px;border-bottom:1px solid var(--grey-line);}
+.scope-row:last-child{border-bottom:none;}
+.scope-label{font-family:var(--font-m);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700;padding-top:2px;}
+.scope-value{font-size:.9rem;color:var(--white);line-height:1.65;}
+.scope-value b{color:var(--gold);}
+@media(max-width:640px){.scope-row{grid-template-columns:1fr;gap:6px;}}
+
 /* FAQ */
 .faq-section{padding:72px 0;}
 .faq-list{max-width:800px;}
@@ -335,12 +344,24 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </div>
 
+<div class="section-block reveal" style="padding-top:0;">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag depto">Qué se contrata exactamente</span><div class="sd-line"></div></div>
+    <div class="scope-box">
+      <div class="scope-row"><div class="scope-label">Incluye</div><div class="scope-value">Clasificación y respuesta automática de correos conectada a tu bandeja actual (Gmail, Outlook u otro proveedor), con escalado a una persona cuando la IA no tiene la respuesta.</div></div>
+      <div class="scope-row"><div class="scope-label">Límites</div><div class="scope-value"><b>1.000 interacciones al mes</b> incluidas (correos gestionados). El exceso se factura a 0,02€ + IVA por interacción adicional.</div></div>
+      <div class="scope-row"><div class="scope-label">Precio</div><div class="scope-value"><b>350€ + IVA, cerrado</b> — precio de lanzamiento (antes 590€).</div></div>
+      <div class="scope-row"><div class="scope-label">Plazo</div><div class="scope-value">Implantación y ajuste incluidos en el periodo de 90 días de Digitaliza.</div></div>
+    </div>
+  </div>
+</div>
+
 <div class="cta-section reveal">
   <div class="container">
     <div class="cta-inner">
       <div>
         <h2>¿Listo para vaciar tu bandeja de entrada sin perder ni un correo importante?</h2>
-        <p>350 € + IVA de implantación. Se mantiene después dentro de tu Departamento Tecnológico.</p>
+        <p><s style="color:var(--grey);">590€</s> <b style="color:var(--gold);">350 € + IVA</b> <span style="display:inline-block;background:linear-gradient(90deg,var(--gold),#c98f1f);color:#1a1206;font-size:.65rem;font-weight:800;padding:2px 9px;border-radius:20px;vertical-align:middle;">Oferta Lanzamiento 2026</span> de implantación. Se mantiene después dentro de tu Departamento Tecnológico.</p>
       </div>
       <div class="cta-btns">
         <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>

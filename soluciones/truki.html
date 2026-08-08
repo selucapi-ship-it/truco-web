@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-<title>TruKi — Factura, cobra y firma desde el chat | TRUCO technology</title>
-<meta name="description" content="TruKi convierte lo que describes por chat o voz en factura o presupuesto al instante: calcula con tu catálogo, controla quién te debe dinero, recoge la firma del cliente y manda el informe trimestral a tu gestoría solo.">
+<title>Facturación automática (TruKi) — Factura, cobra y firma desde el chat | TRUCO technology</title>
+<meta name="description" content="Facturación automática (TruKi), tu aliado: convierte lo que describes por chat o voz en factura o presupuesto al instante. Calcula con tu catálogo, controla quién te debe dinero, recoge la firma del cliente y manda el informe trimestral a tu gestoría solo.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -152,6 +152,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 @media(max-width:640px){.benefits-list{grid-template-columns:1fr;}}
 @media(prefers-reduced-motion:reduce){.benefits-list li{opacity:1;transform:none;transition:none;}}
 
+/* SCOPE BOX */
+.scope-box{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;overflow:hidden;}
+.scope-row{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:18px 24px;border-bottom:1px solid var(--grey-line);}
+.scope-row:last-child{border-bottom:none;}
+.scope-label{font-family:var(--font-m);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700;padding-top:2px;}
+.scope-value{font-size:.9rem;color:var(--white);line-height:1.65;}
+.scope-value b{color:var(--gold);}
+@media(max-width:640px){.scope-row{grid-template-columns:1fr;gap:6px;}}
+
 /* FAQ */
 .faq-section{padding:72px 0;}
 .faq-list{max-width:800px;}
@@ -215,8 +224,8 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="hero-grid">
       <div>
         <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 1z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg> Solución · Digitaliza tu Empresa</div>
-        <h1>TruKi</h1>
-        <p>Describe el trabajo por chat o por voz: TruKi calcula con tu catálogo, factura o presupuesta al instante, controla quién te ha pagado y recoge la firma del cliente ahí mismo, en la tablet o el móvil.</p>
+        <h1>Facturación automática <span style="color:var(--grey);font-size:.55em;font-weight:600;">(TruKi)</span></h1>
+        <p>Describe el trabajo por chat o por voz: TruKi, tu aliado, calcula con tu catálogo, factura o presupuesta al instante, controla quién te ha pagado y recoge la firma del cliente ahí mismo, en la tablet o el móvil.</p>
         <div class="hero-stats">
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Factura al instante</span></div>
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/></svg><span>Legal desde el día 1</span></div>
@@ -373,12 +382,24 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </div>
 
+<div class="section-block reveal" style="padding-top:0;">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag depto">Qué se contrata exactamente</span><div class="sd-line"></div></div>
+    <div class="scope-box">
+      <div class="scope-row"><div class="scope-label">Incluye</div><div class="scope-value">Chatbot que genera facturas y presupuestos a partir de una descripción en lenguaje natural (chat o voz), calculado con tu propio catálogo de precios, con firma de conformidad del cliente y control de cobros.</div></div>
+      <div class="scope-row"><div class="scope-label">Límites</div><div class="scope-value"><b>Sin límite de facturas ni presupuestos al mes.</b></div></div>
+      <div class="scope-row"><div class="scope-label">Precio</div><div class="scope-value"><b>580€ + IVA, cerrado.</b> El alojamiento va incluido sin coste si eres cliente del Departamento Tecnológico. Si la compras suelta, sin Departamento, el alojamiento cuesta 29€/mes aparte.</div></div>
+      <div class="scope-row"><div class="scope-label">Plazo</div><div class="scope-value">Implantación dentro del periodo estándar de 90 días de Digitaliza.</div></div>
+    </div>
+  </div>
+</div>
+
 <div class="cta-section reveal">
   <div class="container">
     <div class="cta-inner">
       <div>
         <h2>¿Listo para dejar el papeleo atrás y facturar en el momento?</h2>
-        <p>550 € + IVA de implantación. Se mantiene después dentro de tu Departamento Tecnológico.</p>
+        <p>580 € + IVA de implantación (+29 €/mes de hosting si se contrata suelta, sin Departamento). Se mantiene después dentro de tu Departamento Tecnológico.</p>
       </div>
       <div class="cta-btns">
         <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>

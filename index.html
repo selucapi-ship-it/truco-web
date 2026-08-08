@@ -133,7 +133,7 @@ img{display:block;max-width:100%;}
 .hero-kicker .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;}
 .hero-h1{font-size:clamp(2.8rem,4.5vw,4.2rem);font-weight:700;line-height:1.06;letter-spacing:-.03em;margin-bottom:22px;}
 .hero-h1 em{font-style:italic;color:var(--blue);}
-.hero-sub{font-size:1rem;color:var(--grey);line-height:1.7;max-width:440px;margin-bottom:10px;}
+.hero-sub{font-size:1.05rem;color:var(--grey);line-height:1.7;max-width:440px;margin-bottom:10px;}
 .hero-sub strong{color:var(--white);}
 .hero-question{font-size:.95rem;color:var(--gold);font-weight:600;display:flex;align-items:center;gap:7px;margin-bottom:32px;}
 .hero-question::before{content:'→';}
@@ -178,6 +178,91 @@ img{display:block;max-width:100%;}
 .hac-text{font-size:.8rem;}
 .hac-title{color:var(--white);font-weight:600;margin-bottom:2px;}
 .hac-sub{color:var(--grey);font-size:.73rem;}
+/* Ecosistema animado — el panel rota por los canales que tu Departamento atiende a la vez */
+.eco-panel{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;overflow:hidden;position:relative;box-shadow:0 20px 50px -20px rgba(0,0,0,.5);}
+.eco-topbar{padding:12px 16px;border-bottom:1px solid var(--grey-line);display:flex;align-items:center;gap:10px;}
+.eco-icon{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--gold);background:var(--gold-dim);color:var(--gold);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.eco-icon svg{width:16px;height:16px;}
+.eco-icon.pop{animation:ecoIconPop .45s ease;}
+@keyframes ecoIconPop{0%{transform:scale(.5) rotate(-12deg);opacity:0;}55%{transform:scale(1.18) rotate(5deg);}100%{transform:scale(1) rotate(0);opacity:1;}}
+.eco-meta{flex:1;min-width:0;}
+.eco-label{font-size:.82rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.eco-status{font-size:.7rem;color:var(--green);display:flex;align-items:center;gap:4px;}
+.eco-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:hccPulse 1.8s ease-in-out infinite;}
+.eco-progress{height:2px;background:var(--grey-line);overflow:hidden;}
+.eco-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--blue));}
+.eco-progress-fill.run{animation:ecoFill 6s linear forwards;}
+@keyframes ecoFill{from{width:0%;}to{width:100%;}}
+.eco-stage{position:relative;height:224px;}
+.eco-scene{position:absolute;inset:0;padding:14px 16px;opacity:0;transform:scale(.97);pointer-events:none;transition:opacity .45s ease,transform .45s ease;display:flex;flex-direction:column;gap:8px;}
+.eco-scene.active{opacity:1;transform:scale(1);pointer-events:auto;}
+.eco-dots{display:flex;justify-content:center;gap:6px;padding:12px 0 15px;}
+.eco-dot{width:6px;height:6px;border-radius:50%;background:var(--grey-line);transition:all .3s ease;}
+.eco-dot.active{width:20px;border-radius:4px;background:var(--gold);}
+/* Escena Web: barra de navegador en miniatura */
+.eco-browserbar{display:flex;align-items:center;gap:6px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:7px;padding:6px 10px;margin-bottom:2px;}
+.eco-browserbar .dot{width:6px;height:6px;border-radius:50%;background:var(--grey-line);}
+.eco-browserbar .url{font-size:.68rem;color:var(--grey);font-family:var(--font-mono);margin-left:2px;}
+/* Escena Web: página real de fondo + widget de chat flotando en la esquina, no un chat a pantalla completa */
+.eco-webpage{position:relative;flex:1;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:12px;overflow:hidden;}
+.eco-wp-nav{display:flex;align-items:center;gap:7px;padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid var(--grey-line);}
+.eco-wp-logo{width:14px;height:14px;border-radius:4px;background:var(--gold);flex-shrink:0;}
+.eco-wp-navline{height:5px;width:26px;border-radius:3px;background:var(--grey-line);}
+.eco-wp-navline.short{width:16px;}
+.eco-wp-hero{display:flex;flex-direction:column;gap:7px;max-width:62%;}
+.eco-wp-title{height:11px;width:80%;border-radius:3px;background:var(--grey-line);}
+.eco-wp-text{height:6px;width:95%;border-radius:3px;background:var(--grey-line);opacity:.65;}
+.eco-wp-text.short{width:55%;}
+.eco-wp-btn{margin-top:7px;height:20px;width:68px;border-radius:6px;background:var(--gold-dim);border:1px solid var(--gold);}
+.eco-widget{position:absolute;right:10px;bottom:10px;display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.eco-widget-bubble{width:32px;height:32px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(47,123,255,.45);flex-shrink:0;opacity:0;transform:scale(.5);}
+.eco-widget-bubble svg{width:15px;height:15px;}
+.eco-widget-bubble.show{animation:ecoBubbleIn .4s ease forwards;}
+@keyframes ecoBubbleIn{0%{opacity:0;transform:scale(.4);}60%{opacity:1;transform:scale(1.15);}100%{opacity:1;transform:scale(1);}}
+.eco-widget-panel{width:196px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:12px 12px 2px 12px;padding:10px;display:flex;flex-direction:column;gap:7px;box-shadow:0 14px 34px rgba(0,0,0,.45);opacity:0;transform:translateY(10px) scale(.94);transform-origin:bottom right;transition:opacity .3s ease,transform .3s ease;}
+.eco-widget-panel.show{opacity:1;transform:translateY(0) scale(1);}
+.eco-widget-panel .hm{font-size:.72rem;padding:7px 10px;}
+@media(prefers-reduced-motion:reduce){.eco-widget-bubble.show{animation:none;opacity:1;transform:scale(1);}}
+/* Escena Llamada: forma de onda animada */
+.eco-callbar{display:flex;align-items:center;justify-content:space-between;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:7px;padding:8px 12px;margin-bottom:2px;}
+.eco-calltag{font-size:.7rem;color:var(--green);font-weight:600;display:flex;align-items:center;gap:6px;}
+.eco-calltag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:hccPulse 1.2s ease-in-out infinite;}
+.eco-wave{display:flex;align-items:center;gap:2px;height:16px;}
+.eco-wave span{width:2.5px;border-radius:2px;background:var(--blue);animation:ecoWave .9s ease-in-out infinite;}
+.eco-wave span:nth-child(1){height:40%;animation-delay:0s;}
+.eco-wave span:nth-child(2){height:80%;animation-delay:.1s;}
+.eco-wave span:nth-child(3){height:55%;animation-delay:.2s;}
+.eco-wave span:nth-child(4){height:100%;animation-delay:.3s;}
+.eco-wave span:nth-child(5){height:65%;animation-delay:.4s;}
+.eco-wave span:nth-child(6){height:85%;animation-delay:.5s;}
+.eco-wave span:nth-child(7){height:45%;animation-delay:.6s;}
+@keyframes ecoWave{0%,100%{transform:scaleY(.4);}50%{transform:scaleY(1);}}
+/* Escena Correo */
+.eco-mail{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:10px 12px;}
+.eco-mail-from{font-size:.78rem;font-weight:600;color:var(--white);}
+.eco-mail-subj{font-size:.75rem;color:var(--grey);margin-top:2px;}
+/* Escena de cierre: el ecosistema completo */
+.eco-close{align-items:center;justify-content:center;text-align:center;position:relative;}
+.eco-glow{position:absolute;top:50%;left:50%;width:180px;height:180px;transform:translate(-50%,-58%);border-radius:50%;background:radial-gradient(circle,rgba(217,168,63,.22),transparent 70%);opacity:0;}
+.eco-scene.active .eco-glow{animation:ecoGlow 6s ease forwards;}
+@keyframes ecoGlow{0%{opacity:0;transform:translate(-50%,-58%) scale(.7);}30%{opacity:1;transform:translate(-50%,-58%) scale(1.15);}100%{opacity:.5;transform:translate(-50%,-58%) scale(1.3);}}
+.eco-chips{display:flex;gap:10px;position:relative;z-index:1;margin-top:4px;}
+.eco-chip{display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;transform:translateY(6px);}
+.eco-scene.active .eco-chip{animation:ecoChipIn .4s ease forwards;}
+.eco-scene.active .eco-chip:nth-child(1){animation-delay:.15s;}
+.eco-scene.active .eco-chip:nth-child(2){animation-delay:.4s;}
+.eco-scene.active .eco-chip:nth-child(3){animation-delay:.65s;}
+.eco-scene.active .eco-chip:nth-child(4){animation-delay:.9s;}
+@keyframes ecoChipIn{to{opacity:1;transform:translateY(0);}}
+.eco-chip-icon{width:34px;height:34px;border-radius:9px;background:var(--blue-dim);color:var(--blue);display:flex;align-items:center;justify-content:center;border:1px solid rgba(47,123,255,.3);}
+.eco-chip-icon svg{width:16px;height:16px;}
+.eco-chip-label{font-size:.62rem;color:var(--grey);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.04em;}
+.eco-close-title{font-family:var(--font-display);font-weight:700;font-size:1.05rem;margin-top:16px;position:relative;z-index:1;opacity:0;}
+.eco-scene.active .eco-close-title{animation:ecoFadeUp .5s ease 1.1s forwards;}
+.eco-close-sub{font-size:.78rem;color:var(--grey);margin-top:4px;position:relative;z-index:1;opacity:0;}
+.eco-scene.active .eco-close-sub{animation:ecoFadeUp .5s ease 1.3s forwards;}
+@keyframes ecoFadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+@media(prefers-reduced-motion:reduce){.eco-icon.pop{animation:none;}.eco-progress-fill.run{animation:none;width:100%;}.eco-wave span{animation:none;transform:scaleY(.7);}.eco-glow,.eco-chip,.eco-close-title,.eco-close-sub{animation:none !important;opacity:1 !important;transform:none !important;}}
 @media(max-width:960px){
   .hero-inner{grid-template-columns:1fr;padding-top:28px;}
   .hero-right{margin:28px auto 0;max-width:440px;}
@@ -210,17 +295,35 @@ img{display:block;max-width:100%;}
 .pillar-item:hover{transition-delay:0s;}
 .pillar-glyph{font-size:1.5rem;margin-bottom:10px;display:inline-block;transition:transform .22s ease,color .22s ease;}
 .pillar-item:hover .pillar-glyph{transform:scale(1.15);color:var(--accent,var(--blue));}
-.pillar-item h4{font-family:var(--font-display);font-size:.92rem;font-weight:800;margin-bottom:5px;color:var(--white);}
-.pillar-item p{font-size:.82rem;color:var(--grey);line-height:1.5;}
+.pillar-item h4{font-family:var(--font-display);font-size:1.02rem;font-weight:800;margin-bottom:5px;color:var(--white);}
+.pillar-item p{font-size:.92rem;color:var(--grey);line-height:1.5;}
 @media(max-width:640px){.pillars-grid{grid-template-columns:1fr 1fr;}.pillar-item:nth-child(2){border-right:none;}.pillar-item{border-bottom:1px solid var(--grey-line);}}
+.pillars-head{max-width:1120px;margin:0 auto;padding:22px 24px 0;text-align:center;}
+.pillars-head .ph-eyebrow{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.pillars-head h2{font-family:var(--font-display);font-size:clamp(1.35rem,2.6vw,1.75rem);font-weight:800;color:var(--white);max-width:640px;margin:0 auto;line-height:1.4;}
+.pillars-footer{max-width:1120px;margin:0 auto;padding:16px 24px 22px;text-align:center;font-size:.92rem;color:var(--grey);border-top:1px solid var(--grey-line);}
+.pillars-footer b{color:var(--white);}
+
+/* ── ASÍ ES TRABAJAR CON TU DEPARTAMENTO ── */
+#how-we-work{padding:64px 0;}
+#how-we-work .container{max-width:1120px;margin:0 auto;padding:0 24px;text-align:center;}
+#how-we-work .section-tag{justify-content:center;}
+#how-we-work .section-h2{max-width:720px;margin:0 auto 36px;text-align:center;}
+.hww-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left;}
+@media(max-width:768px){.hww-grid{grid-template-columns:1fr;}}
+.hww-item{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:24px 22px;}
+.hww-num{width:34px;height:34px;border-radius:50%;background:var(--gold-dim);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:1rem;margin-bottom:14px;}
+.hww-item p{font-size:.95rem;color:var(--grey);line-height:1.65;}
+.hww-item p b{color:var(--gold);}
+.hww-close{margin-top:32px;font-family:var(--font-display);font-size:1.4rem;font-weight:800;text-align:center;}
 
 /* ── SECTIONS GENERAL ── */
 .section{padding:96px 0;}
-.section-tag{font-family:var(--font-mono);font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.section-tag{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:10px;margin-bottom:12px;}
 .section-tag::before{content:'';width:24px;height:1px;background:var(--blue);}
 .section-tag.gold{color:var(--gold);}
 .section-tag.gold::before{background:var(--gold);}
-.section-h2{font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:700;margin-bottom:12px;max-width:640px;}
+.section-h2{font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:700;margin-bottom:12px;max-width:640px;text-wrap:balance;}
 .section-sub{font-size:1rem;color:var(--grey);max-width:580px;line-height:1.7;margin-bottom:40px;}
 
 /* ── ENTRY STRIP ── */
@@ -230,15 +333,44 @@ img{display:block;max-width:100%;}
   border:1px solid var(--grey-line);border-radius:16px;
   overflow:hidden;background:var(--bg-panel);
 }
-.entry-card{flex:1;padding:32px 28px;display:flex;flex-direction:column;justify-content:flex-start;border-right:1px solid var(--grey-line);position:relative;transition:background .22s ease;}
-.entry-card::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:transparent;transition:background .22s ease;}
-.entry-card:hover{background:rgba(47,123,255,.05);}
-.entry-card:hover::after{background:var(--blue);}
+.entry-card{flex:1;padding:34px 26px 28px;display:flex;flex-direction:column;justify-content:flex-start;border-right:1px solid var(--grey-line);position:relative;overflow:hidden;transition:background .25s ease,transform .25s ease,box-shadow .25s ease;}
+.entry-card::after{content:'';position:absolute;left:0;top:0;right:0;height:3px;background:transparent;transition:background .22s ease;}
+.entry-card::before{content:'';position:absolute;top:-60%;right:-40%;width:220px;height:220px;border-radius:50%;opacity:0;transition:opacity .3s ease;pointer-events:none;}
+.entry-card:hover{transform:translateY(-5px);box-shadow:0 14px 30px rgba(0,0,0,.35);z-index:2;}
+.entry-card:hover::before{opacity:1;}
 .entry-card:last-child{border-right:none;}
-.entry-card h4{font-family:var(--font-display);font-size:1.05rem;font-weight:800;margin-bottom:8px;color:var(--white);}
-.entry-card p{font-size:.88rem;color:var(--grey);line-height:1.6;margin-bottom:14px;flex:1;}
-.entry-price{display:inline-block;color:var(--blue);font-weight:700;font-size:.9rem;background:var(--blue-dim);padding:5px 14px;border-radius:20px;}
-.entry-price-real{font-size:.74rem;color:var(--grey);margin-top:8px;}
+.entry-card.c-blue::after{background:var(--blue);}
+.entry-card.c-blue::before{background:radial-gradient(circle,rgba(47,123,255,.22),transparent 70%);}
+.entry-card.c-blue:hover{background:rgba(47,123,255,.05);}
+.entry-card.c-gold::after{background:var(--gold);}
+.entry-card.c-gold::before{background:radial-gradient(circle,rgba(217,168,63,.22),transparent 70%);}
+.entry-card.c-gold:hover{background:rgba(217,168,63,.05);}
+.entry-card.c-green::after{background:var(--green);}
+.entry-card.c-green::before{background:radial-gradient(circle,rgba(34,197,94,.22),transparent 70%);}
+.entry-card.c-green:hover{background:rgba(34,197,94,.05);}
+.entry-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative;flex-shrink:0;}
+.entry-icon svg{width:22px;height:22px;}
+.c-blue .entry-icon{background:var(--blue-dim);color:var(--blue);}
+.c-gold .entry-icon{background:var(--gold-dim);color:var(--gold);}
+.c-green .entry-icon{background:var(--green-dim);color:var(--green);}
+.entry-kicker{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;position:relative;font-weight:700;}
+.c-blue .entry-kicker{color:var(--blue);}
+.c-gold .entry-kicker{color:var(--gold);}
+.c-green .entry-kicker{color:var(--green);}
+.entry-ribbon{position:absolute;top:16px;right:-32px;transform:rotate(40deg);background:var(--gold);color:#1a1206;font-family:var(--font-mono);font-size:.58rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 38px;box-shadow:0 4px 10px rgba(0,0,0,.3);}
+.entry-card h4{font-family:var(--font-display);font-size:1.2rem;font-weight:800;margin-bottom:8px;color:var(--white);position:relative;letter-spacing:-.01em;}
+.entry-card p{font-size:.95rem;color:var(--grey);line-height:1.6;margin-bottom:14px;flex:1;position:relative;}
+.entry-price{display:inline-block;font-weight:800;font-size:1rem;padding:6px 16px;border-radius:20px;position:relative;font-family:var(--font-mono);}
+.c-blue .entry-price{color:var(--blue);background:var(--blue-dim);}
+.c-gold .entry-price{color:var(--gold);background:var(--gold-dim);}
+.c-green .entry-price{color:var(--green);background:var(--green-dim);}
+.entry-price-real{font-size:.74rem;color:var(--grey);margin-top:8px;position:relative;}
+.entry-cta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-weight:800;font-size:.86rem;text-decoration:none;position:relative;}
+.c-blue .entry-cta{color:var(--blue);}
+.c-gold .entry-cta{color:var(--gold);}
+.c-green .entry-cta{color:var(--green);}
+.entry-cta svg{width:14px;height:14px;transition:transform var(--tr);}
+.entry-cta:hover svg{transform:translateX(3px);}
 .entry-gift{
   flex:0 0 260px;
   background:linear-gradient(135deg,#f2c14e,var(--gold) 55%,#c98f1f);
@@ -261,14 +393,27 @@ img{display:block;max-width:100%;}
 .entry-gift b{display:block;color:#1a1206;font-size:1.2rem;font-weight:800;line-height:1.32;margin-bottom:10px;position:relative;}
 .gift-highlight{display:inline-block;color:#1a1206;font-size:1.2rem;font-weight:900;background:rgba(22,21,26,.15);padding:3px 12px;border-radius:20px;margin:4px 0;}
 .entry-gift p{font-size:.83rem;color:#1a1206;line-height:1.6;margin-top:2px;position:relative;}
+.gift-price{font-family:var(--font-mono);font-weight:900;font-size:2.3rem;color:#1a1206;line-height:1;margin-bottom:8px;position:relative;}
+.gift-price small{display:block;font-family:var(--font-b);font-weight:700;font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;margin-top:5px;opacity:.75;}
+.gift-cta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;background:#1a1206;color:#f2c14e;font-weight:800;font-size:.86rem;text-decoration:none;padding:11px 20px;border-radius:24px;position:relative;transition:transform var(--tr),box-shadow var(--tr);}
+.gift-cta:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.35);}
+.gift-cta svg{width:14px;height:14px;transition:transform var(--tr);}
+.gift-cta:hover svg{transform:translateX(3px);}
 @media(max-width:768px){.entry-strip{flex-direction:column;}.entry-steps{flex-direction:column;}.entry-card{border-right:none;border-bottom:1px solid var(--grey-line);}.entry-card:last-child{border-bottom:none;}.entry-gift{flex:none;}}
 
 /* ── SOLUTIONS SHOWCASE ── */
-.sol-chip-row{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:26px;}
-.sol-chip{display:flex;align-items:center;gap:10px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:24px;padding:9px 18px 9px 10px;font-size:.85rem;font-weight:600;color:var(--white);text-decoration:none;transition:border-color var(--tr),transform var(--tr),background var(--tr);}
-.sol-chip:hover{border-color:var(--blue);transform:translateY(-2px);background:var(--bg-card);}
-.sol-chip-icon{width:28px;height:28px;border-radius:50%;background:var(--blue-dim);color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.sol-chip-icon svg{width:14px;height:14px;}
+#soluciones-showcase .section-h2{font-size:clamp(1.9rem,3.6vw,2.8rem);max-width:760px;}
+#como-empezamos .section-h2{max-width:900px;}
+#soluciones-showcase .section-tag{font-size:.72rem;}
+.need-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;}
+@media(max-width:860px){.need-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.need-grid{grid-template-columns:1fr;}}
+.need-card{display:flex;flex-direction:column;gap:12px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;padding:22px;text-decoration:none;transition:border-color var(--tr),transform var(--tr),background var(--tr),box-shadow var(--tr);}
+.need-card:hover{border-color:var(--blue);transform:translateY(-3px);background:var(--bg-card);box-shadow:0 10px 24px rgba(0,0,0,.3);}
+.need-title{font-family:var(--font-display);font-size:1.02rem;font-weight:700;color:var(--white);line-height:1.35;}
+.need-sub{font-size:.78rem;color:var(--blue);font-weight:600;letter-spacing:.01em;}
+.sol-chip-icon{width:34px;height:34px;border-radius:50%;background:var(--blue-dim);color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sol-chip-icon svg{width:17px;height:17px;}
 .sol-showcase-more{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-weight:700;font-size:.9rem;text-decoration:none;}
 .sol-showcase-more svg{width:15px;height:15px;transition:transform var(--tr);}
 .sol-showcase-more:hover svg{transform:translateX(3px);}
@@ -276,6 +421,13 @@ img{display:block;max-width:100%;}
 
 /* ── TIERS ── */
 .tiers-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+.tier-card.entry{border-color:var(--gold);}
+.tier-card.entry .tier-badge{color:var(--gold);}
+.tier-card.entry .tier-footer{color:var(--gold);}
+.tier-card.altcarte{border-color:var(--green);border-style:dashed;}
+.tier-card.altcarte .tier-badge{color:var(--green);}
+.tier-card.altcarte .tier-footer{color:var(--green);}
+.tier-card.altcarte:hover{border-color:var(--green);}
 .tier-card{
   background:var(--bg-panel);border:1px solid var(--grey-line);
   border-radius:18px;padding:34px;
@@ -289,28 +441,44 @@ img{display:block;max-width:100%;}
   font-family:var(--font-mono);font-size:.6rem;font-weight:700;letter-spacing:.1em;
   padding:4px 18px;border-radius:0 0 8px 8px;
 }
-.tier-badge{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);margin-bottom:14px;display:block;}
+.tier-badge{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);margin-bottom:14px;display:block;}
 .tier-card.featured .tier-badge{color:var(--blue);}
 .tier-name{font-family:var(--font-display);font-size:1.3rem;font-weight:800;margin-bottom:6px;}
-.tier-role{font-size:.88rem;color:var(--grey);margin-bottom:22px;line-height:1.55;}
+.tier-role{font-size:.95rem;color:var(--grey);margin-bottom:22px;line-height:1.6;}
+.tier-role b{color:var(--gold);}
+.tier-founding-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(90deg,#f2c14e,var(--gold) 55%,#c98f1f);color:#1a1206;font-weight:800;font-size:.78rem;padding:6px 14px;border-radius:20px;margin-bottom:12px;}
+.tier-founding-badge:empty{display:none;margin-bottom:0;}
 .tier-price{font-size:2.6rem;font-weight:800;font-family:var(--font-display);}
 .tier-price sub{font-size:1rem;font-weight:500;color:var(--grey);vertical-align:bottom;}
 .tier-vat{font-size:.75rem;color:var(--grey);margin-bottom:4px;}
 .tier-annual{font-size:.78rem;color:var(--grey);margin-bottom:22px;}
+.tier-founding-old{font-size:.72rem;color:var(--grey);margin-bottom:18px;}
+.tier-founding-old .price-old{text-decoration:line-through;}
 .tier-annual span{color:var(--gold);font-weight:600;}
 .tier-list{list-style:none;margin-bottom:24px;}
-.tier-list li{font-size:.88rem;color:var(--grey);padding:6px 0;padding-left:20px;position:relative;border-bottom:1px solid var(--grey-line);}
+.tier-list li{font-size:.95rem;color:var(--grey);padding:6px 0;padding-left:20px;position:relative;border-bottom:1px solid var(--grey-line);}
 .tier-list li:last-child{border-bottom:none;}
 .tier-list li::before{content:'✓';position:absolute;left:0;color:var(--blue);font-weight:700;}
 .tier-footer{font-size:.75rem;font-weight:700;letter-spacing:.04em;color:var(--grey);padding-top:14px;border-top:1px solid var(--grey-line);text-align:center;}
 .tier-card.featured .tier-footer{color:var(--blue);}
+
+.value-highlight{background:linear-gradient(135deg,rgba(217,168,63,.18),rgba(217,168,63,.05));border:1.5px solid var(--gold);border-radius:14px;padding:18px 20px;margin-bottom:22px;position:relative;overflow:hidden;animation:vhGlow 2.4s ease-in-out infinite;}
+@keyframes vhGlow{0%,100%{box-shadow:0 0 0 0 rgba(217,168,63,.25);}50%{box-shadow:0 0 0 6px rgba(217,168,63,0);}}
+.value-highlight::before{content:'';position:absolute;top:-45%;right:-15%;width:150px;height:150px;background:radial-gradient(circle,rgba(217,168,63,.3),transparent 70%);pointer-events:none;}
+.vh-eyebrow{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;position:relative;font-weight:700;}
+.vh-save{font-family:var(--font-display);font-size:1.15rem;font-weight:800;color:var(--white);margin-bottom:12px;position:relative;line-height:1.3;}
+.vh-save b{color:var(--gold);}
+.vh-list{list-style:none;position:relative;display:flex;flex-direction:column;gap:6px;}
+.vh-list li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:.92rem;color:var(--white);padding-left:20px;position:relative;}
+.vh-list li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:800;}
+.vh-tag{font-size:.72rem;color:var(--grey);font-family:var(--font-mono);white-space:nowrap;flex-shrink:0;}
 .dedication-note{
   margin-top:22px;text-align:center;
   background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:10px;
-  padding:16px 28px;font-size:.88rem;color:var(--grey);line-height:1.7;
+  padding:16px 28px;font-size:.92rem;color:var(--grey);line-height:1.7;
 }
 .dedication-note b{color:var(--white);}
-@media(max-width:768px){.tiers-grid{grid-template-columns:1fr;}}
+@media(max-width:640px){.tiers-grid{grid-template-columns:1fr;}}
 
 /* ── FOUNDER SECTION ── */
 #founder{background:var(--bg-panel);border-top:1px solid var(--grey-line);border-bottom:1px solid var(--grey-line);}
@@ -328,20 +496,17 @@ img{display:block;max-width:100%;}
 
 /* ── PACKS EMPRESA CON DESCUENTO ── */
 #packs-descuento{position:relative;background:radial-gradient(ellipse 900px 400px at 85% 0%,rgba(217,168,63,.1),transparent 65%);border-top:1px solid rgba(217,168,63,.18);border-bottom:1px solid rgba(217,168,63,.18);}
-.pd-card{
-  position:relative;background:linear-gradient(160deg,var(--bg-card),var(--bg-panel));
-  border:1px solid var(--grey-line);border-radius:14px;padding:22px;
-  transition:transform var(--tr),border-color var(--tr),box-shadow var(--tr);
-  display:block;text-decoration:none;color:inherit;
-}
-.pd-card:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:0 14px 30px rgba(217,168,63,.2);}
-.pd-icon{
-  width:46px;height:46px;border-radius:12px;
-  background:rgba(217,168,63,.12);border:1px solid rgba(217,168,63,.3);
-  display:flex;align-items:center;justify-content:center;font-size:1.35rem;margin-bottom:14px;
-}
-.pd-badge{position:absolute;top:-11px;right:16px;background:linear-gradient(90deg,#f2c14e,var(--gold) 55%,#c98f1f);color:#1a1206;font-size:.74rem;font-weight:800;padding:5px 12px;border-radius:20px;box-shadow:0 3px 10px rgba(217,168,63,.45);}
-@media(max-width:768px){#packs-descuento .pd-grid{grid-template-columns:1fr!important;}}
+.sr-panel{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;padding:28px 32px;}
+.sr-select{width:100%;max-width:420px;background:var(--bg-card);border:1.5px solid var(--gold);border-radius:8px;padding:12px 14px;color:var(--white);font-family:var(--font-b);font-size:.9rem;outline:none;-webkit-appearance:none;cursor:pointer;margin-top:16px;}
+.sr-select:focus{box-shadow:0 0 0 3px rgba(217,168,63,.15);}
+.sr-select option{background:var(--bg-card);}
+.sr-result{margin-top:22px;padding-top:22px;border-top:1px solid var(--grey-line);}
+.sr-sols-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.sr-sol-chip{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:20px;padding:7px 14px;font-size:.8rem;color:var(--white);font-weight:600;}
+.sr-pro-box{background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:14px 16px;font-size:.85rem;color:var(--grey);line-height:1.6;margin-bottom:18px;}
+.sr-pro-box b{color:var(--white);}
+.sr-ctas{display:flex;gap:12px;flex-wrap:wrap;}
+@media(max-width:640px){.sr-ctas{flex-direction:column;}.sr-ctas a{width:100%;text-align:center;}}
 
 /* ── FAQ ── */
 .faq-list{max-width:760px;}
@@ -358,7 +523,7 @@ img{display:block;max-width:100%;}
 .faq-item.open .faq-icon{background:var(--blue);border-color:var(--blue);}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;}
 .faq-item.open .faq-a{max-height:400px;padding-bottom:20px;}
-.faq-a p{font-size:.9rem;color:var(--grey);line-height:1.75;}
+.faq-a p{font-size:.95rem;color:var(--grey);line-height:1.75;}
 
 /* ── CHAT SECTION ── */
 #chat-section{background:var(--bg-panel);border-top:1px solid var(--grey-line);}
@@ -459,13 +624,25 @@ img{display:block;max-width:100%;}
 /* SECTORES */
 #sectores{padding:80px 0;background:linear-gradient(180deg,var(--bg-panel) 0%,var(--bg) 100%);border-top:1px solid var(--grey-line);border-bottom:1px solid var(--grey-line);}
 .sectores-intro{text-align:center;margin-bottom:48px;}
-.sectores-intro .s-tag{font-family:var(--font-mono);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;}
+.sectores-intro .s-tag{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;}
 .sectores-intro .s-tag::before,.sectores-intro .s-tag::after{content:'';width:20px;height:1px;background:var(--gold);}
 .sectores-intro h2{font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:700;margin-bottom:10px;line-height:1.2;}
 .sectores-intro p{font-size:.95rem;color:var(--grey);max-width:540px;margin:0 auto;line-height:1.7;}
-.sectores-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-@media(max-width:768px){.sectores-grid{grid-template-columns:1fr 1fr;}}
-@media(max-width:480px){.sectores-grid{grid-template-columns:1fr;}}
+.fix-callout{background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.25);border-radius:12px;padding:18px 22px;font-size:.95rem;color:var(--grey);line-height:1.65;max-width:760px;}
+.fix-callout b{color:var(--white);}
+#sectores .fix-callout{background:rgba(47,123,255,.06);border-color:rgba(47,123,255,.2);margin-bottom:32px;max-width:none;}
+.sectores-carousel{position:relative;max-width:640px;margin:0 auto;}
+.sc-track-wrap{overflow:hidden;border-radius:16px;}
+.sc-track{display:flex;transition:transform .45s ease;}
+.sc-track .sector-card{flex:0 0 100%;}
+.sc-arrow{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:var(--bg-panel);border:1px solid var(--grey-line);color:var(--white);font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;transition:border-color .2s,color .2s;}
+.sc-arrow:hover{border-color:var(--blue);color:var(--blue);}
+.sc-arrow.prev{left:-14px;}
+.sc-arrow.next{right:-14px;}
+@media(max-width:700px){.sc-arrow.prev{left:-6px;}.sc-arrow.next{right:-6px;}.sc-arrow{width:34px;height:34px;}}
+.sc-dots{display:flex;justify-content:center;gap:8px;margin-top:20px;}
+.sc-dot{width:8px;height:8px;border-radius:50%;background:var(--grey-line);border:none;cursor:pointer;padding:0;transition:background .2s,transform .2s;}
+.sc-dot.active{background:var(--gold);transform:scale(1.3);}
 .sector-card{background:var(--bg);border:1px solid var(--grey-line);border-radius:16px;padding:24px;transition:border-color .22s,transform .22s;position:relative;overflow:hidden;}
 .sector-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--s-accent,var(--blue));transition:height .22s;}
 .sector-card:hover{border-color:var(--s-accent,var(--blue));transform:translateY(-2px);}
@@ -476,21 +653,19 @@ img{display:block;max-width:100%;}
 .sector-card:nth-child(4){--s-accent:#a855f7;}
 .sector-card:nth-child(5){--s-accent:#f97316;}
 .sector-card:nth-child(6){--s-accent:#ec4899;}
-.sc-title{font-family:var(--font-display);font-size:1.05rem;font-weight:700;margin-bottom:6px;color:var(--white);}
-.sc-sub{font-size:.78rem;color:var(--s-accent,var(--blue));font-family:var(--font-mono);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;}
-.sc-bg-art{position:absolute;bottom:-6%;left:50%;transform:translateX(-50%);width:100%;opacity:.07;color:var(--white);pointer-events:none;}
-.sc-bg-art svg{width:100%;height:auto;display:block;}
+.sc-title{font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:6px;color:var(--white);}
+.sc-sub{font-size:.85rem;color:var(--s-accent,var(--blue));font-family:var(--font-mono);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;}
+.sc-bg-art{display:none;}
 .sc-header-center{position:relative;text-align:center;padding-top:2px;margin-bottom:16px;}
-.sc-header-center .sc-title{font-size:1.2rem;margin-bottom:5px;}
+.sc-header-center .sc-title{font-size:1.3rem;margin-bottom:5px;}
 .sc-header-center .sc-sub{margin-bottom:0;}
-.sc-pains{list-style:none;margin-bottom:16px;}
-.sc-pains li{font-size:.82rem;color:var(--grey);padding:4px 0 4px 16px;position:relative;border-bottom:1px solid var(--grey-line);}
-.sc-pains li:last-child{border-bottom:none;}
-.sc-pains li::before{content:'✗';position:absolute;left:0;color:#5b6573;font-size:.7rem;top:5px;}
-.sc-solution{background:color-mix(in srgb,var(--s-accent,var(--blue)) 8%,transparent);border:1px solid color-mix(in srgb,var(--s-accent,var(--blue)) 25%,transparent);border-radius:8px;padding:10px 12px;}
-.sc-solution-title{font-size:.7rem;font-family:var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--s-accent,var(--blue));margin-bottom:6px;}
-.sc-solution p{font-size:.8rem;color:var(--grey);line-height:1.5;}
-.sc-solution p b{color:var(--white);}
+.sc-pains{list-style:none;margin-bottom:14px;}
+.sc-pains li{font-size:.9rem;color:var(--grey);padding:3px 0 3px 16px;position:relative;}
+.sc-pains li::before{content:'✗';position:absolute;left:0;color:#5b6573;font-size:.7rem;top:4px;}
+.sc-solution{background:var(--bg-panel);border:1px solid color-mix(in srgb,var(--s-accent,var(--blue)) 28%,var(--grey-line));border-radius:10px;padding:14px 16px;}
+.sc-solution-title{font-size:.78rem;font-family:var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--s-accent,var(--blue));margin-bottom:7px;font-weight:700;}
+.sc-solution p{font-size:.95rem;color:var(--white);line-height:1.55;margin-bottom:10px;}
+.sc-solution p b{color:var(--s-accent,var(--blue));}
 .sc-card-cta{display:block;margin-top:12px;text-align:center;background:var(--s-accent,var(--blue));color:#fff;padding:8px 16px;border-radius:7px;font-size:.78rem;font-weight:600;text-decoration:none;transition:opacity var(--tr);}
 .sc-card-cta:hover{opacity:.85;}
 .sectores-cta{text-align:center;margin-top:40px;}
@@ -534,7 +709,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </style>
 <!-- Open Graph -->
 <meta property="og:title" content="TRUCO technology — Tu Departamento Tecnológico">
-<meta property="og:description" content="Deja de cargar con todo tú solo. WhatsApp 24/7, citas automáticas, IA y web para pymes y autónomos en España desde 199€/mes.">
+<meta property="og:description" content="Deja de cargar con todo tú solo. Tu Departamento Tecnológico: WhatsApp 24/7, citas automáticas, IA y web para pymes y autónomos en España, desde 69€/mes.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.trucotechnology.com">
 <meta name="theme-color" content="#141a24">
@@ -583,11 +758,11 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   "mainEntity": [
     {"@type": "Question", "name": "¿Necesito saber de tecnología para contratar vuestros servicios?", "acceptedAnswer": {"@type": "Answer", "text": "No. De hecho, ese es exactamente el punto. Somos tu departamento tecnológico precisamente para que tú no necesites saber nada técnico. Nosotros nos encargamos de todo: configuramos, mantenemos y mejoramos. Tú solo tienes que contarnos cómo funciona tu negocio."}},
     {"@type": "Question", "name": "¿El dominio y el hosting son míos o de TRUCO?", "acceptedAnswer": {"@type": "Answer", "text": "Todo va siempre a tu nombre. El dominio, el hosting y las plataformas externas que usemos se registran y facturan directamente a ti. Si en algún momento decides dejar de trabajar con nosotros, te llevas todo sin ninguna complicación. Nunca tenemos posesión de lo que es tuyo."}},
-    {"@type": "Question", "name": "¿Cuánto dura el período de implantación?", "acceptedAnswer": {"@type": "Answer", "text": "El período de implantación es de 30 días para proyectos web y 90 días para Digitaliza tu Empresa. Durante ese tiempo, el Departamento Tecnológico va completamente de regalo, incluido en el precio. Al terminar, el Departamento continúa mes a mes con renovación automática. Cancela cuando quieras avisando con 7 días."}},
+    {"@type": "Question", "name": "¿Cuánto dura la permanencia?", "acceptedAnswer": {"@type": "Answer", "text": "6 meses en Basic, 12 meses en Lite y Pro. Es lo que hace posible que la web y las soluciones vayan completamente gratis en vez de cobrarlas aparte. Se paga por adelantado, por todo el periodo de permanencia."}},
     {"@type": "Question", "name": "¿Para qué sirve la videollamada mensual incluida?", "acceptedAnswer": {"@type": "Answer", "text": "Es tu reunión de departamento. Revisamos juntos los resultados del mes, analizamos qué ha funcionado bien y qué puede mejorar, y planificamos los cambios para el mes siguiente."}},
-    {"@type": "Question", "name": "¿Cuál es la diferencia entre Lite y Pro?", "acceptedAnswer": {"@type": "Answer", "text": "La diferencia está en cuántas soluciones tecnológicas mantiene cada plan. El Pro (399€/mes) mantiene hasta 6 soluciones, con optimización continua, adaptaciones, revisión avanzada y mayor prioridad. El Lite (199€/mes) mantiene hasta 2 soluciones."}},
-    {"@type": "Question", "name": "¿Puedo empezar con el proyecto web y luego pasar a la suscripción?", "acceptedAnswer": {"@type": "Answer", "text": "Sí, y de hecho es la forma más natural de empezar. Primero construimos o mejoramos tu web, y durante los 30 días de implantación el Departamento Tecnológico Lite va completamente de regalo, incluido en el precio."}},
-    {"@type": "Question", "name": "¿Hay descuento si pago anual?", "acceptedAnswer": {"@type": "Answer", "text": "Sí. Si prefieres pagar el año completo por adelantado, tienes un 10% de descuento: el Pro queda a 4.309,20 € + IVA/año y el Lite a 2.149,20 € + IVA/año."}},
+    {"@type": "Question", "name": "¿Cuál es la diferencia entre Basic, Lite y Pro?", "acceptedAnswer": {"@type": "Answer", "text": "Basic (69€/mes) es el punto de entrada: 1 solución gratis, sin web. Lite (desde 279€/mes) añade tu web + 2 soluciones gratis, hasta 3 en total. Pro (desde 549€/mes) es la Web Profesional regalada + 3 soluciones gratis, hasta 6 en total. Puede haber precio de lanzamiento más bajo para los primeros clientes."}},
+    {"@type": "Question", "name": "¿Puedo empezar comprando el proyecto web suelto y luego pasarme al Departamento?", "acceptedAnswer": {"@type": "Answer", "text": "Sí, y de hecho es el camino por defecto: compras la web suelta sin compromiso, disfrutas 30 días de Departamento Lite o Pro de regalo, y pasado ese plazo pasas automáticamente a tu Departamento en modo mensual, sin permanencia. Si prefieres no continuar, cancelas avisando con 7 días."}},
+    {"@type": "Question", "name": "¿Cómo se paga el Departamento?", "acceptedAnswer": {"@type": "Answer", "text": "Pago único por adelantado con 12% de descuento (364,32€ + IVA en Basic, 2.101,44€ + IVA en Lite, 4.213,44€ + IVA en Pro), o fraccionado a través de SeQura, nuestro partner de financiación, si prefieres no adelantarlo todo de golpe."}},
     {"@type": "Question", "name": "¿Qué tipo de negocios se benefician más de vuestros servicios?", "acceptedAnswer": {"@type": "Answer", "text": "Cualquier empresa que use tecnología en su día a día y quiera tener un equipo técnico que la gestione sin tener que preocuparse de ella. Desde autónomos hasta pymes con equipo."}},
     {"@type": "Question", "name": "¿Tengo que contratar diferentes empresas para cada herramienta?", "acceptedAnswer": {"@type": "Answer", "text": "No. TRUCO se encarga de elegir, implantar, configurar y mantener toda la tecnología necesaria para tu empresa. Tú solo tendrás un único interlocutor."}},
     {"@type": "Question", "name": "¿Y si ya tengo herramientas instaladas?", "acceptedAnswer": {"@type": "Answer", "text": "No es necesario empezar desde cero. Podemos auditar, adaptar y mantener cualquier solución tecnológica existente para integrarla dentro de tu Departamento Tecnológico."}}
@@ -616,7 +791,8 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <li><a href="#sectores">¿Es esto para ti?</a></li>
     <li><a class="nav-links-pack" href="#packs-descuento"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> Packs -15%</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="#chat-section">Hablar con el asistente</a></li>
+    <li><a href="portal/login.html" style="opacity:.75;">Acceso clientes</a></li>
+    <li><a href="pago.html">Contratar</a></li>
   </ul>
   <a class="nav-cta" href="#chat-section">Hablar con el asistente</a>
   <div class="nav-toggle" onclick="toggleMenu()">
@@ -634,7 +810,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         Deja de cargar<br>con todo tú solo.<br>
         Ahora tienes<br><em>quien trabaje para ti.</em>
       </h1>
-      <p class="hero-sub">Implantamos la tecnología que necesitas, la mantenemos, la optimizamos y te acompañamos para que puedas <strong>centrarte únicamente en hacer crecer tu negocio.</strong></p>
+      <p class="hero-sub">Con tu Departamento Tecnológico pasas de <strong>no tener nada, a tenerlo todo</strong>: una web con la visibilidad que nunca has tenido, más hasta 3 asistentes de IA (2 con Lite™, 3 con Pro™) que <strong>nosotros configuramos y entrenamos para tu negocio</strong> — no un robot en blanco que tengas que enseñar tú. Trabajan gratis desde el primer día en tu WhatsApp, en tu teléfono o en tu web agendando citas solas. Ni un cliente se te escapa, y cualquier duda se resuelve las 24 horas.</p>
       <p class="hero-question">Para eso ya estamos nosotros.</p>
       <div class="hero-btns">
         <a class="btn-primary" href="#chat-section">Hablar con el asistente</a>
@@ -647,39 +823,90 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         </div>
         <div class="hero-trust-sep"></div>
         <div class="hero-trust-item">
-          <span class="hero-trust-num">199€</span>
-          <span class="hero-trust-label">desde / mes</span>
+          <span class="hero-trust-num">69€</span>
+          <span class="hero-trust-label">desde / mes (Basic™)</span>
         </div>
         <div class="hero-trust-sep"></div>
         <div class="hero-trust-item">
-          <span class="hero-trust-num" style="color:var(--green);">30-90</span>
-          <span class="hero-trust-label">días de regalo</span>
+          <span class="hero-trust-num" style="color:var(--green);">3 asistentes IA</span>
+          <span class="hero-trust-label">con Pro™: WhatsApp + Llamadas + Web, gratis</span>
         </div>
       </div>
     </div>
 
     <div class="hero-right">
-      <div class="hero-panel-title">Tu asistente trabajando ahora mismo</div>
+      <div class="hero-panel-title">Tu ecosistema, trabajando ahora mismo</div>
 
-      <div class="hero-chat-card">
-        <div class="hcc-header">
-          <div class="hcc-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-          <div>
-            <div class="hcc-name">Asistente TRUCO</div>
-            <div class="hcc-status">En línea</div>
+      <div class="eco-panel">
+        <div class="eco-topbar">
+          <div class="eco-icon" id="ecoIcon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></div>
+          <div class="eco-meta">
+            <div class="eco-label" id="ecoLabel">tu-negocio.com</div>
+            <div class="eco-status">En línea</div>
           </div>
         </div>
-        <div class="hcc-msgs" id="heroChatMsgs">
-          <div class="hm client">Buenas, ¿tenéis cita disponible para esta semana?</div>
-          <div class="hm truco">
-            ¡Hola! Claro que sí, tenemos hueco el jueves a las 11h o el viernes a las 17h. ¿Cuál te viene mejor?
-            <small>Ahora mismo · Asistente IA</small>
+        <div class="eco-progress"><div class="eco-progress-fill" id="ecoProgress"></div></div>
+
+        <div class="eco-stage">
+          <!-- Escena 1: Web interactiva -->
+          <div class="eco-scene" data-scene="web">
+            <div class="eco-browserbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">tu-negocio.com</span></div>
+            <div class="eco-webpage">
+              <div class="eco-wp-nav"><span class="eco-wp-logo"></span><span class="eco-wp-navline"></span><span class="eco-wp-navline"></span><span class="eco-wp-navline short"></span></div>
+              <div class="eco-wp-hero">
+                <div class="eco-wp-title"></div>
+                <div class="eco-wp-text"></div>
+                <div class="eco-wp-text short"></div>
+                <div class="eco-wp-btn"></div>
+              </div>
+              <div class="eco-widget">
+                <div class="eco-widget-panel" id="ecoWidgetPanel">
+                  <div class="hm client">¿Hacéis envíos a domicilio?</div>
+                  <div class="hm truco">¡Sí! Envío gratis a partir de 30€. ¿Te apunto el pedido ya mismo?<small>Ahora mismo · Asistente IA</small></div>
+                </div>
+                <div class="eco-widget-bubble" id="ecoWidgetBubble"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+              </div>
+            </div>
           </div>
-          <div class="hm client">El viernes a las 17 perfecto</div>
-          <div class="hm truco">
-            ¡Reservado! Te llega confirmación en un momento. Hasta el viernes.
-            <small>Ahora mismo · Asistente IA</small>
+          <!-- Escena 2: WhatsApp -->
+          <div class="eco-scene" data-scene="whatsapp">
+            <div class="hm client">Buenas, ¿tenéis cita disponible para esta semana?</div>
+            <div class="hm truco">¡Hola! Tenemos hueco el jueves a las 11h o el viernes a las 17h. ¿Cuál te viene mejor?<small>Ahora mismo · Asistente IA</small></div>
+            <div class="hm client">El viernes a las 17 perfecto</div>
+            <div class="hm truco">¡Reservado! Te llega confirmación en un momento.<small>Ahora mismo · Asistente IA</small></div>
           </div>
+          <!-- Escena 3: Llamada -->
+          <div class="eco-scene" data-scene="llamada">
+            <div class="eco-callbar"><span class="eco-calltag">Llamada en curso · 00:08</span><span class="eco-wave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></div>
+            <div class="hm client">Buenas tardes, ¿tenéis hueco para una revisión mañana?</div>
+            <div class="hm truco">Claro, tengo mañana a las 10h o a las 12h. ¿Cuál prefieres?<small>Ahora mismo · Asistente IA</small></div>
+            <div class="hm client">A las 10, perfecto</div>
+          </div>
+          <!-- Escena 4: Correo -->
+          <div class="eco-scene" data-scene="correo">
+            <div class="eco-mail"><div class="eco-mail-from">Pedro Martínez</div><div class="eco-mail-subj">Presupuesto para reforma de baño</div></div>
+            <div class="hm client" style="align-self:flex-start;">"Buenas, ¿me podéis pasar precio para reformar un baño de 4m²?"</div>
+            <div class="hero-appt-card" style="border-color:var(--green);margin-top:auto;">
+              <div class="hac-icon">✓</div>
+              <div class="hac-text"><div class="hac-title">Respondido automáticamente</div><div class="hac-sub">Presupuesto adjunto · hace 2 segundos</div></div>
+            </div>
+          </div>
+          <!-- Escena 5: Cierre — el ecosistema completo -->
+          <div class="eco-scene eco-close" data-scene="depto">
+            <div class="eco-glow"></div>
+            <div class="eco-chips">
+              <div class="eco-chip"><div class="eco-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></div><div class="eco-chip-label">Web</div></div>
+              <div class="eco-chip"><div class="eco-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><div class="eco-chip-label">WhatsApp</div></div>
+              <div class="eco-chip"><div class="eco-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div class="eco-chip-label">Llamadas</div></div>
+              <div class="eco-chip"><div class="eco-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></div><div class="eco-chip-label">Correo</div></div>
+            </div>
+            <div class="eco-close-title">Tu Departamento Tecnológico</div>
+            <div class="eco-close-sub">4 canales · 1 equipo · trabajando por ti ahora mismo</div>
+          </div>
+        </div>
+
+        <div class="eco-dots" id="ecoDots">
+          <div class="eco-dot active"></div><div class="eco-dot"></div><div class="eco-dot"></div><div class="eco-dot"></div><div class="eco-dot"></div>
         </div>
       </div>
 
@@ -689,16 +916,8 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="hsc-label">Seguidores que confían</div>
         </div>
         <div class="hero-stat-card">
-          <div class="hsc-val" style="color:var(--green);">30-90</div>
-          <div class="hsc-label">Días de regalo</div>
-        </div>
-      </div>
-
-      <div class="hero-appt-card">
-        <div class="hac-icon">✓</div>
-        <div class="hac-text">
-          <div class="hac-title">Cita confirmada automáticamente</div>
-          <div class="hac-sub">Jueves 16 jul · 17:00h · Sin que tú hayas hecho nada</div>
+          <div class="hsc-val" style="color:var(--green);">69€</div>
+          <div class="hsc-label">Desde /mes, tu Departamento</div>
         </div>
       </div>
     </div>
@@ -708,27 +927,55 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <!-- ── PILLARS ── -->
 <div id="pillars">
+  <div class="pillars-head">
+    <div class="ph-eyebrow">De 0 a 100, desde el día 1</div>
+    <h2>Contratas el Departamento y tu empresa pasa de no tener nada, a tenerlo todo</h2>
+  </div>
   <div class="pillars-grid">
     <div class="pillar-item reveal">
+      <div class="pillar-glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+      <h4>Tu web, con visibilidad real</h4>
+      <p>La que nunca has tenido: con SEO básico configurado desde el día 1 para que aparezcas cuando te buscan, incluida gratis en tu Departamento.</p>
+    </div>
+    <div class="pillar-item reveal">
+      <div class="pillar-glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+      <h4>Asistente IA en tu WhatsApp</h4>
+      <p>Contesta y agenda 24/7, aunque te escriban un domingo a las 23h.</p>
+    </div>
+    <div class="pillar-item reveal">
       <div class="pillar-glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-      <h4>Clientes que nunca se pierden</h4>
-      <p>Tus mensajes se atienden al instante mediante IA, en cualquier momento.</p>
+      <h4>Asistente IA en tu teléfono</h4>
+      <p>Coge las llamadas y agenda la cita mientras hablan, aunque tengas las manos ocupadas.</p>
     </div>
     <div class="pillar-item reveal">
       <div class="pillar-glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-      <h4>Citas que se agendan solas</h4>
-      <p>Todo se agenda y confirma sin que muevas un dedo.</p>
+      <h4>Asistente IA en tu web</h4>
+      <p>Resuelve dudas y agenda huecos directamente en tu calendario, sin que muevas un dedo.</p>
     </div>
-    <div class="pillar-item reveal">
-      <div class="pillar-glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
-      <h4>Tiempo que recuperas</h4>
-      <p>Lo que hoy haces tú, mañana lo hace tu departamento.</p>
+  </div>
+  <div class="pillars-footer">Web + <b>3 asistentes de IA</b> — instalados y mantenidos gratis con tu Departamento Pro™ (con Lite™ son 2). Cero clientes perdidos, dudas resueltas las 24 horas.</div>
+</div>
+
+<!-- ── ASÍ ES TRABAJAR CON TU DEPARTAMENTO ── -->
+<div id="how-we-work">
+  <div class="container">
+    <div class="section-tag gold">Así es trabajar con tu Departamento</div>
+    <h2 class="section-h2">No te vendemos una IA en blanco para que la entrenes tú.</h2>
+    <div class="hww-grid">
+      <div class="hww-item">
+        <div class="hww-num">1</div>
+        <p><b>Te auditamos antes de montar nada.</b> Te preguntamos lo necesario sobre tu negocio para que el asistente hable como tú, no como una IA genérica.</p>
+      </div>
+      <div class="hww-item">
+        <div class="hww-num">2</div>
+        <p><b>Nosotros lo configuramos y lo entrenamos.</b> No hay manual que estudiar — nos escribes y nosotros lo ajustamos.</p>
+      </div>
+      <div class="hww-item">
+        <div class="hww-num">3</div>
+        <p><b>Nosotros te agendamos las revisiones</b> — y tu asistente virtual puede incluso cerrar la venta con tus clientes sin que tengas que intervenir. Tú solo miras tu agenda, mañana y noche.</p>
+      </div>
     </div>
-    <div class="pillar-item reveal">
-      <div class="pillar-glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-      <h4>Un equipo siempre ahí</h4>
-      <p>Tu asistente IA está activo en todo momento, con escalado a persona si lo necesita.</p>
-    </div>
+    <p class="hww-close">Somos tu solución.</p>
   </div>
 </div>
 
@@ -740,10 +987,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <h2>Si lo que describes te suena,<br>el Departamento Lite™ no es una opción.</h2>
       <p>Es una necesidad. Hay profesiones donde perder un mensaje, olvidar una cita o tardar en responder tiene un coste real. Aquí van las más comunes.</p>
     </div>
-    <div style="background:rgba(47,123,255,.06);border:1px solid rgba(47,123,255,.2);border-radius:12px;padding:16px 22px;margin-bottom:32px;font-size:.88rem;color:var(--grey);line-height:1.65;">
-      <b style="color:var(--white);">Importante:</b> No te vendemos un software nuevo que aprender. Si ya tienes tu programa de gestión, tu agenda o tu CRM — perfecto. Nosotros nos integramos con lo que ya tienes y nos encargamos de <b style="color:var(--white);">todo lo que llega antes de que el cliente entre en tu sistema:</b> el WhatsApp, el correo, la duda de las 22h, la cita que alguien quiere pedir el domingo. Tú descansas. El negocio no para.
+    <div class="fix-callout">
+      <b>Importante:</b> No te vendemos un software nuevo que aprender. Si ya tienes tu programa de gestión, tu agenda o tu CRM — perfecto. Nosotros nos integramos con lo que ya tienes y nos encargamos de <b>todo lo que llega antes de que el cliente entre en tu sistema:</b> el WhatsApp, el correo, la duda de las 22h, la cita que alguien quiere pedir el domingo. Tú descansas. El negocio no para.
     </div>
-    <div class="sectores-grid">
+    <div class="sectores-carousel" id="sectoresCarousel">
+      <div class="sc-track-wrap">
+        <div class="sc-track" id="scTrack">
 
       <div class="sector-card">
         <div class="sc-bg-art" aria-hidden="true"><svg viewBox="0 0 400 260" fill="currentColor"><polygon points="200,10 385,100 15,100"/><rect x="24" y="100" width="352" height="12"/><rect x="46" y="112" width="18" height="112"/><rect x="110" y="112" width="18" height="112"/><rect x="174" y="112" width="18" height="112"/><rect x="208" y="112" width="18" height="112"/><rect x="272" y="112" width="18" height="112"/><rect x="336" y="112" width="18" height="112"/><rect x="16" y="224" width="368" height="12"/><rect x="0" y="236" width="400" height="24"/></svg></div>
@@ -752,16 +1001,14 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="sc-sub">El móvil no descansa nunca</div>
         </div>
         <ul class="sc-pains">
-          <li>Clientes que escriben a las 21h esperando respuesta inmediata</li>
-          <li>Mensajes de WhatsApp que se acumulan mientras estás en juicio</li>
-          <li>Consultas previas que ocupan horas que deberías dedicar a tus casos</li>
+          <li>Mensajes de WhatsApp acumulándose mientras estás en juicio</li>
           <li>Citas que se pierden porque nadie confirmó a tiempo</li>
         </ul>
         <div class="sc-solution">
           <div class="sc-solution-title">Lo que hacemos nosotros</div>
-          <p>Tu asistente atiende cada consulta, filtra lo urgente de lo que puede esperar y agenda la primera reunión en tu calendario. <b>Tú apareces cuando el cliente ya sabe que eres su abogado.</b>
-        <a class="sc-card-cta" href="sectores/abogados.html">¿Es esto para ti? Descúbrelo →</a>
+          <p>Auditamos cómo trabaja tu despacho y entrenamos tu asistente con tus propios protocolos de consulta. A partir de ahí, él atiende, agenda la reunión y te avisa — <b>apareces cuando el cliente ya sabe que eres su abogado.</b></p>
         </div>
+        <a class="sc-card-cta" href="sectores/abogados.html">Saber más →</a>
       </div>
 
       <div class="sector-card">
@@ -771,16 +1018,14 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="sc-sub">Huecos que cuestan dinero</div>
         </div>
         <ul class="sc-pains">
-          <li>Pacientes que llaman mientras estás en consulta y no vuelven a intentarlo</li>
-          <li>Citas que se olvidan porque nadie avisó con tiempo</li>
-          <li>WhatsApp lleno de preguntas de precio, seguros y disponibilidad</li>
-          <li>Recepción desbordada con llamadas que podrían gestionarse solas</li>
+          <li>Pacientes que llaman en consulta y no vuelven a intentarlo</li>
+          <li>Citas que se olvidan porque nadie avisó a tiempo</li>
         </ul>
         <div class="sc-solution">
           <div class="sc-solution-title">Lo que hacemos nosotros</div>
-          <p>Nos integramos con tu agenda actual. Tu asistente responde dudas, agenda citas y avisa a los pacientes antes de que se olviden. <b>Menos huecos, más pacientes atendidos.</b>
-        <a class="sc-card-cta" href="sectores/clinicas-dentales.html">¿Es esto para ti? Descúbrelo →</a>
+          <p>Configuramos y entrenamos tu asistente con tu propia agenda y protocolos de la clínica. Él responde dudas, confirma y recuerda cada cita — <b>tú solo revisas tu agenda por la mañana y por la noche.</b></p>
         </div>
+        <a class="sc-card-cta" href="sectores/clinicas-dentales.html">Saber más →</a>
       </div>
 
       <div class="sector-card">
@@ -790,16 +1035,14 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="sc-sub">El que responde primero, vende</div>
         </div>
         <ul class="sc-pains">
-          <li>Interesados en un piso que escriben a las 23h y al día siguiente ya llamaron a otra agencia</li>
-          <li>Visitas que nadie confirmó y el cliente no apareció</li>
-          <li>Leads de portales que llegan y se enfrían esperando respuesta</li>
-          <li>Horas perdidas respondiendo siempre las mismas preguntas de precio y zona</li>
+          <li>Interesados que escriben a las 23h y al día siguiente ya llamaron a otra agencia</li>
+          <li>Leads de portales que se enfrían esperando respuesta</li>
         </ul>
         <div class="sc-solution">
           <div class="sc-solution-title">Lo que hacemos nosotros</div>
-          <p>Respuesta en segundos a cada consulta, confirmación de visitas y seguimiento automático. <b>El cliente siente que siempre hay alguien, aunque sean las 11 de la noche.</b>
-        <a class="sc-card-cta" href="sectores/inmobiliarias.html">¿Es esto para ti? Descúbrelo →</a>
+          <p>Entrenamos tu asistente con las fichas de tus propiedades para que responda al segundo, agende la visita y haga seguimiento solo. <b>Si el interesado está listo, tu asistente puede cerrar la venta sin que tú intervengas.</b></p>
         </div>
+        <a class="sc-card-cta" href="sectores/inmobiliarias.html">Saber más →</a>
       </div>
 
       <div class="sector-card">
@@ -809,16 +1052,14 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="sc-sub">Reservas a cualquier hora</div>
         </div>
         <ul class="sc-pains">
-          <li>Clientes que preguntan disponibilidad por WhatsApp mientras estás atendiendo</li>
-          <li>Reservas que no se confirman y el hueco se queda vacío</li>
-          <li>Cancelaciones de última hora sin que nadie ocupe ese sitio</li>
-          <li>El teléfono que suena cuando tienes las manos ocupadas</li>
+          <li>Consultas de disponibilidad por WhatsApp mientras estás atendiendo</li>
+          <li>Cancelaciones de última hora que nadie ocupa</li>
         </ul>
         <div class="sc-solution">
           <div class="sc-solution-title">Lo que hacemos nosotros</div>
-          <p>Tu asistente recibe las consultas, enlaza con tu agenda actual y confirma cada reserva. <b>Tú trabajas. El negocio se llena solo.</b>
-        <a class="sc-card-cta" href="sectores/estetica.html">¿Es esto para ti? Descúbrelo →</a>
+          <p>Auditamos tus servicios y horarios para entrenar tu asistente a tu medida. Él recibe consultas, enlaza con tu agenda y ocupa cada cancelación — <b>tú trabajas, el negocio se llena solo.</b></p>
         </div>
+        <a class="sc-card-cta" href="sectores/estetica.html">Saber más →</a>
       </div>
 
       <div class="sector-card">
@@ -828,16 +1069,14 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="sc-sub">Electricistas, fontaneros, pintores...</div>
         </div>
         <ul class="sc-pains">
-          <li>Presupuestos que piden por WhatsApp mientras estás en obra y no puedes contestar</li>
-          <li>Clientes que llaman y como no coges se van al siguiente</li>
-          <li>Mensajes acumulados al terminar la jornada que ya no tienen sentido contestar</li>
-          <li>Citas de visita que se quedan sin confirmar y el cliente duda</li>
+          <li>Presupuestos por WhatsApp que no puedes contestar en obra</li>
+          <li>Clientes que se van al siguiente porque no coges el teléfono</li>
         </ul>
         <div class="sc-solution">
           <div class="sc-solution-title">Lo que hacemos nosotros</div>
-          <p>Tu asistente recoge la solicitud, da una respuesta inmediata y agenda la visita de presupuesto. <b>Cuando acabas en obra, el cliente ya está esperando confirmación tuya.</b>
-        <a class="sc-card-cta" href="sectores/oficios.html">¿Es esto para ti? Descúbrelo →</a>
+          <p>Entrenamos tu asistente con tus tarifas y disponibilidad real. Él responde al momento y agenda la visita — y si hace falta cambiar algo, nos escribes a nosotros, <b>nunca lo tocas tú.</b></p>
         </div>
+        <a class="sc-card-cta" href="sectores/oficios.html">Saber más →</a>
       </div>
 
       <div class="sector-card">
@@ -847,18 +1086,21 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="sc-sub">Socios que no preguntan, socios que no entran</div>
         </div>
         <ul class="sc-pains">
-          <li>Interesados en apuntarse que preguntan por Instagram o WhatsApp y no reciben respuesta</li>
-          <li>Socios que se dan de baja porque nadie les prestó atención cuando tuvieron una duda</li>
-          <li>Preguntas de horarios y tarifas que responde siempre la misma persona</li>
-          <li>Clases con plazas libres que nadie ofertó a tiempo</li>
+          <li>Interesados que preguntan por Instagram y no reciben respuesta</li>
+          <li>Bajas de socios a los que nadie atendió a tiempo</li>
         </ul>
         <div class="sc-solution">
           <div class="sc-solution-title">Lo que hacemos nosotros</div>
-          <p>Nos conectamos a lo que ya usas. Tu asistente atiende consultas, retiene socios y rellena plazas. <b>Tú entrenas a tus clientes. Nosotros cuidamos que no se vayan.</b></p>
+          <p>Nos integramos con lo que ya usas y entrenamos tu asistente con tus tarifas y clases. Él atiende, retiene socios y agenda las revisiones de seguimiento — <b>tú entrenas, nosotros cuidamos que no se vayan.</b></p>
         </div>
-     
-        <a class="sc-card-cta" href="sectores/gimnasios.html">¿Es esto para ti? Descúbrelo →</a> </div>
+        <a class="sc-card-cta" href="sectores/gimnasios.html">Saber más →</a>
+      </div>
 
+        </div>
+      </div>
+      <button class="sc-arrow prev" onclick="scNav(-1)" aria-label="Sector anterior">‹</button>
+      <button class="sc-arrow next" onclick="scNav(1)" aria-label="Sector siguiente">›</button>
+      <div class="sc-dots" id="scDots"></div>
     </div>
     <div class="sectores-cta">
       <p><b>¿Tu sector no está aquí?</b> Si recibes mensajes de clientes y quieres que alguien los atienda por ti sin que tengas que comprar nada nuevo, el Departamento Tecnológico es para ti.</p>
@@ -867,38 +1109,63 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </section>
 
+<!-- ── ¿YA TIENES ALGO AUTOMATIZADO? ── -->
+<section id="ya-automatizado" class="section reveal">
+  <div class="container">
+    <div class="section-tag gold">¿Ya tienes algo automatizado?</div>
+    <h2 class="section-h2">Si montaste un bot y ahora lo peleas tú solo, el problema no es tuyo — es de quién te lo vendió.</h2>
+    <p class="section-sub">Muchos negocios ya tienen un WhatsApp automatizado, un chatbot o un CRM a medias — configurado una vez y abandonado después. Cada vez que cambia un precio, un horario o un servicio, entras tú a arreglarlo. Eso no es tener un departamento tecnológico: es tener un problema técnico más.</p>
+    <div class="fix-callout">
+      <b>Nosotros nos hacemos cargo de lo que ya tienes.</b> Lo auditamos, lo reconfiguramos, lo entrenamos bien — y a partir de ahí, cualquier cambio nos lo pides a nosotros. Tú no vuelves a tocarlo.
+    </div>
+    <p class="hww-close" style="text-align:left;margin-top:24px;">Somos tu solución.</p>
+    <a class="btn-primary" href="#chat-section" style="margin-top:18px;display:inline-block;">Cuéntanos qué tienes montado →</a>
+  </div>
+</section>
 
 <!-- ── CÓMO EMPEZAMOS ── -->
 <section id="como-empezamos" class="section reveal">
   <div class="container">
     <div class="section-tag">Cómo empezamos</div>
-    <h2 class="section-h2">Empezamos por donde tu negocio lo necesite</h2>
-    <p class="section-sub">El proyecto inicial no es un servicio aparte: es la puerta de entrada a tu departamento tecnológico.</p>
+    <h2 class="section-h2">Dos formas de entrar a tu Departamento — la que encaje contigo hoy</h2>
+    <p class="section-sub">Directo, con la web y las soluciones incluidas desde el primer mes. O sin compromiso al empezar: pagas el proyecto suelto y, si sigues después del regalo, pasas a tu Departamento sin tener que hacer nada.</p>
     <div class="entry-strip">
       <div class="entry-steps">
-        <div class="entry-card" onclick="location.href='proyectos/web-esencial.html'" style="cursor:pointer;">
-          <h4>Empieza desde cero, rápido.</h4>
-          <p>Web Esencial: 5 páginas, sistema de atención automática de FAQ. Lista en 7-10 días, sin complicaciones.</p>
-          <span class="entry-price">Web Esencial · 649 € + IVA · 785,29 € con IVA</span>
-          <div class="entry-price-real"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> 30 días de Departamento Lite™ de regalo — incluidos en el precio</div>
+        <div class="entry-card c-blue">
+          <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="7" y1="14" x2="13" y2="14"/></svg></div>
+          <div class="entry-kicker">Lista en 7-10 días</div>
+          <h4>Web Esencial</h4>
+          <p>5 páginas y atención automática de FAQ. La forma más rápida de tener presencia online seria.</p>
+          <span class="entry-price">649 € + IVA</span>
+          <div class="entry-price-real">O gratis si te haces cliente del Departamento Lite™</div>
+          <a class="entry-cta" href="proyectos/web-esencial.html">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
-        <div class="entry-card" onclick="location.href='proyectos/web-profesional.html'" style="cursor:pointer;">
-          <h4>Web completa con automatización.</h4>
-          <p>Diseño a medida, WhatsApp IA y agenda automática. La que convierte visitas en clientes.</p>
-          <span class="entry-price">Web Profesional · 940 € + IVA · 1.137,40 € con IVA</span>
-          <div class="entry-price-real"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> 30 días de Departamento Lite™ de regalo — incluidos en el precio</div>
+        <div class="entry-card c-gold">
+          <div class="entry-ribbon">Más elegida</div>
+          <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
+          <div class="entry-kicker">Diseño + automatización</div>
+          <h4>Web Profesional</h4>
+          <p>Diseño a medida, WhatsApp IA y agenda automática integrados. La que convierte visitas en clientes.</p>
+          <span class="entry-price">940 € + IVA</span>
+          <div class="entry-price-real">O gratis si te haces cliente del Departamento Pro™</div>
+          <a class="entry-cta" href="proyectos/web-profesional.html">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
-        <div class="entry-card" onclick="location.href='servicios.html#digitaliza'" style="cursor:pointer;">
-          <h4>¿Ya tienes web pero no convierte?</h4>
-          <p>La transformamos con IA, WhatsApp y automatización sin cambiar tu dominio ni hosting.</p>
-          <span class="entry-price">Digitaliza desde 600 € + IVA</span>
-          <div class="entry-price-real"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> 90 días de Departamento (Pro™ o Lite™) de regalo — incluidos en el precio</div>
+        <div class="entry-card c-green">
+          <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg></div>
+          <div class="entry-kicker">Sin cambiar dominio ni hosting</div>
+          <h4>Transforma tu Web</h4>
+          <p>¿Ya tienes web pero no convierte? La reforzamos con IA, WhatsApp y automatización sin tocar lo que ya funciona.</p>
+          <span class="entry-price">Desde 350 € + IVA</span>
+          <div class="entry-price-real">O gratis si te haces cliente del Departamento</div>
+          <a class="entry-cta" href="digitaliza.html">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
       <div class="entry-gift">
-        <div class="gift-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> Regalo incluido</div>
-        <b>El Departamento Tecnológico va completamente de regalo</b>
-        <p>Durante todo el periodo de implantación: <b style="display:inline;color:#1a1206;">30 días en webs</b>, <b style="display:inline;color:#1a1206;">90 días en Digitaliza</b>. Después, renovación automática — cancela cuando quieras avisando con 7 días.</p>
+        <div class="gift-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> Recomendado</div>
+        <div class="gift-price">0 € <small>de instalación</small></div>
+        <b>Web + soluciones, completamente gratis</b>
+        <p>Te haces cliente del Departamento Lite™ o Pro™ y la web entra sin coste — ahorras hasta <b style="display:inline;color:#1a1206;">1.929 €</b> con Lite™ o hasta <b style="display:inline;color:#1a1206;">2.720 €</b> con Pro™ en instalación. A cambio, permanencia: <b style="display:inline;color:#1a1206;">12 meses</b>.</p>
+        <a class="gift-cta" href="#servicios">Ver los Departamentos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
   </div>
@@ -908,15 +1175,16 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 <section id="soluciones-showcase" class="section reveal">
   <div class="container">
     <div class="section-tag gold">Soluciones tecnológicas</div>
-    <h2 class="section-h2">Cada problema de tu negocio tiene una solución concreta</h2>
+    <h2 class="section-h2">¿Cuál de estos problemas tienes tú?</h2>
     <p class="section-sub">Esto es lo que implantamos dentro de Digitaliza tu Empresa. Entra directo en la que te interese, o ve todas juntas con sus precios.</p>
-    <div class="sol-chip-row">
-      <a class="sol-chip" href="soluciones/whatsapp.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>IA para WhatsApp</a>
-      <a class="sol-chip" href="soluciones/web-ia.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></span>IA para tu Web</a>
-      <a class="sol-chip" href="soluciones/crm.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>CRM</a>
-      <a class="sol-chip" href="soluciones/automatizaciones.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>Automatizaciones</a>
-      <a class="sol-chip" href="soluciones/ciberseguridad.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>Ciberseguridad Pyme</a>
-      <a class="sol-chip" href="soluciones/truki.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 1z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg></span>TruKi</a>
+    <div class="need-grid">
+      <a class="need-card" href="soluciones/whatsapp.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span><div class="need-title">Contesta todos los WhatsApp 24/7 y no pierdas ni un cliente</div><div class="need-sub">IA para WhatsApp →</div></a>
+      <a class="need-card" href="soluciones/reservas.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><div class="need-title">Agenda citas mientras duermes</div><div class="need-sub">Reservas y Agenda →</div></a>
+      <a class="need-card" href="soluciones/web-ia.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></span><div class="need-title">No pierdas un cliente por no responder un domingo</div><div class="need-sub">IA para tu Web →</div></a>
+      <a class="need-card" href="soluciones/truki.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 1z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg></span><div class="need-title">Haz la factura solo con la voz, gracias a tu asistente TruKi</div><div class="need-sub">Facturación automática (TruKi) →</div></a>
+      <a class="need-card" href="soluciones/crm.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><div class="need-title">Ten a cada cliente y su historial en un solo sitio, sin post-its</div><div class="need-sub">CRM →</div></a>
+      <a class="need-card" href="soluciones/automatizaciones.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span><div class="need-title">Acaba con las tareas repetitivas de tu empresa</div><div class="need-sub">Automatizaciones →</div></a>
+      <a class="need-card" href="soluciones/llamadas.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><div class="need-title">Contesta el teléfono aunque tengas las manos ocupadas</div><div class="need-sub">IA para Llamadas →</div></a>
     </div>
     <a class="sol-showcase-more" href="servicios.html#digitaliza">Ver todas las soluciones y precios <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
   </div>
@@ -927,44 +1195,94 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="container">
     <div class="section-tag">Departamento Tecnológico TRUCO™</div>
     <h2 class="section-h2">Elige el tamaño de departamento que necesita tu negocio</h2>
+    <p class="section-sub">Basic, Lite y Pro se contratan con permanencia — es lo que hace posible que la web y las soluciones vayan completamente gratis, no una promesa vacía de "mantenimiento" de algo que aún no tienes. ¿Prefieres no comprometerte a nada? Digitaliza tu Empresa es la cuarta opción: compras solo las soluciones que necesitas, sin permanencia.</p>
     <div class="tiers-grid">
       <div class="tier-card featured" onclick="location.href='departamentos/pro.html'" style="cursor:pointer;">
         <span class="tier-badge">Para negocios que quieren escalar</span>
         <div class="tier-name">Departamento Tecnológico Pro™</div>
-        <div class="tier-role">Para empresas con más tecnología activa. Hasta 6 soluciones mantenidas, optimización continua y máxima prioridad. El equipo técnico completo que siempre necesitaste.</div>
-        <div class="tier-price">399 €<sub>/mes</sub></div>
-        <div class="tier-vat">+ IVA · 482,79 € con IVA</div>
-        <div class="tier-annual">o 359,10 €/mes pagando anual <span>· ahorras 10%</span></div>
+        <div class="tier-role">Incluye Web Profesional completa + 3 soluciones a elegir, como Agente virtual de WhatsApp, Agente virtual de Llamadas o Reservas y Agenda. Mantenimiento de hasta 6 soluciones activas, siempre incluido. Y lo más importante: <b>tu equipo tecnológico encargado de todo — tú solo tienes que escribirnos.</b></div>
+        <div class="tier-founding-badge" id="tier-founding-badge-pro"></div>
+        <div class="tier-price" id="tier-price-pro"></div>
+        <div class="tier-vat" id="tier-vat-pro"></div>
+        <div class="tier-founding-old" id="tier-founding-old-pro"></div>
+        <div class="tier-annual">Pago único (12% dto.) o SeQura · Permanencia: <span>12 meses</span></div>
+        <div class="value-highlight">
+          <div class="vh-eyebrow">Lo que te llevas gratis</div>
+          <div class="vh-save">Ahorras entre <b>1.990 € y 2.720 €</b> en instalación</div>
+          <ul class="vh-list">
+            <li>Web Profesional <span class="vh-tag">valor 940 €</span></li>
+            <li>3 soluciones a elegir <span class="vh-tag">valor 1.050-1.780 €</span></li>
+            <li>Mantenimiento de las 6 activas <span class="vh-tag">incluido siempre</span></li>
+          </ul>
+        </div>
         <ul class="tier-list">
-          <li>Todo lo incluido en Departamento Tecnológico Lite™</li>
-          <li>Mantenimiento de hasta 6 soluciones tecnológicas</li>
           <li>Optimización continua de todas las soluciones activas</li>
-          <li>Adaptaciones y ajustes según crece tu empresa</li>
-          <li>Revisión avanzada mensual de rendimiento</li>
-          <li>Mayor prioridad en incidencias y resolución</li>
+          <li>Máxima prioridad en incidencias, respuesta &lt;24h</li>
+          <li>Reunión mensual de revisión y estrategia (45 min)</li>
         </ul>
         <div class="tier-footer">Tu tecnología mantenida. Tú, a lo que importa.</div>
+        <a class="entry-cta" href="departamentos/pro.html" style="margin-top:12px;">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
       <div class="tier-card" onclick="location.href='departamentos/lite.html'" style="cursor:pointer;">
-        <span class="tier-badge">Para autónomos y pequeños negocios</span>
+        <span class="tier-badge">Para pymes pequeñas</span>
         <div class="tier-name">Departamento Tecnológico Lite™</div>
-        <div class="tier-role">Tu Responsable Tecnológico externo. ¿Ya tienes web o alguna herramienta digital? Nos hacemos cargo de todo. Mantenimiento, seguridad, actualizaciones e incidencias. Tu tecnología en buenas manos desde el primer día.</div>
-        <div class="tier-price">199 €<sub>/mes</sub></div>
-        <div class="tier-vat">+ IVA · 240,79 € con IVA</div>
-        <div class="tier-annual">o 179,10 €/mes pagando anual <span>· ahorras 10%</span></div>
+        <div class="tier-role">Incluye tu web (la actual mejorada, o una Web Esencial nueva) + 2 soluciones a elegir, como Agente virtual de WhatsApp o IA para tu Web. Mantenimiento de hasta 3 soluciones activas, siempre incluido. Y lo más importante: <b>tu equipo tecnológico encargado de todo — tú solo tienes que escribirnos.</b></div>
+        <div class="tier-founding-badge" id="tier-founding-badge-lite"></div>
+        <div class="tier-price" id="tier-price-lite"></div>
+        <div class="tier-vat" id="tier-vat-lite"></div>
+        <div class="tier-founding-old" id="tier-founding-old-lite"></div>
+        <div class="tier-annual">Pago único (12% dto.) o SeQura · Permanencia: <span>12 meses</span></div>
+        <div class="value-highlight">
+          <div class="vh-eyebrow">Lo que te llevas gratis</div>
+          <div class="vh-save">Ahorras entre <b>1.349 € y 1.929 €</b> en instalación</div>
+          <ul class="vh-list">
+            <li>Web Esencial o reacondicionada <span class="vh-tag">valor 649 €</span></li>
+            <li>2 soluciones a elegir <span class="vh-tag">valor 700-1.280 €</span></li>
+            <li>Mantenimiento de las 3 activas <span class="vh-tag">incluido siempre</span></li>
+          </ul>
+        </div>
         <ul class="tier-list">
-          <li>Asistente de soporte tecnológico disponible en todo momento</li>
-          <li>Mantenimiento web — actualizaciones y rendimiento</li>
           <li>Seguridad y copias de seguridad periódicas</li>
-          <li>Resolución de incidencias sin coste adicional</li>
           <li>Reunión mensual de revisión y asesoramiento (30 min)</li>
-          <li>Mantenimiento de hasta 2 soluciones tecnológicas implantadas</li>
         </ul>
-        <div class="tier-footer">Departamento de regalo durante la implantación de tu proyecto</div>
+        <div class="tier-footer">La web y las soluciones ya no las pagas aparte, van incluidas</div>
+        <a class="entry-cta" href="departamentos/lite.html" style="margin-top:12px;">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="tier-card entry" onclick="location.href='departamentos/basic.html'" style="cursor:pointer;">
+        <span class="tier-badge">Punto de entrada · para cualquiera</span>
+        <div class="tier-name">Departamento Tecnológico Basic™</div>
+        <div class="tier-role">Incluye 1 solución a elegir entre WhatsApp, TruKi (facturación automática), Reservas y Agenda o IA para tu Web — instalación gratis. Mantenimiento de hasta 2 soluciones activas, siempre incluido. Y lo más importante: <b>tu equipo tecnológico encargado de todo — tú solo tienes que escribirnos.</b> Sin web incluida: si la necesitas, el paso natural es Lite.</div>
+        <div class="tier-price">69 €<sub>/mes</sub></div>
+        <div class="tier-vat">+ IVA · 83,49 € con IVA</div>
+        <div class="tier-annual">Permanencia mínima: <span>6 meses</span></div>
+        <ul class="tier-list">
+          <li>1 solución a elegir, instalación gratis</li>
+          <li>Acompañamiento completo — nunca te quedas solo resolviéndolo</li>
+          <li>Mantenimiento y actualización continua incluidos</li>
+          <li>¿Quieres otra más? Se instala sin recargo de alta, tu cuota no sube</li>
+        </ul>
+        <div class="tier-footer">El punto de entrada al departamento, sin dar el salto grande</div>
+        <a class="entry-cta" href="departamentos/basic.html" style="margin-top:12px;">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="tier-card altcarte" onclick="location.href='digitaliza.html'" style="cursor:pointer;">
+        <span class="tier-badge">Sin permanencia · a la carta</span>
+        <div class="tier-name">Digitaliza tu Empresa</div>
+        <div class="tier-role">¿No quieres comprometerte a nada? Compra solo la solución que necesitas — WhatsApp, web, CRM, facturación... — pagando su precio y ya está. Sin cuota mensual, sin permanencia.</div>
+        <div class="tier-price" style="font-size:1.7rem;">Desde 350 €</div>
+        <div class="tier-vat">+ IVA · pago único por solución</div>
+        <div class="tier-annual">Sin permanencia · el mantenimiento corre de tu cuenta</div>
+        <ul class="tier-list">
+          <li>12 soluciones distintas, instala las que necesites</li>
+          <li>Sin cuota mensual ni compromiso de permanencia</li>
+          <li>Gratis si te haces cliente de Basic, Lite o Pro</li>
+          <li>Combínalas con Web Esencial o Profesional en el mismo pedido</li>
+        </ul>
+        <div class="tier-footer">Paga solo lo que necesitas, cuando lo necesitas</div>
+        <a class="entry-cta" href="digitaliza.html" style="margin-top:12px;">Ver las 12 soluciones <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
     <div class="dedication-note">
-      <b>El Departamento Tecnológico va completamente de regalo durante todo el periodo de implantación.</b> Webs: 30 días · Digitaliza: 90 días. A partir de ahí, renovación automática mensual — cancela cuando quieras avisando con 7 días.
+      <b>Ningún escalón se contrata sin su permanencia.</b> Es lo que permite regalar la web y las soluciones de entrada en vez de cobrarlas aparte. ¿Prefieres no comprometerte a nada? Digitaliza tu Empresa (arriba) es la compra suelta, sin permanencia — pero entonces el mantenimiento corre de tu cuenta.
     </div>
   </div>
 </section>
@@ -991,82 +1309,59 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     </div>
   </div>
 </section>
-<!-- ── CÓMO TRABAJAMOS ── -->
-<section class="reveal" style="padding:80px 0;background:var(--bg-panel);border-top:1px solid var(--grey-line);border-bottom:1px solid var(--grey-line);">
-  <div class="container">
-    <div style="text-align:center;margin-bottom:48px;">
-      <div class="section-tag" style="justify-content:center;display:inline-flex;">Cómo trabajamos</div>
-      <h2 class="section-h2" style="margin:12px auto 10px;text-align:center;">Un proceso claro, sin sorpresas.</h2>
-      <p style="font-size:.95rem;color:var(--grey);max-width:500px;margin:0 auto;line-height:1.7;">Desde el primer análisis hasta el mantenimiento continuo, en todo momento sabes qué hacemos y por qué.</p>
-    </div>
-    <div class="process-steps-grid" style="position:relative;">
-      <div class="process-steps-connector" style="position:absolute;top:24px;left:5%;right:5%;height:1px;background:var(--grey-line);"></div>
-      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 12px;">
-        <div style="width:48px;height:48px;border-radius:50%;background:var(--bg-panel);border:1px solid var(--blue-soft);color:var(--blue);font-family:var(--font-display);font-size:1.1rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative;z-index:1;">1</div>
-        <div style="font-family:var(--font-display);font-size:.9rem;font-weight:700;margin-bottom:6px;color:var(--white);">Analizamos tu empresa</div>
-        <div style="font-size:.76rem;color:var(--grey);line-height:1.5;">Entendemos tu negocio y qué tecnología necesitas realmente.</div>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 12px;">
-        <div style="width:48px;height:48px;border-radius:50%;background:var(--blue);color:#fff;font-family:var(--font-display);font-size:1.1rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative;z-index:1;box-shadow:0 0 20px rgba(47,123,255,.4);">2</div>
-        <div style="font-family:var(--font-display);font-size:.9rem;font-weight:700;margin-bottom:6px;color:var(--white);">Implantamos la solución</div>
-        <div style="font-size:.76rem;color:var(--grey);line-height:1.5;">Configuramos, integramos y ponemos en marcha la tecnología.</div>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 12px;">
-        <div style="width:48px;height:48px;border-radius:50%;background:var(--blue);color:#fff;font-family:var(--font-display);font-size:1.1rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative;z-index:1;box-shadow:0 0 20px rgba(47,123,255,.4);">3</div>
-        <div style="font-family:var(--font-display);font-size:.9rem;font-weight:700;margin-bottom:6px;color:var(--white);">90 días de optimización</div>
-        <div style="font-size:.76rem;color:var(--grey);line-height:1.5;">Ajustamos y perfeccionamos con datos reales de tu empresa.</div>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 12px;">
-        <div style="width:48px;height:48px;border-radius:50%;background:var(--blue);color:#fff;font-family:var(--font-display);font-size:1.1rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative;z-index:1;box-shadow:0 0 20px rgba(47,123,255,.4);">4</div>
-        <div style="font-family:var(--font-display);font-size:.9rem;font-weight:700;margin-bottom:6px;color:var(--white);">Tu Departamento activo</div>
-        <div style="font-size:.76rem;color:var(--grey);line-height:1.5;">Tu equipo tecnológico mantiene todo funcionando. Tú, a lo tuyo.</div>
-      </div>
-      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 12px;">
-        <div style="width:48px;height:48px;border-radius:50%;background:var(--bg-panel);border:1px solid var(--blue-soft);color:var(--blue);font-family:var(--font-display);font-size:1.1rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative;z-index:1;">5</div>
-        <div style="font-family:var(--font-display);font-size:.9rem;font-weight:700;margin-bottom:6px;color:var(--white);">Seguimos contigo</div>
-        <div style="font-size:.76rem;color:var(--grey);line-height:1.5;">Cuando necesitas nueva tecnología, creamos un nuevo proyecto.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── PACKS EMPRESA CON DESCUENTO ── -->
+<!-- ── RECOMENDACIÓN POR SECTOR ── -->
 <section id="packs-descuento" class="section reveal">
   <div class="container">
-    <div class="section-tag gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> Packs por sector</div>
-    <h2 class="section-h2">Packs Empresa con descuento</h2>
-    <p class="section-sub">Por confiar en nuestro Departamento Tecnológico, queremos obsequiarte con un <b style="color:var(--gold);">15% de descuento</b> en nuestros packs. Cada uno trae 3 soluciones ya pensadas para tu tipo de negocio — puedes quitar o añadir las que quieras al contratar, no van cerradas.</p>
-    <div class="pd-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;">
-      <a href="packs/servicios.html" class="pd-card">
-        <span class="pd-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.1em;margin-right:2px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17a2.5 2.5 0 0 0 2.5-2.5c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7.5 7.5 0 1 1-15 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> -15%</span>
-        <div class="pd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M14.7 6.3a4 4 0 1 0-5.4 5.4L2 19l3 3 7.3-7.3a4 4 0 0 0 5.4-5.4l-2.8 2.8-2-2z"/></svg></div>
-        <h4 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:5px;">Pack Servicios</h4>
-        <p style="font-size:.78rem;color:var(--grey);line-height:1.5;">Fontaneros, electricistas, autónomos de oficios, clínicas, centros de estética, gimnasios, academias…</p>
-        <p style="font-size:.75rem;color:var(--white);margin-top:10px;">IA WhatsApp · Reservas · Automatizaciones</p>
-      </a>
-      <a href="packs/despachos.html" class="pd-card">
-        <span class="pd-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.1em;margin-right:2px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17a2.5 2.5 0 0 0 2.5-2.5c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7.5 7.5 0 1 1-15 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> -15%</span>
-        <div class="pd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M3 21h18M6 21V10l6-6 6 6v11"/></svg></div>
-        <h4 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:5px;">Pack Despachos</h4>
-        <p style="font-size:.78rem;color:var(--grey);line-height:1.5;">Abogados, asesorías, gestorías, inmobiliarias, servicios profesionales…</p>
-        <p style="font-size:.75rem;color:var(--white);margin-top:10px;">CRM · Firma digital · Gestión documental</p>
-      </a>
-      <a href="packs/hosteleria.html" class="pd-card">
-        <span class="pd-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.1em;margin-right:2px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17a2.5 2.5 0 0 0 2.5-2.5c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7.5 7.5 0 1 1-15 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> -15%</span>
-        <div class="pd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M3 2v7c0 1.1.9 2 2 2h1v11M7 2v20M11 2v7c0 1.1.9 2 2 2s2-.9 2-2V2M11 2v20M18 2c-2 3-2 6 0 9v11"/></svg></div>
-        <h4 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:5px;">Pack Hostelería</h4>
-        <p style="font-size:.78rem;color:var(--grey);line-height:1.5;">Restaurantes, salones de celebración…</p>
-        <p style="font-size:.75rem;color:var(--white);margin-top:10px;">Reservas · IA WhatsApp · Automatizaciones</p>
-      </a>
-      <a href="packs/empresas.html" class="pd-card">
-        <span class="pd-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.1em;margin-right:2px;"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17a2.5 2.5 0 0 0 2.5-2.5c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7.5 7.5 0 1 1-15 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> -15%</span>
-        <div class="pd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1m4 0h1m-6 4h1m4 0h1"/></svg></div>
-        <h4 style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:5px;">Pack Empresas</h4>
-        <p style="font-size:.78rem;color:var(--grey);line-height:1.5;">Pymes en general, sin un sector concreto.</p>
-        <p style="font-size:.75rem;color:var(--white);margin-top:10px;">CRM · Automatizaciones · Integraciones</p>
-      </a>
+    <div class="sr-panel">
+      <div class="section-tag gold" style="margin-bottom:10px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> Recomendación por sector</div>
+      <h3 style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;margin-bottom:6px;">¿Tienes dudas de qué elegir según tu sector?</h3>
+      <p style="font-size:.85rem;color:var(--grey);max-width:560px;line-height:1.6;">Dinos a qué te dedicas y te decimos exactamente qué 3 soluciones necesitas — y cómo llevártelas completamente gratis.</p>
+      <select id="idx-sector-select" class="sr-select" onchange="idxSectorPick(this.value)">
+        <option value="">Selecciona tu oficio o negocio…</option>
+        <optgroup label="Servicios y citas">
+          <option value="peluqueria">Peluquería / Barbería</option>
+          <option value="estetica">Centro de estética / Belleza</option>
+          <option value="dental">Clínica dental</option>
+          <option value="medica">Clínica médica / Centro de salud</option>
+          <option value="fisio">Fisioterapia</option>
+          <option value="psicologia">Psicología / Terapia</option>
+          <option value="veterinaria">Veterinaria</option>
+          <option value="gimnasio">Gimnasio / Centro deportivo</option>
+          <option value="academia">Academia / Centro de formación</option>
+          <option value="autoescuela">Autoescuela</option>
+          <option value="fontanero">Fontanero</option>
+          <option value="electricista">Electricista</option>
+          <option value="cerrajero">Cerrajero</option>
+          <option value="pintor">Pintor / Reformas</option>
+          <option value="carpintero">Carpintero</option>
+          <option value="taller">Taller mecánico</option>
+        </optgroup>
+        <optgroup label="Despachos y gestión">
+          <option value="abogado">Abogado / Bufete</option>
+          <option value="asesoria">Asesoría</option>
+          <option value="gestoria">Gestoría</option>
+          <option value="consultoria">Consultoría</option>
+          <option value="inmobiliaria">Inmobiliaria</option>
+          <option value="arquitecto">Arquitecto</option>
+          <option value="notaria">Notaría</option>
+        </optgroup>
+        <optgroup label="Hostelería">
+          <option value="restaurante">Restaurante</option>
+          <option value="bar">Bar / Cafetería</option>
+          <option value="eventos">Salón de celebraciones / Eventos</option>
+          <option value="catering">Catering</option>
+        </optgroup>
+        <optgroup label="Comercio y otros">
+          <option value="tienda">Tienda / Comercio</option>
+          <option value="ecommerce">Ecommerce</option>
+          <option value="ferreteria">Ferretería</option>
+          <option value="floristeria">Floristería</option>
+          <option value="panaderia">Panadería / Pastelería</option>
+          <option value="otro">Otro negocio</option>
+        </optgroup>
+      </select>
+      <div id="idx-sector-result" class="sr-result" style="display:none;"></div>
     </div>
-    <p style="font-size:.78rem;color:var(--grey);margin-top:20px;">¿No ves tu oficio en la lista? En el propio checkout puedes elegir tu sector entre más de 30 opciones y te marcamos las soluciones recomendadas al momento.</p>
   </div>
 </section>
 
@@ -1077,45 +1372,36 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <h2 class="section-h2">Todo lo que necesitas saber antes de empezar</h2>
     <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">¿Necesito saber de tecnología para contratar vuestros servicios? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>No. De hecho, ese es exactamente el punto. Somos tu departamento tecnológico precisamente para que tú no necesites saber nada técnico. Nosotros nos encargamos de todo: configuramos, mantenemos y mejoramos. Tú solo tienes que contarnos cómo funciona tu negocio.</p></div>
+        <button class="faq-q" onclick="toggleFaq(this)">¿Necesito saber de tecnología? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>No — para eso estamos nosotros. Configuramos, mantenemos y mejoramos. Tú solo nos cuentas cómo funciona tu negocio.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿El dominio y el hosting son míos o de TRUCO? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Todo va siempre a tu nombre. El dominio, el hosting y las plataformas externas que usemos se registran y facturan directamente a ti. Si en algún momento decides dejar de trabajar con nosotros, te llevas todo sin ninguna complicación. Nunca tenemos posesión de lo que es tuyo.</p></div>
+        <div class="faq-a"><p>Siempre a tu nombre. Si algún día dejas de trabajar con nosotros, te lo llevas todo sin complicaciones.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">¿Cuánto dura el período de implantación? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>El período de implantación es de <b>30 días para proyectos web</b> y <b>90 días para Digitaliza tu Empresa</b>. Durante ese tiempo el Departamento Tecnológico va completamente de regalo, incluido en el precio, mientras lo dejamos todo funcionando perfectamente. Al terminar, el Departamento continúa mes a mes con renovación automática. Cancela cuando quieras avisando con 7 días.</p></div>
+        <button class="faq-q" onclick="toggleFaq(this)">¿Cuál es la diferencia entre Basic, Lite y Pro? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p><b>Basic</b> (69€/mes): 1 solución gratis, sin web. <b>Lite</b> (<span id="faq-price-lite">279</span>€/mes): web + 2 soluciones gratis. <b>Pro</b> (<span id="faq-price-pro">549</span>€/mes): Web Profesional + 3 soluciones gratis. Si superas el rango de tu escalón, subes al siguiente. <a href="#servicios" style="color:var(--blue);">Ver detalle de los tres →</a></p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">¿Para qué sirve la videollamada mensual incluida? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Es tu reunión de departamento. Revisamos juntos los resultados del mes (conversaciones atendidas, citas agendadas, métricas clave), analizamos qué ha funcionado bien y qué puede mejorar, y planificamos los cambios para el mes siguiente. Es el momento en el que tú tienes voz directa sobre cómo evoluciona tu departamento.</p></div>
+        <button class="faq-q" onclick="toggleFaq(this)">¿Por qué hay que comprometerse con una permanencia? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Porque es lo que permite regalar la web y las soluciones en vez de cobrarlas aparte: 6 meses en Basic, 12 en Lite y Pro. ¿Prefieres no comprometerte? La compra suelta sigue disponible, sin permanencia.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">¿Cuál es la diferencia entre Lite y Pro? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>La diferencia está en cuántas soluciones tecnológicas mantiene cada plan. <b>El Pro (399€/mes)</b> mantiene hasta 6 soluciones, con optimización continua, adaptaciones, revisión avanzada y mayor prioridad. Para empresas con más tecnología activa. <b>El Lite (199€/mes)</b> mantiene hasta 2 soluciones: mantenimiento web, seguridad, copias de seguridad, resolución de incidencias y reunión mensual de 30 min. Perfecto para quien tiene web y una o dos herramientas activas.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">¿Puedo empezar con el proyecto web y luego pasar a la suscripción? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Sí, y de hecho es la forma más natural de empezar. Primero construimos o mejoramos tu web (o la digitalizamos), y durante todo el período de implantación (30 o 90 días, según el proyecto) el Departamento Tecnológico va completamente de regalo, incluido en el precio. Así puedes ver cómo funciona el servicio antes de que empiece la renovación automática mensual.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">¿Hay descuento si pago anual? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Sí. Si prefieres pagar el año completo por adelantado, tienes un 10% de descuento: el Pro queda a 4.309,20 € + IVA/año (equivale a 359,10 €/mes) y el Lite a 2.149,20 € + IVA/año (equivale a 179,10 €/mes). El pago anual es único y por adelantado.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">¿Qué tipo de negocios se benefician más de vuestros servicios? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Cualquier empresa que use tecnología en su día a día y quiera tener un equipo técnico que la gestione sin tener que preocuparse de ella. Desde autónomos hasta pymes con equipo. Si tienes web, usas herramientas digitales o quieres implantar tecnología nueva, TRUCO puede convertirse en tu departamento tecnológico.</p></div>
+        <button class="faq-q" onclick="toggleFaq(this)">¿Cómo se paga? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Pago único por adelantado, con un 12% de descuento por hacerlo de una vez. Si prefieres no adelantar todo de golpe, lo fraccionas a través de SeQura, nuestro partner de financiación — ellos nos pagan el total y tú les devuelves en los plazos que elijas.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Tengo que contratar diferentes empresas para cada herramienta? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>No. TRUCO se encarga de elegir, implantar, configurar y mantener toda la tecnología necesaria para tu empresa. <b>Tú solo tendrás un único interlocutor.</b> Sin gestionar proveedores, sin coordinar equipos técnicos.</p></div>
+        <div class="faq-a"><p>No. Elegimos, implantamos y mantenemos toda la tecnología. <b>Un único interlocutor</b>, sin gestionar proveedores.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Y si ya tengo herramientas instaladas? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>No es necesario empezar desde cero. Podemos <b>auditar, adaptar y mantener cualquier solución tecnológica existente</b> para integrarla dentro de tu Departamento Tecnológico.</p></div>
+        <div class="faq-a"><p>No hace falta empezar de cero. Auditamos, adaptamos y mantenemos lo que ya tienes dentro de tu Departamento.</p></div>
       </div>
+    </div>
+    <div style="text-align:center;margin-top:32px;">
+      <a class="btn-ghost" href="#chat-section">¿Tienes otra pregunta? Pregúntale al asistente →</a>
     </div>
   </div>
 </section>
@@ -1145,7 +1431,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
             <button class="chat-send" onclick="sendMsg()">Enviar</button>
           </div>
           <div class="voice-agent-row">
-            <button class="voice-agent-btn" id="voiceAgentBtn" onclick="toggleVoiceAgent()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg> Hablar con un agente</button>
+            <button class="voice-agent-btn" id="voiceAgentBtn" onclick="toggleVoiceAgent()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg> Hablar con asistente virtual</button>
             <div class="voice-agent-status" id="voiceAgentStatus" style="display:none;"></div>
           </div>
         </div>
@@ -1182,10 +1468,11 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="footer-col">
         <h5>Servicios</h5>
         <ul>
+          <li><a href="departamentos/basic.html">Departamento Tecnológico Basic™</a></li>
           <li><a href="servicios.html#lite">Departamento Tecnológico Lite™</a></li>
           <li><a href="servicios.html#pro">Departamento Tecnológico Pro™</a></li>
           <li><a href="servicios.html#web-profesional">Proyecto Web Profesional</a></li>
-          <li><a href="servicios.html#digitaliza">Digitaliza tu Empresa</a></li>
+          <li><a href="digitaliza.html">Digitaliza tu Empresa</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1193,6 +1480,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <ul>
           <li><a href="#nosotros">Quiénes somos</a></li>
           <li><a href="#faq">Preguntas frecuentes</a></li>
+          <li><a href="pago.html">Ir a contratación</a></li>
           <li><a href="#chat-section">Hablar con el asistente</a></li>
           <li><a href="#cta-final">Consultoría gratuita</a></li>
         </ul>
@@ -1221,6 +1509,29 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </button>
 </div>
 
+<script src="founding-offer.js"></script>
+<script>
+(function(){
+  const prices={lite:currentPrice('lite'),pro:currentPrice('pro')};
+  const faqLite=document.getElementById('faq-price-lite');if(faqLite)faqLite.textContent=prices.lite;
+  const faqPro=document.getElementById('faq-price-pro');if(faqPro)faqPro.textContent=prices.pro;
+  ['lite','pro'].forEach(tier=>{
+    const m=prices[tier];
+    const iva=(m*1.21).toFixed(2).replace('.',',');
+    const priceEl=document.getElementById('tier-price-'+tier);
+    const vatEl=document.getElementById('tier-vat-'+tier);
+    const badgeEl=document.getElementById('tier-founding-badge-'+tier);
+    const oldEl=document.getElementById('tier-founding-old-'+tier);
+    if(priceEl)priceEl.innerHTML=m+' €<sub>/mes</sub>';
+    if(vatEl)vatEl.textContent='+ IVA · '+iva+' € con IVA';
+    if(badgeEl&&oldEl&&foundingActive()){
+      const std=STANDARD_PRICES[tier];
+      badgeEl.innerHTML='🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT+' de 10 plazas';
+      oldEl.innerHTML='Antes <s class="price-old">'+std+'€/mes</s>';
+    }
+  });
+})();
+</script>
 <script>
 /* ── NAVBAR SCROLL ── */
 window.addEventListener('scroll',()=>{
@@ -1252,6 +1563,47 @@ function toggleFaq(btn){
     item.classList.add('open');
     icon.textContent='−';
   }
+}
+
+/* ── RECOMENDACIÓN POR SECTOR ── */
+const IDX_TRADE_PACKS={
+  peluqueria:'serviciosCitas',estetica:'serviciosCitas',dental:'serviciosCitas',medica:'serviciosCitas',fisio:'serviciosCitas',psicologia:'serviciosCitas',veterinaria:'serviciosCitas',gimnasio:'serviciosCitas',academia:'serviciosCitas',autoescuela:'serviciosCitas',
+  fontanero:'servicios',electricista:'servicios',cerrajero:'servicios',pintor:'servicios',carpintero:'servicios',taller:'servicios',
+  abogado:'despachos',asesoria:'despachos',gestoria:'despachos',consultoria:'despachos',inmobiliaria:'despachos',arquitecto:'despachos',notaria:'despachos',
+  restaurante:'hosteleria',bar:'hosteleria',eventos:'hosteleria',catering:'hosteleria'
+};
+const IDX_PACKS={
+  servicios:{sols:[{name:'IA para WhatsApp',value:'whatsapp'},{name:'Reservas y Agenda',value:'reservas'},{name:'Automatizaciones',value:'automatizaciones'}]},
+  serviciosCitas:{sols:[{name:'IA para WhatsApp',value:'whatsapp'},{name:'Reservas y Agenda',value:'reservas'},{name:'IA para Llamadas',value:'llamadas'}]},
+  despachos:{sols:[{name:'CRM',value:'crm'},{name:'Firma Digital',value:'firma'},{name:'Gestión Documental',value:'docs'}]},
+  hosteleria:{sols:[{name:'Reservas y Agenda',value:'reservas'},{name:'IA para WhatsApp',value:'whatsapp'},{name:'Automatizaciones',value:'automatizaciones'}]}
+};
+const IDX_PRO_POOL=['whatsapp','web-ia','llamadas','email-ia','reservas','firma'];
+const IDX_PRO_CTA='<a class="btn-primary" href="pago.html?plan=arranque-pro%PACK%">Quiero el Departamento Tecnológico Pro™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-left:2px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>';
+function idxSectorPick(value){
+  const box=document.getElementById('idx-sector-result');
+  if(!value){box.style.display='none';return;}
+  const packKey=IDX_TRADE_PACKS[value];
+  box.style.display='block';
+  if(!packKey){
+    box.innerHTML='<p style="font-size:.85rem;color:var(--grey);line-height:1.6;margin-bottom:18px;">No tenemos un combo cerrado para tu sector, pero seguimos pudiendo ayudarte — con el Departamento <b style="color:var(--white);">Pro™</b> (que ya incluye tu Web Profesional) eliges tú mismo 3 soluciones gratis de las 12 del catálogo.</p><div class="sr-ctas">'+IDX_PRO_CTA.replace('%PACK%','')+'<a class="btn-ghost" href="digitaliza.html">Ver el catálogo completo</a></div>';
+    return;
+  }
+  const pack=IDX_PACKS[packKey];
+  const eligible=pack.sols.filter(s=>IDX_PRO_POOL.includes(s.value));
+  const paid=pack.sols.filter(s=>!IDX_PRO_POOL.includes(s.value));
+  let proMsg;
+  if(paid.length===0){
+    proMsg='✓ Todo esto va <b>completamente gratis</b> con el Departamento <b>Pro™</b> — que ya incluye tu <b>Web Profesional</b>, instalada y mantenida sin coste aparte.';
+  }else if(eligible.length===0){
+    proMsg='Estas soluciones no entran en el pack gratis de Pro™ — necesitan un alcance a medida — pero se mantienen sin coste una vez instaladas. Con el Departamento <b>Pro™</b> (incluye tu <b>Web Profesional</b>) tienes además 3 soluciones más gratis a elegir del resto del catálogo.';
+  }else{
+    const eligVerb=eligible.length>1?'van':'va';
+    const paidVerb=paid.length>1?'se añaden':'se añade';
+    const paidKeepVerb=paid.length>1?'se mantienen':'se mantiene';
+    proMsg='✓ <b>'+eligible.map(s=>s.name).join(' y ')+'</b> '+eligVerb+' completamente gratis con el Departamento <b>Pro™</b> — que ya incluye tu <b>Web Profesional</b>. <b>'+paid.map(s=>s.name).join(' y ')+'</b> '+paidVerb+' a precio de catálogo (y '+paidKeepVerb+' sin coste una vez instalada'+(paid.length>1?'s':'')+').';
+  }
+  box.innerHTML='<div class="sr-sols-row">'+pack.sols.map(s=>'<span class="sr-sol-chip">'+s.name+'</span>').join('')+'</div><div class="sr-pro-box">'+proMsg+'</div><div class="sr-ctas">'+IDX_PRO_CTA.replace('%PACK%','&pack='+packKey)+'<a class="btn-ghost" href="pago.html?plan=digital&pack='+packKey+'">O solo estas 3 sueltas (15% dto.)</a></div>';
 }
 
 /* ── FLOAT CHAT ── */
@@ -1311,8 +1663,8 @@ const KB = {
   precio_general: {
     patterns: ['precio','cuánto cuesta','cuánto es','tarifa','presupuesto','cuánto cobráis','cuánto vale','qué precios tenéis','cuánto me costaría','precios'],
     responses: [
-      'Tenemos dos tipos de servicios con precios distintos:\n\n<b>PROYECTOS (pago único):</b>\nWeb Esencial: 649€ + IVA\nWeb Profesional: desde 940€ + IVA\nDigitaliza tu Empresa: desde 600€ + IVA (según soluciones)\n\n<b>DEPARTAMENTO TECNOLÓGICO (mensual):</b>\nPro™: 399€/mes + IVA — hasta 6 soluciones\nLite™: 199€/mes + IVA — hasta 2 soluciones\n\nTodos los proyectos incluyen el Departamento Tecnológico completamente de regalo durante todo el período de implantación (30 días en webs, 90 en Digitaliza).\n\n¿Cuál encaja con lo que necesitas?',
-      'Depende de qué necesites. Si es tu primera web: desde 649€ + IVA (pago único, con 30 días de Departamento Lite™ de regalo). Si quieres implantar soluciones (WhatsApp IA, CRM, automatizaciones...): desde 600€ + IVA, según cuántas elijas, con 90 días de Departamento de regalo. Y si solo quieres el Departamento Tecnológico manteniendo lo que ya tienes: 199€ o 399€/mes, sin proyecto de por medio. ¿Cuál de las tres situaciones es la tuya?'
+      `Tenemos dos formas de entrar, con precios distintos:\n\n<b>PROYECTO SIN COMPROMISO (pago único):</b>\nWeb Esencial: 649€ + IVA\nWeb Profesional: desde 940€ + IVA\nDigitaliza tu Empresa: desde 350€ + IVA por solución\n\n<b>DEPARTAMENTO TECNOLÓGICO (con permanencia, la web y las soluciones van gratis):</b>\nBasic™: 69€/mes — 6 meses de permanencia, sin web\nLite™: ${currentPrice('lite')}€/mes — 12 meses, con web\nPro™: ${currentPrice('pro')}€/mes — 12 meses, Web Profesional\n\nEn el Departamento se paga en pago único (12% dto.) o fraccionado con SeQura, nunca facturación mensual directa con nosotros. Los proyectos sueltos sí incluyen el Departamento Lite™ o Pro™ completamente de regalo durante la implantación (30 días en webs, 90 en Digitaliza). ¿Cuál encaja con lo que necesitas?`,
+      `Depende de qué necesites. Si es tu primera web: desde 649€ + IVA (pago único, con 30 días de Departamento Lite™ de regalo). Si quieres implantar soluciones (WhatsApp IA, CRM, automatizaciones...): desde 600€ + IVA, según cuántas elijas, con 90 días de Departamento de regalo. Y si solo quieres el Departamento Tecnológico manteniendo lo que ya tienes: ${currentPrice('lite')}€ o ${currentPrice('pro')}€/mes, sin proyecto de por medio. ¿Cuál de las tres situaciones es la tuya?`
     ]
   },
 
@@ -1320,22 +1672,22 @@ const KB = {
   lite: {
     patterns: ['lite','199','departamento lite','mantenimiento','básico','plan básico','pequeño negocio'],
     responses: [
-      'El <b>Departamento Tecnológico Lite™</b> es 199€/mes + IVA.\n\nEs tu Responsable Tecnológico externo. Incluye:\n✓ Asistente de soporte tecnológico en todo momento\n✓ Mantenimiento web — actualizaciones y rendimiento\n✓ Seguridad y copias de seguridad periódicas\n✓ Resolución de incidencias sin coste adicional\n✓ Reunión mensual de revisión y asesoramiento (30 min)\n✓ <b>Mantenimiento de hasta 2 soluciones tecnológicas</b>\n\nPago anual: 2.149,20€ + IVA (179,10€/mes, ahorras 10%).\n\n¿Tienes ya alguna solución implantada o vas a empezar desde cero?',
-      'El Lite son 199€/mes + IVA. Mantiene hasta <b>2 soluciones tecnológicas</b> implantadas — por ejemplo WhatsApp IA + agenda, o web + CRM.\n\nSi necesitas mantener más de 2 soluciones, el Pro es el plan correcto. ¿Cuántas soluciones tienes o planeas implantar?'
+      `El <b>Departamento Tecnológico Lite™</b> es ${currentPrice('lite')}€/mes + IVA, con permanencia mínima de 12 meses — a cambio, tu web y 2 soluciones a elegir van completamente gratis. Incluye:\n✓ Web gratis (reacondicionada o Web Esencial nueva)\n✓ 2 soluciones a elegir, instaladas gratis\n✓ Mantenimiento web — actualizaciones y rendimiento\n✓ Seguridad y copias de seguridad periódicas\n✓ Resolución de incidencias sin coste adicional\n✓ Reunión mensual de revisión y asesoramiento (30 min)\n✓ <b>Mantenimiento de hasta 3 soluciones tecnológicas</b> en total\n\nSe paga en pago único (12% dto.) o fraccionado con SeQura, nunca facturación mensual directa. ¿Tienes ya alguna solución implantada o vas a empezar desde cero?`,
+      `El Lite son ${currentPrice('lite')}€/mes + IVA (permanencia de 12 meses, pago único con 12% dto. o fraccionado con SeQura). Mantiene hasta <b>3 soluciones tecnológicas</b> implantadas — por ejemplo WhatsApp IA + agenda, o web + CRM.\n\nSi necesitas mantener más soluciones, el Pro es el plan correcto. ¿Cuántas soluciones tienes o planeas implantar?`
     ]
   },
 
   pro: {
     patterns: ['pro','399','departamento pro','avanzado','escalar','crecer','más soluciones','varias soluciones'],
     responses: [
-      'El <b>Departamento Tecnológico Pro™</b> es 399€/mes + IVA.\n\nTodo lo del Lite™ más:\n✓ <b>Mantenimiento de hasta 6 soluciones tecnológicas</b>\n✓ Optimización continua de todas las soluciones activas\n✓ Adaptaciones y ajustes según crece tu empresa\n✓ Revisión avanzada mensual de rendimiento\n✓ Mayor prioridad en incidencias\n✓ Reunión mensual de estrategia tecnológica (45 min)\n\nPago anual: 4.309,20€ + IVA (359,10€/mes, ahorras 10%).\n\nEl Pro es necesario cuando tienes 3 o más soluciones activas. ¿Cuántas necesitas?'
+      `El <b>Departamento Tecnológico Pro™</b> es ${currentPrice('pro')}€/mes + IVA, con permanencia mínima de 12 meses — a cambio, tu Web Profesional y 3 soluciones a elegir van completamente gratis. Incluye:\n✓ Web Profesional regalada\n✓ 3 soluciones a elegir, instaladas gratis\n✓ <b>Mantenimiento de hasta 6 soluciones tecnológicas</b> en total\n✓ Supervisión continua de todas las soluciones activas\n✓ Mayor prioridad en incidencias, respuesta &lt;24h\n✓ Reunión mensual de estrategia tecnológica (45 min)\n\nSe paga en pago único (12% dto.) o fraccionado con SeQura, nunca facturación mensual directa. El Pro es necesario cuando tienes 3 o más soluciones activas. ¿Cuántas necesitas?`
     ]
   },
 
   lite_vs_pro: {
     patterns: ['diferencia lite pro','lite o pro','cuál es mejor','lite vs pro','qué diferencia','qué plan','cuál elijo','cuál me conviene','cuál me recomiendas'],
     responses: [
-      'La diferencia está en el número de soluciones que mantienen:\n\n<b>Pro (399€/mes):</b> Mantiene hasta 6 soluciones. Para empresas con mayor ecosistema tecnológico — CRM, automatizaciones, múltiples canales de comunicación...\n\n<b>Lite (199€/mes):</b> Mantiene hasta 2 soluciones tecnológicas. Perfecto si tienes, por ejemplo, tu web y un WhatsApp IA.\n\nLa regla es simple: si tienes 3 o más soluciones, Pro. Si tienes 1-2, Lite.\n\n¿Cuántas soluciones tecnológicas tienes o planeas tener activas?'
+      `La diferencia está en la web y en el número de soluciones que mantienen:\n\n<b>Pro (${currentPrice('pro')}€/mes):</b> Web Profesional + hasta 6 soluciones. Para empresas con mayor ecosistema tecnológico — CRM, automatizaciones, múltiples canales...\n\n<b>Lite (${currentPrice('lite')}€/mes):</b> Web (reacondicionada o Web Esencial nueva) + hasta 3 soluciones. Perfecto si tienes, por ejemplo, tu web y un WhatsApp IA.\n\nSi solo necesitas 1 solución y no necesitas web, mira también Basic™ (69€/mes). La regla general: 3+ soluciones y web → Pro. 1-2 soluciones y web → Lite. 1 solución sin web → Basic. ¿Cuántas soluciones tecnológicas tienes o planeas tener activas?`
     ]
   },
 
@@ -1349,14 +1701,14 @@ const KB = {
   cuantas_soluciones_incluye: {
     patterns: ['qué cuenta como solución','qué es una solución tecnológica','qué significa una solución','cuenta la web como solución'],
     responses: [
-      'Buena pregunta. Una "solución tecnológica" es cada herramienta activa que mantenemos: por ejemplo, tu web, una IA de WhatsApp, un CRM, un sistema de reservas, una automatización o una integración cuentan cada una como 1 solución. El Pro mantiene hasta 6, el Lite hasta 2. ¿Quieres que contemos juntos cuántas tendrías en tu caso?'
+      'Buena pregunta. Una "solución tecnológica" es cada herramienta activa que mantenemos: por ejemplo, tu web, una IA de WhatsApp, un sistema de reservas o una automatización cuentan cada una como 1 solución. El Pro mantiene hasta 6, el Lite hasta 3. Ojo: no todas las soluciones del catálogo pueden elegirse gratis en Lite/Pro (por ejemplo CRM o Integraciones se contratan aparte) — pero una vez instaladas, su mantenimiento sí cuenta y va incluido. ¿Quieres que contemos juntos cuántas tendrías en tu caso?'
     ]
   },
 
   anual: {
-    patterns: ['anual','año','pago anual','descuento anual','pagar el año','todo el año','12 meses'],
+    patterns: ['anual','año','pago anual','descuento anual','pagar el año','todo el año','12 meses','financiar','sequra','fraccionar'],
     responses: [
-      'Sí, tenemos pago anual con <b>10% de descuento</b>:\n\n<b>Pro™ Anual:</b> 4.309,20€ + IVA — equivale a 359,10€/mes (ahorras 478,80€)\n<b>Lite™ Anual:</b> 2.149,20€ + IVA — equivale a 179,10€/mes (ahorras 238,80€)\n\nPago único por adelantado. Renovación al año siguiente.\n\n¿Prefieres empezar con el mensual para conocernos y luego pasarte al anual?'
+      'Con nosotros se paga de una de estas dos formas — no hacemos facturación mensual directa:\n\n<b>Pago único con 12% de descuento:</b> 364,32€ + IVA en Basic, 2.101,44€ + IVA en Lite, 4.213,44€ + IVA en Pro. Es la opción más económica.\n<b>Fraccionado con SeQura:</b> nuestro partner de financiación nos paga el total de golpe y tú les devuelves en los plazos que elijas, sin descuento pero sin adelantar nada.\n\n¿Quieres que veamos cuál encaja mejor con tu caso?'
     ]
   },
 
@@ -1386,36 +1738,36 @@ const KB = {
   digitaliza: {
     patterns: ['digitalizar','digitaliza','600','soluciones tecnológicas','implantar','automatizar','digitalizar mi negocio','digitalizar mi empresa'],
     responses: [
-      '<b>Digitaliza tu Empresa</b> es nuestro servicio de implantación de soluciones tecnológicas. Precio: soluciones elegidas + 300€ de Departamento incluido.\n\nSoluciones disponibles:\nIA para WhatsApp — 590€ + IVA\nIA para Web — 350€ + IVA\nIA para Correo — 350€ + IVA\nCRM — 400€ + IVA\nReservas online — 350€ + IVA\nAutomatizaciones — 400€ + IVA\nIntegraciones — 350€ + IVA\nGestión documental — 400€ + IVA\nFirma digital — 300€ + IVA\nCiberseguridad Pyme — 450€ + IVA\n\n<b>Período de implantación (90 días):</b>\n• 3+ soluciones → Departamento Pro™ completamente de regalo\n• 1-2 soluciones → Departamento Lite™ completamente de regalo\n\n¿Sabías que puedes combinar Digitaliza con la Web Esencial o Web Profesional en la misma compra? Después del período de regalo, tu Departamento sigue manteniendo todo con renovación automática — cancela cuando quieras avisando con 7 días. ¿Qué soluciones necesita tu empresa?',
-      'Con Digitaliza implantamos cualquier solución tecnológica que necesite tu empresa. No tienes que saber qué herramienta necesitas — nos lo cuentas y nosotros diseñamos la solución correcta.\n\nEl precio parte de 600€ + IVA (la solución más económica + el Departamento incluido) y sube según las soluciones elegidas — con 90 días de Departamento completamente de regalo. ¿Cuál es el mayor problema que quieres resolver en tu empresa ahora mismo?'
+      '<b>Digitaliza tu Empresa</b> es nuestro servicio de implantación de soluciones tecnológicas. Cada solución tiene su propio precio, ya con todo incluido (sin recargos aparte).\n\nSoluciones disponibles:\nIA para WhatsApp — 590€ + IVA (Oferta Lanzamiento 2026, precio normal 890€)\nIA para Web — 350€ + IVA (Oferta Lanzamiento 2026, precio normal 650€)\nIA para Correo — 350€ + IVA (Oferta Lanzamiento 2026, precio normal 590€)\nIA para Llamadas — 690€ + IVA (todo incluido, 150 llamadas/mes)\nReservas online — 350€ + IVA\nFacturación automática (TruKi) — 580€ + IVA\nGestión documental — desde 400€ + IVA\nCiberseguridad Pyme — 450€ + IVA (hasta 5 puestos)\nFirma digital — 500€ + IVA\nIntegraciones — desde 600€ + IVA (consulta previa)\nAutomatizaciones — 350€/650€/1.200€ + IVA, precio cerrado según complejidad (simple/media/varias herramientas)\nCRM — desde 950€ + IVA (auditoría previa)\n\n<b>Período de implantación (90 días):</b>\n• 3+ soluciones → Departamento Pro™ completamente de regalo\n• 1-2 soluciones → Departamento Lite™ completamente de regalo\n\n¿Sabías que puedes combinar Digitaliza con la Web Esencial o Web Profesional en la misma compra? Después del período de regalo, tu Departamento sigue manteniendo todo con renovación automática — cancela cuando quieras avisando con 7 días. ¿Qué soluciones necesita tu empresa?',
+      'Con Digitaliza implantamos cualquier solución tecnológica que necesite tu empresa. No tienes que saber qué herramienta necesitas — nos lo cuentas y nosotros diseñamos la solución correcta.\n\nEl precio parte de 350€ + IVA (la solución más económica, ya con todo incluido) y sube según las soluciones elegidas — con 90 días de Departamento completamente de regalo. ¿Cuál es el mayor problema que quieres resolver en tu empresa ahora mismo?'
     ]
   },
 
   sol_whatsapp: {
     patterns: ['ia para whatsapp','whatsapp ia','asistente de whatsapp','bot de whatsapp','automatizar whatsapp','whatsapp business ia','cuánto cuesta el whatsapp','precio del whatsapp','precio de la ia de whatsapp'],
     responses: [
-      'La <b>IA para WhatsApp</b> cuesta 590€ + IVA. Es un asistente que responde automáticamente a tus clientes en WhatsApp Business: resuelve dudas frecuentes, agenda citas y filtra lo urgente de lo que puede esperar, las 24 horas. Es, de lejos, la solución que más contratan nuestros clientes. Incluye 1.000 interacciones al mes (de sobra para el uso normal de un negocio), con exceso a 0,02€/interacción si algún mes se dispara mucho. ¿Recibes muchos mensajes por WhatsApp que se quedan sin respuesta a tiempo?'
+      'La <b>IA para WhatsApp</b> cuesta 590€ + IVA ahora mismo — <b>Oferta de Lanzamiento 2026</b>, precio normal 890€. Es un asistente que responde automáticamente a tus clientes en WhatsApp Business: resuelve dudas frecuentes, agenda citas y filtra lo urgente de lo que puede esperar, las 24 horas. Es, de lejos, la solución que más contratan nuestros clientes. Incluye 1.000 interacciones al mes (de sobra para el uso normal de un negocio), con exceso a 0,02€/interacción si algún mes se dispara mucho. ¿Recibes muchos mensajes por WhatsApp que se quedan sin respuesta a tiempo?'
     ]
   },
 
   sol_web_ia: {
     patterns: ['ia para web','ia para mi web','asistente en la web','chat en la web','chatbot en mi página','cuánto cuesta la ia para web','precio de la ia web'],
     responses: [
-      'La <b>IA para Web</b> cuesta 350€ + IVA. Es un asistente integrado en tu web actual (como el que estás usando ahora mismo) que responde dudas de tus visitantes al instante y los guía hacia contratar o pedir cita. Incluye 1.000 interacciones al mes, con exceso a 0,02€/interacción si se dispara mucho el tráfico. ¿Ya tienes una web donde integrarlo, o necesitarías construirla primero?'
+      'La <b>IA para Web</b> cuesta 350€ + IVA ahora mismo — <b>Oferta de Lanzamiento 2026</b>, precio normal 650€. Es un asistente integrado en tu web actual (como el que estás usando ahora mismo) que responde dudas de tus visitantes al instante y los guía hacia contratar o pedir cita. Incluye 1.000 interacciones al mes, con exceso a 0,02€/interacción si se dispara mucho el tráfico. ¿Ya tienes una web donde integrarlo, o necesitarías construirla primero?'
     ]
   },
 
   sol_email_ia: {
     patterns: ['ia para correo','ia para email','automatizar correos','clasificar correos','gestionar el email','cuánto cuesta la ia de correo','precio de la ia de correo'],
     responses: [
-      'La <b>IA para Correo</b> cuesta 350€ + IVA. Clasifica y responde automáticamente los correos de tus clientes: separa lo urgente, contesta preguntas frecuentes y te avisa solo cuando de verdad hace falta que intervengas tú. Incluye 1.000 correos procesados al mes, con exceso a 0,02€/correo si algún mes se dispara mucho. ¿Recibes muchos correos repetitivos que te quitan tiempo?'
+      'La <b>IA para Correo</b> cuesta 350€ + IVA ahora mismo — <b>Oferta de Lanzamiento 2026</b>, precio normal 590€. Clasifica y responde automáticamente los correos de tus clientes: separa lo urgente, contesta preguntas frecuentes y te avisa solo cuando de verdad hace falta que intervengas tú. Incluye 1.000 correos procesados al mes, con exceso a 0,02€/correo si algún mes se dispara mucho. ¿Recibes muchos correos repetitivos que te quitan tiempo?'
     ]
   },
 
   sol_crm: {
     patterns: ['crm','gestión de clientes','base de datos de clientes','seguimiento de clientes','cuánto cuesta el crm','precio del crm','precio de crm'],
     responses: [
-      'El <b>CRM</b> cuesta 400€ + IVA. Es un sistema de gestión de clientes adaptado a tu sector: guarda el historial de cada cliente, en qué punto está cada oportunidad de venta, y te avisa de seguimientos pendientes. Se integra con el resto de soluciones que tengas. ¿Ahora mismo llevas el seguimiento de clientes en Excel, cuadernos, o no lo llevas de forma organizada?'
+      'El <b>CRM</b> es desde 950€ + IVA — el alcance de un CRM varía mucho de una empresa a otra, así que antes de dar un precio cerrado hacemos una auditoría inicial rápida de cómo llevas hoy tus clientes. Guarda el historial de cada cliente, en qué punto está cada oportunidad de venta, y te avisa de seguimientos pendientes. Se integra con el resto de soluciones que tengas. ¿Ahora mismo llevas el seguimiento de clientes en Excel, cuadernos, o no lo llevas de forma organizada?'
     ]
   },
 
@@ -1429,56 +1781,70 @@ const KB = {
   sol_automatizaciones: {
     patterns: ['automatizaciones','automatizar tareas','flujos automáticos','tareas repetitivas','cuánto cuestan las automatizaciones','precio de las automatizaciones'],
     responses: [
-      'Las <b>Automatizaciones</b> cuestan 400€ + IVA. Conectamos y automatizamos tareas repetitivas de tu día a día — por ejemplo, que un nuevo cliente en el CRM dispare automáticamente un correo de bienvenida y una tarea de seguimiento, sin que nadie tenga que hacerlo a mano. ¿Qué tarea repetitiva te quita más tiempo cada semana?'
+      'Las <b>Automatizaciones</b> tienen 3 precios cerrados según la complejidad del flujo: 350€ + IVA una automatización simple (ej. formulario → CRM → email), 650€ + IVA un flujo de varios pasos (ej. pedido → factura → aviso a almacén), 1.200€ + IVA un proceso que conecta varias herramientas distintas. En la primera llamada te decimos en qué banda encaja tu caso, y ese es el precio final, sin sorpresas. ¿Qué tarea repetitiva te quita más tiempo cada semana?'
     ]
   },
 
   sol_integraciones: {
     patterns: ['integraciones','conectar herramientas','unir programas','conectar mis aplicaciones','cuánto cuestan las integraciones','precio de las integraciones'],
     responses: [
-      'Las <b>Integraciones</b> cuestan 350€ + IVA. Conectamos entre sí las herramientas que ya usas (por ejemplo tu CRM con tu WhatsApp, o tu agenda con tu facturación) para que la información fluya sola, sin que tengas que copiarla a mano de un sitio a otro. ¿Qué herramientas tienes hoy que no se hablan entre ellas?'
+      'Las <b>Integraciones</b> son desde 600€ + IVA. Como cada integración depende de las herramientas concretas que uses, primero consultamos tu caso y cerramos el precio final antes de empezar, sin sorpresas. Conectamos entre sí las herramientas que ya usas (por ejemplo tu CRM con tu WhatsApp, o tu agenda con tu facturación) para que la información fluya sola, sin que tengas que copiarla a mano de un sitio a otro. ¿Qué herramientas tienes hoy que no se hablan entre ellas?'
     ]
   },
 
   sol_gestion_documental: {
     patterns: ['gestión documental','organizar documentos','contratos digitales','archivo digital','cuánto cuesta la gestión documental','precio de la gestión documental'],
     responses: [
-      'La <b>Gestión documental</b> cuesta 400€ + IVA. Organiza y automatiza tus documentos y contratos: plantillas, almacenamiento ordenado y acceso rápido a lo que necesites, sin carpetas perdidas. ¿Ahora mismo cómo gestionas los documentos y contratos de tus clientes?'
+      'La <b>Gestión documental</b> es desde 400€ + IVA. Organiza y automatiza tus documentos y contratos: plantillas, almacenamiento ordenado y acceso rápido a lo que necesites, sin carpetas perdidas. ¿Ahora mismo cómo gestionas los documentos y contratos de tus clientes?'
     ]
   },
 
   sol_firma_digital: {
     patterns: ['firma digital','firmar documentos online','firma electrónica','cuánto cuesta la firma digital','precio de la firma digital'],
     responses: [
-      'La <b>Firma digital</b> cuesta 300€ + IVA. Permite que tus clientes firmen contratos y documentos online, con validez legal, sin imprimir ni desplazarse. Encaja muy bien combinada con Gestión documental o CRM. ¿Tus clientes firman contratos actualmente en papel?'
+      'La <b>Firma digital</b> es 500€ + IVA, precio cerrado. Permite que tus clientes firmen contratos y documentos online, con validez legal, sin imprimir ni desplazarse. Encaja muy bien combinada con Gestión documental o CRM. ¿Tus clientes firman contratos actualmente en papel?'
     ]
   },
 
   sol_ciberseguridad: {
     patterns: ['ciberseguridad','ciberseguridad pyme','seguridad informática','proteger mi empresa','hackeo','me pueden hackear','2fa','doble factor','gestor de contraseñas','copias de seguridad'],
     responses: [
-      'La <b>Ciberseguridad Pyme</b> cuesta 450€ + IVA. Incluye:\n✓ Auditoría inicial básica\n✓ Activación de verificación en dos pasos (2FA) en tus plataformas críticas\n✓ Configuración de un gestor de contraseñas seguro\n✓ Automatización de copias de seguridad en la nube\n✓ Sesión de formación preventiva de 30 minutos para tu equipo\n\nNo incluye respuesta a incidentes de hackeo ya ocurridos ni auditorías de código avanzadas — para eso hablaríamos de un proyecto aparte. Se puede contratar sola o combinada dentro de Digitaliza. ¿Ya has tenido algún susto de seguridad o quieres prevenir antes de que pase?'
+      'La <b>Ciberseguridad Pyme</b> son 450€ + IVA, precio cerrado hasta 5 puestos de trabajo (+150€ por cada 5 adicionales). Es una revisión e instalación de la seguridad básica imprescindible, ni más ni menos:\n✓ Auditoría inicial básica\n✓ Activación de verificación en dos pasos (2FA) en tus plataformas críticas\n✓ Configuración de un gestor de contraseñas seguro\n✓ Automatización de copias de seguridad en la nube\n✓ Instrucción básica para tu equipo (30 minutos)\n\nEs importante que quede claro: no incluye respuesta a incidentes de hackeo ya ocurridos ni auditorías avanzadas — no prometemos protección total, nadie puede. Es la base necesaria que toda empresa debería tener, no una garantía de seguridad. Se puede contratar sola o combinada dentro de Digitaliza. ¿Ya has tenido algún susto de seguridad o quieres prevenir antes de que pase?'
+    ]
+  },
+
+  sol_truki: {
+    patterns: ['truki','facturación automática','facturas automáticas','factura por chat','presupuesto por chat','generar facturas','facturar automáticamente','cuánto cuesta truki','precio de truki'],
+    responses: [
+      '<b>Facturación automática (TruKi)</b> es 580€ + IVA. Describes el trabajo por chat — "5 metros de cable, 3 horas de mano de obra" — y TruKi, tu aliado, genera al instante la factura o el presupuesto, listo para el cliente y guardado en tu propia base de datos. Factura legal desde el primer día. Si la contratas suelta (sin Departamento) tiene 29€/mes de hosting aparte; dentro de Basic, Lite o Pro ya va incluido. ¿Ahora mismo cómo haces tus facturas y presupuestos?'
+    ]
+  },
+
+  sol_llamadas: {
+    patterns: ['ia para llamadas','asistente de voz','asistente de llamadas','agente de voz','contestar el teléfono','contestador ia','llamadas perdidas','cuánto cuesta ia para llamadas','precio de ia para llamadas','ia para el teléfono'],
+    responses: [
+      '<b>IA para Llamadas</b> es 690€ + IVA, precio cerrado y todo incluido (línea + IA, sin coste aparte). Un agente de voz natural contesta tu teléfono a cualquier hora, entiende lo que pide el cliente y agenda la cita directamente en tu calendario mientras hablan — nada de menús de "pulse 1 para...". Incluye 150 llamadas al mes; el exceso se factura a 0,50€ + IVA por llamada adicional. ¿Cuántas llamadas se te escapan ahora mismo por no poder contestar a tiempo?'
     ]
   },
 
   combinar_web_digitaliza: {
     patterns: ['puedo pedir web y soluciones a la vez','combinar web y digitaliza','todo junto','web más soluciones','en la misma compra'],
     responses: [
-      'Sí — en el momento de contratar puedes elegir tu Web Esencial o Web Profesional y, en el mismo pedido, añadir las soluciones de Digitaliza que necesites (WhatsApp IA, CRM, reservas...). Se calcula todo junto: el proyecto + las soluciones + 300€ de Departamento incluido, con 90 días de Departamento completamente de regalo. Así no tienes que hacer dos compras separadas. ¿Quieres que veamos qué combinación encajaría con tu negocio?'
+      'Sí — en el momento de contratar puedes elegir tu Web Esencial o Web Profesional y, en el mismo pedido, añadir las soluciones de Digitaliza que necesites (WhatsApp IA, CRM, reservas...). Se calcula todo junto: el proyecto + las soluciones, con el precio de cada una ya cerrado, con 90 días de Departamento completamente de regalo. Así no tienes que hacer dos compras separadas. ¿Quieres que veamos qué combinación encajaría con tu negocio?'
     ]
   },
 
   packs_sectoriales: {
     patterns: ['pack','packs','descuento en los packs','pack empresa','pack servicios','pack despachos','pack hosteleria','packs con descuento','oferta en los packs','15% de descuento','packs empresa'],
     responses: [
-      'Tenemos 4 packs por sector dentro de Digitaliza, cada uno con <b>15% de descuento</b> si te quedas con 3 soluciones:\n\n<b>Pack Servicios</b> — fontaneros, electricistas, clínicas, estética, gimnasios, academias\n<b>Pack Despachos</b> — abogados, asesorías, gestorías, inmobiliarias\n<b>Pack Hostelería</b> — restaurantes, salones de celebración\n<b>Pack Empresas</b> — pymes en general\n\nCada uno trae 3 soluciones ya pensadas para tu sector, pero puedes quitar o añadir las que quieras — no van cerrados. <a href="pago.html?plan=digital" target="_blank">Elige tu sector directamente en el checkout →</a>\n\n¿A qué te dedicas? Así te digo qué pack encaja mejor contigo.'
+      'Tenemos 3 packs por sector dentro de Digitaliza, cada uno con <b>15% de descuento</b> si te quedas con 3 soluciones:\n\n<b>Pack Servicios</b> — fontaneros, electricistas, clínicas, estética, gimnasios, academias\n<b>Pack Despachos</b> — abogados, asesorías, gestorías, inmobiliarias\n<b>Pack Hostelería</b> — restaurantes, salones de celebración\n\nCada uno trae 3 soluciones ya pensadas para tu sector, pero puedes quitar o añadir las que quieras — no van cerrados. Si tu negocio no encaja en ninguno, no pasa nada: eliges tú mismo entre las 12 soluciones del catálogo. <a href="pago.html?plan=digital" target="_blank">Elige tu sector directamente en el checkout →</a>\n\n¿A qué te dedicas? Así te digo qué pack encaja mejor contigo.'
     ]
   },
 
   arranque: {
     patterns: ['arranque','pack arranque','acceso directo','sin proyecto','solo el departamento','solo mantenimiento','ya tengo todo implantado'],
     responses: [
-      'Si no necesitas un proyecto nuevo y quieres acceder directamente al Departamento Tecnológico:\n\n<b>Arranque Lite™: 199€/mes + IVA</b>\nSin permanencia · hasta 2 soluciones tecnológicas\n\n<b>Arranque Pro™: 399€/mes + IVA</b>\nSin permanencia · hasta 6 soluciones tecnológicas\n\nAl no haber un proyecto de implantación previo, se factura desde el primer mes — el período de regalo aplica solo cuando contratas un Proyecto (Web o Digitaliza). ¿Cuántas soluciones tecnológicas necesitas mantener?'
+      `Si no necesitas un proyecto nuevo y quieres acceder directamente al Departamento Tecnológico, la web y las soluciones van completamente gratis desde el minuto uno, a cambio de una permanencia mínima:\n\n<b>Basic™: 69€/mes + IVA</b>\nPermanencia 6 meses · sin web · 1 solución gratis\n\n<b>Lite™: ${currentPrice('lite')}€/mes + IVA</b>\nPermanencia 12 meses · web gratis · hasta 3 soluciones\n\n<b>Pro™: ${currentPrice('pro')}€/mes + IVA</b>\nPermanencia 12 meses · Web Profesional gratis · hasta 6 soluciones\n\nSe paga en pago único (12% dto.) o fraccionado con SeQura, nunca facturación mensual directa con nosotros. Al terminar la permanencia, sigues mes a mes sin más compromiso o te vas cuando quieras. ¿Cuántas soluciones tecnológicas necesitas mantener?`
     ]
   },
 
@@ -1551,7 +1917,7 @@ const KB = {
   caro_objecion: {
     patterns: ['caro','muy caro','no me llega','precio alto','es mucho','no puedo','fuera de presupuesto','demasiado','me parece caro'],
     responses: [
-      'Entiendo la duda. Permíteme ponerlo en perspectiva:\n\nUn técnico informático externo en España cobra 50-80€/hora. Una incidencia técnica media te lleva 2-3 horas. Solo eso son 100-240€.\n\nEl Departamento Lite™ son 199€/mes. Incluye mantenimiento continuo, seguridad, copias de seguridad, resolución de incidencias ilimitadas y reunión mensual.\n\n¿Cuántas incidencias tecnológicas tienes aproximadamente al mes, o cuánto tiempo pierdes gestionando aspectos técnicos?'
+      `Entiendo la duda. Permíteme ponerlo en perspectiva:\n\nUn técnico informático externo en España cobra 50-80€/hora. Una incidencia técnica media te lleva 2-3 horas. Solo eso son 100-240€.\n\nEl Departamento Lite™ son ${currentPrice('lite')}€/mes. Incluye supervisión continua, seguridad, copias de seguridad, resolución de incidencias sin coste y reunión mensual.\n\n¿Cuántas incidencias tecnológicas tienes aproximadamente al mes, o cuánto tiempo pierdes gestionando aspectos técnicos?`
     ]
   },
 
@@ -1579,7 +1945,7 @@ const KB = {
   noventa_dias: {
     patterns: ['90 días','noventa días','implantación','cuánto tiempo tarda','cuándo funciona','primer mes','cuánto se tarda'],
     responses: [
-      'El período de implantación varía según qué contrates:\n\nPara proyectos <b>Web</b> (Esencial o Profesional): <b>30 días</b>\nTodo el período, el Departamento Lite™ va completamente de regalo, incluido en el precio\n• A partir del día 31: renovación automática mensual (199€/mes) — continúas solo si estás satisfecho\n\nPara <b>Digitaliza</b> (soluciones tecnológicas): <b>90 días</b>\nTodo el período, el Departamento (Pro™ si 3+ soluciones, Lite™ si 1-2) va completamente de regalo\n• A partir del día 91: renovación automática mensual — continúas solo si estás satisfecho\n\nEn ambos casos, cancela cuando quieras avisando con 7 días, sin compromisos adicionales.'
+      `El período de implantación varía según qué contrates:\n\nPara proyectos <b>Web</b> (Esencial o Profesional): <b>30 días</b>\nTodo el período, el Departamento Lite™ va completamente de regalo, incluido en el precio\n• A partir del día 31: renovación automática mensual (${currentPrice('lite')}€/mes) — continúas solo si estás satisfecho\n\nPara <b>Digitaliza</b> (soluciones tecnológicas): <b>90 días</b>\nTodo el período, el Departamento (Pro™ si 3+ soluciones, Lite™ si 1-2) va completamente de regalo\n• A partir del día 91: renovación automática mensual — continúas solo si estás satisfecho\n\nEn ambos casos, sin permanencia: cancela cuando quieras avisando con 7 días. Esto es distinto de hacerte cliente directo del Departamento, que sí lleva permanencia a cambio del regalo desde el primer día.`
     ]
   },
 
@@ -1587,7 +1953,7 @@ const KB = {
   abogado: {
     patterns: ['abogado','bufete','jurídico','legal','letrado','despacho'],
     responses: [
-      'Para despachos de abogados, asesorías, gestorías e inmobiliarias tenemos el <b>Pack Despachos</b>: CRM (seguimiento de expedientes), Firma digital (contratos sin desplazamientos) y Gestión documental (expedientes organizados). Si además se os escapan consultas por WhatsApp fuera de horario, se añade IA para WhatsApp sin problema — el pack no va cerrado.\n\nCon 3 soluciones entráis directos en Departamento Pro™ (399€/mes).\n\n<a href="pago.html?plan=digital&pack=despachos" target="_blank">Ver el Pack Despachos con estas soluciones ya marcadas (15% dto.) →</a>\n\n¿Tienes actualmente alguna herramienta de gestión de agenda o casos?'
+      `Para despachos de abogados, asesorías, gestorías e inmobiliarias tenemos el <b>Pack Despachos</b>: CRM (seguimiento de expedientes), Firma digital (contratos sin desplazamientos) y Gestión documental (expedientes organizados). Si además se os escapan consultas por WhatsApp fuera de horario, se añade IA para WhatsApp sin problema — el pack no va cerrado.\n\nSi las contratáis dentro del Departamento Pro™ (${currentPrice('pro')}€/mes, con permanencia de 12 meses), van gratis las que entren en el pool de soluciones a elegir; el resto se mantiene sin coste una vez instalada. Si preferís comprarlas sueltas, sin permanencia, tenéis el 15% de descuento del pack.\n\n<a href="pago.html?plan=digital&pack=despachos" target="_blank">Ver el Pack Despachos con estas soluciones ya marcadas (15% dto.) →</a>\n\n¿Tienes actualmente alguna herramienta de gestión de agenda o casos?`
     ]
   },
 
@@ -1643,7 +2009,7 @@ const KB = {
   tienda_comercio: {
     patterns: ['tienda','comercio','tienda online','ecommerce','tienda física'],
     responses: [
-      'Para tiendas y comercios tenemos el <b>Pack Empresas</b>: CRM (clientes recurrentes), Automatizaciones y Integraciones (conectar tienda física y online si vendéis por varios canales). Si además se os escapan consultas de stock/horarios por WhatsApp, se añade IA para WhatsApp sin problema.\n\n<a href="pago.html?plan=digital&pack=empresas" target="_blank">Ver el Pack Empresas con estas soluciones ya marcadas (15% dto.) →</a> (puedes quitar o añadir cualquiera).\n\n¿Tu comercio es solo físico, solo online, o ambos?'
+      'Para tiendas y comercios, lo más habitual es combinar CRM (clientes recurrentes), Automatizaciones e Integraciones (conectar tienda física y online si vendéis por varios canales). Si además se os escapan consultas de stock/horarios por WhatsApp, se añade IA para WhatsApp sin problema. No hay un pack cerrado para comercio — eliges tú mismo las que necesitas del catálogo completo, cada una a su precio.\n\n<a href="digitaliza.html" target="_blank">Ver el catálogo completo de soluciones →</a>\n\n¿Tu comercio es solo físico, solo online, o ambos?'
     ]
   },
 
@@ -1991,7 +2357,7 @@ async function toggleVoiceAgent() {
     status.textContent = 'Hablando con el Asistente TRUCO PRO — habla con normalidad';
   } catch (e) {
     status.textContent = 'No se pudo conectar. Inténtalo de nuevo o escríbenos por WhatsApp.';
-    btn.textContent = 'Hablar con un agente';
+    btn.textContent = 'Hablar con asistente virtual';
     btn.disabled = false;
   }
 }
@@ -2025,8 +2391,9 @@ setTimeout(() => {
   <a href="servicios.html#como-empezamos">Cómo empezamos</a>
   <a href="#nosotros">Nosotros</a>
   <a href="#sectores">¿Es esto para ti?</a>
-  <a href="#packs-descuento" style="color:var(--gold);font-weight:700;">Packs Empresa -15%</a>
+  <a href="#packs-descuento" style="color:var(--gold);font-weight:700;">Packs -15%</a>
   <a href="#faq">FAQ</a>
+  <a href="pago.html" style="color:var(--blue);font-weight:700;">Ir a contratación →</a>
   <a href="#chat-section">Hablar con el asistente →</a>
 </div>
 
@@ -2104,31 +2471,136 @@ function loadGA(){
 </script>
 <script>
 (function(){
-  var msgs=document.getElementById('heroChatMsgs');
-  if(!msgs) return;
-  var bubbles=Array.prototype.slice.call(msgs.querySelectorAll('.hm'));
-  if(!bubbles.length) return;
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
-    bubbles.forEach(function(b){ b.classList.add('show'); });
-    return;
+  var track=document.getElementById('scTrack');
+  if(!track) return;
+  var cards=track.querySelectorAll('.sector-card');
+  var dotsWrap=document.getElementById('scDots');
+  var scIndex=0, scTimer=null;
+  dotsWrap.innerHTML=Array.prototype.map.call(cards,function(_,i){
+    return '<button class="sc-dot'+(i===0?' active':'')+'" onclick="scGoTo('+i+')" aria-label="Ir al sector '+(i+1)+'"></button>';
+  }).join('');
+  var dots=dotsWrap.querySelectorAll('.sc-dot');
+  function scRender(){
+    track.style.transform='translateX(-'+(scIndex*100)+'%)';
+    dots.forEach(function(d,i){ d.classList.toggle('active',i===scIndex); });
   }
-  function run(){
-    var delay=300;
-    bubbles.forEach(function(b){
+  function scStop(){
+    if(scTimer){ clearInterval(scTimer); scTimer=null; }
+  }
+  function scStart(){
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    scTimer=setInterval(function(){
+      scIndex=(scIndex+1)%cards.length;
+      scRender();
+    },8000);
+  }
+  window.scNav=function(dir){
+    scIndex=(scIndex+dir+cards.length)%cards.length;
+    scRender();
+    scStop();
+  };
+  window.scGoTo=function(i){
+    scIndex=i;
+    scRender();
+    scStop();
+  };
+  scRender();
+  scStart();
+})();
+</script>
+<script>
+(function(){
+  var panel=document.querySelector('.eco-panel');
+  if(!panel) return;
+  var scenes=Array.prototype.slice.call(panel.querySelectorAll('.eco-scene'));
+  var dots=Array.prototype.slice.call(panel.querySelectorAll('.eco-dot'));
+  var iconEl=document.getElementById('ecoIcon');
+  var labelEl=document.getElementById('ecoLabel');
+  var progressEl=document.getElementById('ecoProgress');
+  if(!scenes.length) return;
+  var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var META={
+    web:{label:'tu-negocio.com',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>'},
+    whatsapp:{label:'WhatsApp Business',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>'},
+    llamada:{label:'Llamada entrante',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>'},
+    correo:{label:'Bandeja de entrada',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>'},
+    depto:{label:'Tu Departamento Tecnológico',icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>'}
+  };
+
+  function revealBubbles(scene,baseDelay){
+    var items=Array.prototype.slice.call(scene.querySelectorAll('.hm, .hero-appt-card'));
+    items.forEach(function(b){ b.classList.remove('show'); });
+    var delay=300+(baseDelay||0);
+    items.forEach(function(b){
       if(b.classList.contains('truco')){
-        setTimeout(function(){
-          var typing=document.createElement('div');
-          typing.className='hcc-typing';
-          typing.innerHTML='<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
-          b.parentNode.insertBefore(typing,b);
-          setTimeout(function(){ typing.remove(); b.classList.add('show'); },700);
-        },delay);
+        (function(b,delay){
+          setTimeout(function(){
+            var typing=document.createElement('div');
+            typing.className='hcc-typing';
+            typing.innerHTML='<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+            b.parentNode.insertBefore(typing,b);
+            setTimeout(function(){ typing.remove(); b.classList.add('show'); },700);
+          },delay);
+        })(b,delay);
         delay+=1300;
       } else {
-        setTimeout(function(){ b.classList.add('show'); },delay);
-        delay+=600;
+        (function(b,delay){ setTimeout(function(){ b.classList.add('show'); },delay); })(b,delay);
+        delay+= b.classList.contains('hero-appt-card')?400:600;
       }
     });
+  }
+
+  function activate(i){
+    scenes.forEach(function(s,idx){ s.classList.toggle('active',idx===i); });
+    dots.forEach(function(d,idx){ d.classList.toggle('active',idx===i); });
+    var key=scenes[i].dataset.scene, meta=META[key];
+    if(meta&&labelEl&&iconEl){
+      labelEl.textContent=meta.label;
+      iconEl.innerHTML=meta.icon;
+      iconEl.classList.remove('pop'); void iconEl.offsetWidth; iconEl.classList.add('pop');
+    }
+    if(progressEl&&!reduced){
+      progressEl.classList.remove('run'); void progressEl.offsetWidth; progressEl.classList.add('run');
+    }
+    var widgetBubble=scenes[i].querySelector('.eco-widget-bubble');
+    var widgetPanel=scenes[i].querySelector('.eco-widget-panel');
+    var extraDelay=0;
+    if(widgetBubble&&widgetPanel){
+      widgetBubble.classList.remove('show'); widgetPanel.classList.remove('show');
+      if(reduced){ widgetBubble.classList.add('show'); widgetPanel.classList.add('show'); }
+      else {
+        setTimeout(function(){ widgetBubble.classList.add('show'); },200);
+        setTimeout(function(){ widgetPanel.classList.add('show'); },650);
+        extraDelay=850;
+      }
+    }
+    revealBubbles(scenes[i],extraDelay);
+  }
+
+  // CSS de apoyo para que la tarjeta de confirmación de correo también aparezca con transición
+  var style=document.createElement('style');
+  style.textContent='.eco-scene .hero-appt-card{opacity:0;transform:translateY(6px);transition:opacity .4s ease,transform .4s ease;}.eco-scene .hero-appt-card.show{opacity:1;transform:translateY(0);}';
+  document.head.appendChild(style);
+
+  if(reduced){
+    // Sin animación: fija la escena de cierre, la que mejor resume todo de un vistazo
+    var lastIdx=scenes.length-1;
+    scenes.forEach(function(s,idx){ s.classList.toggle('active',idx===lastIdx); });
+    dots.forEach(function(d,idx){ d.classList.toggle('active',idx===lastIdx); });
+    var key=scenes[lastIdx].dataset.scene, meta=META[key];
+    if(meta&&labelEl&&iconEl){ labelEl.textContent=meta.label; iconEl.innerHTML=meta.icon; }
+    scenes[lastIdx].querySelectorAll('.hm, .hero-appt-card').forEach(function(b){ b.classList.add('show'); });
+    return;
+  }
+
+  function run(){
+    var idx=0;
+    activate(0);
+    setInterval(function(){
+      idx=(idx+1)%scenes.length;
+      activate(idx);
+    },6000);
   }
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(entries){
@@ -2136,7 +2608,7 @@ function loadGA(){
         if(e.isIntersecting){ run(); io.unobserve(e.target); }
       });
     },{threshold:.4});
-    io.observe(msgs);
+    io.observe(panel);
   } else {
     run();
   }

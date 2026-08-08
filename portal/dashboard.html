@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Tu portal — TRUCO technology</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
+<script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --bg:#16151a;--bg-panel:#201f24;--bg-card:#2b2a30;
+  --blue:#2f7bff;--blue-dim:rgba(47,123,255,.1);
+  --gold:#d9a83f;--gold-dim:rgba(217,168,63,.1);
+  --green:#22c55e;--green-dim:rgba(34,197,94,.1);
+  --white:#f2f0ea;--grey:#b5b2bc;--grey-line:#3d3b42;--red:#ef4444;
+  --font-d:'Playfair Display',Georgia,serif;
+  --font-b:'DM Sans',sans-serif;
+  --font-m:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--white);font-family:var(--font-b);line-height:1.6;min-height:100vh;}
+a{color:inherit;text-decoration:none;}
+h1,h2,h3{font-family:var(--font-d);letter-spacing:-.01em;}
+
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);height:64px;background:rgba(22,21,26,.97);border-bottom:1px solid var(--grey-line);position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);}
+.nav-logo{display:flex;align-items:center;gap:11px;}
+.t-mark{width:36px;height:36px;border:1.5px solid var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);color:var(--gold);font-size:18px;font-weight:800;background:linear-gradient(160deg,var(--bg-panel),var(--bg));}
+.nav-brand{font-family:var(--font-d);font-size:1rem;font-weight:700;}
+.nav-brand span{color:var(--blue);}
+.nav-sub{font-family:var(--font-m);font-size:.45rem;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin-top:1px;}
+#logout-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 16px;border-radius:8px;font-size:.82rem;cursor:pointer;font-family:var(--font-b);}
+#logout-btn:hover{border-color:var(--red);color:var(--red);}
+
+#login-gate{display:flex;align-items:center;justify-content:center;min-height:70vh;color:var(--grey);font-size:.9rem;}
+
+#app{display:none;max-width:1080px;margin:0 auto;padding:40px 24px 80px;}
+.welcome{margin-bottom:32px;}
+.welcome h1{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:6px;}
+.welcome p{color:var(--grey);font-size:.92rem;}
+.welcome b{color:var(--white);}
+
+.grid{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;margin-bottom:20px;}
+@media(max-width:800px){.grid{grid-template-columns:1fr;}}
+
+.card{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;padding:24px 26px;}
+.card-tag{font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.card h2{font-size:1.1rem;margin-bottom:16px;}
+
+.sol-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--grey-line);font-size:.88rem;}
+.sol-row:last-child{border-bottom:none;}
+.sol-check{width:20px;height:20px;border-radius:50%;background:var(--green-dim);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:.7rem;flex-shrink:0;}
+.sol-name{flex:1;}
+.sol-tag{font-size:.68rem;color:var(--gold);font-family:var(--font-m);}
+.empty-note{color:var(--grey);font-size:.85rem;font-style:italic;}
+
+.offer-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--grey-line);font-size:.88rem;}
+.offer-row:last-child{border-bottom:none;}
+.offer-price{color:var(--grey);font-size:.78rem;white-space:nowrap;}
+.offer-cta{color:var(--blue);font-size:.78rem;font-weight:600;white-space:nowrap;}
+.offer-cta:hover{text-decoration:underline;}
+.offers-footer{margin-top:16px;font-size:.8rem;color:var(--grey);}
+.offers-footer a{color:var(--blue);font-weight:600;}
+
+.audit-card p{color:var(--grey);font-size:.86rem;margin-bottom:16px;line-height:1.6;}
+#gcal-audit-btn{min-height:44px;}
+
+.usage-card{grid-column:1/-1;}
+
+.stage-steps{display:flex;justify-content:space-between;position:relative;margin-top:6px;}
+.stage-steps::before{content:'';position:absolute;top:11px;left:11px;right:11px;height:1px;background:var(--grey-line);z-index:0;}
+.stage-step{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1;flex:1;}
+.stage-dot{width:22px;height:22px;border-radius:50%;background:var(--bg-card);border:1.5px solid var(--grey-line);display:flex;align-items:center;justify-content:center;font-size:.62rem;color:var(--grey);}
+.stage-step.done .stage-dot{background:var(--green-dim);border-color:var(--green);color:var(--green);}
+.stage-step.current .stage-dot{background:var(--blue-dim);border-color:var(--blue);color:var(--blue);}
+.stage-label{font-size:.68rem;color:var(--grey);text-align:center;line-height:1.3;}
+.stage-step.done .stage-label,.stage-step.current .stage-label{color:var(--white);font-weight:600;}
+
+.referral-card{grid-column:1/-1;}
+.referral-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+.referral-code-box{background:var(--bg-card);border:1px dashed var(--gold);border-radius:8px;padding:10px 16px;font-family:var(--font-m);font-size:1rem;font-weight:600;color:var(--gold);letter-spacing:.05em;}
+.referral-copy-btn{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:10px 16px;font-size:.82rem;font-weight:600;cursor:pointer;}
+.referral-credits-badge{background:var(--green-dim);border:1px solid rgba(34,197,94,.3);color:var(--green);border-radius:20px;padding:5px 14px;font-size:.78rem;font-weight:600;}
+.referral-hint{color:var(--grey);font-size:.82rem;line-height:1.6;}
+.usage-row{padding:12px 0;border-bottom:1px solid var(--grey-line);}
+.usage-row:last-child{border-bottom:none;}
+.usage-head{display:flex;justify-content:space-between;align-items:baseline;font-size:.85rem;margin-bottom:8px;}
+.usage-name{color:var(--white);font-weight:500;}
+.usage-count{color:var(--grey);font-family:var(--font-m);font-size:.78rem;}
+.usage-bar{height:6px;background:var(--bg-card);border-radius:4px;overflow:hidden;}
+.usage-fill{height:100%;background:var(--blue);border-radius:4px;transition:width .3s ease;}
+.usage-fill.over{background:var(--red);}
+.usage-note{font-size:.76rem;color:var(--grey);margin-top:7px;line-height:1.5;}
+.usage-note.over{color:var(--red);}
+.usage-note b{color:var(--white);}
+.chat-card{grid-column:1/-1;}
+#chat-log{max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;margin-bottom:14px;padding-right:4px;}
+.msg{max-width:80%;padding:10px 14px;border-radius:12px;font-size:.87rem;line-height:1.5;}
+.msg.user{align-self:flex-end;background:var(--blue-dim);border:1px solid rgba(47,123,255,.3);}
+.msg.bot{align-self:flex-start;background:var(--bg-card);border:1px solid var(--grey-line);}
+.chat-input-row{display:flex;gap:10px;}
+.chat-input-row input{flex:1;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:9px;padding:11px 14px;color:var(--white);font-family:var(--font-b);font-size:.88rem;outline:none;}
+.chat-input-row input:focus{border-color:var(--blue);}
+.chat-input-row button{background:var(--blue);border:none;border-radius:9px;color:#fff;padding:0 20px;font-size:.85rem;font-weight:600;cursor:pointer;}
+.chat-input-row button:disabled{opacity:.5;cursor:not-allowed;}
+.chat-hint{color:var(--grey);font-size:.72rem;margin-top:8px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html">
+    <div class="t-mark">T</div>
+    <div><div class="nav-brand">TRUCO<span>technology</span></div><div class="nav-sub">Portal de clientes</div></div>
+  </a>
+  <button id="logout-btn" onclick="doLogout()">Cerrar sesión</button>
+</nav>
+
+<div id="login-gate">Comprobando tu sesión…</div>
+
+<div id="app">
+  <div class="welcome">
+    <h1 id="welcome-title">Hola 👋</h1>
+    <p id="welcome-sub"></p>
+  </div>
+
+  <div class="grid" id="stage-grid" style="display:none;">
+    <div class="card" style="grid-column:1/-1;">
+      <div class="card-tag">Estado de tu implantación</div>
+      <div class="stage-steps" id="stage-steps"></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-tag">Lo que tienes contratado</div>
+      <h2>Tu plan con TRUCO</h2>
+      <div id="contracted-list"><div class="empty-note">Cargando…</div></div>
+    </div>
+
+    <div class="card audit-card">
+      <div class="card-tag">Revisión de servicios</div>
+      <h2>Agenda una auditoría</h2>
+      <p>Repasamos contigo cómo están funcionando tus soluciones activas y qué podrías ajustar o añadir.</p>
+      <div id="gcal-audit-btn"></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card" style="grid-column:1/-1;">
+      <div class="card-tag">Para ti</div>
+      <h2>Ofertas exclusivas</h2>
+      <div id="offers-list"><div class="empty-note">Cargando…</div></div>
+      <div class="offers-footer">La compra se hace en la web normal — <a href="../digitaliza.html">Digitaliza tu Empresa</a> o directamente en <a href="../pago.html">pago.html</a>. Al estar identificado, se te reconoce automáticamente y se te aplica tu descuento de cliente.</div>
+    </div>
+  </div>
+
+  <div class="grid" id="usage-grid" style="display:none;">
+    <div class="card usage-card">
+      <div class="card-tag">Consumo incluido</div>
+      <h2>Uso este mes</h2>
+      <div id="usage-list"></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card referral-card">
+      <div class="card-tag">Invita y gana</div>
+      <h2>Tu enlace de referido</h2>
+      <div class="referral-row">
+        <div class="referral-code-box" id="referral-code-display">—</div>
+        <button class="referral-copy-btn" onclick="copyReferralLink()">Copiar enlace</button>
+        <span class="referral-credits-badge" id="referral-credits-badge" style="display:none;"></span>
+      </div>
+      <p class="referral-hint">Comparte tu enlace — quien lo use consigue un 10% en su primera compra, y tú ganas un 15% de descuento en la tuya cuando se haga cliente. Se aplica solo, sin códigos que canjear a mano.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card chat-card">
+      <div class="card-tag">Tu asistente</div>
+      <h2>Resuelve tus dudas</h2>
+      <div id="chat-log"></div>
+      <div class="chat-input-row">
+        <input type="text" id="chat-input" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendChat()">
+        <button id="chat-send-btn" onclick="sendChat()">Enviar</button>
+      </div>
+      <div class="chat-hint">Este asistente conoce lo que tienes contratado — para temas de venta general, usa el chat de la web pública.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
+// RELLENAR: URL propia de Google Calendar Appointment Schedules para la
+// reunión de "auditoría de servicios" — distinta de la de bienvenida que usa
+// bienvenida.html, porque es una reunión de revisión, no de alta.
+const PORTAL_AUDIT_CALENDAR_URL = 'REEMPLAZA_URL_CALENDARIO_AUDITORIA';
+
+// Mismo catálogo que digitaliza.html/pago.html, duplicado a propósito (ver
+// convención del proyecto) — solo para calcular qué le falta a este cliente.
+const CATALOG = [
+  { key: 'whatsapp', name: 'IA para WhatsApp', price: 590 },
+  { key: 'web-ia', name: 'IA para Web', price: 350 },
+  { key: 'email-ia', name: 'IA para Correo', price: 350 },
+  { key: 'llamadas', name: 'IA para Llamadas', price: 690 },
+  { key: 'reservas', name: 'Reservas y Agenda', price: 350 },
+  { key: 'automatizaciones', name: 'Automatizaciones', price: 350, desde: true },
+  { key: 'integraciones', name: 'Integraciones', price: 600, desde: true },
+  { key: 'docs', name: 'Gestión documental', price: 400, desde: true },
+  { key: 'firma', name: 'Firma digital', price: 500 },
+  { key: 'ciberseguridad', name: 'Ciberseguridad Pyme', price: 450 },
+  { key: 'truki', name: 'Facturación automática (TruKi)', price: 580 },
+  { key: 'crm', name: 'CRM', price: 950, desde: true },
+];
+
+// Mismos límites documentados en pago.html/terminos.html/chat-ai.js — solo
+// estas 4 soluciones llevan un tope de uso incluido en la cuota.
+const USAGE_LIMITS = {
+  whatsapp: { name: 'IA para WhatsApp', limit: 1000, rate: 0.02, unit: 'interacciones' },
+  'web-ia': { name: 'IA para Web', limit: 1000, rate: 0.02, unit: 'interacciones' },
+  'email-ia': { name: 'IA para Correo', limit: 1000, rate: 0.02, unit: 'interacciones' },
+  llamadas: { name: 'IA para Llamadas', limit: 150, rate: 0.50, unit: 'llamadas' },
+};
+
+let sb = null;
+let accessToken = null;
+let chatHistory = [];
+
+function isConfigured() {
+  return !SUPABASE_URL.startsWith('REEMPLAZA_') && !SUPABASE_ANON_KEY.startsWith('REEMPLAZA_');
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  if (!isConfigured()) {
+    document.getElementById('login-gate').textContent = 'El portal no está disponible ahora mismo.';
+    return;
+  }
+  sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) {
+    window.location.href = 'login.html';
+    return;
+  }
+  accessToken = session.access_token;
+  await loadClient();
+});
+
+async function doLogout() {
+  if (sb) await sb.auth.signOut();
+  window.location.href = 'login.html';
+}
+
+async function loadClient() {
+  const { data: client, error } = await sb.from('clients').select('*, client_solutions(*)').single();
+  if (error || !client) {
+    document.getElementById('login-gate').textContent = 'No pudimos cargar tu ficha. Escríbenos si el problema continúa.';
+    return;
+  }
+  document.getElementById('login-gate').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+
+  const nombre = client.nombre || 'de nuevo';
+  document.getElementById('welcome-title').textContent = 'Hola, ' + nombre + ' 👋';
+  document.getElementById('welcome-sub').innerHTML = client.negocio
+    ? 'Bienvenido a tu portal — <b>' + escapeHtml(client.negocio) + '</b>'
+    : 'Bienvenido a tu portal de cliente TRUCO technology.';
+
+  const owned = (client.client_solutions || []);
+  const contractedList = document.getElementById('contracted-list');
+  const planLabel = { basic: 'Departamento Basic™', lite: 'Departamento Lite™', pro: 'Departamento Pro™' }[client.arranque_tier] || client.plan_key || 'Sin plan activo registrado';
+  let html = '<div class="sol-row"><div class="sol-check">✓</div><div class="sol-name"><b>' + escapeHtml(planLabel) + '</b></div></div>';
+  if (owned.length) {
+    html += owned.map(s => '<div class="sol-row"><div class="sol-check">✓</div><div class="sol-name">' + escapeHtml(s.solution_name) + '</div>' + (s.is_free ? '<span class="sol-tag">Incluida</span>' : '') + '</div>').join('');
+  } else {
+    html += '<div class="sol-row"><div class="sol-name empty-note">Aún no tenemos registradas soluciones concretas de tu Digitaliza — escríbenos si crees que falta algo.</div></div>';
+  }
+  contractedList.innerHTML = html;
+
+  const ownedKeys = new Set(owned.map(s => s.solution_key));
+  const missing = CATALOG.filter(c => !ownedKeys.has(c.key));
+  const offersList = document.getElementById('offers-list');
+  offersList.innerHTML = missing.length
+    ? missing.map(c => '<div class="offer-row"><span class="sol-name">' + escapeHtml(c.name) + '</span><span class="offer-price">' + (c.desde ? 'desde ' : '') + c.price + ' € + IVA</span><a class="offer-cta" href="../pago.html?sol=' + encodeURIComponent(c.key) + '">Añadir →</a></div>').join('')
+    : '<div class="empty-note">Ya tienes contratado todo nuestro catálogo. 🎉</div>';
+
+  loadAuditButton();
+  loadUsage(owned);
+  loadStage(client.implementation_stage);
+  loadReferral(client);
+}
+
+const STAGES = ['contratado', 'en_implantacion', 'revision', 'completado'];
+const STAGE_LABELS = { contratado: 'Contratado', en_implantacion: 'En implantación', revision: 'En revisión', completado: 'Completado' };
+
+function loadStage(stage) {
+  const grid = document.getElementById('stage-grid');
+  const wrap = document.getElementById('stage-steps');
+  const idx = STAGES.indexOf(stage);
+  if (idx === -1) { grid.style.display = 'none'; return; }
+  grid.style.display = 'grid';
+  wrap.innerHTML = STAGES.map((s, i) => {
+    const cls = i < idx ? 'done' : i === idx ? 'current' : '';
+    return `<div class="stage-step ${cls}"><div class="stage-dot">${i < idx ? '✓' : i + 1}</div><div class="stage-label">${escapeHtml(STAGE_LABELS[s])}</div></div>`;
+  }).join('');
+}
+
+function loadReferral(client) {
+  const code = client.referral_code;
+  if (!code) return;
+  document.getElementById('referral-code-display').textContent = code;
+  const credits = client.referral_credits || 0;
+  const badge = document.getElementById('referral-credits-badge');
+  if (credits > 0) {
+    badge.style.display = 'inline-block';
+    badge.textContent = credits + ' crédito' + (credits > 1 ? 's' : '') + ' disponible' + (credits > 1 ? 's' : '');
+  }
+}
+
+function copyReferralLink() {
+  const code = document.getElementById('referral-code-display').textContent;
+  if (!code || code === '—') return;
+  const link = location.origin + '/pago.html?ref=' + encodeURIComponent(code);
+  navigator.clipboard.writeText(link).then(() => {
+    const btn = document.querySelector('.referral-copy-btn');
+    const original = btn.textContent;
+    btn.textContent = '¡Copiado!';
+    setTimeout(() => { btn.textContent = original; }, 1800);
+  }).catch(() => { alert('Tu enlace: ' + link); });
+}
+
+async function loadUsage(owned) {
+  const limitedOwned = owned.filter(s => USAGE_LIMITS[s.solution_key]);
+  const grid = document.getElementById('usage-grid');
+  if (!limitedOwned.length) { grid.style.display = 'none'; return; }
+
+  const { data, error } = await sb.rpc('portal_usage_summary');
+  const usedByKey = {};
+  (error ? [] : data || []).forEach(r => { usedByKey[r.solution_key] = r.used; });
+
+  const now = new Date();
+  const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  const endDate = endOfMonth.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' });
+
+  const list = document.getElementById('usage-list');
+  list.innerHTML = limitedOwned.map(s => {
+    const cfg = USAGE_LIMITS[s.solution_key];
+    const used = usedByKey[s.solution_key] || 0;
+    const pct = Math.min(100, Math.round((used / cfg.limit) * 100));
+    const over = used > cfg.limit;
+    let note;
+    if (over) {
+      const excess = used - cfg.limit;
+      const charge = (excess * cfg.rate).toFixed(2).replace('.', ',');
+      note = `<div class="usage-note over">Has superado el límite incluido en <b>${excess} ${cfg.unit}</b> este mes — se te cobrarán <b>${charge} € + IVA</b> el ${escapeHtml(endDate)}, al cierre del mes.</div>`;
+    } else {
+      const left = cfg.limit - used;
+      note = `<div class="usage-note">Te quedan <b>${left} ${cfg.unit}</b> hasta el ${escapeHtml(endDate)}, cuando se reinicia el contador.</div>`;
+    }
+    return `<div class="usage-row">
+      <div class="usage-head"><span class="usage-name">${escapeHtml(cfg.name)}</span><span class="usage-count">${used} / ${cfg.limit} ${cfg.unit}</span></div>
+      <div class="usage-bar"><div class="usage-fill${over ? ' over' : ''}" style="width:${pct}%;"></div></div>
+      ${note}
+    </div>`;
+  }).join('');
+  grid.style.display = 'grid';
+}
+
+function loadAuditButton(attempts) {
+  attempts = attempts || 0;
+  if (PORTAL_AUDIT_CALENDAR_URL.startsWith('REEMPLAZA_')) {
+    document.getElementById('gcal-audit-btn').innerHTML = '<p style="color:var(--grey);font-size:.82rem;">Próximamente disponible — mientras tanto, escríbenos y te la agendamos a mano.</p>';
+    return;
+  }
+  if (window.calendar && window.calendar.schedulingButton) {
+    calendar.schedulingButton.load({
+      url: PORTAL_AUDIT_CALENDAR_URL,
+      color: '#2f7bff',
+      label: 'Reservar mi auditoría →',
+      target: document.getElementById('gcal-audit-btn'),
+    });
+  } else if (attempts < 25) {
+    setTimeout(() => loadAuditButton(attempts + 1), 200);
+  }
+}
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const btn = document.getElementById('chat-send-btn');
+  const text = input.value.trim();
+  if (!text || !accessToken) return;
+  appendMsg('user', text);
+  input.value = '';
+  btn.disabled = true;
+  try {
+    const resp = await fetch('/.netlify/functions/portal-chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + accessToken },
+      body: JSON.stringify({ message: text, history: chatHistory }),
+    });
+    const data = await resp.json();
+    const reply = data.text || 'No he podido resolver esto — escríbenos directamente y te ayudamos.';
+    appendMsg('bot', reply);
+    chatHistory.push({ role: 'user', text }, { role: 'bot', text: reply });
+  } catch (e) {
+    appendMsg('bot', 'No hemos podido conectar con el asistente ahora mismo. Inténtalo de nuevo en un momento.');
+  }
+  btn.disabled = false;
+}
+
+function appendMsg(role, text) {
+  const log = document.getElementById('chat-log');
+  const div = document.createElement('div');
+  div.className = 'msg ' + role;
+  div.textContent = text;
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+}
+</script>
+</body>
+</html>

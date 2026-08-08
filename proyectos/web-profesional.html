@@ -244,7 +244,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <p>Durante los 30 días ajustamos todas las integraciones y verificamos que todo funciona con datos reales — el Departamento Lite™ va completamente de regalo, incluido en el precio. Al terminar, tu tecnología sigue mantenida con la renovación mensual.</p>
       <div class="period-tags">
         <span class="period-tag gift"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> 30 días · Departamento Lite™ REGALO</span>
-        <span class="period-tag after">Después · 199 €/mes · Sin compromiso</span>
+        <span class="period-tag after">Después · <span id="renew-price-lite">199</span> €/mes · Sin compromiso</span>
       </div>
     </div>
   </div>
@@ -313,6 +313,10 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </footer>
 
+<script src="../founding-offer.js"></script>
+<script>
+(function(){const el=document.getElementById('renew-price-lite');if(el)el.textContent=currentPrice('lite');})();
+</script>
 <script>
 function toggleFaq(btn){
   const item=btn.closest('.faq-item');

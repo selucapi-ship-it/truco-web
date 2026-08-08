@@ -32,8 +32,22 @@ a{color:inherit;text-decoration:none;}
 ::-webkit-scrollbar-thumb{background:var(--blue-soft);}
 
 .sol-chip{display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--grey);background:var(--bg-card);border:1px solid var(--grey-line);border-radius:7px;padding:7px 10px;cursor:pointer;transition:all var(--tr);}
+.price-old{color:var(--grey);text-decoration:line-through;font-weight:400;}
+.price-new{color:var(--gold);font-weight:800;}
+.launch-tag{display:inline-block;background:linear-gradient(90deg,var(--gold),#c98f1f);color:#1a1206;font-size:.6rem;font-weight:800;padding:2px 8px;border-radius:20px;letter-spacing:.02em;white-space:nowrap;vertical-align:middle;}
+.pc-founding{font-size:.72rem;margin-top:2px;}
+.pc-founding .spots-left{color:var(--gold);font-weight:700;}
 .sol-chip:has(input:checked){background:var(--blue-dim);border-color:var(--blue);color:var(--white);}
 .sol-chip input{width:13px;height:13px;accent-color:var(--blue);flex-shrink:0;}
+.sol-chip-automatizaciones{display:flex;flex-direction:column;align-items:stretch;cursor:default;}
+.sol-chip-automatizaciones:has(input[type=checkbox]:checked){background:var(--bg-card);border-color:var(--grey-line);color:var(--grey);}
+.sol-chip-automatizaciones:has(.sca-main input:checked){background:var(--blue-dim);border-color:var(--blue);color:var(--white);}
+.sca-main{display:flex;align-items:center;gap:6px;cursor:pointer;}
+.band-picker{display:none;flex-direction:column;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--grey-line);}
+.sol-chip-automatizaciones:has(.sca-main input:checked) .band-picker{display:flex;}
+.band-opt{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--grey);cursor:pointer;}
+.band-opt input{width:13px;height:13px;accent-color:var(--blue);flex-shrink:0;}
+.band-opt:has(input:checked){color:var(--white);font-weight:700;}
 .sol-chip span{pointer-events:none;}
 @keyframes packPulse{0%,100%{box-shadow:0 0 0 0 rgba(217,168,63,.45);}50%{box-shadow:0 0 0 5px rgba(217,168,63,0);}}
 .sol-chip.sol-suggested{border-color:var(--gold)!important;animation:packPulse 1.8s ease-in-out infinite;}
@@ -41,11 +55,11 @@ a{color:inherit;text-decoration:none;}
 #pack-badge b{color:var(--white);}
 #pack-security-tip{display:none;margin:0 20px 14px;padding:10px 14px;border-radius:8px;background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.3);font-size:.76rem;color:var(--grey);line-height:1.55;}
 #pack-security-tip b{color:var(--gold);}
-.quick-sector-box{padding:16px 20px;border-bottom:1px solid var(--grey-line);background:rgba(47,123,255,.05);}
+.quick-sector-box{padding:16px 20px;border-bottom:1px solid var(--grey-line);background:rgba(34,197,94,.05);}
 .quick-sector-box label{display:block;font-size:.82rem;color:var(--white);font-weight:700;margin-bottom:2px;}
 .quick-sector-box .qsb-sub{font-size:.72rem;color:var(--grey);margin-bottom:8px;}
-.quick-sector-box select{width:100%;background:var(--bg-panel);border:1px solid var(--blue-soft);border-radius:8px;padding:11px 14px;color:var(--white);font-family:var(--font-b);font-size:.88rem;outline:none;-webkit-appearance:none;cursor:pointer;}
-.quick-sector-box select:focus{border-color:var(--blue);}
+.quick-sector-box select{width:100%;background:var(--bg-panel);border:1.5px solid var(--green);border-radius:8px;padding:11px 14px;color:var(--white);font-family:var(--font-b);font-size:.88rem;outline:none;-webkit-appearance:none;cursor:pointer;}
+.quick-sector-box select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,.15);}
 .quick-sector-box select option{background:var(--bg-panel);}
 .billing-toggle{display:flex;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:10px;padding:4px;margin-bottom:16px;}
 .billing-btn{flex:1;text-align:center;padding:9px 16px;border-radius:7px;font-size:.85rem;font-weight:600;color:var(--grey);cursor:pointer;transition:all var(--tr);}
@@ -54,6 +68,8 @@ a{color:inherit;text-decoration:none;}
 .annual-highlight{background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.2);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:.78rem;color:var(--gold);line-height:1.6;}
 .annual-highlight b{color:var(--white);}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pickerPulse{0%,100%{box-shadow:0 0 0 0 rgba(47,123,255,.5);}50%{box-shadow:0 0 0 8px rgba(47,123,255,0);}}
+.picker-pulse{animation:pickerPulse .8s ease-in-out 2;}
 nav{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);height:64px;background:rgba(22,21,26,.97);border-bottom:1px solid var(--grey-line);position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);}
 .t-mark{width:38px;height:38px;border:1.5px solid var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Georgia',serif;color:var(--gold);font-size:20px;font-weight:700;background:linear-gradient(160deg,var(--bg-panel),var(--bg));}
 .nav-logo{display:flex;align-items:center;gap:11px;}
@@ -80,6 +96,16 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .checkout{max-width:1060px;margin:0 auto;padding:40px 24px 80px;display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:start;}
 @media(max-width:800px){.checkout{grid-template-columns:1fr;}}
 
+.mobile-sticky-bar{display:none;}
+@media(max-width:800px){
+  .mobile-sticky-bar.active{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:200;background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:12px 16px;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 -8px 24px rgba(0,0,0,.4);}
+  .checkout.has-sticky-bar{padding-bottom:100px;}
+}
+.msb-info{display:flex;flex-direction:column;line-height:1.3;min-width:0;}
+.msb-label{font-size:.65rem;color:var(--grey);text-transform:uppercase;letter-spacing:.05em;font-family:var(--font-m);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.msb-price{font-size:1.1rem;font-weight:700;font-family:var(--font-d);color:var(--white);}
+.msb-btn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:12px 18px;font-size:.85rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+
 .step{margin-bottom:36px;}
 .step-hd{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
 .step-num{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-family:var(--font-m);font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -90,13 +116,37 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .cat-label::after{content:'';flex:1;height:1px;background:var(--grey-line);min-width:16px;}
 @media(max-width:480px){.cat-label::after{display:none;}}
 
+/* PATH SELECTOR — paso 0 */
+.path-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:10px;}
+@media(max-width:860px){.path-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.path-grid{grid-template-columns:1fr;}}
+.path-card{border:1.5px solid var(--grey-line);border-radius:16px;padding:26px 24px;cursor:pointer;transition:border-color var(--tr),transform var(--tr),background var(--tr);background:var(--bg-panel);position:relative;}
+.path-card:hover{transform:translateY(-3px);}
+.path-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.path-icon svg{width:22px;height:22px;}
+.path-card.c-blue .path-icon{background:var(--blue-dim);color:var(--blue);}
+.path-card.c-blue:hover{border-color:var(--blue-soft);}
+.path-card.c-gold .path-icon{background:var(--gold-dim);color:var(--gold);}
+.path-card.c-gold:hover{border-color:var(--gold);}
+.path-card.c-green .path-icon{background:var(--green-dim);color:var(--green);}
+.path-card.c-green:hover{border-color:var(--green);}
+.path-card h3{font-family:var(--font-d);font-size:1.15rem;font-weight:800;margin-bottom:8px;}
+.path-card p{font-size:.85rem;color:var(--grey);line-height:1.6;margin-bottom:16px;}
+.path-tag{display:inline-block;font-size:.78rem;font-weight:700;padding:5px 14px;border-radius:20px;font-family:var(--font-m);}
+.path-card.c-blue .path-tag{color:var(--blue);background:var(--blue-dim);}
+.path-card.c-gold .path-tag{color:var(--gold);background:var(--gold-dim);}
+.path-card.c-green .path-tag{color:var(--green);background:var(--green-dim);}
+.path-change{display:none;align-items:center;justify-content:space-between;gap:12px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:10px;padding:12px 18px;margin-bottom:20px;flex-wrap:wrap;}
+.path-change b{color:var(--white);}
+.path-change span{font-size:.85rem;color:var(--grey);}
+.path-change a{font-size:.82rem;color:var(--blue);font-weight:700;cursor:pointer;}
+.path-change a:hover{text-decoration:underline;}
+
 /* PROJECT CARDS — 2 col */
 .project-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
 @media(max-width:440px){.project-grid{grid-template-columns:1fr;}}
 @media(max-width:480px){.solutions-grid-el{grid-template-columns:1fr!important;}}
 
-.onboarding-direct-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-@media(max-width:600px){.onboarding-direct-grid{grid-template-columns:1fr;}}
 
 .plan-card{border:1.5px solid var(--grey-line);border-radius:14px;padding:0;cursor:pointer;overflow:hidden;transition:border-color var(--tr),transform var(--tr);position:relative;}
 .plan-card:hover{border-color:var(--blue-soft);transform:translateY(-1px);}
@@ -112,6 +162,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .pc-vat{font-size:.7rem;color:var(--grey);margin-top:3px;}
 .pc-includes{font-size:.75rem;color:var(--grey);margin-top:8px;padding-top:8px;border-top:1px solid var(--grey-line);}
 .pc-includes span{color:var(--gold);}
+.pc-save-tag{margin-top:10px;background:linear-gradient(135deg,rgba(217,168,63,.22),rgba(217,168,63,.08));border:1px solid var(--gold);border-radius:8px;padding:7px 10px;font-size:.74rem;font-weight:700;color:var(--gold);text-align:center;}
 .pc-check-box{position:absolute;top:14px;right:14px;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--grey-line);display:flex;align-items:center;justify-content:center;transition:all var(--tr);}
 .plan-card.selected .pc-check-box{background:var(--blue);border-color:var(--blue);}
 .pc-check-box::after{content:'✓';font-size:.68rem;color:#fff;opacity:0;transition:opacity var(--tr);}
@@ -166,6 +217,19 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .error-msg{font-size:.73rem;color:var(--red);display:none;}
 .form-field input.error ~ .error-msg,.form-field select.error ~ .error-msg{display:block;}
 
+/* CLIENTE EXISTENTE / NUEVO */
+.client-toggle{display:flex;gap:8px;margin-bottom:18px;}
+.ct-btn{flex:1;padding:11px;border-radius:8px;border:1px solid var(--grey-line);background:var(--bg-panel);color:var(--grey);font-size:.85rem;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:all var(--tr);}
+.ct-btn.active{border-color:var(--blue);color:var(--white);background:var(--blue-dim);}
+
+/* FUERZA DE CONTRASEÑA */
+.pw-strength-bar{height:5px;background:var(--bg-card);border-radius:4px;overflow:hidden;margin-top:9px;}
+.pw-strength-fill{height:100%;width:0;border-radius:4px;background:var(--red);transition:width .25s ease,background .25s ease;}
+.pw-strength-label{font-size:.72rem;margin-top:5px;font-weight:600;min-height:15px;}
+.pw-reqs{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;}
+.pw-reqs span{font-size:.68rem;color:var(--grey);background:var(--bg-card);border:1px solid var(--grey-line);border-radius:12px;padding:3px 9px;transition:all var(--tr);}
+.pw-reqs span.met{color:var(--green);border-color:var(--green);background:var(--green-dim);}
+
 /* LEGAL */
 .legal-box{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px;}
 .check-row{display:flex;align-items:flex-start;gap:12px;}
@@ -181,10 +245,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .sb-header h3{font-size:1rem;font-weight:700;}
 .sb-sub{font-size:.78rem;color:var(--grey);margin-top:4px;}
 .sb-empty{padding:20px 22px;font-size:.85rem;color:var(--grey);font-style:italic;}
-.sb-features{padding:14px 22px;border-bottom:1px solid var(--grey-line);}
-.sb-features ul{list-style:none;display:flex;flex-direction:column;gap:4px;}
-.sb-features li{font-size:.78rem;color:var(--grey);padding-left:16px;position:relative;}
-.sb-features li::before{content:'✓';position:absolute;left:0;color:var(--blue);font-weight:700;}
 .sb-breakdown{padding:14px 22px;border-bottom:1px solid var(--grey-line);display:flex;flex-direction:column;gap:7px;}
 .sbr-row{display:flex;justify-content:space-between;align-items:baseline;}
 .sbr-label{font-size:.8rem;color:var(--grey);}
@@ -204,6 +264,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .pay-btn:hover:not(:disabled){opacity:.85;}
 .pay-btn:disabled{opacity:.38;cursor:not-allowed;}
 .sb-secure{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 22px 16px;font-size:.72rem;color:var(--grey);}
+.sb-email-btn{width:100%;background:none;border:1px solid var(--grey-line);color:var(--grey);border-radius:10px;padding:10px;font-size:.78rem;font-family:var(--font-b);cursor:pointer;margin-top:8px;transition:all var(--tr);}
+.sb-email-btn:hover{border-color:var(--blue);color:var(--white);}
 
 /* ── TRANSICIÓN ENTRE PÁGINAS (sobria, sin efectismos) ── */
 @view-transition{navigation:auto;}
@@ -235,26 +297,55 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 <div class="checkout">
 <div class="form-col">
   <div class="step">
-      <div class="step-hd"><div class="step-num">1</div><h2>Selecciona tu plan de entrada</h2></div>
+      <div class="step-hd"><div class="step-num">1</div><h2>¿Cómo quieres empezar?</h2></div>
 
-      <!-- CATEGORÍA A: DEPARTAMENTO TECNOLÓGICO — PRIORIDAD -->
+      <!-- PASO 0: ELIGE TU CAMINO -->
+      <div class="path-grid" id="path-grid">
+        <div class="path-card c-gold" id="path-card-depto" onclick="selectPath('depto')">
+          <div class="path-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+          <h3>Departamento Tecnológico</h3>
+          <p>Tu web y las soluciones que elijas van completamente gratis. A cambio, una permanencia mínima.</p>
+          <span class="path-tag">Desde 69 €/mes</span>
+        </div>
+        <div class="path-card c-blue" id="path-card-proyecto" onclick="selectPath('proyecto')">
+          <div class="path-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="7" y1="14" x2="13" y2="14"/></svg></div>
+          <h3>Proyecto Web</h3>
+          <p>Tu web nueva, pago único, sin permanencia al empezar — con 30 días de Departamento Lite™ de regalo.</p>
+          <span class="path-tag">Desde 649 €</span>
+        </div>
+        <div class="path-card c-green" id="path-card-digitaliza" onclick="selectPath('digitaliza')">
+          <div class="path-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+          <h3>Digitaliza tu Empresa</h3>
+          <p>Elige solo las soluciones que necesitas — WhatsApp, CRM, Ciberseguridad... Pagas su precio, sin permanencia al empezar, con 90 días de Departamento de regalo.</p>
+          <span class="path-tag">Desde 350 €</span>
+        </div>
+      </div>
+      <div class="path-change" id="path-change">
+        <span>Has elegido: <b id="path-change-label"></b></span>
+        <a onclick="selectPath(null)">← Cambiar</a>
+      </div>
+
+      <!-- CATEGORÍA A: DEPARTAMENTO TECNOLÓGICO -->
+      <div id="wrap-depto" style="display:none;">
       <div class="cat-label">Departamento Tecnológico · Suscripción mensual</div>
       <div class="pack-grid" style="margin-bottom:16px;">
 
         <label class="plan-card pro-card" id="card-arranque-pro" onclick="selectDirect('arranque-pro')">
           <div class="pc-ribbon">PRO</div>
-          <input type="radio" name="plan" value="arranque-pro" style="display:none">
           <div class="pc-check-box"></div>
           <div class="pc-top">
-            <div class="pc-tag">Suscripción mensual · Ecosistema tecnológico amplio</div>
+            <div class="pc-tag">Web Profesional + 3 soluciones gratis</div>
             <div class="pc-name">Departamento Pro™</div>
-            <div class="pc-base-price">399 €<sub>/mes + IVA</sub></div>
-            <div class="pc-vat">482,79 €/mes con IVA · Sin compromisos</div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--gold);">Anual: 4.309,20 € + IVA · Ahorras 10%</div>
+            <div class="pc-base-price" id="pc-price-pro"></div>
+            <div class="pc-vat" id="pc-vat-pro"></div>
+            <div class="pc-founding" id="pc-founding-pro"></div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 12 meses</div>
+            <div class="pc-save-tag">🎁 Ahorras 1.990-2.720 € en instalación</div>
           </div>
           <div class="pc-breakdown">
-            <div class="pb-row"><span class="pb-label">Hasta 6 soluciones tecnológicas</span><span class="pb-val">✓</span></div>
-            <div class="pb-row"><span class="pb-label">Optimización continua</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Web Profesional regalada</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">3 soluciones a elegir, gratis</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Mantenimiento hasta 6 en total</span><span class="pb-val">✓</span></div>
             <div class="pb-row"><span class="pb-label">Mayor prioridad incidencias</span><span class="pb-val">✓</span></div>
             <div class="pb-divider"></div>
             <div class="pb-row"><span class="pb-label">Reunión mensual</span><span class="pb-val">45 min</span></div>
@@ -262,65 +353,70 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         </label>
 
         <label class="plan-card" id="card-arranque-lite" onclick="selectDirect('arranque-lite')">
-          <input type="radio" name="plan" value="arranque-lite" style="display:none">
           <div class="pc-check-box"></div>
           <div class="pc-top">
-            <div class="pc-tag">Suscripción mensual · Para quien ya tiene tecnología</div>
+            <div class="pc-tag">Web + 2 soluciones gratis</div>
             <div class="pc-name">Departamento Lite™</div>
-            <div class="pc-base-price">199 €<sub>/mes + IVA</sub></div>
-            <div class="pc-vat">240,79 €/mes con IVA · Sin compromisos</div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--gold);">Anual: 2.149,20 € + IVA · Ahorras 10%</div>
+            <div class="pc-base-price" id="pc-price-lite"></div>
+            <div class="pc-vat" id="pc-vat-lite"></div>
+            <div class="pc-founding" id="pc-founding-lite"></div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 12 meses</div>
+            <div class="pc-save-tag">🎁 Ahorras 1.349-1.929 € en instalación</div>
           </div>
           <div class="pc-breakdown">
-            <div class="pb-row"><span class="pb-label">Hasta 2 soluciones tecnológicas</span><span class="pb-val">✓</span></div>
-            <div class="pb-row"><span class="pb-label">Mantenimiento web y seguridad</span><span class="pb-val">✓</span></div>
-            <div class="pb-row"><span class="pb-label">Resolución de incidencias</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Web gratis (reacondicionada o nueva)</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">2 soluciones a elegir, gratis</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Mantenimiento hasta 3 en total</span><span class="pb-val">✓</span></div>
             <div class="pb-divider"></div>
             <div class="pb-row"><span class="pb-label">Reunión mensual</span><span class="pb-val">30 min</span></div>
           </div>
         </label>
 
+        <label class="plan-card" id="card-arranque-basic" onclick="selectDirect('arranque-basic')">
+          <div class="pc-check-box"></div>
+          <div class="pc-top">
+            <div class="pc-tag">El punto de entrada · 1 solución gratis</div>
+            <div class="pc-name">Departamento Basic™</div>
+            <div class="pc-base-price">69 €<sub>/mes + IVA</sub></div>
+            <div class="pc-vat">83,49 €/mes con IVA</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 6 meses</div>
+          </div>
+          <div class="pc-breakdown">
+            <div class="pb-row"><span class="pb-label">1 solución a elegir, gratis</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Acompañamiento completo</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Sin web incluida</span><span class="pb-val" style="color:var(--grey);font-weight:400;">—</span></div>
+          </div>
+        </label>
+
       </div>
 
-      <!-- ONBOARDING DIRECTO — aparece al seleccionar Departamento -->
-      <div id="onboarding-direct" style="display:none;background:rgba(47,123,255,.06);border:1px solid rgba(47,123,255,.2);border-radius:12px;padding:16px 20px;margin-bottom:16px;animation:fadeIn .22s ease;">
-        <div style="font-family:var(--font-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;">→ ¿Cómo empezamos?</div>
-        <div class="onboarding-direct-grid">
-          <div style="font-size:.78rem;color:var(--grey);padding:10px 12px;background:rgba(255,255,255,.03);border-radius:8px;line-height:1.5;">
-            <b style="color:var(--white);display:block;margin-bottom:4px;">En 48h te contactamos</b>
-            Hacemos una auditoría gratuita de tu web, herramientas y sistemas actuales.
-          </div>
-          <div style="font-size:.78rem;color:var(--grey);padding:10px 12px;background:rgba(255,255,255,.03);border-radius:8px;line-height:1.5;">
-            <b style="color:var(--white);display:block;margin-bottom:4px;">Incorporamos lo que tienes</b>
-            Tu tecnología actual entra al departamento. Sin cambiar nada que funcione.
-          </div>
-          <div style="font-size:.78rem;color:var(--grey);padding:10px 12px;background:rgba(255,255,255,.03);border-radius:8px;line-height:1.5;">
-            <b style="color:var(--green);display:block;margin-bottom:4px;">Tú te olvidas del resto</b>
-            Mantenimiento, incidencias, actualizaciones. Todo cubierto desde el primer mes.
-          </div>
+      <!-- SELECTOR DE SOLUCIÓN POR ESCALÓN — aparece al elegir Basic/Lite/Pro -->
+      <div id="tier-solutions-picker" class="tier-picker-box" style="display:none;margin-bottom:16px;background:rgba(47,123,255,.06);border:1.5px solid var(--blue-soft);border-radius:14px;padding:18px 20px;">
+        <div class="cat-label" id="tier-solutions-label" style="margin-top:0;">Elige tu solución gratis</div>
+        <div id="tier-solutions-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
+        <div id="tier-solutions-note" style="margin-top:10px;font-size:.76rem;color:var(--grey);"></div>
+      </div>
+
+
+      <div id="payment-mode-block" style="display:none;">
+        <div class="cat-label" style="margin-top:0;">¿Cómo lo pagas?</div>
+        <div class="billing-toggle">
+          <div class="billing-btn active" id="btn-unico" onclick="setTierPaymentMode('unico')">Pago único<span class="billing-save-tag">— ahorra 12%</span></div>
+          <div class="billing-btn" id="btn-financiado" onclick="setTierPaymentMode('financiado')">Fracciona con SeQura</div>
+        </div>
+        <div class="annual-highlight" id="annual-note">
+          <b id="payment-mode-title">Pago único por adelantado — ahorras un 12%.</b> <span id="payment-mode-desc">Se cobra todo el periodo de permanencia de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.</span>
         </div>
       </div>
+      </div><!-- /wrap-depto -->
 
-      <div class="billing-toggle">
-        <div class="billing-btn active" id="btn-arranque" onclick="setDirectBilling('arranque')">
-          Pago mensual
-        </div>
-        <div class="billing-btn" id="btn-anual" onclick="setDirectBilling('anual')">
-          Pago anual<span class="billing-save-tag">— ahorra 10%</span>
-        </div>
-      </div>
-
-      <div class="annual-highlight" id="annual-note" style="display:none">
-        <b>Pago único anual por adelantado.</b> Acceso inmediato al departamento completo. Ideal si ya conoces el servicio y quieres el mejor precio. Renueva o cancela al vencer el año.
-      </div>
-
-      <!-- CATEGORÍA B: PROYECTOS DE ENTRADA -->
-      <div class="cat-label" style="margin-top:24px;">¿Necesitas construir algo primero? · Proyectos de entrada</div>
+      <!-- CATEGORÍA B: PROYECTO WEB -->
+      <div id="wrap-proyecto" style="display:none;">
+      <div class="cat-label">¿Necesitas construir algo primero? · Proyecto Web</div>
       <div class="project-grid">
 
         <!-- 1: WEB ESENCIAL -->
         <label class="plan-card" id="card-esencial" onclick="selectProject('esencial')">
-          <input type="radio" name="plan" value="esencial" style="display:none">
           <div class="pc-check-box"></div>
           <div class="pc-top">
             <div class="pc-tag">Proyecto único · 30 días · Rápido</div>
@@ -334,7 +430,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         <!-- 2: WEB PROFESIONAL — destacada -->
         <label class="plan-card" id="card-web" onclick="selectProject('web')" style="border-color:var(--blue);">
           <div class="pc-ribbon" style="background:linear-gradient(90deg,var(--gold),#c98f1f);color:#1a1206;">MÁS ELEGIDA</div>
-          <input type="radio" name="plan" value="web" style="display:none">
           <div class="pc-check-box"></div>
           <div class="pc-top" style="padding-top:28px;">
             <div class="pc-tag" style="color:var(--blue);">Proyecto único · 30 días · Con automatización</div>
@@ -347,23 +442,12 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 
       </div>
 
-      <!-- ADD-ON: DIGITALIZA (se puede combinar con la web de arriba, o contratarse sola) -->
-      <div class="cat-label" style="margin-top:24px;">¿Añades soluciones tecnológicas? · Opcional, se combina con la web</div>
-      <div class="project-grid" style="grid-template-columns:1fr;">
-        <label class="plan-card" id="card-digital" onclick="toggleDigitalAddon()">
-          <div class="pc-check-box"></div>
-          <div class="pc-top">
-            <div class="pc-tag">Se añade a tu compra · 90 días de implantación</div>
-            <div class="pc-name">Digitaliza tu Empresa</div>
-            <div class="pc-base-price" id="digital-price-display">desde 600 €<sub> + IVA</sub></div>
-            <div class="pc-vat">Precio según soluciones elegidas · también puedes contratarla sola</div>
-            <div class="pc-includes" style="margin-top:8px;">Elige las <span>soluciones que necesitas</span> abajo</div>
-          </div>
-        </label>
+      <div id="proyecto-digitaliza-crosssell" style="display:none;margin-top:16px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:14px 18px;font-size:.84rem;color:var(--grey);">
+        <span id="proyecto-crosssell-text"></span> <a onclick="selectPath('digitaliza')" style="color:var(--green);font-weight:700;cursor:pointer;">Ir a Digitaliza tu Empresa →</a>
       </div>
 
       <!-- PANEL DINÁMICO — aparece al seleccionar proyecto -->
-      <div id="project-panel" style="display:none;margin-bottom:20px;">
+      <div id="project-panel" style="display:none;margin-bottom:20px;margin-top:16px;">
 
         <!-- WEBS: 30 días automático -->
         <div id="web-implantacion" style="display:none;background:var(--bg-panel);border:1.5px solid var(--blue-soft);border-radius:14px;padding:20px;animation:fadeIn .22s ease;">
@@ -374,85 +458,116 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div style="font-size:.72rem;color:var(--grey);margin-top:4px;">Supervisión, ajustes y soporte durante toda la implantación</div>
           </div>
           <div style="font-size:.78rem;color:var(--grey);background:rgba(255,255,255,.03);border-radius:8px;padding:10px 14px;">
-            <b style="color:var(--white);">Desde el día 31</b>, si quieres seguir, renovación automática a 199 €/mes + IVA. Si no, cancelas sin más avisando con 7 días — sin compromisos ocultos.
+            <b style="color:var(--white);">Desde el día 31</b>, si quieres seguir, renovación automática a <span id="renew-price-esencial"></span> €/mes + IVA. Si no, cancelas sin más avisando con 7 días — sin compromisos ocultos.
           </div>
-        </div>
-
-        <!-- DIGITALIZA: selector de soluciones + 90 días -->
-        <div id="digital-implantacion" style="display:none;background:var(--bg-panel);border:1.5px solid var(--blue);border-radius:14px;overflow:hidden;animation:fadeIn .22s ease;">
-          <div style="padding:18px 20px;border-bottom:1px solid var(--grey-line);">
-            <div style="font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:4px;">Selecciona las soluciones a implantar</div>
-            <div style="font-size:.75rem;color:var(--grey);">El precio y el departamento se asignan automáticamente según tu selección</div>
-            <div style="font-size:.72rem;color:var(--grey);margin-top:6px;">Las soluciones con IA (WhatsApp, Web, Correo) incluyen 1.000 interacciones/mes · exceso 0,02 €/interacción</div>
-          </div>
-          <div class="quick-sector-box">
-            <label for="quick-sector">Elige tu sector y nosotros seleccionamos lo que necesitas</label>
-            <div class="qsb-sub">Marcamos las soluciones habituales de tu sector — tú decides si las mantienes, quitas o añades más.</div>
-            <select id="quick-sector" onchange="quickSectorSelect(this.value)">
-              <option value="">Selecciona tu oficio o negocio…</option>
-              <optgroup label="Servicios y citas">
-                <option value="peluqueria">Peluquería / Barbería</option>
-                <option value="estetica">Centro de estética / Belleza</option>
-                <option value="dental">Clínica dental</option>
-                <option value="medica">Clínica médica / Centro de salud</option>
-                <option value="fisio">Fisioterapia</option>
-                <option value="psicologia">Psicología / Terapia</option>
-                <option value="veterinaria">Veterinaria</option>
-                <option value="gimnasio">Gimnasio / Centro deportivo</option>
-                <option value="academia">Academia / Centro de formación</option>
-                <option value="autoescuela">Autoescuela</option>
-                <option value="fontanero">Fontanero</option>
-                <option value="electricista">Electricista</option>
-                <option value="cerrajero">Cerrajero</option>
-                <option value="pintor">Pintor / Reformas</option>
-                <option value="carpintero">Carpintero</option>
-                <option value="taller">Taller mecánico</option>
-              </optgroup>
-              <optgroup label="Despachos y gestión">
-                <option value="abogado">Abogado / Bufete</option>
-                <option value="asesoria">Asesoría</option>
-                <option value="gestoria">Gestoría</option>
-                <option value="consultoria">Consultoría</option>
-                <option value="inmobiliaria">Inmobiliaria</option>
-                <option value="arquitecto">Arquitecto</option>
-                <option value="notaria">Notaría</option>
-              </optgroup>
-              <optgroup label="Hostelería">
-                <option value="restaurante">Restaurante</option>
-                <option value="bar">Bar / Cafetería</option>
-                <option value="eventos">Salón de celebraciones / Eventos</option>
-                <option value="catering">Catering</option>
-              </optgroup>
-              <optgroup label="Comercio y otros">
-                <option value="tienda">Tienda / Comercio</option>
-                <option value="ecommerce">Ecommerce</option>
-                <option value="ferreteria">Ferretería</option>
-                <option value="floristeria">Floristería</option>
-                <option value="panaderia">Panadería / Pastelería</option>
-                <option value="otro">Otro negocio</option>
-              </optgroup>
-            </select>
-          </div>
-          <div id="pack-badge"></div>
-          <div id="pack-security-tip"></div>
-          <div class="solutions-grid-el" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:16px 20px;" id="solutions-grid">
-            <label class="sol-chip" data-price="590"><input type="checkbox" value="whatsapp" onchange="updateSolutions()"><span>IA para WhatsApp — 590 € + IVA</span></label>
-            <label class="sol-chip" data-price="350"><input type="checkbox" value="web-ia" onchange="updateSolutions()"><span>IA para Web — 350 € + IVA</span></label>
-            <label class="sol-chip" data-price="350"><input type="checkbox" value="email-ia" onchange="updateSolutions()"><span>IA para Correo — 350 € + IVA</span></label>
-            <label class="sol-chip" data-price="400"><input type="checkbox" value="crm" onchange="updateSolutions()"><span>CRM — 400 € + IVA</span></label>
-            <label class="sol-chip" data-price="350"><input type="checkbox" value="reservas" onchange="updateSolutions()"><span>Reservas online — 350 € + IVA</span></label>
-            <label class="sol-chip" data-price="400"><input type="checkbox" value="automatizaciones" onchange="updateSolutions()"><span>Automatizaciones — 400 € + IVA</span></label>
-            <label class="sol-chip" data-price="350"><input type="checkbox" value="integraciones" onchange="updateSolutions()"><span>Integraciones — 350 € + IVA</span></label>
-            <label class="sol-chip" data-price="400"><input type="checkbox" value="docs" onchange="updateSolutions()"><span>Gestión documental — 400 € + IVA</span></label>
-            <label class="sol-chip" data-price="300"><input type="checkbox" value="firma" onchange="updateSolutions()"><span>Firma digital — 300 € + IVA</span></label>
-            <label class="sol-chip" data-price="450"><input type="checkbox" value="ciberseguridad" onchange="updateSolutions()"><span>Ciberseguridad Pyme — 450 € + IVA</span></label>
-            <label class="sol-chip" data-price="550"><input type="checkbox" value="truki" onchange="updateSolutions()"><span>TruKi (facturas por chat) — 550 € + IVA</span></label>
-          </div>
-          <div id="solutions-result" style="margin:0 20px 16px;padding:12px 14px;border-radius:8px;font-size:.8rem;line-height:1.55;display:none;"></div>
-          <div id="digital-90d" style="display:none;margin:0 20px 16px;background:rgba(255,255,255,.03);border:1px solid var(--grey-line);border-radius:8px;padding:12px 14px;font-size:.78rem;color:var(--grey);line-height:1.6;"></div>
         </div>
 
       </div>
+      </div><!-- /wrap-proyecto -->
+
+      <!-- CATEGORÍA C: DIGITALIZA TU EMPRESA -->
+      <div id="wrap-digitaliza" style="display:none;">
+      <div class="cat-label">Elige las soluciones que necesitas · Digitaliza tu Empresa</div>
+
+      <div id="digitaliza-project-crosssell" style="display:none;margin-bottom:16px;background:rgba(47,123,255,.06);border:1px solid rgba(47,123,255,.2);border-radius:10px;padding:14px 18px;font-size:.84rem;color:var(--grey);">
+        <span id="digitaliza-crosssell-text"></span> <a onclick="selectPath('proyecto')" style="color:var(--blue);font-weight:700;cursor:pointer;">Ir a Proyecto Web →</a>
+      </div>
+
+      <div class="project-grid" style="grid-template-columns:1fr;margin-bottom:16px;">
+        <label class="plan-card" id="card-digital" onclick="toggleDigitalAddon()">
+          <div class="pc-check-box"></div>
+          <div class="pc-top">
+            <div class="pc-tag">90 días de implantación</div>
+            <div class="pc-name">Digitaliza tu Empresa</div>
+            <div class="pc-base-price" id="digital-price-display">desde 350 €<sub> + IVA</sub></div>
+            <div class="pc-vat">Precio según soluciones elegidas · también puedes combinarla con una web</div>
+          </div>
+        </label>
+      </div>
+
+      <!-- DIGITALIZA: selector de soluciones + 90 días -->
+      <div id="digital-implantacion" style="display:none;background:var(--bg-panel);border:1.5px solid var(--blue);border-radius:14px;overflow:hidden;animation:fadeIn .22s ease;margin-bottom:20px;">
+        <div style="padding:18px 20px;border-bottom:1px solid var(--grey-line);">
+          <div style="font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:4px;">Selecciona las soluciones a implantar</div>
+          <div style="font-size:.72rem;color:var(--grey);">Las soluciones con IA (WhatsApp, Web, Correo) incluyen 1.000 interacciones/mes · exceso 0,02 €/interacción</div>
+        </div>
+        <div class="quick-sector-box">
+          <label for="quick-sector">Elige tu sector y te recomendamos las soluciones habituales</label>
+          <div class="qsb-sub">Puedes quitar o añadir las que quieras después.</div>
+          <select id="quick-sector" onchange="quickSectorSelect(this.value)">
+            <option value="">Selecciona tu oficio o negocio…</option>
+            <optgroup label="Servicios y citas">
+              <option value="peluqueria">Peluquería / Barbería</option>
+              <option value="estetica">Centro de estética / Belleza</option>
+              <option value="dental">Clínica dental</option>
+              <option value="medica">Clínica médica / Centro de salud</option>
+              <option value="fisio">Fisioterapia</option>
+              <option value="psicologia">Psicología / Terapia</option>
+              <option value="veterinaria">Veterinaria</option>
+              <option value="gimnasio">Gimnasio / Centro deportivo</option>
+              <option value="academia">Academia / Centro de formación</option>
+              <option value="autoescuela">Autoescuela</option>
+              <option value="fontanero">Fontanero</option>
+              <option value="electricista">Electricista</option>
+              <option value="cerrajero">Cerrajero</option>
+              <option value="pintor">Pintor / Reformas</option>
+              <option value="carpintero">Carpintero</option>
+              <option value="taller">Taller mecánico</option>
+            </optgroup>
+            <optgroup label="Despachos y gestión">
+              <option value="abogado">Abogado / Bufete</option>
+              <option value="asesoria">Asesoría</option>
+              <option value="gestoria">Gestoría</option>
+              <option value="consultoria">Consultoría</option>
+              <option value="inmobiliaria">Inmobiliaria</option>
+              <option value="arquitecto">Arquitecto</option>
+              <option value="notaria">Notaría</option>
+            </optgroup>
+            <optgroup label="Hostelería">
+              <option value="restaurante">Restaurante</option>
+              <option value="bar">Bar / Cafetería</option>
+              <option value="eventos">Salón de celebraciones / Eventos</option>
+              <option value="catering">Catering</option>
+            </optgroup>
+            <optgroup label="Comercio y otros">
+              <option value="tienda">Tienda / Comercio</option>
+              <option value="ecommerce">Ecommerce</option>
+              <option value="ferreteria">Ferretería</option>
+              <option value="floristeria">Floristería</option>
+              <option value="panaderia">Panadería / Pastelería</option>
+              <option value="otro">Otro negocio</option>
+            </optgroup>
+          </select>
+        </div>
+        <div id="pack-badge"></div>
+        <div id="pack-security-tip"></div>
+        <div class="solutions-grid-el" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:16px 20px;" id="solutions-grid">
+          <label class="sol-chip" data-price="590"><input type="checkbox" value="whatsapp" onchange="updateSolutions()"><span>IA para WhatsApp — <s class="price-old">890€</s> <b class="price-new">590 € + IVA</b> <span class="launch-tag">Oferta 2026</span></span></label>
+          <label class="sol-chip" data-price="350"><input type="checkbox" value="web-ia" onchange="updateSolutions()"><span>IA para Web — <s class="price-old">650€</s> <b class="price-new">350 € + IVA</b> <span class="launch-tag">Oferta 2026</span></span></label>
+          <label class="sol-chip" data-price="350"><input type="checkbox" value="email-ia" onchange="updateSolutions()"><span>IA para Correo — <s class="price-old">590€</s> <b class="price-new">350 € + IVA</b> <span class="launch-tag">Oferta 2026</span></span></label>
+          <label class="sol-chip" data-price="950" data-desde="true"><input type="checkbox" value="crm" onchange="updateSolutions()"><span>CRM — desde 950 € + IVA<small style="display:block;font-weight:400;color:var(--grey);font-size:.72rem;">Requiere auditoría previa para cerrar precio</small></span></label>
+          <label class="sol-chip" data-price="350"><input type="checkbox" value="reservas" onchange="updateSolutions()"><span>Reservas y Agenda — 350 € + IVA</span></label>
+          <div class="sol-chip sol-chip-automatizaciones" id="chip-automatizaciones" data-price="350" data-desde="true">
+            <label class="sca-main"><input type="checkbox" value="automatizaciones" onchange="toggleAutomatizacionesBands(this.checked)"><span>Automatizaciones<small style="display:block;font-weight:400;color:var(--grey);font-size:.72rem;">Precio cerrado según complejidad — elige tu banda</small></span></label>
+            <div class="band-picker" id="automatizaciones-bands">
+              <label class="band-opt"><input type="radio" name="autom-band" value="350" checked onchange="setAutomatizacionesBand(350)"><span>Simple — 350 € + IVA</span></label>
+              <label class="band-opt"><input type="radio" name="autom-band" value="650" onchange="setAutomatizacionesBand(650)"><span>Media — 650 € + IVA</span></label>
+              <label class="band-opt"><input type="radio" name="autom-band" value="1200" onchange="setAutomatizacionesBand(1200)"><span>Compleja — 1.200 € + IVA</span></label>
+            </div>
+          </div>
+          <label class="sol-chip" data-price="600" data-desde="true"><input type="checkbox" value="integraciones" onchange="updateSolutions()"><span>Integraciones — desde 600 € + IVA<small style="display:block;font-weight:400;color:var(--grey);font-size:.72rem;">Consulta tu caso, precio final sin sorpresas</small></span></label>
+          <label class="sol-chip" data-price="400"><input type="checkbox" value="docs" onchange="updateSolutions()"><span>Gestión documental — desde 400 € + IVA</span></label>
+          <label class="sol-chip" data-price="500"><input type="checkbox" value="firma" onchange="updateSolutions()"><span>Firma digital — 500 € + IVA</span></label>
+          <label class="sol-chip" data-price="450"><input type="checkbox" value="ciberseguridad" onchange="updateSolutions()"><span>Ciberseguridad Pyme — 450 € + IVA</span></label>
+          <label class="sol-chip" data-price="580"><input type="checkbox" value="truki" onchange="updateSolutions()"><span>Facturación automática (TruKi) — 580 € + IVA</span></label>
+          <label class="sol-chip" data-price="690"><input type="checkbox" value="llamadas" onchange="updateSolutions()"><span>IA para Llamadas — 690 € + IVA<small style="display:block;font-weight:400;color:var(--grey);font-size:.72rem;">Incluye 150 llamadas/mes · exceso 0,50 €/llamada</small></span></label>
+        </div>
+        <div id="solutions-desde-note" style="display:none;margin:0 20px 12px;padding:10px 14px;border-radius:8px;background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.25);font-size:.76rem;color:var(--grey);line-height:1.5;"></div>
+        <div id="solutions-result" style="margin:0 20px 16px;padding:12px 14px;border-radius:8px;font-size:.8rem;line-height:1.55;display:none;"></div>
+        <div id="digital-90d" style="display:none;margin:0 20px 16px;background:rgba(255,255,255,.03);border:1px solid var(--grey-line);border-radius:8px;padding:12px 14px;font-size:.78rem;color:var(--grey);line-height:1.6;"></div>
+      </div>
+
+      </div><!-- /wrap-digitaliza -->
 
       <!-- TIMELINE -->
       <div class="timeline" id="timeline-box" style="display:none">
@@ -470,28 +585,54 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
   <!-- PASO 2 -->
   <div class="step">
     <div class="step-hd"><div class="step-num">2</div><h2>Tus datos de contacto</h2></div>
-    <div class="form-grid">
-      <div class="form-field">
+
+    <div class="client-toggle">
+      <button type="button" class="ct-btn active" id="ct-btn-new" onclick="setClientMode('new')">Primera vez con TRUCO</button>
+      <button type="button" class="ct-btn" id="ct-btn-existing" onclick="setClientMode('existing')">Ya soy cliente</button>
+    </div>
+
+    <div id="existing-login-box" style="display:none;margin-bottom:18px;">
+      <div class="form-grid">
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" id="login-email-checkout" autocomplete="username" placeholder="tu@email.com">
+        </div>
+        <div class="form-field">
+          <label>Contraseña</label>
+          <input type="password" id="login-pass-checkout" autocomplete="current-password" placeholder="Tu contraseña">
+        </div>
+      </div>
+      <button type="button" onclick="checkoutLogin()" style="margin-top:10px;background:var(--blue);border:none;border-radius:8px;color:#fff;padding:10px 20px;font-size:.85rem;font-weight:600;cursor:pointer;">Entrar</button>
+      <div class="error-msg" id="checkout-login-error" style="display:none;margin-top:8px;">Credenciales incorrectas.</div>
+    </div>
+
+    <div id="existing-confirmed-box" style="display:none;background:var(--green-dim);border:1px solid rgba(34,197,94,.3);border-radius:10px;padding:14px 18px;margin-bottom:18px;font-size:.85rem;color:var(--grey);line-height:1.55;">
+      ✓ Hola, <b id="existing-confirmed-name" style="color:var(--white);"></b> — hemos identificado tu cuenta y aplicado tu descuento de cliente. No hace falta que rellenes tus datos otra vez.
+      <a onclick="undoClientLogin()" style="display:block;margin-top:6px;color:var(--blue);cursor:pointer;font-size:.78rem;">Usar otros datos →</a>
+    </div>
+
+    <div class="form-grid" id="checkout-fields-grid">
+      <div class="form-field" data-field="nombre">
         <label>Nombre completo <span class="req">*</span></label>
-        <input type="text" id="f-nombre" placeholder="Tu nombre y apellidos" oninput="vField(this)">
+        <input type="text" id="f-nombre" autocomplete="name" placeholder="Tu nombre y apellidos" oninput="vField(this)">
         <span class="error-msg">Campo obligatorio</span>
       </div>
-      <div class="form-field">
+      <div class="form-field" data-field="email">
         <label>Email <span class="req">*</span></label>
-        <input type="email" id="f-email" placeholder="tu@email.com" oninput="vEmail(this)">
+        <input type="email" id="f-email" autocomplete="email" placeholder="tu@email.com" oninput="vEmail(this)">
         <span class="error-msg">Introduce un email válido</span>
       </div>
-      <div class="form-field">
+      <div class="form-field" data-field="telefono">
         <label>Teléfono <span class="req">*</span></label>
-        <input type="tel" id="f-telefono" placeholder="+34 600 000 000" oninput="vField(this)">
+        <input type="tel" id="f-telefono" autocomplete="tel" placeholder="+34 600 000 000" oninput="vField(this)">
         <span class="error-msg">Campo obligatorio</span>
       </div>
-      <div class="form-field">
+      <div class="form-field" data-field="negocio">
         <label>Nombre del negocio <span class="req">*</span></label>
-        <input type="text" id="f-negocio" placeholder="Tu empresa o nombre comercial" oninput="vField(this)">
+        <input type="text" id="f-negocio" autocomplete="organization" placeholder="Tu empresa o nombre comercial" oninput="vField(this)">
         <span class="error-msg">Campo obligatorio</span>
       </div>
-      <div class="form-field">
+      <div class="form-field" data-field="tipo">
         <label>Sector <span class="req">*</span></label>
         <select id="f-tipo" onchange="vField(this);applyPackForSector(this.value)">
           <option value="">Selecciona tu sector</option>
@@ -510,13 +651,33 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         </select>
         <span class="error-msg">Selecciona una opción</span>
       </div>
-      <div class="form-field">
+      <div class="form-field" data-field="nif">
         <label>NIF / CIF <span style="color:var(--grey);font-weight:400;">(para factura)</span></label>
         <input type="text" id="f-nif" placeholder="Opcional">
       </div>
-      <div class="form-field full">
+      <div class="form-field full" data-field="mensaje">
         <label>¿Qué es lo más urgente para tu negocio? <span style="color:var(--grey);font-weight:400;">(opcional)</span></label>
         <textarea id="f-mensaje" placeholder="Cuéntanos brevemente tu situación actual..."></textarea>
+      </div>
+    </div>
+
+    <div class="form-grid" id="new-password-box" style="margin-top:14px;">
+      <div class="form-field full">
+        <label>Crea tu contraseña de acceso al portal <span class="req">*</span></label>
+        <input type="password" id="reg-password" autocomplete="new-password" placeholder="Mínimo 8 caracteres" oninput="updatePasswordStrength()">
+        <div class="pw-strength-bar"><div class="pw-strength-fill" id="pw-strength-fill"></div></div>
+        <div class="pw-strength-label" id="pw-strength-label"></div>
+        <div class="pw-reqs">
+          <span id="pw-req-length">8+ caracteres</span>
+          <span id="pw-req-upper">1 mayúscula</span>
+          <span id="pw-req-lower">1 minúscula</span>
+          <span id="pw-req-special">1 carácter especial</span>
+        </div>
+      </div>
+      <div class="form-field full">
+        <label>Repite la contraseña <span class="req">*</span></label>
+        <input type="password" id="reg-password2" autocomplete="new-password" placeholder="Repite la contraseña" oninput="checkPasswordMatch()">
+        <span class="error-msg">Las contraseñas no coinciden</span>
       </div>
     </div>
   </div>
@@ -531,7 +692,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       </div>
       <div class="check-row">
         <input type="checkbox" id="ch-terminos" onchange="updateBtn()">
-        <div class="check-text"><b>Términos y condiciones *</b> — He leído y acepto los <a href="terminos.html" target="_blank">Términos y Condiciones</a>, incluyendo el período de implantación, la renovación automática mensual y los límites de uso incluidos en las soluciones de IA. <b style="color:var(--white);">Entiendo que el dominio y el hosting son contratados y pagados directamente por mí, y que TRUCO technology no asume su titularidad ni su coste.</b></div>
+        <div class="check-text"><b>Términos y condiciones *</b> — He revisado el <b style="color:var(--white);">Resumen del pedido</b> de la derecha (qué incluye, precio total y permanencia si la hay) y he leído y acepto los <a href="terminos.html" target="_blank">Términos y Condiciones</a>, incluyendo el período de implantación, la renovación automática mensual y los límites de uso incluidos en las soluciones de IA. <b style="color:var(--white);">Entiendo que el dominio y el hosting son contratados y pagados directamente por mí, y que TRUCO technology no asume su titularidad ni su coste.</b></div>
       </div>
       <div class="check-row">
         <input type="checkbox" id="ch-comercial">
@@ -552,7 +713,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       <div class="sb-sub" id="sb-sub">Elige una opción para ver el resumen.</div>
     </div>
     <div id="sb-empty" class="sb-empty">Selecciona un plan arriba.</div>
-    <div id="sb-features" class="sb-features" style="display:none"><ul id="sb-feat-list"></ul></div>
     <div id="sb-breakdown" class="sb-breakdown" style="display:none"></div>
     <div id="sb-renewal" class="sb-renewal" style="display:none"></div>
     <div class="trust-row">
@@ -565,6 +725,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       <button class="pay-btn" id="payBtn" disabled onclick="handlePay()">
         <span id="btn-text">Selecciona un plan</span>
       </button>
+      <button class="sb-email-btn" id="sb-email-btn" style="display:none;" onclick="emailMeSummary()">✉ Enviarme este resumen, lo decido con calma</button>
     </div>
     <div class="sb-secure">Procesado por Stripe · Cifrado 256-bit</div>
   </div>
@@ -572,38 +733,256 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 
 </div><!-- /checkout -->
 
+<div class="mobile-sticky-bar" id="mobile-sticky-bar">
+  <div class="msb-info">
+    <span class="msb-label" id="msb-label">Plan</span>
+    <span class="msb-price" id="msb-price"></span>
+  </div>
+  <button class="msb-btn" onclick="document.querySelector('.summary-box').scrollIntoView({behavior:'smooth',block:'start'})">Ver resumen ↓</button>
+</div>
 
 
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="founding-offer.js"></script>
 <script>
 // Al crear cada Stripe Payment Link real, configura su redirección tras el pago
 // a bienvenida.html?plan=<clave> (ej. bienvenida.html?plan=arranque-lite) para
 // que el cliente llegue directo a agendar su reunión de bienvenida prioritaria.
+
+// ── RECONOCIMIENTO DE CLIENTE EXISTENTE ──
+// Si quien navega tiene una sesión activa del portal de clientes (ver
+// portal/login.html), se le reconoce en silencio y se le aplica un descuento
+// automático — sin códigos que gestionar ni que se puedan filtrar/adivinar:
+// el descuento vive ligado exclusivamente a su sesión autenticada. Si no hay
+// sesión (el 100% de las visitas hoy), esto no cambia nada del comportamiento.
+const PORTAL_SUPABASE_URL = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
+const PORTAL_SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
+const CLIENT_DISCOUNT = 0.10;
+const REFERRAL_NEW_DISCOUNT = 0.10; // para quien compra por primera vez con un ?ref= válido de otro cliente
+const REFERRAL_CREDIT_DISCOUNT = 0.15; // para el cliente que refirió, canjeando 1 crédito ganado
+let clienteExistente = false;
+let portalSb = null;
+let clientMode = 'new'; // 'new' | 'existing'
+let loggedInClientData = null;
+let referralCodeValid = false;
+let referralCodeUsed = '';
+
+function initPortalSb() {
+  if (portalSb) return portalSb;
+  if (typeof supabase === 'undefined' || PORTAL_SUPABASE_URL.startsWith('REEMPLAZA_')) return null;
+  portalSb = supabase.createClient(PORTAL_SUPABASE_URL, PORTAL_SUPABASE_ANON_KEY);
+  return portalSb;
+}
+
+async function checkClienteSession() {
+  try {
+    const sb = initPortalSb();
+    if (!sb) return;
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return;
+    setClientMode('existing');
+    await applyLoggedInClient();
+  } catch (e) {
+    // Si algo falla aquí, sencillamente no se aplica el descuento — nunca
+    // debe romper ni ralentizar el flujo de pago normal.
+  }
+}
+checkClienteSession();
+
+// ── PROGRAMA DE REFERIDOS ──
+// Si llega con ?ref=CODIGO en la URL, comprobamos que el código existe de
+// verdad (sin exponer de quién es) y, si es así, aplicamos el descuento de
+// referido en su primera compra. El propio código se manda a Stripe para que
+// stripe-webhook.js recompense a quien le refirió una vez se confirme el pago.
+(function captureReferralCode(){
+  const params=new URLSearchParams(location.search);
+  const ref=params.get('ref');
+  if(ref){referralCodeUsed=ref.trim().toUpperCase();validateReferralCode();}
+})();
+async function validateReferralCode(){
+  try{
+    const sb=initPortalSb();
+    if(!sb)return;
+    const{data,error}=await sb.rpc('validate_referral_code',{p_code:referralCodeUsed});
+    if(!error&&data===true){referralCodeValid=true;updateAll();}
+  }catch(e){/* si falla, sencillamente no se aplica el descuento de referido */}
+}
+
+function setClientMode(mode) {
+  clientMode = mode;
+  const btnNew = document.getElementById('ct-btn-new'), btnExisting = document.getElementById('ct-btn-existing');
+  if (btnNew) btnNew.classList.toggle('active', mode === 'new');
+  if (btnExisting) btnExisting.classList.toggle('active', mode === 'existing');
+  const pwBox = document.getElementById('new-password-box');
+  if (pwBox) pwBox.style.display = mode === 'new' ? 'grid' : 'none';
+  const loginBox = document.getElementById('existing-login-box');
+  if (loginBox) loginBox.style.display = (mode === 'existing' && !loggedInClientData) ? 'block' : 'none';
+  const grid = document.getElementById('checkout-fields-grid');
+  if (mode === 'new') {
+    const confirmed = document.getElementById('existing-confirmed-box');
+    if (confirmed) confirmed.style.display = 'none';
+    showAllCheckoutFields();
+  } else if (mode === 'existing' && !loggedInClientData) {
+    // Antes de iniciar sesión no hace falta pedir nombre/teléfono/negocio/etc
+    // — solo email y contraseña, sus datos ya los tenemos en su ficha.
+    if (grid) grid.style.display = 'none';
+  }
+}
+
+async function checkoutLogin() {
+  const email = document.getElementById('login-email-checkout').value.trim();
+  const password = document.getElementById('login-pass-checkout').value;
+  const errEl = document.getElementById('checkout-login-error');
+  errEl.style.display = 'none';
+  if (!email || !password) return;
+  const sb = initPortalSb();
+  if (!sb) return;
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  if (error) {
+    errEl.textContent = 'Credenciales incorrectas.';
+    errEl.style.display = 'block';
+    return;
+  }
+  await applyLoggedInClient();
+}
+
+function setVal(id, v) {
+  const el = document.getElementById(id);
+  if (el && v) el.value = v;
+}
+
+function showAllCheckoutFields() {
+  const grid = document.getElementById('checkout-fields-grid');
+  if (!grid) return;
+  grid.style.display = 'grid';
+  grid.querySelectorAll('.form-field').forEach(f => { f.style.display = ''; });
+}
+
+async function applyLoggedInClient() {
+  const sb = initPortalSb();
+  if (!sb) return;
+  const { data: client, error } = await sb.from('clients').select('*').single();
+  if (error || !client) return;
+  loggedInClientData = client;
+  clienteExistente = true;
+  const loginEmailEl = document.getElementById('login-email-checkout'), loginPassEl = document.getElementById('login-pass-checkout');
+  if (loginEmailEl) loginEmailEl.value = '';
+  if (loginPassEl) loginPassEl.value = '';
+  const loginBox = document.getElementById('existing-login-box');
+  if (loginBox) loginBox.style.display = 'none';
+  const confirmed = document.getElementById('existing-confirmed-box');
+  if (confirmed) { confirmed.style.display = 'block'; document.getElementById('existing-confirmed-name').textContent = client.nombre || client.email; }
+
+  setVal('f-nombre', client.nombre);
+  setVal('f-email', client.email);
+  setVal('f-telefono', client.telefono);
+  setVal('f-negocio', client.negocio);
+  if (client.tipo) { const tipoEl = document.getElementById('f-tipo'); if (tipoEl) tipoEl.value = client.tipo; }
+  setVal('f-nif', client.nif);
+
+  // Solo pedimos lo que de verdad no sepamos ya de su ficha — el resto no
+  // hace falta que lo vuelva a escribir.
+  const missing = ['nombre', 'telefono', 'negocio', 'tipo'].filter(k => !client[k]);
+  const grid = document.getElementById('checkout-fields-grid');
+  if (missing.length === 0) {
+    grid.style.display = 'none';
+  } else {
+    grid.style.display = 'grid';
+    grid.querySelectorAll('.form-field').forEach(f => {
+      const key = f.dataset.field;
+      f.style.display = (missing.includes(key) || key === 'mensaje') ? '' : 'none';
+    });
+  }
+  const pwBox = document.getElementById('new-password-box');
+  if (pwBox) pwBox.style.display = 'none';
+  if (client.tipo) applyPackForSector(client.tipo);
+  updateAll();
+}
+
+function undoClientLogin() {
+  loggedInClientData = null;
+  clienteExistente = false;
+  const confirmed = document.getElementById('existing-confirmed-box');
+  if (confirmed) confirmed.style.display = 'none';
+  showAllCheckoutFields();
+  if (clientMode === 'new') { const pwBox = document.getElementById('new-password-box'); if (pwBox) pwBox.style.display = 'grid'; }
+  ['f-nombre', 'f-email', 'f-telefono', 'f-negocio', 'f-nif'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  const tipoEl = document.getElementById('f-tipo'); if (tipoEl) tipoEl.value = '';
+  if (portalSb) portalSb.auth.signOut();
+  updateAll();
+}
+
+// ── CONTRASEÑA DE ACCESO AL PORTAL (solo para clientes nuevos) ──
+// Mínimo 8 caracteres, 1 mayúscula, 1 minúscula y 1 carácter especial —
+// se comprueba en vivo y también se bloquea el pago si no se cumple.
+function passwordChecks(pw) {
+  return {
+    length: pw.length >= 8,
+    upper: /[A-Z]/.test(pw),
+    lower: /[a-z]/.test(pw),
+    special: /[^A-Za-z0-9]/.test(pw),
+  };
+}
+
+function updatePasswordStrength() {
+  const pw = document.getElementById('reg-password').value;
+  const checks = passwordChecks(pw);
+  const score = Object.values(checks).filter(Boolean).length;
+  const fill = document.getElementById('pw-strength-fill');
+  const label = document.getElementById('pw-strength-label');
+  const colors = ['var(--red)', 'var(--red)', 'var(--gold)', 'var(--gold)', 'var(--green)'];
+  const labels = ['', 'Muy débil', 'Débil', 'Buena', 'Muy segura'];
+  fill.style.width = (pw ? Math.max(12, (score / 4) * 100) : 0) + '%';
+  fill.style.background = colors[score];
+  label.textContent = pw ? labels[score] : '';
+  label.style.color = colors[score];
+  Object.keys(checks).forEach(k => {
+    const el = document.getElementById('pw-req-' + k);
+    if (el) el.classList.toggle('met', checks[k]);
+  });
+  checkPasswordMatch();
+  return checks;
+}
+
+function checkPasswordMatch() {
+  const pw2El = document.getElementById('reg-password2');
+  if (!pw2El) return;
+  const pw = document.getElementById('reg-password').value;
+  const pw2 = pw2El.value;
+  if (!pw2) { pw2El.classList.remove('error'); return; }
+  pw2El.classList.toggle('error', pw !== pw2);
+}
 const PROJECTS={esencial:{name:'Web Esencial',base:649},web:{name:'Web Profesional',base:940},digital:{name:'Digitaliza tu Empresa',base:590}};
-const DIGITAL_BUYOUT=300;
+const DIGITAL_BUYOUT=0; // la alta e integración ya va incluida dentro del precio de cada solución
+const DESDE_NOTES={
+  crm:'<b style="color:var(--gold);">CRM:</b> el precio mostrado es un "desde" — requiere una auditoría inicial gratuita para cerrar el número final, antes de que decidas nada.',
+  integraciones:'<b style="color:var(--gold);">Integraciones:</b> el precio mostrado es un "desde" — consultamos qué herramientas usas antes de cerrar el número final.',
+  automatizaciones:'<b style="color:var(--gold);">Automatizaciones:</b> no es un "desde" abierto — son 3 precios cerrados según la complejidad del flujo (350€/650€/1.200€), lo confirmamos en la primera llamada.'
+};
 
 const PACKS={
-  servicios:{name:'Pack Servicios',sub:'fontaneros, electricistas, autónomos de oficios, clínicas, centros de estética, gimnasios, academias…',sols:['whatsapp','reservas','automatizaciones']},
+  servicios:{name:'Pack Servicios',sub:'fontaneros, electricistas, cerrajeros, pintores, carpinteros, talleres…',sols:['whatsapp','reservas','automatizaciones']},
+  serviciosCitas:{name:'Pack Servicios',sub:'peluquerías, centros de estética, clínicas, gimnasios, academias, autoescuelas…',sols:['whatsapp','reservas','llamadas']},
   despachos:{name:'Pack Despachos',sub:'abogados, asesorías, gestorías, inmobiliarias, servicios profesionales…',sols:['crm','firma','docs'],security:true},
-  hosteleria:{name:'Pack Hostelería',sub:'restaurantes, salones de celebración…',sols:['reservas','whatsapp','automatizaciones']},
-  empresas:{name:'Pack Empresas',sub:'pymes en general',sols:['crm','automatizaciones','integraciones'],security:true}
+  hosteleria:{name:'Pack Hostelería',sub:'restaurantes, salones de celebración…',sols:['reservas','whatsapp','automatizaciones']}
 };
 const SECTOR_PACKS={
-  'dental':'servicios','Clínica / Centro médico':'servicios','autonomo':'servicios',
-  'Centro de estética / Belleza':'servicios','Gimnasio / Deportes':'servicios','Formación / Academia':'servicios',
+  'dental':'serviciosCitas','Clínica / Centro médico':'serviciosCitas','autonomo':'servicios',
+  'Centro de estética / Belleza':'serviciosCitas','Gimnasio / Deportes':'serviciosCitas','Formación / Academia':'serviciosCitas',
   'Despacho / Consultoría':'despachos','Inmobiliaria':'despachos','Servicios profesionales':'despachos',
-  'Restaurante / Hostelería':'hosteleria',
-  'Comercio / Tienda':'empresas','Otro':'empresas'
+  'Restaurante / Hostelería':'hosteleria'
 };
 const TRADE_PACKS={
-  peluqueria:'servicios',estetica:'servicios',dental:'servicios',medica:'servicios',fisio:'servicios',psicologia:'servicios',veterinaria:'servicios',gimnasio:'servicios',academia:'servicios',autoescuela:'servicios',fontanero:'servicios',electricista:'servicios',cerrajero:'servicios',pintor:'servicios',carpintero:'servicios',taller:'servicios',
+  peluqueria:'serviciosCitas',estetica:'serviciosCitas',dental:'serviciosCitas',medica:'serviciosCitas',fisio:'serviciosCitas',psicologia:'serviciosCitas',veterinaria:'serviciosCitas',gimnasio:'serviciosCitas',academia:'serviciosCitas',autoescuela:'serviciosCitas',
+  fontanero:'servicios',electricista:'servicios',cerrajero:'servicios',pintor:'servicios',carpintero:'servicios',taller:'servicios',
   abogado:'despachos',asesoria:'despachos',gestoria:'despachos',consultoria:'despachos',inmobiliaria:'despachos',arquitecto:'despachos',notaria:'despachos',
-  restaurante:'hosteleria',bar:'hosteleria',eventos:'hosteleria',catering:'hosteleria',
-  tienda:'empresas',ecommerce:'empresas',ferreteria:'empresas',floristeria:'empresas',panaderia:'empresas',otro:'empresas'
+  restaurante:'hosteleria',bar:'hosteleria',eventos:'hosteleria',catering:'hosteleria'
 };
 const PACK_DISCOUNT=0.15;
 let sectorEngaged=false;
 function matchingPackKey(){
-  const checked=Array.from(document.querySelectorAll('#solutions-grid input:checked')).map(cb=>cb.value).sort();
+  const checked=Array.from(document.querySelectorAll('#solutions-grid input[type=checkbox]:checked')).map(cb=>cb.value).sort();
   for(const k in PACKS){
     const sols=[...PACKS[k].sols].sort();
     if(sols.length===checked.length&&sols.every((v,i)=>v===checked[i]))return k;
@@ -612,13 +991,27 @@ function matchingPackKey(){
 }
 function sumCheckedSolutions(){
   let t=0;
-  document.querySelectorAll('#solutions-grid input:checked').forEach(c=>{t+=parseInt(c.closest('.sol-chip').dataset.price||0);});
+  document.querySelectorAll('#solutions-grid input[type=checkbox]:checked').forEach(c=>{t+=parseInt(c.closest('.sol-chip').dataset.price||0);});
   return t;
 }
 function getPackDiscountInfo(count){
   if(!sectorEngaged||count!==3)return{applies:false};
   const exact=matchingPackKey();
   return{applies:true,key:exact,label:exact?PACKS[exact].name+' completo':'3 soluciones de tu sector'};
+}
+// Combina el descuento de pack de sector con el de cliente existente SIN
+// apilarlos — si ambos aplican, se usa el mayor de los dos, nunca la suma,
+// para que el descuento nunca se dispare sin control.
+function getBestDiscountInfo(count){
+  const packInfo=getPackDiscountInfo(count);
+  const candidates=[
+    {rate:packInfo.applies?PACK_DISCOUNT:0,label:packInfo.label},
+    {rate:clienteExistente?CLIENT_DISCOUNT:0,label:'Cliente TRUCO'},
+    {rate:(referralCodeValid&&clientMode==='new')?REFERRAL_NEW_DISCOUNT:0,label:'Código de referido'},
+    {rate:(loggedInClientData&&loggedInClientData.referral_credits>0)?REFERRAL_CREDIT_DISCOUNT:0,label:'Crédito por referido'},
+  ];
+  const best=candidates.reduce((a,b)=>b.rate>a.rate?b:a,{rate:0,label:''});
+  return best.rate>0?{applies:true,rate:best.rate,label:best.label}:{applies:false,rate:0};
 }
 
 function applyPackForSector(sectorValue){
@@ -654,7 +1047,7 @@ function applyPack(packKey){
   if(!pack)return;
   sectorEngaged=true;
   if(!digitalAddon)toggleDigitalAddon();
-  document.querySelectorAll('#solutions-grid input').forEach(cb=>{cb.checked=pack.sols.includes(cb.value);});
+  document.querySelectorAll('#solutions-grid input[type=checkbox]').forEach(cb=>{cb.checked=pack.sols.includes(cb.value);});
   document.querySelectorAll('#solutions-grid .sol-chip').forEach(chip=>chip.classList.remove('sol-suggested'));
   updateSolutions();
   if(badge){
@@ -672,40 +1065,215 @@ function applyPack(packKey){
     }
   }
 }
-const DIRECT={'arranque-lite':{name:'Departamento Tecnológico Lite™',arranque:'lite'},'arranque-pro':{name:'Departamento Tecnológico Pro™',arranque:'pro'}};
-const ARRANQUES={lite:{name:'Lite™',monthlyAfter:199},pro:{name:'Pro™',monthlyAfter:399}};
-const STRIPE={'esencial-lite':'REEMPLAZA_ESENCIAL','web-lite':'REEMPLAZA_WEB_PRO','digital-lite':'REEMPLAZA_DIGITAL_LITE','digital-pro':'REEMPLAZA_DIGITAL_PRO','arranque-lite':'REEMPLAZA_LITE_MES','arranque-pro':'REEMPLAZA_PRO_MES','arranque-lite-a':'REEMPLAZA_LITE_ANUAL','arranque-pro-a':'REEMPLAZA_PRO_ANUAL','esencial-solutions-lite':'REEMPLAZA_ESENCIAL_SOL_LITE','esencial-solutions-pro':'REEMPLAZA_ESENCIAL_SOL_PRO','web-solutions-lite':'REEMPLAZA_WEB_SOL_LITE','web-solutions-pro':'REEMPLAZA_WEB_SOL_PRO'};
-const FEATURES={lite:['Asistente de soporte tecnológico en todo momento','Mantenimiento web — actualizaciones y rendimiento','Seguridad y copias de seguridad periódicas','Resolución de incidencias técnicas sin coste adicional','Reunión mensual de revisión y asesoramiento (30 min)','Mantenimiento de hasta 2 soluciones tecnológicas'],pro:['Todo lo incluido en Departamento Lite™','Mantenimiento de hasta 6 soluciones tecnológicas','Optimización continua de todas las soluciones activas','Adaptaciones y ajustes según crece tu empresa','Revisión avanzada mensual de rendimiento','Mayor prioridad en incidencias y resolución','Reunión mensual de revisión y estrategia (45 min)']};
-const TIMELINES={'esencial-lite':[{l:'Web Esencial lista',v:'Días 7-10',c:'gold'},{l:'30 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:'199 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'web-lite':[{l:'Entrega Web Profesional',v:'Semana 2-4',c:'gold'},{l:'30 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:'199 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'digital-lite':[{l:'Implantación completa',v:'90 días',c:'gold'},{l:'90 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:'199 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'digital-pro':[{l:'Implantación completa',v:'90 días',c:'gold'},{l:'90 días — Departamento Pro™',v:'REGALO',c:'green'},{l:'Después',v:'399 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'arranque':[{l:'Mes 1',v:'199 €',c:'blue'},{l:'Mes 2',v:'199 €',c:'blue'},{l:'Mes 3+',v:'199 €/mes · Renueva o cancela',c:'grey'}],'arranque-pro':[{l:'Mes 1',v:'399 €',c:'blue'},{l:'Mes 2',v:'399 €',c:'blue'},{l:'Mes 3+',v:'399 €/mes · Renueva o cancela',c:'grey'}],'esencial-solutions-lite':[{l:'Web Esencial + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:'199 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'esencial-solutions-pro':[{l:'Web Esencial + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Pro™',v:'REGALO',c:'green'},{l:'Después',v:'399 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'web-solutions-lite':[{l:'Web Profesional + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:'199 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'web-solutions-pro':[{l:'Web Profesional + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Pro™',v:'REGALO',c:'green'},{l:'Después',v:'399 €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}]};
+const DIRECT={'arranque-basic':{name:'Departamento Tecnológico Basic™',arranque:'basic'},'arranque-lite':{name:'Departamento Tecnológico Lite™',arranque:'lite'},'arranque-pro':{name:'Departamento Tecnológico Pro™',arranque:'pro'}};
+const ARRANQUES={basic:{name:'Basic™',monthly:69,permanenciaMeses:6,freeSols:1},lite:{name:'Lite™',monthly:currentPrice('lite'),permanenciaMeses:12,freeSols:2},pro:{name:'Pro™',monthly:currentPrice('pro'),permanenciaMeses:12,freeSols:3}};
 
-let selectedProject=null,selectedDirect=null,directBilling='arranque',selectedDigitalPlan=null,digitalTotalPrice=590,digitalAddon=false;
+function renderFoundingPrices(){
+  const renewEl=document.getElementById('renew-price-esencial');if(renewEl)renewEl.textContent=currentPrice('lite');
+  ['lite','pro'].forEach(tier=>{
+    const m=ARRANQUES[tier].monthly;
+    const iva=(m*1.21).toFixed(2).replace('.',',');
+    const priceEl=document.getElementById('pc-price-'+tier);
+    const vatEl=document.getElementById('pc-vat-'+tier);
+    const foundEl=document.getElementById('pc-founding-'+tier);
+    if(priceEl)priceEl.innerHTML=m+' €<sub>/mes + IVA</sub>';
+    if(vatEl)vatEl.textContent=iva+' €/mes con IVA';
+    if(foundEl){
+      if(foundingActive()){
+        const std=STANDARD_PRICES[tier];
+        foundEl.innerHTML='<s class="price-old">'+std+'€/mes</s> <span class="launch-tag">Precio de fundador</span> · <span class="spots-left">Quedan '+FOUNDING_SPOTS_LEFT+' de 10 plazas</span>';
+      }else{
+        foundEl.innerHTML='';
+      }
+    }
+  });
+}
+renderFoundingPrices();
+const TIER_POOLS={
+  basic:{max:1,label:'Elige tu solución gratis',sols:[
+    {value:'whatsapp',name:'IA para WhatsApp'},
+    {value:'truki',name:'Facturación automática (TruKi)'},
+    {value:'reservas',name:'Reservas y Agenda'},
+    {value:'web-ia',name:'IA para tu Web'}
+  ]},
+  lite:{max:2,label:'Elige 2 soluciones gratis',sols:[
+    {value:'whatsapp',name:'IA para WhatsApp'},
+    {value:'web-ia',name:'IA para tu Web'},
+    {value:'llamadas',name:'IA para Llamadas'},
+    {value:'email-ia',name:'IA para Correo'},
+    {value:'reservas',name:'Reservas y Agenda'},
+    {value:'firma',name:'Firma Digital'},
+    {value:'ciberseguridad',name:'Ciberseguridad Pyme'},
+    {value:'automatizaciones',name:'Automatizaciones (banda Simple)'}
+  ]},
+  pro:{max:3,label:'Elige 3 soluciones gratis',sols:[
+    {value:'whatsapp',name:'IA para WhatsApp'},
+    {value:'web-ia',name:'IA para tu Web'},
+    {value:'llamadas',name:'IA para Llamadas'},
+    {value:'email-ia',name:'IA para Correo'},
+    {value:'reservas',name:'Reservas y Agenda'},
+    {value:'firma',name:'Firma Digital'},
+    {value:'ciberseguridad',name:'Ciberseguridad Pyme'},
+    {value:'automatizaciones',name:'Automatizaciones (banda Simple)'}
+  ]}
+};
+const STRIPE={'esencial-lite':'REEMPLAZA_ESENCIAL','web-lite':'REEMPLAZA_WEB_PRO','digital-lite':'REEMPLAZA_DIGITAL_LITE','digital-pro':'REEMPLAZA_DIGITAL_PRO','arranque-basic':'REEMPLAZA_BASIC','arranque-lite':'REEMPLAZA_LITE','arranque-pro':'REEMPLAZA_PRO','esencial-solutions-lite':'REEMPLAZA_ESENCIAL_SOL_LITE','esencial-solutions-pro':'REEMPLAZA_ESENCIAL_SOL_PRO','web-solutions-lite':'REEMPLAZA_WEB_SOL_LITE','web-solutions-pro':'REEMPLAZA_WEB_SOL_PRO'};
+const TIMELINES={'esencial-lite':[{l:'Web Esencial lista',v:'Días 7-10',c:'gold'},{l:'30 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('lite')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'web-lite':[{l:'Entrega Web Profesional',v:'Semana 2-4',c:'gold'},{l:'30 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('lite')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'digital-lite':[{l:'Implantación completa',v:'90 días',c:'gold'},{l:'90 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('lite')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'digital-pro':[{l:'Implantación completa',v:'90 días',c:'gold'},{l:'90 días — Departamento Pro™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('pro')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'arranque-basic':[{l:'Instalación de tu solución',v:'Gratis',c:'gold'},{l:'Permanencia',v:'6 meses',c:'blue'},{l:'Al terminar',v:'Sigues mes a mes o te vas, sin más compromiso',c:'grey'}],'arranque-lite':[{l:'Web + 2 soluciones instaladas',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva o cancela, sin penalización',c:'grey'}],'arranque-pro':[{l:'Web Profesional + 3 soluciones instaladas',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva o cancela, sin penalización',c:'grey'}],'esencial-solutions-lite':[{l:'Web Esencial + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('lite')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'esencial-solutions-pro':[{l:'Web Esencial + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Pro™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('pro')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'web-solutions-lite':[{l:'Web Profesional + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('lite')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'web-solutions-pro':[{l:'Web Profesional + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Pro™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('pro')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}]};
+
+let selectedProject=null,selectedDirect=null,selectedTierSolutions=[],tierPaymentMode='unico',selectedDigitalPlan=null,digitalTotalPrice=590,digitalAddon=false;
+
+function setTierPaymentMode(mode){
+  tierPaymentMode=mode;
+  document.getElementById('btn-unico').classList.toggle('active',mode==='unico');
+  document.getElementById('btn-financiado').classList.toggle('active',mode==='financiado');
+  const title=document.getElementById('payment-mode-title'),desc=document.getElementById('payment-mode-desc');
+  if(mode==='unico'){
+    title.textContent='Pago único por adelantado — ahorras un 12%.';
+    desc.textContent='Se cobra todo el periodo de permanencia de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.';
+  }else{
+    title.textContent='Fracciona el pago con SeQura, sin que dependa de nosotros.';
+    desc.textContent='SeQura nos paga el total de golpe y a ti te deja elegir en cuántos meses lo devuelves, con su propio análisis de riesgo — no depende de tu tarjeta ni de que nosotros pasemos un cargo cada mes. Te lo proponemos al formalizar el contrato.';
+  }
+  updateAll();
+}
 
 function resetDigitalAddon(){
   digitalAddon=false;
-  document.querySelectorAll('#solutions-grid input:checked').forEach(cb=>cb.checked=false);
-  const priceEl=document.getElementById('digital-price-display');if(priceEl)priceEl.innerHTML='desde 600 €<sub> + IVA</sub>';
+  document.querySelectorAll('#solutions-grid input[type=checkbox]:checked').forEach(cb=>cb.checked=false);
+  const automChip=document.getElementById('chip-automatizaciones');
+  if(automChip){automChip.dataset.price=350;document.querySelectorAll('#chip-automatizaciones input[name=autom-band]').forEach(r=>r.checked=(r.value==='350'));}
+  const priceEl=document.getElementById('digital-price-display');if(priceEl)priceEl.innerHTML='desde 350 €<sub> + IVA</sub>';
   const resultEl=document.getElementById('solutions-result');if(resultEl)resultEl.style.display='none';
   const d90=document.getElementById('digital-90d');if(d90)d90.style.display='none';
   const dp=document.getElementById('digital-implantacion');if(dp)dp.style.display='none';
   selectedDigitalPlan=null;digitalTotalPrice=590;
 }
 
+function showPath(path){
+  document.getElementById('path-grid').style.display='none';
+  document.getElementById('path-change').style.display='flex';
+  document.getElementById('path-change-label').textContent=path==='depto'?'Departamento Tecnológico':path==='proyecto'?'Proyecto Web':'Digitaliza tu Empresa';
+  document.getElementById('wrap-depto').style.display=path==='depto'?'block':'none';
+  document.getElementById('wrap-proyecto').style.display=path==='proyecto'?'block':'none';
+  document.getElementById('wrap-digitaliza').style.display=path==='digitaliza'?'block':'none';
+  document.getElementById('path-card-depto').classList.toggle('selected',path==='depto');
+  document.getElementById('path-card-proyecto').classList.toggle('selected',path==='proyecto');
+  document.getElementById('path-card-digitaliza').classList.toggle('selected',path==='digitaliza');
+}
+
+function selectPath(path){
+  if(path===null){
+    if(selectedDirect)selectDirect(selectedDirect);
+    if(selectedProject)selectProject(selectedProject);
+    if(digitalAddon)toggleDigitalAddon();
+    document.getElementById('path-grid').style.display='grid';
+    document.getElementById('path-change').style.display='none';
+    document.getElementById('wrap-depto').style.display='none';
+    document.getElementById('wrap-proyecto').style.display='none';
+    document.getElementById('wrap-digitaliza').style.display='none';
+    updateAll();
+    return;
+  }
+  showPath(path);
+  if(path==='digitaliza'&&!digitalAddon)toggleDigitalAddon();
+  renderCrossSellNotes();
+}
+
 function selectDirect(id){
-  selectedProject=null;selectedDirect=id;
+  if(selectedDirect===id){
+    selectedDirect=null;selectedTierSolutions=[];tierPaymentMode='unico';
+    document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected'));
+    resetDigitalAddon();
+    const pp0=document.getElementById('project-panel');if(pp0)pp0.style.display='none';
+    const tp0=document.getElementById('tier-solutions-picker');if(tp0)tp0.style.display='none';
+    const pm0=document.getElementById('payment-mode-block');if(pm0)pm0.style.display='none';
+    updateAll();
+    return;
+  }
+  selectedProject=null;selectedDirect=id;selectedTierSolutions=[];tierPaymentMode='unico';
+  showPath('depto');
   document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected'));
   document.getElementById('card-'+id).classList.add('selected');
   resetDigitalAddon();
   const pp=document.getElementById('project-panel');if(pp)pp.style.display='none';
-  const od=document.getElementById('onboarding-direct');if(od)od.style.display='block';
+  const pm=document.getElementById('payment-mode-block');if(pm){pm.style.display='block';document.getElementById('btn-unico').classList.add('active');document.getElementById('btn-financiado').classList.remove('active');document.getElementById('payment-mode-title').textContent='Pago único por adelantado — ahorras un 12%.';document.getElementById('payment-mode-desc').textContent='Se cobra todo el periodo de permanencia de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.';}
+  renderTierSolutionsPicker();
+  scrollToSolutionsPicker();
   updateAll();
 }
 
+function renderTierSolutionsPicker(){
+  const picker=document.getElementById('tier-solutions-picker');
+  if(!selectedDirect||!DIRECT[selectedDirect]){if(picker)picker.style.display='none';return;}
+  const tier=DIRECT[selectedDirect].arranque;
+  const pool=TIER_POOLS[tier];
+  if(!pool){if(picker)picker.style.display='none';return;}
+  picker.style.display='block';
+  document.getElementById('tier-solutions-label').textContent=pool.label;
+  const grid=document.getElementById('tier-solutions-grid');
+  grid.innerHTML=pool.sols.map(s=>{
+    const checked=selectedTierSolutions.includes(s.value);
+    return '<label class="sol-chip"><input type="checkbox" value="'+s.value+'" '+(checked?'checked':'')+' onchange="toggleTierSolution(\''+s.value+'\')"><span>'+s.name+'</span></label>';
+  }).join('');
+  updateTierSolutionsNote();
+}
+
+function toggleTierSolution(value){
+  const tier=DIRECT[selectedDirect].arranque;
+  const max=TIER_POOLS[tier].max;
+  const i=selectedTierSolutions.indexOf(value);
+  if(i>-1){
+    selectedTierSolutions.splice(i,1);
+  }else{
+    if(selectedTierSolutions.length>=max)selectedTierSolutions.shift();
+    selectedTierSolutions.push(value);
+  }
+  renderTierSolutionsPicker();
+  updateAll();
+}
+
+function scrollToSolutionsPicker(){
+  const picker=document.getElementById('tier-solutions-picker');
+  if(!picker||picker.style.display==='none')return;
+  setTimeout(()=>{
+    picker.scrollIntoView({behavior:'smooth',block:'center'});
+    picker.classList.add('picker-pulse');
+    setTimeout(()=>picker.classList.remove('picker-pulse'),1600);
+  },80);
+}
+
+function updateTierSolutionsNote(){
+  const tier=DIRECT[selectedDirect].arranque;
+  const max=TIER_POOLS[tier].max;
+  const note=document.getElementById('tier-solutions-note');
+  const left=max-selectedTierSolutions.length;
+  if(left>0){
+    note.textContent='Selecciona '+left+' más para completar tu '+(max>1?'selección gratis.':'solución gratis.');
+    note.style.color='var(--gold)';
+  }else{
+    note.textContent=(max>1?'Soluciones':'Solución')+' gratis seleccionada'+(max>1?'s':'')+'. ¿Necesitas otra? Se instala al precio de catálogo, sin recargo de alta, una vez seas cliente.';
+    note.style.color='var(--green)';
+  }
+}
+
 function selectProject(proj){
-  selectedDirect=null;selectedProject=proj;
-  ['card-arranque-lite','card-arranque-pro'].forEach(id=>document.getElementById(id).classList.remove('selected'));
+  if(selectedProject===proj){
+    selectedProject=null;
+    ['card-arranque-basic','card-arranque-lite','card-arranque-pro'].forEach(id=>document.getElementById(id).classList.remove('selected'));
+    ['card-esencial','card-web'].forEach(id=>document.getElementById(id).classList.remove('selected'));
+    const pp1=document.getElementById('project-panel');if(pp1)pp1.style.display='none';
+    const wp1=document.getElementById('web-implantacion');if(wp1)wp1.style.display='none';
+    renderCrossSellNotes();
+    updateAll();
+    return;
+  }
+  selectedDirect=null;selectedTierSolutions=[];tierPaymentMode='unico';selectedProject=proj;
+  showPath('proyecto');
+  ['card-arranque-basic','card-arranque-lite','card-arranque-pro'].forEach(id=>document.getElementById(id).classList.remove('selected'));
   ['card-esencial','card-web'].forEach(id=>document.getElementById(id).classList.remove('selected'));
   document.getElementById('card-'+proj).classList.add('selected');
-  const od=document.getElementById('onboarding-direct');if(od)od.style.display='none';
+  const tp=document.getElementById('tier-solutions-picker');if(tp)tp.style.display='none';
+  const pm=document.getElementById('payment-mode-block');if(pm)pm.style.display='none';
   const pp=document.getElementById('project-panel');
   const wp=document.getElementById('web-implantacion');
   if(pp)pp.style.display='block';
@@ -717,46 +1285,58 @@ function toggleDigitalAddon(){
   digitalAddon=!digitalAddon;
   const card=document.getElementById('card-digital');
   card.classList.toggle('selected',digitalAddon);
-  const pp=document.getElementById('project-panel');
   const dp=document.getElementById('digital-implantacion');
   if(digitalAddon){
     if(selectedDirect){
-      selectedDirect=null;
-      document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected'));
-      card.classList.add('selected');
-      const od=document.getElementById('onboarding-direct');if(od)od.style.display='none';
+      selectedDirect=null;selectedTierSolutions=[];tierPaymentMode='unico';
+      document.querySelectorAll('.plan-card').forEach(c=>{if(c!==card)c.classList.remove('selected');});
+      const tp=document.getElementById('tier-solutions-picker');if(tp)tp.style.display='none';
+      const pm=document.getElementById('payment-mode-block');if(pm)pm.style.display='none';
     }
-    if(pp)pp.style.display='block';
     if(dp)dp.style.display='block';
   }else{
-    document.querySelectorAll('#solutions-grid input:checked').forEach(cb=>cb.checked=false);
-    document.getElementById('digital-price-display').innerHTML='desde 600 €<sub> + IVA</sub>';
+    document.querySelectorAll('#solutions-grid input[type=checkbox]:checked').forEach(cb=>cb.checked=false);
+    const automChip=document.getElementById('chip-automatizaciones');
+    if(automChip){automChip.dataset.price=350;document.querySelectorAll('#chip-automatizaciones input[name=autom-band]').forEach(r=>r.checked=(r.value==='350'));}
+    document.getElementById('digital-price-display').innerHTML='desde 350 €<sub> + IVA</sub>';
     document.getElementById('solutions-result').style.display='none';
     document.getElementById('digital-90d').style.display='none';
     selectedDigitalPlan=null;digitalTotalPrice=590;
     if(dp)dp.style.display='none';
-    if(pp&&!selectedProject)pp.style.display='none';
   }
   updateAll();
 }
 
-function setDirectBilling(type){
-  directBilling=type;
-  document.querySelectorAll('.billing-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('btn-'+type).classList.add('active');
-  const note=document.getElementById('annual-note');
-  if(note)note.style.display=type==='anual'?'block':'none';
-  updateAll();
+function toggleAutomatizacionesBands(checked){
+  if(!checked){
+    document.querySelectorAll('#chip-automatizaciones input[name=autom-band]').forEach(r=>r.checked=(r.value==='350'));
+    const chip=document.getElementById('chip-automatizaciones');if(chip)chip.dataset.price=350;
+  }
+  updateSolutions();
 }
-
+function setAutomatizacionesBand(price){
+  const chip=document.getElementById('chip-automatizaciones');
+  if(chip)chip.dataset.price=price;
+  updateSolutions();
+}
 function updateSolutions(){
-  const checks=document.querySelectorAll('#solutions-grid input:checked');
+  const checks=document.querySelectorAll('#solutions-grid input[type=checkbox]:checked');
   const count=checks.length;
   const resultEl=document.getElementById('solutions-result');
   let total=0;checks.forEach(c=>{total+=parseInt(c.closest('.sol-chip').dataset.price||0);});
   const priceEl=document.getElementById('digital-price-display');
+  const desdeNote=document.getElementById('solutions-desde-note');
+  if(desdeNote){
+    const desdeChecked=Array.from(checks).map(c=>c.value).filter(v=>DESDE_NOTES[v]);
+    if(desdeChecked.length>0){
+      desdeNote.style.display='block';
+      desdeNote.innerHTML=desdeChecked.map(v=>DESDE_NOTES[v]).join('<br>');
+    }else{
+      desdeNote.style.display='none';
+    }
+  }
   if(count===0){
-    priceEl.innerHTML='desde 600 €<sub> + IVA</sub>';
+    priceEl.innerHTML='desde 350 €<sub> + IVA</sub>';
     resultEl.style.display='none';selectedDigitalPlan=null;
   }else if(count>3){
     priceEl.innerHTML='Consultar<sub> presupuesto</sub>';
@@ -765,27 +1345,27 @@ function updateSolutions(){
     resultEl.innerHTML='<b style="color:var(--gold);">'+count+' soluciones seleccionadas</b> — Elaboramos presupuesto personalizado. <b style="color:var(--white);">Continúa y te contactamos en 24h.</b>';
     selectedDigitalPlan='pro';digitalTotalPrice=0;
   }else{
-    const discInfo=getPackDiscountInfo(count);
-    const discounted=discInfo.applies?Math.round(total*(1-PACK_DISCOUNT)*100)/100:total;
+    const discInfo=getBestDiscountInfo(count);
+    const discounted=discInfo.applies?Math.round(total*(1-discInfo.rate)*100)/100:total;
     priceEl.innerHTML=(discInfo.applies?'<s style="color:var(--grey);font-size:.7em;">'+(total+DIGITAL_BUYOUT)+' €</s> ':'')+(discounted+DIGITAL_BUYOUT)+' €<sub> + IVA</sub>';
     resultEl.style.display='block';
-    const packLine=discInfo.applies?'<div style="font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:4px;">'+discInfo.label+': -15% en soluciones (ahorras '+(total-discounted).toFixed(2).replace('.',',')+' €)</div>':'';
-    const desglose=packLine+'<div style="font-size:.72rem;color:var(--grey);margin-bottom:6px;">'+(discInfo.applies?'<s>'+total+' €</s> '+discounted.toFixed(2).replace('.',',')+' €':total+' €')+' '+(count>1?'soluciones elegidas':'solución elegida')+' + <b style="color:var(--white);">300 € alta e integración de Departamento</b></div>';
+    const packLine=discInfo.applies?'<div style="font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:4px;">'+discInfo.label+': -'+Math.round(discInfo.rate*100)+'% en soluciones (ahorras '+(total-discounted).toFixed(2).replace('.',',')+' €)</div>':'';
+    const desglose=packLine+'<div style="font-size:.72rem;color:var(--grey);margin-bottom:6px;">'+(discInfo.applies?'<s>'+total+' €</s> '+discounted.toFixed(2).replace('.',',')+' €':total+' €')+' + IVA — '+(count>1?'soluciones elegidas, alta e integración incluidas':'solución elegida, alta e integración incluidas')+'</div>';
     if(count<=2){
       selectedDigitalPlan='lite';
       resultEl.style.background='rgba(34,197,94,.08)';resultEl.style.border='1px solid rgba(34,197,94,.25)';
       const nudge=sectorEngaged?'<div style="font-size:.72rem;color:var(--gold);font-weight:600;margin-top:6px;">Añade '+(3-count)+' solución'+(3-count>1?'es':'')+' más y desbloqueas un 15% de descuento.</div>':'';
-      resultEl.innerHTML=desglose+'<b style="color:var(--green);">'+count+' '+(count>1?'soluciones':'solución')+'</b> — <b style="color:var(--white);">Departamento Lite™</b> · 90 días de regalo, luego 199€/mes.'+nudge;
+      resultEl.innerHTML=desglose+'<b style="color:var(--green);">'+count+' '+(count>1?'soluciones':'solución')+'</b> — <b style="color:var(--white);">Departamento Lite™</b> · 90 días de regalo, luego '+currentPrice('lite')+'€/mes.'+nudge;
     }else{
       selectedDigitalPlan='pro';
       resultEl.style.background='rgba(47,123,255,.08)';resultEl.style.border='1px solid rgba(47,123,255,.25)';
-      resultEl.innerHTML=desglose+'<b style="color:var(--blue);">3 soluciones</b> — <b style="color:var(--white);">Departamento Pro™</b> · 90 días de regalo, luego 399€/mes.';
+      resultEl.innerHTML=desglose+'<b style="color:var(--blue);">3 soluciones</b> — <b style="color:var(--white);">Departamento Pro™</b> · 90 días de regalo, luego '+currentPrice('pro')+'€/mes.';
     }
     digitalTotalPrice=discounted;
   }
   const d90=document.getElementById('digital-90d');
   if(d90&&count>0){
-    const dn=count>=3?'Pro™':'Lite™';const dp2=count>=3?399:199;
+    const dn=count>=3?'Pro™':'Lite™';const dp2=count>=3?currentPrice('pro'):currentPrice('lite');
     d90.style.display='block';
     d90.innerHTML='<b style="color:var(--white);">90 días de implantación:</b> el Departamento '+dn+' va <span style="color:var(--green);font-weight:600;">completamente de regalo</span> durante esos 90 días · después, renovación automática a '+dp2+'€/mes + IVA · cancela cuando quieras avisando con 7 días.';
   }else if(d90){d90.style.display='none';}
@@ -800,61 +1380,72 @@ function getRenewalDate(days){
 function getActivePlan(){
   if(selectedDirect){
     const d=DIRECT[selectedDirect];const arr=ARRANQUES[d.arranque];
-    const monthly=arr.monthlyAfter;const ivaM=monthly*0.21;
-    const isAnual=directBilling==='anual';
-    const deptN=d.arranque==='lite'?'Lite™':'Pro™';
-    if(isAnual){
-      const tot=monthly*12*0.9;const ivaA=tot*0.21;
-      return{key:selectedDirect+'-a',name:'Departamento Tecnológico '+deptN+' — Anual',sub:'Pago anual · '+(d.arranque==='lite'?'hasta 2':'hasta 6')+' soluciones · Ahorras 10%',arranqueType:d.arranque,breakdown:[{l:'Precio anual (10% descuento)',v:tot.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:ivaA.toFixed(2).replace('.',',')+' €'},{l:'Total anual con IVA',v:(tot+ivaA).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:monthly*0.9,renewalNote:'anual',stripe:STRIPE[selectedDirect+'-a'],timeline:d.arranque==='pro'?'arranque-pro':'arranque'};
+    const pool=TIER_POOLS[d.arranque];
+    const solNames=selectedTierSolutions.map(v=>{const s=pool.sols.find(x=>x.value===v);return s?s.name:v;});
+    const webLine=d.arranque==='lite'?[{l:'Web (reacondicionada o Web Esencial nueva)',v:'GRATIS',cls:'free'}]:d.arranque==='pro'?[{l:'Web Profesional',v:'GRATIS',cls:'free'}]:[];
+    const solWord=arr.freeSols>1?arr.freeSols+' soluciones':'1 solución';
+    const solLines=solNames.length?solNames.map(n=>({l:n,v:'GRATIS',cls:'free'})):[{l:solWord+' a elegir',v:'Pendiente de elegir'}];
+    const isUnico=tierPaymentMode==='unico';
+    let priceLines,totalCommitment,subPago;
+    if(isUnico){
+      const totBase=arr.monthly*arr.permanenciaMeses;const tot=Math.round(totBase*0.88*100)/100;const iva=tot*0.21;
+      totalCommitment=tot+iva;
+      subPago='Pago único';
+      priceLines=[{l:'Pago único ('+arr.permanenciaMeses+' meses, 12% dto.)',v:tot.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:totalCommitment.toFixed(2).replace('.',',')+' €',total:true}];
+    }else{
+      const ivaM=arr.monthly*0.21;const totMes=arr.monthly+ivaM;
+      totalCommitment=totMes*arr.permanenciaMeses;
+      subPago='Financiado con SeQura';
+      priceLines=[{l:'Cuota (vía SeQura)',v:arr.monthly.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:ivaM.toFixed(2).replace('.',',')+' €'},{l:'Total / mes con IVA',v:totMes.toFixed(2).replace('.',',')+' €',total:true},{l:'Compromiso total ('+arr.permanenciaMeses+' meses)',v:totalCommitment.toFixed(2).replace('.',',')+' €'}];
     }
-    return{key:selectedDirect,name:'Departamento Tecnológico '+deptN,sub:'Suscripción mensual · '+(d.arranque==='lite'?'hasta 2':'hasta 6')+' soluciones · Renovación automática',arranqueType:d.arranque,breakdown:[{l:'Cuota mensual — Departamento '+deptN,v:monthly.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:ivaM.toFixed(2).replace('.',',')+' €'},{l:'Total / mes con IVA',v:(monthly+ivaM).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:monthly,stripe:STRIPE[selectedDirect],timeline:d.arranque==='pro'?'arranque-pro':'arranque'};
+    const renewalMsg='Permanencia mínima de '+arr.permanenciaMeses+' meses — es lo que hace posible este regalo. Al terminar, sigues mes a mes sin más compromiso, o te vas cuando quieras.';
+    return{key:selectedDirect,name:d.name,sub:subPago+' · Permanencia '+arr.permanenciaMeses+' meses · '+solWord+' gratis',arranqueType:d.arranque,breakdown:[...webLine,...solLines,{divider:true},...priceLines],monthlyAfter:arr.monthly,stripe:STRIPE[selectedDirect],totalRaw:isUnico?totalCommitment:null,timeline:selectedDirect,renewalMsg,solutionsIncomplete:selectedTierSolutions.length<arr.freeSols};
   }
-  const sols=digitalAddon?document.querySelectorAll('#solutions-grid input:checked').length:0;
+  const sols=digitalAddon?document.querySelectorAll('#solutions-grid input[type=checkbox]:checked').length:0;
   const hasSolutions=digitalAddon&&sols>0;
   const customQuote=hasSolutions&&sols>3;
 
   if(selectedProject&&hasSolutions){
     const proj=PROJECTS[selectedProject];
     const wn=selectedProject==='web'?'Web Profesional':'Web Esencial';
-    const dp=sols>=3?'pro':'lite';const dn=dp==='lite'?'Lite™':'Pro™';const dm=dp==='lite'?199:399;
+    const dp=sols>=3?'pro':'lite';const dn=dp==='lite'?'Lite™':'Pro™';const dm=dp==='lite'?currentPrice('lite'):currentPrice('pro');
     const key=selectedProject+'-solutions-'+dp;
     if(customQuote){
       return{key,name:wn+' + Digitaliza tu Empresa · '+sols+' soluciones',sub:'Proyecto combinado · Presupuesto personalizado',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'Soluciones ('+sols+')',v:'Presupuesto a medida'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'}],monthlyAfter:dm,stripe:null,timeline:key,customQuote:true,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
     }
-    const discInfo1=getPackDiscountInfo(sols);const rawTotal1=sumCheckedSolutions();const discAmt1=discInfo1.applies?Math.round(rawTotal1*PACK_DISCOUNT*100)/100:0;
+    const discInfo1=getBestDiscountInfo(sols);const rawTotal1=sumCheckedSolutions();const discAmt1=discInfo1.applies?Math.round(rawTotal1*discInfo1.rate*100)/100:0;
     const tb=proj.base+digitalTotalPrice+DIGITAL_BUYOUT;const iva=tb*0.21;
     const solLines1=[{l:(sols>1?'Soluciones elegidas':'Solución elegida')+' ('+sols+')',v:rawTotal1.toFixed(2).replace('.',',')+' €'}];
-    if(discInfo1.applies)solLines1.push({l:'Descuento '+discInfo1.label+' (-15%)',v:'-'+discAmt1.toFixed(2).replace('.',',')+' €',cls:'free'});
-    return{key,name:wn+' + Digitaliza · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto combinado · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},...solLines1,{l:'Alta e integración de Departamento',v:DIGITAL_BUYOUT.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE[key],timeline:key,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
+    if(discInfo1.applies)solLines1.push({l:'Descuento '+discInfo1.label+' (-'+Math.round(discInfo1.rate*100)+'%)',v:'-'+discAmt1.toFixed(2).replace('.',',')+' €',cls:'free'});
+    return{key,name:wn+' + Digitaliza · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto combinado · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},...solLines1,{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE[key],totalRaw:tb+iva,timeline:key,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
   }
 
   if(hasSolutions){
-    const dp=sols>=3?'pro':'lite';const dn=dp==='lite'?'Lite™':'Pro™';const dm=dp==='lite'?199:399;
+    const dp=sols>=3?'pro':'lite';const dn=dp==='lite'?'Lite™':'Pro™';const dm=dp==='lite'?currentPrice('lite'):currentPrice('pro');
     if(customQuote){
       return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+' soluciones',sub:'Proyecto · Presupuesto personalizado',arranqueType:dp,breakdown:[{l:'Implantación ('+sols+' sol.)',v:'Presupuesto a medida'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'}],monthlyAfter:dm,stripe:null,timeline:'digital-'+dp,customQuote:true,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
     }
-    const discInfo2=getPackDiscountInfo(sols);const rawTotal2=sumCheckedSolutions();const discAmt2=discInfo2.applies?Math.round(rawTotal2*PACK_DISCOUNT*100)/100:0;
+    const discInfo2=getBestDiscountInfo(sols);const rawTotal2=sumCheckedSolutions();const discAmt2=discInfo2.applies?Math.round(rawTotal2*discInfo2.rate*100)/100:0;
     const pb=digitalTotalPrice;const tb=pb+DIGITAL_BUYOUT;const iva=tb*0.21;
     const solLines2=[{l:(sols>1?'Soluciones elegidas':'Solución elegida')+' ('+sols+')',v:rawTotal2.toFixed(2).replace('.',',')+' €'}];
-    if(discInfo2.applies)solLines2.push({l:'Descuento '+discInfo2.label+' (-15%)',v:'-'+discAmt2.toFixed(2).replace('.',',')+' €',cls:'free'});
-    return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[...solLines2,{l:'Alta e integración de Departamento',v:DIGITAL_BUYOUT.toFixed(2).replace('.',',')+' €'},{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE['digital-'+dp],timeline:'digital-'+dp,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
+    if(discInfo2.applies)solLines2.push({l:'Descuento '+discInfo2.label+' (-'+Math.round(discInfo2.rate*100)+'%)',v:'-'+discAmt2.toFixed(2).replace('.',',')+' €',cls:'free'});
+    return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto · 90 días de Departamento '+dn+' de regalo',arranqueType:dp,breakdown:[...solLines2,{l:'90 días de Departamento '+dn,v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE['digital-'+dp],totalRaw:tb+iva,timeline:'digital-'+dp,renewalMsg:'Pasados los 90 días de regalo, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
   }
 
   if(selectedProject){
     const proj=PROJECTS[selectedProject];
     const base=proj.base;const iva=base*0.21;
     const wn=selectedProject==='web'?'Web Profesional':'Web Esencial';
-    return{key:selectedProject+'-lite',name:wn+' · 30 días implantación',sub:'Proyecto único · 30 días de Departamento Lite™ de regalo',arranqueType:'lite',breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'30 días de Departamento Lite™',v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:base.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(base+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:199,stripe:STRIPE[selectedProject+'-lite'],timeline:selectedProject==='web'?'web-lite':'esencial-lite'};
+    return{key:selectedProject+'-lite',name:wn+' · 30 días implantación',sub:'Proyecto único · 30 días de Departamento Lite™ de regalo',arranqueType:'lite',breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'30 días de Departamento Lite™',v:'REGALO',cls:'free'},{divider:true},{l:'Base imponible',v:base.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(base+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:199,stripe:STRIPE[selectedProject+'-lite'],totalRaw:base+iva,timeline:selectedProject==='web'?'web-lite':'esencial-lite'};
   }
   return null;
 }
 
 function updateSummary(plan){
-  const te=document.getElementById('sb-title'),se=document.getElementById('sb-sub'),ee=document.getElementById('sb-empty'),fe=document.getElementById('sb-features'),fl=document.getElementById('sb-feat-list'),be=document.getElementById('sb-breakdown'),re=document.getElementById('sb-renewal'),btn=document.getElementById('payBtn'),txt=document.getElementById('btn-text'),tbox=document.getElementById('timeline-box'),tsteps=document.getElementById('tl-steps');
-  if(!plan){te.textContent='Ningún plan seleccionado';se.textContent='Elige una opción para ver el resumen.';ee.style.display='block';fe.style.display='none';be.style.display='none';re.style.display='none';if(tbox)tbox.style.display='none';btn.disabled=true;txt.textContent='Selecciona un plan';return;}
+  const te=document.getElementById('sb-title'),se=document.getElementById('sb-sub'),ee=document.getElementById('sb-empty'),be=document.getElementById('sb-breakdown'),re=document.getElementById('sb-renewal'),btn=document.getElementById('payBtn'),txt=document.getElementById('btn-text'),tbox=document.getElementById('timeline-box'),tsteps=document.getElementById('tl-steps');
+  const msbBar=document.getElementById('mobile-sticky-bar'),checkoutEl=document.querySelector('.checkout');
+  if(!plan){te.textContent='Ningún plan seleccionado';se.textContent='Elige una opción para ver el resumen.';ee.style.display='block';be.style.display='none';re.style.display='none';if(tbox)tbox.style.display='none';btn.disabled=true;txt.textContent='Selecciona un plan';if(msbBar)msbBar.classList.remove('active');if(checkoutEl)checkoutEl.classList.remove('has-sticky-bar');const eb=document.getElementById('sb-email-btn');if(eb)eb.style.display='none';return;}
   te.textContent=plan.name;se.textContent=plan.sub;ee.style.display='none';
-  const feats=FEATURES[plan.arranqueType]||[];
-  if(feats.length){fl.innerHTML=feats.map(f=>'<li>'+f+'</li>').join('');fe.style.display='block';}
   let bh='';plan.breakdown.forEach(r=>{if(r.divider){bh+='<div class="sbr-divider"></div>';return;}bh+=`<div class="sbr-row${r.total?' sbr-total':''}"><span class="sbr-label">${r.l}</span><span class="sbr-val${r.cls?' '+r.cls:''}">${r.v}</span></div>`;});
   be.innerHTML=bh;be.style.display='block';
   const isCombined=plan.timeline&&plan.timeline.includes('-solutions-');
@@ -870,11 +1461,57 @@ function updateSummary(plan){
   re.style.display='block';
   const tl=TIMELINES[plan.timeline];
   if(tl&&tsteps&&tbox){const cols={gold:'var(--gold)',green:'var(--green)',blue:'var(--blue)',grey:'var(--grey)'};tsteps.innerHTML=tl.map(s=>`<div class="tl-step"><div class="tl-dot" style="background:${cols[s.c]||'var(--grey)'}"></div><div class="tl-info"><div class="tl-label">${s.l}</div><div class="tl-val" style="color:${cols[s.c]||'var(--grey)'}">${s.v}</div></div></div>`).join('');tbox.style.display='block';}
-  btn.disabled=false;
-  txt.textContent=plan.customQuote?'→ Solicitar presupuesto personalizado':'→ Confirmar y pagar con Stripe';
+  if(plan.solutionsIncomplete){
+    btn.disabled=true;
+    txt.textContent='Elige tu solución gratis arriba';
+  }else{
+    btn.disabled=false;
+    txt.textContent=plan.customQuote?'→ Solicitar presupuesto personalizado':'→ Confirmar y pagar con Stripe';
+  }
+  if(msbBar){
+    const totalEls=be.querySelectorAll('.sbr-total .sbr-val');
+    const totalTxt=totalEls.length?totalEls[totalEls.length-1].textContent:'';
+    document.getElementById('msb-label').textContent=plan.name;
+    document.getElementById('msb-price').textContent=totalTxt;
+    msbBar.classList.add('active');
+    if(checkoutEl)checkoutEl.classList.add('has-sticky-bar');
+  }
+  const emailBtn=document.getElementById('sb-email-btn');if(emailBtn)emailBtn.style.display='block';
 }
 
-function updateAll(){updateSummary(getActivePlan());}
+function emailMeSummary(){
+  const plan=getActivePlan();
+  if(!plan)return;
+  const toEmail=(document.getElementById('f-email')||{}).value?.trim()||'';
+  const lines=[];
+  plan.breakdown.forEach(r=>{if(r.divider)return;lines.push(r.l+': '+r.v);});
+  const body='Resumen de tu contratación con TRUCO technology:\n\n'+plan.name+'\n'+plan.sub+'\n\n'+lines.join('\n')+'\n\nCuando quieras retomarlo, entra en pago.html y vuelve a elegir las mismas opciones.';
+  const subject='Tu resumen — '+plan.name;
+  const mailto='mailto:'+encodeURIComponent(toEmail)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  window.location.href=mailto;
+}
+
+function renderCrossSellNotes(){
+  const pc=document.getElementById('proyecto-digitaliza-crosssell');
+  if(pc){
+    if(selectedProject){
+      pc.style.display='block';
+      document.getElementById('proyecto-crosssell-text').textContent=digitalAddon?'✓ Ya tienes soluciones tecnológicas añadidas a tu pedido.':'¿También quieres añadir soluciones tecnológicas (WhatsApp, CRM, Ciberseguridad...)?';
+    }else{
+      pc.style.display='none';
+    }
+  }
+  const dc=document.getElementById('digitaliza-project-crosssell');
+  if(dc){
+    if(digitalAddon){
+      dc.style.display='block';
+      document.getElementById('digitaliza-crosssell-text').textContent=selectedProject?'✓ Ya tienes '+(selectedProject==='web'?'Web Profesional':'Web Esencial')+' añadida a tu pedido.':'¿También necesitas una web nueva?';
+    }else{
+      dc.style.display='none';
+    }
+  }
+}
+function updateAll(){updateSummary(getActivePlan());renderCrossSellNotes();}
 
 function vField(el){
   if(!el.value.trim()){el.classList.add('error');}else{el.classList.remove('error');}
@@ -888,6 +1525,30 @@ function updateBtn(){
   if(t&&t.checked)t.parentElement.style.outline='';
 }
 
+// Solo se manda cuando hay 3 soluciones o menos — más de eso ya es
+// "presupuesto personalizado" gestionado a mano por el founder, no hace falta
+// persistirlo automáticamente en client_solutions.
+function buildSolutionsPayload(){
+  if(selectedDirect&&DIRECT[selectedDirect]){
+    const tier=DIRECT[selectedDirect].arranque;
+    const pool=TIER_POOLS[tier];
+    return selectedTierSolutions.map(v=>{
+      const s=pool.sols.find(x=>x.value===v);
+      return{key:v,name:s?s.name:v,price:0,free:true};
+    });
+  }
+  const checks=Array.from(document.querySelectorAll('#solutions-grid input[type=checkbox]:checked'));
+  if(checks.length>0&&checks.length<=3){
+    return checks.map(c=>{
+      const chip=c.closest('.sol-chip');
+      const raw=(chip.querySelector('span')?.textContent||c.value).trim();
+      const name=raw.split(' — ')[0].split(' – ')[0];
+      return{key:c.value,name,price:parseInt(chip.dataset.price||0),free:false};
+    });
+  }
+  return[];
+}
+
 function trucoSessionId(){
   let id=localStorage.getItem('truco_session_id');
   if(!id){id=(crypto.randomUUID?crypto.randomUUID():'sess-'+Date.now()+'-'+Math.random().toString(36).slice(2));localStorage.setItem('truco_session_id',id);}
@@ -899,14 +1560,30 @@ async function handlePay(){
   const r=document.getElementById('ch-rgpd'),t=document.getElementById('ch-terminos');
   let ok=true;
   const missing=[];
-  const checkField=(f,label)=>{if(f&&!f.value.trim()){f.classList.add('error');ok=false;missing.push(label);}else if(f)f.classList.remove('error');};
-  checkField(n,'Nombre completo');
-  checkField(p,'Teléfono');
-  checkField(b,'Nombre del negocio');
-  checkField(s,'Sector');
-  if(e&&(!e.value.trim()||!e.value.includes('@'))){e.classList.add('error');ok=false;missing.push('Email válido');}else if(e)e.classList.remove('error');
+
+  if(clientMode==='existing'&&!loggedInClientData){
+    // Sin sesión iniciada los campos de datos están ocultos — no tiene
+    // sentido validarlos, solo pedimos que inicie sesión primero.
+    ok=false;missing.push('Inicia sesión como cliente arriba, o elige "Primera vez con TRUCO"');
+  }else{
+    const checkField=(f,label)=>{if(f&&!f.value.trim()){f.classList.add('error');ok=false;missing.push(label);}else if(f)f.classList.remove('error');};
+    checkField(n,'Nombre completo');
+    checkField(p,'Teléfono');
+    checkField(b,'Nombre del negocio');
+    checkField(s,'Sector');
+    if(e&&(!e.value.trim()||!e.value.includes('@'))){e.classList.add('error');ok=false;missing.push('Email válido');}else if(e)e.classList.remove('error');
+  }
   if(r&&!r.checked){r.parentElement.style.outline='1px solid var(--red)';ok=false;missing.push('Aceptar la Protección de datos (RGPD)');}else if(r)r.parentElement.style.outline='';
   if(t&&!t.checked){t.parentElement.style.outline='1px solid var(--red)';ok=false;missing.push('Aceptar los Términos y condiciones');}else if(t)t.parentElement.style.outline='';
+
+  if(clientMode==='new'){
+    const pw=document.getElementById('reg-password'),pw2=document.getElementById('reg-password2');
+    const checks=updatePasswordStrength();
+    const allOk=Object.values(checks).every(Boolean);
+    if(!allOk){pw.classList.add('error');ok=false;missing.push('Contraseña: mínimo 8 caracteres, 1 mayúscula, 1 minúscula y 1 carácter especial');}else pw.classList.remove('error');
+    if(pw.value!==pw2.value){pw2.classList.add('error');ok=false;missing.push('Las dos contraseñas no coinciden');}else pw2.classList.remove('error');
+  }
+
   if(!ok){
     alert('Antes de continuar, completa o marca lo siguiente:\n\n• '+missing.join('\n• '));
     document.querySelector('.form-col')?.scrollIntoView({behavior:'smooth',block:'start'});
@@ -930,9 +1607,56 @@ async function handlePay(){
     });
   }catch(err){/* nunca bloquear el pago por un fallo al guardar el lead */}
 
+  // Si es la primera vez, crea ya su cuenta del portal con la contraseña que
+  // acaba de elegir — así no depende de un email de invitación posterior para
+  // poder entrar. Si ya estaba logueado (clientMode==='existing'), no hace
+  // falta: ya tiene cuenta.
+  if(clientMode==='new'){
+    try{
+      const sb=initPortalSb();
+      if(sb){
+        const{data:signUpData,error:signUpErr}=await sb.auth.signUp({
+          email:e.value.trim(),
+          password:document.getElementById('reg-password').value,
+          options:{data:{nombre:n.value.trim()}}
+        });
+        if(!signUpErr&&signUpData&&signUpData.user){
+          await fetch('/.netlify/functions/link-client-signup',{
+            method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({email:e.value.trim(),auth_user_id:signUpData.user.id})
+          });
+        }
+      }
+    }catch(err){/* nunca bloquear el pago por un fallo al crear la cuenta — el founder puede invitarle a mano después */}
+  }
+
   if(plan.customQuote){alert('Con más de 3 soluciones elaboramos un presupuesto personalizado. Te contactamos en menos de 24h. Mientras tanto, escríbenos por WhatsApp o reserva una consultoría gratuita.');return;}
-  if(!plan.stripe||plan.stripe.startsWith('REEMPLAZA')){alert('Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');return;}
-  window.location.href=plan.stripe;
+  if(!plan.totalRaw){alert(selectedDirect&&tierPaymentMode!=='unico'?'La financiación con SeQura se confirma por WhatsApp mientras terminamos de conectarla aquí. Te escribimos en menos de 24h.':'Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');return;}
+
+  const payBtn=document.getElementById('payBtn'),payBtnText=document.getElementById('btn-text');
+  if(payBtn){payBtn.disabled=true;}
+  if(payBtnText){payBtnText.dataset.origText=payBtnText.textContent;payBtnText.textContent='Conectando con el pago…';}
+  try{
+    const resp=await fetch('/.netlify/functions/create-checkout',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        name:'TRUCO technology — '+plan.name,
+        description:plan.sub+' · IVA incluido',
+        amountCents:Math.round(plan.totalRaw*100),
+        customerEmail:e.value.trim(),
+        planKey:plan.key,
+        arranqueTier:plan.arranqueType||'',
+        solutions:buildSolutionsPayload(),
+        refCode:(referralCodeValid&&clientMode==='new')?referralCodeUsed:'',
+        consumeReferralCredit:(loggedInClientData&&loggedInClientData.referral_credits>0)?loggedInClientData.id:''
+      })
+    });
+    const data=await resp.json();
+    if(data.ok&&data.url){window.location.href=data.url;return;}
+  }catch(err){/* sigue al aviso de abajo */}
+  if(payBtn){payBtn.disabled=false;}
+  if(payBtnText){payBtnText.textContent=payBtnText.dataset.origText;}
+  alert('Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');
 }
 
 function toggleFaq(btn){
@@ -945,14 +1669,24 @@ function toggleFaq(btn){
 (function preselectFromUrl(){
   const params=new URLSearchParams(location.search);
   const plan=params.get('plan');
-  if(plan==='arranque-lite'||plan==='arranque-pro')selectDirect(plan);
+  if(plan==='arranque-lite'||plan==='arranque-pro'||plan==='arranque-basic')selectDirect(plan);
   else if(plan==='esencial'||plan==='web')selectProject(plan);
-  else if(plan==='digital')toggleDigitalAddon();
+  else if(plan==='digital')selectPath('digitaliza');
   const pack=params.get('pack');
-  if(pack&&PACKS[pack])applyPack(pack);
+  if(pack&&PACKS[pack]){
+    const arranqueTier=selectedDirect&&DIRECT[selectedDirect]?DIRECT[selectedDirect].arranque:null;
+    if(arranqueTier&&TIER_POOLS[arranqueTier]){
+      const poolValues=TIER_POOLS[arranqueTier].sols.map(s=>s.value);
+      selectedTierSolutions=PACKS[pack].sols.filter(v=>poolValues.includes(v)).slice(0,TIER_POOLS[arranqueTier].max);
+      renderTierSolutionsPicker();
+      updateAll();
+    }else{
+      applyPack(pack);
+    }
+  }
   const sol=params.get('sol');
   if(sol){
-    if(!digitalAddon)toggleDigitalAddon();
+    if(!digitalAddon){showPath('digitaliza');toggleDigitalAddon();}
     const cb=document.querySelector('#solutions-grid input[value="'+sol+'"]');
     if(cb){cb.checked=true;updateSolutions();}
   }

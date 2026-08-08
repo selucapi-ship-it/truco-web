@@ -89,7 +89,8 @@
   .ficha-negocio{color:var(--grey);font-size:.85rem;margin-bottom:16px;}
   .ficha-row{display:flex;justify-content:space-between;font-size:.82rem;padding:8px 0;border-bottom:1px solid var(--grey-line);}
   .ficha-row span:first-child{color:var(--grey);}
-  select#status-select{background:var(--bg-card);border:1px solid var(--grey-line);color:var(--white);font-family:var(--font-m);font-size:.75rem;padding:5px 8px;border-radius:6px;}
+  select#status-select,select#stage-select{background:var(--bg-card);border:1px solid var(--grey-line);color:var(--white);font-family:var(--font-m);font-size:.75rem;padding:5px 8px;border-radius:6px;}
+  .churn-risk-badge{display:inline-block;background:rgba(239,68,68,.12);border:1px solid var(--red);color:var(--red);font-size:.7rem;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:8px;}
   .timeline-title{font-family:var(--font-m);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin:22px 0 10px;}
   .tl-item{border-left:2px solid var(--grey-line);padding:2px 0 14px 14px;margin-left:4px;position:relative;}
   .tl-item::before{content:'';position:absolute;left:-5px;top:4px;width:8px;height:8px;border-radius:50%;background:var(--blue);}
@@ -173,6 +174,7 @@
       <div id="ficha-empty">Selecciona un cliente para ver su ficha.</div>
       <div id="ficha-content" style="display:none;">
         <div class="ficha-name" id="ficha-nombre"></div>
+        <div class="churn-risk-badge" id="churn-risk-badge" style="display:none;">⚠ Riesgo de fuga — encuesta de satisfacción ≤3</div>
         <div class="ficha-negocio" id="ficha-negocio"></div>
         <div class="contact-actions" id="contact-actions"></div>
         <div class="ficha-row"><span>Email</span><span id="ficha-email"></span></div>
@@ -188,7 +190,18 @@
             <option value="descartado">Descartado</option>
           </select>
         </div>
+        <div class="ficha-row">
+          <span>Etapa de implantación</span>
+          <select id="stage-select" onchange="updateStage()">
+            <option value="contratado">Contratado</option>
+            <option value="en_implantacion">En implantación</option>
+            <option value="revision">En revisión</option>
+            <option value="completado">Completado</option>
+          </select>
+        </div>
         <div class="ficha-row"><span>Cliente desde</span><span id="ficha-desde"></span></div>
+        <div class="ficha-row"><span>Acceso al portal</span><span id="ficha-portal-status"></span></div>
+        <button id="invite-portal-btn" onclick="invitePortal()" style="width:100%;margin-top:10px;background:none;border:1px solid var(--blue);color:var(--blue);padding:9px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;">Invitar al portal</button>
         <div class="timeline-title">Historial</div>
         <div class="add-note">
           <input type="text" id="note-input" placeholder="Añadir nota (ej: llamé, no contestó)...">
@@ -352,6 +365,18 @@ async function openFicha(id) {
   document.getElementById('ficha-nif').textContent = client.nif || '—';
   document.getElementById('ficha-desde').textContent = new Date(client.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
   document.getElementById('status-select').value = client.status;
+  document.getElementById('stage-select').value = client.implementation_stage || 'contratado';
+  document.getElementById('churn-risk-badge').style.display = client.churn_risk ? 'inline-block' : 'none';
+
+  const inviteBtn = document.getElementById('invite-portal-btn');
+  const portalStatus = document.getElementById('ficha-portal-status');
+  if (client.auth_user_id) {
+    portalStatus.textContent = 'Activado';
+    inviteBtn.style.display = 'none';
+  } else {
+    portalStatus.textContent = 'Sin activar';
+    inviteBtn.style.display = client.email ? 'block' : 'none';
+  }
 
   const waDigits = (client.telefono || '').replace(/\D/g, '');
   const contactHtml = [
@@ -414,6 +439,33 @@ async function deleteClient() {
   renderStats();
 }
 
+async function invitePortal() {
+  if (!selectedClientId) return;
+  const client = allClients.find(c => c.id === selectedClientId);
+  if (!client || !client.email) { alert('Este cliente no tiene email registrado.'); return; }
+  const btn = document.getElementById('invite-portal-btn');
+  btn.disabled = true;
+  btn.textContent = 'Invitando...';
+  try {
+    const resp = await fetch('/.netlify/functions/invite-client', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: client.email, client_id: client.id }),
+    });
+    const data = await resp.json();
+    if (data.ok) {
+      client.auth_user_id = data.auth_user_id;
+      openFicha(selectedClientId);
+      return;
+    }
+    alert('No se pudo invitar automáticamente (' + (data.reason || 'error') + '). Puedes invitarlo a mano desde Supabase → Authentication → Users → Invite user, y luego pegar su User UID en auth_user_id desde la tabla clients.');
+  } catch (e) {
+    alert('No se pudo conectar con el servidor.');
+  }
+  btn.disabled = false;
+  btn.textContent = 'Invitar al portal';
+}
+
 async function updateStatus() {
   if (!selectedClientId) return;
   const status = document.getElementById('status-select').value;
@@ -421,6 +473,14 @@ async function updateStatus() {
   const client = allClients.find(c => c.id === selectedClientId);
   if (client) client.status = status;
   renderClients();
+}
+
+async function updateStage() {
+  if (!selectedClientId) return;
+  const implementation_stage = document.getElementById('stage-select').value;
+  await sb.from('clients').update({ implementation_stage }).eq('id', selectedClientId);
+  const client = allClients.find(c => c.id === selectedClientId);
+  if (client) client.implementation_stage = implementation_stage;
 }
 
 async function loadAnonymousSessions() {

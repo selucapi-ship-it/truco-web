@@ -152,6 +152,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .cross-nav-chip .arrow{color:var(--blue);width:15px;height:15px;transition:transform var(--tr);}
 .cross-nav-chip:hover .arrow{transform:translateX(3px);}
 
+/* SCOPE BOX */
+.scope-box{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;overflow:hidden;}
+.scope-row{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:18px 24px;border-bottom:1px solid var(--grey-line);}
+.scope-row:last-child{border-bottom:none;}
+.scope-label{font-family:var(--font-m);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700;padding-top:2px;}
+.scope-value{font-size:.9rem;color:var(--white);line-height:1.65;}
+.scope-value b{color:var(--gold);}
+@media(max-width:640px){.scope-row{grid-template-columns:1fr;gap:6px;}}
+
+/* EXAMPLE BANDS */
+.band-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.band-card{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:12px;}
+.band-tier{font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);}
+.band-title{font-family:var(--font-d);font-size:1.02rem;font-weight:700;}
+.band-flow{display:flex;flex-direction:column;gap:6px;}
+.band-step{font-size:.78rem;color:var(--grey);display:flex;align-items:center;gap:8px;}
+.band-step svg{width:13px;height:13px;color:var(--green);flex-shrink:0;}
+.band-price{margin-top:auto;padding-top:10px;border-top:1px solid var(--grey-line);font-size:.9rem;font-weight:700;color:var(--gold);}
+@media(max-width:768px){.band-grid{grid-template-columns:1fr;}}
+
 /* FAQ */
 .faq-section{padding:72px 0;}
 .faq-list{max-width:800px;}
@@ -286,27 +306,40 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag gold">Ejemplo práctico</span><div class="sd-line"></div></div>
-    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:700px;margin-bottom:24px;"><b style="color:var(--white);">Antes:</b> entra un pedido y alguien tiene que copiarlo a mano al programa de facturación, avisar al almacén y actualizar una hoja de Excel. Se tarda 15 minutos y a veces se olvida un paso.</p>
-    <div class="flow-wrap" style="justify-content:flex-start;">
-      <div class="flow-mock" style="width:100%;max-width:420px;">
-        <div class="flow-node">
-          <div class="fn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
-          <div><div class="fn-text">Pedido entra en la tienda</div><div class="fn-sub">10:42:03</div></div>
+    <div class="section-divider"><span class="sd-tag gold">Ejemplos por nivel de complejidad</span><div class="sd-line"></div></div>
+    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:700px;margin-bottom:24px;">Esto es solo una muestra — automatizamos cualquier proceso repetitivo entre las herramientas que ya usas, no solo estos tres casos.</p>
+    <div class="band-grid">
+      <div class="band-card">
+        <div class="band-tier">Simple · 1 automatización</div>
+        <div class="band-title">Formulario web → CRM → email</div>
+        <div class="band-flow">
+          <div class="band-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Alguien rellena tu formulario de contacto</div>
+          <div class="band-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Se da de alta solo en tu CRM</div>
+          <div class="band-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Recibe un email de bienvenida automático</div>
         </div>
-        <div class="flow-connector"></div>
-        <div class="flow-node">
-          <div class="fn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 1z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg></div>
-          <div><div class="fn-text">Factura generada sola</div><div class="fn-sub">10:42:04</div></div>
+        <div class="band-price">350€ + IVA, cerrado</div>
+      </div>
+      <div class="band-card">
+        <div class="band-tier">Media · flujo de varios pasos</div>
+        <div class="band-title">Pedido → factura → aviso a almacén</div>
+        <div class="band-flow">
+          <div class="band-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Entra un pedido en tu tienda online</div>
+          <div class="band-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>La factura se genera sola</div>
+          <div class="band-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>El almacén recibe el aviso al instante</div>
         </div>
-        <div class="flow-connector"></div>
-        <div class="flow-node">
-          <div class="fn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
-          <div><div class="fn-text">Almacén notificado</div><div class="fn-sub">10:42:04</div></div>
+        <div class="band-price">650€ + IVA, cerrado</div>
+      </div>
+      <div class="band-card">
+        <div class="band-tier">Compleja · varias herramientas</div>
+        <div class="band-title">Cita agendada → recordatorio → seguimiento</div>
+        <div class="band-flow">
+          <div class="band-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Un cliente reserva una cita</div>
+          <div class="band-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Recibe recordatorio automático el día antes</div>
+          <div class="band-step"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Después, seguimiento automático por WhatsApp o email</div>
         </div>
+        <div class="band-price">1.200€ + IVA, cerrado</div>
       </div>
     </div>
-    <p style="color:var(--grey);font-size:.85rem;margin-top:16px;">De 15 minutos de trabajo manual a 1 segundo, sin que nadie toque nada.</p>
   </div>
 </div>
 
@@ -330,7 +363,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="cross-nav-items">
         <a class="cross-nav-chip" href="../packs/servicios.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>Pack Servicios <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="../packs/hosteleria.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h1v11M7 2v20M11 2v7c0 1.1.9 2 2 2s2-.9 2-2V2M11 2v20M18 2c-2 3-2 6 0 9v11"/></svg></div>Pack Hostelería <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        <a class="cross-nav-chip" href="../packs/empresas.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1m4 0h1m-6 4h1m4 0h1"/></svg></div>Pack Empresas <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
   </div>
@@ -356,12 +388,24 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </div>
 
+<div class="section-block reveal" style="padding-top:0;">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag depto">Qué se contrata exactamente</span><div class="sd-line"></div></div>
+    <div class="scope-box">
+      <div class="scope-row"><div class="scope-label">Incluye</div><div class="scope-value">Diseño del flujo, conexión entre las herramientas que ya usas y pruebas con datos reales antes de activarlo. No hace falta cambiar de programas.</div></div>
+      <div class="scope-row"><div class="scope-label">Límites</div><div class="scope-value">El precio depende de cuántos pasos tiene el flujo y de cuántas herramientas distintas conecta — por eso hay 3 bandas cerradas (arriba) en vez de un número único o un "desde" abierto. En la primera llamada te decimos en qué banda encaja tu caso, y ese es el precio final.</div></div>
+      <div class="scope-row"><div class="scope-label">Precio</div><div class="scope-value"><b>350€, 650€ o 1.200€ + IVA</b>, precio cerrado según la banda (simple/media/compleja) que corresponda a tu caso.</div></div>
+      <div class="scope-row"><div class="scope-label">Plazo</div><div class="scope-value">Implantación dentro del periodo estándar de 90 días de Digitaliza.</div></div>
+    </div>
+  </div>
+</div>
+
 <div class="cta-section reveal">
   <div class="container">
     <div class="cta-inner">
       <div>
         <h2>¿Listo para dejar de depender de que alguien se acuerde de hacerlo?</h2>
-        <p>400 € + IVA de implantación. Se mantiene después dentro de tu Departamento Tecnológico.</p>
+        <p>350€, 650€ o 1.200€ + IVA de implantación, precio cerrado según la complejidad del flujo. Se mantiene después dentro de tu Departamento Tecnológico.</p>
       </div>
       <div class="cta-btns">
         <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>

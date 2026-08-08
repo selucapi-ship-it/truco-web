@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <title>Departamento Tecnológico Pro™ — TRUCO technology</title>
-<meta name="description" content="El departamento tecnológico completo. Hasta 6 soluciones mantenidas, optimización continua y máxima prioridad.">
+<meta name="description" content="Web Profesional + 3 soluciones tecnológicas, completamente gratis al contratar. Hasta 6 soluciones mantenidas, optimización continua y máxima prioridad.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -60,27 +60,36 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 @keyframes heroFloat1{0%{transform:translate(0,0) scale(1);}100%{transform:translate(-50px,40px) scale(1.12);}}
 @keyframes heroFloat2{0%{transform:translate(0,0) scale(1);}100%{transform:translate(40px,-30px) scale(1.08);}}
 @media(prefers-reduced-motion:reduce){.hero-glow{animation:none;}}
-.ph-tag{font-family:var(--font-m);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);display:inline-flex;align-items:center;gap:9px;margin-bottom:14px;position:relative;z-index:1;}
+.ph-tag{font-family:var(--font-m);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);display:inline-flex;align-items:center;gap:9px;margin-bottom:14px;position:relative;z-index:1;}
 .ph-tag svg{width:15px;height:15px;}
-.hero-badge{display:inline-block;margin-bottom:16px;position:relative;z-index:1;font-size:.72rem;font-weight:700;padding:6px 14px;border-radius:20px;background:var(--blue);color:#fff;}
+.hero-badge{display:inline-block;margin-bottom:16px;position:relative;z-index:1;font-size:.82rem;font-weight:700;padding:6px 14px;border-radius:20px;background:var(--blue);color:#fff;}
 .page-hero h1{font-size:clamp(2.1rem,4vw,3.3rem);font-weight:700;margin-bottom:16px;max-width:760px;position:relative;z-index:1;}
 .page-hero p{font-size:1.05rem;color:var(--grey);line-height:1.75;max-width:620px;position:relative;z-index:1;}
 .hero-price-box{position:relative;z-index:1;margin-top:32px;background:var(--bg-panel);border:1px solid var(--blue-soft);border-radius:16px;padding:28px 32px;display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap;}
+.hp-founding-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(90deg,#f2c14e,var(--gold) 55%,#c98f1f);color:#1a1206;font-weight:800;font-size:.8rem;padding:6px 14px;border-radius:20px;margin-bottom:10px;}
+.hp-founding-badge:empty{display:none;margin-bottom:0;}
 .hp-main{font-size:2.2rem;font-weight:700;font-family:var(--font-d);}
 .hp-main sub{font-size:.9rem;font-weight:500;color:var(--grey);}
-.hp-vat{font-size:.78rem;color:var(--grey);margin-top:2px;}
-.hp-annual{font-size:.78rem;color:var(--gold);margin-top:6px;}
+.hp-vat{font-size:.84rem;color:var(--grey);margin-top:2px;}
+.hp-annual{font-size:.84rem;color:var(--gold);margin-top:6px;}
+.hp-founding-old{font-size:.74rem;color:var(--grey);margin-top:6px;}
+.hp-founding-old .price-old{text-decoration:line-through;}
 @media(max-width:768px){.hero-price-box{flex-direction:column;align-items:flex-start;}}
 
 .section-block{padding:60px 0;}
 .section-divider{display:flex;align-items:center;gap:16px;margin-bottom:32px;flex-wrap:wrap;}
-.sd-tag{font-family:var(--font-m);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+.sd-tag{font-family:var(--font-m);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:20px;white-space:nowrap;flex-shrink:0;font-weight:600;}
 .sd-tag.gold{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(217,168,63,.3);}
 .sd-tag.blue{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(47,123,255,.3);}
 .sd-tag.green{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3);}
 .sd-line{flex:1;height:1px;background:var(--grey-line);min-width:24px;}
 @media(max-width:600px){.section-divider{flex-direction:column;align-items:flex-start;gap:10px;}.sd-line{display:none;}}
 
+.hww-steps{display:flex;flex-direction:column;gap:16px;max-width:760px;}
+.hww-step{display:flex;gap:16px;align-items:flex-start;}
+.hww-step-num{width:30px;height:30px;border-radius:50%;background:var(--gold-dim);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:800;flex-shrink:0;}
+.hww-step p{font-size:.95rem;color:var(--white);line-height:1.6;}
+.hww-step p b{color:var(--gold);}
 .feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
 .feat-card{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:12px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start;
   opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease,border-color .22s;}
@@ -93,29 +102,44 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .feat-grid .feat-card:nth-child(6){transition-delay:.30s;}
 .feat-card:hover{border-color:var(--blue);}
 .feat-card svg{width:19px;height:19px;color:var(--blue);flex-shrink:0;margin-top:2px;}
-.feat-card p{font-size:.88rem;color:var(--white);line-height:1.55;}
+.feat-card p{font-size:.95rem;color:var(--white);line-height:1.55;}
 .feat-card.gold svg{color:var(--gold);}
 .feat-card.gold:hover{border-color:var(--gold);}
-.necessity-note{position:relative;z-index:1;background:linear-gradient(135deg,var(--blue-dim),var(--bg-panel));border:1px solid var(--blue-soft);border-left:3px solid var(--blue);border-radius:10px;padding:16px 20px;margin-top:20px;font-size:.85rem;color:var(--grey);line-height:1.6;}
+.necessity-note{position:relative;z-index:1;background:linear-gradient(135deg,var(--blue-dim),var(--bg-panel));border:1px solid var(--blue-soft);border-left:3px solid var(--blue);border-radius:10px;padding:16px 20px;margin-top:20px;font-size:.92rem;color:var(--grey);line-height:1.6;}
+
+.value-highlight{position:relative;z-index:1;background:linear-gradient(135deg,rgba(217,168,63,.2),rgba(217,168,63,.06));border:1.5px solid var(--gold);border-radius:16px;padding:24px 26px;margin-top:24px;overflow:hidden;animation:vhGlow 2.4s ease-in-out infinite;}
+@keyframes vhGlow{0%,100%{box-shadow:0 0 0 0 rgba(217,168,63,.3);}50%{box-shadow:0 0 0 8px rgba(217,168,63,0);}}
+.value-highlight::before{content:'';position:absolute;top:-50%;right:-15%;width:220px;height:220px;background:radial-gradient(circle,rgba(217,168,63,.3),transparent 70%);pointer-events:none;}
+.vh-eyebrow{font-family:var(--font-m);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;position:relative;font-weight:700;}
+.vh-save{font-family:var(--font-d);font-size:1.5rem;font-weight:800;color:var(--white);margin-bottom:16px;position:relative;line-height:1.3;}
+.vh-save b{color:var(--gold);}
+.vh-list{list-style:none;position:relative;display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;}
+@media(max-width:600px){.vh-list{grid-template-columns:1fr;}}
+.vh-list li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:.95rem;color:var(--white);padding-left:22px;position:relative;}
+.vh-list li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:800;font-size:1.05rem;}
+.vh-tag{font-size:.74rem;color:var(--grey);font-family:var(--font-m);white-space:nowrap;flex-shrink:0;}
 .necessity-note b{color:var(--white);}
 .compare-wrap{overflow-x:auto;}
 .compare-table{width:100%;border-collapse:collapse;min-width:520px;}
-.compare-table th,.compare-table td{padding:14px 16px;text-align:left;font-size:.85rem;border-bottom:1px solid var(--grey-line);}
-.compare-table th{font-family:var(--font-m);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);font-weight:600;}
+.compare-table th,.compare-table td{padding:14px 16px;text-align:left;font-size:.9rem;border-bottom:1px solid var(--grey-line);}
+.compare-table th{font-family:var(--font-m);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);font-weight:600;}
 .compare-table td:not(:first-child),.compare-table th:not(:first-child){text-align:center;}
 .compare-table .col-pro{background:var(--blue-dim);}
 .compare-table th.col-pro{color:var(--blue);border-bottom:2px solid var(--blue);}
 .compare-table td.col-pro{border-bottom:1px solid rgba(47,123,255,.25);}
+.compare-table .col-this{background:var(--blue-dim);}
+.compare-table th.col-this{color:var(--blue);border-bottom:2px solid var(--blue);}
+.compare-table td.col-this{border-bottom:1px solid rgba(47,123,255,.25);}
 .compare-table .cell-limit{color:var(--grey);font-size:.8rem;}
 @media(max-width:768px){.feat-grid{grid-template-columns:1fr;}}
 
 .wib-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-.wib-item{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:10px;padding:14px 16px;font-size:.78rem;color:var(--grey);}
-.wib-item b{display:block;color:var(--white);font-size:.85rem;margin-bottom:3px;}
+.wib-item{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:10px;padding:14px 16px;font-size:.85rem;color:var(--grey);}
+.wib-item b{display:block;color:var(--white);font-size:.92rem;margin-bottom:3px;}
 @media(max-width:900px){.wib-grid{grid-template-columns:repeat(2,1fr);}}
 
 .cross-nav{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:28px 32px;}
-.cross-nav-title{font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.cross-nav-title{font-family:var(--font-m);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
 .cross-nav-items{display:flex;gap:12px;flex-wrap:wrap;}
 .cross-nav-chip{display:flex;align-items:center;gap:10px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:10px;padding:11px 16px;font-size:.85rem;font-weight:600;color:var(--white);transition:border-color var(--tr),transform var(--tr);}
 .cross-nav-chip:hover{border-color:var(--blue);transform:translateY(-3px);}
@@ -125,13 +149,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .faq-section{padding:60px 0;}
 .faq-list{max-width:800px;}
 .faq-item{border-bottom:1px solid var(--grey-line);}
-.faq-q{width:100%;background:none;border:none;color:var(--white);display:flex;justify-content:space-between;align-items:center;padding:20px 0;font-family:var(--font-d);font-size:.95rem;font-weight:700;cursor:pointer;text-align:left;gap:16px;transition:color var(--tr);}
+.faq-q{width:100%;background:none;border:none;color:var(--white);display:flex;justify-content:space-between;align-items:center;padding:20px 0;font-family:var(--font-d);font-size:1rem;font-weight:700;cursor:pointer;text-align:left;gap:16px;transition:color var(--tr);}
 .faq-q:hover{color:var(--blue);}
 .faq-icon{flex-shrink:0;width:24px;height:24px;border:1px solid var(--grey-line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all var(--tr);}
 .faq-item.open .faq-icon{background:var(--blue);border-color:var(--blue);}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;}
 .faq-item.open .faq-a{max-height:400px;padding-bottom:20px;}
-.faq-a p{font-size:.9rem;color:var(--grey);line-height:1.75;}
+.faq-a p{font-size:.95rem;color:var(--grey);line-height:1.75;}
 
 .cta-section{padding:60px 0 96px;}
 .cta-inner{background:linear-gradient(135deg,var(--blue-soft),var(--bg-panel));border:1px solid var(--blue-soft);border-radius:18px;padding:48px;display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;}
@@ -180,30 +204,56 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="hero-glow blue"></div>
   <div class="hero-glow gold"></div>
   <div class="container">
-    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Para empresas que no pueden permitirse fallos</div>
+    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Web Profesional + 3 soluciones incluidas gratis</div>
     <span class="hero-badge">El nivel de fiabilidad que necesita tu empresa</span>
     <h1>Departamento Tecnológico Pro™</h1>
-    <p>Cuando tu negocio ya depende de varias herramientas a la vez, mantenerlas por separado deja de ser suficiente. El Pro™ mantiene hasta 6 soluciones, revisadas cada 15 días y con respuesta prioritaria en menos de 24h — la calidad que necesita una empresa que no puede permitirse que algo falle.</p>
+    <p>Web Profesional regalada + 3 soluciones tecnológicas a elegir, todo instalado completamente gratis. Cuando tu negocio ya depende de varias herramientas a la vez, mantenerlas por separado deja de ser suficiente — el Pro™ mantiene hasta 6, con supervisión continua y respuesta prioritaria en menos de 24h.</p>
     <div class="hero-price-box">
       <div>
-        <div class="hp-main">399 €<sub>/mes</sub></div>
-        <div class="hp-vat">+ IVA · 482,79 €/mes con IVA</div>
-        <div class="hp-annual">o 359,10 €/mes pagando anual · ahorras 10%</div>
+        <div class="hp-founding-badge" id="hp-founding-badge-pro"></div>
+        <div class="hp-main" id="hp-main-pro"></div>
+        <div class="hp-vat" id="hp-vat-pro"></div>
+        <div class="hp-founding-old" id="hp-founding-old-pro"></div>
+        <div class="hp-annual" id="hp-annual-pro"></div>
       </div>
       <a class="btn-primary" href="../pago.html?plan=arranque-pro">Contratar Pro™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </div>
-    <div class="necessity-note"><b>¿Cuándo necesitas Pro™?</b> En cuanto combinas 3 o más herramientas (WhatsApp IA, CRM, reservas, web...) o tu negocio ya no puede esperar días para resolver una incidencia.</div>
+    <div class="necessity-note"><b>La web y las soluciones ya no se pagan aparte, van incluidas.</b> Es lo que hace posible este regalo: 12 meses de permanencia. Lo notas en cuanto combinas 3 o más herramientas (WhatsApp IA, reservas, web...) o cuando cada incidencia necesita respuesta con prioridad, no por orden de llegada.</div>
+    <div class="value-highlight">
+      <div class="vh-eyebrow">Lo que te llevas gratis</div>
+      <div class="vh-save">Ahorras entre <b>1.990 € y 2.720 €</b> en instalación</div>
+      <ul class="vh-list">
+        <li>Web Profesional <span class="vh-tag">valor 940 €</span></li>
+        <li>3 soluciones a elegir <span class="vh-tag">valor 1.050-1.780 €</span></li>
+        <li>Mantenimiento de hasta 6 soluciones <span class="vh-tag">incluido siempre</span></li>
+        <li>Supervisión continua <span class="vh-tag">prioridad máxima</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-bottom:20px;">
+  <div class="container">
+    <div class="section-divider"><h2 class="sd-tag blue">Así trabajamos contigo</h2><div class="sd-line"></div></div>
+    <div class="hww-steps">
+      <div class="hww-step"><div class="hww-step-num">1</div><p><b>Auditoría de tu negocio.</b> Antes de montar nada, te preguntamos cómo trabajas, qué preguntan tus clientes y qué información hace falta para representarte bien.</p></div>
+      <div class="hww-step"><div class="hww-step-num">2</div><p><b>Configuración y entrenamiento a medida.</b> No te entregamos un asistente en blanco para que lo enseñes tú — lo configuramos y entrenamos nosotros con los datos de tu negocio.</p></div>
+      <div class="hww-step"><div class="hww-step-num">3</div><p><b>Cambios sin que tú toques nada.</b> ¿Quieres actualizar un precio, un horario, una respuesta? Nos escribes y lo hacemos nosotros.</p></div>
+      <div class="hww-step"><div class="hww-step-num">4</div><p><b>Revisiones que agendamos nosotros.</b> No tienes que acordarte de pedir cita — te la agendamos y tú solo confirmas un hueco en tu calendario.</p></div>
+      <div class="hww-step"><div class="hww-step-num">5</div><p><b>Tu asistente incluso puede cerrar ventas por ti.</b> Cuando uno de tus clientes está listo para contratar, tu asistente cierra el trato con él sin que tú tengas que intervenir.</p></div>
+    </div>
   </div>
 </div>
 
 <div class="section-block reveal">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag blue">Todo lo incluido en Lite™, más</span><div class="sd-line"></div></div>
+    <div class="section-divider"><h2 class="sd-tag blue">Incluye</h2><div class="sd-line"></div></div>
     <div class="feat-grid">
-      <div class="feat-card gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><p><b>Mantenimiento de hasta 6 soluciones tecnológicas</b></p></div>
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p><b>Revisión de rendimiento cada 15 días</b> de todas tus soluciones activas — frente a la revisión mensual básica de Lite™</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg><p><b>Web Profesional regalada</b> — diseño a medida, páginas ilimitadas, integraciones e IA, con mantenimiento continuo</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><p><b>3 soluciones a elegir</b> del catálogo, instaladas completamente gratis</p></div>
+      <div class="feat-card gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><p><b>Mantenimiento de hasta 6 soluciones tecnológicas</b> en total — la 4ª en adelante, al precio de catálogo, sin recargo de alta</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p><b>Supervisión continua</b> de todas tus soluciones activas — monitorización permanente, no una revisión puntual en el calendario</p></div>
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><p><b>Incidencias con prioridad alta</b> — respuesta en menos de 24h laborables, no por orden de llegada</p></div>
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10M18 20V4M6 20v-4"/></svg><p><b>Ajustes y mejoras sin coste extra</b> cada vez que tu negocio cambia de proceso o añade una herramienta</p></div>
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p><b>Reunión mensual de 45 min</b> con análisis de datos y recomendaciones estratégicas, no solo dudas puntuales</p></div>
     </div>
   </div>
@@ -211,20 +261,21 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag gold">Lite™ vs Pro™ de un vistazo</span><div class="sd-line"></div></div>
+    <div class="section-divider"><h2 class="sd-tag gold">Basic™ vs Lite™ vs Pro™ de un vistazo</h2><div class="sd-line"></div></div>
     <div class="compare-wrap">
       <table class="compare-table">
         <thead>
-          <tr><th>&nbsp;</th><th>Lite™ · 199 €/mes</th><th class="col-pro">Pro™ · 399 €/mes</th></tr>
+          <tr><th>&nbsp;</th><th>Basic™ · 69 €/mes</th><th>Lite™ · <span id="table-price-lite"></span>/mes</th><th class="col-this">Pro™ · <span id="table-price-pro"></span>/mes</th></tr>
         </thead>
         <tbody>
-          <tr><td>Soluciones tecnológicas mantenidas</td><td class="cell-limit">Hasta 2</td><td class="col-pro"><b>Hasta 6</b></td></tr>
-          <tr><td>Mantenimiento web y seguridad</td><td>✓</td><td class="col-pro">✓</td></tr>
-          <tr><td>Copias de seguridad periódicas</td><td>✓</td><td class="col-pro">✓</td></tr>
-          <tr><td>Resolución de incidencias</td><td class="cell-limit">Por orden de llegada</td><td class="col-pro"><b>Prioridad alta, &lt;24h</b></td></tr>
-          <tr><td>Revisión de rendimiento</td><td class="cell-limit">Mensual básica</td><td class="col-pro"><b>Cada 15 días</b></td></tr>
-          <tr><td>Reunión de seguimiento</td><td class="cell-limit">30 min/mes</td><td class="col-pro"><b>45 min/mes + estrategia</b></td></tr>
-          <tr><td>Ideal para</td><td class="cell-limit">1 web + 1-2 herramientas</td><td class="col-pro"><b>3+ herramientas activas</b></td></tr>
+          <tr><td>Web incluida</td><td class="cell-limit">No incluida</td><td>Reacondicionada o nueva</td><td class="col-this"><b>Web Profesional</b></td></tr>
+          <tr><td>Soluciones gratis al contratar</td><td>1</td><td>2</td><td class="col-this"><b>3</b></td></tr>
+          <tr><td>Soluciones mantenidas (rango)</td><td class="cell-limit">Hasta 2</td><td class="cell-limit">Hasta 3</td><td class="col-this"><b>Hasta 6</b></td></tr>
+          <tr><td>Permanencia</td><td>6 meses</td><td>12 meses</td><td class="col-this">12 meses</td></tr>
+          <tr><td>Resolución de incidencias</td><td class="cell-limit">Por orden de llegada</td><td class="cell-limit">Por orden de llegada</td><td class="col-this"><b>Prioridad alta, &lt;24h</b></td></tr>
+          <tr><td>Revisión de rendimiento</td><td class="cell-limit">—</td><td class="cell-limit">Mensual básica</td><td class="col-this"><b>Continua</b></td></tr>
+          <tr><td>Reunión de seguimiento</td><td class="cell-limit">—</td><td class="cell-limit">30 min/mes</td><td class="col-this"><b>45 min/mes + estrategia</b></td></tr>
+          <tr><td>Ideal para</td><td class="cell-limit">Una necesidad puntual</td><td class="cell-limit">1 web + 1-3 herramientas</td><td class="col-this"><b>3+ herramientas activas</b></td></tr>
         </tbody>
       </table>
     </div>
@@ -233,17 +284,17 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag gold">¿Qué es una solución tecnológica?</span><div class="sd-line"></div></div>
-    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:760px;margin-bottom:24px;">Cada sistema implantado que requiere mantenimiento periódico. El Pro™ mantiene hasta 6. Cuando creces y añades nueva tecnología, evolucionamos contigo.</p>
+    <div class="section-divider"><h2 class="sd-tag gold">Las 3 soluciones a elegir, gratis</h2><div class="sd-line"></div></div>
+    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:760px;margin-bottom:24px;">Eliges 3 de este catálogo al contratar, instaladas gratis. El Pro™ mantiene hasta 6 en total — la 4ª en adelante se instala al precio de catálogo, sin recargo de alta.</p>
     <div class="wib-grid">
       <div class="wib-item"><b>IA para WhatsApp</b>Atención automática activa</div>
-      <div class="wib-item"><b>IA Web</b>Sistema de atención en tu web</div>
-      <div class="wib-item"><b>IA Correo</b>Gestión automática de emails</div>
-      <div class="wib-item"><b>CRM</b>Base de datos de clientes</div>
-      <div class="wib-item"><b>Automatización</b>Flujos automáticos activos</div>
-      <div class="wib-item"><b>Reservas</b>Agenda online integrada</div>
-      <div class="wib-item"><b>Integraciones</b>Conexiones entre herramientas</div>
-      <div class="wib-item"><b>Más soluciones</b>Cualquier sistema implantado por TRUCO</div>
+      <div class="wib-item"><b>IA para tu Web</b>Sistema de atención en tu web</div>
+      <div class="wib-item"><b>IA para Llamadas</b>Contesta el teléfono y agenda citas</div>
+      <div class="wib-item"><b>IA para Correo</b>Gestión automática de emails</div>
+      <div class="wib-item"><b>Reservas y Agenda</b>Citas online integradas</div>
+      <div class="wib-item"><b>Firma Digital</b>Firma de contratos online con validez legal</div>
+      <div class="wib-item"><b>Ciberseguridad Pyme</b>Protección y copias de seguridad hasta 5 puestos</div>
+      <div class="wib-item"><b>Automatizaciones (banda Simple)</b>Un flujo interno automatizado a medida</div>
     </div>
   </div>
 </div>
@@ -251,8 +302,9 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
     <div class="cross-nav">
-      <div class="cross-nav-title">Relacionado</div>
+      <h2 class="cross-nav-title">Relacionado</h2>
       <div class="cross-nav-items">
+        <a class="cross-nav-chip" href="basic.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Basic™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="lite.html"><div class="icon-badge sm green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Lite™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="../proyectos/web-profesional.html"><div class="icon-badge sm blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>Web Profesional <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="../servicios.html#digitaliza"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>Digitaliza tu Empresa <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
@@ -263,19 +315,23 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="faq-section reveal">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag blue">Preguntas frecuentes</span><div class="sd-line"></div></div>
+    <div class="section-divider"><h2 class="sd-tag blue">Preguntas frecuentes</h2><div class="sd-line"></div></div>
     <div class="faq-list">
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Cuándo tiene sentido pasar de Lite™ a Pro™? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Cuando tienes más de 2 soluciones tecnológicas activas o necesitas prioridad máxima en la resolución de incidencias.</p></div>
+        <div class="faq-a"><p>Cuando superas las 3 soluciones tecnológicas de Lite™ o necesitas prioridad máxima en la resolución de incidencias. El paso a Pro™ es inmediato, sin penalización.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Qué significa "optimización continua"? <span class="faq-icon">+</span></button>
         <div class="faq-a"><p>Revisamos el rendimiento de cada solución activa y aplicamos mejoras de forma proactiva, sin esperar a que surja un problema.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">¿Hay compromiso de permanencia? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>No, es sin compromiso mensual. Puedes cancelar cuando quieras avisando con 7 días de antelación.</p></div>
+        <button class="faq-q" onclick="toggleFaq(this)">¿Por qué hay permanencia de 12 meses? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Porque regalamos la Web Profesional + 3 soluciones desde el primer día — eso solo tiene sentido económico con un compromiso mínimo de 12 meses. Si no quieres ningún compromiso, la compra suelta (sin Departamento) sigue disponible, pero entonces el mantenimiento corre de tu cuenta.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Cómo se paga? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Por defecto, pago único por adelantado de los 12 meses (<span id="faq-total-pro"></span> + IVA), con un 12% de descuento por hacerlo de una vez. Si prefieres no adelantar todo de golpe, lo fraccionas a través de SeQura, nuestro partner de financiación — ellos nos pagan el total y tú les devuelves en los plazos que elijas. No hacemos facturación mensual directa con nosotros.</p></div>
       </div>
     </div>
   </div>
@@ -286,7 +342,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="cta-inner">
       <div>
         <h2>¿Listo para el departamento tecnológico completo?</h2>
-        <p>399 €/mes + IVA. Sin compromiso, cancela cuando quieras.</p>
+        <p>Pago único con 12% dto., o fracciona con SeQura. Web Profesional + 3 soluciones gratis, 12 meses de permanencia.</p>
       </div>
       <div class="cta-btns">
         <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>
@@ -311,6 +367,24 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </footer>
 
+<script src="../founding-offer.js"></script>
+<script>
+(function(){
+  const mLite=currentPrice('lite'),mPro=currentPrice('pro');
+  const pagoUnicoPro=(Math.round(mPro*12*0.88*100)/100).toFixed(2).replace('.',',');
+  const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
+  set('hp-main-pro',mPro+' €<sub>/mes</sub>');
+  set('hp-vat-pro','+ IVA · '+(mPro*1.21).toFixed(2).replace('.',',')+' €/mes con IVA');
+  set('hp-annual-pro','Pago único con 12% dto.: '+pagoUnicoPro+' € + IVA (sin facturación mensual directa) · o fracciona con SeQura · Permanencia 12 meses');
+  set('table-price-lite',mLite+' €');
+  set('table-price-pro',mPro+' €');
+  set('faq-total-pro',pagoUnicoPro+'€');
+  if(foundingActive()){
+    set('hp-founding-badge-pro','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT+' de 10 plazas');
+    set('hp-founding-old-pro','Antes <s class="price-old">'+STANDARD_PRICES.pro+'€/mes</s>');
+  }
+})();
+</script>
 <script>
 function toggleFaq(btn){
   const item=btn.closest('.faq-item');

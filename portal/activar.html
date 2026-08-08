@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Activa tu acceso — TRUCO technology</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --bg:#16151a;--bg-panel:#201f24;--bg-card:#2b2a30;
+  --blue:#2f7bff;--gold:#d9a83f;--green:#22c55e;
+  --white:#f2f0ea;--grey:#9a96a0;--grey-line:#3d3b42;--red:#ef4444;
+  --font-d:'Playfair Display',Georgia,serif;
+  --font-b:'DM Sans',sans-serif;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--white);font-family:var(--font-b);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+.box{width:100%;max-width:380px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:18px;padding:36px 34px;}
+.mark{width:48px;height:48px;border:1.5px solid var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:800;font-size:1.5rem;color:var(--gold);background:linear-gradient(160deg,var(--bg-card),var(--bg));margin-bottom:18px;}
+h1{font-family:var(--font-d);font-size:1.4rem;margin:0 0 6px;}
+.sub{color:var(--grey);font-size:.88rem;margin:0 0 26px;line-height:1.5;}
+input{width:100%;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:9px;padding:12px 14px;color:var(--white);font-family:var(--font-b);font-size:.92rem;margin-bottom:12px;outline:none;transition:border-color .2s;}
+input:focus{border-color:var(--blue);}
+button{width:100%;background:var(--blue);border:none;border-radius:9px;color:#fff;padding:13px;font-size:.92rem;font-weight:600;cursor:pointer;margin-top:6px;transition:opacity .2s;}
+button:hover{opacity:.88;}
+button:disabled{opacity:.5;cursor:not-allowed;}
+.error{color:var(--red);font-size:.82rem;margin-top:12px;display:none;}
+.ok{color:var(--green);font-size:.85rem;margin-top:14px;display:none;line-height:1.5;}
+.warn{background:rgba(239,68,68,.1);border:1px solid var(--red);border-radius:9px;padding:11px 13px;font-size:.78rem;margin-bottom:18px;display:none;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<div class="box">
+  <div class="mark">T</div>
+  <h1>Activa tu acceso</h1>
+  <p class="sub">Elige la contraseña con la que entrarás a partir de ahora en tu portal de cliente.</p>
+  <div class="warn" id="config-warn">Este enlace no es válido o ha caducado. Escríbenos y te mandamos uno nuevo.</div>
+  <div id="form-wrap">
+    <input type="password" id="pass1" placeholder="Nueva contraseña" autocomplete="new-password">
+    <input type="password" id="pass2" placeholder="Repite la contraseña" autocomplete="new-password">
+    <button id="set-btn" onclick="setPassword()">Activar y entrar</button>
+    <div class="error" id="err"></div>
+    <div class="ok" id="ok-msg">Contraseña guardada. Entrando a tu portal…</div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
+let sb = null;
+let sessionReady = false;
+
+function isConfigured() {
+  return !SUPABASE_URL.startsWith('REEMPLAZA_') && !SUPABASE_ANON_KEY.startsWith('REEMPLAZA_');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (!isConfigured()) {
+    document.getElementById('config-warn').style.display = 'block';
+    document.getElementById('form-wrap').style.display = 'none';
+    return;
+  }
+  sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // El enlace de invitación de Supabase dispara un evento distinto según la
+  // versión — no hay certeza total de si será PASSWORD_RECOVERY o SIGNED_IN,
+  // así que escuchamos ambos y con cualquiera de los dos damos la sesión por
+  // válida para poder fijar la contraseña.
+  sb.auth.onAuthStateChange((event) => {
+    if (event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') {
+      sessionReady = true;
+    }
+  });
+
+  setTimeout(async () => {
+    if (sessionReady) return;
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) { sessionReady = true; return; }
+    document.getElementById('config-warn').style.display = 'block';
+    document.getElementById('form-wrap').style.display = 'none';
+  }, 1200);
+});
+
+async function setPassword() {
+  const p1 = document.getElementById('pass1').value;
+  const p2 = document.getElementById('pass2').value;
+  const errEl = document.getElementById('err');
+  errEl.style.display = 'none';
+  if (!sessionReady) {
+    errEl.textContent = 'Este enlace no es válido o ha caducado. Escríbenos y te mandamos uno nuevo.';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (p1.length < 8) {
+    errEl.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (p1 !== p2) {
+    errEl.textContent = 'Las dos contraseñas no coinciden.';
+    errEl.style.display = 'block';
+    return;
+  }
+  const btn = document.getElementById('set-btn');
+  btn.disabled = true;
+  const { error } = await sb.auth.updateUser({ password: p1 });
+  if (error) {
+    btn.disabled = false;
+    errEl.textContent = 'No se pudo guardar la contraseña. Inténtalo de nuevo.';
+    errEl.style.display = 'block';
+    return;
+  }
+  document.getElementById('form-wrap').innerHTML = '';
+  document.getElementById('ok-msg').style.display = 'block';
+  setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
+}
+</script>
+</body>
+</html>
