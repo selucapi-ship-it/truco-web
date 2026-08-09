@@ -97,6 +97,22 @@
   .fine-note{padding:3mm 13mm 0;font-size:.6rem;color:var(--grey);line-height:1.4;}
   .fine-note b{color:var(--white);}
 
+  /* ── ECOSYSTEM DIAGRAM ── */
+  .eco-section{padding:7mm 13mm 0;}
+  .eco-title{font-family:var(--font-d);font-weight:700;font-size:1.05rem;color:var(--white);text-align:center;}
+  .eco-sub{font-size:.68rem;color:var(--grey);text-align:center;margin-top:3px;margin-bottom:16px;}
+  .eco-nodes{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:150mm;margin:0 auto;}
+  .eco-node{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:11px;padding:12px 8px;text-align:center;}
+  .eco-node svg{width:22px;height:22px;color:var(--gold);margin-bottom:6px;}
+  .eco-node h5{font-size:.7rem;font-weight:700;color:var(--white);margin-bottom:3px;}
+  .eco-node p{font-size:.58rem;color:var(--grey);line-height:1.3;}
+  .eco-lines{max-width:150mm;height:28px;margin:0 auto;display:block;}
+  .eco-hub-wrap{display:flex;justify-content:center;}
+  .eco-hub{display:flex;align-items:center;gap:9px;background:linear-gradient(135deg,var(--gold-dim),transparent);border:1.5px solid var(--gold);border-radius:30px;padding:9px 20px;}
+  .eco-hub .brand-mark{width:26px;height:26px;font-size:.85rem;}
+  .eco-hub-text b{font-family:var(--font-d);font-size:.82rem;color:var(--gold);display:block;line-height:1.15;}
+  .eco-hub-text span{display:block;font-size:.58rem;color:var(--grey);margin-top:1px;}
+
   /* ── FOUNDER + CTA ROW ── */
   .bottom-row{margin-top:auto;border-top:1px solid var(--grey-line);padding:6mm 13mm 7mm;display:flex;align-items:center;gap:16px;}
   .founder{display:flex;gap:11px;align-items:center;flex:1.3;}
@@ -202,6 +218,45 @@
 
   <div class="founding-band"><b>🏷 Programa Fundadores:</b> 20 plazas en total — 10 para Lite™ y 10 para Pro™ — con precio de fundador fijo mientras sigas siendo cliente.</div>
   <div class="fine-note">¿Solo necesitas una cosa ya? <b>Basic™</b> desde 69€/mes: 1 solución gratis, sin web. Pago único con 12% dto. o SeQura. Permanencia de 6 a 12 meses según escalón — nunca facturación mensual directa sin avisar.</div>
+
+  <div class="eco-section">
+    <div class="eco-title">Tu ecosistema, en un solo equipo</div>
+    <div class="eco-sub">Todos los canales por los que te puede llegar un cliente, atendidos a la vez — sin que tengas que mirar cuatro sitios distintos.</div>
+    <div class="eco-nodes">
+      <div class="eco-node">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg>
+        <h5>Web</h5>
+        <p>Responde dudas 24/7</p>
+      </div>
+      <div class="eco-node">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        <h5>WhatsApp</h5>
+        <p>Contesta y agenda citas</p>
+      </div>
+      <div class="eco-node">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <h5>Llamadas</h5>
+        <p>Coge el teléfono por ti</p>
+      </div>
+      <div class="eco-node">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+        <h5>Correo</h5>
+        <p>Clasifica y responde</p>
+      </div>
+    </div>
+    <svg class="eco-lines" viewBox="0 0 400 40" preserveAspectRatio="none">
+      <path d="M50 0 V20 H350 V0" fill="none" stroke="#3d3b42" stroke-width="1.5"/>
+      <path d="M150 0 V20" fill="none" stroke="#3d3b42" stroke-width="1.5"/>
+      <path d="M250 0 V20" fill="none" stroke="#3d3b42" stroke-width="1.5"/>
+      <path d="M200 20 V40" fill="none" stroke="#d9a83f" stroke-width="1.5"/>
+    </svg>
+    <div class="eco-hub-wrap">
+      <div class="eco-hub">
+        <div class="brand-mark">T</div>
+        <div class="eco-hub-text"><b>TRUCO — tu equipo</b><span>Encargado de todo, tú solo escribes</span></div>
+      </div>
+    </div>
+  </div>
 
   <div class="bottom-row">
     <div class="founder">
