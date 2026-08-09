@@ -1149,10 +1149,8 @@ const TIER_POOLS={
   ]},
   pro:{max:3,label:'Elige 3 soluciones gratis',sols:[
     {value:'whatsapp',name:'IA para WhatsApp'},
-    {value:'web-ia',name:'IA para tu Web'},
     {value:'llamadas',name:'IA para Llamadas'},
     {value:'email-ia',name:'IA para Correo'},
-    {value:'reservas',name:'Reservas y Agenda'},
     {value:'firma',name:'Firma Digital'},
     {value:'ciberseguridad',name:'Ciberseguridad Pyme'},
     {value:'automatizaciones',name:'Automatizaciones (banda Simple)'}
@@ -1290,7 +1288,8 @@ function renderExtraSolutionsPanel(){
   if(!block)return;
   if(maxExtra<=0){block.style.display='none';return;}
   block.style.display='block';
-  const available=CLOSED_PRICE_SOLUTIONS.filter(s=>!selectedTierSolutions.includes(s.value));
+  const alreadyIncluded=tier==='pro'?['web-ia','reservas']:[];
+  const available=CLOSED_PRICE_SOLUTIONS.filter(s=>!selectedTierSolutions.includes(s.value)&&!alreadyIncluded.includes(s.value));
   const atMax=selectedExtraSolutions.length>=maxExtra;
   const grid=document.getElementById('extra-solutions-grid');
   grid.innerHTML=available.map(s=>{

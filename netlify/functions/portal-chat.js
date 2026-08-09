@@ -22,7 +22,7 @@ QUÉ ES: Departamento Tecnológico externalizado para pymes y autónomos en Espa
 ── DEPARTAMENTO TECNOLÓGICO ──
 - Basic™: 69€/mes + IVA. Permanencia mínima 6 meses. Sin web. 1 solución gratis (pool: WhatsApp, IA Web, IA Llamadas, IA Correo, Reservas, Firma Digital, Ciberseguridad Pyme, Automatizaciones banda Simple, TruKi — único escalón con TruKi gratis). Mantiene hasta 2 soluciones en total.
 - Lite™: 279€/mes + IVA (o precio de fundador si sigue activa la oferta). Permanencia 12 meses. Web + 2 soluciones gratis (pool: WhatsApp, IA Web, Llamadas, Correo, Reservas, Firma Digital, Ciberseguridad Pyme, Automatizaciones solo banda Simple 350€). TruKi NO entra en este pool, solo en Basic™. Mantiene hasta 3 soluciones en total. Reunión mensual 30 min.
-- Pro™: 549€/mes + IVA (o precio de fundador si sigue activa la oferta). Permanencia 12 meses. Web Profesional + 3 soluciones gratis del mismo pool de 8. Mantiene hasta 6 soluciones en total. Reunión mensual 45 min, mayor prioridad en incidencias.
+- Pro™: 549€/mes + IVA (o precio de fundador si sigue activa la oferta). Permanencia 12 meses. Web Profesional que ya incluye de fábrica chat + agenda de citas (por eso IA para tu Web y Reservas no están en su pool de elegir, ya las tiene gratis) + 3 soluciones gratis a elegir de un pool de 6 (WhatsApp, Llamadas, Correo, Firma Digital, Ciberseguridad, Automatizaciones banda Simple). Mantiene hasta 6 soluciones en total. Reunión mensual 45 min, mayor prioridad en incidencias.
 - Pago: solo pago único con 12% de descuento, o financiado con SeQura. Nunca facturación mensual directa.
 
 ── SOLUCIONES INDIVIDUALES DE DIGITALIZA (+ IVA) ──
