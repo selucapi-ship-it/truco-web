@@ -70,6 +70,16 @@ a{color:inherit;text-decoration:none;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
 @keyframes pickerPulse{0%,100%{box-shadow:0 0 0 0 rgba(47,123,255,.5);}50%{box-shadow:0 0 0 8px rgba(47,123,255,0);}}
 .picker-pulse{animation:pickerPulse .8s ease-in-out 2;}
+.extra-sol-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(135deg,rgba(217,168,63,.14),rgba(217,168,63,.05));border:1.5px solid rgba(217,168,63,.45);border-radius:12px;padding:13px 18px;color:var(--white);font-family:var(--font-b);font-size:.88rem;font-weight:700;cursor:pointer;transition:all var(--tr);}
+.extra-sol-toggle:hover{border-color:var(--gold);background:linear-gradient(135deg,rgba(217,168,63,.2),rgba(217,168,63,.08));}
+.extra-sol-toggle-left{display:flex;align-items:center;gap:10px;}
+.extra-sol-toggle-left svg{width:19px;height:19px;color:var(--gold);flex-shrink:0;}
+.extra-sol-toggle-count{font-family:var(--font-m);font-size:.68rem;color:var(--gold);background:rgba(217,168,63,.15);padding:2px 8px;border-radius:20px;}
+.extra-sol-arrow{width:16px;height:16px;color:var(--gold);transition:transform var(--tr);flex-shrink:0;}
+.extra-sol-toggle.open .extra-sol-arrow{transform:rotate(180deg);}
+.extra-sol-panel{margin-top:10px;background:rgba(217,168,63,.05);border:1.5px solid rgba(217,168,63,.25);border-radius:14px;padding:16px 18px;animation:fadeIn .25s ease;}
+.sol-chip-disabled{opacity:.4;cursor:not-allowed;}
+.sol-chip-disabled input{cursor:not-allowed;}
 nav{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);height:64px;background:rgba(22,21,26,.97);border-bottom:1px solid var(--grey-line);position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);}
 .t-mark{width:38px;height:38px;border:1.5px solid var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Georgia',serif;color:var(--gold);font-size:20px;font-weight:700;background:linear-gradient(160deg,var(--bg-panel),var(--bg));}
 .nav-logo{display:flex;align-items:center;gap:11px;}
@@ -397,15 +407,20 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         <div id="tier-solutions-note" style="margin-top:10px;font-size:.76rem;color:var(--grey);"></div>
       </div>
 
-
-      <div id="payment-mode-block" style="display:none;">
-        <div class="cat-label" style="margin-top:0;">¿Cómo lo pagas?</div>
-        <div class="billing-toggle">
-          <div class="billing-btn active" id="btn-unico" onclick="setTierPaymentMode('unico')">Pago único<span class="billing-save-tag">— ahorra 12%</span></div>
-          <div class="billing-btn" id="btn-financiado" onclick="setTierPaymentMode('financiado')">Fracciona con SeQura</div>
-        </div>
-        <div class="annual-highlight" id="annual-note">
-          <b id="payment-mode-title">Pago único por adelantado — ahorras un 12%.</b> <span id="payment-mode-desc">Se cobra todo el periodo de permanencia de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.</span>
+      <!-- SOLUCIONES ADICIONALES DE PAGO — hasta el límite de mantenimiento del escalón -->
+      <div id="extra-solutions-block" style="display:none;margin-bottom:16px;">
+        <button type="button" class="extra-sol-toggle" id="extra-sol-toggle" onclick="toggleExtraSolutionsPanel()">
+          <span class="extra-sol-toggle-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            ¿Necesitas algo más?
+            <span class="extra-sol-toggle-count" id="extra-sol-toggle-count" style="display:none;"></span>
+          </span>
+          <svg class="extra-sol-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="extra-solutions-panel" class="extra-sol-panel" style="display:none;">
+          <div class="cat-label" style="margin-top:0;">Añade otra solución a tu Departamento, al precio de catálogo</div>
+          <div id="extra-solutions-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
+          <div id="extra-solutions-note" style="margin-top:10px;font-size:.76rem;color:var(--grey);"></div>
         </div>
       </div>
       </div><!-- /wrap-depto -->
@@ -711,6 +726,16 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       <div class="sb-tag">Resumen del pedido</div>
       <h3 id="sb-title">Ningún plan seleccionado</h3>
       <div class="sb-sub" id="sb-sub">Elige una opción para ver el resumen.</div>
+    </div>
+    <div id="payment-mode-block" style="display:none;padding:18px 22px 4px;">
+      <div class="cat-label" style="margin-top:0;">¿Cómo lo pagas?</div>
+      <div class="billing-toggle">
+        <div class="billing-btn active" id="btn-unico" onclick="setTierPaymentMode('unico')">Pago único<span class="billing-save-tag">— ahorra 12%</span></div>
+        <div class="billing-btn" id="btn-financiado" onclick="setTierPaymentMode('financiado')">Fracciona con SeQura</div>
+      </div>
+      <div class="annual-highlight" id="annual-note">
+        <b id="payment-mode-title">Pago único por adelantado — ahorras un 12%.</b> <span id="payment-mode-desc">Se cobra todo el periodo de permanencia de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.</span>
+      </div>
     </div>
     <div id="sb-empty" class="sb-empty">Selecciona un plan arriba.</div>
     <div id="sb-breakdown" class="sb-breakdown" style="display:none"></div>
@@ -1066,7 +1091,18 @@ function applyPack(packKey){
   }
 }
 const DIRECT={'arranque-basic':{name:'Departamento Tecnológico Basic™',arranque:'basic'},'arranque-lite':{name:'Departamento Tecnológico Lite™',arranque:'lite'},'arranque-pro':{name:'Departamento Tecnológico Pro™',arranque:'pro'}};
-const ARRANQUES={basic:{name:'Basic™',monthly:69,permanenciaMeses:6,freeSols:1},lite:{name:'Lite™',monthly:currentPrice('lite'),permanenciaMeses:12,freeSols:2},pro:{name:'Pro™',monthly:currentPrice('pro'),permanenciaMeses:12,freeSols:3}};
+const ARRANQUES={basic:{name:'Basic™',monthly:69,permanenciaMeses:6,freeSols:1,maintainMax:2},lite:{name:'Lite™',monthly:currentPrice('lite'),permanenciaMeses:12,freeSols:2,maintainMax:3},pro:{name:'Pro™',monthly:currentPrice('pro'),permanenciaMeses:12,freeSols:3,maintainMax:6}};
+const CLOSED_PRICE_SOLUTIONS=[
+  {value:'whatsapp',name:'IA para WhatsApp',price:590},
+  {value:'web-ia',name:'IA para tu Web',price:350},
+  {value:'llamadas',name:'IA para Llamadas',price:690},
+  {value:'email-ia',name:'IA para Correo',price:350},
+  {value:'reservas',name:'Reservas y Agenda',price:350},
+  {value:'firma',name:'Firma Digital',price:500},
+  {value:'ciberseguridad',name:'Ciberseguridad Pyme',price:450},
+  {value:'automatizaciones',name:'Automatizaciones (banda Simple)',price:350},
+  {value:'truki',name:'Facturación automática (TruKi)',price:580}
+];
 
 function renderFoundingPrices(){
   const renewEl=document.getElementById('renew-price-esencial');if(renewEl)renewEl.textContent=currentPrice('lite');
@@ -1125,7 +1161,7 @@ const TIER_POOLS={
 const STRIPE={'esencial-lite':'REEMPLAZA_ESENCIAL','web-lite':'REEMPLAZA_WEB_PRO','digital-lite':'REEMPLAZA_DIGITAL_LITE','digital-pro':'REEMPLAZA_DIGITAL_PRO','arranque-basic':'REEMPLAZA_BASIC','arranque-lite':'REEMPLAZA_LITE','arranque-pro':'REEMPLAZA_PRO','esencial-solutions-lite':'REEMPLAZA_ESENCIAL_SOL_LITE','esencial-solutions-pro':'REEMPLAZA_ESENCIAL_SOL_PRO','web-solutions-lite':'REEMPLAZA_WEB_SOL_LITE','web-solutions-pro':'REEMPLAZA_WEB_SOL_PRO'};
 const TIMELINES={'esencial-lite':[{l:'Web Esencial lista',v:'Días 7-10',c:'gold'},{l:'30 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('lite')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'web-lite':[{l:'Entrega Web Profesional',v:'Semana 2-4',c:'gold'},{l:'30 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('lite')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'digital-lite':[{l:'Implantación completa',v:'90 días',c:'gold'},{l:'90 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('lite')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'digital-pro':[{l:'Implantación completa',v:'90 días',c:'gold'},{l:'90 días — Departamento Pro™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('pro')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'arranque-basic':[{l:'Instalación de tu solución',v:'Gratis',c:'gold'},{l:'Permanencia',v:'6 meses',c:'blue'},{l:'Al terminar',v:'Sigues mes a mes o te vas, sin más compromiso',c:'grey'}],'arranque-lite':[{l:'Web + 2 soluciones instaladas',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva o cancela, sin penalización',c:'grey'}],'arranque-pro':[{l:'Web Profesional + 3 soluciones instaladas',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva o cancela, sin penalización',c:'grey'}],'esencial-solutions-lite':[{l:'Web Esencial + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('lite')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'esencial-solutions-pro':[{l:'Web Esencial + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Pro™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('pro')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'web-solutions-lite':[{l:'Web Profesional + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Lite™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('lite')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'web-solutions-pro':[{l:'Web Profesional + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Departamento Pro™',v:'REGALO',c:'green'},{l:'Después',v:currentPrice('pro')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}]};
 
-let selectedProject=null,selectedDirect=null,selectedTierSolutions=[],tierPaymentMode='unico',selectedDigitalPlan=null,digitalTotalPrice=590,digitalAddon=false;
+let selectedProject=null,selectedDirect=null,selectedTierSolutions=[],selectedExtraSolutions=[],tierPaymentMode='unico',selectedDigitalPlan=null,digitalTotalPrice=590,digitalAddon=false;
 
 function setTierPaymentMode(mode){
   tierPaymentMode=mode;
@@ -1186,23 +1222,27 @@ function selectPath(path){
 
 function selectDirect(id){
   if(selectedDirect===id){
-    selectedDirect=null;selectedTierSolutions=[];tierPaymentMode='unico';
+    selectedDirect=null;selectedTierSolutions=[];selectedExtraSolutions=[];tierPaymentMode='unico';
     document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected'));
     resetDigitalAddon();
     const pp0=document.getElementById('project-panel');if(pp0)pp0.style.display='none';
     const tp0=document.getElementById('tier-solutions-picker');if(tp0)tp0.style.display='none';
     const pm0=document.getElementById('payment-mode-block');if(pm0)pm0.style.display='none';
+    const eb0=document.getElementById('extra-solutions-block');if(eb0)eb0.style.display='none';
     updateAll();
     return;
   }
-  selectedProject=null;selectedDirect=id;selectedTierSolutions=[];tierPaymentMode='unico';
+  selectedProject=null;selectedDirect=id;selectedTierSolutions=[];selectedExtraSolutions=[];tierPaymentMode='unico';
   showPath('depto');
   document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected'));
   document.getElementById('card-'+id).classList.add('selected');
   resetDigitalAddon();
   const pp=document.getElementById('project-panel');if(pp)pp.style.display='none';
   const pm=document.getElementById('payment-mode-block');if(pm){pm.style.display='block';document.getElementById('btn-unico').classList.add('active');document.getElementById('btn-financiado').classList.remove('active');document.getElementById('payment-mode-title').textContent='Pago único por adelantado — ahorras un 12%.';document.getElementById('payment-mode-desc').textContent='Se cobra todo el periodo de permanencia de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.';}
+  const ep=document.getElementById('extra-solutions-panel');if(ep)ep.style.display='none';
+  const et=document.getElementById('extra-sol-toggle');if(et)et.classList.remove('open');
   renderTierSolutionsPicker();
+  renderExtraSolutionsPanel();
   scrollToSolutionsPicker();
   updateAll();
 }
@@ -1216,7 +1256,9 @@ function renderTierSolutionsPicker(){
   picker.style.display='block';
   document.getElementById('tier-solutions-label').textContent=pool.label;
   const grid=document.getElementById('tier-solutions-grid');
-  grid.innerHTML=pool.sols.map(s=>{
+  const complete=selectedTierSolutions.length>=pool.max;
+  const solsToShow=complete?pool.sols.filter(s=>selectedTierSolutions.includes(s.value)):pool.sols;
+  grid.innerHTML=solsToShow.map(s=>{
     const checked=selectedTierSolutions.includes(s.value);
     return '<label class="sol-chip"><input type="checkbox" value="'+s.value+'" '+(checked?'checked':'')+' onchange="toggleTierSolution(\''+s.value+'\')"><span>'+s.name+'</span></label>';
   }).join('');
@@ -1232,9 +1274,73 @@ function toggleTierSolution(value){
   }else{
     if(selectedTierSolutions.length>=max)selectedTierSolutions.shift();
     selectedTierSolutions.push(value);
+    const ei=selectedExtraSolutions.indexOf(value);if(ei>-1)selectedExtraSolutions.splice(ei,1);
   }
   renderTierSolutionsPicker();
+  renderExtraSolutionsPanel();
   updateAll();
+}
+
+function renderExtraSolutionsPanel(){
+  const block=document.getElementById('extra-solutions-block');
+  if(!selectedDirect||!DIRECT[selectedDirect]){if(block)block.style.display='none';return;}
+  const tier=DIRECT[selectedDirect].arranque;
+  const arr=ARRANQUES[tier];
+  const maxExtra=arr.maintainMax-arr.freeSols;
+  if(!block)return;
+  if(maxExtra<=0){block.style.display='none';return;}
+  block.style.display='block';
+  const available=CLOSED_PRICE_SOLUTIONS.filter(s=>!selectedTierSolutions.includes(s.value));
+  const atMax=selectedExtraSolutions.length>=maxExtra;
+  const grid=document.getElementById('extra-solutions-grid');
+  grid.innerHTML=available.map(s=>{
+    const checked=selectedExtraSolutions.includes(s.value);
+    const disabled=(!checked&&atMax);
+    return '<label class="sol-chip'+(disabled?' sol-chip-disabled':'')+'"><input type="checkbox" value="'+s.value+'" '+(checked?'checked':'')+(disabled?' disabled':'')+' onchange="toggleExtraSolution(\''+s.value+'\')"><span>'+s.name+' — '+s.price+' € + IVA</span></label>';
+  }).join('');
+  const note=document.getElementById('extra-solutions-note');
+  const left=maxExtra-selectedExtraSolutions.length;
+  if(note){
+    if(selectedExtraSolutions.length===0){
+      note.textContent='Puedes añadir hasta '+maxExtra+' solución'+(maxExtra>1?'es':'')+' más al precio de catálogo — se instala igual que la gratis, sin recargo de alta.';
+      note.style.color='var(--grey)';
+    }else if(left>0){
+      note.textContent='Añadida'+(selectedExtraSolutions.length>1?'s':'')+'. Puedes añadir '+left+' más.';
+      note.style.color='var(--gold)';
+    }else{
+      note.textContent='Máximo de soluciones mantenidas en tu escalón alcanzado.';
+      note.style.color='var(--gold)';
+    }
+  }
+  const countEl=document.getElementById('extra-sol-toggle-count');
+  if(countEl){
+    if(selectedExtraSolutions.length>0){countEl.style.display='inline-block';countEl.textContent='+'+selectedExtraSolutions.length;}
+    else{countEl.style.display='none';}
+  }
+}
+
+function toggleExtraSolution(value){
+  const tier=DIRECT[selectedDirect].arranque;
+  const arr=ARRANQUES[tier];
+  const maxExtra=arr.maintainMax-arr.freeSols;
+  const i=selectedExtraSolutions.indexOf(value);
+  if(i>-1){
+    selectedExtraSolutions.splice(i,1);
+  }else{
+    if(selectedExtraSolutions.length>=maxExtra)return;
+    selectedExtraSolutions.push(value);
+  }
+  renderExtraSolutionsPanel();
+  updateAll();
+}
+
+function toggleExtraSolutionsPanel(){
+  const panel=document.getElementById('extra-solutions-panel');
+  const btn=document.getElementById('extra-sol-toggle');
+  if(!panel)return;
+  const open=panel.style.display!=='none';
+  panel.style.display=open?'none':'block';
+  if(btn)btn.classList.toggle('open',!open);
 }
 
 function scrollToSolutionsPicker(){
@@ -1272,13 +1378,14 @@ function selectProject(proj){
     updateAll();
     return;
   }
-  selectedDirect=null;selectedTierSolutions=[];tierPaymentMode='unico';selectedProject=proj;
+  selectedDirect=null;selectedTierSolutions=[];selectedExtraSolutions=[];tierPaymentMode='unico';selectedProject=proj;
   showPath('proyecto');
   ['card-arranque-basic','card-arranque-lite','card-arranque-pro'].forEach(id=>document.getElementById(id).classList.remove('selected'));
   ['card-esencial','card-web'].forEach(id=>document.getElementById(id).classList.remove('selected'));
   document.getElementById('card-'+proj).classList.add('selected');
   const tp=document.getElementById('tier-solutions-picker');if(tp)tp.style.display='none';
   const pm=document.getElementById('payment-mode-block');if(pm)pm.style.display='none';
+  const eb=document.getElementById('extra-solutions-block');if(eb)eb.style.display='none';
   const pp=document.getElementById('project-panel');
   const wp=document.getElementById('web-implantacion');
   if(pp)pp.style.display='block';
@@ -1293,10 +1400,11 @@ function toggleDigitalAddon(){
   const dp=document.getElementById('digital-implantacion');
   if(digitalAddon){
     if(selectedDirect){
-      selectedDirect=null;selectedTierSolutions=[];tierPaymentMode='unico';
+      selectedDirect=null;selectedTierSolutions=[];selectedExtraSolutions=[];tierPaymentMode='unico';
       document.querySelectorAll('.plan-card').forEach(c=>{if(c!==card)c.classList.remove('selected');});
       const tp=document.getElementById('tier-solutions-picker');if(tp)tp.style.display='none';
       const pm=document.getElementById('payment-mode-block');if(pm)pm.style.display='none';
+      const eb=document.getElementById('extra-solutions-block');if(eb)eb.style.display='none';
     }
     if(dp)dp.style.display='block';
   }else{
@@ -1390,21 +1498,30 @@ function getActivePlan(){
     const webLine=d.arranque==='lite'?[{l:'Web (reacondicionada o Web Esencial nueva)',v:'GRATIS',cls:'free'}]:d.arranque==='pro'?[{l:'Web Profesional',v:'GRATIS',cls:'free'}]:[];
     const solWord=arr.freeSols>1?arr.freeSols+' soluciones':'1 solución';
     const solLines=solNames.length?solNames.map(n=>({l:n,v:'GRATIS',cls:'free'})):[{l:solWord+' a elegir',v:'Pendiente de elegir'}];
+    const extraSols=selectedExtraSolutions.map(v=>CLOSED_PRICE_SOLUTIONS.find(x=>x.value===v)).filter(Boolean);
+    const extraTotal=extraSols.reduce((s,x)=>s+x.price,0);
+    const extraLines=extraSols.map(x=>({l:'+ '+x.name+' (adicional)',v:x.price.toFixed(2).replace('.',',')+' € + IVA'}));
     const isUnico=tierPaymentMode==='unico';
     let priceLines,totalCommitment,subPago;
     if(isUnico){
-      const totBase=arr.monthly*arr.permanenciaMeses;const tot=Math.round(totBase*0.88*100)/100;const iva=tot*0.21;
-      totalCommitment=tot+iva;
+      const totBase=arr.monthly*arr.permanenciaMeses;const tot=Math.round(totBase*0.88*100)/100;
+      const baseImponible=tot+extraTotal;const iva=baseImponible*0.21;
+      totalCommitment=baseImponible+iva;
       subPago='Pago único';
-      priceLines=[{l:'Pago único ('+arr.permanenciaMeses+' meses, 12% dto.)',v:tot.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:totalCommitment.toFixed(2).replace('.',',')+' €',total:true}];
+      priceLines=[{l:'Pago único ('+arr.permanenciaMeses+' meses, 12% dto.)',v:tot.toFixed(2).replace('.',',')+' €'}];
+      if(extraTotal>0)priceLines.push({l:'Soluciones adicionales, instalación única',v:extraTotal.toFixed(2).replace('.',',')+' €'});
+      priceLines.push({l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:totalCommitment.toFixed(2).replace('.',',')+' €',total:true});
     }else{
       const ivaM=arr.monthly*0.21;const totMes=arr.monthly+ivaM;
-      totalCommitment=totMes*arr.permanenciaMeses;
+      const extraConIva=extraTotal*1.21;
+      totalCommitment=totMes*arr.permanenciaMeses+extraConIva;
       subPago='Financiado con SeQura';
-      priceLines=[{l:'Cuota (vía SeQura)',v:arr.monthly.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:ivaM.toFixed(2).replace('.',',')+' €'},{l:'Total / mes con IVA',v:totMes.toFixed(2).replace('.',',')+' €',total:true},{l:'Compromiso total ('+arr.permanenciaMeses+' meses)',v:totalCommitment.toFixed(2).replace('.',',')+' €'}];
+      priceLines=[{l:'Cuota (vía SeQura)',v:arr.monthly.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:ivaM.toFixed(2).replace('.',',')+' €'},{l:'Total / mes con IVA',v:totMes.toFixed(2).replace('.',',')+' €',total:true}];
+      if(extraTotal>0)priceLines.push({l:'+ Soluciones adicionales, pago único aparte',v:extraConIva.toFixed(2).replace('.',',')+' € con IVA'});
+      priceLines.push({l:'Compromiso total ('+arr.permanenciaMeses+' meses)',v:totalCommitment.toFixed(2).replace('.',',')+' €'});
     }
     const renewalMsg='Permanencia mínima de '+arr.permanenciaMeses+' meses — es lo que hace posible este regalo. Al terminar, sigues mes a mes sin más compromiso, o te vas cuando quieras.';
-    return{key:selectedDirect,name:d.name,sub:subPago+' · Permanencia '+arr.permanenciaMeses+' meses · '+solWord+' gratis',arranqueType:d.arranque,breakdown:[...webLine,...solLines,{divider:true},...priceLines],monthlyAfter:arr.monthly,stripe:STRIPE[selectedDirect],totalRaw:isUnico?totalCommitment:null,timeline:selectedDirect,renewalMsg,solutionsIncomplete:selectedTierSolutions.length<arr.freeSols};
+    return{key:selectedDirect,name:d.name,sub:subPago+' · Permanencia '+arr.permanenciaMeses+' meses · '+solWord+' gratis'+(extraSols.length?' + '+extraSols.length+' adicional'+(extraSols.length>1?'es':''):''),arranqueType:d.arranque,breakdown:[...webLine,...solLines,...extraLines,{divider:true},...priceLines],monthlyAfter:arr.monthly,stripe:STRIPE[selectedDirect],totalRaw:isUnico?totalCommitment:null,timeline:selectedDirect,renewalMsg,solutionsIncomplete:selectedTierSolutions.length<arr.freeSols};
   }
   const sols=digitalAddon?document.querySelectorAll('#solutions-grid input[type=checkbox]:checked').length:0;
   const hasSolutions=digitalAddon&&sols>0;
@@ -1537,10 +1654,15 @@ function buildSolutionsPayload(){
   if(selectedDirect&&DIRECT[selectedDirect]){
     const tier=DIRECT[selectedDirect].arranque;
     const pool=TIER_POOLS[tier];
-    return selectedTierSolutions.map(v=>{
+    const free=selectedTierSolutions.map(v=>{
       const s=pool.sols.find(x=>x.value===v);
       return{key:v,name:s?s.name:v,price:0,free:true};
     });
+    const extra=selectedExtraSolutions.map(v=>{
+      const s=CLOSED_PRICE_SOLUTIONS.find(x=>x.value===v);
+      return{key:v,name:s?s.name:v,price:s?s.price:0,free:false};
+    });
+    return[...free,...extra];
   }
   const checks=Array.from(document.querySelectorAll('#solutions-grid input[type=checkbox]:checked'));
   if(checks.length>0&&checks.length<=3){
