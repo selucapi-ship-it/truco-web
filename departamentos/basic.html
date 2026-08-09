@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <title>Departamento Tecnológico Basic™ — TRUCO technology</title>
-<meta name="description" content="El punto de entrada al departamento tecnológico. Una solución instalada gratis, con acompañamiento completo, desde 69€/mes.">
+<meta name="description" content="Para peluquerías, estilistas, autónomos y oficios: WhatsApp con IA, facturación por voz o agenda automática, instalado gratis desde 69€/mes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -114,6 +114,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .wib-item b{display:block;color:var(--white);font-size:.92rem;margin-bottom:3px;}
 @media(max-width:900px){.wib-grid{grid-template-columns:repeat(2,1fr);}}
 
+.who-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px;}
+.who-card{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:22px 20px;transition:border-color var(--tr),transform var(--tr);}
+.who-card:hover{border-color:var(--gold);transform:translateY(-3px);}
+.who-card h4{font-size:1rem;margin:14px 0 8px;color:var(--white);}
+.who-card p{font-size:.86rem;color:var(--grey);line-height:1.6;}
+@media(max-width:900px){.who-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.who-grid{grid-template-columns:1fr;}}
+
 .cross-nav{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:28px 32px;}
 .cross-nav-title{font-family:var(--font-m);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
 .cross-nav-items{display:flex;gap:12px;flex-wrap:wrap;}
@@ -180,9 +188,9 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="hero-glow blue"></div>
   <div class="hero-glow gold"></div>
   <div class="container">
-    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> El punto de entrada · 1 solución incluida</div>
+    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> El primer paso de tu departamento · 1 solución gratis</div>
     <h1>Departamento Tecnológico Basic™</h1>
-    <p>¿Solo necesitas resolver una cosa ya — que alguien conteste el WhatsApp, que las facturas se hagan solas, que las reservas no se pierdan? No hace falta contratar un departamento entero para eso. Basic™ te instala gratis la solución que necesitas — <strong>nosotros la configuramos y la entrenamos para tu negocio, no un robot en blanco que tengas que enseñar tú</strong> — y te acompaña en todo el proceso. <strong>Si algo hay que cambiar más adelante, nos escribes a nosotros.</strong> Sin la web ni las soluciones adicionales de Lite™/Pro™ que quizá todavía no necesitas.</p>
+    <p>Cada cliente que te escribe y no contestas a tiempo se va a la competencia — y ni te enteras. Si eres peluquería, estilista, fontanero, electricista o cualquier autónomo que trabaja solo, Basic™ es el primer paso para que la tecnología empiece a trabajar para ti: instalamos gratis un asistente que <strong>responde y agenda citas las 24 horas</strong>, o si trabajas con las manos, TruKi para <strong>facturar dictando por voz</strong> desde la furgoneta. <strong>Nosotros lo configuramos y lo entrenamos — tú no tienes que aprender nada.</strong></p>
     <div class="hero-price-box">
       <div>
         <div class="hp-main">69 €<sub>/mes</sub></div>
@@ -196,6 +204,36 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </div>
 
 <div class="section-block reveal">
+  <div class="container">
+    <div class="section-divider"><h2 class="sd-tag blue">¿Para quién es Basic™?</h2><div class="sd-line"></div></div>
+    <p style="color:var(--grey);font-size:.92rem;line-height:1.7;max-width:760px;margin-bottom:4px;">Si tu negocio eres tú — o tú y un par de personas más — cada cliente que no atiendes a tiempo es un cliente que gana quien sí responde. Basic™ pone la tecnología a resolver justo ese cuello de botella.</p>
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="icon-badge gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
+        <h4>Peluquerías, estilistas y barberías</h4>
+        <p>Cada minuto con las manos ocupadas es un WhatsApp sin contestar. Con IA para WhatsApp o Reservas y Agenda, tus clientas reservan solas a cualquier hora — y no se van a la de al lado por no encontrarte.</p>
+      </div>
+      <div class="who-card">
+        <div class="icon-badge blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <h4>Fontaneros, electricistas y oficios</h4>
+        <p>Estás debajo de un fregadero, no delante de un ordenador. Con TruKi dictas el trabajo por voz desde la furgoneta y la factura o el presupuesto se generan solos, al momento.</p>
+      </div>
+      <div class="who-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        <h4>Autónomos que trabajan solos</h4>
+        <p>Abogados, consultores, terapeutas que despachan desde casa: cada llamada te interrumpe con el cliente que tienes delante. Con Reservas y Agenda o IA para WhatsApp, agendan solos, sin que descuelgues.</p>
+      </div>
+      <div class="who-card">
+        <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+        <h4>Comercios y negocios de barrio</h4>
+        <p>Tu escaparate ya no es solo la calle. Con IA para tu Web, quien mira precios u horarios a las once de la noche encuentra respuesta al instante — no un cartel de "cerrado".</p>
+      </div>
+    </div>
+    <div class="necessity-note" style="margin-top:22px;"><b>La diferencia no es el tamaño del negocio, es quién responde primero.</b> El que contesta en segundos se queda con el cliente; el que tarda un día, no. Basic™ pone eso a tu favor desde el primer día, sin que tengas que aprender nada nuevo.</div>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-top:0;">
   <div class="container">
     <div class="section-divider"><h2 class="sd-tag gold">Incluye</h2><div class="sd-line"></div></div>
     <div class="feat-grid">
@@ -238,7 +276,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:760px;margin-bottom:24px;">Elegimos estas 4 porque son las que más dependencia real generan en el día a día de un negocio pequeño. Eliges 1 al contratar; la solución se instala completamente gratis.</p>
     <div class="wib-grid">
       <div class="wib-item"><b>IA para WhatsApp</b>Atención automática 24/7</div>
-      <div class="wib-item"><b>Facturación automática (TruKi)</b>Factura y presupuesta por chat</div>
+      <div class="wib-item"><b>Facturación automática (TruKi)</b>Factura y presupuesta dictando por voz</div>
       <div class="wib-item"><b>Reservas y Agenda</b>Citas online sin llamadas perdidas</div>
       <div class="wib-item"><b>IA para tu Web</b>Atención integrada en tu web actual</div>
     </div>
@@ -264,7 +302,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="faq-list">
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Basic™ es solo para autónomos? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>No. El nombre viene de ser el punto de entrada más básico, pero va dirigido a cualquiera que quiera resolver una sola necesidad concreta — autónomo, pyme pequeña, quien sea.</p></div>
+        <div class="faq-a"><p>Está pensado sobre todo para negocios de una sola persona o un equipo muy pequeño — peluquerías, estilistas, oficios, autónomos que trabajan solos — porque son quienes más notan cada cliente que se pierde por no responder a tiempo. Dicho esto, cualquier pyme con una sola necesidad puntual puede contratarlo igual.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Por qué no incluye web? <span class="faq-icon">+</span></button>
