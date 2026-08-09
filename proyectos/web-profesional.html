@@ -85,6 +85,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .sd-line{flex:1;height:1px;background:var(--grey-line);min-width:24px;}
 @media(max-width:600px){.section-divider{flex-direction:column;align-items:flex-start;gap:10px;}.sd-line{display:none;}}
 
+.for-who{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.fw-col{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:26px;}
+.fw-col-title{font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.fw-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.fw-col li{font-size:.88rem;color:var(--grey);line-height:1.5;padding-left:18px;position:relative;}
+.fw-col li::before{content:'—';position:absolute;left:0;color:var(--gold);}
+@media(max-width:768px){.for-who{grid-template-columns:1fr;}}
+
 .feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
 .feat-card{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:12px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start;
   opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease,border-color .22s;}
@@ -198,8 +206,8 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <p>Diseño completamente a medida, tecnología integrada y optimizada para que trabaje por ti desde el primer día.</p>
     <div class="hero-price-box">
       <div>
-        <div class="hp-main">940 €<sub> + IVA</sub></div>
-        <div class="hp-vat">1.137,40 € con IVA · Pago único</div>
+        <div class="hp-main">1.390 €<sub> + IVA</sub></div>
+        <div class="hp-vat">1.681,90 € con IVA · Pago único</div>
         <div class="hp-gift"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> 30 días de Departamento Lite™ de regalo — incluidos</div>
       </div>
       <a class="btn-primary" href="../pago.html?plan=web">Solicitar presupuesto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
@@ -233,6 +241,32 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Pasarela de pago integrada</li>
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>CRM básico de gestión de leads</li>
     </ul>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-top:0;">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag blue">¿Web Esencial o Web Profesional?</span><div class="sd-line"></div></div>
+    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:760px;margin-bottom:20px;">Si necesitas que la web capte y agende sola, sin que tengas que estar pendiente, esta es tu web. Si solo quieres presencia digital seria desde ya, mira la <a href="web-esencial.html" style="color:var(--blue);font-weight:600;">Web Esencial</a> — cuesta menos y llega antes.</p>
+    <div class="for-who">
+      <div class="fw-col">
+        <div class="fw-col-title">Mejor Web Esencial si...</div>
+        <ul>
+          <li>Quieres presencia digital seria y profesional desde ya, sin complicarte</li>
+          <li>Tienes un servicio o tarifa clara — peluquería, estilista, fontanero, autónomo de un solo oficio</li>
+          <li>Estás validando el negocio y no quieres invertir de más todavía</li>
+        </ul>
+      </div>
+      <div class="fw-col" style="border-color:var(--blue);">
+        <div class="fw-col-title" style="color:var(--blue);">Estás aquí · Web Profesional, desde 1.390 €</div>
+        <ul>
+          <li>Quieres que la web capte y agende citas sola, sin que tengas que estar pendiente</li>
+          <li>Tienes varios servicios, especialidades o sedes — clínicas, inmobiliarias, gimnasios</li>
+          <li>Cada contacto perdido te cuesta caro y necesitas responder al segundo</li>
+          <li>Necesitas más de 5 páginas: catálogo, casos de éxito, varias especialidades</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -288,7 +322,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="cta-inner">
       <div>
         <h2>¿Listo para una web que trabaje por ti?</h2>
-        <p>940 € + IVA, pago único. Incluye 30 días de Departamento Lite™ de regalo.</p>
+        <p>1.390 € + IVA, pago único. Incluye 30 días de Departamento Lite™ de regalo.</p>
       </div>
       <div class="cta-btns">
         <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>

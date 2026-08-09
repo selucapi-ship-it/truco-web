@@ -17,8 +17,8 @@ QUÉ ES: Departamento Tecnológico externalizado para pymes y autónomos en Espa
 - Al terminar la permanencia: sigues mes a mes sin más compromiso, o te vas cuando quieras, sin penalización.
 
 ── 2) PROYECTO SIN COMPROMISO — pago único, + IVA, sin permanencia ──
-- Web Esencial: 649€ (785,29€ con IVA). 5 páginas, responsive, SEO básico, lista en 7-10 días. Incluye 30 días de Departamento Lite™ completamente de regalo.
-- Web Profesional: desde 940€ (1.137,40€ con IVA). Diseño a medida, páginas ilimitadas, integraciones, IA si se necesita. Entrega en 2-4 semanas. Incluye 30 días de Departamento Lite™ completamente de regalo.
+- Web Esencial: 790€ (955,90€ con IVA). 5 páginas, responsive, SEO básico, lista en 7-10 días. Incluye 30 días de Departamento Lite™ completamente de regalo.
+- Web Profesional: desde 1.390€ (1.681,90€ con IVA). Diseño a medida, páginas ilimitadas, un chat que responde y agenda citas de fábrica. Entrega en 2-4 semanas. Incluye 30 días de Departamento Lite™ completamente de regalo.
 - Digitaliza tu Empresa: desde 350€ por solución (precio ya con todo incluido, alta e integración, sin recargos aparte). Se puede elegir una o varias de las 12 soluciones del catálogo. Implantación de 90 días, con el Departamento (Pro™ si eliges 3+ soluciones, Lite™ si eliges 1-2) completamente de regalo durante todo ese período. Más de 3 soluciones a la vez = presupuesto personalizado.
 - Se puede combinar Web Esencial o Profesional + Digitaliza en la misma compra.
 - Pasado el período de regalo (30 días en proyectos web, 90 en Digitaliza), el cliente pasa AUTOMÁTICAMENTE a su Departamento (Lite™ o Pro™) en modo mensual, al precio estándar, SIN permanencia — no hace falta que haga nada para seguir. Si no quiere continuar, cancela avisando con 7 días. Esto es distinto del Departamento directo en un solo punto: aquí, aunque sigas, sigues mes a mes de verdad, sin compromiso de 12 meses.
