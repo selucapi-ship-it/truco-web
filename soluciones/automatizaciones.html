@@ -451,6 +451,7 @@ function toggleFaq(btn){
     });
   },{threshold:.12,rootMargin:'0px 0px -60px 0px'});
   els.forEach(function(el){ io.observe(el); });
+    setTimeout(function(){ els.forEach(function(el){ el.classList.add('in-view'); }); },2000);
 
   function animateFlow(mock){
     var nodes = Array.prototype.slice.call(mock.querySelectorAll('.flow-node'));
