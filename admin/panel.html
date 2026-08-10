@@ -54,7 +54,8 @@
   .list-head h2{font-family:var(--font-d);font-size:1.15rem;margin:0;}
   #search{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 12px;color:var(--white);font-size:.85rem;width:220px;outline:none;}
   #search:focus{border-color:var(--blue);}
-  table{width:100%;border-collapse:collapse;font-size:.82rem;}
+  .table-wrap{overflow-x:auto;}
+  table{width:100%;min-width:640px;border-collapse:collapse;font-size:.82rem;}
   th{text-align:left;color:var(--grey);font-family:var(--font-m);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;padding:8px 10px;border-bottom:1px solid var(--grey-line);}
   td{padding:11px 10px;border-bottom:1px solid var(--grey-line);}
   tbody tr{cursor:pointer;transition:background .15s;}
@@ -157,12 +158,14 @@
       </div>
       <div id="loading-state">Cargando...</div>
       <div id="empty-state" style="display:none;">Todavía no hay ningún cliente registrado.</div>
+      <div class="table-wrap">
       <table id="clients-table" style="display:none;">
         <thead>
           <tr><th>Nombre</th><th>Negocio</th><th>Contacto</th><th>Sector</th><th>Status</th><th>Interacciones</th></tr>
         </thead>
         <tbody id="clients-tbody"></tbody>
       </table>
+      </div>
 
       <div class="anon-section">
         <div class="timeline-title">Sesiones de chat sin identificar</div>
