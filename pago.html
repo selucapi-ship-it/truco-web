@@ -17,6 +17,7 @@
   --gold:#d9a83f;--gold-dim:rgba(217,168,63,.1);
   --white:#f2f0ea;--grey:#b5b2bc;--grey-line:#3d3b42;
   --green:#22c55e;--green-dim:rgba(34,197,94,.12);
+  --teal:#2dd4bf;--teal-soft:#125e56;--teal-dim:rgba(45,212,191,.1);
   --red:#ef4444;
   --font-d:'Playfair Display',Georgia,serif;
   --font-b:'DM Sans',sans-serif;
@@ -31,12 +32,10 @@ a{color:inherit;text-decoration:none;}
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-thumb{background:var(--blue-soft);}
 
-.sol-chip{display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--grey);background:var(--bg-card);border:1px solid var(--grey-line);border-radius:7px;padding:7px 10px;cursor:pointer;transition:all var(--tr);}
+.sol-chip{display:flex;align-items:center;gap:6px;font-size:.84rem;color:var(--grey);background:var(--bg-card);border:1px solid var(--grey-line);border-radius:7px;padding:7px 10px;cursor:pointer;transition:all var(--tr);}
 .price-old{color:var(--grey);text-decoration:line-through;font-weight:400;}
 .price-new{color:var(--gold);font-weight:800;}
 .launch-tag{display:inline-block;background:linear-gradient(90deg,var(--gold),#c98f1f);color:#1a1206;font-size:.6rem;font-weight:800;padding:2px 8px;border-radius:20px;letter-spacing:.02em;white-space:nowrap;vertical-align:middle;}
-.pc-founding{font-size:.72rem;margin-top:2px;}
-.pc-founding .spots-left{color:var(--gold);font-weight:700;}
 .sol-chip:has(input:checked){background:var(--blue-dim);border-color:var(--blue);color:var(--white);}
 .sol-chip input{width:13px;height:13px;accent-color:var(--blue);flex-shrink:0;}
 .sol-chip-automatizaciones{display:flex;flex-direction:column;align-items:stretch;cursor:default;}
@@ -45,27 +44,23 @@ a{color:inherit;text-decoration:none;}
 .sca-main{display:flex;align-items:center;gap:6px;cursor:pointer;}
 .band-picker{display:none;flex-direction:column;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--grey-line);}
 .sol-chip-automatizaciones:has(.sca-main input:checked) .band-picker{display:flex;}
-.band-opt{display:flex;align-items:center;gap:8px;font-size:.78rem;color:var(--grey);cursor:pointer;}
+.band-opt{display:flex;align-items:center;gap:8px;font-size:.86rem;color:var(--grey);cursor:pointer;}
 .band-opt input{width:13px;height:13px;accent-color:var(--blue);flex-shrink:0;}
 .band-opt:has(input:checked){color:var(--white);font-weight:700;}
 .sol-chip span{pointer-events:none;}
 @keyframes packPulse{0%,100%{box-shadow:0 0 0 0 rgba(217,168,63,.45);}50%{box-shadow:0 0 0 5px rgba(217,168,63,0);}}
 .sol-chip.sol-suggested{border-color:var(--gold)!important;animation:packPulse 1.8s ease-in-out infinite;}
-#pack-badge{display:none;margin:0 20px 12px;padding:11px 14px;border-radius:8px;background:rgba(47,123,255,.08);border:1px solid rgba(47,123,255,.25);font-size:.76rem;color:var(--grey);line-height:1.55;}
-#pack-badge b{color:var(--white);}
-#pack-security-tip{display:none;margin:0 20px 14px;padding:10px 14px;border-radius:8px;background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.3);font-size:.76rem;color:var(--grey);line-height:1.55;}
-#pack-security-tip b{color:var(--gold);}
 .quick-sector-box{padding:16px 20px;border-bottom:1px solid var(--grey-line);background:rgba(34,197,94,.05);}
 .quick-sector-box label{display:block;font-size:.82rem;color:var(--white);font-weight:700;margin-bottom:2px;}
-.quick-sector-box .qsb-sub{font-size:.72rem;color:var(--grey);margin-bottom:8px;}
+.quick-sector-box .qsb-sub{font-size:.80rem;color:var(--grey);margin-bottom:8px;}
 .quick-sector-box select{width:100%;background:var(--bg-panel);border:1.5px solid var(--green);border-radius:8px;padding:11px 14px;color:var(--white);font-family:var(--font-b);font-size:.88rem;outline:none;-webkit-appearance:none;cursor:pointer;}
 .quick-sector-box select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,.15);}
 .quick-sector-box select option{background:var(--bg-panel);}
 .billing-toggle{display:flex;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:10px;padding:4px;margin-bottom:16px;}
 .billing-btn{flex:1;text-align:center;padding:9px 16px;border-radius:7px;font-size:.85rem;font-weight:600;color:var(--grey);cursor:pointer;transition:all var(--tr);}
 .billing-btn.active{background:var(--blue);color:#fff;}
-.billing-save-tag{font-size:.68rem;color:var(--gold);font-family:var(--font-m);margin-left:5px;}
-.annual-highlight{background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.2);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:.78rem;color:var(--gold);line-height:1.6;}
+.billing-save-tag{font-size:.76rem;color:var(--gold);font-family:var(--font-m);margin-left:5px;}
+.annual-highlight{background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.2);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:.86rem;color:var(--gold);line-height:1.6;}
 .annual-highlight b{color:var(--white);}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
 @keyframes pickerPulse{0%,100%{box-shadow:0 0 0 0 rgba(47,123,255,.5);}50%{box-shadow:0 0 0 8px rgba(47,123,255,0);}}
@@ -74,7 +69,7 @@ a{color:inherit;text-decoration:none;}
 .extra-sol-toggle:hover{border-color:var(--gold);background:linear-gradient(135deg,rgba(217,168,63,.2),rgba(217,168,63,.08));}
 .extra-sol-toggle-left{display:flex;align-items:center;gap:10px;}
 .extra-sol-toggle-left svg{width:19px;height:19px;color:var(--gold);flex-shrink:0;}
-.extra-sol-toggle-count{font-family:var(--font-m);font-size:.68rem;color:var(--gold);background:rgba(217,168,63,.15);padding:2px 8px;border-radius:20px;}
+.extra-sol-toggle-count{font-family:var(--font-m);font-size:.76rem;color:var(--gold);background:rgba(217,168,63,.15);padding:2px 8px;border-radius:20px;}
 .extra-sol-arrow{width:16px;height:16px;color:var(--gold);transition:transform var(--tr);flex-shrink:0;}
 .extra-sol-toggle.open .extra-sol-arrow{transform:rotate(180deg);}
 .extra-sol-panel{margin-top:10px;background:rgba(217,168,63,.05);border:1.5px solid rgba(217,168,63,.25);border-radius:14px;padding:16px 18px;animation:fadeIn .25s ease;}
@@ -92,13 +87,13 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 @media(max-width:600px){
   .nav-sub{display:none;}
   .nav-mid{display:none;}
-  .nav-back{font-size:.78rem;white-space:nowrap;}
+  .nav-back{font-size:.86rem;white-space:nowrap;}
   .t-mark{width:32px;height:32px;font-size:17px;}
 }
 .nav-back:hover{color:var(--white);}
 
 .page-header{text-align:center;padding:52px 24px 40px;border-bottom:1px solid var(--grey-line);background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(47,123,255,.05) 0%,transparent 70%);}
-.ph-tag{font-family:var(--font-m);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;}
+.ph-tag{font-family:var(--font-m);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;}
 .ph-tag::before,.ph-tag::after{content:'';width:20px;height:1px;background:var(--gold);}
 .page-header h1{font-size:clamp(1.7rem,3.5vw,2.5rem);font-weight:700;margin-bottom:10px;}
 .page-header p{font-size:.95rem;color:var(--grey);max-width:480px;margin:0 auto;}
@@ -112,16 +107,16 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
   .checkout.has-sticky-bar{padding-bottom:100px;}
 }
 .msb-info{display:flex;flex-direction:column;line-height:1.3;min-width:0;}
-.msb-label{font-size:.65rem;color:var(--grey);text-transform:uppercase;letter-spacing:.05em;font-family:var(--font-m);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.msb-label{font-size:.74rem;color:var(--grey);text-transform:uppercase;letter-spacing:.05em;font-family:var(--font-m);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .msb-price{font-size:1.1rem;font-weight:700;font-family:var(--font-d);color:var(--white);}
 .msb-btn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:12px 18px;font-size:.85rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;}
 
 .step{margin-bottom:36px;}
 .step-hd{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
-.step-num{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-family:var(--font-m);font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-family:var(--font-m);font-size:.80rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .step-hd h2{font-size:1.05rem;font-weight:700;}
 
-.cat-label{font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.cat-label{font-family:var(--font-m);font-size:.70rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
 .cat-label::before{content:'';width:20px;height:1px;background:currentColor;flex-shrink:0;}
 .cat-label::after{content:'';flex:1;height:1px;background:var(--grey-line);min-width:16px;}
 @media(max-width:480px){.cat-label::after{display:none;}}
@@ -142,7 +137,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .path-card.c-green:hover{border-color:var(--green);}
 .path-card h3{font-family:var(--font-d);font-size:1.15rem;font-weight:800;margin-bottom:8px;}
 .path-card p{font-size:.85rem;color:var(--grey);line-height:1.6;margin-bottom:16px;}
-.path-tag{display:inline-block;font-size:.78rem;font-weight:700;padding:5px 14px;border-radius:20px;font-family:var(--font-m);}
+.path-tag{display:inline-block;font-size:.86rem;font-weight:700;padding:5px 14px;border-radius:20px;font-family:var(--font-m);}
 .path-card.c-blue .path-tag{color:var(--blue);background:var(--blue-dim);}
 .path-card.c-gold .path-tag{color:var(--gold);background:var(--gold-dim);}
 .path-card.c-green .path-tag{color:var(--green);background:var(--green-dim);}
@@ -158,35 +153,41 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 @media(max-width:480px){.solutions-grid-el{grid-template-columns:1fr!important;}}
 
 
-.plan-card{border:1.5px solid var(--grey-line);border-radius:14px;padding:0;cursor:pointer;overflow:hidden;transition:border-color var(--tr),transform var(--tr);position:relative;}
-.plan-card:hover{border-color:var(--blue-soft);transform:translateY(-1px);}
-.plan-card.selected{border-color:var(--blue);}
-.plan-card.pro-card{border-color:var(--blue-soft);}
-.plan-card.pro-card.selected{border-color:var(--blue);}
+.plan-card{--tc:var(--grey-line);--tc-dim:var(--bg-card);border:1.5px solid var(--grey-line);border-top:4px solid var(--tc);border-radius:14px;padding:0;cursor:pointer;overflow:hidden;transition:border-color var(--tr),transform var(--tr),box-shadow var(--tr);position:relative;background:var(--bg-panel);}
+.plan-card:hover{border-color:var(--tc);transform:translateY(-2px);box-shadow:0 10px 24px -12px rgba(0,0,0,.5);}
+.plan-card.selected{border-color:var(--tc);box-shadow:0 0 0 1px var(--tc),0 10px 24px -12px rgba(0,0,0,.5);}
+.plan-card.tier-pro{--tc:var(--blue);--tc-dim:var(--blue-dim);}
+.plan-card.tier-lite{--tc:var(--green);--tc-dim:var(--green-dim);}
+.plan-card.tier-basic{--tc:var(--gold);--tc-dim:var(--gold-dim);}
+.plan-card.tier-elemental{--tc:var(--teal);--tc-dim:var(--teal-dim);}
+.pc-icon{width:34px;height:34px;border-radius:10px;background:var(--tc-dim);color:var(--tc);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+.pc-icon svg{width:18px;height:18px;}
 .pc-top{padding:18px 18px 14px;}
-.pc-tag{font-family:var(--font-m);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);margin-bottom:7px;display:flex;align-items:center;gap:6px;}
-.plan-card.selected .pc-tag{color:var(--blue);}
+.pc-tag{font-family:var(--font-m);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--tc);margin-bottom:7px;display:flex;align-items:center;gap:6px;font-weight:700;}
 .pc-name{font-family:var(--font-d);font-size:.95rem;font-weight:700;margin-bottom:10px;line-height:1.25;}
+.pc-founding-badge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(90deg,#f2c14e,var(--gold) 55%,#c98f1f);color:#1a1206;font-weight:800;font-size:.74rem;padding:4px 10px;border-radius:20px;margin-bottom:8px;}
+.pc-founding-badge:empty{display:none;margin-bottom:0;}
 .pc-base-price{font-size:1.3rem;font-weight:700;font-family:var(--font-d);line-height:1;}
 .pc-base-price sub{font-size:.7rem;font-weight:500;color:var(--grey);vertical-align:bottom;}
 .pc-vat{font-size:.7rem;color:var(--grey);margin-top:3px;}
-.pc-includes{font-size:.75rem;color:var(--grey);margin-top:8px;padding-top:8px;border-top:1px solid var(--grey-line);}
-.pc-includes span{color:var(--gold);}
-.pc-save-tag{margin-top:10px;background:linear-gradient(135deg,rgba(217,168,63,.22),rgba(217,168,63,.08));border:1px solid var(--gold);border-radius:8px;padding:7px 10px;font-size:.74rem;font-weight:700;color:var(--gold);text-align:center;}
+.pc-founding-old{font-size:.7rem;color:var(--grey);margin-top:4px;}
+.pc-includes{font-size:.84rem;color:var(--grey);margin-top:8px;padding-top:8px;border-top:1px solid var(--grey-line);}
+.pc-includes span{color:var(--tc);}
+.pc-save-tag{margin-top:10px;background:var(--tc-dim);border:1px solid var(--tc);border-radius:8px;padding:7px 10px;font-size:.82rem;font-weight:700;color:var(--tc);text-align:center;}
 .pc-check-box{position:absolute;top:14px;right:14px;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--grey-line);display:flex;align-items:center;justify-content:center;transition:all var(--tr);}
-.plan-card.selected .pc-check-box{background:var(--blue);border-color:var(--blue);}
-.pc-check-box::after{content:'✓';font-size:.68rem;color:#fff;opacity:0;transition:opacity var(--tr);}
+.plan-card.selected .pc-check-box{background:var(--tc);border-color:var(--tc);}
+.pc-check-box::after{content:'✓';font-size:.76rem;color:#fff;opacity:0;transition:opacity var(--tr);}
 .plan-card.selected .pc-check-box::after{opacity:1;}
-.pc-ribbon{position:absolute;top:0;right:0;background:var(--blue);color:#fff;font-family:var(--font-m);font-size:.55rem;font-weight:700;letter-spacing:.06em;padding:3px 10px;border-radius:0 12px 0 8px;}
+.pc-ribbon{position:absolute;top:0;right:0;background:var(--tc);color:#0d0c10;font-family:var(--font-m);font-size:.62rem;font-weight:700;letter-spacing:.06em;padding:3px 10px;border-radius:0 12px 0 8px;}
 
 /* ARRANQUE SWITCHER — aparece cuando se selecciona un proyecto */
 /* arranque-switcher eliminado — asignación automática */
 
 /* DIRECT PACK CARDS */
-.pack-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;}
-@media(max-width:500px){.pack-grid{grid-template-columns:1fr;}}
+.pack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:28px;align-items:start;}
+@media(max-width:640px){.pack-grid{grid-template-columns:1fr;}}
 .pc-breakdown{background:var(--bg-card);border-top:1px solid var(--grey-line);padding:12px 16px;display:flex;flex-direction:column;gap:5px;}
-.pb-row{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;}
+.pb-row{display:flex;justify-content:space-between;align-items:center;font-size:.84rem;}
 .pb-label{color:var(--grey);}
 .pb-val{color:var(--white);font-weight:500;}
 .pb-val.free{color:var(--green);font-weight:700;}
@@ -195,7 +196,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 
 /* TIMELINE */
 .timeline{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:12px;padding:16px 20px;margin-bottom:8px;}
-.tl-title{font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:14px;}
+.tl-title{font-family:var(--font-m);font-size:.70rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:14px;}
 .tl-steps{display:flex;gap:0;position:relative;}
 .tl-steps::before{content:'';position:absolute;top:11px;left:11px;right:11px;height:1px;background:var(--grey-line);z-index:0;}
 .tl-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;z-index:1;}
@@ -204,8 +205,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .tl-dot.free{background:var(--green-dim);color:var(--green);border:1px solid var(--green);}
 .tl-dot.paid{background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue);}
 .tl-dot.cont{background:var(--bg-card);color:var(--grey);border:1px solid var(--grey-line);}
-.tl-step-label{font-size:.68rem;color:var(--grey);text-align:center;line-height:1.3;}
-.tl-step-val{font-size:.68rem;font-weight:600;text-align:center;}
+.tl-step-label{font-size:.76rem;color:var(--grey);text-align:center;line-height:1.3;}
+.tl-step-val{font-size:.76rem;font-weight:600;text-align:center;}
 .tl-step-val.green{color:var(--green);}
 .tl-step-val.blue{color:var(--blue);}
 .tl-step-val.gold{color:var(--gold);}
@@ -224,7 +225,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .form-field select option{background:var(--bg-panel);}
 .form-field textarea{resize:vertical;min-height:90px;}
 .form-field input.error,.form-field select.error{border-color:var(--red);}
-.error-msg{font-size:.73rem;color:var(--red);display:none;}
+.error-msg{font-size:.80rem;color:var(--red);display:none;}
 .form-field input.error ~ .error-msg,.form-field select.error ~ .error-msg{display:block;}
 
 /* CLIENTE EXISTENTE / NUEVO */
@@ -235,9 +236,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 /* FUERZA DE CONTRASEÑA */
 .pw-strength-bar{height:5px;background:var(--bg-card);border-radius:4px;overflow:hidden;margin-top:9px;}
 .pw-strength-fill{height:100%;width:0;border-radius:4px;background:var(--red);transition:width .25s ease,background .25s ease;}
-.pw-strength-label{font-size:.72rem;margin-top:5px;font-weight:600;min-height:15px;}
+.pw-strength-label{font-size:.80rem;margin-top:5px;font-weight:600;min-height:15px;}
 .pw-reqs{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;}
-.pw-reqs span{font-size:.68rem;color:var(--grey);background:var(--bg-card);border:1px solid var(--grey-line);border-radius:12px;padding:3px 9px;transition:all var(--tr);}
+.pw-reqs span{font-size:.76rem;color:var(--grey);background:var(--bg-card);border:1px solid var(--grey-line);border-radius:12px;padding:3px 9px;transition:all var(--tr);}
 .pw-reqs span.met{color:var(--green);border-color:var(--green);background:var(--green-dim);}
 
 /* LEGAL */
@@ -251,9 +252,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 /* SUMMARY */
 .summary-box{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;overflow:hidden;position:sticky;top:76px;}
 .sb-header{padding:20px 22px 16px;border-bottom:1px solid var(--grey-line);}
-.sb-tag{font-family:var(--font-m);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:8px;}
+.sb-tag{font-family:var(--font-m);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:8px;}
 .sb-header h3{font-size:1rem;font-weight:700;}
-.sb-sub{font-size:.78rem;color:var(--grey);margin-top:4px;}
+.sb-sub{font-size:.86rem;color:var(--grey);margin-top:4px;}
 .sb-empty{padding:20px 22px;font-size:.85rem;color:var(--grey);font-style:italic;}
 .sb-breakdown{padding:14px 22px;border-bottom:1px solid var(--grey-line);display:flex;flex-direction:column;gap:7px;}
 .sbr-row{display:flex;justify-content:space-between;align-items:baseline;}
@@ -264,7 +265,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .sbr-divider{height:1px;background:var(--grey-line);margin:3px 0;}
 .sbr-total .sbr-label{font-size:.88rem;font-weight:600;color:var(--white);}
 .sbr-total .sbr-val{font-size:1.05rem;font-weight:700;}
-.sb-renewal{padding:12px 22px 14px;border-bottom:1px solid var(--grey-line);font-size:.75rem;color:var(--grey);line-height:1.6;}
+.sb-renewal{padding:12px 22px 14px;border-bottom:1px solid var(--grey-line);font-size:.84rem;color:var(--grey);line-height:1.6;}
 .sb-renewal .renewal-date{color:var(--blue);font-weight:600;font-family:var(--font-m);}
 .sb-renewal .renewal-amount{color:var(--white);font-weight:600;}
 .trust-row{display:flex;gap:6px;padding:12px 22px;flex-wrap:wrap;}
@@ -273,8 +274,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .pay-btn{width:100%;padding:14px;border-radius:10px;border:none;background:var(--blue);color:#fff;font-family:var(--font-b);font-size:.9rem;font-weight:600;cursor:pointer;transition:opacity var(--tr);}
 .pay-btn:hover:not(:disabled){opacity:.85;}
 .pay-btn:disabled{opacity:.38;cursor:not-allowed;}
-.sb-secure{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 22px 16px;font-size:.72rem;color:var(--grey);}
-.sb-email-btn{width:100%;background:none;border:1px solid var(--grey-line);color:var(--grey);border-radius:10px;padding:10px;font-size:.78rem;font-family:var(--font-b);cursor:pointer;margin-top:8px;transition:all var(--tr);}
+.sb-secure{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 22px 16px;font-size:.80rem;color:var(--grey);}
+.sb-email-btn{width:100%;background:none;border:1px solid var(--grey-line);color:var(--grey);border-radius:10px;padding:10px;font-size:.86rem;font-family:var(--font-b);cursor:pointer;margin-top:8px;transition:all var(--tr);}
 .sb-email-btn:hover{border-color:var(--blue);color:var(--white);}
 
 /* ── TRANSICIÓN ENTRE PÁGINAS (sobria, sin efectismos) ── */
@@ -307,53 +308,31 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 <div class="checkout">
 <div class="form-col">
   <div class="step">
-      <div class="step-hd"><div class="step-num">1</div><h2>¿Cómo quieres empezar?</h2></div>
-
-      <!-- PASO 0: ELIGE TU CAMINO -->
-      <div class="path-grid" id="path-grid">
-        <div class="path-card c-gold" id="path-card-depto" onclick="selectPath('depto')">
-          <div class="path-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-          <h3>Departamento Tecnológico</h3>
-          <p>Tu web y las soluciones que elijas van completamente gratis. A cambio, una permanencia mínima.</p>
-          <span class="path-tag">Desde 69 €/mes</span>
-        </div>
-        <div class="path-card c-blue" id="path-card-proyecto" onclick="selectPath('proyecto')">
-          <div class="path-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="7" y1="14" x2="13" y2="14"/></svg></div>
-          <h3>Proyecto Web</h3>
-          <p>Tu web nueva, pago único, sin permanencia al empezar — con 30 días de implantación y coordinación incluida.</p>
-          <span class="path-tag">Desde 790 €</span>
-        </div>
-        <div class="path-card c-green" id="path-card-digitaliza" onclick="selectPath('digitaliza')">
-          <div class="path-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
-          <h3>Digitaliza tu Empresa</h3>
-          <p>Elige solo las soluciones que necesitas — WhatsApp, CRM, Ciberseguridad... Pagas su precio, sin permanencia al empezar, con 90 días de implantación y coordinación incluidos.</p>
-          <span class="path-tag">Desde 350 €</span>
-        </div>
-      </div>
-      <div class="path-change" id="path-change">
-        <span>Has elegido: <b id="path-change-label"></b></span>
-        <a onclick="selectPath(null)">← Cambiar</a>
-      </div>
+      <div class="step-hd"><div class="step-num">1</div><h2>Elige tu Departamento Tecnológico</h2></div>
+      <p style="color:var(--grey);font-size:.88rem;margin:-8px 0 18px;max-width:640px;">Todo lo que ofrece TRUCO vive dentro de tu Departamento — nada se vende suelto. Elige el nivel que encaja con lo que necesitas ahora; siempre puedes subir de nivel más adelante.</p>
 
       <!-- CATEGORÍA A: DEPARTAMENTO TECNOLÓGICO -->
-      <div id="wrap-depto" style="display:none;">
+      <div id="wrap-depto">
       <div class="cat-label">Departamento Tecnológico · Suscripción mensual</div>
       <div class="pack-grid" style="margin-bottom:16px;">
 
-        <label class="plan-card pro-card" id="card-arranque-pro" onclick="selectDirect('arranque-pro')">
+        <label class="plan-card tier-pro" id="card-arranque-pro" onclick="selectDirect('arranque-pro')">
           <div class="pc-ribbon">PRO</div>
           <div class="pc-check-box"></div>
           <div class="pc-top">
+            <div class="pc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
             <div class="pc-tag">Web Profesional + 3 soluciones gratis</div>
             <div class="pc-name">Departamento Pro™</div>
+            <div class="pc-founding-badge" id="pc-founding-badge-pro"></div>
             <div class="pc-base-price" id="pc-price-pro"></div>
             <div class="pc-vat" id="pc-vat-pro"></div>
-            <div class="pc-founding" id="pc-founding-pro"></div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 12 meses</div>
+            <div class="pc-founding-old" id="pc-founding-old-pro"></div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 12 meses</div>
             <div class="pc-save-tag">🎁 Ahorras 2.540-3.170 € en instalación</div>
           </div>
           <div class="pc-breakdown">
             <div class="pb-row"><span class="pb-label">Web Profesional regalada</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Chat + agenda en la web, de fábrica</span><span class="pb-val">✓</span></div>
             <div class="pb-row"><span class="pb-label">3 soluciones a elegir, gratis</span><span class="pb-val">✓</span></div>
             <div class="pb-row"><span class="pb-label">Mantenimiento hasta 6 en total</span><span class="pb-val">✓</span></div>
             <div class="pb-row"><span class="pb-label">Mayor prioridad incidencias</span><span class="pb-val">✓</span></div>
@@ -362,15 +341,17 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
           </div>
         </label>
 
-        <label class="plan-card" id="card-arranque-lite" onclick="selectDirect('arranque-lite')">
+        <label class="plan-card tier-lite" id="card-arranque-lite" onclick="selectDirect('arranque-lite')">
           <div class="pc-check-box"></div>
           <div class="pc-top">
+            <div class="pc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/><line x1="3" y1="12" x2="21" y2="12"/></svg></div>
             <div class="pc-tag">Web + 2 soluciones gratis</div>
             <div class="pc-name">Departamento Lite™</div>
+            <div class="pc-founding-badge" id="pc-founding-badge-lite"></div>
             <div class="pc-base-price" id="pc-price-lite"></div>
             <div class="pc-vat" id="pc-vat-lite"></div>
-            <div class="pc-founding" id="pc-founding-lite"></div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 12 meses</div>
+            <div class="pc-founding-old" id="pc-founding-old-lite"></div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 12 meses</div>
             <div class="pc-save-tag">🎁 Ahorras 1.490-2.070 € en instalación</div>
           </div>
           <div class="pc-breakdown">
@@ -382,19 +363,55 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
           </div>
         </label>
 
-        <label class="plan-card" id="card-arranque-basic" onclick="selectDirect('arranque-basic')">
+        <label class="plan-card tier-basic" id="card-arranque-basic" onclick="selectDirect('arranque-basic')">
           <div class="pc-check-box"></div>
           <div class="pc-top">
+            <div class="pc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
             <div class="pc-tag">El punto de entrada · 1 solución gratis</div>
             <div class="pc-name">Departamento Basic™</div>
             <div class="pc-base-price">69 €<sub>/mes + IVA</sub></div>
             <div class="pc-vat">83,49 €/mes con IVA</div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 6 meses</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 12 meses</div>
           </div>
           <div class="pc-breakdown">
             <div class="pb-row"><span class="pb-label">1 solución a elegir, gratis</span><span class="pb-val">✓</span></div>
             <div class="pb-row"><span class="pb-label">Acompañamiento completo</span><span class="pb-val">✓</span></div>
             <div class="pb-row"><span class="pb-label">Sin web incluida</span><span class="pb-val" style="color:var(--grey);font-weight:400;">—</span></div>
+          </div>
+        </label>
+
+        <label class="plan-card tier-elemental" id="card-arranque-elemental-profesional" onclick="selectDirect('arranque-elemental-profesional')">
+          <div class="pc-check-box"></div>
+          <div class="pc-top">
+            <div class="pc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+            <div class="pc-tag">Empieza por tu visibilidad · con el asistente que agenda por ti</div>
+            <div class="pc-name">Elemental™ — Web Profesional</div>
+            <div class="pc-base-price">149 €<sub>/mes + IVA</sub></div>
+            <div class="pc-vat">180,29 €/mes con IVA</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 12 meses</div>
+          </div>
+          <div class="pc-breakdown">
+            <div class="pb-row"><span class="pb-label">Web Profesional, gratis</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Chat + agenda que responde como una persona</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Salud técnica de posicionamiento</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Sin automatizaciones de canal</span><span class="pb-val" style="color:var(--grey);font-weight:400;">—</span></div>
+          </div>
+        </label>
+
+        <label class="plan-card tier-elemental" id="card-arranque-elemental-esencial" onclick="selectDirect('arranque-elemental-esencial')">
+          <div class="pc-check-box"></div>
+          <div class="pc-top">
+            <div class="pc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+            <div class="pc-tag">Empieza por tu visibilidad</div>
+            <div class="pc-name">Elemental™ — Web Esencial</div>
+            <div class="pc-base-price">98 €<sub>/mes + IVA</sub></div>
+            <div class="pc-vat">118,58 €/mes con IVA</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 12 meses</div>
+          </div>
+          <div class="pc-breakdown">
+            <div class="pb-row"><span class="pb-label">Web Esencial, gratis</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Salud técnica de posicionamiento</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Sin automatizaciones de canal</span><span class="pb-val" style="color:var(--grey);font-weight:400;">—</span></div>
           </div>
         </label>
 
@@ -404,7 +421,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       <div id="tier-solutions-picker" class="tier-picker-box" style="display:none;margin-bottom:16px;background:rgba(47,123,255,.06);border:1.5px solid var(--blue-soft);border-radius:14px;padding:18px 20px;">
         <div class="cat-label" id="tier-solutions-label" style="margin-top:0;">Elige tu solución gratis</div>
         <div id="tier-solutions-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
-        <div id="tier-solutions-note" style="margin-top:10px;font-size:.76rem;color:var(--grey);"></div>
+        <div id="tier-solutions-note" style="margin-top:10px;font-size:.84rem;color:var(--grey);"></div>
       </div>
 
       <!-- SOLUCIONES ADICIONALES DE PAGO — hasta el límite de mantenimiento del escalón -->
@@ -420,169 +437,14 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         <div id="extra-solutions-panel" class="extra-sol-panel" style="display:none;">
           <div class="cat-label" style="margin-top:0;">Añade otra solución a tu Departamento, al precio de catálogo</div>
           <div id="extra-solutions-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
-          <div id="extra-solutions-note" style="margin-top:10px;font-size:.76rem;color:var(--grey);"></div>
+          <div id="extra-solutions-note" style="margin-top:10px;font-size:.84rem;color:var(--grey);"></div>
         </div>
       </div>
       </div><!-- /wrap-depto -->
 
-      <!-- CATEGORÍA B: PROYECTO WEB -->
-      <div id="wrap-proyecto" style="display:none;">
-      <div class="cat-label">¿Necesitas construir algo primero? · Proyecto Web</div>
-      <div class="project-grid">
-
-        <!-- 1: WEB ESENCIAL -->
-        <label class="plan-card" id="card-esencial" onclick="selectProject('esencial')">
-          <div class="pc-check-box"></div>
-          <div class="pc-top">
-            <div class="pc-tag">Proyecto único · 30 días · Rápido</div>
-            <div class="pc-name">Web Esencial</div>
-            <div class="pc-base-price">790 €<sub> + IVA</sub></div>
-            <div class="pc-vat">955,90 € con IVA · Todo incluido</div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--grey);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> <b style="color:var(--green);">30 días de implantación y coordinación incluida</b></div>
-          </div>
-        </label>
-
-        <!-- 2: WEB PROFESIONAL — destacada -->
-        <label class="plan-card" id="card-web" onclick="selectProject('web')" style="border-color:var(--blue);">
-          <div class="pc-ribbon" style="background:linear-gradient(90deg,var(--gold),#c98f1f);color:#1a1206;">MÁS ELEGIDA</div>
-          <div class="pc-check-box"></div>
-          <div class="pc-top" style="padding-top:28px;">
-            <div class="pc-tag" style="color:var(--blue);">Proyecto único · 30 días · Chat + agenda incluidos</div>
-            <div class="pc-name">Web Profesional</div>
-            <div class="pc-base-price">1.390 €<sub> + IVA</sub></div>
-            <div class="pc-vat">1.681,90 € con IVA · Todo incluido</div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.72rem;color:var(--grey);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> <b style="color:var(--green);">30 días de implantación y coordinación incluida</b></div>
-          </div>
-        </label>
-
+      <div id="dept-info-note" style="margin-top:16px;background:rgba(217,168,63,.06);border:1px solid rgba(217,168,63,.2);border-radius:10px;padding:14px 18px;font-size:.84rem;color:var(--grey);">
+        ¿Quieres ver el detalle de cada solución antes de elegir? Repasa <a href="digitaliza.html" style="color:var(--gold);font-weight:700;">qué instalamos dentro de cada Departamento</a> — nada se vende suelto, todo viene incluido en tu nivel.
       </div>
-
-      <div id="proyecto-digitaliza-crosssell" style="display:none;margin-top:16px;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.25);border-radius:10px;padding:14px 18px;font-size:.84rem;color:var(--grey);">
-        <span id="proyecto-crosssell-text"></span> <a onclick="selectPath('digitaliza')" style="color:var(--green);font-weight:700;cursor:pointer;">Ir a Digitaliza tu Empresa →</a>
-      </div>
-
-      <!-- PANEL DINÁMICO — aparece al seleccionar proyecto -->
-      <div id="project-panel" style="display:none;margin-bottom:20px;margin-top:16px;">
-
-        <!-- WEBS: 30 días automático -->
-        <div id="web-implantacion" style="display:none;background:var(--bg-panel);border:1.5px solid var(--blue-soft);border-radius:14px;padding:20px;animation:fadeIn .22s ease;">
-          <div style="font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;">⏱ Período de implantación — 30 días</div>
-          <div style="background:var(--green-dim);border:1px solid rgba(34,197,94,.3);border-radius:12px;padding:18px;text-align:center;margin-bottom:14px;">
-            <div style="font-size:1.05rem;font-weight:800;color:var(--white);margin-bottom:4px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:3px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> Implantación y coordinación — 30 días</div>
-            <div style="font-size:.82rem;color:var(--green);font-weight:700;">Incluido en el precio, sin coste aparte</div>
-            <div style="font-size:.72rem;color:var(--grey);margin-top:4px;">Supervisión, ajustes y soporte durante toda la implantación</div>
-          </div>
-          <div style="font-size:.78rem;color:var(--grey);background:rgba(255,255,255,.03);border-radius:8px;padding:10px 14px;">
-            <b style="color:var(--white);">Desde el día 31</b>, si quieres seguir, renovación automática a <span id="renew-price-esencial"></span> €/mes + IVA. Si no, cancelas sin más avisando con 7 días — sin compromisos ocultos.
-          </div>
-        </div>
-
-      </div>
-      </div><!-- /wrap-proyecto -->
-
-      <!-- CATEGORÍA C: DIGITALIZA TU EMPRESA -->
-      <div id="wrap-digitaliza" style="display:none;">
-      <div class="cat-label">Elige las soluciones que necesitas · Digitaliza tu Empresa</div>
-
-      <div id="digitaliza-project-crosssell" style="display:none;margin-bottom:16px;background:rgba(47,123,255,.06);border:1px solid rgba(47,123,255,.2);border-radius:10px;padding:14px 18px;font-size:.84rem;color:var(--grey);">
-        <span id="digitaliza-crosssell-text"></span> <a onclick="selectPath('proyecto')" style="color:var(--blue);font-weight:700;cursor:pointer;">Ir a Proyecto Web →</a>
-      </div>
-
-      <div class="project-grid" style="grid-template-columns:1fr;margin-bottom:16px;">
-        <label class="plan-card" id="card-digital" onclick="toggleDigitalAddon()">
-          <div class="pc-check-box"></div>
-          <div class="pc-top">
-            <div class="pc-tag">90 días de implantación</div>
-            <div class="pc-name">Digitaliza tu Empresa</div>
-            <div class="pc-base-price" id="digital-price-display">desde 350 €<sub> + IVA</sub></div>
-            <div class="pc-vat">Precio según soluciones elegidas · también puedes combinarla con una web</div>
-          </div>
-        </label>
-      </div>
-
-      <!-- DIGITALIZA: selector de soluciones + 90 días -->
-      <div id="digital-implantacion" style="display:none;background:var(--bg-panel);border:1.5px solid var(--blue);border-radius:14px;overflow:hidden;animation:fadeIn .22s ease;margin-bottom:20px;">
-        <div style="padding:18px 20px;border-bottom:1px solid var(--grey-line);">
-          <div style="font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:4px;">Selecciona las soluciones a implantar</div>
-          <div style="font-size:.72rem;color:var(--grey);">Las soluciones con IA (WhatsApp, Web, Correo) incluyen 1.000 interacciones/mes · exceso 0,02 €/interacción</div>
-        </div>
-        <div class="quick-sector-box">
-          <label for="quick-sector">Elige tu sector y te recomendamos las soluciones habituales</label>
-          <div class="qsb-sub">Puedes quitar o añadir las que quieras después.</div>
-          <select id="quick-sector" onchange="quickSectorSelect(this.value)">
-            <option value="">Selecciona tu oficio o negocio…</option>
-            <optgroup label="Servicios y citas">
-              <option value="peluqueria">Peluquería / Barbería</option>
-              <option value="estetica">Centro de estética / Belleza</option>
-              <option value="dental">Clínica dental</option>
-              <option value="medica">Clínica médica / Centro de salud</option>
-              <option value="fisio">Fisioterapia</option>
-              <option value="psicologia">Psicología / Terapia</option>
-              <option value="veterinaria">Veterinaria</option>
-              <option value="gimnasio">Gimnasio / Centro deportivo</option>
-              <option value="academia">Academia / Centro de formación</option>
-              <option value="autoescuela">Autoescuela</option>
-              <option value="fontanero">Fontanero</option>
-              <option value="electricista">Electricista</option>
-              <option value="cerrajero">Cerrajero</option>
-              <option value="pintor">Pintor / Reformas</option>
-              <option value="carpintero">Carpintero</option>
-              <option value="taller">Taller mecánico</option>
-            </optgroup>
-            <optgroup label="Despachos y gestión">
-              <option value="abogado">Abogado / Bufete</option>
-              <option value="asesoria">Asesoría</option>
-              <option value="gestoria">Gestoría</option>
-              <option value="consultoria">Consultoría</option>
-              <option value="inmobiliaria">Inmobiliaria</option>
-              <option value="arquitecto">Arquitecto</option>
-              <option value="notaria">Notaría</option>
-            </optgroup>
-            <optgroup label="Hostelería">
-              <option value="restaurante">Restaurante</option>
-              <option value="bar">Bar / Cafetería</option>
-              <option value="eventos">Salón de celebraciones / Eventos</option>
-              <option value="catering">Catering</option>
-            </optgroup>
-            <optgroup label="Comercio y otros">
-              <option value="tienda">Tienda / Comercio</option>
-              <option value="ecommerce">Ecommerce</option>
-              <option value="ferreteria">Ferretería</option>
-              <option value="floristeria">Floristería</option>
-              <option value="panaderia">Panadería / Pastelería</option>
-              <option value="otro">Otro negocio</option>
-            </optgroup>
-          </select>
-        </div>
-        <div id="pack-badge"></div>
-        <div id="pack-security-tip"></div>
-        <div class="solutions-grid-el" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:16px 20px;" id="solutions-grid">
-          <label class="sol-chip" data-price="590"><input type="checkbox" value="whatsapp" onchange="updateSolutions()"><span>IA para WhatsApp — <s class="price-old">890€</s> <b class="price-new">590 € + IVA</b> <span class="launch-tag">Oferta 2026</span></span></label>
-          <label class="sol-chip" data-price="350"><input type="checkbox" value="web-ia" onchange="updateSolutions()"><span>IA para Web — <s class="price-old">650€</s> <b class="price-new">350 € + IVA</b> <span class="launch-tag">Oferta 2026</span></span></label>
-          <label class="sol-chip" data-price="350"><input type="checkbox" value="email-ia" onchange="updateSolutions()"><span>IA para Correo — <s class="price-old">590€</s> <b class="price-new">350 € + IVA</b> <span class="launch-tag">Oferta 2026</span></span></label>
-          <label class="sol-chip" data-price="950" data-desde="true"><input type="checkbox" value="crm" onchange="updateSolutions()"><span>CRM — desde 950 € + IVA<small style="display:block;font-weight:400;color:var(--grey);font-size:.72rem;">Requiere auditoría previa para cerrar precio</small></span></label>
-          <label class="sol-chip" data-price="350"><input type="checkbox" value="reservas" onchange="updateSolutions()"><span>Reservas y Agenda — 350 € + IVA</span></label>
-          <div class="sol-chip sol-chip-automatizaciones" id="chip-automatizaciones" data-price="350" data-desde="true">
-            <label class="sca-main"><input type="checkbox" value="automatizaciones" onchange="toggleAutomatizacionesBands(this.checked)"><span>Automatizaciones<small style="display:block;font-weight:400;color:var(--grey);font-size:.72rem;">Precio cerrado según complejidad — elige tu banda</small></span></label>
-            <div class="band-picker" id="automatizaciones-bands">
-              <label class="band-opt"><input type="radio" name="autom-band" value="350" checked onchange="setAutomatizacionesBand(350)"><span>Simple — 350 € + IVA</span></label>
-              <label class="band-opt"><input type="radio" name="autom-band" value="650" onchange="setAutomatizacionesBand(650)"><span>Media — 650 € + IVA</span></label>
-              <label class="band-opt"><input type="radio" name="autom-band" value="1200" onchange="setAutomatizacionesBand(1200)"><span>Compleja — 1.200 € + IVA</span></label>
-            </div>
-          </div>
-          <label class="sol-chip" data-price="600" data-desde="true"><input type="checkbox" value="integraciones" onchange="updateSolutions()"><span>Integraciones — desde 600 € + IVA<small style="display:block;font-weight:400;color:var(--grey);font-size:.72rem;">Consulta tu caso, precio final sin sorpresas</small></span></label>
-          <label class="sol-chip" data-price="400"><input type="checkbox" value="docs" onchange="updateSolutions()"><span>Gestión documental — desde 400 € + IVA</span></label>
-          <label class="sol-chip" data-price="500"><input type="checkbox" value="firma" onchange="updateSolutions()"><span>Firma digital — 500 € + IVA</span></label>
-          <label class="sol-chip" data-price="450"><input type="checkbox" value="ciberseguridad" onchange="updateSolutions()"><span>Ciberseguridad Pyme — 450 € + IVA</span></label>
-          <label class="sol-chip" data-price="580"><input type="checkbox" value="truki" onchange="updateSolutions()"><span>Facturación automática (TruKi) — 580 € + IVA</span></label>
-          <label class="sol-chip" data-price="690"><input type="checkbox" value="llamadas" onchange="updateSolutions()"><span>IA para Llamadas — 690 € + IVA<small style="display:block;font-weight:400;color:var(--grey);font-size:.72rem;">Incluye 150 llamadas/mes · exceso 0,50 €/llamada</small></span></label>
-        </div>
-        <div id="solutions-desde-note" style="display:none;margin:0 20px 12px;padding:10px 14px;border-radius:8px;background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.25);font-size:.76rem;color:var(--grey);line-height:1.5;"></div>
-        <div id="solutions-result" style="margin:0 20px 16px;padding:12px 14px;border-radius:8px;font-size:.8rem;line-height:1.55;display:none;"></div>
-        <div id="digital-90d" style="display:none;margin:0 20px 16px;background:rgba(255,255,255,.03);border:1px solid var(--grey-line);border-radius:8px;padding:12px 14px;font-size:.78rem;color:var(--grey);line-height:1.6;"></div>
-      </div>
-
-      </div><!-- /wrap-digitaliza -->
 
       <!-- TIMELINE -->
       <div class="timeline" id="timeline-box" style="display:none">
@@ -623,7 +485,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 
     <div id="existing-confirmed-box" style="display:none;background:var(--green-dim);border:1px solid rgba(34,197,94,.3);border-radius:10px;padding:14px 18px;margin-bottom:18px;font-size:.85rem;color:var(--grey);line-height:1.55;">
       ✓ Hola, <b id="existing-confirmed-name" style="color:var(--white);"></b> — hemos identificado tu cuenta y aplicado tu descuento de cliente. No hace falta que rellenes tus datos otra vez.
-      <a onclick="undoClientLogin()" style="display:block;margin-top:6px;color:var(--blue);cursor:pointer;font-size:.78rem;">Usar otros datos →</a>
+      <a onclick="undoClientLogin()" style="display:block;margin-top:6px;color:var(--blue);cursor:pointer;font-size:.86rem;">Usar otros datos →</a>
     </div>
 
     <div class="form-grid" id="checkout-fields-grid">
@@ -649,7 +511,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       </div>
       <div class="form-field" data-field="tipo">
         <label>Sector <span class="req">*</span></label>
-        <select id="f-tipo" onchange="vField(this);applyPackForSector(this.value)">
+        <select id="f-tipo" onchange="vField(this)">
           <option value="">Selecciona tu sector</option>
             <option value="dental">Clínica dental</option>
           <option>Clínica / Centro médico</option>
@@ -714,7 +576,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         <div class="check-text"><b>Comunicaciones comerciales</b> <em style="color:var(--grey);">(opcional)</em> — Acepto recibir comunicaciones sobre novedades y mejoras del servicio.</div>
       </div>
     </div>
-    <p style="margin-top:12px;font-size:.78rem;color:var(--grey);line-height:1.6;padding:0 4px;">Al confirmar serás redirigido a <strong style="color:var(--white);">Stripe</strong>, la pasarela usada por millones de empresas en todo el mundo. Tu información bancaria nunca pasa por nuestros servidores.</p>
+    <p style="margin-top:12px;font-size:.86rem;color:var(--grey);line-height:1.6;padding:0 4px;">Al confirmar serás redirigido a <strong style="color:var(--white);">Stripe</strong>, la pasarela usada por millones de empresas en todo el mundo. Tu información bancaria nunca pasa por nuestros servidores.</p>
   </div>
 
 </div><!-- /form-col -->
@@ -921,7 +783,6 @@ async function applyLoggedInClient() {
   }
   const pwBox = document.getElementById('new-password-box');
   if (pwBox) pwBox.style.display = 'none';
-  if (client.tipo) applyPackForSector(client.tipo);
   updateAll();
 }
 
@@ -986,51 +847,10 @@ const DESDE_NOTES={
   automatizaciones:'<b style="color:var(--gold);">Automatizaciones:</b> no es un "desde" abierto — son 3 precios cerrados según la complejidad del flujo (350€/650€/1.200€), lo confirmamos en la primera llamada.'
 };
 
-const PACKS={
-  servicios:{name:'Pack Servicios',sub:'fontaneros, electricistas, cerrajeros, pintores, carpinteros, talleres…',sols:['whatsapp','reservas','automatizaciones']},
-  serviciosCitas:{name:'Pack Servicios',sub:'peluquerías, centros de estética, clínicas, gimnasios, academias, autoescuelas…',sols:['whatsapp','reservas','llamadas']},
-  despachos:{name:'Pack Despachos',sub:'abogados, asesorías, gestorías, inmobiliarias, servicios profesionales…',sols:['crm','firma','docs'],security:true},
-  hosteleria:{name:'Pack Hostelería',sub:'restaurantes, salones de celebración…',sols:['reservas','whatsapp','automatizaciones']}
-};
-const SECTOR_PACKS={
-  'dental':'serviciosCitas','Clínica / Centro médico':'serviciosCitas','autonomo':'servicios',
-  'Centro de estética / Belleza':'serviciosCitas','Gimnasio / Deportes':'serviciosCitas','Formación / Academia':'serviciosCitas',
-  'Despacho / Consultoría':'despachos','Inmobiliaria':'despachos','Servicios profesionales':'despachos',
-  'Restaurante / Hostelería':'hosteleria'
-};
-const TRADE_PACKS={
-  peluqueria:'serviciosCitas',estetica:'serviciosCitas',dental:'serviciosCitas',medica:'serviciosCitas',fisio:'serviciosCitas',psicologia:'serviciosCitas',veterinaria:'serviciosCitas',gimnasio:'serviciosCitas',academia:'serviciosCitas',autoescuela:'serviciosCitas',
-  fontanero:'servicios',electricista:'servicios',cerrajero:'servicios',pintor:'servicios',carpintero:'servicios',taller:'servicios',
-  abogado:'despachos',asesoria:'despachos',gestoria:'despachos',consultoria:'despachos',inmobiliaria:'despachos',arquitecto:'despachos',notaria:'despachos',
-  restaurante:'hosteleria',bar:'hosteleria',eventos:'hosteleria',catering:'hosteleria'
-};
-const PACK_DISCOUNT=0.15;
-let sectorEngaged=false;
-function matchingPackKey(){
-  const checked=Array.from(document.querySelectorAll('#solutions-grid input[type=checkbox]:checked')).map(cb=>cb.value).sort();
-  for(const k in PACKS){
-    const sols=[...PACKS[k].sols].sort();
-    if(sols.length===checked.length&&sols.every((v,i)=>v===checked[i]))return k;
-  }
-  return null;
-}
-function sumCheckedSolutions(){
-  let t=0;
-  document.querySelectorAll('#solutions-grid input[type=checkbox]:checked').forEach(c=>{t+=parseInt(c.closest('.sol-chip').dataset.price||0);});
-  return t;
-}
-function getPackDiscountInfo(count){
-  if(!sectorEngaged||count!==3)return{applies:false};
-  const exact=matchingPackKey();
-  return{applies:true,key:exact,label:exact?PACKS[exact].name+' completo':'3 soluciones de tu sector'};
-}
-// Combina el descuento de pack de sector con el de cliente existente SIN
-// apilarlos — si ambos aplican, se usa el mayor de los dos, nunca la suma,
-// para que el descuento nunca se dispare sin control.
+// Combina descuentos disponibles (cliente existente, referidos) SIN apilarlos
+// — si aplican varios, se usa el mayor de todos, nunca la suma.
 function getBestDiscountInfo(count){
-  const packInfo=getPackDiscountInfo(count);
   const candidates=[
-    {rate:packInfo.applies?PACK_DISCOUNT:0,label:packInfo.label},
     {rate:clienteExistente?CLIENT_DISCOUNT:0,label:'Cliente TRUCO'},
     {rate:(referralCodeValid&&clientMode==='new')?REFERRAL_NEW_DISCOUNT:0,label:'Código de referido'},
     {rate:(loggedInClientData&&loggedInClientData.referral_credits>0)?REFERRAL_CREDIT_DISCOUNT:0,label:'Crédito por referido'},
@@ -1039,59 +859,14 @@ function getBestDiscountInfo(count){
   return best.rate>0?{applies:true,rate:best.rate,label:best.label}:{applies:false,rate:0};
 }
 
-function applyPackForSector(sectorValue){
-  const packKey=SECTOR_PACKS[sectorValue];
-  if(!packKey){
-    sectorEngaged=false;
-    const badge=document.getElementById('pack-badge');const secTip=document.getElementById('pack-security-tip');
-    if(badge)badge.style.display='none';
-    if(secTip)secTip.style.display='none';
-    updateAll();
-    return;
-  }
-  applyPack(packKey);
-}
-
-function quickSectorSelect(tradeValue){
-  const packKey=TRADE_PACKS[tradeValue];
-  if(!packKey){
-    sectorEngaged=false;
-    const badge=document.getElementById('pack-badge');const secTip=document.getElementById('pack-security-tip');
-    if(badge)badge.style.display='none';
-    if(secTip)secTip.style.display='none';
-    updateAll();
-    return;
-  }
-  applyPack(packKey);
-}
-
-function applyPack(packKey){
-  const pack=PACKS[packKey];
-  const badge=document.getElementById('pack-badge');
-  const secTip=document.getElementById('pack-security-tip');
-  if(!pack)return;
-  sectorEngaged=true;
-  if(!digitalAddon)toggleDigitalAddon();
-  document.querySelectorAll('#solutions-grid input[type=checkbox]').forEach(cb=>{cb.checked=pack.sols.includes(cb.value);});
-  document.querySelectorAll('#solutions-grid .sol-chip').forEach(chip=>chip.classList.remove('sol-suggested'));
-  updateSolutions();
-  if(badge){
-    badge.innerHTML='<b>'+pack.name+'</b> recomendado para tu sector ('+pack.sub+') — ya hemos marcado las soluciones más habituales, con <b style="color:var(--gold);">15% de descuento</b> por llevarlas juntas. Puedes quitar o añadir las que quieras: el descuento se mantiene mientras tengas 3 soluciones activas.';
-    badge.style.display='block';
-  }
-  if(secTip){
-    if(pack.security){
-      const ciberInput=document.querySelector('#solutions-grid input[value="ciberseguridad"]');
-      if(ciberInput)ciberInput.closest('.sol-chip').classList.add('sol-suggested');
-      secTip.innerHTML='<b>Muy recomendado para tu sector:</b> añade Ciberseguridad Pyme — proteges los datos y contratos de tus clientes (no la hemos marcado, decides tú).';
-      secTip.style.display='block';
-    }else{
-      secTip.style.display='none';
-    }
-  }
-}
-const DIRECT={'arranque-basic':{name:'Departamento Tecnológico Basic™',arranque:'basic'},'arranque-lite':{name:'Departamento Tecnológico Lite™',arranque:'lite'},'arranque-pro':{name:'Departamento Tecnológico Pro™',arranque:'pro'}};
-const ARRANQUES={basic:{name:'Basic™',monthly:69,permanenciaMeses:6,freeSols:1,maintainMax:2},lite:{name:'Lite™',monthly:currentPrice('lite'),permanenciaMeses:12,freeSols:2,maintainMax:3},pro:{name:'Pro™',monthly:currentPrice('pro'),permanenciaMeses:12,freeSols:3,maintainMax:6}};
+const DIRECT={'arranque-elemental-esencial':{name:'Departamento Tecnológico Elemental™ (Web Esencial)',arranque:'elemental-esencial'},'arranque-elemental-profesional':{name:'Departamento Tecnológico Elemental™ (Web Profesional)',arranque:'elemental-profesional'},'arranque-basic':{name:'Departamento Tecnológico Basic™',arranque:'basic'},'arranque-lite':{name:'Departamento Tecnológico Lite™',arranque:'lite'},'arranque-pro':{name:'Departamento Tecnológico Pro™',arranque:'pro'}};
+const ARRANQUES={
+  'elemental-esencial':{name:'Elemental™ (Web Esencial)',monthly:98,permanenciaMeses:12,freeSols:0,maintainMax:0,webGrade:'esencial'},
+  'elemental-profesional':{name:'Elemental™ (Web Profesional)',monthly:149,permanenciaMeses:12,freeSols:0,maintainMax:0,webGrade:'profesional'},
+  basic:{name:'Basic™',monthly:69,permanenciaMeses:12,freeSols:1,maintainMax:2},
+  lite:{name:'Lite™',monthly:currentPrice('lite'),permanenciaMeses:12,freeSols:2,maintainMax:3},
+  pro:{name:'Pro™',monthly:currentPrice('pro'),permanenciaMeses:12,freeSols:3,maintainMax:6}
+};
 const CLOSED_PRICE_SOLUTIONS=[
   {value:'whatsapp',name:'IA para WhatsApp',price:590},
   {value:'web-ia',name:'IA para tu Web',price:350},
@@ -1105,21 +880,24 @@ const CLOSED_PRICE_SOLUTIONS=[
 ];
 
 function renderFoundingPrices(){
-  const renewEl=document.getElementById('renew-price-esencial');if(renewEl)renewEl.textContent=currentPrice('lite');
+  const renewEl=document.getElementById('renew-price-esencial');if(renewEl)renewEl.textContent=STANDARD_PRICES.lite;
   ['lite','pro'].forEach(tier=>{
     const m=ARRANQUES[tier].monthly;
     const iva=(m*1.21).toFixed(2).replace('.',',');
     const priceEl=document.getElementById('pc-price-'+tier);
     const vatEl=document.getElementById('pc-vat-'+tier);
-    const foundEl=document.getElementById('pc-founding-'+tier);
+    const badgeEl=document.getElementById('pc-founding-badge-'+tier);
+    const oldEl=document.getElementById('pc-founding-old-'+tier);
     if(priceEl)priceEl.innerHTML=m+' €<sub>/mes + IVA</sub>';
     if(vatEl)vatEl.textContent=iva+' €/mes con IVA';
-    if(foundEl){
-      if(foundingActive()){
+    if(badgeEl&&oldEl){
+      if(foundingActive(tier)){
         const std=STANDARD_PRICES[tier];
-        foundEl.innerHTML='<s class="price-old">'+std+'€/mes</s> <span class="launch-tag">Precio de fundador</span> · <span class="spots-left">Quedan '+FOUNDING_SPOTS_LEFT+' de 10 plazas</span>';
+        badgeEl.innerHTML='🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[tier]+' de 10 plazas';
+        oldEl.innerHTML='Lo mantienes para siempre · nuevos clientes después: '+std+'€/mes + IVA';
       }else{
-        foundEl.innerHTML='';
+        badgeEl.innerHTML='';
+        oldEl.innerHTML='';
       }
     }
   });
@@ -1156,8 +934,8 @@ const TIER_POOLS={
     {value:'automatizaciones',name:'Automatizaciones (banda Simple)'}
   ]}
 };
-const STRIPE={'esencial-lite':'REEMPLAZA_ESENCIAL','web-lite':'REEMPLAZA_WEB_PRO','digital-lite':'REEMPLAZA_DIGITAL_LITE','digital-pro':'REEMPLAZA_DIGITAL_PRO','arranque-basic':'REEMPLAZA_BASIC','arranque-lite':'REEMPLAZA_LITE','arranque-pro':'REEMPLAZA_PRO','esencial-solutions-lite':'REEMPLAZA_ESENCIAL_SOL_LITE','esencial-solutions-pro':'REEMPLAZA_ESENCIAL_SOL_PRO','web-solutions-lite':'REEMPLAZA_WEB_SOL_LITE','web-solutions-pro':'REEMPLAZA_WEB_SOL_PRO'};
-const TIMELINES={'esencial-lite':[{l:'Web Esencial lista',v:'Días 7-10',c:'gold'},{l:'30 días — Implantación',v:'INCLUIDA',c:'green'},{l:'Después',v:currentPrice('lite')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'web-lite':[{l:'Entrega Web Profesional',v:'Semana 2-4',c:'gold'},{l:'30 días — Implantación',v:'INCLUIDA',c:'green'},{l:'Después',v:currentPrice('lite')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'digital-lite':[{l:'Implantación completa',v:'90 días',c:'gold'},{l:'90 días — Implantación',v:'INCLUIDA',c:'green'},{l:'Después',v:currentPrice('lite')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'digital-pro':[{l:'Implantación completa',v:'90 días',c:'gold'},{l:'90 días — Implantación',v:'INCLUIDA',c:'green'},{l:'Después',v:currentPrice('pro')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'arranque-basic':[{l:'Instalación de tu solución',v:'Gratis',c:'gold'},{l:'Permanencia',v:'6 meses',c:'blue'},{l:'Al terminar',v:'Sigues mes a mes o te vas, sin más compromiso',c:'grey'}],'arranque-lite':[{l:'Web + 2 soluciones instaladas',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva o cancela, sin penalización',c:'grey'}],'arranque-pro':[{l:'Web Profesional + 3 soluciones instaladas',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva o cancela, sin penalización',c:'grey'}],'esencial-solutions-lite':[{l:'Web Esencial + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Implantación',v:'INCLUIDA',c:'green'},{l:'Después',v:currentPrice('lite')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'esencial-solutions-pro':[{l:'Web Esencial + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Implantación',v:'INCLUIDA',c:'green'},{l:'Después',v:currentPrice('pro')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'web-solutions-lite':[{l:'Web Profesional + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Implantación',v:'INCLUIDA',c:'green'},{l:'Después',v:currentPrice('lite')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}],'web-solutions-pro':[{l:'Web Profesional + soluciones listas',v:'90 días',c:'gold'},{l:'90 días — Implantación',v:'INCLUIDA',c:'green'},{l:'Después',v:currentPrice('pro')+' €/mes · Cancela cuando quieras (7 días de aviso)',c:'grey'}]};
+const STRIPE={'arranque-elemental-esencial':'REEMPLAZA_ELEMENTAL_ESENCIAL','arranque-elemental-profesional':'REEMPLAZA_ELEMENTAL_PROFESIONAL','arranque-basic':'REEMPLAZA_BASIC','arranque-lite':'REEMPLAZA_LITE','arranque-pro':'REEMPLAZA_PRO'};
+const TIMELINES={'arranque-elemental-esencial':[{l:'Web Esencial instalada',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}],'arranque-elemental-profesional':[{l:'Web Profesional instalada',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}],'arranque-basic':[{l:'Instalación de tu solución',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}],'arranque-lite':[{l:'Web + 2 soluciones instaladas',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}],'arranque-pro':[{l:'Web Profesional + 3 soluciones instaladas',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}]};
 
 let selectedProject=null,selectedDirect=null,selectedTierSolutions=[],selectedExtraSolutions=[],tierPaymentMode='unico',selectedDigitalPlan=null,digitalTotalPrice=590,digitalAddon=false;
 
@@ -1188,35 +966,10 @@ function resetDigitalAddon(){
   selectedDigitalPlan=null;digitalTotalPrice=590;
 }
 
-function showPath(path){
-  document.getElementById('path-grid').style.display='none';
-  document.getElementById('path-change').style.display='flex';
-  document.getElementById('path-change-label').textContent=path==='depto'?'Departamento Tecnológico':path==='proyecto'?'Proyecto Web':'Digitaliza tu Empresa';
-  document.getElementById('wrap-depto').style.display=path==='depto'?'block':'none';
-  document.getElementById('wrap-proyecto').style.display=path==='proyecto'?'block':'none';
-  document.getElementById('wrap-digitaliza').style.display=path==='digitaliza'?'block':'none';
-  document.getElementById('path-card-depto').classList.toggle('selected',path==='depto');
-  document.getElementById('path-card-proyecto').classList.toggle('selected',path==='proyecto');
-  document.getElementById('path-card-digitaliza').classList.toggle('selected',path==='digitaliza');
-}
-
-function selectPath(path){
-  if(path===null){
-    if(selectedDirect)selectDirect(selectedDirect);
-    if(selectedProject)selectProject(selectedProject);
-    if(digitalAddon)toggleDigitalAddon();
-    document.getElementById('path-grid').style.display='grid';
-    document.getElementById('path-change').style.display='none';
-    document.getElementById('wrap-depto').style.display='none';
-    document.getElementById('wrap-proyecto').style.display='none';
-    document.getElementById('wrap-digitaliza').style.display='none';
-    updateAll();
-    return;
-  }
-  showPath(path);
-  if(path==='digitaliza'&&!digitalAddon)toggleDigitalAddon();
-  renderCrossSellNotes();
-}
+// showPath()/selectPath() ya no hacen falta — solo queda un camino (Departamento), siempre visible.
+// Se dejan como no-op para que ninguna llamada residual rompa nada.
+function showPath(path){}
+function selectPath(path){}
 
 function selectDirect(id){
   if(selectedDirect===id){
@@ -1461,23 +1214,22 @@ function updateSolutions(){
     const discounted=discInfo.applies?Math.round(total*(1-discInfo.rate)*100)/100:total;
     priceEl.innerHTML=(discInfo.applies?'<s style="color:var(--grey);font-size:.7em;">'+(total+DIGITAL_BUYOUT)+' €</s> ':'')+(discounted+DIGITAL_BUYOUT)+' €<sub> + IVA</sub>';
     resultEl.style.display='block';
-    const packLine=discInfo.applies?'<div style="font-size:.72rem;color:var(--gold);font-weight:600;margin-bottom:4px;">'+discInfo.label+': -'+Math.round(discInfo.rate*100)+'% en soluciones (ahorras '+(total-discounted).toFixed(2).replace('.',',')+' €)</div>':'';
-    const desglose=packLine+'<div style="font-size:.72rem;color:var(--grey);margin-bottom:6px;">'+(discInfo.applies?'<s>'+total+' €</s> '+discounted.toFixed(2).replace('.',',')+' €':total+' €')+' + IVA — '+(count>1?'soluciones elegidas, alta e integración incluidas':'solución elegida, alta e integración incluidas')+'</div>';
+    const packLine=discInfo.applies?'<div style="font-size:.80rem;color:var(--gold);font-weight:600;margin-bottom:4px;">'+discInfo.label+': -'+Math.round(discInfo.rate*100)+'% en soluciones (ahorras '+(total-discounted).toFixed(2).replace('.',',')+' €)</div>':'';
+    const desglose=packLine+'<div style="font-size:.80rem;color:var(--grey);margin-bottom:6px;">'+(discInfo.applies?'<s>'+total+' €</s> '+discounted.toFixed(2).replace('.',',')+' €':total+' €')+' + IVA — '+(count>1?'soluciones elegidas, alta e integración incluidas':'solución elegida, alta e integración incluidas')+'</div>';
     if(count<=2){
       selectedDigitalPlan='lite';
       resultEl.style.background='rgba(34,197,94,.08)';resultEl.style.border='1px solid rgba(34,197,94,.25)';
-      const nudge=sectorEngaged?'<div style="font-size:.72rem;color:var(--gold);font-weight:600;margin-top:6px;">Añade '+(3-count)+' solución'+(3-count>1?'es':'')+' más y desbloqueas un 15% de descuento.</div>':'';
-      resultEl.innerHTML=desglose+'<b style="color:var(--green);">'+count+' '+(count>1?'soluciones':'solución')+'</b> — <b style="color:var(--white);">Departamento Lite™</b> · 90 días de implantación, luego '+currentPrice('lite')+'€/mes.'+nudge;
+      resultEl.innerHTML=desglose+'<b style="color:var(--green);">'+count+' '+(count>1?'soluciones':'solución')+'</b> — <b style="color:var(--white);">Departamento Lite™</b> · 90 días de implantación, luego '+STANDARD_PRICES.lite+'€/mes + IVA.';
     }else{
       selectedDigitalPlan='pro';
       resultEl.style.background='rgba(47,123,255,.08)';resultEl.style.border='1px solid rgba(47,123,255,.25)';
-      resultEl.innerHTML=desglose+'<b style="color:var(--blue);">3 soluciones</b> — <b style="color:var(--white);">Departamento Pro™</b> · 90 días de implantación, luego '+currentPrice('pro')+'€/mes.';
+      resultEl.innerHTML=desglose+'<b style="color:var(--blue);">3 soluciones</b> — <b style="color:var(--white);">Departamento Pro™</b> · 90 días de implantación, luego '+STANDARD_PRICES.pro+'€/mes + IVA.';
     }
     digitalTotalPrice=discounted;
   }
   const d90=document.getElementById('digital-90d');
   if(d90&&count>0){
-    const dn=count>=3?'Pro™':'Lite™';const dp2=count>=3?currentPrice('pro'):currentPrice('lite');
+    const dn=count>=3?'Pro™':'Lite™';const dp2=count>=3?STANDARD_PRICES.pro:STANDARD_PRICES.lite;
     d90.style.display='block';
     d90.innerHTML='<b style="color:var(--white);">90 días de implantación:</b> te acompañamos con la coordinación, los ajustes y el soporte, <span style="color:var(--green);font-weight:600;">incluido en el precio</span> · después, renovación automática a '+dp2+'€/mes + IVA (Departamento '+dn+') · cancela cuando quieras avisando con 7 días.';
   }else if(d90){d90.style.display='none';}
@@ -1493,10 +1245,10 @@ function getActivePlan(){
   if(selectedDirect){
     const d=DIRECT[selectedDirect];const arr=ARRANQUES[d.arranque];
     const pool=TIER_POOLS[d.arranque];
-    const solNames=selectedTierSolutions.map(v=>{const s=pool.sols.find(x=>x.value===v);return s?s.name:v;});
-    const webLine=d.arranque==='lite'?[{l:'Web (reacondicionada o Web Esencial nueva)',v:'GRATIS',cls:'free'}]:d.arranque==='pro'?[{l:'Web Profesional',v:'GRATIS',cls:'free'}]:[];
-    const solWord=arr.freeSols>1?arr.freeSols+' soluciones':'1 solución';
-    const solLines=solNames.length?solNames.map(n=>({l:n,v:'GRATIS',cls:'free'})):[{l:solWord+' a elegir',v:'Pendiente de elegir'}];
+    const solNames=pool?selectedTierSolutions.map(v=>{const s=pool.sols.find(x=>x.value===v);return s?s.name:v;}):[];
+    const webLine=d.arranque==='lite'?[{l:'Web (reacondicionada o Web Esencial nueva)',v:'GRATIS',cls:'free'}]:d.arranque==='pro'?[{l:'Web Profesional',v:'GRATIS',cls:'free'},{l:'IA para tu Web',v:'GRATIS',cls:'free'},{l:'Reservas y Agenda',v:'GRATIS',cls:'free'}]:d.arranque==='elemental-esencial'?[{l:'Web Esencial',v:'GRATIS',cls:'free'},{l:'Salud técnica de posicionamiento',v:'INCLUIDA',cls:'free'}]:d.arranque==='elemental-profesional'?[{l:'Web Profesional',v:'GRATIS',cls:'free'},{l:'Chat + agenda en tu web',v:'GRATIS',cls:'free'},{l:'Salud técnica de posicionamiento',v:'INCLUIDA',cls:'free'}]:[];
+    const solWord=arr.freeSols>1?arr.freeSols+' soluciones':arr.freeSols===1?'1 solución':'';
+    const solLines=arr.freeSols===0?[]:solNames.length?solNames.map(n=>({l:n,v:'GRATIS',cls:'free'})):[{l:solWord+' a elegir',v:'Pendiente de elegir'}];
     const extraSols=selectedExtraSolutions.map(v=>CLOSED_PRICE_SOLUTIONS.find(x=>x.value===v)).filter(Boolean);
     const extraTotal=extraSols.reduce((s,x)=>s+x.price,0);
     const extraLines=extraSols.map(x=>({l:'+ '+x.name+' (adicional)',v:x.price.toFixed(2).replace('.',',')+' € + IVA'}));
@@ -1520,44 +1272,7 @@ function getActivePlan(){
       priceLines.push({l:'Compromiso total ('+arr.permanenciaMeses+' meses)',v:totalCommitment.toFixed(2).replace('.',',')+' €'});
     }
     const renewalMsg='Permanencia mínima de '+arr.permanenciaMeses+' meses — es lo que hace posible este regalo. Al terminar, sigues mes a mes sin más compromiso, o te vas cuando quieras.';
-    return{key:selectedDirect,name:d.name,sub:subPago+' · Permanencia '+arr.permanenciaMeses+' meses · '+solWord+' gratis'+(extraSols.length?' + '+extraSols.length+' adicional'+(extraSols.length>1?'es':''):''),arranqueType:d.arranque,breakdown:[...webLine,...solLines,...extraLines,{divider:true},...priceLines],monthlyAfter:arr.monthly,stripe:STRIPE[selectedDirect],totalRaw:isUnico?totalCommitment:null,timeline:selectedDirect,renewalMsg,solutionsIncomplete:selectedTierSolutions.length<arr.freeSols};
-  }
-  const sols=digitalAddon?document.querySelectorAll('#solutions-grid input[type=checkbox]:checked').length:0;
-  const hasSolutions=digitalAddon&&sols>0;
-  const customQuote=hasSolutions&&sols>3;
-
-  if(selectedProject&&hasSolutions){
-    const proj=PROJECTS[selectedProject];
-    const wn=selectedProject==='web'?'Web Profesional':'Web Esencial';
-    const dp=sols>=3?'pro':'lite';const dn=dp==='lite'?'Lite™':'Pro™';const dm=dp==='lite'?currentPrice('lite'):currentPrice('pro');
-    const key=selectedProject+'-solutions-'+dp;
-    if(customQuote){
-      return{key,name:wn+' + Digitaliza tu Empresa · '+sols+' soluciones',sub:'Proyecto combinado · Presupuesto personalizado',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'Soluciones ('+sols+')',v:'Presupuesto a medida'},{l:'90 días de implantación (Departamento '+dn+')',v:'INCLUIDA',cls:'free'}],monthlyAfter:dm,stripe:null,timeline:key,customQuote:true,renewalMsg:'Pasados los 90 días de implantación, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
-    }
-    const discInfo1=getBestDiscountInfo(sols);const rawTotal1=sumCheckedSolutions();const discAmt1=discInfo1.applies?Math.round(rawTotal1*discInfo1.rate*100)/100:0;
-    const tb=proj.base+digitalTotalPrice+DIGITAL_BUYOUT;const iva=tb*0.21;
-    const solLines1=[{l:(sols>1?'Soluciones elegidas':'Solución elegida')+' ('+sols+')',v:rawTotal1.toFixed(2).replace('.',',')+' €'}];
-    if(discInfo1.applies)solLines1.push({l:'Descuento '+discInfo1.label+' (-'+Math.round(discInfo1.rate*100)+'%)',v:'-'+discAmt1.toFixed(2).replace('.',',')+' €',cls:'free'});
-    return{key,name:wn+' + Digitaliza · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto combinado · 90 días de implantación (Departamento '+dn+')',arranqueType:dp,breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},...solLines1,{l:'90 días de implantación (Departamento '+dn+')',v:'INCLUIDA',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE[key],totalRaw:tb+iva,timeline:key,renewalMsg:'Pasados los 90 días de implantación, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
-  }
-
-  if(hasSolutions){
-    const dp=sols>=3?'pro':'lite';const dn=dp==='lite'?'Lite™':'Pro™';const dm=dp==='lite'?currentPrice('lite'):currentPrice('pro');
-    if(customQuote){
-      return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+' soluciones',sub:'Proyecto · Presupuesto personalizado',arranqueType:dp,breakdown:[{l:'Implantación ('+sols+' sol.)',v:'Presupuesto a medida'},{l:'90 días de implantación (Departamento '+dn+')',v:'INCLUIDA',cls:'free'}],monthlyAfter:dm,stripe:null,timeline:'digital-'+dp,customQuote:true,renewalMsg:'Pasados los 90 días de implantación, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
-    }
-    const discInfo2=getBestDiscountInfo(sols);const rawTotal2=sumCheckedSolutions();const discAmt2=discInfo2.applies?Math.round(rawTotal2*discInfo2.rate*100)/100:0;
-    const pb=digitalTotalPrice;const tb=pb+DIGITAL_BUYOUT;const iva=tb*0.21;
-    const solLines2=[{l:(sols>1?'Soluciones elegidas':'Solución elegida')+' ('+sols+')',v:rawTotal2.toFixed(2).replace('.',',')+' €'}];
-    if(discInfo2.applies)solLines2.push({l:'Descuento '+discInfo2.label+' (-'+Math.round(discInfo2.rate*100)+'%)',v:'-'+discAmt2.toFixed(2).replace('.',',')+' €',cls:'free'});
-    return{key:'digital-'+dp,name:'Digitaliza tu Empresa · '+sols+(sols>1?' soluciones':' solución'),sub:'Proyecto · 90 días de implantación (Departamento '+dn+')',arranqueType:dp,breakdown:[...solLines2,{l:'90 días de implantación (Departamento '+dn+')',v:'INCLUIDA',cls:'free'},{divider:true},{l:'Base imponible',v:tb.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(tb+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:dm,stripe:STRIPE['digital-'+dp],totalRaw:tb+iva,timeline:'digital-'+dp,renewalMsg:'Pasados los 90 días de implantación, renovación automática de 1 mes a <span class="renewal-amount">'+dm+',00 €&nbsp;+&nbsp;IVA</span> (Departamento '+dn+') · Cancela cuando quieras avisando con 7 días'};
-  }
-
-  if(selectedProject){
-    const proj=PROJECTS[selectedProject];
-    const base=proj.base;const iva=base*0.21;
-    const wn=selectedProject==='web'?'Web Profesional':'Web Esencial';
-    return{key:selectedProject+'-lite',name:wn+' · 30 días implantación',sub:'Proyecto único · 30 días de implantación y coordinación incluida',arranqueType:'lite',breakdown:[{l:wn,v:proj.base.toFixed(2).replace('.',',')+' €'},{l:'30 días de implantación y coordinación',v:'INCLUIDA',cls:'free'},{divider:true},{l:'Base imponible',v:base.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:(base+iva).toFixed(2).replace('.',',')+' €',total:true}],monthlyAfter:199,stripe:STRIPE[selectedProject+'-lite'],totalRaw:base+iva,timeline:selectedProject==='web'?'web-lite':'esencial-lite'};
+    return{key:selectedDirect,name:d.name,sub:subPago+' · Permanencia '+arr.permanenciaMeses+' meses'+(solWord?' · '+solWord+' gratis':'')+(extraSols.length?' + '+extraSols.length+' adicional'+(extraSols.length>1?'es':''):''),arranqueType:d.arranque,breakdown:[...webLine,...solLines,...extraLines,{divider:true},...priceLines],monthlyAfter:arr.monthly,stripe:STRIPE[selectedDirect],totalRaw:isUnico?totalCommitment:null,timeline:selectedDirect,renewalMsg,solutionsIncomplete:selectedTierSolutions.length<arr.freeSols};
   }
   return null;
 }
@@ -1795,27 +1510,9 @@ function toggleFaq(btn){
 (function preselectFromUrl(){
   const params=new URLSearchParams(location.search);
   const plan=params.get('plan');
-  if(plan==='arranque-lite'||plan==='arranque-pro'||plan==='arranque-basic')selectDirect(plan);
-  else if(plan==='esencial'||plan==='web')selectProject(plan);
-  else if(plan==='digital')selectPath('digitaliza');
-  const pack=params.get('pack');
-  if(pack&&PACKS[pack]){
-    const arranqueTier=selectedDirect&&DIRECT[selectedDirect]?DIRECT[selectedDirect].arranque:null;
-    if(arranqueTier&&TIER_POOLS[arranqueTier]){
-      const poolValues=TIER_POOLS[arranqueTier].sols.map(s=>s.value);
-      selectedTierSolutions=PACKS[pack].sols.filter(v=>poolValues.includes(v)).slice(0,TIER_POOLS[arranqueTier].max);
-      renderTierSolutionsPicker();
-      updateAll();
-    }else{
-      applyPack(pack);
-    }
-  }
-  const sol=params.get('sol');
-  if(sol){
-    if(!digitalAddon){showPath('digitaliza');toggleDigitalAddon();}
-    const cb=document.querySelector('#solutions-grid input[value="'+sol+'"]');
-    if(cb){cb.checked=true;updateSolutions();}
-  }
+  if(plan==='arranque-lite'||plan==='arranque-pro'||plan==='arranque-basic'||plan==='arranque-elemental-esencial'||plan==='arranque-elemental-profesional')selectDirect(plan);
+  else if(plan==='esencial')selectDirect('arranque-elemental-esencial');
+  else if(plan==='web'||plan==='digital')selectDirect('arranque-elemental-profesional');
 })();
 </script>
 </body>

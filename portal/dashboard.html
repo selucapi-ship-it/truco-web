@@ -287,7 +287,7 @@ async function loadClient() {
   const missing = CATALOG.filter(c => !ownedKeys.has(c.key));
   const offersList = document.getElementById('offers-list');
   offersList.innerHTML = missing.length
-    ? missing.map(c => '<div class="offer-row"><span class="sol-name">' + escapeHtml(c.name) + '</span><span class="offer-price">' + (c.desde ? 'desde ' : '') + c.price + ' € + IVA</span><a class="offer-cta" href="../pago.html?sol=' + encodeURIComponent(c.key) + '">Añadir →</a></div>').join('')
+    ? missing.map(c => '<div class="offer-row"><span class="sol-name">' + escapeHtml(c.name) + '</span><span class="offer-price">' + (c.desde ? 'desde ' : '') + c.price + ' € + IVA</span><a class="offer-cta" href="../pago.html">Añadir →</a></div>').join('')
     : '<div class="empty-note">Ya tienes contratado todo nuestro catálogo. 🎉</div>';
 
   loadAuditButton();

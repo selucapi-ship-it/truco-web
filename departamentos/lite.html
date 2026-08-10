@@ -140,6 +140,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .wib-item b{display:block;color:var(--white);font-size:.92rem;margin-bottom:3px;}
 @media(max-width:900px){.wib-grid{grid-template-columns:repeat(2,1fr);}}
 
+.who-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px;}
+.who-card{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:22px 20px;transition:border-color var(--tr),transform var(--tr);}
+.who-card:hover{border-color:var(--gold);transform:translateY(-3px);}
+.who-card h4{font-size:1rem;margin:14px 0 8px;color:var(--white);}
+.who-card p{font-size:.86rem;color:var(--grey);line-height:1.6;}
+@media(max-width:900px){.who-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.who-grid{grid-template-columns:1fr;}}
+
 .cross-nav{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:28px 32px;}
 .cross-nav-title{font-family:var(--font-m);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
 .cross-nav-items{display:flex;gap:12px;flex-wrap:wrap;}
@@ -208,7 +216,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="container">
     <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Web + 2 soluciones incluidas gratis</div>
     <h1>Departamento Tecnológico Lite™</h1>
-    <p>Tu web (la actual, reacondicionada, o una Web Esencial nueva) + 2 soluciones tecnológicas a elegir, todo instalado completamente gratis. Después, mantenimiento, seguridad, copias de respaldo e incidencias resueltas — pensado para negocios que están empezando a construir su presencia tecnológica.</p>
+    <p>¿Tu web actual no genera ni una llamada — o directamente no tienes una? Si diriges un restaurante, una tienda, una academia o un taller con local propio, Lite™ es el paso natural: <strong>una web nueva (o la que ya tienes, renovada) + 2 herramientas a elegir</strong> — reservas, WhatsApp, lo que tu negocio necesite — todo instalado completamente gratis. Después, mantenimiento, seguridad, copias de respaldo e incidencias resueltas.</p>
     <div class="hero-price-box">
       <div>
         <div class="hp-founding-badge" id="hp-founding-badge-lite"></div>
@@ -225,6 +233,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="vh-save">Ahorras entre <b>1.490 € y 2.070 €</b> en instalación</div>
       <ul class="vh-list">
         <li>Web Esencial o reacondicionada <span class="vh-tag">valor 790 €</span></li>
+        <li>¿Web con chat o agenda? <span class="vh-tag">elígela como 1 de tus 2</span></li>
         <li>2 soluciones a elegir <span class="vh-tag">valor 700-1.280 €</span></li>
         <li>Mantenimiento de las 3 activas <span class="vh-tag">incluido siempre</span></li>
         <li>Reunión mensual de revisión <span class="vh-tag">30 min</span></li>
@@ -233,7 +242,37 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </div>
 
-<div class="section-block reveal" style="padding-bottom:20px;">
+<div class="section-block reveal">
+  <div class="container">
+    <div class="section-divider"><h2 class="sd-tag green">¿Para quién es Lite™?</h2><div class="sd-line"></div></div>
+    <p style="color:var(--grey);font-size:.92rem;line-height:1.7;max-width:760px;margin-bottom:4px;">Si tu negocio ya tiene un local, un horario y clientes que buscan información antes de venir, necesitas algo más que un WhatsApp — necesitas una web que trabaje por ti mientras estás ocupado con el cliente que tienes delante.</p>
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="icon-badge gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2l1.5 1.5L6 2l1.5 1.5L9 2l1.5 1.5L12 2v20l-1.5-1.5L9 22l-1.5-1.5L6 22l-1.5-1.5L3 22z"/><line x1="16" y1="8" x2="21" y2="8"/><line x1="16" y1="12" x2="21" y2="12"/><line x1="16" y1="16" x2="18" y2="16"/></svg></div>
+        <h4>Restaurantes y hostelería</h4>
+        <p>Una web con tu carta y reservas online, sin depender de apps de terceros que se llevan comisión por cada mesa que te reservan.</p>
+      </div>
+      <div class="who-card">
+        <div class="icon-badge blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+        <h4>Tiendas con web anticuada</h4>
+        <p>Llevas años con una web que no genera ni una llamada. La renovamos y le añadimos IA para tu Web o WhatsApp — que empiece a traerte clientes de verdad.</p>
+      </div>
+      <div class="who-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/></svg></div>
+        <h4>Academias y centros de formación</h4>
+        <p>Web con horarios, cursos y matrícula online — para que quien busca información a las diez de la noche no tenga que esperar a que abráis.</p>
+      </div>
+      <div class="who-card">
+        <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <h4>Talleres y negocios con local propio</h4>
+        <p>Carpinterías, talleres mecánicos, cerrajerías: una web que da confianza antes de que el cliente cruce la puerta, más WhatsApp para presupuestos rápidos.</p>
+      </div>
+    </div>
+    <div class="limit-note" style="margin-top:22px;"><b>Si tu negocio ya combina 4 o más herramientas a la vez</b> — varios canales, varias personas atendiendo — mira el <a href="pro.html">Departamento Pro™</a>, que mantiene hasta 6.</div>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-bottom:20px;padding-top:0;">
   <div class="container">
     <div class="section-divider"><h2 class="sd-tag green">Así trabajamos contigo</h2><div class="sd-line"></div></div>
     <div class="hww-steps">
@@ -268,17 +307,17 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="compare-wrap">
       <table class="compare-table">
         <thead>
-          <tr><th>&nbsp;</th><th>Basic™ · 69 €/mes</th><th class="col-this">Lite™ · <span id="table-price-lite"></span>/mes</th><th class="col-pro">Pro™ · <span id="table-price-pro"></span>/mes</th></tr>
+          <tr><th>&nbsp;</th><th>Basic™ · 69 €/mes</th><th>Elemental™ · desde 98 €/mes</th><th class="col-this">Lite™ · <span id="table-price-lite"></span>/mes</th><th class="col-pro">Pro™ · <span id="table-price-pro"></span>/mes</th></tr>
         </thead>
         <tbody>
-          <tr><td>Web incluida</td><td class="cell-limit">No incluida</td><td class="col-this"><b>Reacondicionada o nueva</b></td><td class="col-pro"><b>Web Profesional</b></td></tr>
-          <tr><td>Soluciones gratis al contratar</td><td>1</td><td class="col-this"><b>2</b></td><td class="col-pro">3</td></tr>
-          <tr><td>Soluciones mantenidas (rango)</td><td class="cell-limit">Hasta 2</td><td class="col-this cell-limit">Hasta 3</td><td class="col-pro"><b>Hasta 6</b></td></tr>
-          <tr><td>Permanencia</td><td>6 meses</td><td class="col-this"><b>12 meses</b></td><td class="col-pro">12 meses</td></tr>
-          <tr><td>Resolución de incidencias</td><td class="cell-limit">Por orden de llegada</td><td class="col-this cell-limit">Por orden de llegada</td><td class="col-pro"><b>Prioridad alta, &lt;24h</b></td></tr>
-          <tr><td>Revisión de rendimiento</td><td class="cell-limit">—</td><td class="col-this cell-limit">Mensual básica</td><td class="col-pro"><b>Continua</b></td></tr>
-          <tr><td>Reunión de seguimiento</td><td class="cell-limit">—</td><td class="col-this cell-limit">30 min/mes</td><td class="col-pro"><b>45 min/mes + estrategia</b></td></tr>
-          <tr><td>Ideal para</td><td class="cell-limit">Una necesidad puntual</td><td class="col-this cell-limit">1 web + 1-3 herramientas</td><td class="col-pro"><b>3+ herramientas activas</b></td></tr>
+          <tr><td>Web incluida</td><td class="cell-limit">No incluida</td><td><b>Esencial o Profesional, a elegir</b></td><td class="col-this"><b>Reacondicionada o nueva</b></td><td class="col-pro"><b>Web Profesional</b></td></tr>
+          <tr><td>Automatizaciones de canal</td><td>1 a elegir</td><td class="cell-limit">Ninguna</td><td class="col-this"><b>2 a elegir</b></td><td class="col-pro">3 a elegir</td></tr>
+          <tr><td>Soluciones mantenidas (rango)</td><td class="cell-limit">Hasta 2</td><td class="cell-limit">—</td><td class="col-this cell-limit">Hasta 3</td><td class="col-pro"><b>Hasta 6</b></td></tr>
+          <tr><td>Permanencia</td><td>12 meses</td><td>12 meses</td><td class="col-this"><b>12 meses</b></td><td class="col-pro">12 meses</td></tr>
+          <tr><td>Resolución de incidencias</td><td class="cell-limit">Por orden de llegada</td><td class="cell-limit">Por orden de llegada</td><td class="col-this cell-limit">Por orden de llegada</td><td class="col-pro"><b>Prioridad alta, &lt;24h</b></td></tr>
+          <tr><td>Revisión de rendimiento</td><td class="cell-limit">—</td><td class="cell-limit">Salud técnica automática</td><td class="col-this cell-limit">Mensual básica</td><td class="col-pro"><b>Continua</b></td></tr>
+          <tr><td>Reunión de seguimiento</td><td class="cell-limit">—</td><td class="cell-limit">—</td><td class="col-this cell-limit">30 min/mes</td><td class="col-pro"><b>45 min/mes + estrategia</b></td></tr>
+          <tr><td>Ideal para</td><td class="cell-limit">Una necesidad puntual</td><td class="cell-limit">Visibilidad y posicionamiento</td><td class="col-this cell-limit">1 web + 1-3 herramientas</td><td class="col-pro"><b>3+ herramientas activas</b></td></tr>
         </tbody>
       </table>
     </div>
@@ -290,8 +329,8 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="section-divider"><h2 class="sd-tag blue">Las 2 soluciones a elegir, gratis</h2><div class="sd-line"></div></div>
     <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:760px;margin-bottom:24px;">Eliges 2 de este catálogo al contratar, instaladas gratis. Si más adelante quieres otra dentro del rango de 3, se instala al precio de catálogo sin recargo de alta.</p>
     <div class="wib-grid">
-      <div class="wib-item"><b>IA para WhatsApp</b>Atención automática activa</div>
-      <div class="wib-item"><b>IA para tu Web</b>Sistema de atención en tu web</div>
+      <div class="wib-item"><b>IA para WhatsApp</b>Atiende y agenda citas 24/7</div>
+      <div class="wib-item"><b>IA para tu Web</b>Atiende y agenda citas en tu web</div>
       <div class="wib-item"><b>IA para Llamadas</b>Contesta el teléfono y agenda citas</div>
       <div class="wib-item"><b>IA para Correo</b>Gestión automática de emails</div>
       <div class="wib-item"><b>Reservas y Agenda</b>Citas online integradas</div>
@@ -307,6 +346,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="cross-nav">
       <h2 class="cross-nav-title">Relacionado</h2>
       <div class="cross-nav-items">
+        <a class="cross-nav-chip" href="elemental.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Elemental™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="basic.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Basic™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="pro.html"><div class="icon-badge sm blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Pro™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="../proyectos/web-esencial.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/></svg></div>Web Esencial <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
@@ -382,9 +422,9 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   set('table-price-lite',mLite+' €');
   set('table-price-pro',mPro+' €');
   set('faq-total-lite',pagoUnicoLite+'€');
-  if(foundingActive()){
-    set('hp-founding-badge-lite','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT+' de 10 plazas');
-    set('hp-founding-old-lite','Antes <s class="price-old">'+STANDARD_PRICES.lite+'€/mes</s>');
+  if(foundingActive('lite')){
+    set('hp-founding-badge-lite','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT.lite+' de 10 plazas');
+    set('hp-founding-old-lite','Lo mantienes para siempre · nuevos clientes después: '+STANDARD_PRICES.lite+'€/mes + IVA');
   }
 })();
 </script>

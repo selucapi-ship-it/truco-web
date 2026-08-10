@@ -316,6 +316,10 @@ img{display:block;max-width:100%;}
 .hww-item p{font-size:.95rem;color:var(--grey);line-height:1.65;}
 .hww-item p b{color:var(--gold);}
 .hww-close{margin-top:32px;font-family:var(--font-display);font-size:1.4rem;font-weight:800;text-align:center;}
+.hww-icon{width:52px;height:52px;border-radius:14px;background:var(--gold-dim);color:var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+.hww-icon svg{width:26px;height:26px;}
+.hww-item-visual .hww-num{width:auto;height:auto;background:none;color:var(--gold);font-family:var(--font-m);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;border-radius:0;display:block;font-weight:700;}
+.hww-item-visual .hww-num::before{content:'Paso ';}
 
 /* ── SECTIONS GENERAL ── */
 .section{padding:96px 0;}
@@ -348,6 +352,12 @@ img{display:block;max-width:100%;}
 .entry-card.c-green::after{background:var(--green);}
 .entry-card.c-green::before{background:radial-gradient(circle,rgba(34,197,94,.22),transparent 70%);}
 .entry-card.c-green:hover{background:rgba(34,197,94,.05);}
+.entry-card.c-teal::after{background:#2dd4bf;}
+.entry-card.c-teal::before{background:radial-gradient(circle,rgba(45,212,191,.22),transparent 70%);}
+.entry-card.c-teal:hover{background:rgba(45,212,191,.05);}
+.c-teal .entry-icon{background:rgba(45,212,191,.1);color:#2dd4bf;}
+.c-teal .entry-kicker{color:#2dd4bf;}
+.c-teal .entry-cta{color:#2dd4bf;}
 .entry-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative;flex-shrink:0;}
 .entry-icon svg{width:22px;height:22px;}
 .c-blue .entry-icon{background:var(--blue-dim);color:var(--blue);}
@@ -408,11 +418,18 @@ img{display:block;max-width:100%;}
 .need-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;}
 @media(max-width:860px){.need-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:560px){.need-grid{grid-template-columns:1fr;}}
-.need-card{display:flex;flex-direction:column;gap:12px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;padding:22px;text-decoration:none;transition:border-color var(--tr),transform var(--tr),background var(--tr),box-shadow var(--tr);}
-.need-card:hover{border-color:var(--blue);transform:translateY(-3px);background:var(--bg-card);box-shadow:0 10px 24px rgba(0,0,0,.3);}
+.need-card{--n-accent:var(--blue);display:flex;flex-direction:column;gap:12px;background:var(--bg-panel);border:1px solid var(--grey-line);border-top:3px solid var(--n-accent);border-radius:16px;padding:22px;text-decoration:none;transition:border-color var(--tr),transform var(--tr),background var(--tr),box-shadow var(--tr);}
+.need-card:hover{border-color:var(--n-accent);border-top-color:var(--n-accent);transform:translateY(-3px);background:var(--bg-card);box-shadow:0 10px 24px rgba(0,0,0,.3);}
+.need-card:nth-child(1){--n-accent:#2f7bff;}
+.need-card:nth-child(2){--n-accent:#e9b949;}
+.need-card:nth-child(3){--n-accent:#22c55e;}
+.need-card:nth-child(4){--n-accent:#a855f7;}
+.need-card:nth-child(5){--n-accent:#f97316;}
+.need-card:nth-child(6){--n-accent:#ec4899;}
+.need-card:nth-child(7){--n-accent:#a9764f;}
 .need-title{font-family:var(--font-display);font-size:1.02rem;font-weight:700;color:var(--white);line-height:1.35;}
-.need-sub{font-size:.78rem;color:var(--blue);font-weight:600;letter-spacing:.01em;}
-.sol-chip-icon{width:34px;height:34px;border-radius:50%;background:var(--blue-dim);color:var(--blue);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.need-sub{font-size:.78rem;color:var(--n-accent);font-weight:600;letter-spacing:.01em;}
+.sol-chip-icon{width:34px;height:34px;border-radius:50%;background:color-mix(in srgb,var(--n-accent) 16%,transparent);color:var(--n-accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .sol-chip-icon svg{width:17px;height:17px;}
 .sol-showcase-more{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-weight:700;font-size:.9rem;text-decoration:none;}
 .sol-showcase-more svg{width:15px;height:15px;transition:transform var(--tr);}
@@ -424,10 +441,18 @@ img{display:block;max-width:100%;}
 .tier-card.entry{border-color:var(--gold);}
 .tier-card.entry .tier-badge{color:var(--gold);}
 .tier-card.entry .tier-footer{color:var(--gold);}
-.tier-card.altcarte{border-color:var(--green);border-style:dashed;}
-.tier-card.altcarte .tier-badge{color:var(--green);}
-.tier-card.altcarte .tier-footer{color:var(--green);}
-.tier-card.altcarte:hover{border-color:var(--green);}
+.tier-card.tier-lite{border-color:var(--green);}
+.tier-card.tier-lite .tier-badge{color:var(--green);}
+.tier-card.tier-lite .tier-footer{color:var(--green);}
+.tier-card.tier-lite:hover{border-color:var(--green);}
+.tier-card.tier-lite .tier-list li::before{color:var(--green);}
+.tier-card.tier-elemental{border-color:#2dd4bf;}
+.tier-card.tier-elemental .tier-badge{color:#2dd4bf;}
+.tier-card.tier-elemental .tier-footer{color:#2dd4bf;}
+.tier-card.tier-elemental:hover{border-color:#2dd4bf;}
+.tier-card.tier-elemental .tier-list li::before{color:#2dd4bf;}
+.tier-card.entry .tier-list li::before{color:var(--gold);}
+.tier-card.featured .tier-list li::before{color:var(--blue);}
 .tier-card{
   background:var(--bg-panel);border:1px solid var(--grey-line);
   border-radius:18px;padding:34px;
@@ -494,8 +519,6 @@ img{display:block;max-width:100%;}
 .founder-sig b{color:var(--gold);font-weight:500;}
 @media(max-width:768px){.founder-inner{grid-template-columns:1fr;}.founder-photo-wrap{max-width:280px;}}
 
-/* ── PACKS EMPRESA CON DESCUENTO ── */
-#packs-descuento{position:relative;background:radial-gradient(ellipse 900px 400px at 85% 0%,rgba(217,168,63,.1),transparent 65%);border-top:1px solid rgba(217,168,63,.18);border-bottom:1px solid rgba(217,168,63,.18);}
 .sr-panel{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;padding:28px 32px;}
 .sr-select{width:100%;max-width:420px;background:var(--bg-card);border:1.5px solid var(--gold);border-radius:8px;padding:12px 14px;color:var(--white);font-family:var(--font-b);font-size:.9rem;outline:none;-webkit-appearance:none;cursor:pointer;margin-top:16px;}
 .sr-select:focus{box-shadow:0 0 0 3px rgba(217,168,63,.15);}
@@ -653,6 +676,7 @@ img{display:block;max-width:100%;}
 .sector-card:nth-child(4){--s-accent:#a855f7;}
 .sector-card:nth-child(5){--s-accent:#f97316;}
 .sector-card:nth-child(6){--s-accent:#ec4899;}
+.sector-card:nth-child(7){--s-accent:#a9764f;}
 .sc-title{font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:6px;color:var(--white);}
 .sc-sub{font-size:.85rem;color:var(--s-accent,var(--blue));font-family:var(--font-mono);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px;}
 .sc-bg-art{display:none;}
@@ -662,6 +686,7 @@ img{display:block;max-width:100%;}
 .sc-pains{list-style:none;margin-bottom:14px;}
 .sc-pains li{font-size:.9rem;color:var(--grey);padding:3px 0 3px 16px;position:relative;}
 .sc-pains li::before{content:'✗';position:absolute;left:0;color:#5b6573;font-size:.7rem;top:4px;}
+.sc-trades-list li::before{content:'✓';color:var(--gold);}
 .sc-solution{background:var(--bg-panel);border:1px solid color-mix(in srgb,var(--s-accent,var(--blue)) 28%,var(--grey-line));border-radius:10px;padding:14px 16px;}
 .sc-solution-title{font-size:.78rem;font-family:var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--s-accent,var(--blue));margin-bottom:7px;font-weight:700;}
 .sc-solution p{font-size:.95rem;color:var(--white);line-height:1.55;margin-bottom:10px;}
@@ -758,10 +783,10 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   "mainEntity": [
     {"@type": "Question", "name": "¿Necesito saber de tecnología para contratar vuestros servicios?", "acceptedAnswer": {"@type": "Answer", "text": "No. De hecho, ese es exactamente el punto. Somos tu departamento tecnológico precisamente para que tú no necesites saber nada técnico. Nosotros nos encargamos de todo: configuramos, mantenemos y mejoramos. Tú solo tienes que contarnos cómo funciona tu negocio."}},
     {"@type": "Question", "name": "¿El dominio y el hosting son míos o de TRUCO?", "acceptedAnswer": {"@type": "Answer", "text": "Todo va siempre a tu nombre. El dominio, el hosting y las plataformas externas que usemos se registran y facturan directamente a ti. Si en algún momento decides dejar de trabajar con nosotros, te llevas todo sin ninguna complicación. Nunca tenemos posesión de lo que es tuyo."}},
-    {"@type": "Question", "name": "¿Cuánto dura la permanencia?", "acceptedAnswer": {"@type": "Answer", "text": "6 meses en Basic, 12 meses en Lite y Pro. Es lo que hace posible que la web y las soluciones vayan completamente gratis en vez de cobrarlas aparte. Se paga por adelantado, por todo el periodo de permanencia."}},
+    {"@type": "Question", "name": "¿Cuánto dura la permanencia?", "acceptedAnswer": {"@type": "Answer", "text": "12 meses en los 4 Departamentos: Elemental, Basic, Lite y Pro. Es lo que hace posible que la web y las soluciones vayan completamente gratis en vez de cobrarlas aparte. Se paga por adelantado, por todo el periodo de permanencia. Al terminar, renuevas o te lo llevas todo — código incluido."}},
     {"@type": "Question", "name": "¿Para qué sirve la videollamada mensual incluida?", "acceptedAnswer": {"@type": "Answer", "text": "Es tu reunión de departamento. Revisamos juntos los resultados del mes, analizamos qué ha funcionado bien y qué puede mejorar, y planificamos los cambios para el mes siguiente."}},
-    {"@type": "Question", "name": "¿Cuál es la diferencia entre Basic, Lite y Pro?", "acceptedAnswer": {"@type": "Answer", "text": "Basic (69€/mes) es el punto de entrada: 1 solución gratis, sin web. Lite (desde 279€/mes) añade tu web + 2 soluciones gratis, hasta 3 en total. Pro (desde 549€/mes) es la Web Profesional regalada + 3 soluciones gratis, hasta 6 en total. Puede haber precio de lanzamiento más bajo para los primeros clientes."}},
-    {"@type": "Question", "name": "¿Puedo empezar comprando el proyecto web suelto y luego pasarme al Departamento?", "acceptedAnswer": {"@type": "Answer", "text": "Sí, y de hecho es el camino por defecto: compras la web suelta sin compromiso, con 30 días de implantación y coordinación incluidos, y pasado ese plazo pasas automáticamente a tu Departamento Lite o Pro en modo mensual, sin permanencia. Si prefieres no continuar, cancelas avisando con 7 días."}},
+    {"@type": "Question", "name": "¿Cuál es la diferencia entre Elemental, Basic, Lite y Pro?", "acceptedAnswer": {"@type": "Answer", "text": "Elemental (desde 98€/mes) es solo visibilidad: tu web, sin automatizaciones. Basic (69€/mes) es solo automatización: 1 solución gratis, sin web. Lite (desde 279€/mes) combina ambos: tu web + 2 soluciones gratis, hasta 3 en total. Pro (desde 549€/mes) es la Web Profesional regalada + 3 soluciones gratis, hasta 6 en total. Puede haber precio de lanzamiento más bajo para los primeros clientes en Lite y Pro."}},
+    {"@type": "Question", "name": "¿Puedo contratar solo la web, sin automatizaciones?", "acceptedAnswer": {"@type": "Answer", "text": "Sí, es exactamente lo que es el Departamento Elemental: tu web (Esencial o Profesional) más mantenimiento y salud técnica de posicionamiento, sin ninguna automatización. Desde 98€/mes con 12 meses de permanencia. Si más adelante quieres añadir soluciones automatizadas, el paso natural es subir a Lite o Pro."}},
     {"@type": "Question", "name": "¿Cómo se paga el Departamento?", "acceptedAnswer": {"@type": "Answer", "text": "Pago único por adelantado con 12% de descuento (364,32€ + IVA en Basic, 2.101,44€ + IVA en Lite, 4.213,44€ + IVA en Pro), o fraccionado a través de SeQura, nuestro partner de financiación, si prefieres no adelantarlo todo de golpe."}},
     {"@type": "Question", "name": "¿Qué tipo de negocios se benefician más de vuestros servicios?", "acceptedAnswer": {"@type": "Answer", "text": "Cualquier empresa que use tecnología en su día a día y quiera tener un equipo técnico que la gestione sin tener que preocuparse de ella. Desde autónomos hasta pymes con equipo."}},
     {"@type": "Question", "name": "¿Tengo que contratar diferentes empresas para cada herramienta?", "acceptedAnswer": {"@type": "Answer", "text": "No. TRUCO se encarga de elegir, implantar, configurar y mantener toda la tecnología necesaria para tu empresa. Tú solo tendrás un único interlocutor."}},
@@ -789,7 +814,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <li><a href="#como-empezamos">Cómo empezamos</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#sectores">¿Es esto para ti?</a></li>
-    <li><a class="nav-links-pack" href="#packs-descuento"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> Packs -15%</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="portal/login.html" style="opacity:.75;">Acceso clientes</a></li>
     <li><a href="pago.html">Contratar</a></li>
@@ -956,21 +980,24 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="pillars-footer">Web + <b>3 asistentes de IA</b> — instalados y mantenidos gratis con tu Departamento Pro™ (con Lite™ son 2). Cero clientes perdidos, dudas resueltas las 24 horas.</div>
 </div>
 
-<!-- ── ASÍ ES TRABAJAR CON TU DEPARTAMENTO ── -->
+<!-- ── ASÍ TRABAJARÍA TU DEPARTAMENTO TECNOLÓGICO ── -->
 <div id="how-we-work">
   <div class="container">
-    <div class="section-tag gold">Así es trabajar con tu Departamento</div>
+    <div class="section-tag gold">Así trabajaría tu departamento tecnológico</div>
     <h2 class="section-h2">No te vendemos una IA en blanco para que la entrenes tú.</h2>
-    <div class="hww-grid">
-      <div class="hww-item">
+    <div class="hww-grid hww-grid-visual">
+      <div class="hww-item hww-item-visual">
+        <div class="hww-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
         <div class="hww-num">1</div>
         <p><b>Te auditamos antes de montar nada.</b> Te preguntamos lo necesario sobre tu negocio para que el asistente hable como tú, no como una IA genérica.</p>
       </div>
-      <div class="hww-item">
+      <div class="hww-item hww-item-visual">
+        <div class="hww-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
         <div class="hww-num">2</div>
         <p><b>Nosotros lo configuramos y lo entrenamos.</b> No hay manual que estudiar — nos escribes y nosotros lo ajustamos.</p>
       </div>
-      <div class="hww-item">
+      <div class="hww-item hww-item-visual">
+        <div class="hww-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg></div>
         <div class="hww-num">3</div>
         <p><b>Nosotros te agendamos las revisiones</b> — y tu asistente virtual puede incluso cerrar la venta con tus clientes sin que tengas que intervenir. Tú solo miras tu agenda, mañana y noche.</p>
       </div>
@@ -1096,6 +1123,24 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <a class="sc-card-cta" href="sectores/gimnasios.html">Saber más →</a>
       </div>
 
+      <div class="sector-card">
+        <div class="sc-bg-art" aria-hidden="true"><svg viewBox="0 0 300 300" fill="currentColor"><rect x="40" y="90" width="220" height="150" rx="6"/><rect x="20" y="60" width="260" height="40" rx="8"/><rect x="80" y="130" width="60" height="60"/><rect x="170" y="130" width="50" height="30"/></svg></div>
+        <div class="sc-header-center">
+          <div class="sc-title">Comercio y pequeños negocios</div>
+          <div class="sc-sub">Solo necesitas resolver UNA cosa</div>
+        </div>
+        <ul class="sc-pains sc-trades-list">
+          <li>Esteticista, peluquería, barbería</li>
+          <li>Papelería, frutería, floristería</li>
+          <li>Zapatería, panadería, tienda de barrio</li>
+        </ul>
+        <div class="sc-solution">
+          <div class="sc-solution-title">Lo que hacemos nosotros</div>
+          <p>No necesitas web ni automatizar todo tu negocio. Con el Departamento <b>Basic™</b> automatizamos gratis esa única cosa que se te escapa — WhatsApp, reservas o facturación.</p>
+        </div>
+        <a class="sc-card-cta" href="sectores/comercio-pequeno.html">Saber más →</a>
+      </div>
+
         </div>
       </div>
       <button class="sc-arrow prev" onclick="scNav(-1)" aria-label="Sector anterior">‹</button>
@@ -1109,63 +1154,42 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </section>
 
-<!-- ── ¿YA TIENES ALGO AUTOMATIZADO? ── -->
-<section id="ya-automatizado" class="section reveal">
-  <div class="container">
-    <div class="section-tag gold">¿Ya tienes algo automatizado?</div>
-    <h2 class="section-h2">Si montaste un bot y ahora lo peleas tú solo, el problema no es tuyo — es de quién te lo vendió.</h2>
-    <p class="section-sub">Muchos negocios ya tienen un WhatsApp automatizado, un chatbot o un CRM a medias — configurado una vez y abandonado después. Cada vez que cambia un precio, un horario o un servicio, entras tú a arreglarlo. Eso no es tener un departamento tecnológico: es tener un problema técnico más.</p>
-    <div class="fix-callout">
-      <b>Nosotros nos hacemos cargo de lo que ya tienes.</b> Lo auditamos, lo reconfiguramos, lo entrenamos bien — y a partir de ahí, cualquier cambio nos lo pides a nosotros. Tú no vuelves a tocarlo.
-    </div>
-    <p class="hww-close" style="text-align:left;margin-top:24px;">Somos tu solución.</p>
-    <a class="btn-primary" href="#chat-section" style="margin-top:18px;display:inline-block;">Cuéntanos qué tienes montado →</a>
-  </div>
-</section>
-
 <!-- ── CÓMO EMPEZAMOS ── -->
 <section id="como-empezamos" class="section reveal">
   <div class="container">
-    <div class="section-tag">Cómo empezamos</div>
-    <h2 class="section-h2">Dos formas de entrar a tu Departamento — la que encaje contigo hoy</h2>
-    <p class="section-sub">Directo, con la web y las soluciones incluidas desde el primer mes. O sin compromiso al empezar: pagas el proyecto suelto y, si sigues después del regalo, pasas a tu Departamento sin tener que hacer nada.</p>
+    <div class="section-tag">Encuentra tu situación</div>
+    <h2 class="section-h2">¿Cuál de estas frases describe mejor tu negocio ahora mismo?</h2>
+    <p class="section-sub">Cada Departamento resuelve una necesidad concreta. Reconócete en una y ya sabes por dónde empezar — el precio y el detalle completo están un poco más abajo.</p>
     <div class="entry-strip">
-      <div class="entry-steps">
-        <div class="entry-card c-blue">
-          <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="7" y1="14" x2="13" y2="14"/></svg></div>
-          <div class="entry-kicker">Lista en 7-10 días</div>
-          <h4>Web Esencial</h4>
-          <p>5 páginas con SEO básico, botón de WhatsApp y formulario de contacto. La forma más rápida de tener presencia online seria.</p>
-          <span class="entry-price">790 € + IVA</span>
-          <div class="entry-price-real">O gratis si te haces cliente del Departamento Lite™</div>
-          <a class="entry-cta" href="proyectos/web-esencial.html">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        </div>
+      <div class="entry-steps entry-steps-4">
         <div class="entry-card c-gold">
-          <div class="entry-ribbon">Más elegida</div>
-          <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></div>
-          <div class="entry-kicker">Diseño + automatización</div>
-          <h4>Web Profesional</h4>
-          <p>Diseño a medida con un chat que responde y agenda citas de fábrica, lista además para conectar con tu WhatsApp Business. La que convierte visitas en clientes.</p>
-          <span class="entry-price">1.390 € + IVA</span>
-          <div class="entry-price-real">O gratis si te haces cliente del Departamento Pro™</div>
-          <a class="entry-cta" href="proyectos/web-profesional.html">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg></div>
+          <div class="entry-kicker">Solo necesitas UNA cosa</div>
+          <h4>Basic™</h4>
+          <p>"Se me escapan mensajes de WhatsApp, pierdo horas facturando a mano, o las citas se me desordenan — pero no necesito web todavía." Automatiza eso, ya.</p>
+          <a class="entry-cta" href="departamentos/basic.html">Ver Basic™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+        <div class="entry-card c-teal">
+          <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="7" y1="14" x2="13" y2="14"/></svg></div>
+          <div class="entry-kicker">No te encuentran</div>
+          <h4>Elemental™</h4>
+          <p>"No tengo web, o la que tengo no convence a nadie ni aparece en Google." Antes de automatizar nada, necesitas que te encuentren.</p>
+          <a class="entry-cta" href="departamentos/elemental.html">Ver Elemental™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
         <div class="entry-card c-green">
-          <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg></div>
-          <div class="entry-kicker">Sin cambiar dominio ni hosting</div>
-          <h4>Transforma tu Web</h4>
-          <p>¿Ya tienes web pero no convierte? La reforzamos con IA, WhatsApp y automatización sin tocar lo que ya funciona.</p>
-          <span class="entry-price">Desde 350 € + IVA</span>
-          <div class="entry-price-real">O gratis si te haces cliente del Departamento</div>
-          <a class="entry-cta" href="digitaliza.html">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/><line x1="3" y1="12" x2="21" y2="12"/></svg></div>
+          <div class="entry-kicker">Web + un par de cosas más</div>
+          <h4>Lite™</h4>
+          <p>"Tengo web (o casi), pero además se me escapan mensajes o se me pierden citas." Tu web cuidada + 2 automatizaciones trabajando contigo.</p>
+          <a class="entry-cta" href="departamentos/lite.html">Ver Lite™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
-      </div>
-      <div class="entry-gift">
-        <div class="gift-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> Recomendado</div>
-        <div class="gift-price">0 € <small>de instalación</small></div>
-        <b>Web + soluciones, completamente gratis</b>
-        <p>Te haces cliente del Departamento Lite™ o Pro™ y la web entra sin coste — ahorras hasta <b style="display:inline;color:#1a1206;">1.929 €</b> con Lite™ o hasta <b style="display:inline;color:#1a1206;">2.720 €</b> con Pro™ en instalación. A cambio, permanencia: <b style="display:inline;color:#1a1206;">12 meses</b>.</p>
-        <a class="gift-cta" href="#servicios">Ver los Departamentos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <div class="entry-card c-blue">
+          <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <div class="entry-kicker">Todo tu ecosistema</div>
+          <h4>Pro™</h4>
+          <p>"Me escriben por varios canales a la vez, se me escapan clientes en el proceso, y no quiero perseguir la tecnología yo mismo." El departamento completo.</p>
+          <a class="entry-cta" href="departamentos/pro.html">Ver Pro™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
       </div>
     </div>
   </div>
@@ -1176,7 +1200,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="container">
     <div class="section-tag gold">Soluciones tecnológicas</div>
     <h2 class="section-h2">¿Cuál de estos problemas tienes tú?</h2>
-    <p class="section-sub">Esto es lo que implantamos dentro de Digitaliza tu Empresa. Entra directo en la que te interese, o ve todas juntas con sus precios.</p>
+    <p class="section-sub">Esto es lo que instalamos dentro de tu Departamento. Entra directo en la que te interese, o ve todas juntas con sus precios.</p>
     <div class="need-grid">
       <a class="need-card" href="soluciones/whatsapp.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span><div class="need-title">Contesta todos los WhatsApp 24/7 y no pierdas ni un cliente</div><div class="need-sub">IA para WhatsApp →</div></a>
       <a class="need-card" href="soluciones/reservas.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><div class="need-title">Agenda citas mientras duermes</div><div class="need-sub">Reservas y Agenda →</div></a>
@@ -1195,95 +1219,71 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="container">
     <div class="section-tag">Departamento Tecnológico TRUCO™</div>
     <h2 class="section-h2">Elige el tamaño de departamento que necesita tu negocio</h2>
-    <p class="section-sub">Basic, Lite y Pro se contratan con permanencia — es lo que hace posible que la web y las soluciones vayan completamente gratis, no una promesa vacía de "mantenimiento" de algo que aún no tienes. ¿Prefieres no comprometerte a nada? Digitaliza tu Empresa es la cuarta opción: compras solo las soluciones que necesitas, sin permanencia.</p>
-    <div class="tiers-grid">
+    <p class="section-sub">Todo va gratis dentro de tu Departamento — nada se vende suelto — a cambio de 12 meses de permanencia. De un vistazo: el detalle completo de cada uno vive en su propia página.</p>
+    <div class="tiers-grid tiers-grid-glance">
       <div class="tier-card featured" onclick="location.href='departamentos/pro.html'" style="cursor:pointer;">
         <span class="tier-badge">Para negocios que quieren escalar</span>
-        <div class="tier-name">Departamento Tecnológico Pro™</div>
-        <div class="tier-role">Incluye Web Profesional completa — con un chat que responde y agenda citas de fábrica — + 3 soluciones más a elegir, como Agente virtual de WhatsApp, Agente virtual de Llamadas o Firma Digital. Mantenimiento de hasta 6 soluciones activas, siempre incluido. Y lo más importante: <b>tu equipo tecnológico encargado de todo — tú solo tienes que escribirnos.</b></div>
+        <div class="tier-name">Departamento Pro™</div>
+        <div class="tier-role">Web Profesional + 3 soluciones a elegir. <b>Tu equipo tecnológico, tú solo escribes.</b></div>
         <div class="tier-founding-badge" id="tier-founding-badge-pro"></div>
         <div class="tier-price" id="tier-price-pro"></div>
         <div class="tier-vat" id="tier-vat-pro"></div>
         <div class="tier-founding-old" id="tier-founding-old-pro"></div>
-        <div class="tier-annual">Pago único (12% dto.) o SeQura · Permanencia: <span>12 meses</span></div>
-        <div class="value-highlight">
-          <div class="vh-eyebrow">Lo que te llevas gratis</div>
-          <div class="vh-save">Ahorras entre <b>2.090 € y 2.720 €</b> en instalación</div>
-          <ul class="vh-list">
-            <li>Web Profesional <span class="vh-tag">valor 1.390 €</span></li>
-            <li>Chat + agenda en tu web <span class="vh-tag">de fábrica</span></li>
-            <li>3 soluciones a elegir <span class="vh-tag">valor 1.150-1.780 €</span></li>
-            <li>Mantenimiento de las 6 activas <span class="vh-tag">incluido siempre</span></li>
-          </ul>
-        </div>
-        <ul class="tier-list">
-          <li>Optimización continua de todas las soluciones activas</li>
-          <li>Máxima prioridad en incidencias, respuesta &lt;24h</li>
-          <li>Reunión mensual de revisión y estrategia (45 min)</li>
+        <div class="tier-annual">Permanencia: <span>12 meses</span></div>
+        <ul class="tier-list tier-list-glance">
+          <li>Web Profesional + chat/agenda de fábrica</li>
+          <li>3 soluciones gratis · mantiene hasta 6</li>
+          <li>Prioridad alta en incidencias</li>
         </ul>
-        <div class="tier-footer">Tu tecnología mantenida. Tú, a lo que importa.</div>
-        <a class="entry-cta" href="departamentos/pro.html" style="margin-top:12px;">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="entry-cta" href="departamentos/pro.html" style="margin-top:12px;">Ver detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
-      <div class="tier-card" onclick="location.href='departamentos/lite.html'" style="cursor:pointer;">
+      <div class="tier-card tier-lite" onclick="location.href='departamentos/lite.html'" style="cursor:pointer;">
         <span class="tier-badge">Para pymes pequeñas</span>
-        <div class="tier-name">Departamento Tecnológico Lite™</div>
-        <div class="tier-role">Incluye tu web (la actual mejorada, o una Web Esencial nueva) + 2 soluciones a elegir, como Agente virtual de WhatsApp o IA para tu Web. Mantenimiento de hasta 3 soluciones activas, siempre incluido. Y lo más importante: <b>tu equipo tecnológico encargado de todo — tú solo tienes que escribirnos.</b></div>
+        <div class="tier-name">Departamento Lite™</div>
+        <div class="tier-role">Tu web + 2 soluciones a elegir. <b>Tu equipo tecnológico, tú solo escribes.</b></div>
         <div class="tier-founding-badge" id="tier-founding-badge-lite"></div>
         <div class="tier-price" id="tier-price-lite"></div>
         <div class="tier-vat" id="tier-vat-lite"></div>
         <div class="tier-founding-old" id="tier-founding-old-lite"></div>
-        <div class="tier-annual">Pago único (12% dto.) o SeQura · Permanencia: <span>12 meses</span></div>
-        <div class="value-highlight">
-          <div class="vh-eyebrow">Lo que te llevas gratis</div>
-          <div class="vh-save">Ahorras entre <b>1.490 € y 2.070 €</b> en instalación</div>
-          <ul class="vh-list">
-            <li>Web Esencial o reacondicionada <span class="vh-tag">valor 790 €</span></li>
-            <li>2 soluciones a elegir <span class="vh-tag">valor 700-1.280 €</span></li>
-            <li>Mantenimiento de las 3 activas <span class="vh-tag">incluido siempre</span></li>
-          </ul>
-        </div>
-        <ul class="tier-list">
-          <li>Seguridad y copias de seguridad periódicas</li>
-          <li>Reunión mensual de revisión y asesoramiento (30 min)</li>
+        <div class="tier-annual">Permanencia: <span>12 meses</span></div>
+        <ul class="tier-list tier-list-glance">
+          <li>Web (reacondicionada o Esencial nueva)</li>
+          <li>2 soluciones gratis · mantiene hasta 3</li>
+          <li>Reunión mensual de 30 min</li>
         </ul>
-        <div class="tier-footer">La web y las soluciones ya no las pagas aparte, van incluidas</div>
-        <a class="entry-cta" href="departamentos/lite.html" style="margin-top:12px;">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="entry-cta" href="departamentos/lite.html" style="margin-top:12px;">Ver detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
       <div class="tier-card entry" onclick="location.href='departamentos/basic.html'" style="cursor:pointer;">
         <span class="tier-badge">Punto de entrada · para cualquiera</span>
-        <div class="tier-name">Departamento Tecnológico Basic™</div>
-        <div class="tier-role">Incluye 1 solución a elegir entre WhatsApp, TruKi (facturación automática), Reservas y Agenda o IA para tu Web — instalación gratis. Mantenimiento de hasta 2 soluciones activas, siempre incluido. Y lo más importante: <b>tu equipo tecnológico encargado de todo — tú solo tienes que escribirnos.</b> Sin web incluida: si la necesitas, el paso natural es Lite.</div>
+        <div class="tier-name">Departamento Basic™</div>
+        <div class="tier-role">1 solución a elegir, sin web. <b>Tu equipo tecnológico, tú solo escribes.</b></div>
         <div class="tier-price">69 €<sub>/mes</sub></div>
         <div class="tier-vat">+ IVA · 83,49 € con IVA</div>
-        <div class="tier-annual">Permanencia mínima: <span>6 meses</span></div>
-        <ul class="tier-list">
-          <li>1 solución a elegir, instalación gratis</li>
-          <li>Acompañamiento completo — nunca te quedas solo resolviéndolo</li>
-          <li>Mantenimiento y actualización continua incluidos</li>
-          <li>¿Quieres otra más? Se instala sin recargo de alta, tu cuota no sube</li>
+        <div class="tier-annual">Permanencia: <span>12 meses</span></div>
+        <ul class="tier-list tier-list-glance">
+          <li>1 solución a elegir, gratis</li>
+          <li>Acompañamiento completo</li>
+          <li>Sin web — el paso natural es Lite</li>
         </ul>
-        <div class="tier-footer">El punto de entrada al departamento, sin dar el salto grande</div>
-        <a class="entry-cta" href="departamentos/basic.html" style="margin-top:12px;">Saber más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="entry-cta" href="departamentos/basic.html" style="margin-top:12px;">Ver detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
-      <div class="tier-card altcarte" onclick="location.href='digitaliza.html'" style="cursor:pointer;">
-        <span class="tier-badge">Sin permanencia · a la carta</span>
-        <div class="tier-name">Digitaliza tu Empresa</div>
-        <div class="tier-role">¿No quieres comprometerte a nada? Compra solo la solución que necesitas — WhatsApp, web, CRM, facturación... — pagando su precio y ya está. Sin cuota mensual, sin permanencia.</div>
-        <div class="tier-price" style="font-size:1.7rem;">Desde 350 €</div>
-        <div class="tier-vat">+ IVA · pago único por solución</div>
-        <div class="tier-annual">Sin permanencia · el mantenimiento corre de tu cuenta</div>
-        <ul class="tier-list">
-          <li>12 soluciones distintas, instala las que necesites</li>
-          <li>Sin cuota mensual ni compromiso de permanencia</li>
-          <li>Gratis si te haces cliente de Basic, Lite o Pro</li>
-          <li>Combínalas con Web Esencial o Profesional en el mismo pedido</li>
+      <div class="tier-card tier-elemental" onclick="location.href='departamentos/elemental.html'" style="cursor:pointer;">
+        <span class="tier-badge">Solo visibilidad, sin automatizar todavía</span>
+        <div class="tier-name">Departamento Elemental™</div>
+        <div class="tier-role">Tu web + salud técnica de posicionamiento. <b>Tu equipo tecnológico, tú solo escribes.</b></div>
+        <div class="tier-price">98 €<sub>/mes</sub></div>
+        <div class="tier-vat">+ IVA · desde 118,58 € con IVA</div>
+        <div class="tier-annual">149 €/mes con Web Profesional · Permanencia: <span>12 meses</span></div>
+        <ul class="tier-list tier-list-glance">
+          <li>Web (Esencial o Profesional), gratis</li>
+          <li>Salud técnica de posicionamiento</li>
+          <li>Sin automatizaciones — combina con Basic™/Lite™</li>
         </ul>
-        <div class="tier-footer">Paga solo lo que necesitas, cuando lo necesitas</div>
-        <a class="entry-cta" href="digitaliza.html" style="margin-top:12px;">Ver las 12 soluciones <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="entry-cta" href="departamentos/elemental.html" style="margin-top:12px;">Ver detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
     <div class="dedication-note">
-      <b>Ningún escalón se contrata sin su permanencia.</b> Es lo que permite regalar la web y las soluciones de entrada en vez de cobrarlas aparte. ¿Prefieres no comprometerte a nada? Digitaliza tu Empresa (arriba) es la compra suelta, sin permanencia — pero entonces el mantenimiento corre de tu cuenta.
+      <b>Ningún escalón se contrata sin su permanencia</b> de 12 meses — es lo que permite regalar la web y las soluciones. <a href="servicios.html" style="color:var(--blue);">Comparativa completa y catálogo en Servicios →</a>
     </div>
   </div>
 </section>
@@ -1310,59 +1310,17 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     </div>
   </div>
 </section>
-<!-- ── RECOMENDACIÓN POR SECTOR ── -->
-<section id="packs-descuento" class="section reveal">
+<!-- ── ¿YA TIENES ALGO AUTOMATIZADO? ── -->
+<section id="ya-automatizado" class="section reveal">
   <div class="container">
-    <div class="sr-panel">
-      <div class="section-tag gold" style="margin-bottom:10px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> Recomendación por sector</div>
-      <h3 style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;margin-bottom:6px;">¿Tienes dudas de qué elegir según tu sector?</h3>
-      <p style="font-size:.85rem;color:var(--grey);max-width:560px;line-height:1.6;">Dinos a qué te dedicas y te decimos exactamente qué 3 soluciones necesitas — y cómo llevártelas completamente gratis.</p>
-      <select id="idx-sector-select" class="sr-select" onchange="idxSectorPick(this.value)">
-        <option value="">Selecciona tu oficio o negocio…</option>
-        <optgroup label="Servicios y citas">
-          <option value="peluqueria">Peluquería / Barbería</option>
-          <option value="estetica">Centro de estética / Belleza</option>
-          <option value="dental">Clínica dental</option>
-          <option value="medica">Clínica médica / Centro de salud</option>
-          <option value="fisio">Fisioterapia</option>
-          <option value="psicologia">Psicología / Terapia</option>
-          <option value="veterinaria">Veterinaria</option>
-          <option value="gimnasio">Gimnasio / Centro deportivo</option>
-          <option value="academia">Academia / Centro de formación</option>
-          <option value="autoescuela">Autoescuela</option>
-          <option value="fontanero">Fontanero</option>
-          <option value="electricista">Electricista</option>
-          <option value="cerrajero">Cerrajero</option>
-          <option value="pintor">Pintor / Reformas</option>
-          <option value="carpintero">Carpintero</option>
-          <option value="taller">Taller mecánico</option>
-        </optgroup>
-        <optgroup label="Despachos y gestión">
-          <option value="abogado">Abogado / Bufete</option>
-          <option value="asesoria">Asesoría</option>
-          <option value="gestoria">Gestoría</option>
-          <option value="consultoria">Consultoría</option>
-          <option value="inmobiliaria">Inmobiliaria</option>
-          <option value="arquitecto">Arquitecto</option>
-          <option value="notaria">Notaría</option>
-        </optgroup>
-        <optgroup label="Hostelería">
-          <option value="restaurante">Restaurante</option>
-          <option value="bar">Bar / Cafetería</option>
-          <option value="eventos">Salón de celebraciones / Eventos</option>
-          <option value="catering">Catering</option>
-        </optgroup>
-        <optgroup label="Comercio y otros">
-          <option value="tienda">Tienda / Comercio</option>
-          <option value="ecommerce">Ecommerce</option>
-          <option value="ferreteria">Ferretería</option>
-          <option value="floristeria">Floristería</option>
-          <option value="panaderia">Panadería / Pastelería</option>
-          <option value="otro">Otro negocio</option>
-        </optgroup>
-      </select>
-      <div id="idx-sector-result" class="sr-result" style="display:none;"></div>
+    <div class="section-tag gold">¿Ya tienes algo automatizado?</div>
+    <h2 class="section-h2">Si montaste un bot y ahora lo peleas tú solo, el problema no es tuyo — es de quién te lo vendió.</h2>
+    <p class="section-sub">Muchos negocios ya tienen un WhatsApp automatizado, un chatbot o un CRM a medias — configurado una vez y abandonado después. Cada vez que cambia un precio, un horario o un servicio, entras tú a arreglarlo. Eso no es tener un departamento tecnológico: es tener un problema técnico más.</p>
+    <div class="fix-callout">
+      <b>Nosotros nos hacemos cargo de lo que ya tienes.</b> Lo auditamos, lo reconfiguramos, lo entrenamos bien — y a partir de ahí, cualquier cambio nos lo pides a nosotros. Tú no vuelves a tocarlo.
     </div>
+    <p class="hww-close" style="text-align:left;margin-top:24px;">Somos tu solución.</p>
+    <a class="btn-primary" href="#chat-section" style="margin-top:18px;display:inline-block;">Cuéntanos qué tienes montado →</a>
   </div>
 </section>
 
@@ -1386,7 +1344,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Por qué hay que comprometerse con una permanencia? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Porque es lo que permite regalar la web y las soluciones en vez de cobrarlas aparte: 6 meses en Basic, 12 en Lite y Pro. ¿Prefieres no comprometerte? La compra suelta sigue disponible, sin permanencia.</p></div>
+        <div class="faq-a"><p>Porque es lo que permite regalar la web y las soluciones en vez de cobrarlas aparte: 12 meses en los 4 Departamentos (Elemental, Basic, Lite y Pro). Al terminar, renuevas si quieres seguir, o te lo llevas todo — código fuente incluido, en un pen drive personalizado.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Cómo se paga? <span class="faq-icon">+</span></button>
@@ -1525,10 +1483,10 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     const oldEl=document.getElementById('tier-founding-old-'+tier);
     if(priceEl)priceEl.innerHTML=m+' €<sub>/mes</sub>';
     if(vatEl)vatEl.textContent='+ IVA · '+iva+' € con IVA';
-    if(badgeEl&&oldEl&&foundingActive()){
+    if(badgeEl&&oldEl&&foundingActive(tier)){
       const std=STANDARD_PRICES[tier];
-      badgeEl.innerHTML='🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT+' de 10 plazas';
-      oldEl.innerHTML='Antes <s class="price-old">'+std+'€/mes</s>';
+      badgeEl.innerHTML='🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[tier]+' de 10 plazas';
+      oldEl.innerHTML='Lo mantienes para siempre · nuevos clientes después: '+std+'€/mes + IVA';
     }
   });
 })();
@@ -1564,47 +1522,6 @@ function toggleFaq(btn){
     item.classList.add('open');
     icon.textContent='−';
   }
-}
-
-/* ── RECOMENDACIÓN POR SECTOR ── */
-const IDX_TRADE_PACKS={
-  peluqueria:'serviciosCitas',estetica:'serviciosCitas',dental:'serviciosCitas',medica:'serviciosCitas',fisio:'serviciosCitas',psicologia:'serviciosCitas',veterinaria:'serviciosCitas',gimnasio:'serviciosCitas',academia:'serviciosCitas',autoescuela:'serviciosCitas',
-  fontanero:'servicios',electricista:'servicios',cerrajero:'servicios',pintor:'servicios',carpintero:'servicios',taller:'servicios',
-  abogado:'despachos',asesoria:'despachos',gestoria:'despachos',consultoria:'despachos',inmobiliaria:'despachos',arquitecto:'despachos',notaria:'despachos',
-  restaurante:'hosteleria',bar:'hosteleria',eventos:'hosteleria',catering:'hosteleria'
-};
-const IDX_PACKS={
-  servicios:{sols:[{name:'IA para WhatsApp',value:'whatsapp'},{name:'Reservas y Agenda',value:'reservas'},{name:'Automatizaciones',value:'automatizaciones'}]},
-  serviciosCitas:{sols:[{name:'IA para WhatsApp',value:'whatsapp'},{name:'Reservas y Agenda',value:'reservas'},{name:'IA para Llamadas',value:'llamadas'}]},
-  despachos:{sols:[{name:'CRM',value:'crm'},{name:'Firma Digital',value:'firma'},{name:'Gestión Documental',value:'docs'}]},
-  hosteleria:{sols:[{name:'Reservas y Agenda',value:'reservas'},{name:'IA para WhatsApp',value:'whatsapp'},{name:'Automatizaciones',value:'automatizaciones'}]}
-};
-const IDX_PRO_POOL=['whatsapp','web-ia','llamadas','email-ia','reservas','firma'];
-const IDX_PRO_CTA='<a class="btn-primary" href="pago.html?plan=arranque-pro%PACK%">Quiero el Departamento Tecnológico Pro™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-left:2px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>';
-function idxSectorPick(value){
-  const box=document.getElementById('idx-sector-result');
-  if(!value){box.style.display='none';return;}
-  const packKey=IDX_TRADE_PACKS[value];
-  box.style.display='block';
-  if(!packKey){
-    box.innerHTML='<p style="font-size:.85rem;color:var(--grey);line-height:1.6;margin-bottom:18px;">No tenemos un combo cerrado para tu sector, pero seguimos pudiendo ayudarte — con el Departamento <b style="color:var(--white);">Pro™</b> (que ya incluye tu Web Profesional) eliges tú mismo 3 soluciones gratis de las 12 del catálogo.</p><div class="sr-ctas">'+IDX_PRO_CTA.replace('%PACK%','')+'<a class="btn-ghost" href="digitaliza.html">Ver el catálogo completo</a></div>';
-    return;
-  }
-  const pack=IDX_PACKS[packKey];
-  const eligible=pack.sols.filter(s=>IDX_PRO_POOL.includes(s.value));
-  const paid=pack.sols.filter(s=>!IDX_PRO_POOL.includes(s.value));
-  let proMsg;
-  if(paid.length===0){
-    proMsg='✓ Todo esto va <b>completamente gratis</b> con el Departamento <b>Pro™</b> — que ya incluye tu <b>Web Profesional</b>, instalada y mantenida sin coste aparte.';
-  }else if(eligible.length===0){
-    proMsg='Estas soluciones no entran en el pack gratis de Pro™ — necesitan un alcance a medida — pero se mantienen sin coste una vez instaladas. Con el Departamento <b>Pro™</b> (incluye tu <b>Web Profesional</b>) tienes además 3 soluciones más gratis a elegir del resto del catálogo.';
-  }else{
-    const eligVerb=eligible.length>1?'van':'va';
-    const paidVerb=paid.length>1?'se añaden':'se añade';
-    const paidKeepVerb=paid.length>1?'se mantienen':'se mantiene';
-    proMsg='✓ <b>'+eligible.map(s=>s.name).join(' y ')+'</b> '+eligVerb+' completamente gratis con el Departamento <b>Pro™</b> — que ya incluye tu <b>Web Profesional</b>. <b>'+paid.map(s=>s.name).join(' y ')+'</b> '+paidVerb+' a precio de catálogo (y '+paidKeepVerb+' sin coste una vez instalada'+(paid.length>1?'s':'')+').';
-  }
-  box.innerHTML='<div class="sr-sols-row">'+pack.sols.map(s=>'<span class="sr-sol-chip">'+s.name+'</span>').join('')+'</div><div class="sr-pro-box">'+proMsg+'</div><div class="sr-ctas">'+IDX_PRO_CTA.replace('%PACK%','&pack='+packKey)+'<a class="btn-ghost" href="pago.html?plan=digital&pack='+packKey+'">O solo estas 3 sueltas (15% dto.)</a></div>';
 }
 
 /* ── FLOAT CHAT ── */
@@ -1664,8 +1581,8 @@ const KB = {
   precio_general: {
     patterns: ['precio','cuánto cuesta','cuánto es','tarifa','presupuesto','cuánto cobráis','cuánto vale','qué precios tenéis','cuánto me costaría','precios'],
     responses: [
-      `Tenemos dos formas de entrar, con precios distintos:\n\n<b>PROYECTO SIN COMPROMISO (pago único):</b>\nWeb Esencial: 790€ + IVA\nWeb Profesional: desde 1.390€ + IVA (incluye chat + agenda de citas de fábrica)\nDigitaliza tu Empresa: desde 350€ + IVA por solución\n\n<b>DEPARTAMENTO TECNOLÓGICO (con permanencia, la web y las soluciones van gratis):</b>\nBasic™: 69€/mes — 6 meses de permanencia, sin web\nLite™: ${currentPrice('lite')}€/mes — 12 meses, con web\nPro™: ${currentPrice('pro')}€/mes — 12 meses, Web Profesional\n\nEn el Departamento se paga en pago único (12% dto.) o fraccionado con SeQura, nunca facturación mensual directa con nosotros. Los proyectos sueltos sí incluyen implantación y coordinación con tu Departamento Lite™ o Pro™, sin coste aparte (30 días en webs, 90 en Digitaliza). ¿Cuál encaja con lo que necesitas?`,
-      `Depende de qué necesites. Si es tu primera web: desde 790€ + IVA (pago único, con 30 días de implantación y coordinación incluida). Si quieres implantar soluciones (WhatsApp IA, CRM, automatizaciones...): desde 600€ + IVA, según cuántas elijas, con 90 días de implantación incluidos. Y si solo quieres el Departamento Tecnológico manteniendo lo que ya tienes: ${currentPrice('lite')}€ o ${currentPrice('pro')}€/mes, sin proyecto de por medio. ¿Cuál de las tres situaciones es la tuya?`
+      `Tenemos 4 Departamentos Tecnológicos, todos con la web y/o las soluciones completamente gratis (12 meses de permanencia en los 4):\n\n<b>Basic™: 69€/mes + IVA</b> — sin web, 1 solución gratis\n<b>Elemental™: desde 98€/mes + IVA</b> — solo tu web (Esencial o Profesional), sin automatizaciones\n<b>Lite™: ${currentPrice('lite')}€/mes + IVA</b> — tu web + 2 soluciones gratis\n<b>Pro™: ${currentPrice('pro')}€/mes + IVA</b> — Web Profesional + 3 soluciones gratis\n\nSe paga en pago único (12% dto.) o fraccionado con SeQura, nunca facturación mensual directa con nosotros. Al terminar los 12 meses, renuevas o te llevas todo lo construido, código incluido. ¿Cuál encaja con lo que necesitas?`,
+      `Depende de qué necesites. Si solo quieres visibilidad, sin automatizar nada: Elemental™, desde 98€/mes. Si quieres automatizar algo concreto (WhatsApp IA, facturación, reservas...) sin necesitar web: Basic™, 69€/mes. Si quieres web + un par de soluciones: Lite™, ${currentPrice('lite')}€/mes. Y si quieres el paquete completo: Pro™, ${currentPrice('pro')}€/mes. Los 4 llevan 12 meses de permanencia y la implantación va gratis. ¿Cuál de las cuatro situaciones es la tuya?`
     ]
   },
 
@@ -1739,8 +1656,8 @@ const KB = {
   digitaliza: {
     patterns: ['digitalizar','digitaliza','600','soluciones tecnológicas','implantar','automatizar','digitalizar mi negocio','digitalizar mi empresa'],
     responses: [
-      '<b>Digitaliza tu Empresa</b> es nuestro servicio de implantación de soluciones tecnológicas. Cada solución tiene su propio precio, ya con todo incluido (sin recargos aparte).\n\nSoluciones disponibles:\nIA para WhatsApp — 590€ + IVA (Oferta Lanzamiento 2026, precio normal 890€)\nIA para Web — 350€ + IVA (Oferta Lanzamiento 2026, precio normal 650€)\nIA para Correo — 350€ + IVA (Oferta Lanzamiento 2026, precio normal 590€)\nIA para Llamadas — 690€ + IVA (todo incluido, 150 llamadas/mes)\nReservas online — 350€ + IVA\nFacturación automática (TruKi) — 580€ + IVA\nGestión documental — desde 400€ + IVA\nCiberseguridad Pyme — 450€ + IVA (hasta 5 puestos)\nFirma digital — 500€ + IVA\nIntegraciones — desde 600€ + IVA (consulta previa)\nAutomatizaciones — 350€/650€/1.200€ + IVA, precio cerrado según complejidad (simple/media/varias herramientas)\nCRM — desde 950€ + IVA (auditoría previa)\n\n<b>Período de implantación (90 días, incluido en el precio):</b>\n• 3+ soluciones → pasas a Departamento Pro™\n• 1-2 soluciones → pasas a Departamento Lite™\n\n¿Sabías que puedes combinar Digitaliza con la Web Esencial o Web Profesional en la misma compra? Después del período de implantación, tu Departamento sigue manteniendo todo con renovación automática — cancela cuando quieras avisando con 7 días. ¿Qué soluciones necesita tu empresa?',
-      'Con Digitaliza implantamos cualquier solución tecnológica que necesite tu empresa. No tienes que saber qué herramienta necesitas — nos lo cuentas y nosotros diseñamos la solución correcta.\n\nEl precio parte de 350€ + IVA (la solución más económica, ya con todo incluido) y sube según las soluciones elegidas — con 90 días de implantación y coordinación incluidos. ¿Cuál es el mayor problema que quieres resolver en tu empresa ahora mismo?'
+      `<b>Digitaliza tu Empresa</b> es hoy nuestra guía informativa de soluciones tecnológicas — no se compran sueltas, se instalan dentro de tu Departamento (Basic™, Lite™ o Pro™). Cada solución tiene un precio de catálogo si la añades más allá de tu pool gratis, ya con todo incluido (sin recargos aparte).\n\nSoluciones disponibles:\nIA para WhatsApp — 590€ + IVA (Oferta Lanzamiento 2026, precio normal 890€)\nIA para Web — 350€ + IVA (Oferta Lanzamiento 2026, precio normal 650€)\nIA para Correo — 350€ + IVA (Oferta Lanzamiento 2026, precio normal 590€)\nIA para Llamadas — 690€ + IVA (todo incluido, 150 llamadas/mes)\nReservas online — 350€ + IVA\nFacturación automática (TruKi) — 580€ + IVA\nGestión documental — desde 400€ + IVA\nCiberseguridad Pyme — 450€ + IVA (hasta 5 puestos)\nFirma digital — 500€ + IVA\nIntegraciones — desde 600€ + IVA (consulta previa)\nAutomatizaciones — 350€/650€/1.200€ + IVA, precio cerrado según complejidad (simple/media/varias herramientas)\nCRM — desde 950€ + IVA (auditoría previa)\n\n<b>Cuántas entran gratis según tu Departamento:</b>\nBasic™ (69€/mes): 1 gratis\nLite™ (${currentPrice('lite')}€/mes): 2 gratis\nPro™ (${currentPrice('pro')}€/mes): 3 gratis\n\nTodos con 12 meses de permanencia y período de implantación incluido. ¿Qué soluciones necesita tu empresa?`,
+      'Las soluciones de Digitaliza se instalan siempre dentro de un Departamento — no existe compra suelta. No tienes que saber qué herramienta necesitas — nos lo cuentas y nosotros diseñamos la solución correcta, y va gratis si entra en el pool de tu tier (Basic™ 1, Lite™ 2, Pro™ 3). ¿Cuál es el mayor problema que quieres resolver en tu empresa ahora mismo?'
     ]
   },
 
@@ -1754,7 +1671,7 @@ const KB = {
   sol_web_ia: {
     patterns: ['ia para web','ia para mi web','asistente en la web','chat en la web','chatbot en mi página','cuánto cuesta la ia para web','precio de la ia web'],
     responses: [
-      'La <b>IA para Web</b> cuesta 350€ + IVA ahora mismo — <b>Oferta de Lanzamiento 2026</b>, precio normal 650€. Es un asistente integrado en tu web actual (como el que estás usando ahora mismo) que responde dudas de tus visitantes al instante y los guía hacia contratar o pedir cita. Incluye 1.000 interacciones al mes, con exceso a 0,02€/interacción si se dispara mucho el tráfico. ¿Ya tienes una web donde integrarlo, o necesitarías construirla primero?'
+      'La <b>IA para Web</b> cuesta 350€ + IVA ahora mismo — <b>Oferta de Lanzamiento 2026</b>, precio normal 650€. Es un asistente integrado en tu web actual (como el que estás usando ahora mismo) que responde dudas de tus visitantes al instante y agenda la cita directamente en tu calendario, igual que la versión de WhatsApp. Incluye 1.000 interacciones al mes, con exceso a 0,02€/interacción si se dispara mucho el tráfico. ¿Ya tienes una web donde integrarlo, o necesitarías construirla primero?'
     ]
   },
 
@@ -1835,17 +1752,17 @@ const KB = {
     ]
   },
 
-  packs_sectoriales: {
-    patterns: ['pack','packs','descuento en los packs','pack empresa','pack servicios','pack despachos','pack hosteleria','packs con descuento','oferta en los packs','15% de descuento','packs empresa'],
+  soluciones_por_sector: {
+    patterns: ['qué necesito para mi sector','recomiéndame algo','no sé qué elegir','según mi negocio','qué soluciones necesito'],
     responses: [
-      'Tenemos 3 packs por sector dentro de Digitaliza, cada uno con <b>15% de descuento</b> si te quedas con 3 soluciones:\n\n<b>Pack Servicios</b> — fontaneros, electricistas, clínicas, estética, gimnasios, academias\n<b>Pack Despachos</b> — abogados, asesorías, gestorías, inmobiliarias\n<b>Pack Hostelería</b> — restaurantes, salones de celebración\n\nCada uno trae 3 soluciones ya pensadas para tu sector, pero puedes quitar o añadir las que quieras — no van cerrados. Si tu negocio no encaja en ninguno, no pasa nada: eliges tú mismo entre las 12 soluciones del catálogo. <a href="pago.html?plan=digital" target="_blank">Elige tu sector directamente en el checkout →</a>\n\n¿A qué te dedicas? Así te digo qué pack encaja mejor contigo.'
+      'Depende de a qué te dediques — cuéntame tu sector y te digo exactamente qué soluciones encajan mejor. Por ejemplo: negocios con citas (peluquerías, clínicas, gimnasios) suelen necesitar IA para WhatsApp + Reservas y Agenda; despachos (abogados, asesorías, inmobiliarias) suelen necesitar CRM + Firma Digital; hostelería suele necesitar Reservas + IA para WhatsApp. Elige las que quieras dentro de tu Departamento Basic™, Lite™ o Pro™ — no van en combos cerrados, tú decides. <a href="pago.html" target="_blank">Ver el checkout →</a>\n\n¿A qué te dedicas?'
     ]
   },
 
   arranque: {
     patterns: ['arranque','pack arranque','acceso directo','sin proyecto','solo el departamento','solo mantenimiento','ya tengo todo implantado'],
     responses: [
-      `Si no necesitas un proyecto nuevo y quieres acceder directamente al Departamento Tecnológico, la web y las soluciones van completamente gratis desde el minuto uno, a cambio de una permanencia mínima:\n\n<b>Basic™: 69€/mes + IVA</b>\nPermanencia 6 meses · sin web · 1 solución gratis\n\n<b>Lite™: ${currentPrice('lite')}€/mes + IVA</b>\nPermanencia 12 meses · web gratis · hasta 3 soluciones\n\n<b>Pro™: ${currentPrice('pro')}€/mes + IVA</b>\nPermanencia 12 meses · Web Profesional gratis · hasta 6 soluciones\n\nSe paga en pago único (12% dto.) o fraccionado con SeQura, nunca facturación mensual directa con nosotros. Al terminar la permanencia, sigues mes a mes sin más compromiso o te vas cuando quieras. ¿Cuántas soluciones tecnológicas necesitas mantener?`
+      `Tenemos 4 Departamentos Tecnológicos, todos con la web y/o las soluciones completamente gratis desde el minuto uno, a cambio de 12 meses de permanencia:\n\n<b>Basic™: 69€/mes + IVA</b>\nSin web · 1 solución gratis\n\n<b>Elemental™: desde 98€/mes + IVA</b>\nSolo tu web (Esencial o Profesional) · sin automatizaciones\n\n<b>Lite™: ${currentPrice('lite')}€/mes + IVA</b>\nWeb gratis · hasta 3 soluciones\n\n<b>Pro™: ${currentPrice('pro')}€/mes + IVA</b>\nWeb Profesional gratis · hasta 6 soluciones\n\nSe paga en pago único (12% dto.) o fraccionado con SeQura, nunca facturación mensual directa con nosotros. Al terminar los 12 meses, renuevas si quieres seguir, o te lo llevas todo — código fuente incluido, en un pen drive personalizado. ¿Cuántas soluciones tecnológicas necesitas mantener?`
     ]
   },
 
@@ -1853,15 +1770,15 @@ const KB = {
   permanencia: {
     patterns: ['permanencia','compromiso','atarme','cuánto tiempo','mínimo','puedo irme','baja','salir','me puedo dar de baja'],
     responses: [
-      'Depende de si contratas un proyecto o solo una solución:\n\n<b>Proyecto (Web Esencial o Profesional):</b> 30 días de implantación y coordinación, <b>incluidos en el precio</b> — luego pasas a Departamento Lite™.\n\n<b>Digitaliza / soluciones tecnológicas:</b> 90 días de implantación y coordinación, <b>incluidos en el precio</b> — luego pasas a Departamento Pro™ o Lite™ según el número de soluciones.\n\nEn ambos casos, al terminar el período de implantación entras en renovación automática mensual y <b>continúas solo si estás satisfecho</b>, cancelando cuando quieras avisando con 7 días. Y durante todo el período de implantación, ajustamos lo que haga falta sin coste adicional para que funcione de verdad.',
-      'No hay compromisos adicionales tras el período de implantación. La implantación y coordinación van incluidas en el precio durante todo ese período (tanto en proyectos web como en Digitaliza), y existe porque configurar bien la tecnología de una empresa lleva tiempo — no queremos entregarte algo a medias. Una vez pasado (30 días si es un proyecto web, 90 si son soluciones de Digitaliza), la decisión de continuar es siempre tuya, con renovación automática mensual cancelable cuando quieras avisando con 7 días.'
+      'Los 4 Departamentos (Elemental™, Basic™, Lite™ y Pro™) llevan <b>12 meses de permanencia</b> — es lo que hace posible que la web y las soluciones vayan completamente gratis en vez de cobrarlas aparte. Dentro de esos 12 meses hay un período inicial de implantación (30 días si solo hay web, 90 si hay varias soluciones) donde ajustamos todo sin coste adicional, y después sigue el mantenimiento continuo dentro de la misma cuota. Al terminar los 12 meses, renuevas si quieres seguir, o <b>te lo llevamos todo</b> — código fuente incluido, en un pen drive personalizado.',
+      'La permanencia de 12 meses es el trato: nosotros te regalamos la implantación completa (web y/o soluciones), y tú te comprometes a esos 12 meses. Durante ese tiempo ajustamos lo que haga falta sin coste adicional para que todo funcione de verdad. Al terminar, la decisión de continuar es siempre tuya — renuevas, o te llevas absolutamente todo lo construido, sin penalización.'
     ]
   },
 
   cancelacion: {
     patterns: ['cómo cancelo','cómo doy de baja','proceso de cancelación','quiero cancelar','dejar de pagar','puedo cancelar','como cancelar','darme de baja'],
     responses: [
-      'Cancelar es sencillo: nos avisas con un mínimo de 7 días de antelación a tu próxima fecha de facturación y no se te cobra el mes siguiente. Sin preguntas incómodas ni permanencia oculta. ¿Es algo que te preocupa por una experiencia anterior con otro proveedor?'
+      'Los 4 Departamentos llevan 12 meses de permanencia — es lo que hace posible regalarte la implantación de la web y las soluciones. Durante esos 12 meses no hay baja anticipada del servicio ya implantado, pero al terminarlos decides tú: renuevas si quieres seguir, o cancelas y te llevamos todo lo construido — código fuente incluido, en un pen drive personalizado, sin penalización. ¿Es algo que te preocupa por una experiencia anterior con otro proveedor?'
     ]
   },
 
@@ -1875,7 +1792,7 @@ const KB = {
   garantia: {
     patterns: ['garantía','si no funciona','dinero de vuelta','qué pasa si','y si no me gusta','qué garantías','riesgo','me devolvéis el dinero','reembolso'],
     responses: [
-      'Garantía de Ajuste TRUCO™:\n\n✓ Durante todo el período de implantación, ajustamos y perfeccionamos la solución las veces que haga falta hasta que funcione como acordamos, sin coste adicional.\n\n✓ Incidencias técnicas: las resolvemos sin coste adicional, siempre.\n\n✓ Sin permanencia una vez pasada la implantación: si no es lo que necesitas, simplemente no continúas, sin penalización.\n\nLos pagos ya realizados no son reembolsables, pero tampoco te dejamos a medias: seguimos ajustando hasta dejarlo funcionando de verdad.'
+      'Garantía de Ajuste TRUCO™:\n\n✓ Durante todo el período de implantación, ajustamos y perfeccionamos la solución las veces que haga falta hasta que funcione como acordamos, sin coste adicional.\n\n✓ Incidencias técnicas: las resolvemos sin coste adicional, siempre.\n\n✓ Al terminar tu permanencia de 12 meses: si no quieres continuar, te llevas absolutamente todo lo implantado — código fuente incluido — sin penalización.\n\nLos pagos ya realizados no son reembolsables, pero tampoco te dejamos a medias: seguimos ajustando hasta dejarlo funcionando de verdad.'
     ]
   },
 
@@ -1932,7 +1849,7 @@ const KB = {
   por_que_vosotros: {
     patterns: ['por qué contrataros','por qué elegiros','qué os diferencia','por qué vosotros y no otra empresa','sois mejores que'],
     responses: [
-      'Buena pregunta. La diferencia principal es que no somos una agencia que entrega un proyecto y desaparece, ni una herramienta de software que tienes que aprender a usar tú. Somos tu departamento tecnológico completo: implantamos Y mantenemos, con un único interlocutor, ajustamos lo que haga falta durante la implantación sin coste adicional, y sin permanencia forzosa después. La mayoría de agencias no ofrecen soporte continuo, y la mayoría de softwares no se implantan ni configuran por ti. ¿Qué es lo que más te frena a la hora de decidirte?'
+      'Buena pregunta. La diferencia principal es que no somos una agencia que entrega un proyecto y desaparece, ni una herramienta de software que tienes que aprender a usar tú. Somos tu departamento tecnológico completo: implantamos Y mantenemos, con un único interlocutor, y ajustamos lo que haga falta durante la implantación sin coste adicional. La permanencia de 12 meses es precisamente lo que nos permite regalarte esa implantación en vez de cobrártela aparte. La mayoría de agencias no ofrecen soporte continuo, y la mayoría de softwares no se implantan ni configuran por ti. ¿Qué es lo que más te frena a la hora de decidirte?'
     ]
   },
 
@@ -1946,7 +1863,7 @@ const KB = {
   noventa_dias: {
     patterns: ['90 días','noventa días','implantación','cuánto tiempo tarda','cuándo funciona','primer mes','cuánto se tarda'],
     responses: [
-      `El período de implantación varía según qué contrates:\n\nPara proyectos <b>Web</b> (Esencial o Profesional): <b>30 días</b>\nTodo el período, la implantación y coordinación van incluidas en el precio, sin coste aparte\n• A partir del día 31: pasas a Departamento Lite™ con renovación automática mensual (${currentPrice('lite')}€/mes) — continúas solo si estás satisfecho\n\nPara <b>Digitaliza</b> (soluciones tecnológicas): <b>90 días</b>\nTodo el período, la implantación y coordinación van incluidas en el precio\n• A partir del día 91: pasas a Departamento (Pro™ si 3+ soluciones, Lite™ si 1-2) con renovación automática mensual — continúas solo si estás satisfecho\n\nEn ambos casos, sin permanencia: cancela cuando quieras avisando con 7 días. Esto es distinto de hacerte cliente directo del Departamento, que sí lleva permanencia a cambio de que la web y las soluciones vayan gratis desde el primer día.`
+      `El período de implantación inicial varía según qué Departamento contrates, dentro de los 12 meses de permanencia:\n\n<b>Solo web</b> (Elemental™, o Lite™/Pro™ si aún no tienes soluciones): <b>30 días</b>\nTodo el período, la implantación y coordinación van incluidas en la cuota, sin coste aparte\n\n<b>Con varias soluciones</b> (Basic™, Lite™, Pro™): <b>90 días</b>\nTodo el período, la implantación y coordinación van incluidas en la cuota\n\nEn ambos casos, pasado ese período inicial sigue el mantenimiento continuo dentro de la misma cuota, durante el resto de tus 12 meses de permanencia. Al terminarlos, renuevas si quieres seguir, o te llevamos todo lo construido — código fuente incluido.`
     ]
   },
 
@@ -1954,63 +1871,63 @@ const KB = {
   abogado: {
     patterns: ['abogado','bufete','jurídico','legal','letrado','despacho'],
     responses: [
-      `Para despachos de abogados, asesorías, gestorías e inmobiliarias tenemos el <b>Pack Despachos</b>: CRM (seguimiento de expedientes), Firma digital (contratos sin desplazamientos) y Gestión documental (expedientes organizados). Si además se os escapan consultas por WhatsApp fuera de horario, se añade IA para WhatsApp sin problema — el pack no va cerrado.\n\nSi las contratáis dentro del Departamento Pro™ (${currentPrice('pro')}€/mes, con permanencia de 12 meses), van gratis las que entren en el pool de soluciones a elegir; el resto se mantiene sin coste una vez instalada. Si preferís comprarlas sueltas, sin permanencia, tenéis el 15% de descuento del pack.\n\n<a href="pago.html?plan=digital&pack=despachos" target="_blank">Ver el Pack Despachos con estas soluciones ya marcadas (15% dto.) →</a>\n\n¿Tienes actualmente alguna herramienta de gestión de agenda o casos?`
+      `Para despachos de abogados, asesorías, gestorías e inmobiliarias solemos recomendar: CRM (seguimiento de expedientes), Firma digital (contratos sin desplazamientos) y Gestión documental (expedientes organizados). Si además se os escapan consultas por WhatsApp fuera de horario, se añade IA para WhatsApp sin problema.\n\nDentro del Departamento Pro™ (${currentPrice('pro')}€/mes, permanencia 12 meses), van gratis las que entren en tu pool de soluciones a elegir; el resto se añade a precio de catálogo y se mantiene sin coste una vez instalada.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Tienes actualmente alguna herramienta de gestión de agenda o casos?`
     ]
   },
 
   dental: {
     patterns: ['dental','dentista','clínica dental','odontología'],
     responses: [
-      'Para clínicas dentales tenemos el <b>Pack Servicios</b>: IA para WhatsApp (conectada a tu software de clínica, tipo Gesden o Clinicpro), Reservas online y Automatizaciones para recordatorios de cita. El asistente recoge solicitudes mientras estás en consulta y avisa al paciente, sin perder ninguna.\n\n<a href="pago.html?plan=digital&pack=servicios" target="_blank">Ver el Pack Servicios con estas soluciones ya marcadas (15% dto.) →</a> (puedes quitar o añadir cualquiera).\n\n¿Qué software usas actualmente para la agenda?'
+      'Para clínicas dentales solemos recomendar: IA para WhatsApp (conectada a tu software de clínica, tipo Gesden o Clinicpro), Reservas online y Automatizaciones para recordatorios de cita. El asistente recoge solicitudes mientras estás en consulta y avisa al paciente, sin perder ninguna.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Qué software usas actualmente para la agenda?'
     ]
   },
 
   clinica_general: {
     patterns: ['clínica médica','centro médico','consulta médica','médico privado','fisioterapia','psicólogo'],
     responses: [
-      'Para clínicas y consultas médicas tenemos el <b>Pack Servicios</b>: IA para WhatsApp + Reservas online + Automatizaciones (recordatorios de cita). Así ningún paciente se queda sin respuesta y la recepción deja de estar desbordada con llamadas repetitivas.\n\n<a href="pago.html?plan=digital&pack=servicios" target="_blank">Ver el Pack Servicios con estas soluciones ya marcadas (15% dto.) →</a> (puedes quitar o añadir cualquiera).\n\n¿Qué canal usan más tus pacientes para pedir cita: llamada, WhatsApp o ambos?'
+      'Para clínicas y consultas médicas solemos recomendar: IA para WhatsApp + Reservas online + Automatizaciones (recordatorios de cita). Así ningún paciente se queda sin respuesta y la recepción deja de estar desbordada con llamadas repetitivas.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Qué canal usan más tus pacientes para pedir cita: llamada, WhatsApp o ambos?'
     ]
   },
 
   inmobiliaria: {
     patterns: ['inmobiliaria','agente inmobiliario','venta de pisos','alquiler de pisos','agencia inmobiliaria'],
     responses: [
-      'Para inmobiliarias tenemos el <b>Pack Despachos</b>: CRM (seguimiento de cada lead e interesado), Firma digital (contratos de arras/alquiler sin desplazamientos) y Gestión documental. Y si la velocidad de respuesta es tu prioridad número uno, se añade IA para WhatsApp sin problema — el que responde primero, suele vender.\n\n<a href="pago.html?plan=digital&pack=despachos" target="_blank">Ver el Pack Despachos con estas soluciones ya marcadas (15% dto.) →</a>\n\n¿Cuántos leads recibís al mes aproximadamente?'
+      'Para inmobiliarias solemos recomendar: CRM (seguimiento de cada lead e interesado), Firma digital (contratos de arras/alquiler sin desplazamientos) y Gestión documental. Y si la velocidad de respuesta es tu prioridad número uno, se añade IA para WhatsApp sin problema — el que responde primero, suele vender.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Cuántos leads recibís al mes aproximadamente?'
     ]
   },
 
   estetica: {
     patterns: ['centro de estética','clínica estética','peluquería','salón de belleza','centro de belleza'],
     responses: [
-      'Para centros de estética y belleza tenemos el <b>Pack Servicios</b>: Reservas online + IA para WhatsApp + Automatizaciones (recordatorios, para reducir los "no show"). Los clientes reservan solos a cualquier hora y el asistente resuelve dudas de precio y disponibilidad.\n\n<a href="pago.html?plan=digital&pack=servicios" target="_blank">Ver el Pack Servicios con estas soluciones ya marcadas (15% dto.) →</a> (puedes quitar o añadir cualquiera).\n\n¿Cómo gestionáis ahora mismo las reservas?'
+      'Para centros de estética y belleza solemos recomendar: Reservas online + IA para WhatsApp + Automatizaciones (recordatorios, para reducir los "no show"). Los clientes reservan solos a cualquier hora y el asistente resuelve dudas de precio y disponibilidad.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Cómo gestionáis ahora mismo las reservas?'
     ]
   },
 
   autonomo_oficio: {
     patterns: ['electricista','fontanero','pintor','carpintero','instalador','oficio','reformas'],
     responses: [
-      'Para autónomos de oficios tenemos el <b>Pack Servicios</b>: IA para WhatsApp (recoge la solicitud mientras estás en obra y agenda la visita), Reservas online y Automatizaciones para el seguimiento de presupuestos.\n\nCuando terminas en obra, el cliente ya tiene confirmación y tú tienes todo organizado.\n\n<a href="pago.html?plan=digital&pack=servicios" target="_blank">Ver el Pack Servicios con estas soluciones ya marcadas (15% dto.) →</a> (puedes quitar o añadir cualquiera).\n\n¿Recibes muchos mensajes de WhatsApp que se quedan sin respuesta?'
+      'Para autónomos de oficios solemos recomendar: IA para WhatsApp (recoge la solicitud mientras estás en obra y agenda la visita), Reservas online y Automatizaciones para el seguimiento de presupuestos.\n\nCuando terminas en obra, el cliente ya tiene confirmación y tú tienes todo organizado.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Recibes muchos mensajes de WhatsApp que se quedan sin respuesta?'
     ]
   },
 
   gimnasio: {
     patterns: ['gimnasio','centro deportivo','box de crossfit','estudio de yoga','centro de entrenamiento'],
     responses: [
-      'Para gimnasios y centros deportivos tenemos el <b>Pack Servicios</b>: IA para WhatsApp (altas, dudas de horarios y tarifas), Reservas online (clases y horarios) y Automatizaciones (seguimiento de socios para evitar bajas por falta de atención).\n\n<a href="pago.html?plan=digital&pack=servicios" target="_blank">Ver el Pack Servicios con estas soluciones ya marcadas (15% dto.) →</a> (puedes quitar o añadir cualquiera).\n\n¿Cuántos socios activos gestionáis aproximadamente ahora mismo?'
+      'Para gimnasios y centros deportivos solemos recomendar: IA para WhatsApp (altas, dudas de horarios y tarifas), Reservas online (clases y horarios) y Automatizaciones (seguimiento de socios para evitar bajas por falta de atención).\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Cuántos socios activos gestionáis aproximadamente ahora mismo?'
     ]
   },
 
   restaurante: {
     patterns: ['restaurante','bar','cafetería','hostelería','local de comida'],
     responses: [
-      'Para restaurantes y hostelería tenemos el <b>Pack Hostelería</b>: Reservas online + IA para WhatsApp + Automatizaciones (confirmaciones y recordatorios, para reducir los no-shows). Reservas de mesa sin llamadas perdidas y menos mesas vacías.\n\n<a href="pago.html?plan=digital&pack=hosteleria" target="_blank">Ver el Pack Hostelería con estas soluciones ya marcadas (15% dto.) →</a> (puedes quitar o añadir cualquiera).\n\n¿Tomáis reservas ahora mismo por teléfono, redes sociales, o no lleváis un sistema fijo?'
+      'Para restaurantes y hostelería solemos recomendar: Reservas online + IA para WhatsApp + Automatizaciones (confirmaciones y recordatorios, para reducir los no-shows). Reservas de mesa sin llamadas perdidas y menos mesas vacías.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Tomáis reservas ahora mismo por teléfono, redes sociales, o no lleváis un sistema fijo?'
     ]
   },
 
   tienda_comercio: {
     patterns: ['tienda','comercio','tienda online','ecommerce','tienda física'],
     responses: [
-      'Para tiendas y comercios, lo más habitual es combinar CRM (clientes recurrentes), Automatizaciones e Integraciones (conectar tienda física y online si vendéis por varios canales). Si además se os escapan consultas de stock/horarios por WhatsApp, se añade IA para WhatsApp sin problema. No hay un pack cerrado para comercio — eliges tú mismo las que necesitas del catálogo completo, cada una a su precio.\n\n<a href="digitaliza.html" target="_blank">Ver el catálogo completo de soluciones →</a>\n\n¿Tu comercio es solo físico, solo online, o ambos?'
+      'Para tiendas y comercios, lo más habitual es combinar CRM (clientes recurrentes), Automatizaciones e Integraciones (conectar tienda física y online si vendéis por varios canales). Si además se os escapan consultas de stock/horarios por WhatsApp, se añade IA para WhatsApp sin problema — eliges tú mismo las que necesitas del catálogo completo.\n\n<a href="digitaliza.html" target="_blank">Ver el catálogo completo de soluciones →</a>\n\n¿Tu comercio es solo físico, solo online, o ambos?'
     ]
   },
 
@@ -2078,7 +1995,7 @@ const KB = {
   experiencia_referencias: {
     patterns: ['tenéis clientes','tenéis referencias','casos de éxito','tenéis experiencia','cuánto tiempo lleváis','sois nuevos'],
     responses: [
-      'Trabajamos precisamente con la filosofía de un departamento tecnológico serio: ajustamos la implantación las veces que haga falta sin coste adicional, sin permanencia forzosa, y un único interlocutor para todo. Preferimos que lo compruebes tú mismo con poco riesgo antes que prometerte cifras. ¿Quieres que analicemos tu caso concreto en una consultoría gratuita?'
+      'Trabajamos precisamente con la filosofía de un departamento tecnológico serio: ajustamos la implantación las veces que haga falta sin coste adicional, con la Garantía de Ajuste TRUCO™, y un único interlocutor para todo. Preferimos que lo compruebes tú mismo antes que prometerte cifras. ¿Quieres que analicemos tu caso concreto en una consultoría gratuita?'
     ]
   },
 
@@ -2392,7 +2309,6 @@ setTimeout(() => {
   <a href="servicios.html#como-empezamos">Cómo empezamos</a>
   <a href="#nosotros">Nosotros</a>
   <a href="#sectores">¿Es esto para ti?</a>
-  <a href="#packs-descuento" style="color:var(--gold);font-weight:700;">Packs -15%</a>
   <a href="#faq">FAQ</a>
   <a href="pago.html" style="color:var(--blue);font-weight:700;">Ir a contratación →</a>
   <a href="#chat-section">Hablar con el asistente →</a>

@@ -15,18 +15,19 @@
 // condiciones, cambiar en las 5 a la vez.
 const CATALOG_TEXT = `DATOS REALES DE TRUCO technology (no inventes nada fuera de esto; si no lo sabes, dilo):
 
-QUÉ ES: Departamento Tecnológico externalizado para pymes y autónomos en España. Hay dos formas de entrar:
-1) Departamento Tecnológico (Basic™/Lite™/Pro™): cliente directo, con permanencia, web y soluciones completamente gratis.
-2) Proyecto sin compromiso (Web Esencial, Web Profesional, Digitaliza tu Empresa): se compra suelto, pagando su precio, sin permanencia.
+QUÉ ES: Departamento Tecnológico externalizado para pymes y autónomos en España — es lo único que vendemos. Hay 4 escalones, TODOS con 12 meses de permanencia y web/soluciones instaladas completamente gratis. Se organizan en dos ejes: visibilidad (Elemental™ = solo web) y automatización (Basic™ = solo soluciones); Lite™ y Pro™ combinan ambos ejes a más escala. No existe ninguna vía de compra suelta sin permanencia — Web Esencial, Web Profesional y Digitaliza tu Empresa son hoy solo páginas informativas, no productos aparte.
 
-── DEPARTAMENTO TECNOLÓGICO ──
-- Basic™: 69€/mes + IVA. Permanencia mínima 6 meses. Sin web. 1 solución gratis (pool: WhatsApp, IA Web, IA Llamadas, IA Correo, Reservas, Firma Digital, Ciberseguridad Pyme, Automatizaciones banda Simple, TruKi — único escalón con TruKi gratis). Mantiene hasta 2 soluciones en total.
-- Lite™: 279€/mes + IVA (o precio de fundador si sigue activa la oferta). Permanencia 12 meses. Web + 2 soluciones gratis (pool: WhatsApp, IA Web, Llamadas, Correo, Reservas, Firma Digital, Ciberseguridad Pyme, Automatizaciones solo banda Simple 350€). TruKi NO entra en este pool, solo en Basic™. Mantiene hasta 3 soluciones en total. Reunión mensual 30 min.
-- Pro™: 549€/mes + IVA (o precio de fundador si sigue activa la oferta). Permanencia 12 meses. Web Profesional que ya incluye de fábrica chat + agenda de citas (por eso IA para tu Web y Reservas no están en su pool de elegir, ya las tiene gratis) + 3 soluciones gratis a elegir de un pool de 6 (WhatsApp, Llamadas, Correo, Firma Digital, Ciberseguridad, Automatizaciones banda Simple). Mantiene hasta 6 soluciones en total. Reunión mensual 45 min, mayor prioridad en incidencias.
+── LOS 4 DEPARTAMENTOS ──
+- Basic™ (eje automatización): 69€/mes + IVA. Sin web. 1 solución gratis (pool: WhatsApp, IA Web, IA Llamadas, IA Correo, Reservas, Firma Digital, Ciberseguridad Pyme, Automatizaciones banda Simple, TruKi — único escalón con TruKi gratis). Mantiene hasta 2 soluciones en total.
+- Elemental™ (eje visibilidad): 98€/mes + IVA con Web Esencial, o 149€/mes + IVA con Web Profesional. Solo web, nunca incluye soluciones automatizadas. Incluye mantenimiento, seguridad, actualizaciones y "salud técnica de posicionamiento" (velocidad, indexación, enlaces rotos, datos estructurados, Google Business, seguimiento de posiciones) — nunca promete resultados de ranking, es salud técnica automatizable, no una campaña activa de SEO.
+- Lite™: 279€/mes + IVA (o precio de fundador si sigue activa la oferta). Web + 2 soluciones gratis (pool: WhatsApp, IA Web, Llamadas, Correo, Reservas, Firma Digital, Ciberseguridad Pyme, Automatizaciones solo banda Simple 350€). TruKi NO entra en este pool, solo en Basic™. Mantiene hasta 3 soluciones en total. Reunión mensual 30 min.
+- Pro™: 549€/mes + IVA (o precio de fundador si sigue activa la oferta). Web Profesional que ya incluye de fábrica chat + agenda de citas (por eso IA para tu Web y Reservas no están en su pool de elegir, ya las tiene gratis) + 3 soluciones gratis a elegir de un pool de 6 (WhatsApp, Llamadas, Correo, Firma Digital, Ciberseguridad, Automatizaciones banda Simple). Mantiene hasta 6 soluciones en total. Reunión mensual 45 min, mayor prioridad en incidencias.
+- La oferta de fundador (cuando esté activa) solo aplica a Lite™/Pro™ — Basic™ y Elemental™ siempre a precio fijo.
 - Pago: solo pago único con 12% de descuento, o financiado con SeQura. Nunca facturación mensual directa.
+- Al terminar los 12 meses: el cliente renueva si quiere seguir, o se lo lleva todo — incluido el código fuente de su web, en un pen drive personalizado.
 
-── SOLUCIONES INDIVIDUALES DE DIGITALIZA (+ IVA) ──
-IA para WhatsApp 590€ · IA para Web 350€ · IA para Correo 350€ · IA para Llamadas 690€ (150 llamadas/mes incluidas, exceso 0,50€ + IVA) · Reservas online 350€ · Facturación automática (TruKi) 580€ (+29€/mes de hosting si se contrata suelta, sin Departamento) · Gestión documental desde 400€ · Ciberseguridad Pyme 450€ (hasta 5 puestos, +150€ por cada 5 adicionales) · Firma digital 500€ · Integraciones desde 600€ · Automatizaciones 350/650/1.200€ según complejidad · CRM desde 950€.
+── SOLUCIONES INDIVIDUALES (+ IVA, se instalan siempre dentro de un Departamento, nunca sueltas) ──
+IA para WhatsApp 590€ (agenda citas en el calendario) · IA para Web 350€ (agenda citas en el calendario, igual que WhatsApp) · IA para Correo 350€ · IA para Llamadas 690€ (150 llamadas/mes incluidas, exceso 0,50€ + IVA) · Reservas online 350€ (botón de reserva directa; se combina con WhatsApp/Web/Llamadas o funciona sola) · Facturación automática (TruKi) 580€ (+29€/mes de hosting si se contrata suelta, sin Departamento) · Gestión documental desde 400€ · Ciberseguridad Pyme 450€ (hasta 5 puestos, +150€ por cada 5 adicionales) · Firma digital 500€ · Integraciones desde 600€ · Automatizaciones 350/650/1.200€ según complejidad · CRM desde 950€.
 
 CONDICIONES GENERALES:
 - Garantía de Ajuste TRUCO™: se ajusta lo que haga falta sin coste durante la implantación. Incidencias técnicas siempre sin coste.
@@ -40,7 +41,7 @@ function buildSystemInstruction(client, solutions) {
   const plan = client.plan_key || 'sin plan registrado';
   const solLines = solutions.length
     ? solutions.map(s => `- ${s.solution_name}${s.is_free ? ' (incluida gratis en su plan)' : ''}`).join('\n')
-    : '(ninguna solución de Digitaliza registrada todavía)';
+    : '(ninguna solución registrada todavía)';
 
   return `Eres el asistente del Portal de Clientes de TRUCO technology, hablando en privado con un cliente real ya identificado — no un visitante anónimo de la web. Respondes en español, cercano, profesional, como alguien del propio departamento tecnológico que ya conoce a este cliente. Nunca actúes como si no supieras quién es.
 

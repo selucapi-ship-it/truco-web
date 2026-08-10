@@ -138,6 +138,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .wib-item b{display:block;color:var(--white);font-size:.92rem;margin-bottom:3px;}
 @media(max-width:900px){.wib-grid{grid-template-columns:repeat(2,1fr);}}
 
+.who-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px;}
+.who-card{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:22px 20px;transition:border-color var(--tr),transform var(--tr);}
+.who-card:hover{border-color:var(--blue);transform:translateY(-3px);}
+.who-card h4{font-size:1rem;margin:14px 0 8px;color:var(--white);}
+.who-card p{font-size:.86rem;color:var(--grey);line-height:1.6;}
+@media(max-width:900px){.who-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.who-grid{grid-template-columns:1fr;}}
+
 .cross-nav{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:28px 32px;}
 .cross-nav-title{font-family:var(--font-m);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
 .cross-nav-items{display:flex;gap:12px;flex-wrap:wrap;}
@@ -207,7 +215,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Web Profesional + 3 soluciones incluidas gratis</div>
     <span class="hero-badge">El nivel de fiabilidad que necesita tu empresa</span>
     <h1>Departamento Tecnológico Pro™</h1>
-    <p>Web Profesional regalada + 3 soluciones tecnológicas a elegir, todo instalado completamente gratis. Cuando tu negocio ya depende de varias herramientas a la vez, mantenerlas por separado deja de ser suficiente — el Pro™ mantiene hasta 6, con supervisión continua y respuesta prioritaria en menos de 24h.</p>
+    <p>Cuando ya usas WhatsApp, un calendario de citas y una web que no habla con ninguno de los dos, cada herramienta suelta es un cliente que se pierde entre medias. Si tu negocio ya depende de varios canales a la vez — clínica, bufete, inmobiliaria, gimnasio con varios monitores —, Pro™ te da <strong>una Web Profesional que ya viene con chat y agenda de fábrica, más 3 soluciones a elegir</strong>, todo instalado completamente gratis. El Pro™ mantiene hasta 6, con supervisión continua y respuesta prioritaria en menos de 24h.</p>
     <div class="hero-price-box">
       <div>
         <div class="hp-founding-badge" id="hp-founding-badge-pro"></div>
@@ -224,6 +232,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="vh-save">Ahorras entre <b>2.540 € y 3.170 €</b> en instalación</div>
       <ul class="vh-list">
         <li>Web Profesional <span class="vh-tag">valor 1.390 €</span></li>
+        <li>Chat + agenda en tu web <span class="vh-tag">de fábrica</span></li>
         <li>3 soluciones a elegir <span class="vh-tag">valor 1.150-1.780 €</span></li>
         <li>Mantenimiento de hasta 6 soluciones <span class="vh-tag">incluido siempre</span></li>
         <li>Supervisión continua <span class="vh-tag">prioridad máxima</span></li>
@@ -232,7 +241,37 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </div>
 
-<div class="section-block reveal" style="padding-bottom:20px;">
+<div class="section-block reveal">
+  <div class="container">
+    <div class="section-divider"><h2 class="sd-tag blue">¿Para quién es Pro™?</h2><div class="sd-line"></div></div>
+    <p style="color:var(--grey);font-size:.92rem;line-height:1.7;max-width:760px;margin-bottom:4px;">Cuando ya no es una sola persona atendiendo, sino varios canales y varias manos a la vez, un fallo de coordinación cuesta un cliente. Pro™ está pensado para negocios que ya dependen de 3 o más herramientas en marcha.</p>
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="icon-badge blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+        <h4>Clínicas dentales y de estética</h4>
+        <p>Web interactiva que agenda sola, WhatsApp para dudas y confirmaciones, Reservas y Agenda sincronizada — todo hablando entre sí, no tres sistemas sueltos.</p>
+      </div>
+      <div class="who-card">
+        <div class="icon-badge gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8a1 1 0 0 1 .4-.8l7-5.4a1 1 0 0 1 1.2 0l7 5.4a1 1 0 0 1 .4.8v13"/><path d="M9 21v-6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6"/></svg></div>
+        <h4>Bufetes y consultoras con varios socios</h4>
+        <p>Cada socio recibe consultas por un canal distinto. Pro™ centraliza WhatsApp, llamadas y web en un mismo sitio, con prioridad en incidencias.</p>
+      </div>
+      <div class="who-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4v18M13 21V11l6 4v6"/></svg></div>
+        <h4>Inmobiliarias con varios agentes</h4>
+        <p>Web Profesional que responde y filtra visitas sola, más WhatsApp y llamadas repartidas entre tu equipo sin que se cruce nada.</p>
+      </div>
+      <div class="who-card">
+        <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5h11v11h-11z"/><path d="M6.5 2v4.5M17.5 2v4.5M2 6.5h20M6.5 17.5V22M17.5 17.5V22"/></svg></div>
+        <h4>Gimnasios y centros con varias clases</h4>
+        <p>Reservas de clases, WhatsApp para socios y web que muestra horarios en tiempo real — mantenidas juntas, no como tres suscripciones sueltas.</p>
+      </div>
+    </div>
+    <div class="necessity-note" style="margin-top:22px;"><b>Si solo necesitas una web y 1-2 herramientas</b>, el <a href="lite.html" style="color:var(--blue);font-weight:600;">Departamento Lite™</a> es probablemente suficiente y más barato.</div>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-bottom:20px;padding-top:0;">
   <div class="container">
     <div class="section-divider"><h2 class="sd-tag blue">Así trabajamos contigo</h2><div class="sd-line"></div></div>
     <div class="hww-steps">
@@ -265,17 +304,17 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="compare-wrap">
       <table class="compare-table">
         <thead>
-          <tr><th>&nbsp;</th><th>Basic™ · 69 €/mes</th><th>Lite™ · <span id="table-price-lite"></span>/mes</th><th class="col-this">Pro™ · <span id="table-price-pro"></span>/mes</th></tr>
+          <tr><th>&nbsp;</th><th>Basic™ · 69 €/mes</th><th>Elemental™ · desde 98 €/mes</th><th>Lite™ · <span id="table-price-lite"></span>/mes</th><th class="col-this">Pro™ · <span id="table-price-pro"></span>/mes</th></tr>
         </thead>
         <tbody>
-          <tr><td>Web incluida</td><td class="cell-limit">No incluida</td><td>Reacondicionada o nueva</td><td class="col-this"><b>Web Profesional</b></td></tr>
-          <tr><td>Soluciones gratis al contratar</td><td>1</td><td>2</td><td class="col-this"><b>3</b></td></tr>
-          <tr><td>Soluciones mantenidas (rango)</td><td class="cell-limit">Hasta 2</td><td class="cell-limit">Hasta 3</td><td class="col-this"><b>Hasta 6</b></td></tr>
-          <tr><td>Permanencia</td><td>6 meses</td><td>12 meses</td><td class="col-this">12 meses</td></tr>
-          <tr><td>Resolución de incidencias</td><td class="cell-limit">Por orden de llegada</td><td class="cell-limit">Por orden de llegada</td><td class="col-this"><b>Prioridad alta, &lt;24h</b></td></tr>
-          <tr><td>Revisión de rendimiento</td><td class="cell-limit">—</td><td class="cell-limit">Mensual básica</td><td class="col-this"><b>Continua</b></td></tr>
-          <tr><td>Reunión de seguimiento</td><td class="cell-limit">—</td><td class="cell-limit">30 min/mes</td><td class="col-this"><b>45 min/mes + estrategia</b></td></tr>
-          <tr><td>Ideal para</td><td class="cell-limit">Una necesidad puntual</td><td class="cell-limit">1 web + 1-3 herramientas</td><td class="col-this"><b>3+ herramientas activas</b></td></tr>
+          <tr><td>Web incluida</td><td class="cell-limit">No incluida</td><td><b>Esencial o Profesional, a elegir</b></td><td>Reacondicionada o nueva</td><td class="col-this"><b>Web Profesional</b></td></tr>
+          <tr><td>Automatizaciones de canal</td><td>1 a elegir</td><td class="cell-limit">Ninguna</td><td>2 a elegir</td><td class="col-this"><b>3 a elegir</b></td></tr>
+          <tr><td>Soluciones mantenidas (rango)</td><td class="cell-limit">Hasta 2</td><td class="cell-limit">—</td><td class="cell-limit">Hasta 3</td><td class="col-this"><b>Hasta 6</b></td></tr>
+          <tr><td>Permanencia</td><td>12 meses</td><td>12 meses</td><td>12 meses</td><td class="col-this">12 meses</td></tr>
+          <tr><td>Resolución de incidencias</td><td class="cell-limit">Por orden de llegada</td><td class="cell-limit">Por orden de llegada</td><td class="cell-limit">Por orden de llegada</td><td class="col-this"><b>Prioridad alta, &lt;24h</b></td></tr>
+          <tr><td>Revisión de rendimiento</td><td class="cell-limit">—</td><td class="cell-limit">Salud técnica automática</td><td class="cell-limit">Mensual básica</td><td class="col-this"><b>Continua</b></td></tr>
+          <tr><td>Reunión de seguimiento</td><td class="cell-limit">—</td><td class="cell-limit">—</td><td class="cell-limit">30 min/mes</td><td class="col-this"><b>45 min/mes + estrategia</b></td></tr>
+          <tr><td>Ideal para</td><td class="cell-limit">Una necesidad puntual</td><td class="cell-limit">Visibilidad y posicionamiento</td><td class="cell-limit">1 web + 1-3 herramientas</td><td class="col-this"><b>3+ herramientas activas</b></td></tr>
         </tbody>
       </table>
     </div>
@@ -287,7 +326,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="section-divider"><h2 class="sd-tag gold">Las 3 soluciones a elegir, gratis</h2><div class="sd-line"></div></div>
     <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:760px;margin-bottom:24px;">Tu Web Profesional ya incluye un chat que responde y agenda citas de fábrica, así que no hace falta elegirlo aquí. Estas 3 son aparte, para cubrir el resto de canales por los que te puede llegar un cliente. El Pro™ mantiene hasta 6 en total — la 4ª en adelante se instala al precio de catálogo, sin recargo de alta.</p>
     <div class="wib-grid">
-      <div class="wib-item"><b>IA para WhatsApp</b>Atención automática activa</div>
+      <div class="wib-item"><b>IA para WhatsApp</b>Atiende y agenda citas 24/7</div>
       <div class="wib-item"><b>IA para Llamadas</b>Contesta el teléfono y agenda citas</div>
       <div class="wib-item"><b>IA para Correo</b>Gestión automática de emails</div>
       <div class="wib-item"><b>Firma Digital</b>Firma de contratos online con validez legal</div>
@@ -302,6 +341,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="cross-nav">
       <h2 class="cross-nav-title">Relacionado</h2>
       <div class="cross-nav-items">
+        <a class="cross-nav-chip" href="elemental.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Elemental™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="basic.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Basic™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="lite.html"><div class="icon-badge sm green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Lite™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="../proyectos/web-profesional.html"><div class="icon-badge sm blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>Web Profesional <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
@@ -377,9 +417,9 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   set('table-price-lite',mLite+' €');
   set('table-price-pro',mPro+' €');
   set('faq-total-pro',pagoUnicoPro+'€');
-  if(foundingActive()){
-    set('hp-founding-badge-pro','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT+' de 10 plazas');
-    set('hp-founding-old-pro','Antes <s class="price-old">'+STANDARD_PRICES.pro+'€/mes</s>');
+  if(foundingActive('pro')){
+    set('hp-founding-badge-pro','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT.pro+' de 10 plazas');
+    set('hp-founding-old-pro','Lo mantienes para siempre · nuevos clientes después: '+STANDARD_PRICES.pro+'€/mes + IVA');
   }
 })();
 </script>
