@@ -146,7 +146,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
     <div class="card audit-card">
       <div class="card-tag">Revisión de servicios</div>
       <h2>Agenda una auditoría</h2>
-      <p>Repasamos contigo cómo están funcionando tus soluciones activas y qué podrías ajustar o añadir.</p>
+      <p>Repasamos contigo cómo están funcionando tus automatizaciones activas y qué podrías ajustar o añadir.</p>
       <div id="gcal-audit-btn"></div>
     </div>
   </div>
@@ -279,7 +279,7 @@ async function loadClient() {
   if (owned.length) {
     html += owned.map(s => '<div class="sol-row"><div class="sol-check">✓</div><div class="sol-name">' + escapeHtml(s.solution_name) + '</div>' + (s.is_free ? '<span class="sol-tag">Incluida</span>' : '') + '</div>').join('');
   } else {
-    html += '<div class="sol-row"><div class="sol-name empty-note">Aún no tenemos registradas soluciones concretas de tu Digitaliza — escríbenos si crees que falta algo.</div></div>';
+    html += '<div class="sol-row"><div class="sol-name empty-note">Aún no tenemos registradas automatizaciones concretas de tu Digitaliza — escríbenos si crees que falta algo.</div></div>';
   }
   contractedList.innerHTML = html;
 

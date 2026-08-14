@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-<title>Departamento Tecnológico Elemental™ — TRUCO technology</title>
-<meta name="description" content="Tu web (Esencial o Profesional, con el asistente que agenda por ti) + salud técnica de posicionamiento, gratis al contratar. Desde 98€/mes.">
+<title>Departamento Tecnológico Basic™ — TRUCO technology</title>
+<meta name="description" content="Web Profesional con chat que responde dudas y agenda citas siempre, gratis, + 1 automatización más a elegir (WhatsApp, Correo o TruKi). Desde 149€/mes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -64,11 +64,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .ph-tag svg{width:15px;height:15px;}
 .page-hero h1{font-size:clamp(2.1rem,4vw,3.3rem);font-weight:700;margin-bottom:16px;max-width:760px;position:relative;z-index:1;}
 .page-hero p{font-size:1.05rem;color:var(--grey);line-height:1.75;max-width:640px;position:relative;z-index:1;}
+.page-hero p strong{color:var(--white);}
 .hero-price-box{position:relative;z-index:1;margin-top:32px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;padding:28px 32px;display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap;}
+.hp-founding-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(90deg,#f2c14e,var(--gold) 55%,#c98f1f);color:#1a1206;font-weight:800;font-size:.8rem;padding:6px 14px;border-radius:20px;margin-bottom:10px;}
+.hp-founding-badge:empty{display:none;margin-bottom:0;}
 .hp-main{font-size:2.2rem;font-weight:700;font-family:var(--font-d);}
 .hp-main sub{font-size:.9rem;font-weight:500;color:var(--grey);}
 .hp-vat{font-size:.84rem;color:var(--grey);margin-top:2px;}
 .hp-annual{font-size:.84rem;color:var(--gold);margin-top:6px;}
+.hp-founding-old{font-size:.74rem;color:var(--grey);margin-top:6px;}
+.hp-founding-old .price-old{text-decoration:line-through;}
 @media(max-width:768px){.hero-price-box{flex-direction:column;align-items:flex-start;}}
 
 .section-block{padding:60px 0;}
@@ -99,8 +104,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .feat-card:hover{border-color:var(--gold);}
 .feat-card svg{width:19px;height:19px;color:var(--gold);flex-shrink:0;margin-top:2px;}
 .feat-card p{font-size:.95rem;color:var(--white);line-height:1.55;}
-.feat-card.grey svg{color:var(--grey);}
-.feat-card.grey:hover{border-color:var(--grey);}
+.feat-card.blue svg{color:var(--blue);}
+.feat-card.blue:hover{border-color:var(--blue);}
 .limit-note{position:relative;z-index:1;background:var(--bg-panel);border:1px solid var(--grey-line);border-left:3px solid var(--gold);border-radius:10px;padding:16px 20px;margin-top:20px;font-size:.92rem;color:var(--grey);line-height:1.6;}
 .limit-note b{color:var(--white);}
 .limit-note a{color:var(--blue);font-weight:600;}
@@ -118,21 +123,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .vh-list li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:800;font-size:1.05rem;}
 .vh-tag{font-size:.74rem;color:var(--grey);font-family:var(--font-m);white-space:nowrap;flex-shrink:0;}
 
-.web-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-@media(max-width:768px){.web-grid{grid-template-columns:1fr;}}
-.web-card{background:var(--bg-panel);border:1.5px solid var(--grey-line);border-radius:16px;padding:26px;position:relative;}
-.web-card.featured{border-color:var(--gold);background:linear-gradient(135deg,rgba(217,168,63,.1),var(--bg-panel));}
-.web-card-ribbon{position:absolute;top:-11px;left:24px;background:linear-gradient(90deg,var(--gold),#c98f1f);color:#1a1206;font-size:.62rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:4px 12px;border-radius:20px;}
-.web-card h3{font-size:1.15rem;margin-bottom:6px;}
-.web-card .price{font-family:var(--font-d);font-size:1.7rem;font-weight:800;margin:10px 0 4px;}
-.web-card .price sub{font-size:.7rem;font-weight:500;color:var(--grey);}
-.web-card ul{list-style:none;margin:16px 0 0;display:flex;flex-direction:column;gap:9px;}
-.web-card li{font-size:.88rem;color:var(--grey);padding-left:20px;position:relative;line-height:1.5;}
-.web-card li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:800;}
-.web-card li b{color:var(--white);}
+.wib-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.wib-item{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:10px;padding:14px 16px;font-size:.85rem;color:var(--grey);}
+.wib-item b{display:block;color:var(--white);font-size:.92rem;margin-bottom:3px;}
+@media(max-width:900px){.wib-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.wib-grid{grid-template-columns:1fr;}}
 
 .compare-wrap{overflow-x:auto;}
-.compare-table{width:100%;border-collapse:collapse;min-width:620px;}
+.compare-table{width:100%;border-collapse:collapse;min-width:640px;}
 .compare-table th,.compare-table td{padding:14px 16px;text-align:left;font-size:.9rem;border-bottom:1px solid var(--grey-line);}
 .compare-table th{font-family:var(--font-m);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);font-weight:600;}
 .compare-table td:not(:first-child),.compare-table th:not(:first-child){text-align:center;}
@@ -211,7 +209,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </a>
   <div class="nav-right">
     <a class="nav-back" href="../index.html#servicios"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Departamento Tecnológico</a>
-    <a class="nav-cta" href="../pago.html?plan=arranque-elemental-esencial">Contratar Elemental™</a>
+    <a class="nav-cta" href="../pago.html?plan=arranque-elemental-profesional">Contratar Basic™</a>
   </div>
 </nav>
 
@@ -219,26 +217,28 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="hero-glow blue"></div>
   <div class="hero-glow gold"></div>
   <div class="container">
-    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Web + salud técnica de posicionamiento, gratis</div>
-    <h1>Departamento Tecnológico Elemental™</h1>
-    <p>Si nadie te encuentra en Google, da igual lo bueno que seas. Elemental™ es el punto de partida para tu visibilidad: elige entre <strong>Web Esencial</strong> o <strong>Web Profesional — con el asistente que responde y agenda citas como si fuera una persona</strong>, y nosotros nos encargamos de que siga funcionando bien y encontrándose fácil, mes a mes. Sin automatizaciones de canal — eso es lo que añade Lite™ o Pro™ cuando lo necesites.</p>
+    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Web Profesional + 1 automatización más, gratis</div>
+    <h1>Departamento Tecnológico Basic™</h1>
+    <p>No montamos webs bonitas que no venden. Montamos webs que trabajan por ti 24/7 — <strong>responden dudas y agendan citas en tu calendario, siempre</strong>, sin que gastes ningún pick en ello. Y si eliges WhatsApp como tu automatización, podrás hacer que tu agente derive la conversación y hasta cierre la venta ahí mismo. Basic™ te da la Web Profesional completa más 1 automatización más a elegir, todo instalado completamente gratis.</p>
     <div class="hero-price-box">
       <div>
-        <div class="hp-main">Desde 98 €<sub>/mes</sub></div>
-        <div class="hp-vat">+ IVA · 118,58 €/mes con IVA (Web Esencial)</div>
-        <div class="hp-annual">149 €/mes + IVA con Web Profesional — chat y agenda incluidos · Permanencia 12 meses</div>
+        <div class="hp-founding-badge" id="hp-founding-badge-elemental"></div>
+        <div class="hp-main" id="hp-main-elemental"></div>
+        <div class="hp-vat" id="hp-vat-elemental"></div>
+        <div class="hp-founding-old" id="hp-founding-old-elemental"></div>
+        <div class="hp-annual" id="hp-annual-elemental"></div>
       </div>
-      <a class="btn-primary" href="../pago.html?plan=arranque-elemental-esencial">Contratar Elemental™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a class="btn-primary" href="../pago.html?plan=arranque-elemental-profesional">Contratar Basic™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </div>
-    <div class="limit-note"><b>Elemental™ es el eje de visibilidad de tu Departamento.</b> Si también necesitas automatizar WhatsApp, llamadas o reservas, ese es el otro eje — mira <a href="basic.html">Basic™</a>, o combina los dos con <a href="lite.html">Lite™</a>.</div>
+    <div class="limit-note"><b>La web y la automatización ya no se pagan aparte, van incluidas.</b> Es lo que hace posible este regalo: 12 meses de permanencia. Si tu negocio ya combina varias herramientas a la vez, mira <a href="lite.html">Lite™</a> o <a href="pro.html">Pro™</a>.</div>
     <div class="value-highlight">
       <div class="vh-eyebrow">Lo que te llevas gratis</div>
-      <div class="vh-save">Ahorras hasta <b>1.390 €</b> en instalación, según la web que elijas</div>
+      <div class="vh-save">Ahorras entre <b>1.740 € y 1.980 €</b> en instalación</div>
       <ul class="vh-list">
-        <li>Web Esencial <span class="vh-tag">valor 790 €</span></li>
-        <li>o Web Profesional <span class="vh-tag">valor 1.390 €</span></li>
-        <li>Salud técnica de posicionamiento <span class="vh-tag">revisión constante</span></li>
-        <li>Mantenimiento y copias de seguridad <span class="vh-tag">incluido siempre</span></li>
+        <li>Web Profesional <span class="vh-tag">valor 1.390 €</span></li>
+        <li>Chat + agenda en tu calendario <span class="vh-tag">de fábrica, siempre</span></li>
+        <li>1 automatización más a elegir <span class="vh-tag">valor 350-590 €</span></li>
+        <li>Mantenimiento de todo lo activo <span class="vh-tag">incluido siempre</span></li>
       </ul>
     </div>
   </div>
@@ -246,49 +246,18 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="section-block reveal">
   <div class="container">
-    <div class="section-divider"><h2 class="sd-tag gold">Elige tu web</h2><div class="sd-line"></div></div>
-    <p style="color:var(--grey);font-size:.92rem;line-height:1.7;max-width:760px;margin-bottom:22px;">Las dos opciones incluyen salud técnica de posicionamiento y mantenimiento. La diferencia es lo que hace tu web por ti mientras no estás mirando.</p>
-    <div class="web-grid">
-      <div class="web-card">
-        <h3>Web Esencial</h3>
-        <p style="color:var(--grey);font-size:.86rem;">Presencia profesional desde el minuto uno — información clara, diseño cuidado, lista para que te encuentren.</p>
-        <div class="price">98 €<sub>/mes + IVA</sub></div>
-        <ul>
-          <li><b>Web a medida</b>, valor 790 €</li>
-          <li>Salud técnica de posicionamiento</li>
-          <li>Mantenimiento y copias de seguridad</li>
-        </ul>
-      </div>
-      <div class="web-card featured">
-        <div class="web-card-ribbon">Con el asistente que agenda por ti</div>
-        <h3>Web Profesional</h3>
-        <p style="color:var(--grey);font-size:.86rem;">Todo lo de Esencial, más un chat que <b style="color:var(--white);">responde dudas y agenda citas solo, como si fuera una persona</b> — de fábrica, sin configurarlo aparte.</p>
-        <div class="price">149 €<sub>/mes + IVA</sub></div>
-        <ul>
-          <li><b>Web Profesional</b>, valor 1.390 €</li>
-          <li><b>Chat + agenda que atiende solo</b>, de fábrica</li>
-          <li>Salud técnica de posicionamiento</li>
-          <li>Mantenimiento y copias de seguridad</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="section-block reveal" style="padding-top:0;">
-  <div class="container">
-    <div class="section-divider"><h2 class="sd-tag gold">¿Para quién es Elemental™?</h2><div class="sd-line"></div></div>
-    <p style="color:var(--grey);font-size:.92rem;line-height:1.7;max-width:760px;margin-bottom:4px;">Para negocios cuyo problema no es "tengo demasiadas herramientas sueltas", sino "nadie me encuentra todavía". Antes de automatizar nada, necesitas que te vean.</p>
+    <div class="section-divider"><h2 class="sd-tag gold">¿Para quién es Basic™?</h2><div class="sd-line"></div></div>
+    <p style="color:var(--grey);font-size:.92rem;line-height:1.7;max-width:760px;margin-bottom:4px;">Para negocios que quieren una web que no se limite a estar ahí bonita, sino que trabaje: que responda dudas y agende citas sola, siempre — más una automatización extra para el canal por el que de verdad te llegan los clientes.</p>
     <div class="who-grid">
       <div class="who-card">
         <div class="icon-badge gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="10"/></svg></div>
         <h4>Negocios que empiezan de cero</h4>
-        <p>Todavía no tienes web, o vives solo del boca a boca. Elemental™ te pone en Google con una base sólida antes de pensar en automatizar nada.</p>
+        <p>Todavía no tienes web, o vives solo del boca a boca. Basic™ te pone en marcha con una web que además atiende y agenda por ti, sin que tengas que aprender nada.</p>
       </div>
       <div class="who-card">
         <div class="icon-badge blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10M18 20V4M6 20v-4"/></svg></div>
         <h4>Profesionales que necesitan credibilidad</h4>
-        <p>Consultores, terapeutas, formadores: una web cuidada es lo primero que mira un cliente potencial antes de confiar en ti.</p>
+        <p>Consultores, terapeutas, formadores: una web cuidada que agenda la cita sola es lo primero que mira un cliente potencial antes de confiar en ti.</p>
       </div>
       <div class="who-card">
         <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
@@ -297,11 +266,11 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
       <div class="who-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-        <h4>Quien quiere que su web también atienda</h4>
-        <p>Con la Web Profesional, tu web responde dudas y agenda citas sola — sin que necesites automatizar ningún otro canal todavía.</p>
+        <h4>Quien quiere que WhatsApp también cierre ventas</h4>
+        <p>Eliges IA para WhatsApp como tu automatización y tu agente puede derivar la conversación y cerrar la venta ahí mismo, sin que tengas que intervenir.</p>
       </div>
     </div>
-    <div class="limit-note" style="margin-top:22px;"><b>¿Necesitas también automatizar WhatsApp, llamadas o reservas?</b> Eso es el otro eje del Departamento — mira <a href="basic.html">Basic™</a> si solo quieres eso, o <a href="lite.html">Lite™</a> para combinar los dos.</div>
+    <div class="limit-note" style="margin-top:22px;"><b>¿Necesitas más de 1 automatización además de la web?</b> Ese es el siguiente escalón — mira <a href="lite.html">Lite™</a> para 2 a elegir, o <a href="pro.html">Pro™</a> para 3.</div>
   </div>
 </div>
 
@@ -310,10 +279,10 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="section-divider"><h2 class="sd-tag gold">Así trabajamos contigo</h2><div class="sd-line"></div></div>
     <div class="hww-steps">
       <div class="hww-step"><div class="hww-step-num">1</div><p><b>Auditoría de tu negocio.</b> Antes de diseñar nada, te preguntamos cómo trabajas, quién es tu cliente y qué te diferencia de la competencia.</p></div>
-      <div class="hww-step"><div class="hww-step-num">2</div><p><b>Diseño y contenido a medida.</b> Escribimos y montamos tu web nosotros — no un cuestionario que rellenas tú y ya está.</p></div>
+      <div class="hww-step"><div class="hww-step-num">2</div><p><b>Diseño, contenido y automatización a medida.</b> Escribimos y montamos tu web nosotros, y configuramos tu automatización con los datos reales de tu negocio.</p></div>
       <div class="hww-step"><div class="hww-step-num">3</div><p><b>Revisión técnica constante.</b> Velocidad, indexación, enlaces rotos, ficha de Google — lo vigilamos y corregimos solos, sin que tengas que pedirlo.</p></div>
       <div class="hww-step"><div class="hww-step-num">4</div><p><b>Cambios sin que tú toques nada.</b> ¿Un precio, un horario, un texto? Nos escribes y lo hacemos nosotros.</p></div>
-      <div class="hww-step"><div class="hww-step-num">5</div><p><b>Con Web Profesional, tu asistente puede cerrar la cita por ti.</b> Cuando un cliente quiere reservar, tu web lo atiende y lo agenda sin que tengas que intervenir.</p></div>
+      <div class="hww-step"><div class="hww-step-num">5</div><p><b>Tu web y tu automatización pueden cerrar la cita o la venta por ti.</b> Cuando un cliente quiere reservar o comprar, lo atienden y lo agendan sin que tengas que intervenir.</p></div>
     </div>
   </div>
 </div>
@@ -322,31 +291,44 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="container">
     <div class="section-divider"><h2 class="sd-tag gold">Incluye</h2><div class="sd-line"></div></div>
     <div class="feat-grid">
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg><p><b>Tu web gratis</b> — Esencial o Profesional, la que elijas, incluida en la cuota</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg><p><b>Web Profesional gratis</b> — diseño a medida, valor 1.390 €, incluida en la cuota</p></div>
+      <div class="feat-card blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><p><b>Chat que responde dudas y agenda citas en tu calendario, siempre</b> — de fábrica, sin gastar ningún pick</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><p><b>1 automatización más a elegir</b> entre WhatsApp, Correo o TruKi, instalada completamente gratis</p></div>
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p><b>Salud técnica de posicionamiento</b> — velocidad, indexación, enlaces rotos y ficha de Google, vigilados sin parar</p></div>
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><p><b>Mantenimiento web</b> — actualizaciones, seguridad y rendimiento</p></div>
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><p><b>Copias de seguridad</b> periódicas y verificadas</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><p><b>Mantenimiento y copias de seguridad</b> periódicas y verificadas, siempre incluidas</p></div>
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p><b>Resolución de incidencias</b> técnicas sin coste adicional, por orden de llegada</p></div>
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p><b>Informe mensual</b> de salud técnica — qué se ha revisado y qué se ha corregido</p></div>
-      <div class="feat-card grey"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><p><b>Sin automatizaciones de canal</b> — WhatsApp, llamadas o correo se añaden en Basic™ o Lite™</p></div>
     </div>
   </div>
 </div>
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
-    <div class="section-divider"><h2 class="sd-tag gold">Basic™ vs Elemental™ vs Lite™ vs Pro™ de un vistazo</h2><div class="sd-line"></div></div>
+    <div class="section-divider"><h2 class="sd-tag blue">La automatización más a elegir en Basic™</h2><div class="sd-line"></div></div>
+    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:760px;margin-bottom:24px;">Tu web ya incluye chat y agenda de fábrica, así que no hace falta elegirlo aquí. Esta 1 es aparte, para cubrir el otro canal por el que te llegan clientes.</p>
+    <div class="wib-grid">
+      <div class="wib-item"><b>IA para WhatsApp</b>Atiende, agenda y puede cerrar la venta ahí mismo</div>
+      <div class="wib-item"><b>IA para Correo</b>Gestión automática de emails</div>
+      <div class="wib-item"><b>Facturación automática (TruKi)</b>Factura y presupuesta dictando por voz</div>
+    </div>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-top:0;">
+  <div class="container">
+    <div class="section-divider"><h2 class="sd-tag gold">Start™ vs Basic™ vs Lite™ vs Pro™ de un vistazo</h2><div class="sd-line"></div></div>
     <div class="compare-wrap">
       <table class="compare-table">
         <thead>
-          <tr><th>&nbsp;</th><th>Basic™ · 69 €/mes</th><th class="col-this">Elemental™ · desde 98 €/mes</th><th>Lite™ · desde 229 €/mes</th><th class="col-pro">Pro™ · desde 449 €/mes</th></tr>
+          <tr><th>&nbsp;</th><th>Start™ · <span id="table-price-start"></span>/mes</th><th class="col-this">Basic™ · <span id="table-price-elemental"></span>/mes</th><th>Lite™ · <span id="table-price-lite"></span>/mes</th><th class="col-pro">Pro™ · <span id="table-price-pro"></span>/mes</th></tr>
         </thead>
         <tbody>
-          <tr><td>Web incluida</td><td class="cell-limit">No incluida</td><td class="col-this"><b>Esencial o Profesional, a elegir</b></td><td>Reacondicionada o nueva</td><td class="col-pro"><b>Web Profesional</b></td></tr>
+          <tr><td>Web incluida</td><td class="cell-limit">No incluida</td><td class="col-this"><b>Web Profesional, con chat + agenda de fábrica</b></td><td>Reacondicionada o nueva</td><td class="col-pro"><b>Web Profesional</b></td></tr>
           <tr><td>Salud técnica de posicionamiento</td><td class="cell-limit">—</td><td class="col-this"><b>Incluida</b></td><td class="cell-limit">—</td><td class="cell-limit">—</td></tr>
-          <tr><td>Automatizaciones a elegir</td><td><b>1 a elegir</b></td><td class="col-this cell-limit">Ninguna</td><td>2 a elegir</td><td class="col-pro">3 a elegir</td></tr>
+          <tr><td>Automatizaciones a elegir</td><td>1 a elegir</td><td class="col-this"><b>1 más a elegir</b></td><td>2 a elegir</td><td class="col-pro">3 a elegir</td></tr>
+          <tr><td>Automatizaciones mantenidas (rango)</td><td class="cell-limit">Hasta 2</td><td class="col-this cell-limit">Hasta 2</td><td class="cell-limit">Hasta 3</td><td class="col-pro"><b>Hasta 6</b></td></tr>
           <tr><td>Permanencia</td><td>12 meses</td><td class="col-this">12 meses</td><td>12 meses</td><td class="col-pro">12 meses</td></tr>
-          <tr><td>Ideal para</td><td class="cell-limit">Solo automatizar 1 canal</td><td class="col-this"><b>Visibilidad y posicionamiento</b></td><td class="cell-limit">Web + 1-3 herramientas</td><td class="col-pro"><b>3+ herramientas activas</b></td></tr>
+          <tr><td>Ideal para</td><td class="cell-limit">Una necesidad puntual</td><td class="col-this"><b>Web que trabaje + 1 automatización</b></td><td class="cell-limit">Web + 1-3 herramientas</td><td class="col-pro"><b>3+ herramientas activas</b></td></tr>
         </tbody>
       </table>
     </div>
@@ -358,7 +340,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="cross-nav">
       <h2 class="cross-nav-title">Relacionado</h2>
       <div class="cross-nav-items">
-        <a class="cross-nav-chip" href="basic.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Basic™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="cross-nav-chip" href="basic.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Start™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="lite.html"><div class="icon-badge sm green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Lite™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="pro.html"><div class="icon-badge sm blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Pro™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="../digitaliza.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>Ver todo lo que instalamos <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
@@ -372,20 +354,24 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="section-divider"><h2 class="sd-tag gold">Preguntas frecuentes</h2><div class="sd-line"></div></div>
     <div class="faq-list">
       <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿La web con chat y agenda cuenta como mi automatización a elegir? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>No. El chat que responde dudas y agenda citas en tu calendario va siempre incluido en la Web Profesional, de fábrica, sin gastar ningún pick. La automatización que eliges (WhatsApp, Correo o TruKi) es aparte, para cubrir otro canal.</p></div>
+      </div>
+      <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Qué es exactamente "salud técnica de posicionamiento"? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Es la parte de SEO que sí podemos mantener siempre al día: velocidad de carga, que Google indexe bien tus páginas, que no haya enlaces rotos, datos estructurados correctos y tu ficha de Google actualizada. No prometemos "vas a subir de puesto" — ninguna agencia seria lo promete, porque depende también de contenido y enlaces externos que no forman parte de este nivel — pero sí que la base técnica nunca sea el motivo por el que Google te penaliza.</p></div>
+        <div class="faq-a"><p>Es la parte de SEO que sí podemos mantener siempre al día: velocidad de carga, que Google indexe bien tus páginas, que no haya enlaces rotos, datos estructurados correctos y tu ficha de Google actualizada. No prometemos "vas a subir de puesto" — ninguna agencia seria lo promete, porque depende también de contenido y enlaces externos — pero sí que la base técnica nunca sea el motivo por el que Google te penaliza.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">¿Por qué Elemental™ no incluye automatizaciones? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Porque separamos el Departamento en dos ejes: visibilidad (tu web) y automatización (tus canales). Elemental™ es solo el primero. Si también necesitas automatizar WhatsApp, llamadas o reservas, mira <a href="basic.html">Basic™</a>, o combina los dos con <a href="lite.html">Lite™</a>.</p></div>
+        <button class="faq-q" onclick="toggleFaq(this)">Si elijo WhatsApp, ¿de verdad puede cerrar la venta solo? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Sí. Configuramos y entrenamos tu agente de WhatsApp con los datos de tu negocio para que pueda derivar la conversación y, cuando el cliente esté listo, cerrar el trato ahí mismo — sin que tengas que intervenir.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">¿Puedo empezar con Web Esencial y pasar a Web Profesional después? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Sí. Es un cambio de cuota, no un contrato nuevo — nos escribes y lo gestionamos nosotros.</p></div>
+        <button class="faq-q" onclick="toggleFaq(this)">¿Por qué hay permanencia de 12 meses? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Porque regalamos la Web Profesional + 1 automatización desde el primer día — eso solo tiene sentido económico con un compromiso mínimo de 12 meses. Si no quieres ningún compromiso, la compra suelta (sin Departamento) sigue disponible, pero entonces el mantenimiento corre de tu cuenta.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Cómo se paga? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Por defecto, pago único por adelantado de los 12 meses, con un 12% de descuento por hacerlo de una vez. Si prefieres no adelantar todo de golpe, lo fraccionas a través de SeQura, nuestro partner de financiación. No hacemos facturación mensual directa con nosotros.</p></div>
+        <div class="faq-a"><p>Por defecto, pago único por adelantado de los 12 meses (<span id="faq-total-elemental"></span> + IVA), con un 12% de descuento por hacerlo de una vez. Si prefieres no adelantar todo de golpe, lo fraccionas a través de SeQura, nuestro partner de financiación — ellos nos pagan el total y tú les devuelves en los plazos que elijas. No hacemos facturación mensual directa con nosotros.</p></div>
       </div>
     </div>
   </div>
@@ -395,12 +381,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="container">
     <div class="cta-inner">
       <div>
-        <h2>¿Listo para que te empiecen a encontrar?</h2>
-        <p>Pago único con 12% dto., o fracciona con SeQura. Web gratis, 12 meses de permanencia.</p>
+        <h2>¿Listo para una web que trabaje por ti?</h2>
+        <p>Pago único con 12% dto., o fracciona con SeQura. Web Profesional + 1 automatización gratis, 12 meses de permanencia.</p>
       </div>
       <div class="cta-btns">
         <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>
-        <a class="btn-primary" href="../pago.html?plan=arranque-elemental-esencial">Contratar Elemental™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="btn-primary" href="../pago.html?plan=arranque-elemental-profesional">Contratar Basic™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
   </div>
@@ -421,6 +407,31 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </footer>
 
+<script src="../founding-offer.js"></script>
+<script>
+function renderFoundingPricesElemental(){
+  const mStart=currentPrice('basic'),mElemental=currentPrice('elemental-profesional'),mLite=currentPrice('lite'),mPro=currentPrice('pro');
+  const pagoUnicoElemental=(Math.round(mElemental*12*0.88*100)/100).toFixed(2).replace('.',',');
+  const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
+  set('hp-main-elemental',mElemental+' €<sub>/mes</sub>');
+  set('hp-vat-elemental','+ IVA · '+(mElemental*1.21).toFixed(2).replace('.',',')+' €/mes con IVA');
+  set('hp-annual-elemental','Pago único con 12% dto.: '+pagoUnicoElemental+' € + IVA (sin facturación mensual directa) · o fracciona con SeQura · Permanencia 12 meses');
+  set('table-price-start',mStart+' €');
+  set('table-price-elemental',mElemental+' €');
+  set('table-price-lite',mLite+' €');
+  set('table-price-pro',mPro+' €');
+  set('faq-total-elemental',pagoUnicoElemental+'€');
+  if(foundingActive('elemental-profesional')){
+    set('hp-founding-badge-elemental','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT['elemental-profesional']+' de '+FOUNDING_SPOTS_TOTAL['elemental-profesional']+' plazas');
+    set('hp-founding-old-elemental','Lo mantienes para siempre · nuevos clientes después: '+STANDARD_PRICES['elemental-profesional']+'€/mes + IVA');
+  }else{
+    set('hp-founding-badge-elemental','');
+    set('hp-founding-old-elemental','');
+  }
+}
+renderFoundingPricesElemental();
+window.onFoundingSpotsUpdated.push(renderFoundingPricesElemental);
+</script>
 <script>
 function toggleFaq(btn){
   const item=btn.closest('.faq-item');

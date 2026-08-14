@@ -1,19 +1,24 @@
-// ── OFERTA DE FUNDADOR — Lite™ y Pro™ ──
-// Elemental™ y Basic™ se quedan FUERA de este sistema a propósito — precio plano, sin descuento
-// de fundador ni contador de plazas (sus precios flat viven en ARRANQUES dentro de pago.html).
+// ── OFERTA DE FUNDADOR — Start™, Basic™, Lite™ y Pro™ ──
 //
-// El contador YA NO se edita a mano: los números de abajo son solo el valor
-// de arranque/fallback (por si Supabase no responde). En cuanto la página
-// carga, se pide el valor real a la tabla founding_spots de Supabase — cada
-// pago real a precio de fundador la decrementa automáticamente desde
+// El contador NO se edita a mano: los números de abajo son solo el valor de
+// arranque/fallback (por si Supabase no responde). En cuanto la página carga,
+// se pide el valor real a la tabla founding_spots de Supabase — cada pago real
+// a precio de fundador la decrementa automáticamente desde
 // netlify/functions/stripe-webhook.js (ver supabase/migration_founding_spots.sql).
 // Cuando el contador de un tier llegue a 0, la oferta desaparece sola PARA ESE
-// TIER en todas las páginas y se queda su precio estándar (279€ Lite / 549€ Pro).
-const FOUNDING_SPOTS_LEFT = { lite: 10, pro: 10 };
+// TIER en todas las páginas y se queda su precio estándar.
+//
+// Las claves de tier ('basic','elemental-profesional','lite','pro') son las
+// mismas que usa pago.html en ARRANQUES/DIRECT — 'basic' es el tier que se
+// muestra como "Start™" y 'elemental-profesional' el que se muestra como
+// "Basic™" (los nombres visibles cambiaron, las claves internas no, a
+// propósito, para no romper nada ya grabado en Supabase/Stripe).
+const FOUNDING_SPOTS_TOTAL = { basic: 20, 'elemental-profesional': 10, lite: 10, pro: 10 };
+const FOUNDING_SPOTS_LEFT = { basic: 20, 'elemental-profesional': 10, lite: 10, pro: 10 };
 
 // Precios — no tocar salvo que cambie la estrategia de precios en general.
-const FOUNDING_PRICES = { lite: 229, pro: 449 };
-const STANDARD_PRICES = { lite: 279, pro: 549 };
+const FOUNDING_PRICES = { basic: 69, 'elemental-profesional': 149, lite: 229, pro: 449 };
+const STANDARD_PRICES = { basic: 89, 'elemental-profesional': 169, lite: 279, pro: 549 };
 
 function foundingActive(tier){ return FOUNDING_SPOTS_LEFT[tier] > 0; }
 function currentPrice(tier){ return foundingActive(tier) ? FOUNDING_PRICES[tier] : STANDARD_PRICES[tier]; }

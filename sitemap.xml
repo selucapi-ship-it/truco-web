@@ -80,12 +80,7 @@
     <priority>0.6</priority>
   </url>
 
-  <!-- Proyectos (informativo, dentro de Elemental) -->
-  <url>
-    <loc>https://www.trucotechnology.com/proyectos/web-esencial.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
+  <!-- Proyectos (informativo, dentro de Basic™) -->
   <url>
     <loc>https://www.trucotechnology.com/proyectos/web-profesional.html</loc>
     <changefreq>monthly</changefreq>
