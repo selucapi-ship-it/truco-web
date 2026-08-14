@@ -195,6 +195,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 }
 @keyframes pageOut{to{opacity:0;}}
 @keyframes pageIn{from{opacity:0;}}
+@media(max-width:600px){.sd-tag{white-space:normal;}.btn-primary,.btn-ghost{white-space:normal;text-align:center;max-width:100%;}}
 </style>
 </head>
 <body>
@@ -311,7 +312,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         </thead>
         <tbody>
           <tr><td>Web incluida</td><td class="cell-limit">No incluida</td><td><b>Esencial o Profesional, a elegir</b></td><td class="col-this"><b>Reacondicionada o nueva</b></td><td class="col-pro"><b>Web Profesional</b></td></tr>
-          <tr><td>Automatizaciones de canal</td><td>1 a elegir</td><td class="cell-limit">Ninguna</td><td class="col-this"><b>2 a elegir</b></td><td class="col-pro">3 a elegir</td></tr>
+          <tr><td>Automatizaciones a elegir</td><td>1 a elegir</td><td class="cell-limit">Ninguna</td><td class="col-this"><b>2 a elegir</b></td><td class="col-pro">3 a elegir</td></tr>
           <tr><td>Soluciones mantenidas (rango)</td><td class="cell-limit">Hasta 2</td><td class="cell-limit">—</td><td class="col-this cell-limit">Hasta 3</td><td class="col-pro"><b>Hasta 6</b></td></tr>
           <tr><td>Permanencia</td><td>12 meses</td><td>12 meses</td><td class="col-this"><b>12 meses</b></td><td class="col-pro">12 meses</td></tr>
           <tr><td>Resolución de incidencias</td><td class="cell-limit">Por orden de llegada</td><td class="cell-limit">Por orden de llegada</td><td class="col-this cell-limit">Por orden de llegada</td><td class="col-pro"><b>Prioridad alta, &lt;24h</b></td></tr>
@@ -326,7 +327,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
-    <div class="section-divider"><h2 class="sd-tag blue">Las 2 soluciones a elegir, gratis</h2><div class="sd-line"></div></div>
+    <div class="section-divider"><h2 class="sd-tag blue">Las 2 automatizaciones a elegir, gratis</h2><div class="sd-line"></div></div>
     <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:760px;margin-bottom:24px;">Eliges 2 de este catálogo al contratar, instaladas gratis. Si más adelante quieres otra dentro del rango de 3, se instala al precio de catálogo sin recargo de alta.</p>
     <div class="wib-grid">
       <div class="wib-item"><b>IA para WhatsApp</b>Atiende y agenda citas 24/7</div>
@@ -336,7 +337,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="wib-item"><b>Reservas y Agenda</b>Citas online integradas</div>
       <div class="wib-item"><b>Firma Digital</b>Firma de contratos online con validez legal</div>
       <div class="wib-item"><b>Ciberseguridad Pyme</b>Protección y copias de seguridad hasta 5 puestos</div>
-      <div class="wib-item"><b>Automatizaciones (banda Simple)</b>Un flujo interno automatizado a medida</div>
+      <div class="wib-item"><b>Flujos a medida (banda Simple)</b>Un flujo interno automatizado a medida</div>
     </div>
   </div>
 </div>
@@ -412,7 +413,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <script src="../founding-offer.js"></script>
 <script>
-(function(){
+function renderFoundingPricesLite(){
   const mLite=currentPrice('lite'),mPro=currentPrice('pro');
   const pagoUnicoLite=(Math.round(mLite*12*0.88*100)/100).toFixed(2).replace('.',',');
   const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
@@ -425,8 +426,13 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   if(foundingActive('lite')){
     set('hp-founding-badge-lite','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT.lite+' de 10 plazas');
     set('hp-founding-old-lite','Lo mantienes para siempre · nuevos clientes después: '+STANDARD_PRICES.lite+'€/mes + IVA');
+  }else{
+    set('hp-founding-badge-lite','');
+    set('hp-founding-old-lite','');
   }
-})();
+}
+renderFoundingPricesLite();
+window.onFoundingSpotsUpdated.push(renderFoundingPricesLite);
 </script>
 <script>
 function toggleFaq(btn){

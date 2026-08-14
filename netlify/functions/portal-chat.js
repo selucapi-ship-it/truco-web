@@ -18,16 +18,16 @@ const CATALOG_TEXT = `DATOS REALES DE TRUCO technology (no inventes nada fuera d
 QUÉ ES: Departamento Tecnológico externalizado para pymes y autónomos en España — es lo único que vendemos. Hay 4 escalones, TODOS con 12 meses de permanencia y web/soluciones instaladas completamente gratis. Se organizan en dos ejes: visibilidad (Elemental™ = solo web) y automatización (Basic™ = solo soluciones); Lite™ y Pro™ combinan ambos ejes a más escala. No existe ninguna vía de compra suelta sin permanencia — Web Esencial, Web Profesional y Digitaliza tu Empresa son hoy solo páginas informativas, no productos aparte.
 
 ── LOS 4 DEPARTAMENTOS ──
-- Basic™ (eje automatización): 69€/mes + IVA. Sin web. 1 solución gratis (pool: WhatsApp, IA Web, IA Llamadas, IA Correo, Reservas, Firma Digital, Ciberseguridad Pyme, Automatizaciones banda Simple, TruKi — único escalón con TruKi gratis). Mantiene hasta 2 soluciones en total.
+- Basic™ (eje automatización): 69€/mes + IVA. Sin web. 1 solución gratis (pool: WhatsApp, IA Web, IA Llamadas, IA Correo, Reservas, Firma Digital, Ciberseguridad Pyme, Flujos automáticos a medida (banda Simple), TruKi — único escalón con TruKi gratis). Mantiene hasta 2 soluciones en total.
 - Elemental™ (eje visibilidad): 98€/mes + IVA con Web Esencial, o 149€/mes + IVA con Web Profesional. Solo web, nunca incluye soluciones automatizadas. Incluye mantenimiento, seguridad, actualizaciones y "salud técnica de posicionamiento" (velocidad, indexación, enlaces rotos, datos estructurados, Google Business, seguimiento de posiciones) — nunca promete resultados de ranking, es salud técnica automatizable, no una campaña activa de SEO.
-- Lite™: 279€/mes + IVA (o precio de fundador si sigue activa la oferta). Web + 2 soluciones gratis (pool: WhatsApp, IA Web, Llamadas, Correo, Reservas, Firma Digital, Ciberseguridad Pyme, Automatizaciones solo banda Simple 350€). TruKi NO entra en este pool, solo en Basic™. Mantiene hasta 3 soluciones en total. Reunión mensual 30 min.
-- Pro™: 549€/mes + IVA (o precio de fundador si sigue activa la oferta). Web Profesional que ya incluye de fábrica chat + agenda de citas (por eso IA para tu Web y Reservas no están en su pool de elegir, ya las tiene gratis) + 3 soluciones gratis a elegir de un pool de 6 (WhatsApp, Llamadas, Correo, Firma Digital, Ciberseguridad, Automatizaciones banda Simple). Mantiene hasta 6 soluciones en total. Reunión mensual 45 min, mayor prioridad en incidencias.
+- Lite™: 279€/mes + IVA (o precio de fundador si sigue activa la oferta). Web + 2 soluciones gratis (pool: WhatsApp, IA Web, Llamadas, Correo, Reservas, Firma Digital, Ciberseguridad Pyme, Flujos automáticos a medida solo banda Simple 350€). TruKi NO entra en este pool, solo en Basic™. Mantiene hasta 3 soluciones en total. Reunión mensual 30 min.
+- Pro™: 549€/mes + IVA (o precio de fundador si sigue activa la oferta). Web Profesional que ya incluye de fábrica chat + agenda de citas (por eso IA para tu Web y Reservas no están en su pool de elegir, ya las tiene gratis) + 3 soluciones gratis a elegir de un pool de 6 (WhatsApp, Llamadas, Correo, Firma Digital, Ciberseguridad, Flujos automáticos a medida (banda Simple)). Mantiene hasta 6 soluciones en total. Reunión mensual 45 min, mayor prioridad en incidencias.
 - La oferta de fundador (cuando esté activa) solo aplica a Lite™/Pro™ — Basic™ y Elemental™ siempre a precio fijo.
 - Pago: solo pago único con 12% de descuento, o financiado con SeQura. Nunca facturación mensual directa.
 - Al terminar los 12 meses: el cliente renueva si quiere seguir, o se lo lleva todo — incluido el código fuente de su web, en un pen drive personalizado.
 
-── SOLUCIONES INDIVIDUALES (+ IVA, se instalan siempre dentro de un Departamento, nunca sueltas) ──
-IA para WhatsApp 590€ (agenda citas en el calendario) · IA para Web 350€ (agenda citas en el calendario, igual que WhatsApp) · IA para Correo 350€ · IA para Llamadas 690€ (150 llamadas/mes incluidas, exceso 0,50€ + IVA) · Reservas online 350€ (botón de reserva directa; se combina con WhatsApp/Web/Llamadas o funciona sola) · Facturación automática (TruKi) 580€ (+29€/mes de hosting si se contrata suelta, sin Departamento) · Gestión documental desde 400€ · Ciberseguridad Pyme 450€ (hasta 5 puestos, +150€ por cada 5 adicionales) · Firma digital 500€ · Integraciones desde 600€ · Automatizaciones 350/650/1.200€ según complejidad · CRM desde 950€.
+── AUTOMATIZACIONES INDIVIDUALES (+ IVA, se instalan siempre dentro de un Departamento, nunca sueltas) ──
+IA para WhatsApp 590€ (agenda citas en el calendario) · IA para Web 350€ (agenda citas en el calendario, igual que WhatsApp) · IA para Correo 350€ · IA para Llamadas 690€ (150 llamadas/mes incluidas, exceso 0,50€ + IVA) · Reservas online 350€ (botón de reserva directa; se combina con WhatsApp/Web/Llamadas o funciona sola) · Facturación automática (TruKi) 580€ (+29€/mes de hosting si se contrata suelta, sin Departamento) · Gestión documental desde 400€ · Ciberseguridad Pyme 450€ (hasta 5 puestos, +150€ por cada 5 adicionales) · Firma digital 500€ · Integraciones desde 600€ · Flujos automáticos a medida 350/650/1.200€ según complejidad · CRM desde 950€.
 
 CONDICIONES GENERALES:
 - Garantía de Ajuste TRUCO™: se ajusta lo que haga falta sin coste durante la implantación. Incidencias técnicas siempre sin coste.
@@ -58,7 +58,8 @@ REGLAS DE RESPUESTA:
 2. Sé breve pero completo — 3-4 frases o un par de puntos clave, no un documento.
 3. Si pregunta por soluciones que NO tiene contratadas, puedes mencionar el precio del catálogo, pero deja claro que para contratarla debe ir a digitaliza.html o pago.html — tú no gestionas compras desde aquí.
 4. Si quiere agendar una revisión/auditoría de sus servicios, dile que use el botón "Agendar una auditoría" del propio panel.
-5. Si la pregunta es genuinamente imposible de responder con esta información (asesoría legal/fiscal personalizada, algo fuera de TRUCO), responde EXACTAMENTE empezando con "[NO_SE_RESPONDER]" seguido de una frase breve. No uses ese texto en ningún otro caso.`;
+5. Si la pregunta es algo genuinamente fuera del ámbito de TRUCO — charla casual, opinión personal, cultura general, insultos, bromas, o cualquier tema sin relación con su negocio o sus servicios — responde EXACTAMENTE empezando con "[FUERA_DE_TEMA]" seguido de una frase breve y respetuosa tipo "Lo siento, pero ese tema no corresponde a TRUCOtechnology", sin ofrecer nada más y sin invitar a agendar nada.
+6. Si la pregunta SÍ es sobre su negocio o sus servicios pero es genuinamente imposible de responder con esta información (asesoría legal/fiscal muy personalizada, un caso demasiado específico), responde EXACTAMENTE empezando con "[NO_SE_RESPONDER]" seguido de una frase breve y amable, invitando siempre a agendar una revisión con el equipo para resolverlo ahí — nunca dejes la respuesta en un simple "no puedo ayudarte". No uses ninguno de estos dos textos en ningún otro caso.`;
 }
 
 exports.handler = async function (event) {
@@ -175,8 +176,11 @@ exports.handler = async function (event) {
       return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'empty_response' }) };
     }
 
-    const finalText = rawText.replace('[NO_SE_RESPONDER]', '').trim();
-    const unresolved = rawText.includes('[NO_SE_RESPONDER]');
+    const isOffTopic = rawText.includes('[FUERA_DE_TEMA]');
+    const isUnanswerable = rawText.includes('[NO_SE_RESPONDER]');
+    const finalText = rawText.replace('[FUERA_DE_TEMA]', '').replace('[NO_SE_RESPONDER]', '').trim();
+    const unresolved = isOffTopic || isUnanswerable;
+    const reason = isOffTopic ? 'off_topic' : (isUnanswerable ? 'ai_could_not_answer' : undefined);
 
     // Registramos el intercambio como una única interacción (pregunta + respuesta
     // separadas por '\n---\n') para poder reconstruir turnos de conversación la
@@ -187,7 +191,7 @@ exports.handler = async function (event) {
       body: JSON.stringify({ client_id: client.id, source: 'portal', nota: `${message.slice(0, 800)}\n---\n${finalText.slice(0, 800)}` }),
     }).catch(() => {});
 
-    return { statusCode: 200, body: JSON.stringify({ text: finalText, unresolved }) };
+    return { statusCode: 200, body: JSON.stringify({ text: finalText, unresolved, reason }) };
   } catch (e) {
     return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'exception' }) };
   }

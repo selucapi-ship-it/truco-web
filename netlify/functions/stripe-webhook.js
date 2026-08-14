@@ -79,6 +79,7 @@ exports.handler = async function (event) {
   const email = session.customer_details ? session.customer_details.email : session.customer_email;
   const planKey = (session.metadata && session.metadata.plan_key) || '';
   const arranqueTier = (session.metadata && session.metadata.arranque_tier) || '';
+  const isFounding = (session.metadata && session.metadata.founding) === 'true';
   const nombre = session.customer_details ? session.customer_details.name : null;
   let solutions = [];
   try {
@@ -122,6 +123,25 @@ exports.handler = async function (event) {
     } catch (err) {
       // No bloquear la confirmación del webhook a Stripe por un fallo aquí —
       // el pago ya se ha cobrado, esto solo actualiza el CRM.
+    }
+
+    // Contador de plazas de fundador: solo baja 1 plaza cuando el pago
+    // confirmado por Stripe se hizo realmente al precio de fundador (lo
+    // decidió pago.html en el momento del checkout, vía metadata.founding) —
+    // nunca en cada compra de Lite™/Pro™. decrement_founding_spot() ya se
+    // protege sola contra bajar de 0 (ver migration_founding_spots.sql), así
+    // que da igual si esto se procesa dos veces por un reintento de Stripe.
+    if (isFounding && (arranqueTier === 'lite' || arranqueTier === 'pro')) {
+      try {
+        await fetch(`${supabaseUrl}/rest/v1/rpc/decrement_founding_spot`, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ p_tier: arranqueTier }),
+        });
+      } catch (err) {
+        // No bloquear el webhook — en el peor caso el founder ajusta el
+        // contador a mano una vez en el SQL Editor de Supabase.
+      }
     }
 
     // Programa de referidos: si esta compra venía de un enlace de referido

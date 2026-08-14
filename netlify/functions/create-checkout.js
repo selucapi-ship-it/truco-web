@@ -34,6 +34,7 @@ exports.handler = async function (event) {
   const customerEmail = payload.customerEmail ? String(payload.customerEmail).slice(0, 200) : undefined;
   const planKey = payload.planKey ? String(payload.planKey).slice(0, 100) : '';
   const arranqueTier = payload.arranqueTier ? String(payload.arranqueTier).slice(0, 20) : '';
+  const founding = payload.founding === true;
   const solutions = Array.isArray(payload.solutions) ? payload.solutions : [];
   const refCode = payload.refCode ? String(payload.refCode).slice(0, 20) : '';
   const consumeReferralCredit = payload.consumeReferralCredit ? String(payload.consumeReferralCredit).slice(0, 100) : '';
@@ -71,6 +72,7 @@ exports.handler = async function (event) {
       metadata: {
         plan_key: planKey,
         arranque_tier: arranqueTier,
+        founding: founding ? 'true' : 'false',
         source: 'checkout',
         solutions: JSON.stringify(solutions).slice(0, 500),
         ref_code: refCode,

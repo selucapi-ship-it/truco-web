@@ -308,18 +308,23 @@ img{display:block;max-width:100%;}
 #how-we-work{padding:64px 0;}
 #how-we-work .container{max-width:1120px;margin:0 auto;padding:0 24px;text-align:center;}
 #how-we-work .section-tag{justify-content:center;}
-#how-we-work .section-h2{max-width:720px;margin:0 auto 36px;text-align:center;}
-.hww-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;text-align:left;}
-@media(max-width:768px){.hww-grid{grid-template-columns:1fr;}}
-.hww-item{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:24px 22px;}
-.hww-num{width:34px;height:34px;border-radius:50%;background:var(--gold-dim);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:1rem;margin-bottom:14px;}
-.hww-item p{font-size:.95rem;color:var(--grey);line-height:1.65;}
-.hww-item p b{color:var(--gold);}
+#how-we-work .section-h2{max-width:720px;margin:0 auto 40px;text-align:center;}
+.hww-grid{display:flex;align-items:stretch;gap:0;text-align:left;}
+@media(max-width:860px){.hww-grid{flex-direction:column;gap:14px;}}
+.hww-item{flex:1;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:22px;}
+.hww-arrow{flex-shrink:0;width:40px;display:flex;align-items:center;justify-content:center;color:var(--grey-line);}
+.hww-arrow svg{width:20px;height:20px;}
+@media(max-width:860px){.hww-arrow{display:none;}}
+.hww-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.hww-icon{flex-shrink:0;width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;}
+.hww-icon svg{width:16px;height:16px;}
+.hww-icon.gold{background:var(--gold-dim);color:var(--gold);}
+.hww-icon.blue{background:rgba(47,123,255,.12);color:var(--blue);}
+.hww-icon.green{background:rgba(34,197,94,.12);color:var(--green);}
+.hww-num{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--grey);font-weight:700;}
+.hww-item h4{font-family:var(--font-display);font-size:1.06rem;font-weight:800;margin:0 0 6px;color:var(--white);line-height:1.3;}
+.hww-item p{font-size:.87rem;color:var(--grey);line-height:1.55;margin:0;}
 .hww-close{margin-top:32px;font-family:var(--font-display);font-size:1.4rem;font-weight:800;text-align:center;}
-.hww-icon{width:52px;height:52px;border-radius:14px;background:var(--gold-dim);color:var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
-.hww-icon svg{width:26px;height:26px;}
-.hww-item-visual .hww-num{width:auto;height:auto;background:none;color:var(--gold);font-family:var(--font-m);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;border-radius:0;display:block;font-weight:700;}
-.hww-item-visual .hww-num::before{content:'Paso ';}
 
 /* ── SECTIONS GENERAL ── */
 .section{padding:96px 0;}
@@ -370,6 +375,10 @@ img{display:block;max-width:100%;}
 .entry-ribbon{position:absolute;top:16px;right:-32px;transform:rotate(40deg);background:var(--gold);color:#1a1206;font-family:var(--font-mono);font-size:.58rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 38px;box-shadow:0 4px 10px rgba(0,0,0,.3);}
 .entry-card h4{font-family:var(--font-display);font-size:1.2rem;font-weight:800;margin-bottom:8px;color:var(--white);position:relative;letter-spacing:-.01em;}
 .entry-card p{font-size:.95rem;color:var(--grey);line-height:1.6;margin-bottom:14px;flex:1;position:relative;}
+.entry-pains{list-style:none;margin:0 0 14px;padding:0;flex:1;position:relative;}
+.entry-pains li{font-size:.88rem;color:var(--grey);padding:3px 0 3px 18px;position:relative;line-height:1.5;}
+.entry-pains li::before{content:'✗';position:absolute;left:0;color:#5b6573;font-size:.66rem;top:5px;}
+.entry-close{font-family:var(--font-display);font-weight:800;font-size:.98rem;color:var(--white);margin:0 0 4px;position:relative;}
 .entry-price{display:inline-block;font-weight:800;font-size:1rem;padding:6px 16px;border-radius:20px;position:relative;font-family:var(--font-mono);}
 .c-blue .entry-price{color:var(--blue);background:var(--blue-dim);}
 .c-gold .entry-price{color:var(--gold);background:var(--gold-dim);}
@@ -518,6 +527,22 @@ img{display:block;max-width:100%;}
 .founder-sig{margin-top:24px;font-family:var(--font-mono);font-size:.72rem;color:var(--grey);letter-spacing:.06em;}
 .founder-sig b{color:var(--gold);font-weight:500;}
 @media(max-width:768px){.founder-inner{grid-template-columns:1fr;}.founder-photo-wrap{max-width:280px;}}
+
+/* ── CÓMO TRABAJAMOS (dentro de Nosotros) ── */
+.hiw-wrap{margin-top:72px;padding-top:56px;border-top:1px solid var(--grey-line);}
+.hiw-intro{max-width:760px;margin:0 auto 40px;text-align:center;}
+.hiw-intro .section-tag{justify-content:center;margin-bottom:16px;}
+.hiw-intro h3{font-family:var(--font-display);font-size:clamp(1.3rem,2.4vw,1.7rem);font-weight:800;margin-bottom:14px;line-height:1.35;}
+.hiw-intro p{font-size:.95rem;color:var(--grey);line-height:1.75;}
+.hiw-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:920px;margin:0 auto;}
+@media(max-width:760px){.hiw-grid{grid-template-columns:1fr;}}
+.hiw-card{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:22px 24px;}
+.hiw-when{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);margin-bottom:8px;}
+.hiw-when::before{content:'"';color:var(--gold);}
+.hiw-when::after{content:'"';color:var(--gold);}
+.hiw-then{font-size:.94rem;color:var(--white);line-height:1.6;}
+.hiw-then b{color:var(--gold);}
+.hiw-close{text-align:center;margin-top:32px;font-family:var(--font-display);font-size:1.15rem;font-weight:700;color:var(--white);max-width:620px;margin-left:auto;margin-right:auto;line-height:1.5;}
 
 .sr-panel{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;padding:28px 32px;}
 .sr-select{width:100%;max-width:420px;background:var(--bg-card);border:1.5px solid var(--gold);border-radius:8px;padding:12px 14px;color:var(--white);font-family:var(--font-b);font-size:.9rem;outline:none;-webkit-appearance:none;cursor:pointer;margin-top:16px;}
@@ -985,21 +1010,23 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="container">
     <div class="section-tag gold">Así trabajaría tu departamento tecnológico</div>
     <h2 class="section-h2">No te vendemos una IA en blanco para que la entrenes tú.</h2>
-    <div class="hww-grid hww-grid-visual">
-      <div class="hww-item hww-item-visual">
-        <div class="hww-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-        <div class="hww-num">1</div>
-        <p><b>Te auditamos antes de montar nada.</b> Te preguntamos lo necesario sobre tu negocio para que el asistente hable como tú, no como una IA genérica.</p>
+    <div class="hww-grid">
+      <div class="hww-item">
+        <div class="hww-head"><div class="hww-icon gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><div class="hww-num">Paso 1</div></div>
+        <h4>Te auditamos primero</h4>
+        <p>Para entender cómo trabajas y qué necesitas.</p>
       </div>
-      <div class="hww-item hww-item-visual">
-        <div class="hww-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
-        <div class="hww-num">2</div>
-        <p><b>Nosotros lo configuramos y lo entrenamos.</b> No hay manual que estudiar — nos escribes y nosotros lo ajustamos.</p>
+      <div class="hww-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      <div class="hww-item">
+        <div class="hww-head"><div class="hww-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="hww-num">Paso 2</div></div>
+        <h4>Nosotros lo entrenamos</h4>
+        <p>Para que tú no tengas que hacer nada. Tu Departamento ajusta y adapta todo lo que contrates a tu negocio.</p>
       </div>
-      <div class="hww-item hww-item-visual">
-        <div class="hww-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg></div>
-        <div class="hww-num">3</div>
-        <p><b>Nosotros te agendamos las revisiones</b> — y tu asistente virtual puede incluso cerrar la venta con tus clientes sin que tengas que intervenir. Tú solo miras tu agenda, mañana y noche.</p>
+      <div class="hww-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      <div class="hww-item">
+        <div class="hww-head"><div class="hww-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div><div class="hww-num">Paso 3</div></div>
+        <h4>Creamos tu ecosistema</h4>
+        <p>Web, WhatsApp, correo, facturas, llamadas — automatizado. Tú solo te preocupas de tu negocio.</p>
       </div>
     </div>
     <p class="hww-close">Somos tu solución.</p>
@@ -1013,9 +1040,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="s-tag">¿Es esto para ti?</div>
       <h2>Si lo que describes te suena,<br>el Departamento Lite™ no es una opción.</h2>
       <p>Es una necesidad. Hay profesiones donde perder un mensaje, olvidar una cita o tardar en responder tiene un coste real. Aquí van las más comunes.</p>
-    </div>
-    <div class="fix-callout">
-      <b>Importante:</b> No te vendemos un software nuevo que aprender. Si ya tienes tu programa de gestión, tu agenda o tu CRM — perfecto. Nosotros nos integramos con lo que ya tienes y nos encargamos de <b>todo lo que llega antes de que el cliente entre en tu sistema:</b> el WhatsApp, el correo, la duda de las 22h, la cita que alguien quiere pedir el domingo. Tú descansas. El negocio no para.
     </div>
     <div class="sectores-carousel" id="sectoresCarousel">
       <div class="sc-track-wrap">
@@ -1166,28 +1190,48 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg></div>
           <div class="entry-kicker">Solo necesitas UNA cosa</div>
           <h4>Basic™</h4>
-          <p>"Se me escapan mensajes de WhatsApp, pierdo horas facturando a mano, o las citas se me desordenan — pero no necesito web todavía." Automatiza eso, ya.</p>
+          <ul class="entry-pains">
+            <li>Pierdo clientes por no contestar el WhatsApp a tiempo</li>
+            <li>Pierdo horas facturando a mano</li>
+            <li>Se me solapan las citas</li>
+          </ul>
+          <p class="entry-close">Este es tu Departamento.</p>
           <a class="entry-cta" href="departamentos/basic.html">Ver Basic™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
         <div class="entry-card c-teal">
           <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="7" y1="14" x2="13" y2="14"/></svg></div>
           <div class="entry-kicker">No te encuentran</div>
           <h4>Elemental™</h4>
-          <p>"No tengo web, o la que tengo no convence a nadie ni aparece en Google." Antes de automatizar nada, necesitas que te encuentren.</p>
+          <ul class="entry-pains">
+            <li>No tengo web, o la que tengo no la encuentra nadie</li>
+            <li>No apareces en Google cuando te buscan</li>
+            <li>Aún no necesitas automatizar nada</li>
+          </ul>
+          <p class="entry-close">Este es tu Departamento.</p>
           <a class="entry-cta" href="departamentos/elemental.html">Ver Elemental™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
         <div class="entry-card c-green">
           <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/><line x1="3" y1="12" x2="21" y2="12"/></svg></div>
           <div class="entry-kicker">Web + un par de cosas más</div>
           <h4>Lite™</h4>
-          <p>"Tengo web (o casi), pero además se me escapan mensajes o se me pierden citas." Tu web cuidada + 2 automatizaciones trabajando contigo.</p>
+          <ul class="entry-pains">
+            <li>Tengo web, pero se me siguen escapando mensajes</li>
+            <li>Se me pierden citas entre WhatsApp y llamadas</li>
+            <li>Necesito la web cuidada + un par de cosas resueltas</li>
+          </ul>
+          <p class="entry-close">Este es tu Departamento.</p>
           <a class="entry-cta" href="departamentos/lite.html">Ver Lite™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
         <div class="entry-card c-blue">
           <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
           <div class="entry-kicker">Todo tu ecosistema</div>
           <h4>Pro™</h4>
-          <p>"Me escriben por varios canales a la vez, se me escapan clientes en el proceso, y no quiero perseguir la tecnología yo mismo." El departamento completo.</p>
+          <ul class="entry-pains">
+            <li>Me escriben por varios canales a la vez y no llego</li>
+            <li>Se me escapan clientes en el proceso</li>
+            <li>No quiero perseguir la tecnología yo mismo</li>
+          </ul>
+          <p class="entry-close">Este es tu Departamento.</p>
           <a class="entry-cta" href="departamentos/pro.html">Ver Pro™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
@@ -1198,7 +1242,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 <!-- ── SOLUTIONS SHOWCASE ── -->
 <section id="soluciones-showcase" class="section reveal">
   <div class="container">
-    <div class="section-tag gold">Soluciones tecnológicas</div>
+    <div class="section-tag gold">Automatizaciones</div>
     <h2 class="section-h2">¿Cuál de estos problemas tienes tú?</h2>
     <p class="section-sub">Esto es lo que instalamos dentro de tu Departamento. Entra directo en la que te interese, o ve todas juntas con sus precios.</p>
     <div class="need-grid">
@@ -1207,10 +1251,10 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <a class="need-card" href="soluciones/web-ia.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></span><div class="need-title">No pierdas un cliente por no responder un domingo</div><div class="need-sub">IA para tu Web →</div></a>
       <a class="need-card" href="soluciones/truki.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 1z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg></span><div class="need-title">Haz la factura solo con la voz, gracias a tu asistente TruKi</div><div class="need-sub">Facturación automática (TruKi) →</div></a>
       <a class="need-card" href="soluciones/crm.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><div class="need-title">Ten a cada cliente y su historial en un solo sitio, sin post-its</div><div class="need-sub">CRM →</div></a>
-      <a class="need-card" href="soluciones/automatizaciones.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span><div class="need-title">Acaba con las tareas repetitivas de tu empresa</div><div class="need-sub">Automatizaciones →</div></a>
+      <a class="need-card" href="soluciones/flujos-a-medida.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span><div class="need-title">Acaba con las tareas repetitivas de tu empresa</div><div class="need-sub">Flujos a medida →</div></a>
       <a class="need-card" href="soluciones/llamadas.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><div class="need-title">Contesta el teléfono aunque tengas las manos ocupadas</div><div class="need-sub">IA para Llamadas →</div></a>
     </div>
-    <a class="sol-showcase-more" href="servicios.html#digitaliza">Ver todas las soluciones y precios <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    <a class="sol-showcase-more" href="servicios.html#digitaliza">Ver todas las automatizaciones y precios <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
   </div>
 </section>
 
@@ -1306,6 +1350,33 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <p>Con más de 20.000 personas siguiendo el trabajo que hacemos en redes, sé lo que necesita una pyme o un autónomo cuando habla de tecnología: no más herramientas, no más cursos. Un equipo de confianza que esté ahí, que entienda su negocio y que lo haga funcionar mejor cada mes.</p>
           <div class="founder-sig"><b>Fundador · TRUCO technology</b> — www.trucotechnology.com</div>
         </div>
+      </div>
+
+      <div class="hiw-wrap">
+        <div class="hiw-intro">
+          <div class="section-tag gold">Cómo trabajamos contigo</div>
+          <h3>No entregamos un proyecto y desaparecemos — somos tu departamento, todos los días.</h3>
+          <p>TRUCO technology es tu departamento tecnológico externalizado: nuestro trabajo es que tu empresa esté siempre al día, usando la tecnología que de verdad la hace crecer. Sale algo nuevo que puede beneficiarte, algo deja de funcionar como quieres, cambias un precio o te vas de vacaciones — esto es lo que hacemos en cada caso.</p>
+        </div>
+        <div class="hiw-grid">
+          <div class="hiw-card">
+            <div class="hiw-when">Sale algo nuevo que puede beneficiar a tu negocio</div>
+            <div class="hiw-then">Lo estudiamos nosotros, te auditamos para proponértelo con sentido, y si encaja, <b>lo implantamos en tu empresa.</b></div>
+          </div>
+          <div class="hiw-card">
+            <div class="hiw-when">Algo no funciona como te gustaría</div>
+            <div class="hiw-then">Nos lo comentas y <b>nosotros nos encargamos de todo</b> — tú no vuelves a tocarlo.</div>
+          </div>
+          <div class="hiw-card">
+            <div class="hiw-when">Te vas de vacaciones y quieres cambiar un precio, una oferta o un horario</div>
+            <div class="hiw-then">Tranquilo, <b>tú solo nos avisas.</b> Nosotros lo modificamos todo por ti.</div>
+          </div>
+          <div class="hiw-card">
+            <div class="hiw-when">Quieres ajustar cómo trabaja tu asistente</div>
+            <div class="hiw-then">¿Que no cierre ventas? ¿Que te resuma cada conversación para llegar preparado a la cita? <b>Lo configuramos exactamente como tú quieras.</b></div>
+          </div>
+        </div>
+        <p class="hiw-close">Somos tus manos en toda la tecnología que rodea tu empresa — para que tú solo tengas que preocuparte de llevar tu negocio.</p>
       </div>
     </div>
   </div>
@@ -1470,7 +1541,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <script src="founding-offer.js"></script>
 <script>
-(function(){
+function renderFoundingPricesHome(){
   const prices={lite:currentPrice('lite'),pro:currentPrice('pro')};
   const faqLite=document.getElementById('faq-price-lite');if(faqLite)faqLite.textContent=prices.lite;
   const faqPro=document.getElementById('faq-price-pro');if(faqPro)faqPro.textContent=prices.pro;
@@ -1483,13 +1554,20 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     const oldEl=document.getElementById('tier-founding-old-'+tier);
     if(priceEl)priceEl.innerHTML=m+' €<sub>/mes</sub>';
     if(vatEl)vatEl.textContent='+ IVA · '+iva+' € con IVA';
-    if(badgeEl&&oldEl&&foundingActive(tier)){
-      const std=STANDARD_PRICES[tier];
-      badgeEl.innerHTML='🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[tier]+' de 10 plazas';
-      oldEl.innerHTML='Lo mantienes para siempre · nuevos clientes después: '+std+'€/mes + IVA';
+    if(badgeEl&&oldEl){
+      if(foundingActive(tier)){
+        const std=STANDARD_PRICES[tier];
+        badgeEl.innerHTML='🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[tier]+' de 10 plazas';
+        oldEl.innerHTML='Lo mantienes para siempre · nuevos clientes después: '+std+'€/mes + IVA';
+      }else{
+        badgeEl.innerHTML='';
+        oldEl.innerHTML='';
+      }
     }
   });
-})();
+}
+renderFoundingPricesHome();
+window.onFoundingSpotsUpdated.push(renderFoundingPricesHome);
 </script>
 <script>
 /* ── NAVBAR SCROLL ── */
@@ -1617,9 +1695,9 @@ const KB = {
   },
 
   cuantas_soluciones_incluye: {
-    patterns: ['qué cuenta como solución','qué es una solución tecnológica','qué significa una solución','cuenta la web como solución'],
+    patterns: ['qué cuenta como solución','qué es una solución tecnológica','qué significa una solución','cuenta la web como solución','qué es una automatización','qué cuenta como automatización'],
     responses: [
-      'Buena pregunta. Una "solución tecnológica" es cada herramienta activa que mantenemos: por ejemplo, tu web, una IA de WhatsApp, un sistema de reservas o una automatización cuentan cada una como 1 solución. El Pro mantiene hasta 6, el Lite hasta 3. Ojo: no todas las soluciones del catálogo pueden elegirse gratis en Lite/Pro (por ejemplo CRM o Integraciones se contratan aparte) — pero una vez instaladas, su mantenimiento sí cuenta y va incluido. ¿Quieres que contemos juntos cuántas tendrías en tu caso?'
+      'Buena pregunta. Una "automatización" es cada herramienta activa que mantenemos: por ejemplo, una IA de WhatsApp, un sistema de reservas o un flujo automático a medida cuentan cada una como 1 automatización (tu web es aparte, no cuenta contra este cupo). El Pro mantiene hasta 6, el Lite hasta 3. Ojo: no todas las del catálogo pueden elegirse gratis en Lite/Pro (por ejemplo CRM o Integraciones se contratan aparte) — pero una vez instaladas, su mantenimiento sí cuenta y va incluido. ¿Quieres que contemos juntos cuántas tendrías en tu caso?'
     ]
   },
 
@@ -1699,7 +1777,7 @@ const KB = {
   sol_automatizaciones: {
     patterns: ['automatizaciones','automatizar tareas','flujos automáticos','tareas repetitivas','cuánto cuestan las automatizaciones','precio de las automatizaciones'],
     responses: [
-      'Las <b>Automatizaciones</b> tienen 3 precios cerrados según la complejidad del flujo: 350€ + IVA una automatización simple (ej. formulario → CRM → email), 650€ + IVA un flujo de varios pasos (ej. pedido → factura → aviso a almacén), 1.200€ + IVA un proceso que conecta varias herramientas distintas. En la primera llamada te decimos en qué banda encaja tu caso, y ese es el precio final, sin sorpresas. ¿Qué tarea repetitiva te quita más tiempo cada semana?'
+      'Los <b>Flujos automáticos a medida</b> tienen 3 precios cerrados según la complejidad del flujo: 350€ + IVA una automatización simple (ej. formulario → CRM → email), 650€ + IVA un flujo de varios pasos (ej. pedido → factura → aviso a almacén), 1.200€ + IVA un proceso que conecta varias herramientas distintas. En la primera llamada te decimos en qué banda encaja tu caso, y ese es el precio final, sin sorpresas. ¿Qué tarea repetitiva te quita más tiempo cada semana?'
     ]
   },
 
@@ -1878,14 +1956,14 @@ const KB = {
   dental: {
     patterns: ['dental','dentista','clínica dental','odontología'],
     responses: [
-      'Para clínicas dentales solemos recomendar: IA para WhatsApp (conectada a tu software de clínica, tipo Gesden o Clinicpro), Reservas online y Automatizaciones para recordatorios de cita. El asistente recoge solicitudes mientras estás en consulta y avisa al paciente, sin perder ninguna.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Qué software usas actualmente para la agenda?'
+      'Para clínicas dentales solemos recomendar: IA para WhatsApp (conectada a tu software de clínica, tipo Gesden o Clinicpro), Reservas online y Flujos a medida para recordatorios de cita. El asistente recoge solicitudes mientras estás en consulta y avisa al paciente, sin perder ninguna.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Qué software usas actualmente para la agenda?'
     ]
   },
 
   clinica_general: {
     patterns: ['clínica médica','centro médico','consulta médica','médico privado','fisioterapia','psicólogo'],
     responses: [
-      'Para clínicas y consultas médicas solemos recomendar: IA para WhatsApp + Reservas online + Automatizaciones (recordatorios de cita). Así ningún paciente se queda sin respuesta y la recepción deja de estar desbordada con llamadas repetitivas.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Qué canal usan más tus pacientes para pedir cita: llamada, WhatsApp o ambos?'
+      'Para clínicas y consultas médicas solemos recomendar: IA para WhatsApp + Reservas online + Flujos a medida (recordatorios de cita). Así ningún paciente se queda sin respuesta y la recepción deja de estar desbordada con llamadas repetitivas.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Qué canal usan más tus pacientes para pedir cita: llamada, WhatsApp o ambos?'
     ]
   },
 
@@ -1899,35 +1977,35 @@ const KB = {
   estetica: {
     patterns: ['centro de estética','clínica estética','peluquería','salón de belleza','centro de belleza'],
     responses: [
-      'Para centros de estética y belleza solemos recomendar: Reservas online + IA para WhatsApp + Automatizaciones (recordatorios, para reducir los "no show"). Los clientes reservan solos a cualquier hora y el asistente resuelve dudas de precio y disponibilidad.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Cómo gestionáis ahora mismo las reservas?'
+      'Para centros de estética y belleza solemos recomendar: Reservas online + IA para WhatsApp + Flujos a medida (recordatorios, para reducir los "no show"). Los clientes reservan solos a cualquier hora y el asistente resuelve dudas de precio y disponibilidad.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Cómo gestionáis ahora mismo las reservas?'
     ]
   },
 
   autonomo_oficio: {
     patterns: ['electricista','fontanero','pintor','carpintero','instalador','oficio','reformas'],
     responses: [
-      'Para autónomos de oficios solemos recomendar: IA para WhatsApp (recoge la solicitud mientras estás en obra y agenda la visita), Reservas online y Automatizaciones para el seguimiento de presupuestos.\n\nCuando terminas en obra, el cliente ya tiene confirmación y tú tienes todo organizado.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Recibes muchos mensajes de WhatsApp que se quedan sin respuesta?'
+      'Para autónomos de oficios solemos recomendar: IA para WhatsApp (recoge la solicitud mientras estás en obra y agenda la visita), Reservas online y Flujos a medida para el seguimiento de presupuestos.\n\nCuando terminas en obra, el cliente ya tiene confirmación y tú tienes todo organizado.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Recibes muchos mensajes de WhatsApp que se quedan sin respuesta?'
     ]
   },
 
   gimnasio: {
     patterns: ['gimnasio','centro deportivo','box de crossfit','estudio de yoga','centro de entrenamiento'],
     responses: [
-      'Para gimnasios y centros deportivos solemos recomendar: IA para WhatsApp (altas, dudas de horarios y tarifas), Reservas online (clases y horarios) y Automatizaciones (seguimiento de socios para evitar bajas por falta de atención).\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Cuántos socios activos gestionáis aproximadamente ahora mismo?'
+      'Para gimnasios y centros deportivos solemos recomendar: IA para WhatsApp (altas, dudas de horarios y tarifas), Reservas online (clases y horarios) y Flujos a medida (seguimiento de socios para evitar bajas por falta de atención).\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Cuántos socios activos gestionáis aproximadamente ahora mismo?'
     ]
   },
 
   restaurante: {
     patterns: ['restaurante','bar','cafetería','hostelería','local de comida'],
     responses: [
-      'Para restaurantes y hostelería solemos recomendar: Reservas online + IA para WhatsApp + Automatizaciones (confirmaciones y recordatorios, para reducir los no-shows). Reservas de mesa sin llamadas perdidas y menos mesas vacías.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Tomáis reservas ahora mismo por teléfono, redes sociales, o no lleváis un sistema fijo?'
+      'Para restaurantes y hostelería solemos recomendar: Reservas online + IA para WhatsApp + Flujos a medida (confirmaciones y recordatorios, para reducir los no-shows). Reservas de mesa sin llamadas perdidas y menos mesas vacías.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Tomáis reservas ahora mismo por teléfono, redes sociales, o no lleváis un sistema fijo?'
     ]
   },
 
   tienda_comercio: {
     patterns: ['tienda','comercio','tienda online','ecommerce','tienda física'],
     responses: [
-      'Para tiendas y comercios, lo más habitual es combinar CRM (clientes recurrentes), Automatizaciones e Integraciones (conectar tienda física y online si vendéis por varios canales). Si además se os escapan consultas de stock/horarios por WhatsApp, se añade IA para WhatsApp sin problema — eliges tú mismo las que necesitas del catálogo completo.\n\n<a href="digitaliza.html" target="_blank">Ver el catálogo completo de soluciones →</a>\n\n¿Tu comercio es solo físico, solo online, o ambos?'
+      'Para tiendas y comercios, lo más habitual es combinar CRM (clientes recurrentes), Flujos a medida e Integraciones (conectar tienda física y online si vendéis por varios canales). Si además se os escapan consultas de stock/horarios por WhatsApp, se añade IA para WhatsApp sin problema — eliges tú mismo las que necesitas del catálogo completo.\n\n<a href="digitaliza.html" target="_blank">Ver el catálogo completo de automatizaciones →</a>\n\n¿Tu comercio es solo físico, solo online, o ambos?'
     ]
   },
 
@@ -1970,7 +2048,7 @@ const KB = {
 
   // ── CITA / CONTACTO HUMANO ──
   reservar_cita: {
-    patterns: ['reservar cita','reservar consultoría','quiero una consultoría','agendar una llamada','agendar cita','quiero una cita','resérvame','cómo contrato','quiero empezar ya','quiero reservar','consultoría gratuita','pedir cita'],
+    patterns: ['reservar cita','reservar consultoría','quiero una consultoría','agendar una llamada','agendar cita','agéndame','agendame','quiero agendar','puedes agendarme','quiero una cita','dame una cita','ponme una cita','resérvame','reservame','cómo contrato','quiero empezar ya','quiero reservar','consultoría gratuita','pedir cita','quiero cita','necesito una cita','coge una cita','coger cita'],
     responses: [
       'Me alegra que quieras dar el paso.\n\nLa consultoría gratuita dura unos 20-30 minutos. Analizamos tu empresa, te decimos qué soluciones encajan y qué costaría. Sin compromiso.\n\n¿Prefieres elegir día y hora tú mismo o que te contactemos nosotros?',
       '¡Perfecto! La consultoría es gratuita y sin compromiso. En 20-30 minutos te explicamos exactamente cómo encajaría TRUCO en tu empresa y qué inversión necesitarías. ¿Cuándo tienes disponibilidad?'
@@ -1989,6 +2067,117 @@ const KB = {
     patterns: ['horario de atención','a qué hora atendéis','estáis disponibles','horario de soporte'],
     responses: [
       'Este asistente está disponible 24/7 para resolver dudas al momento. Para hablar con el equipo humano, la vía más rápida es reservar una consultoría gratuita a la hora que mejor te venga, o escribir por WhatsApp y te respondemos en horario laboral. ¿Quieres que te muestre el calendario de citas?'
+    ]
+  },
+
+  // Preguntas fuera de tema (broma, curiosidad, insulto, charla casual...).
+  // Se intercepta aquí para responder con un rechazo educado y NO ofrecer
+  // cita — una pregunta random no debe acabar empujando a reservar.
+  fuera_de_tema: {
+    patterns: [
+      // Clima / tiempo
+      'que tiempo hace','va a llover','hace frio','hace calor','va a nevar',
+      'el pronostico del tiempo','como esta el clima','va a hacer sol','temperatura de hoy',
+      'prevision meteorologica','esta nublado','hay tormenta','cuando escampa',
+      'va a hacer viento','el tiempo de mañana','el tiempo para mañana','que tiempo hara mañana',
+      'como va a estar el tiempo','hace buen dia','hace mal dia',
+
+      // Cultura general / trivia
+      'capital de francia','capital de españa','capital de italia','capital de alemania',
+      'cuantos habitantes tiene','quien descubrio america','quien gano el mundial',
+      'quien gano la champions','cuando fue la segunda guerra mundial','cual es el planeta mas grande',
+      'cuantos planetas hay','quien invento la bombilla','quien invento internet',
+      'cual es el rio mas largo','cuanto pesa la luna','cuanto mide el everest',
+      'quien pinto la mona lisa','cual es el animal mas rapido','cuantos huesos tiene el cuerpo humano',
+      'que idioma se habla en brasil','cual es la montaña mas alta','quien escribio don quijote',
+      'cuando se independizo','cual es el oceano mas grande','que significa la palabra',
+      'como se dice en ingles','traduceme esto','cuantos paises hay en europa',
+      'cual es el pais mas grande del mundo','cual es la ciudad mas poblada','quien fue napoleon',
+      'quien fue cleopatra','cuando cayo el muro de berlin','que es un agujero negro',
+      'cuantas estrellas hay en el universo','cual es la velocidad de la luz',
+
+      // Matemáticas triviales / conversiones
+      'cuanto es 2 mas 2','cuanto es dos mas dos','cuanto son dos mas dos','cuanto es 5 por 5',
+      'resuelveme esta ecuacion','cual es la raiz cuadrada de','cuanto es el 20 por ciento de 50',
+      'convierte esto a kilometros','cuantos son 100 grados fahrenheit en celsius',
+      'cuanto es una milla en kilometros','cuanto es una libra en kilos',
+
+      // Sobre el asistente / personal / insultos
+      'eres tonto','eres idiota','eres estupido','eres imbecil','eres gilipollas',
+      'que eres tu','tienes sentimientos','tienes novia','tienes novio','cuantos años tienes',
+      'de donde eres','tienes nombre','como te llamas de verdad','eres una persona real',
+      'te puedo insultar','cual es tu color favorito','que comida te gusta','tienes familia',
+      'puedes enamorarte','sueñas','tienes emociones','eres feliz','estas triste',
+      'me caes mal','no me gustas','eres aburrido','eres util para algo','sirves para algo',
+      'cuentame un chiste sobre ti','hazme reir','dime algo gracioso','eres inteligente',
+      'cual es tu pelicula favorita','tienes alma','estas vivo','me quieres','te gusto',
+      'eres mi amigo','vas a sustituir a los humanos','vas a acabar con el mundo',
+      'les tienes miedo a los humanos','eres skynet','eres chatgpt','eres gemini','quien te creo',
+
+      // Entretenimiento / cultura pop
+      'que pelicula me recomiendas','que serie ver','recomiendame musica','cual es tu cancion favorita',
+      'quien es tu actor favorito','que libro me recomiendas','cual es la mejor pelicula',
+      'quien gano los oscar','cuando sale la nueva temporada','que videojuego me recomiendas',
+      'cual es el mejor equipo de futbol','quien es el mejor futbolista','cuanto gana messi',
+      'cuanto gana ronaldo','cual es tu superheroe favorito','recomiendame una serie de netflix',
+      'que hay en la cartelera','cual es tu comida favorita','tienes hambre','que desayunaste',
+      'que cenaste','te gusta el futbol','eres del madrid o del barça','quien va a ganar el partido',
+      'que cancion esta sonando','quien es el mejor cantante','recomiendame un videojuego',
+      'que opinas de la nueva pelicula','cual es tu serie favorita',
+
+      // Salud personal / consejos no relacionados con el negocio
+      'me duele la cabeza','que tomo para el dolor','tengo fiebre','como bajo de peso',
+      'que ejercicio hago','dieta para adelgazar','remedio para el resfriado','me siento mal',
+      'tengo ansiedad','como dejo de fumar','que vitaminas tomar','me duele la espalda',
+      'tengo insomnio','como duermo mejor','me pica la garganta','tengo alergia',
+      'que hago si tengo tos','consejo de pareja','estoy triste que hago','como supero una ruptura',
+      'como ligo','como hago amigos','tengo ganas de llorar','me siento solo',
+
+      // Política / religión / temas sensibles
+      'que opinas de la politica','quien es el mejor presidente','cual es tu religion',
+      'crees en dios','que opinas del aborto','que piensas de la guerra','cual es tu opinion politica',
+      'votarias a','que opinas de vox','que opinas del gobierno','eres de izquierdas o derechas',
+      'que opinas de la inmigracion','que opinas del feminismo','que piensas de la monarquia',
+      'que opinas de trump','que opinas de pedro sanchez','existe dios','cual es la religion verdadera',
+
+      // Chistes / bromas / peticiones creativas sin relación
+      'cuentame un chiste','dime un acertijo','adivina un numero','jugamos a algo',
+      'juguemos al ahorcado','dime una adivinanza','hazme una broma','cuentame algo random',
+      'dime algo random','escribeme un poema','cantame una cancion','dime un trabalenguas',
+      'hazme un rap','cuentame un cuento','inventame una historia','dime un piropo',
+      'hazme reir un rato','sabes algun chiste',
+
+      // Cotidiano / casual, sin relación con la empresa
+      'que hora es','que dia es hoy','que dia de la semana es','cuantos dias faltan para navidad',
+      'que fecha es hoy','donde puedo comer cerca','recomiendame un restaurante',
+      'donde esta el bar mas cercano','como llego a','cual es la ruta mas rapida',
+      'hay trafico','como esta el trafico','recomiendame un hotel','donde puedo comprar ropa',
+      'donde hay un banco cerca','donde esta el hospital mas cercano','donde esta la farmacia mas cercana',
+      'cual es el numero de emergencias','que se celebra hoy','es festivo hoy',
+
+      // Tecnología general no relacionada con TRUCO
+      'que movil me compro','cual es el mejor telefono','iphone o android','que ordenador me compro',
+      'como formateo mi pc','se me ha roto el movil','como actualizo windows',
+      'como instalo una aplicacion en mi movil','cual es la mejor tablet','como conecto el wifi de mi casa',
+      'se me ha caido internet','como cambio la contraseña del wifi','que auriculares me compro',
+      'cual es la mejor television','como configuro mi router','cual es mejor ps5 o xbox',
+
+      // Estudios / deberes personales
+      'ayudame con mis deberes','hazme un resumen de un libro','explicame historia del colegio',
+      'ayudame con matematicas del colegio','hazme un trabajo de clase','que carrera estudio',
+      'donde estudio ingenieria','cual es la mejor universidad','como preparo un examen',
+      'dame apuntes de biologia','ayudame con la tesis',
+
+      // Viajes personales
+      'donde puedo ir de vacaciones','que pais visitar','cual es el mejor destino turistico',
+      'recomiendame un viaje','donde puedo alquilar un coche de vacaciones','que hacer en paris',
+      'que visitar en roma','mejor epoca para viajar a','recomiendame un crucero',
+      'recomiendame un destino turistico','que ver en nueva york','donde ir de luna de miel'
+    ],
+    responses: [
+      'Lo siento, pero ese tema no corresponde a TRUCOtechnology — no puedo ayudarte con eso. Si tienes alguna duda sobre tu negocio, tu web o nuestras soluciones, encantado de ayudarte.',
+      'Esa pregunta se sale del terreno de TRUCOtechnology, así que no puedo resolvértela. Si quieres, seguimos hablando de tu empresa o de cómo automatizarla.',
+      'Lo siento, pero eso no es algo con lo que pueda ayudarte — no corresponde a TRUCOtechnology. Estoy aquí para resolver dudas sobre tu negocio y nuestras soluciones, ¿te ayudo con algo de eso?'
     ]
   },
 
@@ -2197,16 +2386,23 @@ function sendMsg() {
         // TRUCO PRO lo resuelve directamente.
         addMsg('bot', aiResp.text, 'Asistente TRUCO PRO');
         chatHistory.push({ role: 'bot', text: aiResp.text });
-      } else {
-        // Ni TRUCO PRO ha podido resolverlo del todo: muestra su explicación
-        // (si la hay) y la cita queda como último paso.
-        const msg = aiResp.text || 'Esta es una duda muy específica — prefiero que alguien del equipo te lo confirme en persona en vez de arriesgarme a darte un dato incorrecto.';
+      } else if (aiResp.reason === 'off_topic') {
+        // Pregunta genuinamente fuera de tema (que la IA detectó, no el
+        // matcher local): rechazo educado, SIN ofrecer cita — un "¿eres
+        // tonto?" no debe acabar empujando a reservar.
+        const msg = aiResp.text || 'Lo siento, pero ese tema no corresponde a TRUCOtechnology.';
         addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null);
         chatHistory.push({ role: 'bot', text: msg });
-        if (!chatCtaOffered) {
-          chatCtaOffered = true;
-          setTimeout(() => showBookingCard(), 400);
-        }
+      } else {
+        // Pregunta relacionada con el negocio que ni TRUCO PRO ha podido
+        // resolver del todo (caso legal/fiscal muy específico, presupuesto
+        // a medida, fallo técnico...): muestra su explicación y ofrece
+        // agendar directamente — siempre, no solo la primera vez.
+        const msg = aiResp.text || 'Eso se sale de lo que puedo resolverte yo — pero si quieres, te reservo ahora mismo una consultoría gratuita con el equipo y lo resolvemos ahí.';
+        addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null);
+        chatHistory.push({ role: 'bot', text: msg });
+        chatCtaOffered = true;
+        setTimeout(() => showBookingCard(), 400);
       }
     });
     return;

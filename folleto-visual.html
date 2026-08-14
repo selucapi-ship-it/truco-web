@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>TRUCO technology — Folleto</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,800&family=DM+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0b0f; --panel:#18151d; --panel-line:#322d3a;
+    --gold:#e8a83a; --gold-deep:#c98a1f;
+    --green:#3ecf7e; --blue:#4a8eff; --purple:#b571f0;
+    --cream:#f8f4ea; --grey:#a49cae;
+    --font-d:'Playfair Display',Georgia,serif;
+    --font-b:'DM Sans',sans-serif;
+    --font-m:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  @page{ size:A4; margin:0; }
+  html,body{background:#000;}
+  body{font-family:var(--font-b);color:var(--cream);-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .page{
+    width:210mm;height:297mm;margin:10mm auto;background:var(--bg);
+    box-shadow:0 4px 60px rgba(0,0,0,.6);
+    position:relative;overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+  @media print{ body{background:#000;} .page{margin:0;box-shadow:none;} }
+  @media(prefers-reduced-motion:reduce),print{ .live-dot,.flow-pulse{animation:none !important;} }
+
+  /* ══ TOP BAR ══ */
+  .top-bar{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:9mm 14mm 0;}
+  .brand{display:flex;align-items:center;gap:8px;}
+  .brand-mark{width:25px;height:25px;background:var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:900;font-size:.82rem;color:var(--bg);flex-shrink:0;}
+  .brand-name{font-family:var(--font-d);font-weight:800;font-size:.8rem;color:var(--cream);}
+  .brand-name span{color:var(--grey);font-weight:600;}
+  .top-tag{font-family:var(--font-m);font-size:.5rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);}
+
+  /* ══ HERO ══ */
+  .hero{flex-shrink:0;display:grid;grid-template-columns:1.15fr .85fr;gap:8mm;align-items:start;padding:8mm 14mm 0;}
+  .eyebrow{font-family:var(--font-m);font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:4mm;}
+  .hero h1{font-family:var(--font-d);font-weight:900;color:var(--cream);font-size:2.55rem;line-height:1.04;letter-spacing:-.02em;text-wrap:balance;}
+  .hero h1 em{font-style:normal;color:var(--gold);}
+  .hero p{font-family:var(--font-b);font-weight:600;font-size:.98rem;color:var(--grey);line-height:1.5;margin-top:5mm;max-width:100mm;}
+  .hero p b{color:var(--cream);font-weight:800;}
+
+  /* ══ LIVE DEMO PANEL ══ */
+  .demo{background:var(--panel);border:1px solid var(--panel-line);border-radius:16px;padding:6mm;box-shadow:0 16px 40px rgba(0,0,0,.4);}
+  .demo-head{display:flex;align-items:center;gap:6px;margin-bottom:6mm;}
+  .live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:blink 1.6s ease-in-out infinite;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+  .demo-head span{font-family:var(--font-m);font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cream);}
+  .flow-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:3mm;}
+  .flow-node{display:flex;flex-direction:column;align-items:center;gap:2mm;flex:1;}
+  .flow-circle{width:11mm;height:11mm;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-m);font-weight:700;font-size:.62rem;color:#08120c;}
+  .flow-circle.c1{background:var(--green);}
+  .flow-circle.c2{background:var(--blue);color:#eef4ff;}
+  .flow-circle.c3{background:var(--gold);}
+  .flow-node span{font-family:var(--font-b);font-size:.58rem;font-weight:600;color:var(--grey);text-align:center;}
+  .flow-line{flex:.6;height:1.5px;background:repeating-linear-gradient(90deg,var(--panel-line) 0 4px,transparent 4px 8px);margin-top:-6mm;}
+  .demo-result{background:rgba(62,207,126,.1);border:1px solid rgba(62,207,126,.35);border-radius:10px;padding:3mm 4mm;margin-top:2mm;}
+  .demo-result b{display:block;font-family:var(--font-b);font-weight:800;font-size:.76rem;color:var(--green);}
+  .demo-result span{font-family:var(--font-b);font-size:.68rem;color:var(--grey);}
+
+  /* ══ 4 CANALES ══ */
+  .eco{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;padding:7mm 14mm 0;}
+  .eco-tag{font-family:var(--font-m);font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);margin-bottom:5mm;}
+  .eco-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;}
+  .eco-card{background:var(--panel);border:1px solid var(--panel-line);border-radius:14px;padding:5mm 4.5mm 6mm;display:flex;flex-direction:column;}
+  .eco-bar{height:3px;border-radius:2px;margin:-5mm -4.5mm 5mm;}
+  .c-whatsapp .eco-bar{background:var(--green);}
+  .c-llamadas .eco-bar{background:var(--blue);}
+  .c-web .eco-bar{background:var(--gold);}
+  .c-agenda .eco-bar{background:var(--purple);}
+  .eco-num{font-family:var(--font-m);font-size:.58rem;font-weight:700;color:var(--grey);letter-spacing:.08em;}
+  .eco-label{font-family:var(--font-m);font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-top:1mm;margin-bottom:7mm;}
+  .eco-verb{font-family:var(--font-d);font-weight:800;font-size:1.25rem;color:var(--cream);line-height:1.08;}
+  .c-whatsapp .eco-verb em{color:var(--green);}
+  .c-llamadas .eco-verb em{color:var(--blue);}
+  .c-web .eco-verb em{color:var(--gold);}
+  .c-agenda .eco-verb em{color:var(--purple);}
+  .eco-verb em{display:block;font-style:normal;}
+  .eco-note{text-align:center;font-family:var(--font-b);font-weight:600;font-size:.7rem;color:var(--grey);margin-top:3mm;}
+  .eco-note b{color:var(--gold);}
+
+  /* ══ FOUNDER BADGE ══ */
+  .founder-badge{flex-shrink:0;margin:4mm 14mm 0;text-align:center;background:rgba(232,168,58,.1);border:1px solid rgba(232,168,58,.35);border-radius:10px;padding:2.5mm 6mm;font-family:var(--font-m);font-weight:700;font-size:.66rem;letter-spacing:.03em;color:var(--gold);}
+
+  /* ══ PRICE + CTA ══ */
+  .price-bar{flex-shrink:0;display:flex;align-items:stretch;margin:4mm 14mm 5mm;border-radius:16px;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.4);}
+  .price-chip{background:linear-gradient(120deg,var(--gold),var(--gold-deep));padding:5mm 10mm;display:flex;flex-direction:column;justify-content:center;flex:.85;}
+  .price-chip .lead{font-family:var(--font-m);font-size:.58rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(13,12,16,.65);}
+  .price-chip .num-row{display:flex;align-items:baseline;gap:6px;}
+  .price-chip .num{font-family:var(--font-d);font-weight:900;font-size:2.4rem;color:#0d0c10;line-height:1;letter-spacing:-.02em;}
+  .price-chip .suffix{font-family:var(--font-b);font-weight:700;font-size:.78rem;color:rgba(13,12,16,.72);}
+  .price-chip .hint{font-size:.62rem;font-weight:600;color:rgba(13,12,16,.78);margin-top:2px;}
+  .cta-chip{background:var(--panel);flex:1.15;display:flex;align-items:center;justify-content:space-between;gap:5mm;padding:5mm 9mm;}
+  .cta-chip h2{font-family:var(--font-d);font-weight:800;font-size:1.32rem;color:var(--cream);line-height:1.08;}
+  .cta-chip h2 em{font-style:normal;color:var(--gold);display:block;}
+  .cta-chip p{font-family:var(--font-b);font-size:.68rem;color:var(--grey);margin-top:2mm;}
+  .qr-block{background:#fff;border-radius:9px;padding:5px;flex-shrink:0;}
+  .qr-block img{width:22mm;height:22mm;display:block;}
+
+  /* ══ FOOT ══ */
+  .foot{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 14mm 7mm;}
+  .foot span{font-family:var(--font-m);font-size:.5rem;letter-spacing:.05em;color:var(--grey);}
+  .foot .r{color:var(--gold);font-weight:700;}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="top-bar">
+    <div class="brand">
+      <div class="brand-mark">T</div>
+      <div class="brand-name">TRUCO <span>technology</span></div>
+    </div>
+    <div class="top-tag">Departamento Tecnológico · España</div>
+  </div>
+
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Automatiza lo que te roba tiempo</div>
+      <h1>¿Y si tu negocio <em>trabajara solo?</em></h1>
+      <p>WhatsApp, llamadas, web y agenda — <b>entrenados para tu negocio</b>, no un bot en blanco que tengas que enseñar tú. Tú atiendes a tus clientes; la tecnología se ocupa del resto.</p>
+    </div>
+    <div class="demo">
+      <div class="demo-head"><span class="live-dot"></span><span>Automatización activa</span></div>
+      <div class="flow-row">
+        <div class="flow-node"><div class="flow-circle c1">WHA</div><span>Nuevo cliente</span></div>
+        <div class="flow-line"></div>
+        <div class="flow-node"><div class="flow-circle c2">IA</div><span>Responde</span></div>
+        <div class="flow-line"></div>
+        <div class="flow-node"><div class="flow-circle c3">AGE</div><span>Cita confirmada</span></div>
+      </div>
+      <div class="demo-result"><b>✓ Cita reservada</b><span>Sin que tú hayas tocado el móvil.</span></div>
+    </div>
+  </div>
+
+  <div class="eco">
+    <div class="eco-tag">Cuatro formas de dejar de hacerlo tú</div>
+    <div class="eco-grid">
+
+      <div class="eco-card c-whatsapp">
+        <div class="eco-bar"></div>
+        <div class="eco-num">01</div>
+        <div class="eco-label">WhatsApp</div>
+        <div class="eco-verb">Responde<em>y vende</em></div>
+      </div>
+
+      <div class="eco-card c-llamadas">
+        <div class="eco-bar"></div>
+        <div class="eco-num">02</div>
+        <div class="eco-label">Llamadas</div>
+        <div class="eco-verb">Atiende<em>y agenda</em></div>
+      </div>
+
+      <div class="eco-card c-web">
+        <div class="eco-bar"></div>
+        <div class="eco-num">03</div>
+        <div class="eco-label">Web</div>
+        <div class="eco-verb">Capta<em>clientes</em></div>
+      </div>
+
+      <div class="eco-card c-agenda">
+        <div class="eco-bar"></div>
+        <div class="eco-num">04</div>
+        <div class="eco-label">Agenda</div>
+        <div class="eco-verb">Organiza<em>sola</em></div>
+      </div>
+
+    </div>
+    <div class="eco-note">Eliges <b>1 de estas 4</b>, instalada completamente gratis con tu Departamento Basic™</div>
+  </div>
+
+  <div class="founder-badge">🏷 Programa Fundadores — plazas limitadas, precio fijo para siempre</div>
+
+  <div class="price-bar">
+    <div class="price-chip">
+      <div class="lead">Departamento Basic™</div>
+      <div class="num-row"><span class="num">69€</span><span class="suffix">/mes + IVA</span></div>
+      <div class="hint">Auditoría inicial gratuita</div>
+    </div>
+    <div class="cta-chip">
+      <div>
+        <h2>Quiero automatizar <em>mi negocio</em></h2>
+        <p>Escanea y descubre qué podemos hacer por ti.</p>
+      </div>
+      <div class="qr-block"><img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=https://www.trucotechnology.com" alt="QR TRUCO technology"></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>trucotechnology.com</span>
+    <span class="r">Implantación de la solución incluida</span>
+  </div>
+
+</div>
+
+</body>
+</html>
