@@ -274,7 +274,7 @@ async function loadClient() {
 
   const owned = (client.client_solutions || []);
   const contractedList = document.getElementById('contracted-list');
-  const planLabel = { basic: 'Departamento Basic™', lite: 'Departamento Lite™', pro: 'Departamento Pro™' }[client.arranque_tier] || client.plan_key || 'Sin plan activo registrado';
+  const planLabel = { start: 'Departamento Start™', basic: 'Departamento Basic™', lite: 'Departamento Lite™', pro: 'Departamento Pro™' }[client.arranque_tier] || client.plan_key || 'Sin plan activo registrado';
   let html = '<div class="sol-row"><div class="sol-check">✓</div><div class="sol-name"><b>' + escapeHtml(planLabel) + '</b></div></div>';
   if (owned.length) {
     html += owned.map(s => '<div class="sol-row"><div class="sol-check">✓</div><div class="sol-name">' + escapeHtml(s.solution_name) + '</div>' + (s.is_free ? '<span class="sol-tag">Incluida</span>' : '') + '</div>').join('');

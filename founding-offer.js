@@ -8,17 +8,15 @@
 // Cuando el contador de un tier llegue a 0, la oferta desaparece sola PARA ESE
 // TIER en todas las páginas y se queda su precio estándar.
 //
-// Las claves de tier ('basic','elemental-profesional','lite','pro') son las
-// mismas que usa pago.html en ARRANQUES/DIRECT — 'basic' es el tier que se
-// muestra como "Start™" y 'elemental-profesional' el que se muestra como
-// "Basic™" (los nombres visibles cambiaron, las claves internas no, a
-// propósito, para no romper nada ya grabado en Supabase/Stripe).
-const FOUNDING_SPOTS_TOTAL = { basic: 20, 'elemental-profesional': 10, lite: 10, pro: 10 };
-const FOUNDING_SPOTS_LEFT = { basic: 20, 'elemental-profesional': 10, lite: 10, pro: 10 };
+// Las claves de tier ('start','basic','lite','pro') son las mismas que usa
+// pago.html en ARRANQUES/DIRECT y coinciden con los nombres visibles
+// (Start™/Basic™/Lite™/Pro™).
+const FOUNDING_SPOTS_TOTAL = { start: 10, basic: 10, lite: 10, pro: 10 };
+const FOUNDING_SPOTS_LEFT = { start: 10, basic: 10, lite: 10, pro: 10 };
 
 // Precios — no tocar salvo que cambie la estrategia de precios en general.
-const FOUNDING_PRICES = { basic: 69, 'elemental-profesional': 149, lite: 229, pro: 449 };
-const STANDARD_PRICES = { basic: 89, 'elemental-profesional': 169, lite: 279, pro: 549 };
+const FOUNDING_PRICES = { start: 69, basic: 149, lite: 229, pro: 449 };
+const STANDARD_PRICES = { start: 89, basic: 169, lite: 279, pro: 549 };
 
 function foundingActive(tier){ return FOUNDING_SPOTS_LEFT[tier] > 0; }
 function currentPrice(tier){ return foundingActive(tier) ? FOUNDING_PRICES[tier] : STANDARD_PRICES[tier]; }

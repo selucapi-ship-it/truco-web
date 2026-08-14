@@ -67,13 +67,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .pi-yes span{color:var(--green);font-weight:700;}
 @media(max-width:768px){.promise-inner{grid-template-columns:1fr;}.promise-item{border-right:none;border-bottom:1px solid var(--grey-line);padding:20px 0;}.promise-item:last-child{border-bottom:none;}}
 
-/* RULE OF GOLD */
-.gold-rule{background:linear-gradient(135deg,rgba(217,168,63,.08),var(--bg-panel));border:1px solid rgba(217,168,63,.2);border-radius:14px;padding:28px 32px;margin:48px 0;}
-.gr-title{font-family:var(--font-m);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
-.gr-steps{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.gr-step{font-size:.9rem;color:var(--white);font-weight:600;padding:8px 16px;background:rgba(217,168,63,.1);border:1px solid rgba(217,168,63,.2);border-radius:8px;}
-.gr-arrow{color:var(--gold);font-size:1.2rem;}
-
 /* SECTION HEADERS */
 .section-block{padding:80px 0;}
 .section-divider{display:flex;align-items:center;gap:16px;margin-bottom:48px;flex-wrap:wrap;}
@@ -112,9 +105,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .sc-body{padding:0;}
 
 /* COLS */
-.sc-cols{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--grey-line);}
-.sc-col{padding:24px 24px;}
-.sc-col:not(:last-child){border-right:1px solid var(--grey-line);}
 .sc-col-title{font-family:var(--font-m);font-size:.70rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
 .sc-col-title::before{content:'';width:14px;height:1px;background:currentColor;}
 .sc-list{list-style:none;}
@@ -135,7 +125,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .vh-list li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:.85rem;color:var(--white);padding-left:20px;position:relative;border-bottom:none;}
 .vh-list li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:800;}
 .vh-tag{font-size:.80rem;color:var(--grey);font-family:var(--font-m);white-space:nowrap;flex-shrink:0;}
-@media(max-width:768px){.sc-cols{grid-template-columns:1fr;}.sc-col{border-right:none !important;border-bottom:1px solid var(--grey-line);}.sc-col:last-child{border-bottom:none;}.sc-header-inner{grid-template-columns:1fr;}.sc-price{text-align:left;}}
+@media(max-width:768px){.sc-header-inner{grid-template-columns:1fr;}.sc-price{text-align:left;}}
 
 /* DIGITALIZA SOLUTIONS GRID */
 .solutions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:24px;border-top:1px solid var(--grey-line);}
@@ -158,17 +148,6 @@ a.solution-chip{display:block;color:inherit;}
 .di-item::before{content:'✔';color:var(--blue);font-weight:700;flex-shrink:0;}
 @media(max-width:640px){.digitaliza-includes{grid-template-columns:1fr 1fr;}.di-item:nth-child(2n){border-right:none;}.di-item{border-bottom:1px solid var(--grey-line);}}
 
-/* 90 DAYS BLOCK */
-.period-block{background:linear-gradient(135deg,rgba(47,123,255,.06),var(--bg-card));border:1px solid rgba(47,123,255,.2);border-radius:12px;padding:20px 24px;margin:0 24px 24px;}
-.pb-title{font-family:var(--font-m);font-size:.70rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;}
-.pb-text{font-size:.86rem;color:var(--grey);line-height:1.65;}
-.pb-text b{color:var(--white);}
-.pb-months{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
-.pb-month{padding:6px 14px;border-radius:8px;font-size:.86rem;font-weight:600;}
-.pb-month.included{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3);}
-.pb-month.service{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(47,123,255,.3);}
-.pb-month.after{background:var(--bg-panel);color:var(--grey);border:1px solid var(--grey-line);}
-
 /* SOLUTION WHAT IS */
 .what-is-block{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:28px 32px;margin:48px 0;}
 .wib-title{font-family:var(--font-d);font-size:1.2rem;font-weight:700;margin-bottom:8px;}
@@ -178,22 +157,10 @@ a.solution-chip{display:block;color:inherit;}
 .wib-item b{display:block;color:var(--white);margin-bottom:3px;font-size:.9rem;}
 @media(max-width:640px){.wib-grid{grid-template-columns:1fr 1fr;}}
 
-/* CÓMO TRABAJAMOS */
-.como-section{padding:80px 0;background:var(--bg-panel);border-top:1px solid var(--grey-line);border-bottom:1px solid var(--grey-line);}
-.como-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;margin-top:40px;}
-.como-steps::before{content:'';position:absolute;top:24px;left:5%;right:5%;height:1px;background:var(--grey-line);}
-.como-step{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px;}
-.cs-num{width:48px;height:48px;border-radius:50%;background:var(--bg-panel);border:1px solid var(--blue);color:var(--blue);font-family:var(--font-d);font-size:1.1rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative;z-index:1;}
-.cs-num.highlight{background:var(--blue);color:#fff;border-color:var(--blue);}
-.cs-title{font-size:.9rem;font-weight:700;margin-bottom:6px;color:var(--white);}
-.cs-desc{font-size:.86rem;color:var(--grey);line-height:1.5;}
-@media(max-width:768px){.como-steps{grid-template-columns:1fr;}.como-steps::before{display:none;}.como-step{flex-direction:row;text-align:left;gap:16px;padding:16px 0;border-bottom:1px solid var(--grey-line);}.como-step:last-child{border-bottom:none;}.cs-num{flex-shrink:0;margin-bottom:0;}}
-
 .onboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
 .tiers-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
 @media(max-width:700px){.tiers-cols{grid-template-columns:1fr;}}
-.impl-period-grid{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-@media(max-width:768px){.onboard-grid,.tiers-cols,.impl-period-grid{grid-template-columns:1fr;}}
+@media(max-width:768px){.onboard-grid,.tiers-cols{grid-template-columns:1fr;}}
 
 /* SC FOOTER */
 .sc-footer{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-top:1px solid var(--grey-line);background:rgba(255,255,255,.02);flex-wrap:wrap;gap:14px;}
@@ -372,8 +339,8 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         </div>
       </div>
 
-      <!-- START (clave interna: basic) -->
-      <div class="service-card" id="basic" onclick="if(!event.target.closest('.sc-footer'))location.href='departamentos/basic.html'" style="cursor:pointer;">
+      <!-- START (clave interna: start) -->
+      <div class="service-card" id="start" onclick="if(!event.target.closest('.sc-footer'))location.href='departamentos/start.html'" style="cursor:pointer;">
         <div class="sc-header">
           <div>
             <div class="sc-cat blue">Departamento Tecnológico · 12 meses</div>
@@ -383,10 +350,10 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           </div>
         </div>
         <div style="padding:20px 24px;border-top:1px solid var(--grey-line);">
-          <div style="font-size:.7rem;margin-bottom:6px;" id="sc-founding-badge-basic"></div>
-          <div style="font-size:2rem;font-weight:700;font-family:var(--font-d);" id="sc-price-basic"></div>
-          <div style="font-size:.80rem;color:var(--grey);margin-bottom:4px;" id="sc-vat-basic"></div>
-          <div style="font-size:.7rem;color:var(--grey);" id="sc-founding-old-basic"></div>
+          <div style="font-size:.7rem;margin-bottom:6px;" id="sc-founding-badge-start"></div>
+          <div style="font-size:2rem;font-weight:700;font-family:var(--font-d);" id="sc-price-start"></div>
+          <div style="font-size:.80rem;color:var(--grey);margin-bottom:4px;" id="sc-vat-start"></div>
+          <div style="font-size:.7rem;color:var(--grey);" id="sc-founding-old-start"></div>
           <div style="font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia: 12 meses</div>
         </div>
         <div style="padding:0 24px 16px;">
@@ -400,12 +367,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         </div>
         <div class="sc-footer">
           <div class="sc-footer-left" style="font-size:.86rem;">Pago único con 12% dto., o fracciona con SeQura. Permanencia de 12 meses — es lo que hace posible el regalo.</div>
-          <a class="btn-primary" href="pago.html?plan=arranque-basic">Contratar Start™</a>
+          <a class="btn-primary" href="pago.html?plan=arranque-start">Contratar Start™</a>
         </div>
       </div>
 
-      <!-- BASIC (clave interna: elemental-profesional) -->
-      <div class="service-card" id="elemental" onclick="if(!event.target.closest('.sc-footer'))location.href='departamentos/elemental.html'" style="cursor:pointer;border-color:var(--gold);">
+      <!-- BASIC (clave interna: basic) -->
+      <div class="service-card" id="basic" onclick="if(!event.target.closest('.sc-footer'))location.href='departamentos/basic.html'" style="cursor:pointer;border-color:var(--gold);">
         <div class="sc-header">
           <div>
             <div class="sc-cat gold">Departamento Tecnológico · 12 meses</div>
@@ -415,10 +382,10 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           </div>
         </div>
         <div style="padding:20px 24px;border-top:1px solid var(--grey-line);">
-          <div style="font-size:.7rem;margin-bottom:6px;" id="sc-founding-badge-elemental-profesional"></div>
-          <div style="font-size:2rem;font-weight:700;font-family:var(--font-d);" id="sc-price-elemental-profesional"></div>
-          <div style="font-size:.80rem;color:var(--grey);margin-bottom:4px;" id="sc-vat-elemental-profesional"></div>
-          <div style="font-size:.7rem;color:var(--grey);" id="sc-founding-old-elemental-profesional"></div>
+          <div style="font-size:.7rem;margin-bottom:6px;" id="sc-founding-badge-basic"></div>
+          <div style="font-size:2rem;font-weight:700;font-family:var(--font-d);" id="sc-price-basic"></div>
+          <div style="font-size:.80rem;color:var(--grey);margin-bottom:4px;" id="sc-vat-basic"></div>
+          <div style="font-size:.7rem;color:var(--grey);" id="sc-founding-old-basic"></div>
           <div style="font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia: 12 meses</div>
         </div>
         <div style="padding:0 24px 16px;">
@@ -432,7 +399,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         </div>
         <div class="sc-footer">
           <div class="sc-footer-left" style="font-size:.86rem;">Pago único con 12% dto., o fracciona con SeQura. Permanencia de 12 meses — es lo que hace posible el regalo.</div>
-          <a class="btn-primary" href="departamentos/elemental.html">Ver Basic™</a>
+          <a class="btn-primary" href="departamentos/basic.html">Ver Basic™</a>
         </div>
       </div>
 
@@ -487,95 +454,9 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </div>
 
-<!-- GOLD RULE -->
-<div class="container">
-  <div class="gold-rule">
-    <div class="gr-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> La regla de TRUCO</div>
-    <div class="gr-steps">
-      <div class="gr-step">Todo proyecto implanta tecnología</div>
-      <div class="gr-arrow">→</div>
-      <div class="gr-step">El Departamento Tecnológico la mantiene</div>
-      <div class="gr-arrow">→</div>
-      <div class="gr-step">Cuando necesitas algo nuevo, se crea un nuevo proyecto</div>
-      <div class="gr-arrow">→</div>
-      <div class="gr-step">Que pasa a formar parte de tu Departamento</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════ PROYECTOS ═══════ -->
+<!-- ═══════ CATÁLOGO ═══════ -->
 <div class="section-block reveal">
   <div class="container">
-    <div class="section-divider">
-      <div class="sd-tag project">Basic™ · Tu web</div>
-      <div class="sd-line"></div>
-      <div class="sd-desc">La web que incluye de fábrica tu Departamento Tecnológico Basic™ — instalación gratis, 12 meses de permanencia. Ya no ofrecemos una versión más básica: es la misma Web Profesional que llevan de serie Basic™, Lite™ y Pro™.</div>
-    </div>
-
-    <!-- WEB PROFESIONAL -->
-    <div class="service-card featured" id="web-profesional" onclick="if(!event.target.closest('.sc-footer'))location.href='pago.html?plan=web'" style="cursor:pointer;">
-      <div class="sc-header" style="background:linear-gradient(135deg,rgba(47,123,255,.06),var(--bg-panel));">
-        <div class="sc-header-inner">
-          <div>
-            <div class="sc-cat blue">Basic™ · Incluida de fábrica</div>
-            <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
-              <span class="sc-badge featured">SIEMPRE INCLUIDA EN BASIC™</span>
-              <span class="sc-badge blue">Mejor relación calidad-precio</span>
-            </div>
-            <h2 class="sc-title">Web Profesional</h2>
-            <p class="sc-desc">Una web diseñada para convertir visitas en clientes. Diseño completamente a medida, tecnología integrada y optimizada para que trabaje por ti desde el primer día.</p>
-          </div>
-          <div class="sc-price">
-            <div class="sc-price-main">149 €<span style="font-size:1rem;font-weight:500;">/mes</span></div>
-            <div class="sc-price-vat">+ IVA · Permanencia 12 meses</div>
-            <div class="sc-price-vat" style="margin-top:4px;color:var(--green);font-weight:600;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> Instalación gratis, incluida en la cuota</div>
-          </div>
-        </div>
-      </div>
-      <div class="sc-body">
-        <div class="sc-cols">
-          <div class="sc-col">
-            <div class="sc-col-title">Incluye</div>
-            <ul class="sc-list">
-              <li><b>Diseño completamente a medida</b> desde cero</li>
-              <li><b>Páginas ilimitadas</b> según necesidades</li>
-              <li><b>SEO avanzado</b> con Google Analytics configurado</li>
-              <li><b>Funcionalidades avanzadas</b> personalizadas</li>
-              <li><b>Mayor personalización</b> visual y de contenido</li>
-              <li><b>Chat que responde y agenda citas</b> incluido de fábrica</li>
-              <li><b>Entrega llave en mano</b> con formación incluida</li>
-            </ul>
-          </div>
-          <div class="sc-col">
-            <div class="sc-col-title">Integraciones tecnológicas disponibles</div>
-            <ul class="sc-list">
-              <li>Conexión con WhatsApp Business</li>
-              <li>Formularios inteligentes de captación</li>
-              <li>Pasarela de pago integrada</li>
-              <li>CRM básico de gestión de leads</li>
-            </ul>
-          </div>
-          <div class="sc-col">
-            <div class="sc-col-title">Periodo de implantación incluido</div>
-            <div class="period-block" style="margin:0;">
-              <div class="pb-title">Implantación - 90 días</div>
-              <div class="pb-text">Durante los 90 días ajustamos todas las integraciones y verificamos que todo funciona con datos reales - implantación y coordinación incluidas en la cuota, sin coste extra. A partir de ahí, tu Departamento Basic™ sigue manteniéndola durante los 12 meses de permanencia.</div>
-              <div class="pb-months">
-                <div class="pb-month included"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:2px;"><rect x="3" y="8" width="18" height="4"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg> 90 días · Implantación INCLUIDA</div>
-                <div class="pb-month after">Mantenimiento continuo · 149 €/mes + IVA · 12 meses</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-footer-left"><b>Si no renuevas al terminar los 12 meses, te lo llevas todo</b> - código fuente incluido, en un pen drive personalizado. Dominio y hosting, responsabilidad y coste del cliente.</div>
-          <div class="sc-cta">
-            <a class="btn-ghost" href="index.html#chat-section">Preguntar al asistente</a>
-            <a class="btn-primary" href="pago.html?plan=web">Contratar Basic™ (Web Profesional)</a>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- CATÁLOGO DE SOLUCIONES (informativo) -->
     <div class="section-divider" style="margin-top:56px;">
@@ -583,7 +464,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="sd-line"></div>
       <div class="sd-desc">Esto es lo que se instala dentro de Start™, Basic™, Lite™ o Pro™ — consulta cada una para resolver dudas antes de elegir tu Departamento.</div>
     </div>
-    <div class="service-card" id="digitaliza" onclick="if(!event.target.closest('.sc-footer')&&!event.target.closest('a'))location.href='pago.html'" style="cursor:pointer;">
+    <div class="service-card" id="digitaliza" onclick="if(!event.target.closest('.sc-footer')&&!event.target.closest('a'))location.href='digitaliza.html'" style="cursor:pointer;">
       <div class="sc-header">
         <div class="sc-header-inner">
           <div>
@@ -599,26 +480,23 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         </div>
       </div>
       <div class="sc-body">
-        <!-- Solutions grid -->
+        <!-- Solutions grid — vista previa, el catálogo completo con precios vive en digitaliza.html -->
         <div style="padding:24px 24px 0;border-top:1px solid var(--grey-line);">
-          <div class="sc-col-title">Descubre cómo puede mejorar cada automatización tu empresa</div>
+          <div class="sc-col-title">Algunas de las 12 automatizaciones del catálogo</div>
         </div>
-        <div class="solutions-grid">
-          <a class="solution-chip" href="soluciones/whatsapp.html" style="text-decoration:none;cursor:pointer;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><h5>IA para WhatsApp</h5><span class="sol-price"><s class="price-old">890€</s> 590 € + IVA<span class="launch-tag">Oferta 2026</span></span><p>Atención automática, agenda y gestión de conversaciones vía WhatsApp Business.</p><p style="font-size:.76rem;color:var(--grey);margin-top:6px;">Incluye 1.000 interacciones/mes · exceso 0,02 €/interacción</p></a>
-          <a class="solution-chip" href="soluciones/web-ia.html" style="text-decoration:none;cursor:pointer;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></div><h5>IA para tu Web</h5><span class="sol-price"><s class="price-old">650€</s> 350 € + IVA<span class="launch-tag">Oferta 2026</span></span><p>Sistema de atención inteligente integrado en tu web actual.</p><p style="font-size:.76rem;color:var(--grey);margin-top:6px;">Incluye 1.000 interacciones/mes · exceso 0,02 €/interacción</p></a>
-          <a class="solution-chip" href="soluciones/email-ia.html" style="text-decoration:none;cursor:pointer;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div><h5>IA para Correo</h5><span class="sol-price"><s class="price-old">590€</s> 350 € + IVA<span class="launch-tag">Oferta 2026</span></span><p>Clasificación y respuesta automática de correos de clientes.</p><p style="font-size:.76rem;color:var(--grey);margin-top:6px;">Incluye 1.000 interacciones/mes · exceso 0,02 €/interacción</p></a>
-          <a class="solution-chip" href="soluciones/llamadas.html" style="text-decoration:none;cursor:pointer;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><h5>IA para Llamadas</h5><span class="sol-price">690 € + IVA</span><p>Tu teléfono contestado 24/7 con voz natural: agenda citas o resuelve dudas sin que suene a robot.</p><p style="font-size:.76rem;color:var(--grey);margin-top:6px;">Incluye 150 llamadas/mes, todo incluido · exceso 0,50 €/llamada</p></a>
-          <a class="solution-chip" href="soluciones/flujos-a-medida.html" style="text-decoration:none;cursor:pointer;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><h5>Flujos automáticos a medida</h5><span class="sol-price">350€ / 650€ / 1.200€ + IVA</span><p>Flujos que eliminan tareas repetitivas de tu equipo.</p><p style="font-size:.76rem;color:var(--grey);margin-top:6px;">Precio cerrado según complejidad: simple, media o varias herramientas</p></a>
-          <a class="solution-chip" href="soluciones/crm.html" style="text-decoration:none;cursor:pointer;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h5>CRM</h5><span class="sol-price">Desde 950 € + IVA</span><p>Sistema de gestión de clientes adaptado a tu sector y flujo de trabajo.</p><p style="font-size:.76rem;color:var(--grey);margin-top:6px;">Requiere una auditoría inicial para cerrar el precio final</p></a>
-          <a class="solution-chip" href="soluciones/reservas.html" style="text-decoration:none;cursor:pointer;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><h5>Reservas y Agenda</h5><span class="sol-price">350 € + IVA</span><p>Sistema de citas online integrado con tu calendario actual.</p></a>
-          <a class="solution-chip" href="soluciones/integraciones.html" style="text-decoration:none;cursor:pointer;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div><h5>Integraciones</h5><span class="sol-price">Desde 600 € + IVA</span><p>Conexión entre todas las herramientas que ya usas en tu empresa.</p><p style="font-size:.76rem;color:var(--grey);margin-top:6px;">Consulta tu caso, precio final sin sorpresas</p></a>
-          <a class="solution-chip" href="soluciones/docs.html" style="text-decoration:none;cursor:pointer;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div><h5>Gestión Documental</h5><span class="sol-price">Desde 400 € + IVA</span><p>Organización y automatización de documentos y contratos.</p></a>
-          <a class="solution-chip" href="soluciones/firma.html" style="text-decoration:none;cursor:pointer;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></div><h5>Firma Digital</h5><span class="sol-price">500 € + IVA</span><p>Sistema de firma digital para contratos y documentos legales.</p></a>
-          <a class="solution-chip" href="soluciones/ciberseguridad.html" style="text-decoration:none;cursor:pointer;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h5>Ciberseguridad Pyme</h5><span class="sol-price">450 € + IVA</span><p>Revisión e instalación de la seguridad básica imprescindible: 2FA, gestor de contraseñas, copias de seguridad automáticas e instrucción básica para tu equipo.</p></a>
-          <a class="solution-chip" href="soluciones/truki.html" style="text-decoration:none;cursor:pointer;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 1z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg></div><h5>Facturación automática <span style="font-weight:400;color:var(--grey);">(TruKi)</span></h5><span class="sol-price">580 € + IVA</span><p>Describe el trabajo por chat y tu aliado TruKi genera al instante la factura o el presupuesto, listo para el cliente y guardado en tu propia base de datos.</p></a>
+        <div class="solutions-grid" style="grid-template-columns:repeat(6,1fr);padding-bottom:8px;">
+          <a class="solution-chip" href="soluciones/whatsapp.html" style="text-decoration:none;cursor:pointer;padding:14px 10px;text-align:center;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><h5 style="font-size:.8rem;margin-bottom:0;">WhatsApp</h5></a>
+          <a class="solution-chip" href="soluciones/web-ia.html" style="text-decoration:none;cursor:pointer;padding:14px 10px;text-align:center;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></div><h5 style="font-size:.8rem;margin-bottom:0;">Tu Web</h5></a>
+          <a class="solution-chip" href="soluciones/llamadas.html" style="text-decoration:none;cursor:pointer;padding:14px 10px;text-align:center;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><h5 style="font-size:.8rem;margin-bottom:0;">Llamadas</h5></a>
+          <a class="solution-chip" href="soluciones/truki.html" style="text-decoration:none;cursor:pointer;padding:14px 10px;text-align:center;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 1z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg></div><h5 style="font-size:.8rem;margin-bottom:0;">TruKi</h5></a>
+          <a class="solution-chip" href="soluciones/reservas.html" style="text-decoration:none;cursor:pointer;padding:14px 10px;text-align:center;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><h5 style="font-size:.8rem;margin-bottom:0;">Reservas</h5></a>
+          <a class="solution-chip" href="soluciones/crm.html" style="text-decoration:none;cursor:pointer;padding:14px 10px;text-align:center;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h5 style="font-size:.8rem;margin-bottom:0;">CRM</h5></a>
+        </div>
+        <div style="padding:0 24px 20px;">
+          <a href="digitaliza.html" style="display:inline-flex;align-items:center;gap:6px;color:var(--gold);font-weight:700;font-size:.86rem;">+ 6 automatizaciones más, con precios y detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
         <!-- What we do -->
-        <div class="sc-col-title" style="padding:20px 24px 12px;">Lo que hacemos en cada proyecto</div>
+        <div class="sc-col-title" style="padding:20px 24px 12px;">Lo que hacemos en cada implantación</div>
         <div class="digitaliza-includes">
           <div class="di-item">Estudio previo de tu empresa y necesidades</div>
           <div class="di-item">Configuración e integración completa</div>
@@ -629,31 +507,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="di-item">Soporte técnico durante la implantación</div>
           <div class="di-item">Documentación completa entregada</div>
         </div>
-        <!-- Qué departamento te da cuántas -->
-        <div style="padding:24px;">
-          <div class="period-block" style="margin:0;">
-            <div class="pb-title">Cuántas automatizaciones incluye cada Departamento</div>
-            <div class="pb-text">Cada automatización que eliges se instala gratis dentro de tu Departamento y queda mantenida mientras seas cliente. El número de automatizaciones incluidas depende del tier:</div>
-            <div class="impl-period-grid">
-              <div style="background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.2);border-radius:8px;padding:12px 14px;">
-                <div style="font-family:var(--font-mono);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">1 automatización, sin web → Departamento Start™</div>
-                <div style="font-size:.84rem;color:var(--grey);">Desde <span id="renew-price-basic-digital">69</span> €/mes + IVA · Permanencia 12 meses</div>
-              </div>
-              <div style="background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.2);border-radius:8px;padding:12px 14px;">
-                <div style="font-family:var(--font-mono);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">1 automatización + Web Profesional → Departamento Basic™</div>
-                <div style="font-size:.84rem;color:var(--grey);">Desde <span id="renew-price-elemental-profesional-digital">149</span> €/mes + IVA · Permanencia 12 meses</div>
-              </div>
-              <div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:12px 14px;">
-                <div style="font-family:var(--font-mono);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:6px;">2 automatizaciones + web → Departamento Lite™</div>
-                <div style="font-size:.84rem;color:var(--grey);">Desde <span id="renew-price-lite-digital">279</span> €/mes + IVA · Permanencia 12 meses</div>
-              </div>
-              <div style="background:rgba(47,123,255,.08);border:1px solid rgba(47,123,255,.2);border-radius:8px;padding:12px 14px;">
-                <div style="font-family:var(--font-mono);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;">3 automatizaciones + web → Departamento Pro™</div>
-                <div style="font-size:.84rem;color:var(--grey);">Desde <span id="renew-price-pro-digital">549</span> €/mes + IVA · Permanencia 12 meses</div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div class="sc-footer">
           <div class="sc-footer-left"><b>El cliente no busca proveedores. TRUCO se encarga absolutamente de todo.</b> Elegimos, implantamos, configuramos y mantenemos. Un único interlocutor para toda tu tecnología.</div>
           <div class="sc-cta">
@@ -661,39 +514,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
             <a class="btn-primary" href="pago.html">Ver mi Departamento Tecnológico</a>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- CÓMO TRABAJAMOS -->
-<div class="como-section reveal" id="como-trabajamos">
-  <div class="container">
-    <div style="text-align:center;">
-      <div class="ph-tag" style="justify-content:center;">Cómo trabajamos</div>
-      <h2 style="font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;margin-bottom:10px;">Un proceso claro, sin sorpresas.</h2>
-      <p style="font-size:.95rem;color:var(--grey);max-width:520px;margin:0 auto;">Desde el primer análisis hasta el mantenimiento continuo, sabes en todo momento qué estamos haciendo y por qué.</p>
-    </div>
-    <div class="como-steps">
-      <div class="como-step">
-        <div class="cs-num">1</div>
-        <div><div class="cs-title">Analizamos tu empresa</div><div class="cs-desc">Entendemos tu negocio, tus procesos y qué tecnología necesitas realmente.</div></div>
-      </div>
-      <div class="como-step">
-        <div class="cs-num highlight">2</div>
-        <div><div class="cs-title">Implantamos la automatización</div><div class="cs-desc">Configuramos, integramos y ponemos en marcha la tecnología diseñada para tu empresa.</div></div>
-      </div>
-      <div class="como-step">
-        <div class="cs-num highlight">3</div>
-        <div><div class="cs-title">90 días de optimización</div><div class="cs-desc">Supervisamos el funcionamiento real, ajustamos y perfeccionamos hasta que funcione exactamente como necesitas.</div></div>
-      </div>
-      <div class="como-step">
-        <div class="cs-num highlight">4</div>
-        <div><div class="cs-title">Tu Departamento activo</div><div class="cs-desc">Tu equipo tecnológico mantiene y supervisa todo. Tú solo te preocupas de tu negocio.</div></div>
-      </div>
-      <div class="como-step">
-        <div class="cs-num">5</div>
-        <div><div class="cs-title">Seguimos contigo</div><div class="cs-desc">Cuando necesitas nueva tecnología, creamos un nuevo proyecto que pasa al Departamento.</div></div>
       </div>
     </div>
   </div>
@@ -772,11 +592,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 <script src="founding-offer.js"></script>
 <script>
 function renderFoundingPricesServicios(){
-  ['renew-price-lite-esencial','renew-price-lite-web','renew-price-lite-digital'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=STANDARD_PRICES.lite;});
-  const proRenewEl=document.getElementById('renew-price-pro-digital');if(proRenewEl)proRenewEl.textContent=STANDARD_PRICES.pro;
-  const startRenewEl=document.getElementById('renew-price-basic-digital');if(startRenewEl)startRenewEl.textContent=currentPrice('basic');
-  const basicRenewEl=document.getElementById('renew-price-elemental-profesional-digital');if(basicRenewEl)basicRenewEl.textContent=currentPrice('elemental-profesional');
-  ['lite','pro','basic','elemental-profesional'].forEach(tier=>{
+  ['lite','pro','start','basic'].forEach(tier=>{
     const m=currentPrice(tier);
     const iva=(m*1.21).toFixed(2).replace('.',',');
     const priceEl=document.getElementById('sc-price-'+tier);

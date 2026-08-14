@@ -440,6 +440,12 @@ img{display:block;max-width:100%;}
 .need-sub{font-size:.78rem;color:var(--n-accent);font-weight:600;letter-spacing:.01em;}
 .sol-chip-icon{width:34px;height:34px;border-radius:50%;background:color-mix(in srgb,var(--n-accent) 16%,transparent);color:var(--n-accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .sol-chip-icon svg{width:17px;height:17px;}
+.need-card-catalog{background:linear-gradient(135deg,rgba(217,168,63,.2),rgba(217,168,63,.06));border:1.5px solid var(--gold)!important;border-top:1.5px solid var(--gold)!important;position:relative;overflow:hidden;animation:vhGlow 2.4s ease-in-out infinite;}
+.need-card-catalog:hover{background:linear-gradient(135deg,rgba(217,168,63,.28),rgba(217,168,63,.1));border-color:var(--gold)!important;}
+.need-card-catalog .sol-chip-icon{background:linear-gradient(135deg,#f2c14e,var(--gold) 60%,#c98f1f);color:#1a1206;}
+.need-card-catalog .need-title{font-size:1.08rem;}
+.need-card-catalog .need-sub{color:var(--gold);font-weight:800;}
+.ncc-badge{position:absolute;top:0;right:0;background:linear-gradient(90deg,#f2c14e,var(--gold) 55%,#c98f1f);color:#1a1206;font-family:var(--font-mono);font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:5px 14px;border-radius:0 14px 0 10px;}
 .sol-showcase-more{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-weight:700;font-size:.9rem;text-decoration:none;}
 .sol-showcase-more svg{width:15px;height:15px;transition:transform var(--tr);}
 .sol-showcase-more:hover svg{transform:translateX(3px);}
@@ -455,11 +461,11 @@ img{display:block;max-width:100%;}
 .tier-card.tier-lite .tier-footer{color:var(--green);}
 .tier-card.tier-lite:hover{border-color:var(--green);}
 .tier-card.tier-lite .tier-list li::before{color:var(--green);}
-.tier-card.tier-elemental{border-color:#2dd4bf;}
-.tier-card.tier-elemental .tier-badge{color:#2dd4bf;}
-.tier-card.tier-elemental .tier-footer{color:#2dd4bf;}
-.tier-card.tier-elemental:hover{border-color:#2dd4bf;}
-.tier-card.tier-elemental .tier-list li::before{color:#2dd4bf;}
+.tier-card.tier-pro{border-color:#2dd4bf;}
+.tier-card.tier-pro .tier-badge{color:#2dd4bf;}
+.tier-card.tier-pro .tier-footer{color:#2dd4bf;}
+.tier-card.tier-pro:hover{border-color:#2dd4bf;}
+.tier-card.tier-pro .tier-list li::before{color:#2dd4bf;}
 .tier-card.entry .tier-list li::before{color:var(--gold);}
 .tier-card.featured .tier-list li::before{color:var(--blue);}
 .tier-card{
@@ -1033,6 +1039,36 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </div>
 
+<!-- ── CÓMO TRABAJAMOS CONTIGO (día a día, no solo el arranque) ── -->
+<div class="container">
+  <div class="hiw-wrap">
+    <div class="hiw-intro">
+      <div class="section-tag gold">Cómo trabajamos contigo</div>
+      <h3>No entregamos un proyecto y desaparecemos. Nos quedamos — para que tu negocio no pare de crecer.</h3>
+      <p>Aquí no compras una herramienta que tienes que aprender a manejar. Te despreocupas de la tecnología para siempre: nosotros vigilamos que tu empresa esté siempre al día, pase lo que pase. Sale algo nuevo que puede beneficiarte, algo deja de funcionar, cambias un precio, te vas de vacaciones — esto es lo que hacemos en cada caso, sin que tengas que pedirlo.</p>
+    </div>
+    <div class="hiw-grid">
+      <div class="hiw-card">
+        <div class="hiw-when">Sale algo nuevo que puede beneficiar a tu negocio</div>
+        <div class="hiw-then">Lo vemos nosotros primero. Te lo proponemos ya estudiado y, si encaja, <b>lo tienes implantado sin mover un dedo.</b></div>
+      </div>
+      <div class="hiw-card">
+        <div class="hiw-when">Algo no funciona como te gustaría</div>
+        <div class="hiw-then">Nos escribes y el problema desaparece. <b>Tú no vuelves a tocarlo — nunca.</b></div>
+      </div>
+      <div class="hiw-card">
+        <div class="hiw-when">Te vas de vacaciones y quieres cambiar un precio, una oferta o un horario</div>
+        <div class="hiw-then">Nos mandas un mensaje desde la playa. <b>Cuando vuelvas, ya está hecho.</b></div>
+      </div>
+      <div class="hiw-card">
+        <div class="hiw-when">Quieres ajustar cómo trabaja tu asistente</div>
+        <div class="hiw-then">¿Que no cierre ventas solo? ¿Que te resuma cada conversación antes de la cita? Lo ajustamos <b>a tu manera, no a la nuestra.</b></div>
+      </div>
+    </div>
+    <p class="hiw-close">No contratas un servicio que se acaba. Contratas a alguien que se queda — siempre ahí, para que tu negocio no deje de crecer.</p>
+  </div>
+</div>
+
 <!-- ── SECTORES ── -->
 <section id="sectores" class="reveal">
   <div class="container">
@@ -1196,7 +1232,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
             <li>Se me solapan las citas</li>
           </ul>
           <p class="entry-close">Este es tu Departamento.</p>
-          <a class="entry-cta" href="departamentos/basic.html">Ver Start™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a class="entry-cta" href="departamentos/start.html">Ver Start™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
         <div class="entry-card c-teal">
           <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="7" y1="14" x2="13" y2="14"/></svg></div>
@@ -1208,7 +1244,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
             <li>Quiero que mi web agende citas sola, sin que yo intervenga</li>
           </ul>
           <p class="entry-close">Este es tu Departamento.</p>
-          <a class="entry-cta" href="departamentos/elemental.html">Ver Basic™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a class="entry-cta" href="departamentos/basic.html">Ver Basic™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
         <div class="entry-card c-green">
           <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/><line x1="3" y1="12" x2="21" y2="12"/></svg></div>
@@ -1253,6 +1289,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <a class="need-card" href="soluciones/crm.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><div class="need-title">Ten a cada cliente y su historial en un solo sitio, sin post-its</div><div class="need-sub">CRM →</div></a>
       <a class="need-card" href="soluciones/flujos-a-medida.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span><div class="need-title">Acaba con las tareas repetitivas de tu empresa</div><div class="need-sub">Flujos a medida →</div></a>
       <a class="need-card" href="soluciones/llamadas.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><div class="need-title">Contesta el teléfono aunque tengas las manos ocupadas</div><div class="need-sub">IA para Llamadas →</div></a>
+      <a class="need-card need-card-catalog" href="digitaliza.html"><span class="ncc-badge">Catálogo completo</span><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span><div class="need-title">¿No sabes cuál de estas 12 es la tuya? Compáralas todas, con precios reales</div><div class="need-sub">Digitaliza tu Empresa →</div></a>
     </div>
     <a class="sol-showcase-more" href="servicios.html#digitaliza">Ver todas las automatizaciones y precios <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
   </div>
@@ -1265,21 +1302,37 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <h2 class="section-h2">Elige el tamaño de departamento que necesita tu negocio</h2>
     <p class="section-sub">Todo va gratis dentro de tu Departamento — nada se vende suelto — a cambio de 12 meses de permanencia. De un vistazo: el detalle completo de cada uno vive en su propia página.</p>
     <div class="tiers-grid tiers-grid-glance">
-      <div class="tier-card featured" onclick="location.href='departamentos/pro.html'" style="cursor:pointer;">
-        <span class="tier-badge">Para negocios que quieren escalar</span>
-        <div class="tier-name">Departamento Pro™</div>
-        <div class="tier-role">Web Profesional + 3 automatizaciones a elegir. <b>Tu equipo tecnológico, tú solo escribes.</b></div>
-        <div class="tier-founding-badge" id="tier-founding-badge-pro"></div>
-        <div class="tier-price" id="tier-price-pro"></div>
-        <div class="tier-vat" id="tier-vat-pro"></div>
-        <div class="tier-founding-old" id="tier-founding-old-pro"></div>
+      <div class="tier-card entry" onclick="location.href='departamentos/start.html'" style="cursor:pointer;">
+        <span class="tier-badge">Punto de entrada · para cualquiera</span>
+        <div class="tier-name">Departamento Start™</div>
+        <div class="tier-role">1 automatización a elegir, sin web. <b>Tu equipo tecnológico, tú solo escribes.</b></div>
+        <div class="tier-founding-badge" id="tier-founding-badge-start"></div>
+        <div class="tier-price" id="tier-price-start"></div>
+        <div class="tier-vat" id="tier-vat-start"></div>
+        <div class="tier-founding-old" id="tier-founding-old-start"></div>
         <div class="tier-annual">Permanencia: <span>12 meses</span></div>
         <ul class="tier-list tier-list-glance">
-          <li>Web Profesional + chat/agenda de fábrica</li>
-          <li>3 automatizaciones gratis · mantiene hasta 6</li>
-          <li>Prioridad alta en incidencias</li>
+          <li>1 automatización a elegir, gratis</li>
+          <li>Acompañamiento completo</li>
+          <li>Sin web — el paso natural es Basic™</li>
         </ul>
-        <a class="entry-cta" href="departamentos/pro.html" style="margin-top:12px;">Ver detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="entry-cta" href="departamentos/start.html" style="margin-top:12px;">Ver detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="tier-card featured" onclick="location.href='departamentos/basic.html'" style="cursor:pointer;">
+        <span class="tier-badge">Web que trabaja + 1 automatización</span>
+        <div class="tier-name">Departamento Basic™</div>
+        <div class="tier-role">Web Profesional con chat y agenda de fábrica + 1 automatización más. <b>Tu equipo tecnológico, tú solo escribes.</b></div>
+        <div class="tier-founding-badge" id="tier-founding-badge-basic"></div>
+        <div class="tier-price" id="tier-price-basic"></div>
+        <div class="tier-vat" id="tier-vat-basic"></div>
+        <div class="tier-founding-old" id="tier-founding-old-basic"></div>
+        <div class="tier-annual">Permanencia: <span>12 meses</span></div>
+        <ul class="tier-list tier-list-glance">
+          <li>Web Profesional con chat + agenda, de fábrica</li>
+          <li>1 automatización gratis más, a elegir</li>
+          <li>Ideal si necesitas presencia + un extra</li>
+        </ul>
+        <a class="entry-cta" href="departamentos/basic.html" style="margin-top:12px;">Ver detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
       <div class="tier-card tier-lite" onclick="location.href='departamentos/lite.html'" style="cursor:pointer;">
         <span class="tier-badge">Cubre todos tus canales</span>
@@ -1297,37 +1350,21 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         </ul>
         <a class="entry-cta" href="departamentos/lite.html" style="margin-top:12px;">Ver detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
-      <div class="tier-card entry" onclick="location.href='departamentos/basic.html'" style="cursor:pointer;">
-        <span class="tier-badge">Punto de entrada · para cualquiera</span>
-        <div class="tier-name">Departamento Start™</div>
-        <div class="tier-role">1 automatización a elegir, sin web. <b>Tu equipo tecnológico, tú solo escribes.</b></div>
-        <div class="tier-founding-badge" id="tier-founding-badge-basic"></div>
-        <div class="tier-price" id="tier-price-basic"></div>
-        <div class="tier-vat" id="tier-vat-basic"></div>
-        <div class="tier-founding-old" id="tier-founding-old-basic"></div>
+      <div class="tier-card tier-pro" onclick="location.href='departamentos/pro.html'" style="cursor:pointer;">
+        <span class="tier-badge">Para negocios que quieren escalar</span>
+        <div class="tier-name">Departamento Pro™</div>
+        <div class="tier-role">Web Profesional + 3 automatizaciones a elegir. <b>Tu equipo tecnológico, tú solo escribes.</b></div>
+        <div class="tier-founding-badge" id="tier-founding-badge-pro"></div>
+        <div class="tier-price" id="tier-price-pro"></div>
+        <div class="tier-vat" id="tier-vat-pro"></div>
+        <div class="tier-founding-old" id="tier-founding-old-pro"></div>
         <div class="tier-annual">Permanencia: <span>12 meses</span></div>
         <ul class="tier-list tier-list-glance">
-          <li>1 automatización a elegir, gratis</li>
-          <li>Acompañamiento completo</li>
-          <li>Sin web — el paso natural es Basic™</li>
+          <li>Web Profesional + chat/agenda de fábrica</li>
+          <li>3 automatizaciones gratis · mantiene hasta 6</li>
+          <li>Prioridad alta en incidencias</li>
         </ul>
-        <a class="entry-cta" href="departamentos/basic.html" style="margin-top:12px;">Ver detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-      </div>
-      <div class="tier-card tier-elemental" onclick="location.href='departamentos/elemental.html'" style="cursor:pointer;">
-        <span class="tier-badge">Web que trabaja + 1 automatización</span>
-        <div class="tier-name">Departamento Basic™</div>
-        <div class="tier-role">Web Profesional con chat y agenda de fábrica + 1 automatización más. <b>Tu equipo tecnológico, tú solo escribes.</b></div>
-        <div class="tier-founding-badge" id="tier-founding-badge-elemental-profesional"></div>
-        <div class="tier-price" id="tier-price-elemental-profesional"></div>
-        <div class="tier-vat" id="tier-vat-elemental-profesional"></div>
-        <div class="tier-founding-old" id="tier-founding-old-elemental-profesional"></div>
-        <div class="tier-annual">Permanencia: <span>12 meses</span></div>
-        <ul class="tier-list tier-list-glance">
-          <li>Web Profesional con chat + agenda, de fábrica</li>
-          <li>1 automatización gratis más, a elegir</li>
-          <li>Ideal si necesitas presencia + un extra</li>
-        </ul>
-        <a class="entry-cta" href="departamentos/elemental.html" style="margin-top:12px;">Ver detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="entry-cta" href="departamentos/pro.html" style="margin-top:12px;">Ver detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
     <div class="dedication-note">
@@ -1354,33 +1391,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <p>Con más de 20.000 personas siguiendo el trabajo que hacemos en redes, sé lo que necesita una pyme o un autónomo cuando habla de tecnología: no más herramientas, no más cursos. Un equipo de confianza que esté ahí, que entienda su negocio y que lo haga funcionar mejor cada mes.</p>
           <div class="founder-sig"><b>Fundador · TRUCO technology</b> — www.trucotechnology.com</div>
         </div>
-      </div>
-
-      <div class="hiw-wrap">
-        <div class="hiw-intro">
-          <div class="section-tag gold">Cómo trabajamos contigo</div>
-          <h3>No entregamos un proyecto y desaparecemos — somos tu departamento, todos los días.</h3>
-          <p>TRUCO technology es tu departamento tecnológico externalizado: nuestro trabajo es que tu empresa esté siempre al día, usando la tecnología que de verdad la hace crecer. Sale algo nuevo que puede beneficiarte, algo deja de funcionar como quieres, cambias un precio o te vas de vacaciones — esto es lo que hacemos en cada caso.</p>
-        </div>
-        <div class="hiw-grid">
-          <div class="hiw-card">
-            <div class="hiw-when">Sale algo nuevo que puede beneficiar a tu negocio</div>
-            <div class="hiw-then">Lo estudiamos nosotros, te auditamos para proponértelo con sentido, y si encaja, <b>lo implantamos en tu empresa.</b></div>
-          </div>
-          <div class="hiw-card">
-            <div class="hiw-when">Algo no funciona como te gustaría</div>
-            <div class="hiw-then">Nos lo comentas y <b>nosotros nos encargamos de todo</b> — tú no vuelves a tocarlo.</div>
-          </div>
-          <div class="hiw-card">
-            <div class="hiw-when">Te vas de vacaciones y quieres cambiar un precio, una oferta o un horario</div>
-            <div class="hiw-then">Tranquilo, <b>tú solo nos avisas.</b> Nosotros lo modificamos todo por ti.</div>
-          </div>
-          <div class="hiw-card">
-            <div class="hiw-when">Quieres ajustar cómo trabaja tu asistente</div>
-            <div class="hiw-then">¿Que no cierre ventas? ¿Que te resuma cada conversación para llegar preparado a la cita? <b>Lo configuramos exactamente como tú quieras.</b></div>
-          </div>
-        </div>
-        <p class="hiw-close">Somos tus manos en toda la tecnología que rodea tu empresa — para que tú solo tengas que preocuparte de llevar tu negocio.</p>
       </div>
     </div>
   </div>
@@ -1415,7 +1425,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Cuál es la diferencia entre Start, Basic, Lite y Pro? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p><b>Start</b> (<span id="faq-price-basic">69</span>€/mes): 1 automatización gratis, sin web. <b>Basic</b> (<span id="faq-price-elemental-profesional">149</span>€/mes): Web Profesional con chat y agenda de fábrica + 1 automatización más. <b>Lite</b> (<span id="faq-price-lite">279</span>€/mes): web + 2 automatizaciones gratis. <b>Pro</b> (<span id="faq-price-pro">549</span>€/mes): Web Profesional + 3 automatizaciones gratis. Si superas el rango de tu escalón, subes al siguiente. <a href="#servicios" style="color:var(--blue);">Ver detalle de los cuatro →</a></p></div>
+        <div class="faq-a"><p><b>Start</b> (<span id="faq-price-start">69</span>€/mes): 1 automatización gratis, sin web. <b>Basic</b> (<span id="faq-price-basic">149</span>€/mes): Web Profesional con chat y agenda de fábrica + 1 automatización más. <b>Lite</b> (<span id="faq-price-lite">279</span>€/mes): web + 2 automatizaciones gratis. <b>Pro</b> (<span id="faq-price-pro">549</span>€/mes): Web Profesional + 3 automatizaciones gratis. Si superas el rango de tu escalón, subes al siguiente. <a href="#servicios" style="color:var(--blue);">Ver detalle de los cuatro →</a></p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Por qué hay que comprometerse con una permanencia? <span class="faq-icon">+</span></button>
@@ -1502,11 +1512,10 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="footer-col">
         <h5>Servicios</h5>
         <ul>
-          <li><a href="departamentos/basic.html">Departamento Tecnológico Start™</a></li>
-          <li><a href="departamentos/elemental.html">Departamento Tecnológico Basic™</a></li>
+          <li><a href="departamentos/start.html">Departamento Tecnológico Start™</a></li>
+          <li><a href="departamentos/basic.html">Departamento Tecnológico Basic™</a></li>
           <li><a href="servicios.html#lite">Departamento Tecnológico Lite™</a></li>
           <li><a href="servicios.html#pro">Departamento Tecnológico Pro™</a></li>
-          <li><a href="servicios.html#web-profesional">Proyecto Web Profesional</a></li>
           <li><a href="digitaliza.html">Digitaliza tu Empresa</a></li>
         </ul>
       </div>
@@ -1547,12 +1556,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 <script src="founding-offer.js"></script>
 <script>
 function renderFoundingPricesHome(){
-  const prices={lite:currentPrice('lite'),pro:currentPrice('pro'),basic:currentPrice('basic'),'elemental-profesional':currentPrice('elemental-profesional')};
+  const prices={lite:currentPrice('lite'),pro:currentPrice('pro'),start:currentPrice('start'),basic:currentPrice('basic')};
   const faqLite=document.getElementById('faq-price-lite');if(faqLite)faqLite.textContent=prices.lite;
   const faqPro=document.getElementById('faq-price-pro');if(faqPro)faqPro.textContent=prices.pro;
-  const faqStart=document.getElementById('faq-price-basic');if(faqStart)faqStart.textContent=prices.basic;
-  const faqBasic=document.getElementById('faq-price-elemental-profesional');if(faqBasic)faqBasic.textContent=prices['elemental-profesional'];
-  ['lite','pro','basic','elemental-profesional'].forEach(tier=>{
+  const faqStart=document.getElementById('faq-price-start');if(faqStart)faqStart.textContent=prices.start;
+  const faqBasic=document.getElementById('faq-price-basic');if(faqBasic)faqBasic.textContent=prices.basic;
+  ['lite','pro','start','basic'].forEach(tier=>{
     const m=prices[tier];
     const iva=(m*1.21).toFixed(2).replace('.',',');
     const priceEl=document.getElementById('tier-price-'+tier);
@@ -1667,8 +1676,8 @@ const KB = {
   precio_general: {
     patterns: ['precio','cuánto cuesta','cuánto es','tarifa','presupuesto','cuánto cobráis','cuánto vale','qué precios tenéis','cuánto me costaría','precios'],
     responses: [
-      `Tenemos 4 Departamentos Tecnológicos, todos con la web y/o las automatizaciones completamente gratis (12 meses de permanencia en los 4):\n\n<b>Start™: ${currentPrice('basic')}€/mes + IVA</b> — sin web, 1 automatización gratis\n<b>Basic™: ${currentPrice('elemental-profesional')}€/mes + IVA</b> — Web Profesional con chat y agenda de fábrica + 1 automatización más\n<b>Lite™: ${currentPrice('lite')}€/mes + IVA</b> — tu web + 2 automatizaciones gratis\n<b>Pro™: ${currentPrice('pro')}€/mes + IVA</b> — Web Profesional + 3 automatizaciones gratis\n\nSe paga en pago único (12% dto.) o fraccionado con SeQura, nunca facturación mensual directa con nosotros. Al terminar los 12 meses, renuevas o te llevas todo lo construido, código incluido. ¿Cuál encaja con lo que necesitas?`,
-      `Depende de qué necesites. Si quieres automatizar algo concreto (WhatsApp IA, facturación, reservas...) sin necesitar web: Start™, ${currentPrice('basic')}€/mes. Si además de eso quieres una web que trabaje sola — responde dudas y agenda citas de fábrica —: Basic™, ${currentPrice('elemental-profesional')}€/mes. Si quieres web + un par de automatizaciones más: Lite™, ${currentPrice('lite')}€/mes. Y si quieres el paquete completo: Pro™, ${currentPrice('pro')}€/mes. Los 4 llevan 12 meses de permanencia y la implantación va gratis. ¿Cuál de las cuatro situaciones es la tuya?`
+      `Tenemos 4 Departamentos Tecnológicos, todos con la web y/o las automatizaciones completamente gratis (12 meses de permanencia en los 4):\n\n<b>Start™: ${currentPrice('start')}€/mes + IVA</b> — sin web, 1 automatización gratis\n<b>Basic™: ${currentPrice('basic')}€/mes + IVA</b> — Web Profesional con chat y agenda de fábrica + 1 automatización más\n<b>Lite™: ${currentPrice('lite')}€/mes + IVA</b> — tu web + 2 automatizaciones gratis\n<b>Pro™: ${currentPrice('pro')}€/mes + IVA</b> — Web Profesional + 3 automatizaciones gratis\n\nSe paga en pago único (12% dto.) o fraccionado con SeQura, nunca facturación mensual directa con nosotros. Al terminar los 12 meses, renuevas o te llevas todo lo construido, código incluido. ¿Cuál encaja con lo que necesitas?`,
+      `Depende de qué necesites. Si quieres automatizar algo concreto (WhatsApp IA, facturación, reservas...) sin necesitar web: Start™, ${currentPrice('start')}€/mes. Si además de eso quieres una web que trabaje sola — responde dudas y agenda citas de fábrica —: Basic™, ${currentPrice('basic')}€/mes. Si quieres web + un par de automatizaciones más: Lite™, ${currentPrice('lite')}€/mes. Y si quieres el paquete completo: Pro™, ${currentPrice('pro')}€/mes. Los 4 llevan 12 meses de permanencia y la implantación va gratis. ¿Cuál de las cuatro situaciones es la tuya?`
     ]
   },
 
@@ -1676,8 +1685,8 @@ const KB = {
   lite: {
     patterns: ['lite','199','departamento lite','mantenimiento','básico','plan básico','pequeño negocio'],
     responses: [
-      `El <b>Departamento Tecnológico Lite™</b> es ${currentPrice('lite')}€/mes + IVA, con permanencia mínima de 12 meses — a cambio, tu web y 2 automatizaciones a elegir van completamente gratis. Incluye:\n✓ Web gratis (reacondicionada, o Web Profesional nueva si no tienes ninguna)\n✓ 2 automatizaciones a elegir, instaladas gratis (de un catálogo de 7, incluyendo IA para Llamadas)\n✓ Mantenimiento web — actualizaciones y rendimiento\n✓ Seguridad y copias de seguridad periódicas\n✓ Resolución de incidencias sin coste adicional\n✓ Reunión mensual de revisión y asesoramiento (30 min)\n✓ <b>Mantenimiento de hasta 3 automatizaciones tecnológicas</b> en total\n\nSe paga en pago único (12% dto.) o fraccionado con SeQura, nunca facturación mensual directa. ¿Tienes ya alguna automatización implantada o vas a empezar desde cero?`,
-      `El Lite son ${currentPrice('lite')}€/mes + IVA (permanencia de 12 meses, pago único con 12% dto. o fraccionado con SeQura). Mantiene hasta <b>3 automatizaciones tecnológicas</b> implantadas — por ejemplo WhatsApp IA + agenda, o web + CRM.\n\nSi necesitas mantener más automatizaciones, el Pro es el plan correcto. ¿Cuántas automatizaciones tienes o planeas implantar?`
+      `El <b>Departamento Tecnológico Lite™</b> es ${currentPrice('lite')}€/mes + IVA, con permanencia mínima de 12 meses — a cambio, tu web y 2 automatizaciones a elegir van completamente gratis. Incluye:\n✓ Web gratis (reacondicionada, o Web Profesional nueva si no tienes ninguna)\n✓ 2 automatizaciones a elegir, instaladas gratis (de un pool de 7 — incluye IA para Llamadas, exclusiva desde Lite™ en adelante, y TruKi, disponible ya desde Start™)\n✓ Mantenimiento web — actualizaciones y rendimiento\n✓ Seguridad y copias de seguridad periódicas\n✓ Resolución de incidencias sin coste adicional\n✓ Reunión mensual de revisión y asesoramiento (30 min)\n✓ <b>Mantenimiento de hasta 3 automatizaciones tecnológicas</b> en total\n\nSe paga en pago único (12% dto.) o fraccionado con SeQura, nunca facturación mensual directa. ¿Tienes ya alguna automatización implantada o vas a empezar desde cero?`,
+      `El Lite son ${currentPrice('lite')}€/mes + IVA (permanencia de 12 meses, pago único con 12% dto. o fraccionado con SeQura). Mantiene hasta <b>3 automatizaciones tecnológicas</b> implantadas — por ejemplo WhatsApp IA + agenda, o web + IA para Llamadas (esta última, exclusiva desde Lite™ en adelante).\n\nSi necesitas mantener más automatizaciones, el Pro es el plan correcto. ¿Cuántas automatizaciones tienes o planeas implantar?`
     ]
   },
 
@@ -1691,7 +1700,7 @@ const KB = {
   lite_vs_pro: {
     patterns: ['diferencia lite pro','lite o pro','cuál es mejor','lite vs pro','qué diferencia','qué plan','cuál elijo','cuál me conviene','cuál me recomiendas'],
     responses: [
-      `La diferencia está en la web y en el número de automatizaciones que mantienen:\n\n<b>Pro (${currentPrice('pro')}€/mes):</b> Web Profesional + hasta 6 automatizaciones. Para empresas con mayor ecosistema tecnológico — CRM, automatizaciones, múltiples canales...\n\n<b>Lite (${currentPrice('lite')}€/mes):</b> Web (reacondicionada o Profesional nueva) + hasta 3 automatizaciones. Perfecto si tienes, por ejemplo, tu web y un WhatsApp IA.\n\nSi quieres una web que trabaje (chat + agenda de fábrica) más 1 automatización, mira Basic™ (${currentPrice('elemental-profesional')}€/mes). Si solo necesitas 1 automatización y no necesitas web, mira Start™ (${currentPrice('basic')}€/mes). La regla general: 3+ automatizaciones y web → Pro. 1-2 automatizaciones y web → Lite. Web + 1 automatización → Basic. 1 automatización sin web → Start. ¿Cuántas automatizaciones tecnológicas tienes o planeas tener activas?`
+      `La diferencia está en la web y en el número de automatizaciones que mantienen:\n\n<b>Pro (${currentPrice('pro')}€/mes):</b> Web Profesional + hasta 6 automatizaciones. Para empresas con mayor ecosistema tecnológico — CRM, automatizaciones, múltiples canales...\n\n<b>Lite (${currentPrice('lite')}€/mes):</b> Web (reacondicionada o Profesional nueva) + hasta 3 automatizaciones. Perfecto si tienes, por ejemplo, tu web y un WhatsApp IA.\n\nSi quieres una web que trabaje (chat + agenda de fábrica) más 1 automatización, mira Basic™ (${currentPrice('basic')}€/mes). Si solo necesitas 1 automatización y no necesitas web, mira Start™ (${currentPrice('start')}€/mes). La regla general: 3+ automatizaciones y web → Pro. 1-2 automatizaciones y web → Lite. Web + 1 automatización → Basic. 1 automatización sin web → Start. ¿Cuántas automatizaciones tecnológicas tienes o planeas tener activas?`
     ]
   },
 
@@ -1742,7 +1751,7 @@ const KB = {
   digitaliza: {
     patterns: ['digitalizar','digitaliza','600','soluciones tecnológicas','implantar','automatizar','digitalizar mi negocio','digitalizar mi empresa'],
     responses: [
-      `<b>Digitaliza tu Empresa</b> es hoy nuestra guía informativa de automatizaciones tecnológicas — no se compran sueltas, se instalan dentro de tu Departamento (Start™, Basic™, Lite™ o Pro™). Cada automatización tiene un precio de catálogo si la añades más allá de tu pool gratis, ya con todo incluido (sin recargos aparte).\n\nAutomatizaciones disponibles:\nIA para WhatsApp — 590€ + IVA (Oferta Lanzamiento 2026, precio normal 890€)\nIA para Web — 350€ + IVA (Oferta Lanzamiento 2026, precio normal 650€)\nIA para Correo — 350€ + IVA (Oferta Lanzamiento 2026, precio normal 590€)\nIA para Llamadas — 690€ + IVA (todo incluido, 150 llamadas/mes) — exclusiva desde Lite™ en adelante\nReservas online — 350€ + IVA\nFacturación automática (TruKi) — 580€ + IVA\nGestión documental — desde 400€ + IVA\nCiberseguridad Pyme — 450€ + IVA (hasta 5 puestos) — solo gratis en Pro™\nFirma digital — 500€ + IVA\nIntegraciones — desde 600€ + IVA (consulta previa)\nFlujos automáticos a medida — 350€/650€/1.200€ + IVA, precio cerrado según complejidad (simple/media/varias herramientas) — solo gratis en Pro™\nCRM — desde 950€ + IVA (auditoría previa)\n\n<b>Cuántas entran gratis según tu Departamento:</b>\nStart™ (${currentPrice('basic')}€/mes): 1 gratis, sin web\nBasic™ (${currentPrice('elemental-profesional')}€/mes): 1 gratis, con Web Profesional siempre incluida\nLite™ (${currentPrice('lite')}€/mes): 2 gratis, de un pool de 7\nPro™ (${currentPrice('pro')}€/mes): 3 gratis, de un pool de 6\n\nTodos con 12 meses de permanencia y período de implantación incluido. ¿Qué automatizaciones necesita tu empresa?`,
+      `<b>Digitaliza tu Empresa</b> es hoy nuestra guía informativa de automatizaciones tecnológicas — no se compran sueltas, se instalan dentro de tu Departamento (Start™, Basic™, Lite™ o Pro™). Cada automatización tiene un precio de catálogo si la añades más allá de tu pool gratis, ya con todo incluido (sin recargos aparte).\n\nAutomatizaciones disponibles:\nIA para WhatsApp — 590€ + IVA (Oferta Lanzamiento 2026, precio normal 890€)\nIA para Web — 350€ + IVA (Oferta Lanzamiento 2026, precio normal 650€)\nIA para Correo — 350€ + IVA (Oferta Lanzamiento 2026, precio normal 590€)\nIA para Llamadas — 690€ + IVA (Oferta Lanzamiento 2026, precio normal 890€ — todo incluido, 150 llamadas/mes) — exclusiva desde Lite™ en adelante\nReservas online — 350€ + IVA\nFacturación automática (TruKi) — 580€ + IVA\nGestión documental — desde 400€ + IVA — exclusiva desde Lite™ en adelante\nCiberseguridad Pyme — 450€ + IVA (hasta 5 puestos) — solo gratis en Pro™, y exclusiva desde Lite™ en adelante\nFirma digital — 500€ + IVA\nIntegraciones — desde 600€ + IVA (consulta previa) — exclusiva desde Lite™ en adelante\nFlujos automáticos a medida — 350€/650€/1.200€ + IVA, precio cerrado según complejidad (simple/media/varias herramientas) — solo gratis en Pro™, y exclusiva desde Lite™ en adelante\nCRM — desde 950€ + IVA (auditoría previa) — exclusiva desde Lite™ en adelante\n\n<b>Importante:</b> en Start™ y Basic™ solo puedes añadir, como automatización de pago extra, del siguiente grupo: WhatsApp, Web, Correo, Reservas, TruKi o Firma Digital. Llamadas, Ciberseguridad, Flujos a medida, CRM, Integraciones y Gestión documental solo se pueden añadir desde Lite™ en adelante, ni siquiera pagando aparte en Start™/Basic™.\n\n<b>Cuántas entran gratis según tu Departamento:</b>\nStart™ (${currentPrice('start')}€/mes): 1 gratis, sin web\nBasic™ (${currentPrice('basic')}€/mes): 1 gratis, con Web Profesional siempre incluida\nLite™ (${currentPrice('lite')}€/mes): 2 gratis, de un pool de 7\nPro™ (${currentPrice('pro')}€/mes): 3 gratis, de un pool de 6\n\nTodos con 12 meses de permanencia y período de implantación incluido. ¿Qué automatizaciones necesita tu empresa?`,
       'Las automatizaciones de Digitaliza se instalan siempre dentro de un Departamento — no existe compra suelta. No tienes que saber qué herramienta necesitas — nos lo cuentas y nosotros diseñamos la automatización correcta, y va gratis si entra en el pool de tu tier (Start™ 1, Basic™ 1, Lite™ 2, Pro™ 3). ¿Cuál es el mayor problema que quieres resolver en tu empresa ahora mismo?'
     ]
   },
@@ -1827,7 +1836,7 @@ const KB = {
   sol_llamadas: {
     patterns: ['ia para llamadas','asistente de voz','asistente de llamadas','agente de voz','contestar el teléfono','contestador ia','llamadas perdidas','cuánto cuesta ia para llamadas','precio de ia para llamadas','ia para el teléfono'],
     responses: [
-      '<b>IA para Llamadas</b> es 690€ + IVA, precio cerrado y todo incluido (línea + IA, sin coste aparte). Un agente de voz natural contesta tu teléfono a cualquier hora, entiende lo que pide el cliente y agenda la cita directamente en tu calendario mientras hablan — nada de menús de "pulse 1 para...". Incluye 150 llamadas al mes; el exceso se factura a 0,50€ + IVA por llamada adicional. ¿Cuántas llamadas se te escapan ahora mismo por no poder contestar a tiempo?'
+      'La <b>IA para Llamadas</b> cuesta 690€ + IVA ahora mismo — <b>Oferta de Lanzamiento 2026</b>, precio normal 890€ — todo incluido (línea + IA, sin coste aparte). Un agente de voz natural contesta tu teléfono a cualquier hora, entiende lo que pide el cliente y agenda la cita directamente en tu calendario mientras hablan — nada de menús de "pulse 1 para...". Incluye 150 llamadas al mes; el exceso se factura a 0,50€ + IVA por llamada adicional. Exclusiva desde Lite™ en adelante — no disponible en Start™ ni Basic™, ni siquiera pagando aparte. ¿Cuántas llamadas se te escapan ahora mismo por no poder contestar a tiempo?'
     ]
   },
 
@@ -1848,7 +1857,7 @@ const KB = {
   arranque: {
     patterns: ['arranque','pack arranque','acceso directo','sin proyecto','solo el departamento','solo mantenimiento','ya tengo todo implantado'],
     responses: [
-      `Tenemos 4 Departamentos Tecnológicos, todos con la web y/o las automatizaciones completamente gratis desde el minuto uno, a cambio de 12 meses de permanencia:\n\n<b>Start™: ${currentPrice('basic')}€/mes + IVA</b>\nSin web · 1 automatización gratis\n\n<b>Basic™: ${currentPrice('elemental-profesional')}€/mes + IVA</b>\nWeb Profesional con chat y agenda de fábrica · 1 automatización más\n\n<b>Lite™: ${currentPrice('lite')}€/mes + IVA</b>\nWeb gratis · hasta 3 automatizaciones\n\n<b>Pro™: ${currentPrice('pro')}€/mes + IVA</b>\nWeb Profesional gratis · hasta 6 automatizaciones\n\nSe paga en pago único (12% dto.) o fraccionado con SeQura, nunca facturación mensual directa con nosotros. Al terminar los 12 meses, renuevas si quieres seguir, o te lo llevas todo — código fuente incluido, en un pen drive personalizado. ¿Cuántas automatizaciones tecnológicas necesitas mantener?`
+      `Tenemos 4 Departamentos Tecnológicos, todos con la web y/o las automatizaciones completamente gratis desde el minuto uno, a cambio de 12 meses de permanencia:\n\n<b>Start™: ${currentPrice('start')}€/mes + IVA</b>\nSin web · 1 automatización gratis\n\n<b>Basic™: ${currentPrice('basic')}€/mes + IVA</b>\nWeb Profesional con chat y agenda de fábrica · 1 automatización más\n\n<b>Lite™: ${currentPrice('lite')}€/mes + IVA</b>\nWeb gratis · hasta 3 automatizaciones\n\n<b>Pro™: ${currentPrice('pro')}€/mes + IVA</b>\nWeb Profesional gratis · hasta 6 automatizaciones\n\nSe paga en pago único (12% dto.) o fraccionado con SeQura, nunca facturación mensual directa con nosotros. Al terminar los 12 meses, renuevas si quieres seguir, o te lo llevas todo — código fuente incluido, en un pen drive personalizado. ¿Cuántas automatizaciones tecnológicas necesitas mantener?`
     ]
   },
 

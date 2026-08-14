@@ -159,8 +159,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .plan-card.selected{border-color:var(--tc);box-shadow:0 0 0 1px var(--tc),0 10px 24px -12px rgba(0,0,0,.5);}
 .plan-card.tier-pro{--tc:var(--blue);--tc-dim:var(--blue-dim);}
 .plan-card.tier-lite{--tc:var(--green);--tc-dim:var(--green-dim);}
-.plan-card.tier-basic{--tc:var(--gold);--tc-dim:var(--gold-dim);}
-.plan-card.tier-elemental{--tc:var(--teal);--tc-dim:var(--teal-dim);}
+.plan-card.tier-start{--tc:var(--gold);--tc-dim:var(--gold-dim);}
+.plan-card.tier-basic{--tc:var(--teal);--tc-dim:var(--teal-dim);}
 .pc-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
 .pc-icon{width:34px;height:34px;border-radius:10px;background:var(--tc-dim);color:var(--tc);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .pc-icon svg{width:18px;height:18px;}
@@ -363,15 +363,15 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
           </div>
         </label>
 
-        <label class="plan-card tier-basic" id="card-arranque-basic" onclick="selectDirect('arranque-basic')">
+        <label class="plan-card tier-start" id="card-arranque-start" onclick="selectDirect('arranque-start')">
           <div class="pc-check-box"></div>
           <div class="pc-top">
             <div class="pc-head"><div class="pc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="pc-name">Departamento Start™</div></div>
             <div class="pc-tag">El punto de entrada · 1 automatización gratis, sin web</div>
-            <div class="pc-founding-badge" id="pc-founding-badge-basic"></div>
-            <div class="pc-base-price" id="pc-price-basic"></div>
-            <div class="pc-vat" id="pc-vat-basic"></div>
-            <div class="pc-founding-old" id="pc-founding-old-basic"></div>
+            <div class="pc-founding-badge" id="pc-founding-badge-start"></div>
+            <div class="pc-base-price" id="pc-price-start"></div>
+            <div class="pc-vat" id="pc-vat-start"></div>
+            <div class="pc-founding-old" id="pc-founding-old-start"></div>
             <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 12 meses</div>
           </div>
           <div class="pc-breakdown">
@@ -381,15 +381,15 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
           </div>
         </label>
 
-        <label class="plan-card tier-elemental" id="card-arranque-elemental-profesional" onclick="selectDirect('arranque-elemental-profesional')">
+        <label class="plan-card tier-basic" id="card-arranque-basic" onclick="selectDirect('arranque-basic')">
           <div class="pc-check-box"></div>
           <div class="pc-top">
             <div class="pc-head"><div class="pc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div><div class="pc-name">Departamento Basic™</div></div>
             <div class="pc-tag">Web Profesional + 1 automatización gratis</div>
-            <div class="pc-founding-badge" id="pc-founding-badge-elemental-profesional"></div>
-            <div class="pc-base-price" id="pc-price-elemental-profesional"></div>
-            <div class="pc-vat" id="pc-vat-elemental-profesional"></div>
-            <div class="pc-founding-old" id="pc-founding-old-elemental-profesional"></div>
+            <div class="pc-founding-badge" id="pc-founding-badge-basic"></div>
+            <div class="pc-base-price" id="pc-price-basic"></div>
+            <div class="pc-vat" id="pc-vat-basic"></div>
+            <div class="pc-founding-old" id="pc-founding-old-basic"></div>
             <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 12 meses</div>
           </div>
           <div class="pc-breakdown">
@@ -857,10 +857,10 @@ function getBestDiscountInfo(count){
   return best.rate>0?{applies:true,rate:best.rate,label:best.label}:{applies:false,rate:0};
 }
 
-const DIRECT={'arranque-elemental-profesional':{name:'Departamento Tecnológico Basic™',arranque:'elemental-profesional'},'arranque-basic':{name:'Departamento Tecnológico Start™',arranque:'basic'},'arranque-lite':{name:'Departamento Tecnológico Lite™',arranque:'lite'},'arranque-pro':{name:'Departamento Tecnológico Pro™',arranque:'pro'}};
+const DIRECT={'arranque-basic':{name:'Departamento Tecnológico Basic™',arranque:'basic'},'arranque-start':{name:'Departamento Tecnológico Start™',arranque:'start'},'arranque-lite':{name:'Departamento Tecnológico Lite™',arranque:'lite'},'arranque-pro':{name:'Departamento Tecnológico Pro™',arranque:'pro'}};
 const ARRANQUES={
-  'elemental-profesional':{name:'Basic™',monthly:currentPrice('elemental-profesional'),permanenciaMeses:12,freeSols:1,maintainMax:2,webGrade:'profesional'},
-  basic:{name:'Start™',monthly:currentPrice('basic'),permanenciaMeses:12,freeSols:1,maintainMax:2},
+  basic:{name:'Basic™',monthly:currentPrice('basic'),permanenciaMeses:12,freeSols:1,maintainMax:2,webGrade:'profesional'},
+  start:{name:'Start™',monthly:currentPrice('start'),permanenciaMeses:12,freeSols:1,maintainMax:2},
   lite:{name:'Lite™',monthly:currentPrice('lite'),permanenciaMeses:12,freeSols:2,maintainMax:3},
   pro:{name:'Pro™',monthly:currentPrice('pro'),permanenciaMeses:12,freeSols:3,maintainMax:6}
 };
@@ -884,9 +884,9 @@ function renderFoundingPrices(){
   // precio antiguo aunque el badge ya muestre el nuevo.
   ARRANQUES.lite.monthly=currentPrice('lite');
   ARRANQUES.pro.monthly=currentPrice('pro');
+  ARRANQUES.start.monthly=currentPrice('start');
   ARRANQUES.basic.monthly=currentPrice('basic');
-  ARRANQUES['elemental-profesional'].monthly=currentPrice('elemental-profesional');
-  ['lite','pro','basic','elemental-profesional'].forEach(tier=>{
+  ['lite','pro','start','basic'].forEach(tier=>{
     const m=ARRANQUES[tier].monthly;
     const iva=(m*1.21).toFixed(2).replace('.',',');
     const priceEl=document.getElementById('pc-price-'+tier);
@@ -918,12 +918,12 @@ window.onFoundingSpotsUpdated.push(function(){
   if(typeof selectedDirect!=='undefined'&&selectedDirect&&DIRECT[selectedDirect])updateAll();
 });
 const TIER_POOLS={
-  'elemental-profesional':{max:1,label:'Elige tu automatización gratis',sols:[
+  basic:{max:1,label:'Elige tu automatización gratis',sols:[
     {value:'whatsapp',name:'IA para WhatsApp'},
     {value:'email-ia',name:'IA para Correo'},
     {value:'truki',name:'Facturación automática (TruKi)'}
   ]},
-  basic:{max:1,label:'Elige tu automatización gratis',sols:[
+  start:{max:1,label:'Elige tu automatización gratis',sols:[
     {value:'whatsapp',name:'IA para WhatsApp'},
     {value:'web-ia',name:'IA para tu Web'},
     {value:'email-ia',name:'IA para Correo'},
@@ -948,8 +948,8 @@ const TIER_POOLS={
     {value:'automatizaciones',name:'Flujos automáticos a medida'}
   ]}
 };
-const STRIPE={'arranque-elemental-profesional':'REEMPLAZA_ELEMENTAL_PROFESIONAL','arranque-basic':'REEMPLAZA_BASIC','arranque-lite':'REEMPLAZA_LITE','arranque-pro':'REEMPLAZA_PRO'};
-const TIMELINES={'arranque-elemental-profesional':[{l:'Web Profesional + tu automatización instaladas',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}],'arranque-basic':[{l:'Instalación de tu automatización',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}],'arranque-lite':[{l:'Web + 2 automatizaciones instaladas',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}],'arranque-pro':[{l:'Web Profesional + 3 automatizaciones instaladas',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}]};
+const STRIPE={'arranque-basic':'REEMPLAZA_BASIC','arranque-start':'REEMPLAZA_START','arranque-lite':'REEMPLAZA_LITE','arranque-pro':'REEMPLAZA_PRO'};
+const TIMELINES={'arranque-basic':[{l:'Web Profesional + tu automatización instaladas',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}],'arranque-start':[{l:'Instalación de tu automatización',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}],'arranque-lite':[{l:'Web + 2 automatizaciones instaladas',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}],'arranque-pro':[{l:'Web Profesional + 3 automatizaciones instaladas',v:'Gratis',c:'gold'},{l:'Permanencia',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}]};
 
 let selectedProject=null,selectedDirect=null,selectedTierSolutions=[],selectedExtraSolutions=[],selectedAuditSolutions=[],tierPaymentMode='unico',selectedDigitalPlan=null,digitalTotalPrice=590,digitalAddon=false;
 
@@ -1056,7 +1056,11 @@ function renderExtraSolutionsPanel(){
   if(maxExtra<=0){block.style.display='none';return;}
   block.style.display='block';
   const alreadyIncluded=tier==='pro'?['web-ia','reservas']:[];
-  const available=CLOSED_PRICE_SOLUTIONS.filter(s=>!selectedTierSolutions.includes(s.value)&&!alreadyIncluded.includes(s.value));
+  // Llamadas, Ciberseguridad y Flujos a medida solo se pueden añadir (gratis
+  // o de pago) a partir de Lite™ — en Start™/Basic™ ni siquiera pagando.
+  const liteProOnly=['llamadas','ciberseguridad','automatizaciones'];
+  const restricted=(tier==='start'||tier==='basic')?liteProOnly:[];
+  const available=CLOSED_PRICE_SOLUTIONS.filter(s=>!selectedTierSolutions.includes(s.value)&&!alreadyIncluded.includes(s.value)&&!restricted.includes(s.value));
   const atMax=selectedExtraSolutions.length>=maxExtra;
   const grid=document.getElementById('extra-solutions-grid');
   grid.innerHTML=available.map(s=>{
@@ -1093,6 +1097,15 @@ function renderExtraSolutionsPanel(){
 function renderOpenSolutionsGrid(){
   const grid=document.getElementById('extra-solutions-open-grid');
   if(!grid)return;
+  const tier=(selectedDirect&&DIRECT[selectedDirect])?DIRECT[selectedDirect].arranque:null;
+  // CRM, Integraciones y Gestión Documental: igual que Llamadas/Ciberseguridad
+  // /Flujos, solo entran a partir de Lite™ — en Start™/Basic™ no se muestran.
+  if(tier==='start'||tier==='basic'){
+    grid.innerHTML='';
+    const note=document.getElementById('extra-solutions-open-note');
+    if(note)note.innerHTML='CRM, Integraciones y Gestión Documental están disponibles a partir del Departamento <b style="color:var(--white);">Lite™</b>. <a href="departamentos/lite.html" style="color:var(--gold);font-weight:700;">Ver Lite™ →</a>';
+    return;
+  }
   grid.innerHTML=OPEN_PRICE_SOLUTIONS.map(s=>{
     const checked=selectedAuditSolutions.includes(s.value);
     return '<label class="sol-chip'+(checked?' sol-chip-audit':'')+'"><input type="checkbox" value="'+s.value+'" '+(checked?'checked':'')+' onchange="toggleAuditSolution(\''+s.value+'\')"><span>'+s.name+' — desde '+s.from+' € + IVA</span></label>';
@@ -1172,7 +1185,7 @@ function updateTierSolutionsNote(){
 function selectProject(proj){
   if(selectedProject===proj){
     selectedProject=null;
-    ['card-arranque-basic','card-arranque-lite','card-arranque-pro'].forEach(id=>document.getElementById(id).classList.remove('selected'));
+    ['card-arranque-start','card-arranque-basic','card-arranque-lite','card-arranque-pro'].forEach(id=>document.getElementById(id).classList.remove('selected'));
     ['card-esencial','card-web'].forEach(id=>document.getElementById(id).classList.remove('selected'));
     const pp1=document.getElementById('project-panel');if(pp1)pp1.style.display='none';
     const wp1=document.getElementById('web-implantacion');if(wp1)wp1.style.display='none';
@@ -1182,7 +1195,7 @@ function selectProject(proj){
   }
   selectedDirect=null;selectedTierSolutions=[];selectedExtraSolutions=[];selectedAuditSolutions=[];tierPaymentMode='unico';selectedProject=proj;
   showPath('proyecto');
-  ['card-arranque-basic','card-arranque-lite','card-arranque-pro'].forEach(id=>document.getElementById(id).classList.remove('selected'));
+  ['card-arranque-start','card-arranque-basic','card-arranque-lite','card-arranque-pro'].forEach(id=>document.getElementById(id).classList.remove('selected'));
   ['card-esencial','card-web'].forEach(id=>document.getElementById(id).classList.remove('selected'));
   document.getElementById('card-'+proj).classList.add('selected');
   const tp=document.getElementById('tier-solutions-picker');if(tp)tp.style.display='none';
@@ -1296,7 +1309,7 @@ function getActivePlan(){
     const d=DIRECT[selectedDirect];const arr=ARRANQUES[d.arranque];
     const pool=TIER_POOLS[d.arranque];
     const solNames=pool?selectedTierSolutions.map(v=>{const s=pool.sols.find(x=>x.value===v);return s?s.name:v;}):[];
-    const webLine=d.arranque==='lite'?[{l:'Web (reacondicionada, o Web Profesional nueva si no tienes)',v:'GRATIS',cls:'free'}]:d.arranque==='pro'?[{l:'Web Profesional',v:'GRATIS',cls:'free'},{l:'IA para tu Web',v:'GRATIS',cls:'free'},{l:'Reservas y Agenda',v:'GRATIS',cls:'free'}]:d.arranque==='elemental-profesional'?[{l:'Web Profesional',v:'GRATIS',cls:'free'},{l:'Chat + agenda en tu web, de fábrica',v:'GRATIS',cls:'free'},{l:'Salud técnica de posicionamiento',v:'INCLUIDA',cls:'free'}]:[];
+    const webLine=d.arranque==='lite'?[{l:'Web (reacondicionada, o Web Profesional nueva si no tienes)',v:'GRATIS',cls:'free'}]:d.arranque==='pro'?[{l:'Web Profesional',v:'GRATIS',cls:'free'},{l:'IA para tu Web',v:'GRATIS',cls:'free'},{l:'Reservas y Agenda',v:'GRATIS',cls:'free'}]:d.arranque==='basic'?[{l:'Web Profesional',v:'GRATIS',cls:'free'},{l:'Chat + agenda en tu web, de fábrica',v:'GRATIS',cls:'free'},{l:'Salud técnica de posicionamiento',v:'INCLUIDA',cls:'free'}]:[];
     const solWord=arr.freeSols>1?arr.freeSols+' automatizaciones':arr.freeSols===1?'1 automatización':'';
     const solLines=arr.freeSols===0?[]:solNames.length?solNames.map(n=>({l:n,v:'GRATIS',cls:'free'})):[{l:solWord+' a elegir',v:'Pendiente de elegir'}];
     const extraSols=selectedExtraSolutions.map(v=>CLOSED_PRICE_SOLUTIONS.find(x=>x.value===v)).filter(Boolean);
@@ -1566,8 +1579,8 @@ function toggleFaq(btn){
 (function preselectFromUrl(){
   const params=new URLSearchParams(location.search);
   const plan=params.get('plan');
-  if(plan==='arranque-lite'||plan==='arranque-pro'||plan==='arranque-basic'||plan==='arranque-elemental-profesional')selectDirect(plan);
-  else if(plan==='esencial'||plan==='web'||plan==='digital')selectDirect('arranque-elemental-profesional');
+  if(plan==='arranque-lite'||plan==='arranque-pro'||plan==='arranque-start'||plan==='arranque-basic')selectDirect(plan);
+  else if(plan==='esencial'||plan==='web'||plan==='digital')selectDirect('arranque-basic');
 })();
 </script>
 </body>

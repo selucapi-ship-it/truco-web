@@ -23,7 +23,7 @@
 // Permanencia / periodo de regalo por tipo de plan — mismos números que
 // pago.html (ARRANQUES.*.permanenciaMeses y las notas de "30/90 días de
 // regalo"). Si cambian ahí, cambiar aquí también.
-const ARRANQUE_PERMANENCIA_MESES = { basic: 6, lite: 12, pro: 12 };
+const ARRANQUE_PERMANENCIA_MESES = { start: 12, basic: 12, lite: 12, pro: 12 };
 const PROYECTO_SOLO_GIFT_DAYS = 30; // web-lite / esencial-lite (proyecto sin Digitaliza)
 const PROYECTO_CON_DIGITALIZA_GIFT_DAYS = 90; // cualquier combinación que incluya Digitaliza
 
@@ -129,12 +129,12 @@ exports.handler = async function (event) {
     // confirmado por Stripe se hizo realmente al precio de fundador (lo
     // decidió pago.html en el momento del checkout, vía metadata.founding) —
     // nunca en cada compra. Los 4 Departamentos participan del sistema de
-    // fundador (Start™/Basic™ además de Lite™/Pro™ — 'basic' y
-    // 'elemental-profesional' son las claves internas de Start™/Basic™, ver
-    // founding-offer.js). decrement_founding_spot() ya se protege sola contra
-    // bajar de 0 (ver migration_founding_spots.sql), así que da igual si esto
-    // se procesa dos veces por un reintento de Stripe.
-    if (isFounding && ['lite', 'pro', 'basic', 'elemental-profesional'].includes(arranqueTier)) {
+    // fundador (Start™/Basic™ además de Lite™/Pro™ — 'start' y 'basic' son
+    // las claves internas de Start™/Basic™, ver founding-offer.js).
+    // decrement_founding_spot() ya se protege sola contra bajar de 0 (ver
+    // migration_founding_spots.sql), así que da igual si esto se procesa dos
+    // veces por un reintento de Stripe.
+    if (isFounding && ['lite', 'pro', 'start', 'basic'].includes(arranqueTier)) {
       try {
         await fetch(`${supabaseUrl}/rest/v1/rpc/decrement_founding_spot`, {
           method: 'POST',
