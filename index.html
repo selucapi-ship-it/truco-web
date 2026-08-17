@@ -840,6 +840,28 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </script>
 </head>
 <body>
+<script>
+// ── ORIGEN DE VISITA (folletos, carteles, QR impresos) ──
+// Si la URL trae ?src=<etiqueta> (la ponen los QR de material impreso, ver
+// folleto-comercios.html), se registra una vez por sesión en Supabase vía
+// log_web_visit (RPC pública de solo-conteo, sin datos personales) para
+// poder medir si cada pieza impresa está funcionando. Fetch crudo en vez del
+// SDK de Supabase porque es una única llamada de fuego-y-olvido — no merece
+// la pena cargar toda la librería solo para esto.
+(function trackVisitSource(){
+  try{
+    var src = new URLSearchParams(location.search).get('src');
+    if(!src) return;
+    var key = 'truco_src_logged_' + src;
+    if(sessionStorage.getItem(key)) return;
+    fetch('https://oxdopzvbrxdsjvzxmpxy.supabase.co/rest/v1/rpc/log_web_visit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX' },
+      body: JSON.stringify({ p_src: src }),
+    }).then(function(r){ if(r.ok) sessionStorage.setItem(key, '1'); }).catch(function(){});
+  }catch(e){}
+})();
+</script>
 <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
 <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
 <script src="https://cdn.jsdelivr.net/npm/livekit-client/dist/livekit-client.umd.min.js" defer></script>
