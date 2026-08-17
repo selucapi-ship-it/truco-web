@@ -369,6 +369,7 @@ img{display:block;max-width:100%;}
 .c-gold .entry-icon{background:var(--gold-dim);color:var(--gold);}
 .c-green .entry-icon{background:var(--green-dim);color:var(--green);}
 .entry-kicker{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;position:relative;font-weight:700;}
+.entry-recommended-badge{display:inline-flex;align-items:center;gap:5px;background:#2dd4bf;color:#0d0c10;font-family:var(--font-mono);font-size:.66rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:5px 13px;border-radius:20px;margin-bottom:14px;box-shadow:0 3px 10px rgba(45,212,191,.35);}
 .c-blue .entry-kicker{color:var(--blue);}
 .c-gold .entry-kicker{color:var(--gold);}
 .c-green .entry-kicker{color:var(--green);}
@@ -625,6 +626,18 @@ img{display:block;max-width:100%;}
 .voice-agent-btn:disabled{opacity:.6;cursor:not-allowed;}
 .voice-agent-status{font-size:.76rem;color:var(--grey);text-align:center;}
 @media(max-width:900px){.chat-box{height:420px;}}
+@media(max-width:600px){
+  .chat-box{height:min(72vh,540px);border-radius:12px;}
+  .chat-header{padding:12px 14px;}
+  .chat-hname{font-size:.94rem;}
+  .chat-hsub{font-size:.78rem;}
+  .chat-msgs{padding:14px;gap:10px;}
+  .msg{font-size:.94rem;line-height:1.6;max-width:90%;padding:11px 14px;}
+  .chat-input-row{padding:10px 12px;}
+  .chat-input{font-size:1rem;padding:12px 14px;}
+  .chat-send{font-size:.9rem;padding:12px 16px;}
+  .voice-agent-btn{font-size:.86rem;padding:11px 14px;}
+}
 
 /* ── CTA FINAL ── */
 #cta-final{
@@ -814,7 +827,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   "mainEntity": [
     {"@type": "Question", "name": "¿Necesito saber de tecnología para contratar vuestros servicios?", "acceptedAnswer": {"@type": "Answer", "text": "No. De hecho, ese es exactamente el punto. Somos tu departamento tecnológico precisamente para que tú no necesites saber nada técnico. Nosotros nos encargamos de todo: configuramos, mantenemos y mejoramos. Tú solo tienes que contarnos cómo funciona tu negocio."}},
     {"@type": "Question", "name": "¿El dominio y el hosting son míos o de TRUCO?", "acceptedAnswer": {"@type": "Answer", "text": "Todo va siempre a tu nombre. El dominio, el hosting y las plataformas externas que usemos se registran y facturan directamente a ti. Si en algún momento decides dejar de trabajar con nosotros, te llevas todo sin ninguna complicación. Nunca tenemos posesión de lo que es tuyo."}},
-    {"@type": "Question", "name": "¿Cuánto dura la permanencia?", "acceptedAnswer": {"@type": "Answer", "text": "12 meses en los 4 Departamentos: Start, Basic, Lite y Pro. Es lo que hace posible que la web y las automatizaciones vayan completamente gratis en vez de cobrarlas aparte. Se paga por adelantado, por todo el periodo de permanencia. Al terminar, renuevas o te lo llevas todo — código incluido."}},
+    {"@type": "Question", "name": "¿Cuánto dura la permanencia?", "acceptedAnswer": {"@type": "Answer", "text": "12 meses en los 4 Departamentos: Start, Basic, Lite y Pro. Cubre la implantación completa de la web y las automatizaciones (gratis en vez de cobrarlas aparte) y la gestión de tu Departamento cada mes. Se paga por adelantado, por todo el periodo de permanencia. Al terminar, renuevas o te lo llevas todo — código incluido."}},
     {"@type": "Question", "name": "¿Para qué sirve la videollamada mensual incluida?", "acceptedAnswer": {"@type": "Answer", "text": "Es tu reunión de departamento. Revisamos juntos los resultados del mes, analizamos qué ha funcionado bien y qué puede mejorar, y planificamos los cambios para el mes siguiente."}},
     {"@type": "Question", "name": "¿Cuál es la diferencia entre Start, Basic, Lite y Pro?", "acceptedAnswer": {"@type": "Answer", "text": "Start (69€/mes) es solo automatización: 1 automatización gratis, sin web. Basic (149€/mes) suma la Web Profesional con chat y agenda incluidos de fábrica, más 1 automatización adicional gratis. Lite (desde 279€/mes) combina ambos: tu web (reacondicionada, o Profesional nueva si no tienes ninguna) + 2 automatizaciones gratis, hasta 3 en total. Pro (desde 549€/mes) es la Web Profesional regalada + 3 automatizaciones gratis, hasta 6 en total. Puede haber precio de fundador más bajo para los primeros clientes en cada Departamento."}},
     {"@type": "Question", "name": "¿Puedo contratar solo la web, sin automatizaciones?", "acceptedAnswer": {"@type": "Answer", "text": "No exactamente — no vendemos la web completamente sola. Si tu prioridad es la web, el Departamento Basic es tu opción: Web Profesional con chat que responde dudas y agenda citas de fábrica, más 1 automatización adicional a elegir. Desde 149€/mes con 12 meses de permanencia. Si en cambio solo quieres automatizar una cosa y no necesitas web, el Departamento Start es el punto de entrada: sin web, 1 automatización gratis, desde 69€/mes."}},
@@ -1035,7 +1048,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <p>Web, WhatsApp, correo, facturas, llamadas — automatizado. Tú solo te preocupas de tu negocio.</p>
       </div>
     </div>
-    <p class="hww-close">Somos tu automatización.</p>
+    <p class="hww-close">Somos tu Departamento.</p>
   </div>
 </div>
 
@@ -1231,10 +1244,11 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
             <li>Pierdo horas facturando a mano</li>
             <li>Se me solapan las citas</li>
           </ul>
-          <p class="entry-close">Este es tu Departamento.</p>
+          <p class="entry-close">Este es tu Departamento. <span style="color:var(--grey);font-weight:400;font-size:.82em;">(asistencia enfocada a esa única automatización — si necesitas más, el paso es Basic™)</span></p>
           <a class="entry-cta" href="departamentos/start.html">Ver Start™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
         <div class="entry-card c-teal">
+          <div class="entry-recommended-badge">★ Recomendado</div>
           <div class="entry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="7" y1="14" x2="13" y2="14"/></svg></div>
           <div class="entry-kicker">Tu web, pero que además trabaje por ti</div>
           <h4>Basic™</h4>
@@ -1291,7 +1305,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <a class="need-card" href="soluciones/llamadas.html"><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><div class="need-title">Contesta el teléfono aunque tengas las manos ocupadas</div><div class="need-sub">IA para Llamadas →</div></a>
       <a class="need-card need-card-catalog" href="digitaliza.html"><span class="ncc-badge">Catálogo completo</span><span class="sol-chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span><div class="need-title">¿No sabes cuál de estas 12 es la tuya? Compáralas todas, con precios reales</div><div class="need-sub">Digitaliza tu Empresa →</div></a>
     </div>
-    <a class="sol-showcase-more" href="servicios.html#digitaliza">Ver todas las automatizaciones y precios <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    <a class="sol-showcase-more" href="digitaliza.html">Ver todas las automatizaciones y precios <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
   </div>
 </section>
 
@@ -1310,7 +1324,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <div class="tier-price" id="tier-price-start"></div>
         <div class="tier-vat" id="tier-vat-start"></div>
         <div class="tier-founding-old" id="tier-founding-old-start"></div>
-        <div class="tier-annual">Permanencia: <span>12 meses</span></div>
+        <div class="tier-annual">Integración + gestión de tu Departamento incluidas · permanencia <span>12 meses</span></div>
         <ul class="tier-list tier-list-glance">
           <li>1 automatización a elegir, gratis</li>
           <li>Acompañamiento completo</li>
@@ -1326,7 +1340,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <div class="tier-price" id="tier-price-basic"></div>
         <div class="tier-vat" id="tier-vat-basic"></div>
         <div class="tier-founding-old" id="tier-founding-old-basic"></div>
-        <div class="tier-annual">Permanencia: <span>12 meses</span></div>
+        <div class="tier-annual">Integración + gestión de tu Departamento incluidas · permanencia <span>12 meses</span></div>
         <ul class="tier-list tier-list-glance">
           <li>Web Profesional con chat + agenda, de fábrica</li>
           <li>1 automatización gratis más, a elegir</li>
@@ -1342,7 +1356,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <div class="tier-price" id="tier-price-lite"></div>
         <div class="tier-vat" id="tier-vat-lite"></div>
         <div class="tier-founding-old" id="tier-founding-old-lite"></div>
-        <div class="tier-annual">Permanencia: <span>12 meses</span></div>
+        <div class="tier-annual">Integración + gestión de tu Departamento incluidas · permanencia <span>12 meses</span></div>
         <ul class="tier-list tier-list-glance">
           <li>Web (reacondicionada o Profesional nueva)</li>
           <li>2 automatizaciones gratis · mantiene hasta 3</li>
@@ -1358,7 +1372,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <div class="tier-price" id="tier-price-pro"></div>
         <div class="tier-vat" id="tier-vat-pro"></div>
         <div class="tier-founding-old" id="tier-founding-old-pro"></div>
-        <div class="tier-annual">Permanencia: <span>12 meses</span></div>
+        <div class="tier-annual">Integración + gestión de tu Departamento incluidas · permanencia <span>12 meses</span></div>
         <ul class="tier-list tier-list-glance">
           <li>Web Profesional + chat/agenda de fábrica</li>
           <li>3 automatizaciones gratis · mantiene hasta 6</li>
@@ -1404,7 +1418,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="fix-callout">
       <b>Nosotros nos hacemos cargo de lo que ya tienes.</b> Lo auditamos, lo reconfiguramos, lo entrenamos bien — y a partir de ahí, cualquier cambio nos lo pides a nosotros. Tú no vuelves a tocarlo.
     </div>
-    <p class="hww-close" style="text-align:left;margin-top:24px;">Somos tu automatización.</p>
+    <p class="hww-close" style="text-align:left;margin-top:24px;">Somos tu Departamento.</p>
     <a class="btn-primary" href="#chat-section" style="margin-top:18px;display:inline-block;">Cuéntanos qué tienes montado →</a>
   </div>
 </section>
@@ -1865,15 +1879,15 @@ const KB = {
   permanencia: {
     patterns: ['permanencia','compromiso','atarme','cuánto tiempo','mínimo','puedo irme','baja','salir','me puedo dar de baja'],
     responses: [
-      'Los 4 Departamentos (Start™, Basic™, Lite™ y Pro™) llevan <b>12 meses de permanencia</b> — es lo que hace posible que la web y las automatizaciones vayan completamente gratis en vez de cobrarlas aparte. Dentro de esos 12 meses hay un período inicial de implantación (90 días) donde ajustamos todo sin coste adicional, y después sigue el mantenimiento continuo dentro de la misma cuota. Al terminar los 12 meses, renuevas si quieres seguir, o <b>te lo llevamos todo</b> — código fuente incluido, en un pen drive personalizado.',
-      'La permanencia de 12 meses es el trato: nosotros te regalamos la implantación completa (web y/o automatizaciones), y tú te comprometes a esos 12 meses. Durante ese tiempo ajustamos lo que haga falta sin coste adicional para que todo funcione de verdad. Al terminar, la decisión de continuar es siempre tuya — renuevas, o te llevas absolutamente todo lo construido, sin penalización.'
+      'Los 4 Departamentos (Start™, Basic™, Lite™ y Pro™) llevan <b>12 meses de permanencia</b> — cubre la implantación completa (web y/o automatizaciones) y la gestión de tu Departamento cada mes, en vez de cobrarlas aparte. Dentro de esos 12 meses hay un período inicial de implantación (90 días) donde ajustamos todo sin coste adicional, y después sigue la gestión continua dentro de la misma cuota. Al terminar los 12 meses, renuevas si quieres seguir, o <b>te lo llevamos todo</b> — código fuente incluido, en un pen drive personalizado.',
+      'La permanencia de 12 meses es el trato: durante ese tiempo, la cuota cubre la implantación completa (web y/o automatizaciones) y la gestión de tu Departamento — ajustamos lo que haga falta sin coste adicional para que todo funcione de verdad. Al terminar, la decisión de continuar es siempre tuya — renuevas, o te llevas absolutamente todo lo construido, sin penalización.'
     ]
   },
 
   cancelacion: {
     patterns: ['cómo cancelo','cómo doy de baja','proceso de cancelación','quiero cancelar','dejar de pagar','puedo cancelar','como cancelar','darme de baja'],
     responses: [
-      'Los 4 Departamentos llevan 12 meses de permanencia — es lo que hace posible regalarte la implantación de la web y las automatizaciones. Durante esos 12 meses no hay baja anticipada del servicio ya implantado, pero al terminarlos decides tú: renuevas si quieres seguir, o cancelas y te llevamos todo lo construido — código fuente incluido, en un pen drive personalizado, sin penalización. ¿Es algo que te preocupa por una experiencia anterior con otro proveedor?'
+      'Los 4 Departamentos llevan 12 meses de permanencia — cubre la implantación de la web y las automatizaciones, y la gestión continua de tu Departamento cada mes. Durante esos 12 meses no hay baja anticipada del servicio ya implantado, pero al terminarlos decides tú: renuevas si quieres seguir, o cancelas y te llevamos todo lo construido — código fuente incluido, en un pen drive personalizado, sin penalización. ¿Es algo que te preocupa por una experiencia anterior con otro proveedor?'
     ]
   },
 
@@ -2065,7 +2079,7 @@ const KB = {
 
   // ── CITA / CONTACTO HUMANO ──
   reservar_cita: {
-    patterns: ['reservar cita','reservar consultoría','quiero una consultoría','agendar una llamada','agendar cita','agéndame','agendame','quiero agendar','puedes agendarme','quiero una cita','dame una cita','ponme una cita','resérvame','reservame','cómo contrato','quiero empezar ya','quiero reservar','consultoría gratuita','pedir cita','quiero cita','necesito una cita','coge una cita','coger cita'],
+    patterns: ['reservar cita','reservar consultoría','quiero una consultoría','agendar una llamada','agendar cita','agéndame','agendame','quiero agendar','puedes agendarme','quiero una cita','dame una cita','ponme una cita','resérvame','reservame','cómo contrato','quiero empezar ya','quiero reservar','consultoría gratuita','pedir cita','quiero cita','necesito una cita','coge una cita','coger cita','quiero una auditoría','quiero una auditoria','necesito una auditoría','necesito una auditoria','pedir una auditoría','pedir una auditoria','solicitar una auditoría','solicitar una auditoria','agendar una auditoría','agendar una auditoria','auditoría gratuita','auditoria gratuita','quiero auditoria','quiero auditoría','una reunión con vosotros','una reunion con vosotros','hablar con el equipo'],
     responses: [
       'Me alegra que quieras dar el paso.\n\nLa consultoría gratuita dura unos 20-30 minutos. Analizamos tu empresa, te decimos qué automatizaciones encajan y qué costaría. Sin compromiso.\n\n¿Prefieres elegir día y hora tú mismo o que te contactemos nosotros?',
       '¡Perfecto! La consultoría es gratuita y sin compromiso. En 20-30 minutos te explicamos exactamente cómo encajaría TRUCO en tu empresa y qué inversión necesitarías. ¿Cuándo tienes disponibilidad?'
@@ -2519,7 +2533,7 @@ setTimeout(() => {
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
   <a href="servicios.html">Servicios</a>
-  <a href="servicios.html#como-empezamos">Cómo empezamos</a>
+  <a href="#como-empezamos">Cómo empezamos</a>
   <a href="#nosotros">Nosotros</a>
   <a href="#sectores">¿Es esto para ti?</a>
   <a href="#faq">FAQ</a>

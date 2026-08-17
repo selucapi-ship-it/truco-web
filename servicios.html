@@ -94,6 +94,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .sc-badge.blue{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(47,123,255,.25);}
 .sc-badge.green{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.25);}
 .sc-badge.featured{background:var(--blue);color:#fff;}
+.sc-badge.featured-gold{background:var(--gold);color:#1a1206;}
 .sc-title{font-size:clamp(1.4rem,2.5vw,1.9rem);font-weight:700;margin-bottom:10px;}
 .sc-desc{font-size:.92rem;color:var(--grey);line-height:1.7;max-width:none;}
 .sc-price{text-align:right;flex-shrink:0;}
@@ -209,6 +210,40 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 }
 @keyframes pageOut{to{opacity:0;}}
 @keyframes pageIn{from{opacity:0;}}
+
+/* ── FLOATING CHAT ── */
+@keyframes floatPulse{
+  0%,100%{box-shadow:0 4px 20px rgba(47,123,255,.45),0 0 0 0 rgba(47,123,255,.5);}
+  50%{box-shadow:0 4px 26px rgba(47,123,255,.65),0 0 0 10px rgba(47,123,255,0);}
+}
+#float-chat{position:fixed;bottom:24px;right:24px;z-index:800;display:flex;align-items:center;gap:10px;}
+.float-label{
+  background:var(--bg-panel);border:1px solid var(--blue-soft);color:var(--white);
+  font-size:.82rem;font-weight:600;padding:10px 16px;border-radius:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,.35);
+  opacity:0;transform:translateX(8px);pointer-events:none;
+  transition:opacity .4s ease,transform .4s ease;
+  white-space:nowrap;
+}
+.float-label.show{opacity:1;transform:translateX(0);pointer-events:auto;}
+.float-btn{
+  position:relative;width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),#1f5fd6);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;cursor:pointer;border:none;flex-shrink:0;
+  animation:floatPulse 2.4s ease-in-out infinite;
+  transition:transform var(--tr);
+}
+.float-btn:hover{transform:scale(1.08);}
+.float-notif{
+  position:absolute;top:-4px;right:-4px;width:18px;height:18px;
+  background:#ef4444;border-radius:50%;border:2px solid var(--bg);
+  display:none;
+}
+@media(max-width:1024px){
+  .float-btn{width:52px;height:52px;font-size:1.3rem;}
+  .float-label{display:none;}
+}
 </style>
 </head>
 <body>
@@ -257,11 +292,11 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="tiers-cols">
 
       <!-- PRO -->
-      <div class="service-card featured" id="pro" onclick="if(!event.target.closest('.sc-footer'))location.href='departamentos/pro.html'" style="cursor:pointer;">
-        <div class="sc-header" style="background:linear-gradient(135deg,rgba(47,123,255,.06),var(--bg-panel));">
+      <div class="service-card" id="pro" onclick="if(!event.target.closest('.sc-footer'))location.href='departamentos/pro.html'" style="cursor:pointer;">
+        <div class="sc-header">
           <div>
             <div class="sc-cat blue">Departamento Tecnológico · 12 meses</div>
-            <span class="sc-badge featured">Para empresas en crecimiento</span>
+            <span class="sc-badge blue">Para empresas en crecimiento</span>
             <h2 class="sc-title" style="font-size:1.4rem;">Departamento Tecnológico Pro™</h2>
             <p class="sc-desc" style="font-size:.85rem;">Web Profesional regalada — con chat que responde y agenda citas de fábrica — + 3 automatizaciones más a elegir, instaladas gratis. Mantiene hasta 6 automatizaciones tecnológicas con optimización continua, mayor prioridad y revisiones avanzadas.</p>
           </div>
@@ -271,16 +306,16 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div style="font-size:2rem;font-weight:700;font-family:var(--font-d);" id="sc-price-pro"></div>
           <div style="font-size:.80rem;color:var(--grey);margin-bottom:4px;" id="sc-vat-pro"></div>
           <div style="font-size:.7rem;color:var(--grey);" id="sc-founding-old-pro"></div>
-          <div style="font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia: 12 meses</div>
+          <div style="font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Integración + gestión de tu Departamento incluidas · Permanencia: 12 meses</div>
         </div>
         <div class="value-highlight">
-          <div class="vh-eyebrow">Lo que te llevas gratis</div>
-          <div class="vh-save">Ahorras entre <b>2.540 € y 3.170 €</b> en instalación</div>
+          <div class="vh-eyebrow">Lo que incluye tu Departamento</div>
+          <div class="vh-save">Web + 3 automatizaciones <b>incluidas en la cuota</b>, sin pagarlas aparte</div>
           <ul class="vh-list">
             <li>Web Profesional <span class="vh-tag">valor 1.390 €</span></li>
             <li>Chat + agenda en tu web <span class="vh-tag">de fábrica</span></li>
             <li>3 automatizaciones a elegir <span class="vh-tag">valor 1.150-1.780 €</span></li>
-            <li>Mantenimiento de las 6 activas <span class="vh-tag">incluido siempre</span></li>
+            <li>Gestión de tu Departamento <span class="vh-tag">cada mes, sin parar</span></li>
           </ul>
         </div>
         <div style="padding:0 24px 16px;">
@@ -293,7 +328,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           </ul>
         </div>
         <div class="sc-footer">
-          <div class="sc-footer-left" style="font-size:.86rem;">Pago único con 12% dto., o fracciona con SeQura. Permanencia de 12 meses — es lo que hace posible el regalo.</div>
+          <div class="sc-footer-left" style="font-size:.86rem;">Pago único con 12% dto., o fracciona con SeQura. Permanencia de 12 meses: integración completa, configurada con los datos reales de tu negocio, y gestión de tu Departamento cada mes, incluidas.</div>
           <a class="btn-primary" href="pago.html?plan=arranque-pro">Contratar Pro™</a>
         </div>
       </div>
@@ -313,15 +348,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div style="font-size:2rem;font-weight:700;font-family:var(--font-d);" id="sc-price-lite"></div>
           <div style="font-size:.80rem;color:var(--grey);margin-bottom:4px;" id="sc-vat-lite"></div>
           <div style="font-size:.7rem;color:var(--grey);" id="sc-founding-old-lite"></div>
-          <div style="font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia: 12 meses</div>
+          <div style="font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Integración + gestión de tu Departamento incluidas · Permanencia: 12 meses</div>
         </div>
         <div class="value-highlight">
-          <div class="vh-eyebrow">Lo que te llevas gratis</div>
-          <div class="vh-save">Ahorras entre <b>1.490 € y 2.070 €</b> en instalación</div>
+          <div class="vh-eyebrow">Lo que incluye tu Departamento</div>
+          <div class="vh-save">Web + 2 automatizaciones <b>incluidas en la cuota</b>, sin pagarlas aparte</div>
           <ul class="vh-list">
             <li>Web Profesional o reacondicionada <span class="vh-tag">valor 1.390 €</span></li>
             <li>2 automatizaciones a elegir <span class="vh-tag">valor 700-1.280 €</span></li>
-            <li>Mantenimiento de las 3 activas <span class="vh-tag">incluido siempre</span></li>
+            <li>Gestión de tu Departamento <span class="vh-tag">cada mes, sin parar</span></li>
           </ul>
         </div>
         <div style="padding:0 24px 16px;">
@@ -334,7 +369,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           </ul>
         </div>
         <div class="sc-footer">
-          <div class="sc-footer-left" style="font-size:.86rem;">Pago único con 12% dto., o fracciona con SeQura. Permanencia de 12 meses — es lo que hace posible el regalo.</div>
+          <div class="sc-footer-left" style="font-size:.86rem;">Pago único con 12% dto., o fracciona con SeQura. Permanencia de 12 meses: integración completa, configurada con los datos reales de tu negocio, y gestión de tu Departamento cada mes, incluidas.</div>
           <a class="btn-primary" href="pago.html?plan=arranque-lite">Contratar Lite™</a>
         </div>
       </div>
@@ -354,7 +389,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div style="font-size:2rem;font-weight:700;font-family:var(--font-d);" id="sc-price-start"></div>
           <div style="font-size:.80rem;color:var(--grey);margin-bottom:4px;" id="sc-vat-start"></div>
           <div style="font-size:.7rem;color:var(--grey);" id="sc-founding-old-start"></div>
-          <div style="font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia: 12 meses</div>
+          <div style="font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Integración + gestión de tu Departamento incluidas · Permanencia: 12 meses</div>
         </div>
         <div style="padding:0 24px 16px;">
           <div class="sc-col-title">Incluye</div>
@@ -366,19 +401,19 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           </ul>
         </div>
         <div class="sc-footer">
-          <div class="sc-footer-left" style="font-size:.86rem;">Pago único con 12% dto., o fracciona con SeQura. Permanencia de 12 meses — es lo que hace posible el regalo.</div>
+          <div class="sc-footer-left" style="font-size:.86rem;">Pago único con 12% dto., o fracciona con SeQura. Permanencia de 12 meses: integración completa, configurada con los datos reales de tu negocio, y gestión de tu Departamento cada mes, incluidas.</div>
           <a class="btn-primary" href="pago.html?plan=arranque-start">Contratar Start™</a>
         </div>
       </div>
 
       <!-- BASIC (clave interna: basic) -->
-      <div class="service-card" id="basic" onclick="if(!event.target.closest('.sc-footer'))location.href='departamentos/basic.html'" style="cursor:pointer;border-color:var(--gold);">
-        <div class="sc-header">
+      <div class="service-card featured" id="basic" onclick="if(!event.target.closest('.sc-footer'))location.href='departamentos/basic.html'" style="cursor:pointer;border-color:var(--gold);">
+        <div class="sc-header" style="background:linear-gradient(135deg,rgba(217,168,63,.08),var(--bg-panel));">
           <div>
             <div class="sc-cat gold">Departamento Tecnológico · 12 meses</div>
-            <span class="sc-badge gold">Web que trabaja + 1 automatización</span>
+            <span class="sc-badge featured-gold">★ Recomendado · el punto de entrada perfecto</span>
             <h2 class="sc-title" style="font-size:1.4rem;">Departamento Tecnológico Basic™</h2>
-            <p class="sc-desc" style="font-size:.85rem;">Web Profesional con chat que responde dudas y agenda citas, <b style="color:var(--white);">siempre incluida de fábrica</b>, más 1 automatización adicional a elegir. Nosotros la mantenemos, actualizamos y cuidamos su salud técnica de posicionamiento.</p>
+            <p class="sc-desc" style="font-size:.85rem;">Web Profesional con chat que responde dudas y agenda citas, <b style="color:var(--white);">siempre incluida de fábrica</b>, más 1 automatización adicional a elegir. Nosotros la mantenemos, actualizamos y cuidamos su salud técnica de posicionamiento. Si más adelante necesitas cubrir más canales, es el paso natural hacia <a href="departamentos/lite.html" style="color:var(--gold);text-decoration:underline;" onclick="event.stopPropagation()">Lite™</a> o <a href="departamentos/pro.html" style="color:var(--gold);text-decoration:underline;" onclick="event.stopPropagation()">Pro™</a>.</p>
           </div>
         </div>
         <div style="padding:20px 24px;border-top:1px solid var(--grey-line);">
@@ -386,7 +421,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div style="font-size:2rem;font-weight:700;font-family:var(--font-d);" id="sc-price-basic"></div>
           <div style="font-size:.80rem;color:var(--grey);margin-bottom:4px;" id="sc-vat-basic"></div>
           <div style="font-size:.7rem;color:var(--grey);" id="sc-founding-old-basic"></div>
-          <div style="font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia: 12 meses</div>
+          <div style="font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Integración + gestión de tu Departamento incluidas · Permanencia: 12 meses</div>
         </div>
         <div style="padding:0 24px 16px;">
           <div class="sc-col-title">Incluye</div>
@@ -398,8 +433,8 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           </ul>
         </div>
         <div class="sc-footer">
-          <div class="sc-footer-left" style="font-size:.86rem;">Pago único con 12% dto., o fracciona con SeQura. Permanencia de 12 meses — es lo que hace posible el regalo.</div>
-          <a class="btn-primary" href="departamentos/basic.html">Ver Basic™</a>
+          <div class="sc-footer-left" style="font-size:.86rem;">Pago único con 12% dto., o fracciona con SeQura. Permanencia de 12 meses: integración completa, configurada con los datos reales de tu negocio, y gestión de tu Departamento cada mes, incluidas.</div>
+          <a class="btn-primary" href="pago.html?plan=arranque-basic">Contratar Basic™</a>
         </div>
       </div>
 
@@ -451,71 +486,24 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
     </div>
 
-  </div>
-</div>
-
-<!-- ═══════ CATÁLOGO ═══════ -->
-<div class="section-block reveal">
-  <div class="container">
-
-    <!-- CATÁLOGO DE SOLUCIONES (informativo) -->
-    <div class="section-divider" style="margin-top:56px;">
-      <div class="sd-tag project">Catálogo de automatizaciones · Informativo</div>
-      <div class="sd-line"></div>
-      <div class="sd-desc">Esto es lo que se instala dentro de Start™, Basic™, Lite™ o Pro™ — consulta cada una para resolver dudas antes de elegir tu Departamento.</div>
-    </div>
-    <div class="service-card" id="digitaliza" onclick="if(!event.target.closest('.sc-footer')&&!event.target.closest('a'))location.href='digitaliza.html'" style="cursor:pointer;">
-      <div class="sc-header">
-        <div class="sc-header-inner">
-          <div>
-            <div class="sc-cat gold">Guía de automatizaciones · No se compra suelta</div>
-            <span class="sc-badge gold">Para resolver dudas antes de elegir</span>
-            <h2 class="sc-title">Digitaliza tu Empresa</h2>
-            <p class="sc-desc">Dinos qué problema quieres resolver — te ayudamos a ver qué automatización encaja. Se instala dentro de tu Departamento Start™ (1 gratis), Basic™ (1 gratis), Lite™ (2 gratis) o Pro™ (3 gratis), nunca como compra aislada.</p>
-          </div>
-          <div class="sc-price" style="max-width:260px;">
-            <div class="sc-price-main" style="font-size:1.3rem;line-height:1.3;">Incluidas en tu Departamento</div>
-            <div class="sc-price-vat">Start desde 69 €/mes · Basic desde 149 €/mes · Lite desde 279 €/mes · Pro desde 549 €/mes</div>
-          </div>
-        </div>
-      </div>
-      <div class="sc-body">
-        <!-- Solutions grid — vista previa, el catálogo completo con precios vive en digitaliza.html -->
-        <div style="padding:24px 24px 0;border-top:1px solid var(--grey-line);">
-          <div class="sc-col-title">Algunas de las 12 automatizaciones del catálogo</div>
-        </div>
-        <div class="solutions-grid" style="grid-template-columns:repeat(6,1fr);padding-bottom:8px;">
-          <a class="solution-chip" href="soluciones/whatsapp.html" style="text-decoration:none;cursor:pointer;padding:14px 10px;text-align:center;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><h5 style="font-size:.8rem;margin-bottom:0;">WhatsApp</h5></a>
-          <a class="solution-chip" href="soluciones/web-ia.html" style="text-decoration:none;cursor:pointer;padding:14px 10px;text-align:center;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></div><h5 style="font-size:.8rem;margin-bottom:0;">Tu Web</h5></a>
-          <a class="solution-chip" href="soluciones/llamadas.html" style="text-decoration:none;cursor:pointer;padding:14px 10px;text-align:center;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><h5 style="font-size:.8rem;margin-bottom:0;">Llamadas</h5></a>
-          <a class="solution-chip" href="soluciones/truki.html" style="text-decoration:none;cursor:pointer;padding:14px 10px;text-align:center;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 1z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg></div><h5 style="font-size:.8rem;margin-bottom:0;">TruKi</h5></a>
-          <a class="solution-chip" href="soluciones/reservas.html" style="text-decoration:none;cursor:pointer;padding:14px 10px;text-align:center;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><h5 style="font-size:.8rem;margin-bottom:0;">Reservas</h5></a>
-          <a class="solution-chip" href="soluciones/crm.html" style="text-decoration:none;cursor:pointer;padding:14px 10px;text-align:center;"><div class="sc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h5 style="font-size:.8rem;margin-bottom:0;">CRM</h5></a>
-        </div>
-        <div style="padding:0 24px 20px;">
-          <a href="digitaliza.html" style="display:inline-flex;align-items:center;gap:6px;color:var(--gold);font-weight:700;font-size:.86rem;">+ 6 automatizaciones más, con precios y detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        </div>
-        <!-- What we do -->
-        <div class="sc-col-title" style="padding:20px 24px 12px;">Lo que hacemos en cada implantación</div>
-        <div class="digitaliza-includes">
-          <div class="di-item">Estudio previo de tu empresa y necesidades</div>
-          <div class="di-item">Configuración e integración completa</div>
-          <div class="di-item">Entrenamiento de la automatización con datos reales</div>
-          <div class="di-item">Pruebas exhaustivas antes de activar</div>
-          <div class="di-item">Formación a tu equipo</div>
-          <div class="di-item">Optimización durante el periodo inicial</div>
-          <div class="di-item">Soporte técnico durante la implantación</div>
-          <div class="di-item">Documentación completa entregada</div>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-footer-left"><b>El cliente no busca proveedores. TRUCO se encarga absolutamente de todo.</b> Elegimos, implantamos, configuramos y mantenemos. Un único interlocutor para toda tu tecnología.</div>
-          <div class="sc-cta">
-            <a class="btn-ghost" href="index.html#chat-section">Preguntar al asistente</a>
-            <a class="btn-primary" href="pago.html">Ver mi Departamento Tecnológico</a>
-          </div>
-        </div>
+    <!-- LO QUE HACEMOS EN CADA IMPLANTACIÓN -->
+    <div class="what-is-block">
+      <h3 class="wib-title">Lo que hacemos en cada implantación</h3>
+      <p class="wib-sub">Cada automatización que eliges dentro de tu Departamento pasa por el mismo proceso, la elijas cuando la elijas.</p>
+      <div class="digitaliza-includes">
+        <div class="di-item">Estudio previo de tu empresa y necesidades</div>
+        <div class="di-item">Configuración e integración completa</div>
+        <div class="di-item">Entrenamiento de la automatización con datos reales</div>
+        <div class="di-item">Pruebas exhaustivas antes de activar</div>
+        <div class="di-item">Formación a tu equipo</div>
+        <div class="di-item">Optimización durante el periodo inicial</div>
+        <div class="di-item">Soporte técnico durante la implantación</div>
+        <div class="di-item">Documentación completa entregada</div>
       </div>
     </div>
+
+    <p style="text-align:center;font-size:.88rem;color:var(--grey);margin-top:8px;">¿Dudas sobre qué automatización elegir, sus límites o qué entra gratis en cada Departamento? <a href="digitaliza.html" style="color:var(--gold);font-weight:700;">Resuélvelas en Digitaliza tu Empresa →</a></p>
+
   </div>
 </div>
 
@@ -588,6 +576,22 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     </div>
   </div>
 </footer>
+
+<!-- ── FLOAT CHAT BTN ── -->
+<div id="float-chat">
+  <div class="float-label" id="floatLabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:3px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> ¿Hablamos?</div>
+  <button class="float-btn" onclick="location.href='index.html#chat-section'" title="Hablar con el asistente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <span class="float-notif" id="floatNotif"></span>
+  </button>
+</div>
+<script>
+setTimeout(function(){
+  var fn=document.getElementById('floatNotif'), fl=document.getElementById('floatLabel');
+  if(fn) fn.style.display='block';
+  if(fl) fl.classList.add('show');
+},4000);
+</script>
 
 <script src="founding-offer.js"></script>
 <script>

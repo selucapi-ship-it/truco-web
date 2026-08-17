@@ -213,6 +213,40 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 @keyframes pageOut{to{opacity:0;}}
 @keyframes pageIn{from{opacity:0;}}
 @media(max-width:600px){.sd-tag{white-space:normal;}.btn-primary,.btn-ghost{white-space:normal;text-align:center;max-width:100%;}}
+
+/* ── FLOATING CHAT ── */
+@keyframes floatPulse{
+  0%,100%{box-shadow:0 4px 20px rgba(47,123,255,.45),0 0 0 0 rgba(47,123,255,.5);}
+  50%{box-shadow:0 4px 26px rgba(47,123,255,.65),0 0 0 10px rgba(47,123,255,0);}
+}
+#float-chat{position:fixed;bottom:24px;right:24px;z-index:800;display:flex;align-items:center;gap:10px;}
+.float-label{
+  background:var(--bg-panel);border:1px solid var(--blue-soft);color:var(--white);
+  font-size:.82rem;font-weight:600;padding:10px 16px;border-radius:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,.35);
+  opacity:0;transform:translateX(8px);pointer-events:none;
+  transition:opacity .4s ease,transform .4s ease;
+  white-space:nowrap;
+}
+.float-label.show{opacity:1;transform:translateX(0);pointer-events:auto;}
+.float-btn{
+  position:relative;width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),#1f5fd6);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;cursor:pointer;border:none;flex-shrink:0;
+  animation:floatPulse 2.4s ease-in-out infinite;
+  transition:transform var(--tr);
+}
+.float-btn:hover{transform:scale(1.08);}
+.float-notif{
+  position:absolute;top:-4px;right:-4px;width:18px;height:18px;
+  background:#ef4444;border-radius:50%;border:2px solid var(--bg);
+  display:none;
+}
+@media(max-width:1024px){
+  .float-btn{width:52px;height:52px;font-size:1.3rem;}
+  .float-label{display:none;}
+}
 </style>
 </head>
 <body>
@@ -223,7 +257,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div><div class="nav-brand">TRUCO<span>technology</span></div><div class="nav-sub">Tu Departamento Tecnológico</div></div>
   </a>
   <div class="nav-right">
-    <a class="nav-back" href="../servicios.html#digitaliza"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Digitaliza tu Empresa</a>
+    <a class="nav-back" href="../digitaliza.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Digitaliza tu Empresa</a>
     <a class="nav-cta" href="../pago.html">Contratar servicio</a>
   </div>
 </nav>
@@ -236,7 +270,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div>
         <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Automatización · Digitaliza tu Empresa</div>
         <h1>IA para Llamadas</h1>
-        <p>Ten tu propio asistente virtual que contesta el teléfono a la primera, a cualquier hora. Agenda la cita o resuelve la duda, sin que suene a robot ni a menú de teclas.</p>
+        <p>Estás con las manos metidas en una instalación, o conduciendo hacia la siguiente cita, y el teléfono suena. No puedes cogerlo — y quien llama, cuelga y prueba con el siguiente de la lista. Con tu propio asistente de llamadas, esa llamada nunca se pierde: contesta con voz natural, agenda la cita, y tú sigues con las manos donde las tenías.</p>
         <div class="hero-stats">
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Contesta al primer tono</span></div>
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg><span>Disponible 24/7</span></div>
@@ -286,7 +320,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="problem-grid">
       <div class="problem-card">
         <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-        <p>El teléfono se contesta siempre, tengas las manos ocupadas o sea domingo por la noche.</p>
+        <p>Ya no hace falta correr a por el móvil con las manos sucias o el destornillador en la mano — el teléfono se contesta solo, siempre.</p>
       </div>
       <div class="problem-card">
         <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
@@ -294,7 +328,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
       <div class="problem-card">
         <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-        <p>Suena a una persona real de tu negocio — no a un contestador, ni a un menú de "pulse 1 para...".</p>
+        <p>Quien llama no nota que habla con una máquina: nada de menús de "pulse 1 para...", suena a alguien de tu negocio.</p>
       </div>
     </div>
   </div>
@@ -343,15 +377,26 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="container">
     <div class="section-divider"><span class="sd-tag depto">Beneficios</span><div class="sd-line"></div></div>
     <ul class="benefits-list">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Contesta al momento, sin tonos de espera ni buzón de voz</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Agenda la cita directamente en tu calendario, sin pasar por ti</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Voz natural — no un menú de teclas ni un contestador robótico</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>No cambias de número: se desvía tu línea actual a la IA</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Si el cliente pide hablar con una persona, lo deriva a tu equipo</li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>150 llamadas al mes incluidas, línea + IA sin coste aparte</li>
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Se activa siempre, o solo cuando no llegas a coger tú a tiempo</li>
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Cada llamada queda transcrita, para que veas de qué habló cada cliente</li>
     </ul>
   </div>
 </div>
 
+<div class="section-block reveal" style="padding-top:0;">
+  <div class="container">
+    <div class="cross-nav">
+      <div class="cross-nav-title">Especialmente útil para</div>
+      <div class="cross-nav-items">
+        <a class="cross-nav-chip" href="../sectores/oficios.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>Autónomos y oficios <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="cross-nav-chip" href="../sectores/clinicas-dentales.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>Clínicas dentales <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="faq-section reveal">
   <div class="container">
@@ -384,6 +429,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="scope-row"><div class="scope-label">Incluye</div><div class="scope-value">Número de teléfono con el desvío configurado (o desvío de tu línea actual), IA entrenada con la información real de tu negocio para contestar y agendar citas directamente en tu calendario, con una voz natural — no un menú de teclas.</div></div>
       <div class="scope-row"><div class="scope-label">Límites</div><div class="scope-value"><b>150 llamadas al mes incluidas</b>, todo incluido (línea + IA, sin coste aparte). El exceso se factura a 0,50€ + IVA por llamada adicional.</div></div>
       <div class="scope-row"><div class="scope-label">Precio</div><div class="scope-value"><b>690€ + IVA, cerrado</b> — precio de lanzamiento (antes 890€). Todo incluido — sin coste de línea aparte, sin sorpresas.</div></div>
+      <div class="scope-row"><div class="scope-label">Disponible en</div><div class="scope-value">Departamento <b>Lite™</b> o <b>Pro™</b> — no se ofrece en Start™ ni Basic™, ni siquiera pagándola aparte.</div></div>
       <div class="scope-row"><div class="scope-label">Plazo</div><div class="scope-value">Implantación y ajuste incluidos en el periodo estándar de implantación de 90 días.</div></div>
     </div>
   </div>
@@ -418,6 +464,22 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     </div>
   </div>
 </footer>
+
+<!-- ── FLOAT CHAT BTN ── -->
+<div id="float-chat">
+  <div class="float-label" id="floatLabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:3px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> ¿Hablamos?</div>
+  <button class="float-btn" onclick="location.href='../index.html#chat-section'" title="Hablar con el asistente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <span class="float-notif" id="floatNotif"></span>
+  </button>
+</div>
+<script>
+setTimeout(function(){
+  var fn=document.getElementById('floatNotif'), fl=document.getElementById('floatLabel');
+  if(fn) fn.style.display='block';
+  if(fl) fl.classList.add('show');
+},4000);
+</script>
 
 <script>
 function toggleFaq(btn){

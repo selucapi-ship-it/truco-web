@@ -31,6 +31,40 @@ footer a{color:var(--grey);}
 }
 @keyframes pageOut{to{opacity:0;}}
 @keyframes pageIn{from{opacity:0;}}
+
+/* ── FLOATING CHAT ── */
+@keyframes floatPulse{
+  0%,100%{box-shadow:0 4px 20px rgba(47,123,255,.45),0 0 0 0 rgba(47,123,255,.5);}
+  50%{box-shadow:0 4px 26px rgba(47,123,255,.65),0 0 0 10px rgba(47,123,255,0);}
+}
+#float-chat{position:fixed;bottom:24px;right:24px;z-index:800;display:flex;align-items:center;gap:10px;}
+.float-label{
+  background:var(--bg-panel);border:1px solid #1b3a66;color:var(--white);
+  font-size:.82rem;font-weight:600;padding:10px 16px;border-radius:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,.35);
+  opacity:0;transform:translateX(8px);pointer-events:none;
+  transition:opacity .4s ease,transform .4s ease;
+  white-space:nowrap;
+}
+.float-label.show{opacity:1;transform:translateX(0);pointer-events:auto;}
+.float-btn{
+  position:relative;width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),#1f5fd6);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;cursor:pointer;border:none;flex-shrink:0;
+  animation:floatPulse 2.4s ease-in-out infinite;
+  transition:transform 0.22s cubic-bezier(.4,0,.2,1);
+}
+.float-btn:hover{transform:scale(1.08);}
+.float-notif{
+  position:absolute;top:-4px;right:-4px;width:18px;height:18px;
+  background:#ef4444;border-radius:50%;border:2px solid var(--bg);
+  display:none;
+}
+@media(max-width:1024px){
+  .float-btn{width:52px;height:52px;font-size:1.3rem;}
+  .float-label{display:none;}
+}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"></head><body>
 <nav>
@@ -60,11 +94,27 @@ footer a{color:var(--grey);}
 <h2>7. Garantía de Ajuste TRUCO™</h2>
 <p>Durante todo el período de implantación (90 días), TRUCO technology ajusta y perfecciona la automatización implantada cuantas veces sea razonablemente necesario para que funcione según lo acordado, sin coste adicional. Las incidencias técnicas se resuelven siempre sin coste adicional durante toda la vigencia del servicio. Los pagos ya realizados no son reembolsables.</p>
 <h2>8. Precios e IVA</h2>
-<p>Todos los precios son en euros. Los indicados como "+ IVA" deben incrementarse con el 21% vigente en España. Las facturas se emiten automáticamente tras cada pago.</p>
+<p>Todos los precios son en euros. Los indicados como "+ IVA" deben incrementarse con el 21% vigente en España. Las facturas se emiten automáticamente tras cada pago. El pago del periodo de permanencia se realiza por defecto de una sola vez, con un 12% de descuento por adelantarlo; quien prefiera no adelantarlo todo de golpe puede fraccionarlo a través de SeQura, nuestro partner de financiación externo. No se realiza facturación mensual directa por parte de TRUCO technology. Ciberseguridad Pyme, Flujos automáticos a medida, CRM, Integraciones y Gestión Documental solo están disponibles a partir del Departamento Lite™ — no se ofrecen, ni siquiera pagando, en Start™ ni Basic™.</p>
 <h2>9. Límites de uso de las automatizaciones de IA</h2>
 <p>Las automatizaciones que incorporan inteligencia artificial (IA para WhatsApp, IA para Web, IA para Correo) incluyen un cupo de <b>1.000 interacciones mensuales por automatización activa</b>. Las interacciones que superen ese cupo se facturan a <b>0,02 € + IVA por interacción adicional</b> en la factura del mes siguiente. IA para Llamadas tiene un límite distinto por tratarse de telefonía: incluye <b>150 llamadas mensuales</b>, y el exceso se factura a <b>0,50 € + IVA por llamada adicional</b>. Si el uso de una automatización supera de forma anómala su volumen habitual (por ejemplo, un pico de spam o un ataque automatizado), TRUCO technology podrá pausar temporalmente esa automatización de IA concreta, sin afectar al resto del Departamento Tecnológico, notificándolo al cliente de inmediato para acordar cómo proceder.</p>
 <h2>10. Propiedad intelectual</h2>
 <p>Al finalizar cualquier proyecto el cliente recibe el <b>código fuente completo</b>. La propiedad del resultado pertenece al cliente. TRUCO technology puede mencionar el proyecto en su portfolio salvo indicación expresa en contrario.</p>
 <h2>11. Legislación aplicable</h2>
 <p>Estos términos se rigen por la legislación española. Para cualquier controversia, las partes se someten a los Juzgados y Tribunales del domicilio del cliente.</p>
-</div><footer>© 2026 TRUCO technology · <a href="aviso-legal.html">Aviso Legal</a> · <a href="privacidad.html">Privacidad</a> · <a href="cookies.html">Cookies</a> · <a href="terminos.html">Términos</a> · <a href="index.html" onclick="try{localStorage.removeItem('cookie_consent');}catch(e){}">Gestionar cookies</a></footer></body></html>
+</div><footer>© 2026 TRUCO technology · <a href="aviso-legal.html">Aviso Legal</a> · <a href="privacidad.html">Privacidad</a> · <a href="cookies.html">Cookies</a> · <a href="terminos.html">Términos</a> · <a href="index.html" onclick="try{localStorage.removeItem('cookie_consent');}catch(e){}">Gestionar cookies</a></footer>
+
+<!-- ── FLOAT CHAT BTN ── -->
+<div id="float-chat">
+  <div class="float-label" id="floatLabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:3px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> ¿Hablamos?</div>
+  <button class="float-btn" onclick="location.href='index.html#chat-section'" title="Hablar con el asistente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <span class="float-notif" id="floatNotif"></span>
+  </button>
+</div>
+<script>
+setTimeout(function(){
+  var fn=document.getElementById('floatNotif'), fl=document.getElementById('floatLabel');
+  if(fn) fn.style.display='block';
+  if(fl) fl.classList.add('show');
+},4000);
+</script></body></html>

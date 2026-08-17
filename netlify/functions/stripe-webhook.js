@@ -114,6 +114,7 @@ exports.handler = async function (event) {
           p_permanencia_meses: shape.permanencia_meses,
           p_gift_period_days: shape.gift_period_days,
           p_solutions: solutions.length ? solutions : null,
+          p_is_founder: isFounding,
         }),
       });
       if (resp.ok) {

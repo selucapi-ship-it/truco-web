@@ -31,6 +31,40 @@ footer a{color:var(--grey);}
 }
 @keyframes pageOut{to{opacity:0;}}
 @keyframes pageIn{from{opacity:0;}}
+
+/* ── FLOATING CHAT ── */
+@keyframes floatPulse{
+  0%,100%{box-shadow:0 4px 20px rgba(47,123,255,.45),0 0 0 0 rgba(47,123,255,.5);}
+  50%{box-shadow:0 4px 26px rgba(47,123,255,.65),0 0 0 10px rgba(47,123,255,0);}
+}
+#float-chat{position:fixed;bottom:24px;right:24px;z-index:800;display:flex;align-items:center;gap:10px;}
+.float-label{
+  background:var(--bg-panel);border:1px solid #1b3a66;color:var(--white);
+  font-size:.82rem;font-weight:600;padding:10px 16px;border-radius:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,.35);
+  opacity:0;transform:translateX(8px);pointer-events:none;
+  transition:opacity .4s ease,transform .4s ease;
+  white-space:nowrap;
+}
+.float-label.show{opacity:1;transform:translateX(0);pointer-events:auto;}
+.float-btn{
+  position:relative;width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),#1f5fd6);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;cursor:pointer;border:none;flex-shrink:0;
+  animation:floatPulse 2.4s ease-in-out infinite;
+  transition:transform 0.22s cubic-bezier(.4,0,.2,1);
+}
+.float-btn:hover{transform:scale(1.08);}
+.float-notif{
+  position:absolute;top:-4px;right:-4px;width:18px;height:18px;
+  background:#ef4444;border-radius:50%;border:2px solid var(--bg);
+  display:none;
+}
+@media(max-width:1024px){
+  .float-btn{width:52px;height:52px;font-size:1.3rem;}
+  .float-label{display:none;}
+}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"></head><body>
 <nav>
@@ -59,4 +93,20 @@ footer a{color:var(--grey);}
 <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, portabilidad y limitación escribiendo a [Tu email]. Responderemos en un plazo máximo de <b>30 días hábiles</b>. Puedes reclamar ante la <b>AEPD</b> en www.aepd.es.</p>
 <h2>8. Seguridad</h2>
 <p>Aplicamos cifrado SSL, acceso restringido y copias de seguridad. Los pagos se procesan exclusivamente a través de Stripe con cifrado de 256 bits.</p>
-</div><footer>© 2026 TRUCO technology · <a href="aviso-legal.html">Aviso Legal</a> · <a href="privacidad.html">Privacidad</a> · <a href="cookies.html">Cookies</a> · <a href="terminos.html">Términos</a> · <a href="index.html" onclick="try{localStorage.removeItem('cookie_consent');}catch(e){}">Gestionar cookies</a></footer></body></html>
+</div><footer>© 2026 TRUCO technology · <a href="aviso-legal.html">Aviso Legal</a> · <a href="privacidad.html">Privacidad</a> · <a href="cookies.html">Cookies</a> · <a href="terminos.html">Términos</a> · <a href="index.html" onclick="try{localStorage.removeItem('cookie_consent');}catch(e){}">Gestionar cookies</a></footer>
+
+<!-- ── FLOAT CHAT BTN ── -->
+<div id="float-chat">
+  <div class="float-label" id="floatLabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:3px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> ¿Hablamos?</div>
+  <button class="float-btn" onclick="location.href='index.html#chat-section'" title="Hablar con el asistente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <span class="float-notif" id="floatNotif"></span>
+  </button>
+</div>
+<script>
+setTimeout(function(){
+  var fn=document.getElementById('floatNotif'), fl=document.getElementById('floatLabel');
+  if(fn) fn.style.display='block';
+  if(fl) fl.classList.add('show');
+},4000);
+</script></body></html>

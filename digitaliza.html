@@ -176,6 +176,40 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 @keyframes pageOut{to{opacity:0;}}
 @keyframes pageIn{from{opacity:0;}}
 @media(max-width:600px){.sd-tag{white-space:normal;}.btn-primary,.btn-ghost{white-space:normal;text-align:center;max-width:100%;}}
+
+/* ── FLOATING CHAT ── */
+@keyframes floatPulse{
+  0%,100%{box-shadow:0 4px 20px rgba(47,123,255,.45),0 0 0 0 rgba(47,123,255,.5);}
+  50%{box-shadow:0 4px 26px rgba(47,123,255,.65),0 0 0 10px rgba(47,123,255,0);}
+}
+#float-chat{position:fixed;bottom:24px;right:24px;z-index:800;display:flex;align-items:center;gap:10px;}
+.float-label{
+  background:var(--bg-panel);border:1px solid var(--blue-soft);color:var(--white);
+  font-size:.82rem;font-weight:600;padding:10px 16px;border-radius:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,.35);
+  opacity:0;transform:translateX(8px);pointer-events:none;
+  transition:opacity .4s ease,transform .4s ease;
+  white-space:nowrap;
+}
+.float-label.show{opacity:1;transform:translateX(0);pointer-events:auto;}
+.float-btn{
+  position:relative;width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),#1f5fd6);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;cursor:pointer;border:none;flex-shrink:0;
+  animation:floatPulse 2.4s ease-in-out infinite;
+  transition:transform var(--tr);
+}
+.float-btn:hover{transform:scale(1.08);}
+.float-notif{
+  position:absolute;top:-4px;right:-4px;width:18px;height:18px;
+  background:#ef4444;border-radius:50%;border:2px solid var(--bg);
+  display:none;
+}
+@media(max-width:1024px){
+  .float-btn{width:52px;height:52px;font-size:1.3rem;}
+  .float-label{display:none;}
+}
 </style>
 </head>
 <body>
@@ -195,18 +229,17 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="hero-glow blue"></div>
   <div class="hero-glow gold"></div>
   <div class="container">
-    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Tu Departamento Tecnológico · sin compromiso al empezar</div>
+    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Dudas resueltas · límites y beneficios de cada automatización</div>
     <h1>Digitaliza tu Empresa</h1>
-    <p>Esto también es entrar en tu Departamento Tecnológico — solo que sin compromiso desde el primer día. Eliges una o varias de estas 12 automatizaciones, pagas su precio de implantación, y las tienes funcionando ya. Los primeros 90 días de implantación y coordinación van incluidos en el precio; pasado ese plazo, pasas automáticamente a tu Departamento Lite™ o Pro™ — y si no quieres continuar, solo tienes que avisar con 7 días.</p>
+    <p>¿No sabes qué automatización te resuelve el problema, qué llevas gratis con tu Departamento y qué solo está disponible a partir de Lite™? Esta página existe para eso. Cada una de las 12 automatizaciones de abajo tiene su ficha con qué hace exactamente, qué incluye, cuánto cuesta de instalación y en qué Departamento — Start™, Basic™, Lite™ o Pro™ — la tienes gratis, de pago o no disponible. Sin letra pequeña.</p>
     <div class="hero-price-box">
       <div>
-        <div class="hp-main">Desde 350 €</div>
-        <div class="hp-vat">+ IVA · pago único por automatización, sin cuota mensual al empezar</div>
-        <div class="hp-annual">Combina 3 automatizaciones del mismo sector y llevas un 15% de descuento</div>
+        <div class="hp-main">350 € – 890 €</div>
+        <div class="hp-vat">+ IVA de instalación, según la automatización · siempre dentro de tu Departamento, nunca suelta</div>
       </div>
-      <a class="btn-primary" href="#soluciones">Ver las 12 automatizaciones <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a class="btn-primary" href="#soluciones">Ver las 12, con límites y precios claros <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </div>
-    <div class="limit-note"><b>¿Prefieres no pagar nada por la instalación?</b> Eligiendo <a href="departamentos/start.html">Start™</a>, <a href="departamentos/basic.html">Basic™</a>, <a href="departamentos/lite.html">Lite™</a> o <a href="departamentos/pro.html">Pro™</a> directamente tienes 1, 1, 2 o 3 de estas automatizaciones completamente gratis desde el primer mes, a cambio de una permanencia mínima. Aquí empiezas sin esa permanencia — pero pasados los 90 días, el destino es el mismo: tu Departamento.</div>
+    <div class="limit-note"><b>Ninguna automatización se compra suelta.</b> Todas se instalan y se mantienen dentro de tu Departamento Tecnológico. Elige <a href="departamentos/start.html">Start™</a>, <a href="departamentos/basic.html">Basic™</a>, <a href="departamentos/lite.html">Lite™</a> o <a href="departamentos/pro.html">Pro™</a> y algunas ya vienen gratis (1 con Start™, 1 con Basic™, 2 con Lite™, 3 con Pro™); el resto se paga aparte, si tu Departamento las permite — revisa el límite exacto en la ficha de cada una. Start™ es la entrada más ligera, sin necesidad de web.</div>
   </div>
 </div>
 
@@ -226,8 +259,8 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
       <div class="step-card">
         <div class="step-num">03</div>
-        <h4>90 días de implantación y coordinación incluidos</h4>
-        <p>Toda implantación incluye 90 días de supervisión y ajuste sin coste — Start™ si implantas 1 automatización, Lite™ si implantas 2, Pro™ si implantas 3 o más. Pasado ese plazo pasas automáticamente a tu Departamento en modo mensual, sin permanencia; cancelas cuando quieras avisando con 7 días.</p>
+        <h4>Se mantiene dentro de tu Departamento</h4>
+        <p>La instalación es un pago único, pero la automatización vive y se mantiene dentro de tu Departamento — Start™, Basic™, Lite™ o Pro™, según cuántas elijas — con permanencia de 12 meses — cubre tanto la integración completa como la gestión de tu Departamento cada mes, no solo la instalación.</p>
       </div>
     </div>
   </div>
@@ -252,7 +285,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 <div class="section-block reveal" style="padding-top:0;" id="soluciones">
   <div class="container">
     <div class="section-divider"><span class="sd-tag gold">Las 12 automatizaciones, en detalle</span><div class="sd-line"></div></div>
-    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:760px;margin-bottom:28px;">Cada una se instala dentro de tu Departamento Start™, Basic™, Lite™ o Pro™ — nunca suelta. Elige la que te resuelva el problema; si necesitas varias, sube de tier.</p>
+    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:760px;margin-bottom:28px;">Cada ficha te dice, sin rodeos, qué Departamento la lleva gratis, cuál la cobra aparte y cuál no la ofrece todavía — y el precio de abajo es el de instalarla dentro de tu Departamento, la primera vez. Elige la que te resuelva el problema; si necesitas varias, tu Departamento sale más a cuenta que pagarlas todas por separado.</p>
     <div class="sol-detail-grid">
 
       <div class="sol-detail-card">
@@ -318,7 +351,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <li>Transcripción de cada llamada para que veas de qué se habló</li>
         </ul>
         <div class="sdc-note"><b>Incluye 150 llamadas al mes,</b> todo incluido (línea + IA). El exceso se factura a 0,50 €/llamada adicional.</div>
-        <div class="sdc-footer"><span class="sdc-free">Gratis si la eliges dentro de Lite™ o Pro™</span><a class="sdc-link" href="soluciones/llamadas.html">Página completa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+        <div class="sdc-footer"><span class="sdc-free">Gratis si la eliges dentro de Lite™ o Pro™ · no disponible en Start™ ni Basic™</span><a class="sdc-link" href="soluciones/llamadas.html">Página completa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
       </div>
 
       <div class="sol-detail-card">
@@ -339,7 +372,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
       <div class="sol-detail-card">
         <div class="sdc-head">
-          <div class="sdc-name">Facturación automática<span>TruKi — describe el trabajo, recibe la factura</span></div>
+          <div class="sdc-name">Facturación automática (TruKi)<span>Describe el trabajo, recibe la factura</span></div>
           <div class="sdc-price">580 € + IVA</div>
         </div>
         <p class="sdc-desc">Le cuentas a TruKi por chat qué material y horas has usado en un trabajo — "6 metros de cable 2,5, 3 cajas de registro, 2 horas de mano de obra" — y genera al instante un presupuesto o una factura lista para el cliente, guardada también en tu propia base de datos.</p>
@@ -469,12 +502,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="section-divider"><span class="sd-tag gold">Preguntas frecuentes</span><div class="sd-line"></div></div>
     <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">¿Puedo contratar solo una automatización suelta? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Sí. Cada automatización se vende de forma independiente y no hace falta firmar ninguna permanencia para empezar — pagas la implantación de la que necesites y ya está funcionando. Eso sí, sigue siendo una entrada a tu Departamento Tecnológico: los primeros 90 días de mantenimiento van incluidos en el precio, y después continúa como parte de tu Departamento.</p></div>
+        <button class="faq-q" onclick="toggleFaq(this)">¿Puedo tener una automatización sin contratar un Departamento entero? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>No de forma suelta — cada automatización se instala y se mantiene siempre dentro de tu Departamento Tecnológico (Start™, Basic™, Lite™ o Pro™). La buena noticia es que Start™, el más ligero, ya te da 1 automatización completamente gratis desde el primer mes, sin necesidad de web ni del resto del paquete — no hace falta dar el salto grande para tener la tuya funcionando.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Qué pasa después de instalarla? ¿Hay que pagar algo más? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>La implantación es un pago único. Incluye 90 días de implantación y coordinación con supervisión y ajuste sin coste, pasando después a tu Departamento correspondiente — Start™, Lite™ o Pro™ (según cuántas automatizaciones implantes). Pasado ese periodo, pasas automáticamente a ese Departamento en modo mensual, sin permanencia, y seguimos manteniéndola sin que tengas que hacer nada. Si prefieres no continuar, cancelas avisando con 7 días — la automatización sigue siendo tuya, pero el mantenimiento pasa a correr de tu cuenta.</p></div>
+        <div class="faq-a"><p>Nada extra durante los primeros 90 días: van incluidos en el precio de instalación, con supervisión y ajuste sin coste. Pasado ese plazo, tu automatización sigue mantenida dentro de tu Departamento — Start™, Basic™, Lite™ o Pro™, según cuál hayas elegido — con permanencia de 12 meses — cubre tanto la integración completa como la gestión de tu Departamento cada mes, no solo la instalación.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Puedo combinarla con una Web Profesional? <span class="faq-icon">+</span></button>
@@ -497,7 +530,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="cta-inner">
       <div>
         <h2>¿Cuál es el problema que quieres resolver ya?</h2>
-        <p>Desde 350 € + IVA, pago único, sin permanencia. Elige una o varias automatizaciones y te decimos el precio final antes de nada.</p>
+        <p>Desde 350 € + IVA de instalación, dentro de tu Departamento Tecnológico. Elige una o varias automatizaciones y te decimos el precio final antes de nada.</p>
       </div>
       <div class="cta-btns">
         <a class="btn-ghost" href="index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>
@@ -521,6 +554,22 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     </div>
   </div>
 </footer>
+
+<!-- ── FLOAT CHAT BTN ── -->
+<div id="float-chat">
+  <div class="float-label" id="floatLabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:3px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> ¿Hablamos?</div>
+  <button class="float-btn" onclick="location.href='index.html#chat-section'" title="Hablar con el asistente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <span class="float-notif" id="floatNotif"></span>
+  </button>
+</div>
+<script>
+setTimeout(function(){
+  var fn=document.getElementById('floatNotif'), fl=document.getElementById('floatLabel');
+  if(fn) fn.style.display='block';
+  if(fl) fl.classList.add('show');
+},4000);
+</script>
 
 <script>
 function toggleFaq(btn){

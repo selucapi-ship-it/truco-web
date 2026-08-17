@@ -41,8 +41,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .nav-back{font-size:.85rem;color:var(--grey);transition:color var(--tr);display:flex;align-items:center;gap:6px;}
 .nav-back svg{width:14px;height:14px;}
 .nav-back:hover{color:var(--white);}
+.nav-cta{background:var(--blue);color:#fff;padding:9px 20px;border-radius:7px;font-size:.85rem;font-weight:600;white-space:nowrap;}
 @media(max-width:600px){.nav-sub{display:none;}.nav-back{display:none;}.nav-cta{padding:8px 14px;font-size:.78rem;}.t-mark{width:34px;height:34px;font-size:18px;}}
-.nav-cta{background:var(--blue);color:#fff;padding:9px 20px;border-radius:7px;font-size:.85rem;font-weight:600;}
 
 .icon-badge{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .icon-badge svg{width:23px;height:23px;}
@@ -191,6 +191,40 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 }
 @keyframes pageOut{to{opacity:0;}}
 @keyframes pageIn{from{opacity:0;}}
+
+/* ── FLOATING CHAT ── */
+@keyframes floatPulse{
+  0%,100%{box-shadow:0 4px 20px rgba(47,123,255,.45),0 0 0 0 rgba(47,123,255,.5);}
+  50%{box-shadow:0 4px 26px rgba(47,123,255,.65),0 0 0 10px rgba(47,123,255,0);}
+}
+#float-chat{position:fixed;bottom:24px;right:24px;z-index:800;display:flex;align-items:center;gap:10px;}
+.float-label{
+  background:var(--bg-panel);border:1px solid var(--blue-soft);color:var(--white);
+  font-size:.82rem;font-weight:600;padding:10px 16px;border-radius:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,.35);
+  opacity:0;transform:translateX(8px);pointer-events:none;
+  transition:opacity .4s ease,transform .4s ease;
+  white-space:nowrap;
+}
+.float-label.show{opacity:1;transform:translateX(0);pointer-events:auto;}
+.float-btn{
+  position:relative;width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),#1f5fd6);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;cursor:pointer;border:none;flex-shrink:0;
+  animation:floatPulse 2.4s ease-in-out infinite;
+  transition:transform var(--tr);
+}
+.float-btn:hover{transform:scale(1.08);}
+.float-notif{
+  position:absolute;top:-4px;right:-4px;width:18px;height:18px;
+  background:#ef4444;border-radius:50%;border:2px solid var(--bg);
+  display:none;
+}
+@media(max-width:1024px){
+  .float-btn{width:52px;height:52px;font-size:1.3rem;}
+  .float-label{display:none;}
+}
 </style>
 </head>
 <body>
@@ -212,7 +246,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="container">
     <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> El primer paso de tu departamento · 1 automatización gratis a elegir</div>
     <h1>Departamento Tecnológico Start™</h1>
-    <p>Cada cliente que te escribe y no contestas a tiempo se va a la competencia — y ni te enteras. Start™ es el punto de entrada más barato al departamento tecnológico: sin web, instalamos gratis <strong>1 automatización a elegir</strong> entre WhatsApp, tu Web, Correo, Reservas y Agenda, o Facturación automática (TruKi). <strong>Nosotros lo configuramos y lo entrenamos — tú no tienes que aprender nada.</strong></p>
+    <p>Cada cliente que te escribe y no contestas a tiempo se va a la competencia — y ni te enteras. Start™ es el punto de entrada más barato al departamento tecnológico: sin web, instalamos gratis <strong>1 automatización a elegir</strong> entre WhatsApp, tu Web, Correo, Reservas y Agenda, o Facturación automática (TruKi). <strong>Nosotros lo configuramos y lo entrenamos — tú no tienes que aprender nada.</strong> Eso sí, la asistencia de Start™ está pensada para esa única necesidad, no para gestionar toda tu presencia digital — si lo que buscas es algo más completo, Basic™ es el paso natural.</p>
     <div class="hero-price-box">
       <div>
         <div class="hp-founding-badge" id="hp-founding-badge-basic"></div>
@@ -224,13 +258,14 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <a class="btn-primary" href="../pago.html?plan=arranque-start">Contratar Start™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </div>
     <div class="necessity-note"><b>¿Por qué existe Start™?</b> Porque no todo el mundo necesita el departamento completo desde el primer día. Es la forma de entrar en el ecosistema TRUCO con una única necesidad resuelta, sin web y sin dar el salto grande — y cuando crezcas, subir a <a href="basic.html">Basic™</a> o <a href="lite.html">Lite™</a> es inmediato.</div>
+    <div class="necessity-note" style="margin-top:14px;border-color:var(--gold);"><b>¿Ya sabes que necesitas más que 1 cosa suelta?</b> La mayoría de negocios que crecen acaban necesitando también una web que trabaje por ellos — no solo una automatización aislada. <a href="basic.html" style="color:var(--gold);font-weight:600;">Basic™</a> te da la Web Profesional completa + 1 automatización, por poco más al mes, y es donde empieza de verdad tu ecosistema tecnológico.</div>
     <div class="value-highlight">
-      <div class="vh-eyebrow">Lo que te llevas gratis</div>
-      <div class="vh-save">Ahorras entre <b>350 € y 590 €</b> en instalación</div>
+      <div class="vh-eyebrow">Lo que incluye tu Departamento</div>
+      <div class="vh-save">Instalación de tu automatización <b>incluida en la cuota</b>, sin pagarla aparte</div>
       <ul class="vh-list">
         <li>1 automatización a elegir <span class="vh-tag">valor 350-590 €</span></li>
         <li>Configuración y entrenamiento <span class="vh-tag">a medida de tu negocio</span></li>
-        <li>Mantenimiento de la automatización <span class="vh-tag">incluido siempre</span></li>
+        <li>Gestión de tu Departamento <span class="vh-tag">cada mes, sin parar</span></li>
         <li>Acompañamiento completo <span class="vh-tag">de principio a fin</span></li>
       </ul>
     </div>
@@ -276,7 +311,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><p><b>Mantenimiento y actualización continua</b> de la automatización elegida, incluidos en la cuota</p></div>
       <div class="feat-card gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><p><b>¿Quieres una 2ª automatización?</b> Se instala al precio de catálogo, sin recargo de alta — tu cuota mensual no sube</p></div>
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p><b>Resolución de incidencias</b> técnicas sin coste adicional, por orden de llegada</p></div>
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p><b>Permanencia mínima de 12 meses</b> — es lo que hace posible instalar la automatización completamente gratis en vez de cobrarla aparte</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p><b>Permanencia mínima de 12 meses</b> — cubre la integración completa (configurada con tus datos reales) y la gestión de tu Departamento cada mes, en vez de cobrarlas aparte</p></div>
     </div>
   </div>
 </div>
@@ -324,7 +359,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <a class="cross-nav-chip" href="basic.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Basic™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="lite.html"><div class="icon-badge sm green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Lite™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="pro.html"><div class="icon-badge sm blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Pro™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        <a class="cross-nav-chip" href="../servicios.html#digitaliza"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>Digitaliza tu Empresa <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="cross-nav-chip" href="../digitaliza.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>Digitaliza tu Empresa <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
   </div>
@@ -358,6 +393,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </div>
 
+<div class="section-block reveal" style="padding-top:0;padding-bottom:0;">
+  <div class="container">
+    <div class="necessity-note"><b>¿Se te queda corto con 1 automatización?</b> <a href="basic.html">Basic™</a> añade tu Web Profesional completa + otra automatización más, con la misma filosofía de todo incluido en la cuota.</div>
+  </div>
+</div>
+
 <div class="cta-section reveal">
   <div class="container">
     <div class="cta-inner">
@@ -388,6 +429,22 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </footer>
 
+<!-- ── FLOAT CHAT BTN ── -->
+<div id="float-chat">
+  <div class="float-label" id="floatLabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:3px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> ¿Hablamos?</div>
+  <button class="float-btn" onclick="location.href='../index.html#chat-section'" title="Hablar con el asistente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <span class="float-notif" id="floatNotif"></span>
+  </button>
+</div>
+<script>
+setTimeout(function(){
+  var fn=document.getElementById('floatNotif'), fl=document.getElementById('floatLabel');
+  if(fn) fn.style.display='block';
+  if(fl) fl.classList.add('show');
+},4000);
+</script>
+
 <script src="../founding-offer.js"></script>
 <script>
 function renderFoundingPricesBasic(){
@@ -396,7 +453,7 @@ function renderFoundingPricesBasic(){
   const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
   set('hp-main-basic',mBasic+' €<sub>/mes</sub>');
   set('hp-vat-basic','+ IVA · '+(mBasic*1.21).toFixed(2).replace('.',',')+' €/mes con IVA');
-  set('hp-annual-basic','Pago único con 12% dto.: '+pagoUnicoBasic+' € + IVA (sin facturación mensual directa) · o fracciona con SeQura · Permanencia 12 meses');
+  set('hp-annual-basic','Pago único con 12% dto.: '+pagoUnicoBasic+' € + IVA (sin facturación mensual directa) · o fracciona con SeQura · Permanencia 12 meses. Integración completa de tu automatización, configurada con los datos reales de tu negocio, y gestión de tu Departamento cada mes — incluidas.');
   set('table-price-start',mBasic+' €');
   set('table-price-basic',mElemental+' €');
   set('table-price-lite',mLite+' €');

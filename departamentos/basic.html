@@ -41,8 +41,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .nav-back{font-size:.85rem;color:var(--grey);transition:color var(--tr);display:flex;align-items:center;gap:6px;}
 .nav-back svg{width:14px;height:14px;}
 .nav-back:hover{color:var(--white);}
+.nav-cta{background:var(--gold);color:#1a1206;padding:9px 20px;border-radius:7px;font-size:.85rem;font-weight:700;white-space:nowrap;}
 @media(max-width:600px){.nav-sub{display:none;}.nav-back{display:none;}.nav-cta{padding:8px 14px;font-size:.78rem;}.t-mark{width:34px;height:34px;font-size:18px;}}
-.nav-cta{background:var(--gold);color:#1a1206;padding:9px 20px;border-radius:7px;font-size:.85rem;font-weight:700;}
 
 .icon-badge{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .icon-badge svg{width:23px;height:23px;}
@@ -198,6 +198,40 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 @keyframes pageOut{to{opacity:0;}}
 @keyframes pageIn{from{opacity:0;}}
 @media(max-width:600px){.sd-tag{white-space:normal;}.btn-primary,.btn-ghost{white-space:normal;text-align:center;max-width:100%;}}
+
+/* ── FLOATING CHAT ── */
+@keyframes floatPulse{
+  0%,100%{box-shadow:0 4px 20px rgba(47,123,255,.45),0 0 0 0 rgba(47,123,255,.5);}
+  50%{box-shadow:0 4px 26px rgba(47,123,255,.65),0 0 0 10px rgba(47,123,255,0);}
+}
+#float-chat{position:fixed;bottom:24px;right:24px;z-index:800;display:flex;align-items:center;gap:10px;}
+.float-label{
+  background:var(--bg-panel);border:1px solid var(--blue-soft);color:var(--white);
+  font-size:.82rem;font-weight:600;padding:10px 16px;border-radius:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,.35);
+  opacity:0;transform:translateX(8px);pointer-events:none;
+  transition:opacity .4s ease,transform .4s ease;
+  white-space:nowrap;
+}
+.float-label.show{opacity:1;transform:translateX(0);pointer-events:auto;}
+.float-btn{
+  position:relative;width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),#1f5fd6);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;cursor:pointer;border:none;flex-shrink:0;
+  animation:floatPulse 2.4s ease-in-out infinite;
+  transition:transform var(--tr);
+}
+.float-btn:hover{transform:scale(1.08);}
+.float-notif{
+  position:absolute;top:-4px;right:-4px;width:18px;height:18px;
+  background:#ef4444;border-radius:50%;border:2px solid var(--bg);
+  display:none;
+}
+@media(max-width:1024px){
+  .float-btn{width:52px;height:52px;font-size:1.3rem;}
+  .float-label{display:none;}
+}
 </style>
 </head>
 <body>
@@ -217,7 +251,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="hero-glow blue"></div>
   <div class="hero-glow gold"></div>
   <div class="container">
-    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Web Profesional + 1 automatización más, gratis</div>
+    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> ★ El punto de entrada recomendado · Web Profesional + 1 automatización más, gratis</div>
     <h1>Departamento Tecnológico Basic™</h1>
     <p>No montamos webs bonitas que no venden. Montamos webs que trabajan por ti 24/7 — <strong>responden dudas y agendan citas en tu calendario, siempre</strong>, sin que gastes ningún pick en ello. Y si eliges WhatsApp como tu automatización, podrás hacer que tu agente derive la conversación y hasta cierre la venta ahí mismo. Basic™ te da la Web Profesional completa más 1 automatización más a elegir, todo instalado completamente gratis.</p>
     <div class="hero-price-box">
@@ -230,15 +264,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
       <a class="btn-primary" href="../pago.html?plan=arranque-basic">Contratar Basic™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </div>
-    <div class="limit-note"><b>La web y la automatización ya no se pagan aparte, van incluidas.</b> Es lo que hace posible este regalo: 12 meses de permanencia. Si tu negocio ya combina varias herramientas a la vez, mira <a href="lite.html">Lite™</a> o <a href="pro.html">Pro™</a>.</div>
+    <div class="limit-note"><b>La web y la automatización ya no se pagan aparte, van incluidas.</b> Es lo que hace posible este regalo: 12 meses de permanencia. Basic™ es donde empieza tu ecosistema tecnológico — cuando tu negocio necesite cubrir varios canales a la vez (WhatsApp + web + llamadas, por ejemplo), el paso natural es <a href="lite.html">Lite™</a> o <a href="pro.html">Pro™</a>, sin perder nada de lo que ya tienes.</div>
     <div class="value-highlight">
-      <div class="vh-eyebrow">Lo que te llevas gratis</div>
-      <div class="vh-save">Ahorras entre <b>1.740 € y 1.980 €</b> en instalación</div>
+      <div class="vh-eyebrow">Lo que incluye tu Departamento</div>
+      <div class="vh-save">Web Profesional + automatización <b>incluidas en la cuota</b>, sin pagarlas aparte</div>
       <ul class="vh-list">
         <li>Web Profesional <span class="vh-tag">valor 1.390 €</span></li>
         <li>Chat + agenda en tu calendario <span class="vh-tag">de fábrica, siempre</span></li>
         <li>1 automatización más a elegir <span class="vh-tag">valor 350-590 €</span></li>
-        <li>Mantenimiento de todo lo activo <span class="vh-tag">incluido siempre</span></li>
+        <li>Gestión de tu Departamento <span class="vh-tag">cada mes, sin parar</span></li>
       </ul>
     </div>
   </div>
@@ -343,9 +377,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <a class="cross-nav-chip" href="start.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Start™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="lite.html"><div class="icon-badge sm green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Lite™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="pro.html"><div class="icon-badge sm blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Pro™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        <a class="cross-nav-chip" href="../digitaliza.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>Ver todo lo que instalamos <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="cross-nav-chip" href="../proyectos/web-profesional.html" style="border-color:rgba(217,168,63,.5);"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>¿Quieres ver la web que se te va a construir? <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-top:0;padding-bottom:0;">
+  <div class="container">
+    <div class="limit-note"><b>¿Necesitas combinar más de 1 automatización?</b> <a href="lite.html">Lite™</a> te da tu web + 2 automatizaciones a elegir, mismo espíritu de todo incluido, un peldaño más completo.</div>
   </div>
 </div>
 
@@ -367,7 +407,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Por qué hay permanencia de 12 meses? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Porque regalamos la Web Profesional + 1 automatización desde el primer día — eso solo tiene sentido económico con un compromiso mínimo de 12 meses. Si no quieres ningún compromiso, la compra suelta (sin Departamento) sigue disponible, pero entonces el mantenimiento corre de tu cuenta.</p></div>
+        <div class="faq-a"><p>Porque regalamos la Web Profesional + 1 automatización desde el primer día — eso solo tiene sentido económico con un compromiso mínimo de 12 meses. Si buscas un compromiso todavía más ligero, <a href="start.html">Start™</a> tiene la misma lógica con solo 1 automatización, sin web.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Cómo se paga? <span class="faq-icon">+</span></button>
@@ -407,6 +447,22 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </footer>
 
+<!-- ── FLOAT CHAT BTN ── -->
+<div id="float-chat">
+  <div class="float-label" id="floatLabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:3px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> ¿Hablamos?</div>
+  <button class="float-btn" onclick="location.href='../index.html#chat-section'" title="Hablar con el asistente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <span class="float-notif" id="floatNotif"></span>
+  </button>
+</div>
+<script>
+setTimeout(function(){
+  var fn=document.getElementById('floatNotif'), fl=document.getElementById('floatLabel');
+  if(fn) fn.style.display='block';
+  if(fl) fl.classList.add('show');
+},4000);
+</script>
+
 <script src="../founding-offer.js"></script>
 <script>
 function renderFoundingPricesElemental(){
@@ -415,7 +471,7 @@ function renderFoundingPricesElemental(){
   const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
   set('hp-main-elemental',mElemental+' €<sub>/mes</sub>');
   set('hp-vat-elemental','+ IVA · '+(mElemental*1.21).toFixed(2).replace('.',',')+' €/mes con IVA');
-  set('hp-annual-elemental','Pago único con 12% dto.: '+pagoUnicoElemental+' € + IVA (sin facturación mensual directa) · o fracciona con SeQura · Permanencia 12 meses');
+  set('hp-annual-elemental','Pago único con 12% dto.: '+pagoUnicoElemental+' € + IVA (sin facturación mensual directa) · o fracciona con SeQura · Permanencia 12 meses. Integración completa de tu web y tu automatización, configuradas con los datos reales de tu negocio, y gestión de tu Departamento cada mes — incluidas.');
   set('table-price-start',mStart+' €');
   set('table-price-basic',mElemental+' €');
   set('table-price-lite',mLite+' €');
