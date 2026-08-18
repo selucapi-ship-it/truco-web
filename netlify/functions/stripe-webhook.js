@@ -16,6 +16,9 @@
 //   - SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY (ya las necesita save-lead.js)
 //   - N8N_ALTA_CLIENTE_WEBHOOK_URL — URL del webhook del flujo n8n
 //     otros/n8n-truco/alta-cliente-nuevo.json una vez importado y activo.
+//   - INVITE_CLIENT_INTERNAL_SECRET — el mismo valor que configures en
+//     invite-client.js, para que esta llamada automática al alta del portal
+//     se autentique correctamente (ver ese archivo para el motivo).
 //
 // Mientras falte cualquiera de estas, la función no rompe nada: se limita a
 // no hacer la parte que dependa de lo que falte.
@@ -189,9 +192,16 @@ exports.handler = async function (event) {
     if (clientId) {
       try {
         const origin = event.headers.origin || 'https://' + event.headers.host;
+        const inviteHeaders = { 'Content-Type': 'application/json' };
+        // invite-client.js exige o bien este secreto (llamada servidor a
+        // servidor, sin sesión de usuario) o bien una sesión founder real —
+        // sin esto, quedaría fuera hasta invitar al cliente a mano.
+        if (process.env.INVITE_CLIENT_INTERNAL_SECRET) {
+          inviteHeaders['X-Internal-Secret'] = process.env.INVITE_CLIENT_INTERNAL_SECRET;
+        }
         await fetch(origin + '/.netlify/functions/invite-client', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: inviteHeaders,
           body: JSON.stringify({ email, client_id: clientId }),
         });
       } catch (err) {
