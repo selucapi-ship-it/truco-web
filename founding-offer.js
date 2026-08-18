@@ -14,7 +14,11 @@
 const FOUNDING_SPOTS_TOTAL = { start: 10, basic: 10, lite: 10, pro: 10 };
 const FOUNDING_SPOTS_LEFT = { start: 10, basic: 10, lite: 10, pro: 10 };
 
-// Precios — no tocar salvo que cambie la estrategia de precios en general.
+// Precios — mismo patrón que los cupos de arriba: estos son solo el valor de
+// arranque/fallback. En cuanto la página carga se piden los precios reales a
+// la tabla tier_config de Supabase (fuente de verdad única desde la migración
+// "monstruo" — antes estaban duplicados a mano aquí y otra vez en
+// portal/dashboard.html). Si Supabase no responde, se queda con estos valores.
 const FOUNDING_PRICES = { start: 69, basic: 149, lite: 229, pro: 449 };
 const STANDARD_PRICES = { start: 89, basic: 169, lite: 279, pro: 549 };
 
@@ -51,4 +55,23 @@ window.onFoundingSpotsUpdated = window.onFoundingSpotsUpdated || [];
       window.onFoundingSpotsUpdated.forEach(fn => { try { fn(); } catch (e) {} });
     })
     .catch(() => {}); // Supabase caído o sin red: se queda con los valores de fallback, no rompe nada.
+})();
+
+(function fetchLiveTierConfig(){
+  const SUPABASE_URL = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
+  fetch(SUPABASE_URL + '/rest/v1/tier_config?select=tier,founder_price_eur,standard_price_eur', {
+    headers: { apikey: SUPABASE_ANON_KEY }
+  })
+    .then(r => r.ok ? r.json() : null)
+    .then(rows => {
+      if (!Array.isArray(rows) || !rows.length) return;
+      rows.forEach(row => {
+        if (!(row.tier in FOUNDING_PRICES)) return;
+        FOUNDING_PRICES[row.tier] = Number(row.founder_price_eur);
+        STANDARD_PRICES[row.tier] = Number(row.standard_price_eur);
+      });
+      window.onFoundingSpotsUpdated.forEach(fn => { try { fn(); } catch (e) {} });
+    })
+    .catch(() => {}); // tabla aún no migrada o Supabase caído: se queda con los valores de fallback, no rompe nada.
 })();

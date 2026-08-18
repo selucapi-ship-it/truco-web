@@ -146,6 +146,25 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .chat-input-row button:hover:not(:disabled){background:var(--blue-light);}
 .chat-input-row button:disabled{opacity:.5;cursor:not-allowed;}
 .chat-hint{color:var(--grey);font-size:.72rem;margin-top:8px;}
+
+.tasks-card p.tasks-intro{color:var(--grey);font-size:.86rem;margin-bottom:16px;line-height:1.6;}
+.task-form{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.task-form input,.task-form textarea{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:9px;padding:11px 14px;color:var(--white);font-family:var(--font-b);font-size:.88rem;outline:none;resize:vertical;transition:border-color .15s;}
+.task-form input:focus,.task-form textarea:focus{border-color:var(--blue);}
+.task-form button{align-self:flex-start;background:var(--blue);border:none;border-radius:9px;color:#fff;padding:11px 20px;font-size:.85rem;font-weight:600;cursor:pointer;transition:background .15s;}
+.task-form button:hover:not(:disabled){background:var(--blue-light);}
+.task-form button:disabled{opacity:.5;cursor:not-allowed;}
+.task-list{display:flex;flex-direction:column;gap:0;}
+.task-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--grey-line);font-size:.87rem;}
+.task-item:last-child{border-bottom:none;}
+.task-item-title{flex:1;color:var(--white);}
+.task-item-date{font-size:.72rem;color:var(--grey);font-family:var(--font-m);white-space:nowrap;}
+.task-status{font-size:.68rem;font-family:var(--font-m);letter-spacing:.05em;text-transform:uppercase;border-radius:20px;padding:4px 11px;white-space:nowrap;}
+.task-status.open{background:var(--blue-dim);color:var(--blue-light);border:1px solid rgba(47,123,255,.3);}
+.task-status.in_progress{background:var(--gold-dim);color:var(--gold-light);border:1px solid rgba(217,168,63,.3);}
+.task-status.blocked{background:rgba(239,68,68,.1);color:#ff8a80;border:1px solid rgba(239,68,68,.3);}
+.task-status.done{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3);}
+.task-status.cancelled{background:var(--bg-card);color:var(--grey);border:1px solid var(--grey-line);}
 </style>
 </head>
 <body>
@@ -217,6 +236,20 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
   </div>
 
   <div class="grid">
+    <div class="card tasks-card" style="grid-column:1/-1;">
+      <div class="card-tag">Peticiones</div>
+      <h2>Solicita un cambio</h2>
+      <p class="tasks-intro">¿Quieres actualizar un precio, un horario, una respuesta de tu asistente? Cuéntanoslo aquí y nos ponemos con ello — nunca hace falta que lo toques tú.</p>
+      <div class="task-form">
+        <input type="text" id="task-title" placeholder="¿Qué necesitas cambiar?" maxlength="200">
+        <textarea id="task-desc" placeholder="Detalles (opcional)" rows="2" maxlength="2000"></textarea>
+        <button id="task-send-btn" onclick="sendTask()">Enviar petición</button>
+      </div>
+      <div id="task-list" class="task-list"><div class="empty-note">Aún no has enviado ninguna petición.</div></div>
+    </div>
+  </div>
+
+  <div class="grid">
     <div class="card referral-card">
       <div class="card-tag">Invita y gana</div>
       <h2>Tu enlace de referido</h2>
@@ -268,15 +301,34 @@ const CATALOG = [
   { key: 'crm', name: 'CRM', price: 950, desde: true },
 ];
 
-// Mismos límites documentados en pago.html/terminos.html/chat-ai.js — solo
-// estas 4 soluciones llevan un tope de uso incluido en la cuota. "label" es
-// la unidad humana que se muestra como titular (no la unidad de facturación).
+// "name"/"unit"/"label" son solo presentación (icono/copy de esta página) y
+// se quedan aquí. "limit"/"rate" son los que se pisan en vivo desde
+// solutions_catalog (fetchLiveUsageLimits, abajo) — antes eran una copia
+// hardcodeada más de los mismos números que también vivían en SQL, fuente
+// de la duplicación que causó bugs de precio/límite desincronizados.
 const USAGE_LIMITS = {
   whatsapp: { name: 'IA para WhatsApp', limit: 1000, rate: 0.02, unit: 'interacciones', label: 'clientes atendidos' },
   'web-ia': { name: 'IA para Web', limit: 1000, rate: 0.02, unit: 'interacciones', label: 'visitantes atendidos' },
   'email-ia': { name: 'IA para Correo', limit: 1000, rate: 0.02, unit: 'interacciones', label: 'correos respondidos' },
   llamadas: { name: 'IA para Llamadas', limit: 150, rate: 0.50, unit: 'llamadas', label: 'llamadas atendidas' },
 };
+
+// Pisa limit/rate con los valores reales de solutions_catalog si la
+// migración "monstruo" ya está aplicada; si la tabla aún no existe o
+// Supabase no responde, se queda con los valores de fallback de arriba —
+// nunca rompe la página.
+async function fetchLiveUsageLimits() {
+  try {
+    const { data, error } = await sb.from('solutions_catalog').select('solution_key,monthly_usage_limit,overage_rate_eur');
+    if (error || !Array.isArray(data)) return;
+    data.forEach(row => {
+      if (USAGE_LIMITS[row.solution_key] && row.monthly_usage_limit != null) {
+        USAGE_LIMITS[row.solution_key].limit = Number(row.monthly_usage_limit);
+        USAGE_LIMITS[row.solution_key].rate = Number(row.overage_rate_eur);
+      }
+    });
+  } catch (e) {}
+}
 
 const USAGE_ICONS = {
   whatsapp: '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3C7.03 3 3 6.58 3 11c0 2.08.9 3.97 2.38 5.4L4.5 21l4.86-1.5C10.4 19.8 11.18 20 12 20c4.97 0 9-3.58 9-8s-4.03-9-9-9Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>',
@@ -360,10 +412,49 @@ async function loadClient() {
     : '<div class="empty-note">Ya tienes contratado todo nuestro catálogo. 🎉</div>';
 
   loadAuditButton();
-  loadUsage(owned);
+  fetchLiveUsageLimits().then(() => loadUsage(owned));
   loadStage(client.implementation_stage);
   loadReferral(client);
   loadFounderBadge(client);
+  loadTasks();
+}
+
+const TASK_STATUS_LABELS = { open: 'Recibida', in_progress: 'En marcha', blocked: 'Bloqueada', done: 'Hecha', cancelled: 'Cancelada' };
+
+async function loadTasks() {
+  const list = document.getElementById('task-list');
+  const { data, error } = await sb.from('tasks').select('*').order('created_at', { ascending: false });
+  if (error || !data || !data.length) {
+    list.innerHTML = '<div class="empty-note">Aún no has enviado ninguna petición.</div>';
+    return;
+  }
+  list.innerHTML = data.map(t => {
+    const date = new Date(t.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+    const status = TASK_STATUS_LABELS[t.status] || t.status;
+    return `<div class="task-item">
+      <div class="task-item-title">${escapeHtml(t.title)}</div>
+      <span class="task-status ${escapeHtml(t.status)}">${escapeHtml(status)}</span>
+      <span class="task-item-date">${escapeHtml(date)}</span>
+    </div>`;
+  }).join('');
+}
+
+async function sendTask() {
+  const titleInput = document.getElementById('task-title');
+  const descInput = document.getElementById('task-desc');
+  const btn = document.getElementById('task-send-btn');
+  const title = titleInput.value.trim();
+  if (!title) { titleInput.focus(); return; }
+  btn.disabled = true;
+  const { error } = await sb.rpc('create_client_task', { p_title: title, p_description: descInput.value.trim() || null });
+  btn.disabled = false;
+  if (error) {
+    alert('No hemos podido enviar tu petición. Escríbenos directamente si el problema continúa.');
+    return;
+  }
+  titleInput.value = '';
+  descInput.value = '';
+  loadTasks();
 }
 
 function loadFounderBadge(client) {

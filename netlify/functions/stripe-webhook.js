@@ -115,6 +115,10 @@ exports.handler = async function (event) {
           p_gift_period_days: shape.gift_period_days,
           p_solutions: solutions.length ? solutions : null,
           p_is_founder: isFounding,
+          p_stripe_session_id: session.id || null,
+          p_stripe_payment_intent_id: session.payment_intent || null,
+          p_stripe_customer_id: session.customer || null,
+          p_amount_total_cents: typeof session.amount_total === 'number' ? session.amount_total : null,
         }),
       });
       if (resp.ok) {

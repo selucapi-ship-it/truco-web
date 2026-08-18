@@ -11,6 +11,13 @@ alter table clients add column if not exists is_founder boolean not null default
 -- netlify/functions/stripe-webhook.js). Una vez marcado fundador, una
 -- renovación NO founder no debe desmarcarlo — por eso usa coalesce contra el
 -- valor ya guardado en vez de sobreescribir siempre con el nuevo valor.
+-- "create or replace" NO sustituye una función existente si la lista de
+-- parámetros no coincide exactamente (Postgres las trata como sobrecargas
+-- distintas) — sin este drop explícito de la firma antigua (sin
+-- p_is_founder), quedarían dos confirm_client_purchase compitiendo y
+-- cualquier referencia sin argumentos (como el revoke/grant de abajo)
+-- fallaría con "function name is not unique".
+drop function if exists confirm_client_purchase(text, text, text, text, text, int, int, jsonb);
 create or replace function confirm_client_purchase(
   p_email text, p_nombre text default null, p_plan_key text default null,
   p_plan_type text default null, p_arranque_tier text default null,
@@ -43,5 +50,5 @@ begin
   return v_client_id;
 end;
 $$;
-revoke all on function confirm_client_purchase from public, anon, authenticated;
-grant execute on function confirm_client_purchase to service_role;
+revoke all on function confirm_client_purchase(text, text, text, text, text, int, int, jsonb, boolean) from public, anon, authenticated;
+grant execute on function confirm_client_purchase(text, text, text, text, text, int, int, jsonb, boolean) to service_role;

@@ -11,21 +11,44 @@
 <style>
   :root{
     --bg:#16151a; --bg-panel:#201f24; --bg-card:#2b2a30;
-    --blue:#2f7bff; --blue-dim:rgba(47,123,255,.12);
-    --gold:#d9a83f; --green:#22c55e; --red:#ef4444;
+    --blue:#2f7bff; --blue-dim:rgba(47,123,255,.12); --blue-light:#6ea3ff;
+    --gold:#d9a83f; --gold-dim:rgba(217,168,63,.1); --gold-light:#ecc878;
+    --green:#22c55e; --green-dim:rgba(34,197,94,.12); --red:#ef4444;
     --grey:#9a96a0; --grey-line:#3d3b42; --white:#f2f0ea;
+    --shadow-card:0 10px 28px -12px rgba(0,0,0,.5);
     --font-d:'Playfair Display',Georgia,serif;
     --font-b:'DM Sans',sans-serif;
     --font-m:'JetBrains Mono',monospace;
   }
   *{box-sizing:border-box;}
-  body{margin:0;background:var(--bg);color:var(--white);font-family:var(--font-b);min-height:100vh;}
+  body{margin:0;background:radial-gradient(1100px 520px at 15% -10%,rgba(217,168,63,.05),transparent 60%),var(--bg);color:var(--white);font-family:var(--font-b);min-height:100vh;}
   a{color:var(--blue);}
+  ::selection{background:var(--gold-dim);color:var(--gold-light);}
+  ::-webkit-scrollbar{width:10px;height:10px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:var(--grey-line);border-radius:6px;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--grey);}
+
+  /* ── SISTEMA DE TARJETAS (ficha) ── */
+  .card{
+    background:linear-gradient(165deg,var(--bg-panel),var(--bg-panel) 60%,var(--bg-card));
+    border:1px solid var(--grey-line);border-radius:16px;padding:20px 22px;
+    box-shadow:var(--shadow-card);margin-bottom:16px;
+  }
+  .card-tag{
+    font-family:var(--font-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);
+    margin-bottom:14px;display:inline-flex;align-items:center;gap:7px;background:var(--gold-dim);
+    border:1px solid rgba(217,168,63,.22);border-radius:20px;padding:5px 12px 5px 10px;
+  }
+  .card-tag::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+  .card.danger{border-color:rgba(239,68,68,.28);}
+  .card.danger .card-tag{color:var(--red);background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.25);}
+  .card.danger .card-tag::before{background:var(--red);}
 
   /* ── LOGIN ── */
   #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
-  .login-box{width:100%;max-width:340px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;padding:32px;}
-  .login-box .mark{width:44px;height:44px;border:2px solid var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:800;font-size:1.4rem;margin-bottom:16px;}
+  .login-box{width:100%;max-width:340px;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:16px;padding:32px;box-shadow:var(--shadow-card);}
+  .login-box .mark{width:44px;height:44px;border:1.5px solid var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);color:var(--gold);font-weight:800;font-size:1.4rem;margin-bottom:16px;background:linear-gradient(160deg,var(--bg-panel),var(--bg));box-shadow:0 0 0 1px rgba(217,168,63,.12),0 6px 16px -6px rgba(217,168,63,.35);}
   .login-box h1{font-family:var(--font-d);font-size:1.3rem;margin:0 0 4px;}
   .login-box p{color:var(--grey);font-size:.85rem;margin:0 0 20px;}
   .login-box input{width:100%;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:11px 13px;color:var(--white);font-family:var(--font-b);font-size:.9rem;margin-bottom:10px;outline:none;}
@@ -37,35 +60,49 @@
 
   /* ── APP SHELL ── */
   #app-screen{display:none;}
-  .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid var(--grey-line);background:var(--bg-panel);}
-  .topbar-brand{display:flex;align-items:center;gap:10px;}
-  .topbar-brand .mark{width:30px;height:30px;border:1.5px solid var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:800;font-size:1rem;}
-  .topbar-brand b{font-family:var(--font-d);font-size:1.02rem;}
-  .topbar-brand span{font-family:var(--font-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);display:block;}
-  #logout-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 26px;border-bottom:1px solid var(--grey-line);background:rgba(32,31,36,.92);backdrop-filter:blur(14px);position:sticky;top:0;z-index:150;}
+  .topbar-brand{display:flex;align-items:center;gap:11px;}
+  .topbar-brand .mark{width:34px;height:34px;border:1.5px solid var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);color:var(--gold);font-weight:800;font-size:1.05rem;background:linear-gradient(160deg,var(--bg-panel),var(--bg));box-shadow:0 0 0 1px rgba(217,168,63,.12),0 6px 16px -6px rgba(217,168,63,.35);}
+  .topbar-brand b{font-family:var(--font-d);font-size:1.04rem;}
+  .topbar-brand span{font-family:var(--font-m);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--grey);display:block;margin-top:1px;}
+  #logout-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;transition:border-color .15s,color .15s;}
   #logout-btn:hover{border-color:var(--red);color:var(--red);}
 
-  .layout{display:grid;grid-template-columns:1fr 380px;gap:0;min-height:calc(100vh - 63px);}
+  .layout{display:grid;grid-template-columns:1fr 400px;gap:0;min-height:calc(100vh - 63px);}
   @media(max-width:900px){.layout{grid-template-columns:1fr;}}
 
   /* ── LIST PANEL ── */
   .list-panel{padding:20px 24px;border-right:1px solid var(--grey-line);}
   .list-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;}
-  .list-head h2{font-family:var(--font-d);font-size:1.15rem;margin:0;}
-  #search{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 12px;color:var(--white);font-size:.85rem;width:220px;outline:none;}
-  #search:focus{border-color:var(--blue);}
-  .table-wrap{overflow-x:auto;}
+  .list-head h2{font-family:var(--font-d);font-size:1.3rem;margin:0;letter-spacing:-.01em;}
+  #search{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 12px;color:var(--white);font-size:.85rem;width:220px;outline:none;transition:border-color .15s,box-shadow .15s;}
+  #search:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-dim);}
+
+  /* ── FILTROS ── */
+  .filters-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+  .filters-bar select{background:var(--bg-card);border:1px solid var(--grey-line);color:var(--white);font-family:var(--font-m);font-size:.72rem;padding:7px 9px;border-radius:7px;outline:none;cursor:pointer;}
+  .filters-bar select:focus{border-color:var(--blue);}
+  #filters-clear{background:none;border:1px solid var(--grey-line);color:var(--grey);font-size:.72rem;padding:7px 11px;border-radius:7px;cursor:pointer;}
+  #filters-clear:hover{border-color:var(--red);color:var(--red);}
+
+  .table-wrap{overflow-x:auto;border:1px solid var(--grey-line);border-radius:14px;box-shadow:var(--shadow-card);}
   table{width:100%;min-width:640px;border-collapse:collapse;font-size:.82rem;}
-  th{text-align:left;color:var(--grey);font-family:var(--font-m);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;padding:8px 10px;border-bottom:1px solid var(--grey-line);}
-  td{padding:11px 10px;border-bottom:1px solid var(--grey-line);}
-  tbody tr{cursor:pointer;transition:background .15s;}
-  tbody tr:hover{background:var(--bg-panel);}
-  tbody tr.active{background:var(--blue-dim);}
-  .status-badge{font-family:var(--font-m);font-size:.62rem;padding:3px 9px;border-radius:12px;text-transform:uppercase;letter-spacing:.03em;}
-  .status-nuevo{background:rgba(47,123,255,.15);color:var(--blue);}
-  .status-contactado{background:rgba(217,168,63,.15);color:var(--gold);}
-  .status-cliente{background:rgba(34,197,94,.15);color:var(--green);}
-  .status-descartado{background:rgba(141,151,166,.15);color:var(--grey);}
+  thead tr{background:var(--bg-panel);}
+  th{text-align:left;color:var(--grey);font-family:var(--font-m);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;padding:11px 12px;border-bottom:1px solid var(--grey-line);}
+  td{padding:12px;border-bottom:1px solid var(--grey-line);}
+  tbody tr{cursor:pointer;transition:background .15s;background:var(--bg-panel);}
+  tbody tr:nth-child(even){background:#231f27;}
+  tbody tr:hover{background:var(--blue-dim);}
+  tbody tr.active{background:var(--blue-dim);box-shadow:inset 3px 0 0 var(--blue);}
+  tbody tr:last-child td{border-bottom:none;}
+  .client-name-cell{display:flex;align-items:center;gap:10px;}
+  .client-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(160deg,var(--gold-dim),var(--bg-card));border:1px solid rgba(217,168,63,.25);color:var(--gold-light);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:.72rem;font-weight:700;flex-shrink:0;}
+  .status-badge{font-family:var(--font-m);font-size:.6rem;padding:3px 9px;border-radius:12px;text-transform:uppercase;letter-spacing:.04em;border:1px solid transparent;}
+  .status-nuevo{background:rgba(47,123,255,.15);color:var(--blue-light);border-color:rgba(47,123,255,.25);}
+  .status-contactado{background:var(--gold-dim);color:var(--gold-light);border-color:rgba(217,168,63,.25);}
+  .status-cliente{background:var(--green-dim);color:var(--green);border-color:rgba(34,197,94,.25);}
+  .status-descartado{background:rgba(141,151,166,.15);color:var(--grey);border-color:var(--grey-line);}
+  .status-baja{background:rgba(239,68,68,.12);color:var(--red);border-color:rgba(239,68,68,.25);}
   #empty-state, #loading-state{color:var(--grey);font-size:.85rem;padding:20px 0;}
 
   .anon-section{margin-top:28px;}
@@ -76,22 +113,30 @@
   .anon-item .del-btn:hover{border-color:var(--red);color:var(--red);}
 
   /* ── STATS BAR ── */
-  .stats-bar{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
-  .stat-card{flex:1;min-width:110px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:10px;padding:12px 14px;}
-  .stat-card .n{font-family:var(--font-d);font-size:1.4rem;font-weight:800;line-height:1;}
-  .stat-card .l{font-family:var(--font-m);font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;color:var(--grey);margin-top:4px;}
-  #export-csv-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 13px;border-radius:8px;font-size:.78rem;cursor:pointer;white-space:nowrap;}
-  #export-csv-btn:hover{border-color:var(--blue);color:var(--blue);}
+  .stats-bar{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+  .stat-card{position:relative;flex:1;min-width:110px;background:linear-gradient(165deg,var(--bg-card),var(--bg-panel));border:1px solid var(--grey-line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow-card);overflow:hidden;}
+  .stat-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),var(--blue));opacity:.7;}
+  .stat-card .n{font-family:var(--font-d);font-size:1.55rem;font-weight:800;line-height:1;color:var(--white);}
+  .stat-card .l{font-family:var(--font-m);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);margin-top:6px;}
+  #export-csv-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 13px;border-radius:8px;font-size:.78rem;cursor:pointer;white-space:nowrap;transition:border-color .15s,color .15s;}
+  #export-csv-btn:hover{border-color:var(--blue);color:var(--blue-light);}
 
   /* ── FICHA PANEL ── */
-  .ficha-panel{padding:20px 24px;}
+  .ficha-panel{padding:20px 22px;}
   #ficha-empty{color:var(--grey);font-size:.85rem;text-align:center;margin-top:60px;}
-  .ficha-name{font-family:var(--font-d);font-size:1.3rem;margin:0 0 4px;}
-  .ficha-negocio{color:var(--grey);font-size:.85rem;margin-bottom:16px;}
-  .ficha-row{display:flex;justify-content:space-between;font-size:.82rem;padding:8px 0;border-bottom:1px solid var(--grey-line);}
+  .ficha-header{margin-bottom:18px;}
+  .ficha-name{font-family:var(--font-d);font-size:1.45rem;margin:0 0 6px;letter-spacing:-.01em;}
+  .ficha-badges{display:flex;flex-wrap:wrap;gap:0;}
+  .ficha-negocio{color:var(--grey);font-size:.85rem;margin-bottom:14px;}
+  .ficha-row{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;padding:9px 0;border-bottom:1px solid var(--grey-line);}
+  .ficha-row:last-of-type{border-bottom:none;}
   .ficha-row span:first-child{color:var(--grey);}
+  .card-action-btn{display:block;width:100%;margin-top:12px;padding:10px;border-radius:9px;font-size:.8rem;font-weight:600;cursor:pointer;text-align:center;transition:background .15s,border-color .15s;}
+  .card-action-btn.blue{background:none;border:1px solid var(--blue);color:var(--blue-light);}
+  .card-action-btn.blue:hover{background:var(--blue-dim);}
   select#status-select,select#stage-select{background:var(--bg-card);border:1px solid var(--grey-line);color:var(--white);font-family:var(--font-m);font-size:.75rem;padding:5px 8px;border-radius:6px;}
   .churn-risk-badge{display:inline-block;background:rgba(239,68,68,.12);border:1px solid var(--red);color:var(--red);font-size:.7rem;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:8px;}
+  .renewal-badge{display:inline-block;background:rgba(217,168,63,.14);border:1px solid var(--gold);color:var(--gold);font-size:.7rem;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:8px;margin-left:6px;}
   .timeline-title{font-family:var(--font-m);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin:22px 0 10px;}
   .tl-item{border-left:2px solid var(--grey-line);padding:2px 0 14px 14px;margin-left:4px;position:relative;}
   .tl-item::before{content:'';position:absolute;left:-5px;top:4px;width:8px;height:8px;border-radius:50%;background:var(--blue);}
@@ -115,12 +160,84 @@
   .add-note input:focus{border-color:var(--blue);}
   .add-note button{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:0 16px;font-size:.8rem;font-weight:600;cursor:pointer;}
 
-  /* ── DELETE ── */
-  #delete-client-btn{
-    width:100%;margin-top:26px;background:none;border:1px solid var(--red);color:var(--red);
-    padding:10px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;
+  /* ── DAR DE BAJA / REACTIVAR / RGPD (zona de gestión) ── */
+  #deactivate-client-btn,#reactivate-client-btn,#rgpd-btn{
+    width:100%;background:none;padding:10px;border-radius:9px;font-size:.8rem;font-weight:600;
+    cursor:pointer;transition:background .15s;margin-top:0;
   }
-  #delete-client-btn:hover{background:rgba(239,68,68,.1);}
+  #deactivate-client-btn{border:1px solid var(--red);color:var(--red);}
+  #deactivate-client-btn:hover{background:rgba(239,68,68,.1);}
+  #reactivate-client-btn{border:1px solid var(--green);color:var(--green);}
+  #reactivate-client-btn:hover{background:rgba(34,197,94,.1);}
+  #rgpd-btn{border:1px solid var(--grey-line);color:var(--grey);}
+  #rgpd-btn:hover{border-color:var(--gold);color:var(--gold-light);}
+  .card.danger > button + button{margin-top:10px;}
+
+  /* ── TAREAS / AUTOMATIZACIONES (ficha) ── */
+  .row-item{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--grey-line);font-size:.8rem;}
+  .row-item:last-child{border-bottom:none;}
+  .row-item .rt-title{flex:1;color:var(--white);}
+  .row-item select{background:var(--bg-card);border:1px solid var(--grey-line);color:var(--white);font-family:var(--font-m);font-size:.68rem;padding:4px 7px;border-radius:6px;}
+  .row-item .rt-sol{color:var(--grey);font-size:.72rem;font-family:var(--font-m);min-width:78px;}
+  .add-task{display:flex;gap:8px;margin-top:8px;}
+  .add-task input{flex:1;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:8px 10px;color:var(--white);font-size:.8rem;outline:none;}
+  .add-task input:focus{border-color:var(--blue);}
+  .add-task button{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:0 14px;font-size:.78rem;font-weight:600;cursor:pointer;}
+  .empty-mini{color:var(--grey);font-size:.78rem;padding:6px 0;}
+
+  /* ── EQUIPO (overlay) ── */
+  #team-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
+  #team-btn:hover{border-color:var(--gold);color:var(--gold);}
+  #team-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;padding:20px;}
+  .team-box{width:100%;max-width:460px;max-height:80vh;overflow-y:auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:16px;padding:26px;box-shadow:var(--shadow-card);}
+  .team-box h2{font-family:var(--font-d);font-size:1.2rem;margin:0 0 6px;}
+  .team-box p{color:var(--grey);font-size:.82rem;margin:0 0 18px;line-height:1.5;}
+  .team-close{float:right;background:none;border:none;color:var(--grey);font-size:1.1rem;cursor:pointer;}
+  .add-staff{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--grey-line);}
+  .add-staff input,.add-staff select{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.84rem;outline:none;}
+  .add-staff button{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:9px;font-size:.82rem;font-weight:600;cursor:pointer;}
+
+  /* ── ACCESOS (ficha, founder-only) ── */
+  .add-access{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+  .add-access input,.add-access select{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.84rem;outline:none;}
+  .add-access button{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:9px;font-size:.82rem;font-weight:600;cursor:pointer;}
+  .del-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);border-radius:6px;padding:3px 9px;font-size:.7rem;cursor:pointer;flex-shrink:0;}
+  .del-btn:hover{border-color:var(--red);color:var(--red);}
+
+  /* ── ECONÓMICO (ficha) ── */
+  .econ-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--grey-line);font-size:.8rem;}
+  .econ-row:last-child{border-bottom:none;}
+  .econ-row .e-name{color:var(--white);}
+  .econ-row .e-meta{color:var(--grey);font-size:.72rem;font-family:var(--font-m);}
+  .econ-row .e-amount{font-family:var(--font-m);font-size:.78rem;color:var(--white);white-space:nowrap;}
+  .econ-status{font-family:var(--font-m);font-size:.6rem;text-transform:uppercase;padding:2px 8px;border-radius:10px;letter-spacing:.03em;}
+  .econ-status.completed{background:rgba(34,197,94,.15);color:var(--green);}
+  .econ-status.refunded,.econ-status.partially_refunded,.econ-status.disputed,.econ-status.failed{background:rgba(239,68,68,.12);color:var(--red);}
+  .econ-highlight{background:linear-gradient(90deg,rgba(217,168,63,.1),transparent 85%);border-radius:8px;padding:10px 12px;margin:8px -12px;font-size:.82rem;}
+  .econ-highlight b{color:var(--gold);}
+  .econ-overage{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:9px 11px;margin-top:8px;font-size:.78rem;color:#ff8a80;line-height:1.5;}
+  .econ-overage b{color:#fff;}
+
+  /* ── ESTADÍSTICAS (overlay, founder-only) ── */
+  #stats-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
+  #stats-btn:hover{border-color:var(--gold);color:var(--gold);}
+  #stats-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+  .stats-box{width:100%;max-width:920px;margin:0 auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:18px;padding:30px 32px;box-shadow:var(--shadow-card);}
+  .stats-box h2{font-family:var(--font-d);font-size:1.5rem;margin:0 0 18px;letter-spacing:-.01em;}
+  .stats-close{float:right;background:none;border:1px solid var(--grey-line);border-radius:8px;width:32px;height:32px;color:var(--grey);font-size:1rem;cursor:pointer;transition:border-color .15s,color .15s;}
+  .stats-close:hover{border-color:var(--red);color:var(--red);}
+  .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px;}
+  @media(max-width:700px){.stats-grid{grid-template-columns:1fr;}}
+  .stats-card{position:relative;background:linear-gradient(165deg,var(--bg-card),var(--bg-panel));border:1px solid var(--grey-line);border-radius:14px;padding:20px;box-shadow:var(--shadow-card);overflow:hidden;}
+  .stats-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),var(--blue));opacity:.6;}
+  .stats-card h3{font-family:var(--font-m);font-size:.66rem;letter-spacing:.09em;text-transform:uppercase;color:var(--gold-light);margin:0 0 16px;}
+  .stats-card.wide{grid-column:1/-1;}
+  .stats-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;font-size:.72rem;color:var(--grey);}
+  .stats-legend span{display:inline-flex;align-items:center;gap:5px;}
+  .stats-legend i{width:9px;height:9px;border-radius:2px;display:inline-block;}
+  .stats-table{width:100%;border-collapse:collapse;font-size:.78rem;}
+  .stats-table td{padding:7px 4px;border-bottom:1px solid var(--grey-line);}
+  .stats-table td:last-child{text-align:right;color:var(--grey);font-family:var(--font-m);font-size:.72rem;}
 </style>
 </head>
 <body>
@@ -144,8 +261,62 @@
       <div class="mark">T</div>
       <div><b>TRUCO<span style="color:var(--blue);">technology</span></b><span>Panel CRM</span></div>
     </div>
-    <button id="logout-btn" onclick="doLogout()">Cerrar sesión</button>
+    <div>
+      <button id="stats-btn" onclick="openStatsOverlay()" style="display:none;">Estadísticas</button>
+      <button id="team-btn" onclick="openTeamOverlay()" style="display:none;">Equipo</button>
+      <button id="logout-btn" onclick="doLogout()">Cerrar sesión</button>
+    </div>
   </div>
+
+  <div id="stats-overlay">
+    <div class="stats-box">
+      <button class="stats-close" onclick="closeStatsOverlay()">✕</button>
+      <h2>Estadísticas del negocio</h2>
+      <div class="stats-bar" id="stats-summary-bar"></div>
+      <div class="stats-grid">
+        <div class="stats-card">
+          <h3>Altas por mes</h3>
+          <div id="chart-altas"></div>
+        </div>
+        <div class="stats-card">
+          <h3>Ingresos por mes</h3>
+          <div id="chart-ingresos"></div>
+        </div>
+        <div class="stats-card">
+          <h3>Clientes por status</h3>
+          <div id="chart-status"></div>
+        </div>
+        <div class="stats-card">
+          <h3>Clientes por Departamento</h3>
+          <div id="chart-tier"></div>
+        </div>
+        <div class="stats-card wide">
+          <h3>Próximas renovaciones (30 días)</h3>
+          <table class="stats-table" id="stats-renewals-table"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="team-overlay">
+    <div class="team-box">
+      <button class="team-close" onclick="closeTeamOverlay()">✕</button>
+      <h2>Equipo</h2>
+      <p>Solo el founder tiene acceso de bloque a todos los clientes. Los roles admin/support/readonly ya no dan acceso a ningún dato por sí solos — hay que conceder acceso cliente a cliente desde la sección "Accesos" de cada ficha.</p>
+      <div class="add-staff">
+        <input type="email" id="staff-email" placeholder="Email del nuevo miembro (ya debe tener cuenta)">
+        <select id="staff-role">
+          <option value="admin">Admin</option>
+          <option value="support">Support</option>
+          <option value="readonly">Readonly</option>
+          <option value="founder">Founder</option>
+        </select>
+        <button onclick="addStaff()">Añadir al equipo</button>
+      </div>
+      <div id="staff-list"></div>
+    </div>
+  </div>
+
   <div class="layout">
     <div class="list-panel">
       <div class="stats-bar" id="stats-bar"></div>
@@ -155,6 +326,34 @@
           <input type="text" id="search" placeholder="Buscar por nombre, email, negocio..." oninput="renderClients()">
           <button id="export-csv-btn" onclick="exportCSV()">⬇ CSV</button>
         </div>
+      </div>
+      <div class="filters-bar">
+        <select id="filter-status" onchange="renderClients()">
+          <option value="">Status: todos</option>
+          <option value="nuevo">Nuevo</option>
+          <option value="contactado">Contactado</option>
+          <option value="cliente">Cliente</option>
+          <option value="descartado">Descartado</option>
+          <option value="baja">De baja</option>
+        </select>
+        <select id="filter-sector" onchange="renderClients()">
+          <option value="">Sector: todos</option>
+        </select>
+        <select id="filter-tier" onchange="renderClients()">
+          <option value="">Departamento: todos</option>
+          <option value="start">Start™</option>
+          <option value="basic">Basic™</option>
+          <option value="lite">Lite™</option>
+          <option value="pro">Pro™</option>
+        </select>
+        <select id="filter-sort" onchange="renderClients()">
+          <option value="updated_desc">Orden: última actividad</option>
+          <option value="alta_desc">Fecha de alta (recientes)</option>
+          <option value="alta_asc">Fecha de alta (antiguos)</option>
+          <option value="interacciones_desc">Más interacciones</option>
+          <option value="nombre_asc">Nombre A-Z</option>
+        </select>
+        <button id="filters-clear" onclick="clearFilters()">Limpiar</button>
       </div>
       <div id="loading-state">Cargando...</div>
       <div id="empty-state" style="display:none;">Todavía no hay ningún cliente registrado.</div>
@@ -167,7 +366,7 @@
       </table>
       </div>
 
-      <div class="anon-section">
+      <div class="anon-section" id="anon-section">
         <div class="timeline-title">Sesiones de chat sin identificar</div>
         <div id="anon-list"></div>
       </div>
@@ -176,42 +375,102 @@
     <div class="ficha-panel">
       <div id="ficha-empty">Selecciona un cliente para ver su ficha.</div>
       <div id="ficha-content" style="display:none;">
-        <div class="ficha-name" id="ficha-nombre"></div>
-        <div class="churn-risk-badge" id="churn-risk-badge" style="display:none;">⚠ Riesgo de fuga — encuesta de satisfacción ≤3</div>
-        <div class="ficha-negocio" id="ficha-negocio"></div>
-        <div class="contact-actions" id="contact-actions"></div>
-        <div class="ficha-row"><span>Email</span><span id="ficha-email"></span></div>
-        <div class="ficha-row"><span>Teléfono</span><span id="ficha-telefono"></span></div>
-        <div class="ficha-row"><span>Sector</span><span id="ficha-tipo"></span></div>
-        <div class="ficha-row"><span>NIF/CIF</span><span id="ficha-nif"></span></div>
-        <div class="ficha-row">
-          <span>Status</span>
-          <select id="status-select" onchange="updateStatus()">
-            <option value="nuevo">Nuevo</option>
-            <option value="contactado">Contactado</option>
-            <option value="cliente">Cliente</option>
-            <option value="descartado">Descartado</option>
-          </select>
+        <div class="ficha-header">
+          <div class="ficha-name" id="ficha-nombre"></div>
+          <div class="ficha-badges">
+            <span class="churn-risk-badge" id="churn-risk-badge" style="display:none;">⚠ Riesgo de fuga — encuesta de satisfacción ≤3</span>
+            <span class="renewal-badge" id="renewal-badge" style="display:none;">↻ Renovación próxima</span>
+          </div>
+          <div class="ficha-negocio" id="ficha-negocio"></div>
+          <div class="contact-actions" id="contact-actions"></div>
         </div>
-        <div class="ficha-row">
-          <span>Etapa de implantación</span>
-          <select id="stage-select" onchange="updateStage()">
-            <option value="contratado">Contratado</option>
-            <option value="en_implantacion">En implantación</option>
-            <option value="revision">En revisión</option>
-            <option value="completado">Completado</option>
-          </select>
+
+        <div class="card">
+          <div class="card-tag">Datos de contacto</div>
+          <div class="ficha-row"><span>Email</span><span id="ficha-email"></span></div>
+          <div class="ficha-row"><span>Teléfono</span><span id="ficha-telefono"></span></div>
+          <div class="ficha-row"><span>Sector</span><span id="ficha-tipo"></span></div>
+          <div class="ficha-row"><span>NIF/CIF</span><span id="ficha-nif"></span></div>
         </div>
-        <div class="ficha-row"><span>Cliente desde</span><span id="ficha-desde"></span></div>
-        <div class="ficha-row"><span>Acceso al portal</span><span id="ficha-portal-status"></span></div>
-        <button id="invite-portal-btn" onclick="invitePortal()" style="width:100%;margin-top:10px;background:none;border:1px solid var(--blue);color:var(--blue);padding:9px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;">Invitar al portal</button>
-        <div class="timeline-title">Historial</div>
-        <div class="add-note">
-          <input type="text" id="note-input" placeholder="Añadir nota (ej: llamé, no contestó)...">
-          <button onclick="addManualNote()">Añadir</button>
+
+        <div class="card">
+          <div class="card-tag">Ciclo de vida</div>
+          <div class="ficha-row">
+            <span>Status</span>
+            <select id="status-select" onchange="updateStatus()">
+              <option value="nuevo">Nuevo</option>
+              <option value="contactado">Contactado</option>
+              <option value="cliente">Cliente</option>
+              <option value="descartado">Descartado</option>
+            </select>
+          </div>
+          <div class="ficha-row">
+            <span>Etapa de implantación</span>
+            <select id="stage-select" onchange="updateStage()">
+              <option value="contratado">Contratado</option>
+              <option value="en_implantacion">En implantación</option>
+              <option value="revision">En revisión</option>
+              <option value="completado">Completado</option>
+            </select>
+          </div>
+          <div class="ficha-row"><span>Cliente desde</span><span id="ficha-desde"></span></div>
+          <div class="ficha-row"><span>Fecha de alta</span><span id="ficha-alta"></span></div>
+          <div class="ficha-row"><span>Fecha de baja</span><span id="ficha-baja"></span></div>
+          <div class="ficha-row"><span>Acceso al portal</span><span id="ficha-portal-status"></span></div>
+          <button id="invite-portal-btn" onclick="invitePortal()" class="card-action-btn blue">Invitar al portal</button>
         </div>
-        <div id="ficha-timeline" style="margin-top:14px;"></div>
-        <button id="delete-client-btn" onclick="deleteClient()">Borrar cliente</button>
+
+        <div class="card">
+          <div class="card-tag">Tareas</div>
+          <div id="ficha-tasks"><div class="empty-mini">Cargando…</div></div>
+          <div class="add-task">
+            <input type="text" id="task-title-input" placeholder="Nueva tarea (ej: cambiar horario del bot)">
+            <button onclick="addTask()">Añadir</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-tag">Automatizaciones</div>
+          <div id="ficha-automations"><div class="empty-mini">Sin automatizaciones registradas todavía.</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-tag">Económico</div>
+          <div id="ficha-econ-contratado"><div class="empty-mini">Cargando…</div></div>
+          <div id="ficha-econ-proximo-cobro" class="econ-highlight" style="display:none;"></div>
+          <div id="ficha-econ-overage"></div>
+          <div class="empty-mini" style="margin-top:10px;">Pagos</div>
+          <div id="ficha-econ-pagos"><div class="empty-mini">Cargando…</div></div>
+        </div>
+
+        <div class="card" id="accesos-card" style="display:none;">
+          <div class="card-tag">Accesos</div>
+          <div id="ficha-accesos"><div class="empty-mini">Cargando…</div></div>
+          <div class="add-access" id="add-access-form">
+            <input type="email" id="access-email-input" placeholder="Email del colaborador (ya debe tener cuenta)">
+            <select id="access-permission-select">
+              <option value="view">Ver</option>
+              <option value="edit">Editar</option>
+            </select>
+            <button onclick="grantAccess()">Conceder acceso</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-tag">Historial</div>
+          <div class="add-note">
+            <input type="text" id="note-input" placeholder="Añadir nota (ej: llamé, no contestó)...">
+            <button onclick="addManualNote()">Añadir</button>
+          </div>
+          <div id="ficha-timeline" style="margin-top:14px;"></div>
+        </div>
+
+        <div class="card danger" id="danger-card">
+          <div class="card-tag">Zona de gestión</div>
+          <button id="deactivate-client-btn" onclick="deactivateClient()" style="display:none;">Dar de baja</button>
+          <button id="reactivate-client-btn" onclick="reactivateClient()" style="display:none;">Reactivar cliente</button>
+          <button id="rgpd-btn" onclick="requestRgpdErasure()" style="display:none;">Solicitar borrado RGPD</button>
+        </div>
       </div>
     </div>
   </div>
@@ -228,6 +487,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
 let sb = null;
 let allClients = [];
 let selectedClientId = null;
+let isFounder = false;
 
 function isConfigured() {
   return !SUPABASE_URL.startsWith('REEMPLAZA_') && !SUPABASE_ANON_KEY.startsWith('REEMPLAZA_');
@@ -240,19 +500,107 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   const { data: { session } } = await sb.auth.getSession();
-  if (session) showApp(); else showLogin();
+  if (session) verifyAdminAndShowApp(); else showLogin();
 });
+
+// Comprueba que quien ha iniciado sesión está realmente autorizado (founder
+// o alguien con al menos un cliente asignado) ANTES de enseñar nada del
+// panel. Antes de esto, cualquier cuenta con sesión válida (incluido un
+// cliente del portal) veía la interfaz del CRM, aunque la base de datos ya le
+// recortaba todos los datos y acciones que no le correspondían vía RLS —
+// esto cierra también la puerta de entrada, no solo lo que hay detrás.
+async function verifyAdminAndShowApp() {
+  const { data: isAdminResult, error } = await sb.rpc('is_authorized_staff');
+  if (error || !isAdminResult) {
+    await sb.auth.signOut();
+    showLogin();
+    const errEl = document.getElementById('login-error');
+    errEl.textContent = 'Esta cuenta no tiene acceso al panel interno.';
+    errEl.style.display = 'block';
+    return;
+  }
+  showApp();
+}
 
 function showLogin() {
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('app-screen').style.display = 'none';
 }
 
-function showApp() {
+async function showApp() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app-screen').style.display = 'block';
+  await checkFounderStatus();
+  // Las sesiones de chat anónimas (sin cliente al que atribuirlas) son
+  // founder-exclusivas ahora — un colaborador asignado a clientes concretos
+  // no tiene por qué ver visitantes sin identificar. Ni se pinta la sección
+  // ni se lanza la consulta si no es founder (para un colaborador siempre
+  // volvería vacía por RLS, así que preguntarlo sería trabajo de más).
+  document.getElementById('anon-section').style.display = isFounder ? 'block' : 'none';
+  if (isFounder) loadAnonymousSessions();
   loadClients();
-  loadAnonymousSessions();
+}
+
+async function checkFounderStatus() {
+  const { data: { user } } = await sb.auth.getUser();
+  if (!user) return;
+  const { data } = await sb.from('staff_roles').select('role').eq('user_id', user.id).maybeSingle();
+  isFounder = !!(data && data.role === 'founder');
+  document.getElementById('team-btn').style.display = isFounder ? 'inline-block' : 'none';
+  document.getElementById('stats-btn').style.display = isFounder ? 'inline-block' : 'none';
+}
+
+function openTeamOverlay() {
+  document.getElementById('team-overlay').style.display = 'flex';
+  loadStaffList();
+}
+function closeTeamOverlay() {
+  document.getElementById('team-overlay').style.display = 'none';
+}
+
+function openStatsOverlay() {
+  document.getElementById('stats-overlay').style.display = 'block';
+  loadStats();
+}
+function closeStatsOverlay() {
+  document.getElementById('stats-overlay').style.display = 'none';
+}
+
+async function loadStaffList() {
+  const { data, error } = await sb.from('staff_roles').select('user_id, role, created_at').order('created_at', { ascending: true });
+  const list = document.getElementById('staff-list');
+  if (error || !data || !data.length) { list.innerHTML = '<div class="empty-mini">Sin miembros registrados.</div>'; return; }
+  list.innerHTML = data.map(s => `
+    <div class="row-item">
+      <div class="rt-title" style="font-family:var(--font-m);font-size:.72rem;">${escapeHtml(s.user_id.slice(0, 8))}…</div>
+      <span class="rt-sol">${escapeHtml(s.role)}</span>
+    </div>
+  `).join('');
+}
+
+async function addStaff() {
+  const email = document.getElementById('staff-email').value.trim();
+  const role = document.getElementById('staff-role').value;
+  if (!email) return;
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const lookupResp = await fetch('/.netlify/functions/lookup-staff-user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ email }),
+    });
+    const lookupData = await lookupResp.json();
+    if (!lookupData.ok) {
+      alert('No se encontró ningún usuario con ese email (' + (lookupData.reason || 'error') + '). Debe tener ya una cuenta creada en el sitio.');
+      return;
+    }
+    const { error } = await sb.rpc('add_staff_member', { p_user_id: lookupData.user_id, p_role: role });
+    if (error) { alert('No se pudo añadir: ' + error.message); return; }
+    document.getElementById('staff-email').value = '';
+    loadStaffList();
+  } catch (e) {
+    alert('No se pudo conectar con el servidor.');
+  }
 }
 
 async function doLogin() {
@@ -267,7 +615,7 @@ async function doLogin() {
     errEl.style.display = 'block';
     return;
   }
-  showApp();
+  verifyAdminAndShowApp();
 }
 
 async function doLogout() {
@@ -287,8 +635,30 @@ async function loadClients() {
     return;
   }
   allClients = data;
+  populateSectorFilter();
   renderClients();
   renderStats();
+}
+
+// Rellena el <select> de Sector con los valores "tipo" que de verdad aparecen
+// en los clientes cargados — evita una lista fija que se quede corta o con
+// sectores que nadie usa.
+function populateSectorFilter() {
+  const sel = document.getElementById('filter-sector');
+  const current = sel.value;
+  const sectors = [...new Set(allClients.map(c => c.tipo).filter(Boolean))].sort();
+  sel.innerHTML = '<option value="">Sector: todos</option>' +
+    sectors.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+  if (sectors.includes(current)) sel.value = current;
+}
+
+function clearFilters() {
+  document.getElementById('search').value = '';
+  document.getElementById('filter-status').value = '';
+  document.getElementById('filter-sector').value = '';
+  document.getElementById('filter-tier').value = '';
+  document.getElementById('filter-sort').value = 'updated_desc';
+  renderClients();
 }
 
 function renderStats() {
@@ -326,24 +696,44 @@ function exportCSV() {
 
 function renderClients() {
   const q = document.getElementById('search').value.trim().toLowerCase();
-  const filtered = !q ? allClients : allClients.filter(c =>
+  const fStatus = document.getElementById('filter-status').value;
+  const fSector = document.getElementById('filter-sector').value;
+  const fTier = document.getElementById('filter-tier').value;
+  const fSort = document.getElementById('filter-sort').value;
+
+  let filtered = !q ? allClients.slice() : allClients.filter(c =>
     [c.nombre, c.email, c.negocio, c.telefono, c.tipo].some(v => (v || '').toLowerCase().includes(q))
   );
+  if (fStatus) filtered = filtered.filter(c => c.status === fStatus);
+  if (fSector) filtered = filtered.filter(c => c.tipo === fSector);
+  if (fTier) filtered = filtered.filter(c => c.arranque_tier === fTier);
+
+  const interCount = c => (c.interactions && c.interactions[0] && c.interactions[0].count) || 0;
+  const sorters = {
+    updated_desc: (a, b) => new Date(b.updated_at) - new Date(a.updated_at),
+    alta_desc: (a, b) => new Date(b.contract_started_at || 0) - new Date(a.contract_started_at || 0),
+    alta_asc: (a, b) => new Date(a.contract_started_at || 0) - new Date(b.contract_started_at || 0),
+    interacciones_desc: (a, b) => interCount(b) - interCount(a),
+    nombre_asc: (a, b) => (a.nombre || '').localeCompare(b.nombre || ''),
+  };
+  filtered.sort(sorters[fSort] || sorters.updated_desc);
+
   const tbody = document.getElementById('clients-tbody');
   const table = document.getElementById('clients-table');
   const empty = document.getElementById('empty-state');
   if (!filtered.length) {
     table.style.display = 'none';
     empty.style.display = 'block';
-    empty.textContent = allClients.length ? 'Ningún cliente coincide con la búsqueda.' : 'Todavía no hay ningún cliente registrado.';
+    empty.textContent = allClients.length ? 'Ningún cliente coincide con la búsqueda/filtros.' : 'Todavía no hay ningún cliente registrado.';
     return;
   }
   empty.style.display = 'none';
   table.style.display = 'table';
   tbody.innerHTML = filtered.map(c => {
     const count = (c.interactions && c.interactions[0] && c.interactions[0].count) || 0;
+    const initials = (c.nombre || c.email || '?').trim().slice(0, 2).toUpperCase();
     return `<tr class="${c.id === selectedClientId ? 'active' : ''}" onclick="openFicha('${c.id}')">
-      <td>${escapeHtml(c.nombre || '—')}</td>
+      <td><div class="client-name-cell"><div class="client-avatar">${escapeHtml(initials)}</div>${escapeHtml(c.nombre || '—')}</div></td>
       <td>${escapeHtml(c.negocio || '—')}</td>
       <td>${escapeHtml(c.email || c.telefono || '—')}</td>
       <td>${escapeHtml(c.tipo || '—')}</td>
@@ -367,9 +757,29 @@ async function openFicha(id) {
   document.getElementById('ficha-tipo').textContent = client.tipo || '—';
   document.getElementById('ficha-nif').textContent = client.nif || '—';
   document.getElementById('ficha-desde').textContent = new Date(client.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
-  document.getElementById('status-select').value = client.status;
+  document.getElementById('ficha-alta').textContent = client.contract_started_at
+    ? new Date(client.contract_started_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })
+    : '—';
+  document.getElementById('ficha-baja').textContent = client.baja_at
+    ? new Date(client.baja_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })
+    : '—';
+  // status-select se queda en los 4 valores de siempre (nunca "baja" —
+  // darse de baja es una acción deliberada por botón, no una opción más de
+  // un desplegable de uso rutinario). Si el cliente está de baja, el select
+  // simplemente no tiene ese valor y se deja vacío — la fila "Fecha de baja"
+  // de arriba ya deja claro su estado real.
+  document.getElementById('status-select').value = client.status === 'baja' ? '' : client.status;
   document.getElementById('stage-select').value = client.implementation_stage || 'contratado';
   document.getElementById('churn-risk-badge').style.display = client.churn_risk ? 'inline-block' : 'none';
+
+  const renewalDate = computeRenewalDate(client);
+  const renewalBadge = document.getElementById('renewal-badge');
+  if (renewalDate && client.status === 'cliente' && renewalDate - Date.now() <= 14 * 24 * 60 * 60 * 1000 && renewalDate - Date.now() >= 0) {
+    renewalBadge.textContent = '↻ Renueva el ' + renewalDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+    renewalBadge.style.display = 'inline-block';
+  } else {
+    renewalBadge.style.display = 'none';
+  }
 
   const inviteBtn = document.getElementById('invite-portal-btn');
   const portalStatus = document.getElementById('ficha-portal-status');
@@ -395,7 +805,222 @@ async function openFicha(id) {
   ].join('');
   document.getElementById('contact-actions').innerHTML = contactHtml;
 
+  // Botones/secciones exclusivos del founder — un colaborador con acceso
+  // 'edit' a este cliente puede gestionar tareas/automatizaciones/status,
+  // pero nunca darlo de baja, pedir su borrado RGPD, ni ver/tocar quién más
+  // tiene acceso a él. Se reaplica en cada apertura de ficha (no solo una
+  // vez al cargar la app) para no depender de que checkFounderStatus() ya
+  // haya terminado en el primer render.
+  document.getElementById('danger-card').style.display = isFounder ? 'block' : 'none';
+  document.getElementById('deactivate-client-btn').style.display = isFounder && client.status !== 'baja' ? 'block' : 'none';
+  document.getElementById('reactivate-client-btn').style.display = isFounder && client.status === 'baja' ? 'block' : 'none';
+  document.getElementById('rgpd-btn').style.display = isFounder ? 'block' : 'none';
+  document.getElementById('accesos-card').style.display = isFounder ? 'block' : 'none';
+  if (isFounder) loadFichaAccess(id);
+
   await reloadTimeline(id);
+  await loadFichaTasks(id);
+  await loadFichaAutomations(id);
+  await loadFichaEconomics(id);
+}
+
+// contract_started_at + permanencia_meses + gift_period_days — misma fórmula
+// que ya usa clients_due_for_renewal() en SQL, calculada aquí en cliente
+// porque ya se tienen todos los campos cargados, sin necesitar una llamada
+// más al servidor solo para una ficha.
+function computeRenewalDate(client) {
+  if (!client.contract_started_at) return null;
+  const d = new Date(client.contract_started_at);
+  if (client.permanencia_meses) d.setMonth(d.getMonth() + client.permanencia_meses);
+  if (client.gift_period_days) d.setDate(d.getDate() + client.gift_period_days);
+  return d;
+}
+
+async function loadFichaAccess(clientId) {
+  const { data, error } = await sb.from('staff_client_access').select('user_id, permission, granted_at').eq('client_id', clientId).order('granted_at', { ascending: true });
+  const wrap = document.getElementById('ficha-accesos');
+  if (error || !data || !data.length) { wrap.innerHTML = '<div class="empty-mini">Nadie más tiene acceso a este cliente.</div>'; return; }
+  wrap.innerHTML = data.map(a => `
+    <div class="row-item">
+      <div class="rt-title" style="font-family:var(--font-m);font-size:.72rem;">${escapeHtml(a.user_id.slice(0, 8))}…</div>
+      <span class="rt-sol">${escapeHtml(a.permission)}</span>
+      <button class="del-btn" onclick="revokeAccess('${clientId}','${a.user_id}')">Quitar</button>
+    </div>
+  `).join('');
+}
+
+async function grantAccess() {
+  if (!selectedClientId) return;
+  const email = document.getElementById('access-email-input').value.trim();
+  const permission = document.getElementById('access-permission-select').value;
+  if (!email) return;
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const lookupResp = await fetch('/.netlify/functions/lookup-staff-user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ email }),
+    });
+    const lookupData = await lookupResp.json();
+    if (!lookupData.ok) {
+      alert('No se encontró ningún usuario con ese email (' + (lookupData.reason || 'error') + '). Debe tener ya una cuenta creada en el sitio.');
+      return;
+    }
+    const { error } = await sb.rpc('grant_client_access', { p_user_id: lookupData.user_id, p_client_id: selectedClientId, p_permission: permission });
+    if (error) { alert('No se pudo conceder el acceso: ' + error.message); return; }
+    document.getElementById('access-email-input').value = '';
+    loadFichaAccess(selectedClientId);
+  } catch (e) {
+    alert('No se pudo conectar con el servidor.');
+  }
+}
+
+async function revokeAccess(clientId, userId) {
+  if (!confirm('¿Quitar el acceso de este colaborador a este cliente?')) return;
+  const { error } = await sb.rpc('revoke_client_access', { p_user_id: userId, p_client_id: clientId });
+  if (error) { alert('No se pudo quitar el acceso: ' + error.message); return; }
+  loadFichaAccess(clientId);
+}
+
+async function loadFichaTasks(clientId) {
+  const { data, error } = await sb.from('tasks').select('*').eq('client_id', clientId).order('created_at', { ascending: false });
+  const wrap = document.getElementById('ficha-tasks');
+  if (error || !data || !data.length) { wrap.innerHTML = '<div class="empty-mini">Sin tareas todavía.</div>'; return; }
+  const statuses = ['open', 'in_progress', 'blocked', 'done', 'cancelled'];
+  wrap.innerHTML = data.map(t => `
+    <div class="row-item">
+      <div class="rt-title">${escapeHtml(t.title)}</div>
+      <select onchange="updateTaskStatus('${t.id}', this.value)">
+        ${statuses.map(s => `<option value="${s}" ${s === t.status ? 'selected' : ''}>${s}</option>`).join('')}
+      </select>
+    </div>
+  `).join('');
+}
+
+async function addTask() {
+  if (!selectedClientId) return;
+  const input = document.getElementById('task-title-input');
+  const title = input.value.trim();
+  if (!title) return;
+  const { error } = await sb.from('tasks').insert({ client_id: selectedClientId, title });
+  if (error) { alert('No se pudo crear la tarea.'); return; }
+  input.value = '';
+  loadFichaTasks(selectedClientId);
+}
+
+async function updateTaskStatus(taskId, status) {
+  await sb.from('tasks').update({ status }).eq('id', taskId);
+}
+
+async function loadFichaAutomations(clientId) {
+  const { data, error } = await sb.from('client_automations').select('*').eq('client_id', clientId).order('solution_key');
+  const wrap = document.getElementById('ficha-automations');
+  if (error || !data || !data.length) { wrap.innerHTML = '<div class="empty-mini">Sin automatizaciones registradas todavía.</div>'; return; }
+  const statuses = ['pending', 'live', 'paused', 'error'];
+  wrap.innerHTML = data.map(a => `
+    <div class="row-item">
+      <span class="rt-sol">${escapeHtml(a.solution_key)}</span>
+      <select onchange="updateAutomationStatus('${a.id}', this.value)">
+        ${statuses.map(s => `<option value="${s}" ${s === a.status ? 'selected' : ''}>${s}</option>`).join('')}
+      </select>
+    </div>
+  `).join('');
+}
+
+async function updateAutomationStatus(id, status) {
+  await sb.from('client_automations').update({ status, last_checked_at: new Date().toISOString() }).eq('id', id);
+}
+
+// Se piden una sola vez para todo el panel (precios/límites cambian poco) en
+// vez de volver a leer solutions_catalog cada vez que se abre una ficha.
+let solutionsCatalogCache = null;
+async function getSolutionsCatalog() {
+  if (solutionsCatalogCache) return solutionsCatalogCache;
+  const { data } = await sb.from('solutions_catalog').select('solution_key,name,monthly_usage_limit,overage_rate_eur');
+  solutionsCatalogCache = data || [];
+  return solutionsCatalogCache;
+}
+
+async function loadFichaEconomics(clientId) {
+  const client = allClients.find(c => c.id === clientId);
+  const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString();
+  const [{ data: solutions }, { data: payments }, { data: usage }, catalog] = await Promise.all([
+    sb.from('client_solutions').select('*').eq('client_id', clientId),
+    sb.from('payments').select('*').eq('client_id', clientId).order('created_at', { ascending: false }),
+    sb.from('usage_events').select('solution_key,created_at').eq('client_id', clientId).gte('created_at', startOfMonth),
+    getSolutionsCatalog(),
+  ]);
+
+  const contratadoWrap = document.getElementById('ficha-econ-contratado');
+  if (!solutions || !solutions.length) {
+    contratadoWrap.innerHTML = '<div class="empty-mini">Sin automatizaciones/soluciones registradas.</div>';
+  } else {
+    contratadoWrap.innerHTML = solutions.map(s => `
+      <div class="econ-row">
+        <span class="e-name">${escapeHtml(s.solution_name)}</span>
+        <span class="e-amount">${s.is_free ? 'Incluida' : (s.price_eur != null ? s.price_eur + ' €' : '—')}</span>
+      </div>
+    `).join('');
+  }
+
+  const renewalDate = computeRenewalDate(client);
+  const proximoWrap = document.getElementById('ficha-econ-proximo-cobro');
+  if (renewalDate) {
+    proximoWrap.style.display = 'block';
+    proximoWrap.innerHTML = '<b>Próxima renovación:</b> ' + renewalDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+  } else {
+    proximoWrap.style.display = 'none';
+  }
+
+  const overageWrap = document.getElementById('ficha-econ-overage');
+  const ownedKeys = new Set((solutions || []).map(s => s.solution_key));
+  const usedByKey = {};
+  (usage || []).forEach(u => { usedByKey[u.solution_key] = (usedByKey[u.solution_key] || 0) + 1; });
+  const overageLines = [];
+  catalog.filter(c => c.monthly_usage_limit != null && ownedKeys.has(c.solution_key)).forEach(c => {
+    const used = usedByKey[c.solution_key] || 0;
+    if (used > c.monthly_usage_limit) {
+      const excess = used - c.monthly_usage_limit;
+      const charge = (excess * c.overage_rate_eur).toFixed(2).replace('.', ',');
+      overageLines.push(`<div><b>${escapeHtml(c.name)}</b>: ${used}/${c.monthly_usage_limit} — ${excess} de exceso → <b>${charge} € + IVA</b> extra este mes.</div>`);
+    }
+  });
+  overageWrap.innerHTML = overageLines.length ? '<div class="econ-overage">⚠ ' + overageLines.join('') + '</div>' : '';
+
+  const pagosWrap = document.getElementById('ficha-econ-pagos');
+  if (!payments || !payments.length) {
+    pagosWrap.innerHTML = '<div class="empty-mini">Sin pagos registrados.</div>';
+  } else {
+    pagosWrap.innerHTML = payments.map(p => `
+      <div class="econ-row">
+        <div>
+          <div class="e-name">${(p.amount_total_cents / 100).toFixed(2).replace('.', ',')} €${p.is_founder_price ? ' · fundador' : ''}</div>
+          <div class="e-meta">${new Date(p.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}</div>
+        </div>
+        <span class="econ-status ${escapeHtml(p.status)}">${escapeHtml(p.status)}</span>
+      </div>
+    `).join('');
+  }
+}
+
+async function requestRgpdErasure() {
+  if (!selectedClientId) return;
+  const client = allClients.find(c => c.id === selectedClientId);
+  const nombre = client ? (client.nombre || client.email || 'este cliente') : 'este cliente';
+  if (!confirm('¿Anonimizar los datos personales de ' + nombre + '? Esto borra nombre/email/teléfono/NIF de forma irreversible. Los registros de pago se conservan por obligación legal contable.')) return;
+  const { data: reqData, error: reqError } = await sb
+    .from('data_retention_requests')
+    .insert({ client_id: selectedClientId, requested_email: client ? client.email : null })
+    .select()
+    .single();
+  if (reqError) { alert('No se pudo registrar la solicitud.'); return; }
+  const { error } = await sb.rpc('anonymize_client', { p_client_id: selectedClientId, p_request_id: reqData.id });
+  if (error) { alert('No se pudo anonimizar: ' + error.message); return; }
+  alert('Cliente anonimizado.');
+  selectedClientId = null;
+  document.getElementById('ficha-content').style.display = 'none';
+  document.getElementById('ficha-empty').style.display = 'block';
+  await loadClients();
 }
 
 async function reloadTimeline(id) {
@@ -427,19 +1052,30 @@ async function addManualNote() {
   if (client) client.updated_at = new Date().toISOString();
 }
 
-async function deleteClient() {
+async function deactivateClient() {
   if (!selectedClientId) return;
   const client = allClients.find(c => c.id === selectedClientId);
   const nombre = client ? (client.nombre || client.email || 'este cliente') : 'este cliente';
-  if (!confirm('¿Estás seguro de que quieres borrar a ' + nombre + '? Esta acción no se puede deshacer.')) return;
-  const { error } = await sb.from('clients').delete().eq('id', selectedClientId);
-  if (error) { alert('No se pudo borrar el cliente.'); return; }
-  allClients = allClients.filter(c => c.id !== selectedClientId);
-  selectedClientId = null;
-  document.getElementById('ficha-content').style.display = 'none';
-  document.getElementById('ficha-empty').style.display = 'block';
+  if (!confirm('¿Dar de baja a ' + nombre + '? Pasa a estado "De baja" pero se conservan el 100% de sus datos (podrás reactivarlo si vuelve a contratar o si tiene deuda pendiente que seguir).')) return;
+  const { error } = await sb.rpc('deactivate_client', { p_client_id: selectedClientId });
+  if (error) { alert('No se pudo dar de baja: ' + error.message); return; }
+  if (client) { client.status = 'baja'; client.baja_at = new Date().toISOString(); }
   renderClients();
   renderStats();
+  openFicha(selectedClientId);
+}
+
+async function reactivateClient() {
+  if (!selectedClientId) return;
+  const client = allClients.find(c => c.id === selectedClientId);
+  const nombre = client ? (client.nombre || client.email || 'este cliente') : 'este cliente';
+  if (!confirm('¿Reactivar a ' + nombre + '? Vuelve a status "Cliente" y desaparece su fecha de baja.')) return;
+  const { error } = await sb.rpc('reactivate_client', { p_client_id: selectedClientId });
+  if (error) { alert('No se pudo reactivar: ' + error.message); return; }
+  if (client) { client.status = 'cliente'; client.baja_at = null; }
+  renderClients();
+  renderStats();
+  openFicha(selectedClientId);
 }
 
 async function invitePortal() {
@@ -472,8 +1108,13 @@ async function invitePortal() {
 async function updateStatus() {
   if (!selectedClientId) return;
   const status = document.getElementById('status-select').value;
-  await sb.from('clients').update({ status }).eq('id', selectedClientId);
   const client = allClients.find(c => c.id === selectedClientId);
+  const { error } = await sb.rpc('update_client_status', { p_client_id: selectedClientId, p_status: status });
+  if (error) {
+    alert('No se pudo actualizar el status: ' + error.message);
+    if (client) document.getElementById('status-select').value = client.status;
+    return;
+  }
   if (client) client.status = status;
   renderClients();
 }
@@ -481,8 +1122,13 @@ async function updateStatus() {
 async function updateStage() {
   if (!selectedClientId) return;
   const implementation_stage = document.getElementById('stage-select').value;
-  await sb.from('clients').update({ implementation_stage }).eq('id', selectedClientId);
   const client = allClients.find(c => c.id === selectedClientId);
+  const { error } = await sb.rpc('update_client_stage', { p_client_id: selectedClientId, p_stage: implementation_stage });
+  if (error) {
+    alert('No se pudo actualizar la etapa: ' + error.message);
+    if (client) document.getElementById('stage-select').value = client.implementation_stage || 'contratado';
+    return;
+  }
   if (client) client.implementation_stage = implementation_stage;
 }
 
@@ -514,6 +1160,105 @@ async function deleteAnonInteraction(id) {
   const { error } = await sb.from('interactions').delete().eq('id', id);
   if (error) { alert('No se pudo borrar.'); return; }
   await loadAnonymousSessions();
+}
+
+// founder_dashboard_stats() agrega todo en el servidor (security definer,
+// founder-exclusiva) — aquí solo se pinta el jsonb que devuelve, no se hacen
+// cálculos de negocio en el navegador.
+async function loadStats() {
+  const w = id => document.getElementById(id);
+  const { data, error } = await sb.rpc('founder_dashboard_stats');
+  if (error || !data) {
+    w('stats-summary-bar').innerHTML = '<div class="empty-mini">No se pudieron cargar las estadísticas.</div>';
+    return;
+  }
+
+  const activos = data.por_status.cliente || 0;
+  const ingresosTotales = (data.ingresos_totales_cents / 100).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  w('stats-summary-bar').innerHTML = [
+    { n: data.total_clientes, l: 'Total clientes' },
+    { n: activos, l: 'Activos' },
+    { n: ingresosTotales + ' €', l: 'Ingresos totales' },
+    { n: (data.proximas_renovaciones || []).length, l: 'Renuevan en 30 días' },
+  ].map(s => `<div class="stat-card"><div class="n">${s.n}</div><div class="l">${s.l}</div></div>`).join('');
+
+  const altasData = (data.altas_por_mes || []).map(m => ({ label: m.mes.slice(2), value: m.n }));
+  const bajasTotal = (data.bajas_por_mes || []).reduce((s, m) => s + m.n, 0);
+  w('chart-altas').innerHTML = svgBarChart(altasData, { color: 'var(--green)' }) +
+    (bajasTotal ? `<div class="empty-mini" style="margin-top:6px;">Bajas totales en el histórico: ${bajasTotal}</div>` : '');
+
+  const ingresosData = (data.ingresos_por_mes || []).map(m => ({ label: m.mes.slice(2), value: Math.round(m.total_cents / 100) }));
+  w('chart-ingresos').innerHTML = svgBarChart(ingresosData, { color: 'var(--gold)' });
+
+  const statusLabels = { nuevo: 'Nuevo', contactado: 'Contactado', cliente: 'Cliente', descartado: 'Descartado', baja: 'De baja' };
+  const statusData = Object.entries(data.por_status || {}).map(([k, v]) => ({ label: statusLabels[k] || k, value: v }));
+  w('chart-status').innerHTML = svgDonutChart(statusData);
+
+  const tierLabels = { start: 'Start™', basic: 'Basic™', lite: 'Lite™', pro: 'Pro™' };
+  const tierData = Object.entries(data.por_tier || {}).map(([k, v]) => ({ label: tierLabels[k] || k, value: v }));
+  w('chart-tier').innerHTML = svgDonutChart(tierData);
+
+  const renewals = data.proximas_renovaciones || [];
+  w('stats-renewals-table').innerHTML = renewals.length
+    ? renewals.map(r => `<tr><td>${escapeHtml(r.nombre || '—')}${r.negocio ? ' · ' + escapeHtml(r.negocio) : ''}</td><td>${new Date(r.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}</td></tr>`).join('')
+    : '<tr><td class="empty-mini">Ninguna en los próximos 30 días.</td></tr>';
+}
+
+// Gráfico de barras hecho a mano en SVG — sin librería externa, coherente con
+// el resto del sitio (solo Supabase JS + Google Fonts como dependencias).
+// Relleno con degradado propio (más presencia visual que un color plano).
+let chartIdCounter = 0;
+function svgBarChart(data, opts) {
+  opts = opts || {};
+  const width = opts.width || 260, height = opts.height || 130;
+  const color = opts.color || 'var(--blue)';
+  if (!data.length) return '<div class="empty-mini">Sin datos todavía.</div>';
+  const gradId = 'barGrad' + (chartIdCounter++);
+  const max = Math.max(1, ...data.map(d => d.value));
+  const gap = 8;
+  const barW = Math.max(6, (width / data.length) - gap);
+  const bars = data.map((d, i) => {
+    const h = Math.max(2, Math.round((d.value / max) * (height - 30)));
+    const x = i * (barW + gap);
+    const y = height - h - 22;
+    return `<rect x="${x}" y="${y}" width="${barW}" height="${h}" rx="4" style="fill:url(#${gradId});"></rect>
+      <text x="${x + barW / 2}" y="${height - 7}" text-anchor="middle" font-size="8" fill="var(--grey)" font-family="var(--font-m)">${escapeHtml(d.label)}</text>
+      <text x="${x + barW / 2}" y="${y - 4}" text-anchor="middle" font-size="9.5" fill="var(--white)" font-family="var(--font-m)" font-weight="600">${d.value}</text>`;
+  }).join('');
+  return `<svg viewBox="0 0 ${width} ${height}" width="100%" height="${height}" preserveAspectRatio="xMinYMid meet">
+    <defs><linearGradient id="${gradId}" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" style="stop-color:${color};stop-opacity:.45"></stop>
+      <stop offset="100%" style="stop-color:${color};stop-opacity:1"></stop>
+    </linearGradient></defs>
+    ${bars}
+  </svg>`;
+}
+
+// Donut de verdad (anillo con hueco, no tarta) hecho con stroke-dasharray
+// sobre círculos apilados — mismo criterio, sin librería externa. Número
+// total centrado, igual que un dashboard real.
+function svgDonutChart(data) {
+  const size = 150, r = 52, cx = size / 2, cy = size / 2, circumference = 2 * Math.PI * r;
+  const palette = ['var(--blue)', 'var(--gold)', 'var(--green)', 'var(--red)', '#8b7cf6', '#06b6d4'];
+  const total = data.reduce((s, d) => s + d.value, 0);
+  if (!total) return '<div class="empty-mini">Sin datos todavía.</div>';
+  let offset = 0;
+  const circles = data.map((d, i) => {
+    const frac = d.value / total;
+    const dash = frac * circumference;
+    const seg = `<circle cx="${cx}" cy="${cy}" r="${r}" style="fill:none;stroke:${palette[i % palette.length]};stroke-width:16;stroke-dasharray:${dash.toFixed(2)} ${(circumference - dash).toFixed(2)};stroke-dashoffset:${(-offset).toFixed(2)};" transform="rotate(-90 ${cx} ${cy})"></circle>`;
+    offset += dash;
+    return seg;
+  }).join('');
+  const legend = data.map((d, i) => `<span><i style="background:${palette[i % palette.length]};"></i>${escapeHtml(d.label)} (${d.value})</span>`).join('');
+  return `<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+    <svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
+      ${circles}
+      <text x="${cx}" y="${cy - 2}" text-anchor="middle" font-family="var(--font-d)" font-size="22" font-weight="800" fill="var(--white)">${total}</text>
+      <text x="${cx}" y="${cy + 15}" text-anchor="middle" font-family="var(--font-m)" font-size="8" letter-spacing="1" fill="var(--grey)">TOTAL</text>
+    </svg>
+    <div class="stats-legend">${legend}</div>
+  </div>`;
 }
 
 function escapeHtml(s) {
