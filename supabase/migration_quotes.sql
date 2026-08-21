@@ -40,7 +40,13 @@ create policy "founder all quotes" on quotes for all using (is_founder()) with c
 -- solutions_catalog: precio de venta suelta, distinto del "valor si va dentro
 -- de un Departamento" que ya tiene price_eur. Y de alta 3 soluciones que hoy
 -- se venden en soluciones/*.html pero nunca se dieron de alta en el catálogo.
+--
+-- crm/docs/integraciones no van incluidas en NINGÚN Departamento (se venden
+-- siempre sueltas, con auditoría previa) — así que price_eur no aplica para
+-- ellas. Hace falta permitir que sea nulo (hoy es not null); admin/panel.html
+-- ya está preparado para pintar "—" cuando price_eur es null.
 -- =============================================================================
+alter table solutions_catalog alter column price_eur drop not null;
 alter table solutions_catalog add column if not exists standalone_price_eur numeric;
 
 insert into solutions_catalog (solution_key, name, price_eur, standalone_price_eur, monthly_usage_limit, overage_rate_eur) values
