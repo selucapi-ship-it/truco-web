@@ -281,6 +281,7 @@
   @media(max-width:760px){.quotes-layout{grid-template-columns:1fr;}}
   .quotes-sidebar{border-right:1px solid var(--grey-line);padding:24px 18px;max-height:85vh;overflow-y:auto;}
   .quotes-sidebar h2{font-family:var(--font-d);font-size:1.1rem;margin:0 0 14px;}
+  .quotes-sidebar input{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:8px 10px;color:var(--white);font-size:.78rem;outline:none;}
   .quotes-sidebar button.new{width:100%;background:var(--blue);border:none;border-radius:8px;color:#fff;padding:9px;font-size:.8rem;font-weight:600;cursor:pointer;margin-bottom:14px;}
   .quote-row{padding:10px 8px;border-radius:8px;cursor:pointer;font-size:.78rem;margin-bottom:4px;}
   .quote-row:hover{background:rgba(255,255,255,.04);}
@@ -308,6 +309,10 @@
   .price-row{display:grid;grid-template-columns:1fr 60px 60px;gap:6px;align-items:center;margin-bottom:6px;}
   .price-row span{font-size:.72rem;color:var(--grey);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .price-row input{width:100%;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:6px;padding:5px 6px;color:var(--white);font-size:.72rem;outline:none;}
+  #prices-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
+  #prices-btn:hover{border-color:var(--gold);color:var(--gold);}
+  #prices-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+  #prices-overlay .price-row{grid-template-columns:1fr 90px 90px;}
   .stats-table td:last-child{text-align:right;color:var(--grey);font-family:var(--font-m);font-size:.72rem;}
 </style>
 </head>
@@ -336,6 +341,7 @@
       <button id="stats-btn" onclick="openStatsOverlay()" style="display:none;">Estadísticas</button>
       <button id="truki-btn" onclick="openTrukiOverlay()" style="display:none;">TruKi</button>
       <button id="quotes-btn" onclick="openQuotesOverlay()" style="display:none;">Presupuestos</button>
+      <button id="prices-btn" onclick="openPricesOverlay()" style="display:none;">Precios</button>
       <button id="team-btn" onclick="openTeamOverlay()" style="display:none;">Equipo</button>
       <button id="logout-btn" onclick="doLogout()">Cerrar sesión</button>
     </div>
@@ -418,19 +424,8 @@
       <div class="quotes-sidebar">
         <h2>Presupuestos</h2>
         <button class="new" onclick="nuevoPresupuesto()">+ Nuevo presupuesto</button>
+        <input type="text" id="quotes-search" placeholder="Buscar por número (P0001) o nombre..." oninput="renderQuotesList()" style="width:100%;margin-bottom:10px;">
         <div id="quotes-list"></div>
-        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--grey-line);">
-          <div class="empty-mini" style="margin-bottom:8px;">Precios de Departamentos</div>
-          <p style="color:var(--grey);font-size:.7rem;margin:0 0 10px;">Start™/Basic™/Lite™/Pro™ — se aplican solos en toda la web. Para una oferta puntual (ej. Navidad), baja "Fundador" temporalmente.</p>
-          <div id="tiers-editor"></div>
-          <button class="new" style="margin-top:10px;" onclick="guardarPreciosTiers()">Guardar Departamentos</button>
-        </div>
-        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--grey-line);">
-          <div class="empty-mini" style="margin-bottom:8px;">Precios de tus servicios</div>
-          <p style="color:var(--grey);font-size:.7rem;margin:0 0 10px;">Se aplican solos en toda la web (soluciones, sectores, chat) y en los presupuestos nuevos.</p>
-          <div id="prices-editor"></div>
-          <button class="new" style="margin-top:10px;" onclick="guardarPreciosCatalogo()">Guardar precios</button>
-        </div>
       </div>
       <div class="quotes-main">
         <button class="stats-close" onclick="closeQuotesOverlay()">✕</button>
@@ -474,9 +469,26 @@
             <option value="pagado">Pagado</option>
           </select>
           <button onclick="generarEnlacePago()">Generar enlace de pago</button>
+          <button id="quote-delete-btn" onclick="eliminarPresupuesto()" style="display:none;border-color:var(--red);color:var(--red);">Eliminar</button>
         </div>
         <div id="quote-pago-url" class="empty-mini" style="margin-top:8px;"></div>
       </div>
+    </div>
+  </div>
+
+  <div id="prices-overlay">
+    <div class="truki-box">
+      <button class="stats-close" onclick="closePricesOverlay()">✕</button>
+      <h2>Precios</h2>
+      <p style="color:var(--grey);font-size:.82rem;margin:0 0 18px;">Cambia cualquier precio aquí y se aplica solo en toda la web (páginas de soluciones, sectores, el chat, y los presupuestos nuevos) — sin tocar código. Para una oferta puntual (ej. Navidad), baja el precio "Fundador" de los Departamentos temporalmente.</p>
+
+      <div class="empty-mini" style="margin-bottom:8px;">Departamentos</div>
+      <div id="tiers-editor"></div>
+      <button class="new" style="margin-top:10px;margin-bottom:24px;" onclick="guardarPreciosTiers()">Guardar Departamentos</button>
+
+      <div class="empty-mini" style="margin-bottom:8px;">Todos tus servicios</div>
+      <div id="prices-editor"></div>
+      <button class="new" style="margin-top:10px;" onclick="guardarPreciosCatalogo()">Guardar precios</button>
     </div>
   </div>
 
@@ -746,6 +758,7 @@ async function checkFounderStatus() {
   document.getElementById('truki-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('new-client-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('quotes-btn').style.display = isFounder ? 'inline-block' : 'none';
+  document.getElementById('prices-btn').style.display = isFounder ? 'inline-block' : 'none';
 }
 
 function openTeamOverlay() {
@@ -850,10 +863,20 @@ async function openQuotesOverlay() {
     const precio = s.standalone_price_eur ?? s.price_eur;
     return `<option value="${escapeHtml(s.solution_key)}">${escapeHtml(s.name)}${precio ? ' (' + fmtEurPanel(precio) + ')' : ' (a consultar)'}</option>`;
   }).join('');
-  renderPricesEditor(catalog);
-  await loadTiersEditor();
   await loadQuotesList();
   nuevoPresupuesto();
+}
+
+// ── PRECIOS (apartado propio, independiente de Presupuestos) ───────────────
+async function openPricesOverlay() {
+  document.getElementById('prices-overlay').style.display = 'block';
+  solutionsCatalogCache = null;
+  const catalog = await getSolutionsCatalog();
+  renderPricesEditor(catalog);
+  await loadTiersEditor();
+}
+function closePricesOverlay() {
+  document.getElementById('prices-overlay').style.display = 'none';
 }
 
 async function loadTiersEditor() {
@@ -908,24 +931,36 @@ async function guardarPreciosCatalogo() {
   }
   solutionsCatalogCache = null; // fuerza a releer en la próxima apertura
   alert('Precios guardados — ya se reflejan en toda la web (puede tardar unos segundos en llegar a páginas ya abiertas).');
-  await openQuotesOverlay();
+  await openPricesOverlay();
 }
 function closeQuotesOverlay() {
   document.getElementById('quotes-overlay').style.display = 'none';
 }
 
+function formatQuoteNumero(n) {
+  return 'P' + String(n).padStart(4, '0');
+}
+
 async function loadQuotesList() {
-  const { data, error } = await sb.from('quotes').select('*').order('created_at', { ascending: false });
+  const { data, error } = await sb.from('quotes').select('*').order('numero', { ascending: false });
   allQuotes = error ? [] : (data || []);
   renderQuotesList();
 }
 function renderQuotesList() {
   const list = document.getElementById('quotes-list');
-  if (!allQuotes.length) { list.innerHTML = '<div class="empty-mini">Todavía no hay presupuestos.</div>'; return; }
-  list.innerHTML = allQuotes.map(q => `
-    <div class="quote-row${q.id === editingQuoteId ? ' active' : ''}" onclick="cargarPresupuestoEnFormulario('${q.id}')">
-      <div class="q-name">${escapeHtml(q.negocio || q.nombre_contacto || q.email_contacto || 'Sin nombre')}</div>
-      <div class="q-meta">${escapeHtml(q.estado)} · ${fmtEurPanel(q.total_estimado)}</div>
+  const q = (document.getElementById('quotes-search').value || '').trim().toLowerCase();
+  const filtered = !q ? allQuotes : allQuotes.filter(x => {
+    const numeroTexto = formatQuoteNumero(x.numero).toLowerCase(); // ej. "p0007"
+    const numeroDigitos = String(x.numero); // ej. "7"
+    const qDigitos = q.replace(/^p0*/, ''); // "P0007", "p7", "0007" o "7" -> "7"
+    return numeroTexto.includes(q) || (qDigitos && numeroDigitos === qDigitos) ||
+      [x.negocio, x.nombre_contacto, x.email_contacto].some(v => (v || '').toLowerCase().includes(q));
+  });
+  if (!filtered.length) { list.innerHTML = '<div class="empty-mini">' + (allQuotes.length ? 'Ningún presupuesto coincide.' : 'Todavía no hay presupuestos.') + '</div>'; return; }
+  list.innerHTML = filtered.map(x => `
+    <div class="quote-row${x.id === editingQuoteId ? ' active' : ''}" onclick="cargarPresupuestoEnFormulario('${x.id}')">
+      <div class="q-name">${escapeHtml(formatQuoteNumero(x.numero))} — ${escapeHtml(x.negocio || x.nombre_contacto || x.email_contacto || 'Sin nombre')}</div>
+      <div class="q-meta">${escapeHtml(x.estado)} · ${fmtEurPanel(x.total_estimado)}</div>
     </div>
   `).join('');
 }
@@ -937,6 +972,7 @@ function nuevoPresupuesto() {
   ['q-nombre', 'q-email', 'q-telefono', 'q-negocio', 'q-notas'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('q-estado').value = 'borrador';
   document.getElementById('quote-pago-url').textContent = '';
+  document.getElementById('quote-delete-btn').style.display = 'none';
   renderQuoteLineas();
   renderQuotesList();
 }
@@ -945,7 +981,7 @@ function cargarPresupuestoEnFormulario(id) {
   const q = allQuotes.find(x => x.id === id);
   if (!q) return;
   editingQuoteId = id;
-  document.getElementById('quote-form-title').textContent = 'Editar presupuesto';
+  document.getElementById('quote-form-title').textContent = formatQuoteNumero(q.numero) + ' — Editar presupuesto';
   document.getElementById('q-nombre').value = q.nombre_contacto || '';
   document.getElementById('q-email').value = q.email_contacto || '';
   document.getElementById('q-telefono').value = q.telefono || '';
@@ -953,9 +989,20 @@ function cargarPresupuestoEnFormulario(id) {
   document.getElementById('q-notas').value = q.notas || '';
   document.getElementById('q-estado').value = q.estado || 'borrador';
   document.getElementById('quote-pago-url').textContent = q.stripe_checkout_url ? 'Enlace de pago: ' + q.stripe_checkout_url : '';
+  document.getElementById('quote-delete-btn').style.display = 'inline-block';
   quoteLineas = Array.isArray(q.lineas) ? q.lineas.slice() : [];
   renderQuoteLineas();
   renderQuotesList();
+}
+
+async function eliminarPresupuesto() {
+  if (!editingQuoteId) return;
+  const q = allQuotes.find(x => x.id === editingQuoteId);
+  if (!confirm(`¿Eliminar el presupuesto ${q ? formatQuoteNumero(q.numero) : ''} de forma permanente?`)) return;
+  const { error } = await sb.from('quotes').delete().eq('id', editingQuoteId);
+  if (error) { alert('No se pudo eliminar: ' + error.message); return; }
+  await loadQuotesList();
+  nuevoPresupuesto();
 }
 
 function renderQuoteLineas() {
@@ -965,13 +1012,21 @@ function renderQuoteLineas() {
   } else {
     wrap.innerHTML = quoteLineas.map((l, i) => `
       <div class="quote-line">
-        <span class="ql-desc">${escapeHtml(l.descripcion)}</span>
-        <span class="ql-price">${l.precio ? (l.es_desde ? 'desde ' : '') + fmtEurPanel(l.precio) : 'a consultar'} <button class="del-btn" style="margin-left:8px;" onclick="quitarLineaPresupuesto(${i})">✕</button></span>
+        <span class="ql-desc">${escapeHtml(l.descripcion)}${l.es_desde ? ' <span style="color:var(--grey);font-size:.7rem;">(desde)</span>' : ''}</span>
+        <span class="ql-price" style="display:flex;align-items:center;gap:6px;">
+          <input type="number" value="${l.precio ?? ''}" placeholder="a consultar" style="width:80px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:6px;padding:4px 6px;color:var(--white);font-size:.78rem;" onchange="actualizarPrecioLinea(${i}, this.value)">€
+          <button class="del-btn" onclick="quitarLineaPresupuesto(${i})">✕</button>
+        </span>
       </div>
     `).join('');
   }
   const total = quoteLineas.reduce((s, l) => s + (Number(l.precio) || 0), 0);
   document.getElementById('quote-total').textContent = 'Total: ' + fmtEurPanel(total);
+}
+
+function actualizarPrecioLinea(i, value) {
+  quoteLineas[i].precio = value === '' ? null : Number(value);
+  renderQuoteLineas();
 }
 
 function quitarLineaPresupuesto(i) {
@@ -1055,9 +1110,10 @@ async function descargarPdfPresupuesto() {
     if (!data.ok) { alert('No se pudo generar el PDF (' + (data.reason || 'error') + ').'); return; }
     const bytes = Uint8Array.from(atob(data.pdf_base64), c => c.charCodeAt(0));
     const blob = new Blob([bytes], { type: 'application/pdf' });
+    const q = allQuotes.find(x => x.id === editingQuoteId);
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'presupuesto-truco-' + editingQuoteId.slice(0, 8) + '.pdf';
+    a.download = 'presupuesto-' + (q ? formatQuoteNumero(q.numero) : editingQuoteId.slice(0, 8)) + '.pdf';
     a.click();
     URL.revokeObjectURL(a.href);
   } catch (e) {

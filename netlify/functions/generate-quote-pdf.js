@@ -113,7 +113,9 @@ exports.handler = async function (event) {
     y -= 16;
     page.drawText('Tu Departamento Tecnológico', { x: 40, y, size: 9, font, color: grey });
 
-    page.drawText('PRESUPUESTO', { x: width - 40 - fontBold.widthOfTextAtSize('PRESUPUESTO', 16), y: 780, size: 16, font: fontBold, color: dark });
+    const numeroTexto = 'P' + String(quote.numero).padStart(4, '0');
+    const tituloTexto = 'PRESUPUESTO ' + numeroTexto;
+    page.drawText(tituloTexto, { x: width - 40 - fontBold.widthOfTextAtSize(tituloTexto, 16), y: 780, size: 16, font: fontBold, color: dark });
     const fecha = new Date(quote.created_at || Date.now()).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
     page.drawText(fecha, { x: width - 40 - font.widthOfTextAtSize(fecha, 9), y: 780 - 16, size: 9, font, color: grey });
 
