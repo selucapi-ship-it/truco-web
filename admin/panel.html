@@ -98,6 +98,8 @@
   .client-name-cell{display:flex;align-items:center;gap:10px;}
   .client-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(160deg,var(--gold-dim),var(--bg-card));border:1px solid rgba(217,168,63,.25);color:var(--gold-light);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:.72rem;font-weight:700;flex-shrink:0;}
   .status-badge{font-family:var(--font-m);font-size:.6rem;padding:3px 9px;border-radius:12px;text-transform:uppercase;letter-spacing:.04em;border:1px solid transparent;}
+  .cobro-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--grey-line);}
+  .cobro-dot.activa{background:var(--green);}
   .status-nuevo{background:rgba(47,123,255,.15);color:var(--blue-light);border-color:rgba(47,123,255,.25);}
   .status-contactado{background:var(--gold-dim);color:var(--gold-light);border-color:rgba(217,168,63,.25);}
   .status-cliente{background:var(--green-dim);color:var(--green);border-color:rgba(34,197,94,.25);}
@@ -361,6 +363,14 @@
       <input type="text" id="nc-telefono" placeholder="Teléfono">
       <input type="text" id="nc-negocio" placeholder="Negocio / empresa">
       <input type="text" id="nc-tipo" placeholder="Sector (ej. electricista, restaurante...)">
+      <select id="nc-tier" onchange="renderNewClientSolutions()">
+        <option value="">— Sin departamento (venta suelta) —</option>
+        <option value="start">Start™</option>
+        <option value="basic">Basic™</option>
+        <option value="lite">Lite™</option>
+        <option value="pro">Pro™</option>
+      </select>
+      <p id="nc-tier-hint" style="color:var(--grey);font-size:.74rem;margin:-4px 0 10px;"></p>
       <div class="new-client-solutions" id="nc-solutions"></div>
       <button class="submit" onclick="crearClienteManual()">Dar de alta</button>
     </div>
@@ -427,7 +437,7 @@
       <div class="table-wrap">
       <table id="clients-table" style="display:none;">
         <thead>
-          <tr><th>Nombre</th><th>Negocio</th><th>Contacto</th><th>Sector</th><th>Status</th><th>Interacciones</th></tr>
+          <tr><th>Nombre</th><th>Negocio</th><th>Contacto</th><th>Sector</th><th>Status</th><th>Cobro</th><th>Interacciones</th></tr>
         </thead>
         <tbody id="clients-tbody"></tbody>
       </table>
@@ -508,6 +518,20 @@
           <div id="ficha-econ-overage"></div>
           <div class="empty-mini" style="margin-top:10px;">Pagos</div>
           <div id="ficha-econ-pagos"><div class="empty-mini">Cargando…</div></div>
+        </div>
+
+        <div class="card" id="banking-card" style="display:none;">
+          <div class="card-tag">Domiciliación y cobro</div>
+          <p style="color:var(--grey);font-size:.78rem;margin:0 0 12px;">Para saber de un vistazo si este cliente tiene el pago en orden.</p>
+          <div class="add-access" id="banking-form">
+            <input type="text" id="banking-iban" placeholder="IBAN">
+            <input type="text" id="banking-titular" placeholder="Titular de la cuenta">
+            <label style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--white);">
+              <input type="checkbox" id="banking-activa" style="width:auto;"> Domiciliación activa
+            </label>
+            <button onclick="guardarDomiciliacion()">Guardar</button>
+          </div>
+          <div id="banking-fecha" class="empty-mini" style="margin-top:8px;"></div>
         </div>
 
         <div class="card" id="accesos-card" style="display:none;">
@@ -636,16 +660,47 @@ function closeStatsOverlay() {
 }
 
 // ── NUEVO CLIENTE (alta manual, founder-only) ───────────────────────────────
+// Qué automatizaciones se pueden elegir en cada Departamento — mismo criterio
+// que las páginas departamentos/*.html (mantener sincronizado a mano si
+// cambia la oferta ahí, esto no lee esas páginas). "Sin departamento" muestra
+// el catálogo completo, para ventas sueltas (ej. solo TruKi, solo Firma).
+const TIER_SOLUTIONS = {
+  start: ['whatsapp', 'web-ia', 'email-ia', 'reservas', 'truki'],
+  basic: ['whatsapp', 'email-ia', 'truki'],
+  lite: ['whatsapp', 'web-ia', 'llamadas', 'email-ia', 'reservas', 'firma', 'truki'],
+  pro: ['whatsapp', 'llamadas', 'email-ia', 'firma', 'ciberseguridad', 'automatizaciones']
+};
+const TIER_INFO = {
+  start: { nombre: 'Start™', gratis: 1, max: 2 },
+  basic: { nombre: 'Basic™', gratis: 1, max: 2 },
+  lite: { nombre: 'Lite™', gratis: 2, max: 3 },
+  pro: { nombre: 'Pro™', gratis: 3, max: 6 }
+};
+
 async function openNewClientOverlay() {
   document.getElementById('new-client-overlay').style.display = 'flex';
-  const catalog = await getSolutionsCatalog();
-  document.getElementById('nc-solutions').innerHTML = catalog.map(s => `
-    <label><input type="checkbox" value="${escapeHtml(s.solution_key)}"> ${escapeHtml(s.name)}</label>
-  `).join('');
+  document.getElementById('nc-tier').value = '';
+  await renderNewClientSolutions();
 }
 function closeNewClientOverlay() {
   document.getElementById('new-client-overlay').style.display = 'none';
   ['nc-nombre', 'nc-email', 'nc-telefono', 'nc-negocio', 'nc-tipo'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('nc-tier').value = '';
+}
+
+async function renderNewClientSolutions() {
+  const tier = document.getElementById('nc-tier').value;
+  const catalog = await getSolutionsCatalog();
+  const permitidas = tier ? TIER_SOLUTIONS[tier] : catalog.map(s => s.solution_key);
+  const visibles = catalog.filter(s => permitidas.includes(s.solution_key));
+
+  document.getElementById('nc-tier-hint').textContent = tier
+    ? `${TIER_INFO[tier].gratis} gratis incluida(s), hasta ${TIER_INFO[tier].max} mantenidas en total — el resto que marques se añade a precio de catálogo.`
+    : 'Venta suelta, sin Departamento — se puede marcar cualquier automatización del catálogo.';
+
+  document.getElementById('nc-solutions').innerHTML = visibles.map(s => `
+    <label><input type="checkbox" value="${escapeHtml(s.solution_key)}"> ${escapeHtml(s.name)}</label>
+  `).join('');
 }
 
 async function crearClienteManual() {
@@ -654,13 +709,15 @@ async function crearClienteManual() {
   const telefono = document.getElementById('nc-telefono').value.trim();
   const negocio = document.getElementById('nc-negocio').value.trim();
   const tipo = document.getElementById('nc-tipo').value.trim();
+  const tier = document.getElementById('nc-tier').value;
   const solutions = Array.from(document.querySelectorAll('#nc-solutions input:checked')).map(el => el.value);
   if (!email) { alert('El email es obligatorio.'); return; }
 
   const { data, error } = await sb.rpc('create_client_manual', {
     p_nombre: nombre || null, p_email: email, p_telefono: telefono || null,
     p_negocio: negocio || null, p_tipo: tipo || null,
-    p_solutions: solutions.length ? solutions : null
+    p_solutions: solutions.length ? solutions : null,
+    p_arranque_tier: tier || null
   });
   if (error) { alert('No se pudo dar de alta: ' + error.message); return; }
 
@@ -856,6 +913,7 @@ function renderClients() {
       <td>${escapeHtml(c.email || c.telefono || '—')}</td>
       <td>${escapeHtml(c.tipo || '—')}</td>
       <td><span class="status-badge status-${c.status}">${c.status}</span></td>
+      <td><span class="cobro-dot${c.domiciliacion_activa ? ' activa' : ''}" title="${c.domiciliacion_activa ? 'Domiciliado' : 'Sin domiciliar'}"></span></td>
       <td>${count}</td>
     </tr>`;
   }).join('');
@@ -938,6 +996,16 @@ async function openFicha(id) {
   document.getElementById('rgpd-btn').style.display = isFounder ? 'block' : 'none';
   document.getElementById('accesos-card').style.display = isFounder ? 'block' : 'none';
   if (isFounder) loadFichaAccess(id);
+
+  document.getElementById('banking-card').style.display = isFounder ? 'block' : 'none';
+  if (isFounder) {
+    document.getElementById('banking-iban').value = client.iban || '';
+    document.getElementById('banking-titular').value = client.titular_cuenta || '';
+    document.getElementById('banking-activa').checked = !!client.domiciliacion_activa;
+    document.getElementById('banking-fecha').textContent = client.domiciliacion_activa && client.domiciliacion_fecha
+      ? 'Domiciliado desde ' + new Date(client.domiciliacion_fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })
+      : 'Sin domiciliación activa.';
+  }
 
   await reloadTimeline(id);
   await loadFichaTasks(id);
@@ -1171,6 +1239,19 @@ async function addManualNote() {
   await reloadTimeline(selectedClientId);
   const client = allClients.find(c => c.id === selectedClientId);
   if (client) client.updated_at = new Date().toISOString();
+}
+
+async function guardarDomiciliacion() {
+  if (!selectedClientId) return;
+  const iban = document.getElementById('banking-iban').value.trim();
+  const titular = document.getElementById('banking-titular').value.trim();
+  const activa = document.getElementById('banking-activa').checked;
+  const { error } = await sb.rpc('update_client_banking', {
+    p_client_id: selectedClientId, p_iban: iban, p_titular_cuenta: titular, p_domiciliacion_activa: activa
+  });
+  if (error) { alert('No se pudo guardar: ' + error.message); return; }
+  await loadClients();
+  openFicha(selectedClientId);
 }
 
 async function deactivateClient() {
