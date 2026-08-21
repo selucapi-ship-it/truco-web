@@ -247,7 +247,13 @@ exports.handler = async function (event) {
     // el founder puede invitar a mano desde admin/panel.html.
     if (clientId) {
       try {
-        const origin = event.headers.origin || 'https://' + event.headers.host;
+        // Stripe llama a este webhook servidor a servidor — event.headers.host
+        // no es de fiar aquí (puede ser el subdominio de Netlify, una URL de
+        // despliegue de pruebas, o cambiar según desde dónde se disparó la
+        // llamada) y ese valor es justo el que invite-client.js usaría para
+        // el enlace de activación del correo del cliente. Por eso se llama
+        // siempre al dominio público real, nunca a event.headers.host.
+        const origin = 'https://trucotechnology.com';
         const inviteHeaders = { 'Content-Type': 'application/json' };
         // invite-client.js exige o bien este secreto (llamada servidor a
         // servidor, sin sesión de usuario) o bien una sesión founder real —

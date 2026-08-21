@@ -31,6 +31,8 @@
 // auth_user_id resultante a mano en la ficha del cliente desde admin/panel.html
 // (o directamente en la tabla).
 
+const CANONICAL_SITE_URL = 'https://trucotechnology.com';
+
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
@@ -99,7 +101,13 @@ exports.handler = async function (event) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Falta email o client_id' }) };
   }
 
-  const origin = event.headers.origin || 'https://' + event.headers.host;
+  // El enlace de activación del correo SIEMPRE debe apuntar a la web real,
+  // nunca a la URL desde la que se llamó a esta función — antes se usaba
+  // event.headers.origin/host, que en una llamada servidor a servidor
+  // (stripe-webhook.js) o desde una URL de despliegue de pruebas del panel
+  // deja al cliente con un enlace roto o apuntando a una vista previa que
+  // puede dejar de existir. CANONICAL_SITE_URL siempre es el dominio público.
+  const origin = CANONICAL_SITE_URL;
 
   try {
     const inviteResp = await fetch(`${supabaseUrl}/auth/v1/invite`, {
