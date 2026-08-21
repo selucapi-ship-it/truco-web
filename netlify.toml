@@ -12,3 +12,8 @@
   for = "/*"
   [headers.values]
     X-Frame-Options = "SAMEORIGIN"
+
+[[redirects]]
+  from = "/sectores/clinicas-dentales.html"
+  to = "/sectores/clinicas.html"
+  status = 301
