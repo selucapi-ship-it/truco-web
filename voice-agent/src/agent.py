@@ -4,7 +4,7 @@ import json
 import logging
 import os
 import zoneinfo
-from typing import Annotated
+from typing import Annotated, Literal
 
 import requests
 from dotenv import load_dotenv
@@ -22,6 +22,20 @@ MADRID_TZ = zoneinfo.ZoneInfo("Europe/Madrid")
 BUSINESS_HOURS = (9, 18)  # 9:00 a 18:00
 SLOT_MINUTES = 30
 CALENDAR_ID = os.environ.get("GOOGLE_CALENDAR_ID", "primary")
+
+_DIAS_ES = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
+_MESES_ES = [
+    "enero", "febrero", "marzo", "abril", "mayo", "junio",
+    "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+]
+
+
+def _formatear_fecha_es(dt: datetime.datetime) -> str:
+    """Formatea una fecha en español sin depender del locale del sistema — el
+    contenedor (Debian slim) no trae es_ES instalado, así que strftime con
+    %A/%B saldría en inglés (ej. "Thursday", "August") y el agente lo leería
+    tal cual en voz alta a un cliente que habla español."""
+    return f"{_DIAS_ES[dt.weekday()]} {dt.day} de {_MESES_ES[dt.month - 1]} a las {dt.strftime('%H:%M')}"
 
 
 def _get_calendar_service():
@@ -73,12 +87,21 @@ def _log_crm_interaction(nombre=None, email=None, telefono=None, nota=None):
         logger.exception("Error registrando en el CRM")
 
 
-def _find_free_slots(service, max_slots=2, days_ahead=7, min_lead_minutes=60):
+def _find_free_slots(service, max_slots=2, days_ahead=7, min_lead_minutes=60, earliest=None):
+    """earliest: si se da, no busca antes de ese instante (aware, o naive y se
+    asume Madrid) — así se puede pedir "más tarde" o "la semana que viene" sin
+    que siga devolviendo los mismos huecos de hoy una y otra vez."""
     now = datetime.datetime.now(MADRID_TZ)
-    window_end = now + datetime.timedelta(days=days_ahead)
+    if earliest is not None:
+        if earliest.tzinfo is None:
+            earliest = earliest.replace(tzinfo=MADRID_TZ)
+        search_start = max(earliest, now)
+    else:
+        search_start = now
+    window_end = search_start + datetime.timedelta(days=days_ahead)
     busy = service.freebusy().query(
         body={
-            "timeMin": now.isoformat(),
+            "timeMin": search_start.isoformat(),
             "timeMax": window_end.isoformat(),
             "timeZone": "Europe/Madrid",
             "items": [{"id": CALENDAR_ID}],
@@ -93,9 +116,9 @@ def _find_free_slots(service, max_slots=2, days_ahead=7, min_lead_minutes=60):
         for b in busy_ranges
     ]
 
-    earliest_bookable = now + datetime.timedelta(minutes=min_lead_minutes)
+    earliest_bookable = max(search_start, now + datetime.timedelta(minutes=min_lead_minutes))
     slots = []
-    day_date = now.date()
+    day_date = search_start.date()
     days_checked = 0
 
     while len(slots) < max_slots and days_checked <= days_ahead:
@@ -135,7 +158,7 @@ QUÉ ES: Departamento Tecnológico externalizado para pymes y autónomos en Espa
 AUTOMATIZACIONES INDIVIDUALES (+ IVA, todos los precios ya con la alta e integración incluida — se instalan siempre dentro de un Departamento, nunca sueltas):
 IA para WhatsApp quinientos noventa euros ahora mismo, con la oferta de lanzamiento de dos mil veintiséis; el precio normal es ochocientos noventa euros — responde a clientes en WhatsApp Business las veinticuatro horas, agenda citas y filtra lo urgente; es, con diferencia, la automatización que más se contrata. IA para Web trescientos cincuenta euros con la misma oferta de lanzamiento, precio normal seiscientos cincuenta euros — como este mismo asistente pero integrado en la web del cliente, y agenda la cita directamente en el calendario igual que la versión de WhatsApp. IA para Correo trescientos cincuenta euros también en oferta de lanzamiento, precio normal quinientos noventa euros — clasifica y responde correos automáticamente. IA para Llamadas seiscientos noventa euros ahora mismo, con la oferta de lanzamiento de dos mil veintiséis; el precio normal es ochocientos noventa euros — todo incluido, línea e inteligencia artificial sin coste aparte — un agente de voz natural contesta el teléfono a cualquier hora y agenda la cita directamente en el calendario mientras habla con el cliente; incluye ciento cincuenta llamadas al mes, y el exceso se factura a cincuenta céntimos más IVA por llamada adicional. Reservas online trescientos cincuenta euros — un botón de reserva directa; si el negocio ya tiene WhatsApp, Web o Llamadas, el asistente lo manda en vez de agendar por conversación, y también funciona sola sin ninguna IA, ideal para negocios donde el cliente ya sabe justo a qué viene. Facturación automática, TruKi, tu aliado, quinientos ochenta euros — describes el trabajo por chat y genera la factura o el presupuesto al instante; si se contrata suelta, sin Departamento, tiene veintinueve euros al mes de hosting aparte. Gestión documental desde cuatrocientos euros — contratos y documentos organizados. Ciberseguridad Pyme cuatrocientos cincuenta euros, precio cerrado hasta cinco puestos de trabajo — revisión e instalación de la seguridad básica imprescindible: auditoría inicial, activación de doble factor en las plataformas críticas, gestor de contraseñas seguro, copias de seguridad automáticas en la nube y una instrucción básica de treinta minutos; no incluye responder a un hackeo que ya haya pasado ni auditorías avanzadas, y nunca prometemos protección total. Firma digital quinientos euros, precio cerrado — firmar documentos online con validez legal. Integraciones desde seiscientos euros — conecta herramientas que ya usa el cliente entre sí; como cada caso es distinto, antes de dar precio final se consulta el caso concreto. Los flujos automáticos a medida tienen precio cerrado según la complejidad del flujo — trescientos cincuenta euros para algo simple, seiscientos cincuenta para un flujo de varios pasos, mil doscientos para conectar varias herramientas; en la primera llamada se confirma qué banda encaja, sin sorpresas después. CRM desde novecientos cincuenta euros — seguimiento de clientes y oportunidades; requiere una auditoría inicial obligatoria para cerrar el precio final.
 
-LOS CUATRO DEPARTAMENTOS (doce meses de permanencia en los cuatro, + IVA) — preséntalos siempre destacando primero el Pro, es el producto por excelencia:
+LOS CUATRO DEPARTAMENTOS (doce meses de permanencia en los cuatro, + IVA) — recomienda siempre el Departamento más pequeño que cubra de verdad lo que te cuente el que llama, nunca el más caro por defecto. Un autónomo que trabaja solo (electricista, fontanero, peluquera sola...) casi siempre tiene bastante con Basic, o incluso Start si no quiere web — no lo mandes a Lite ni Pro salvo que él mismo diga que necesita varios canales a la vez, un equipo de varias personas, o herramientas exclusivas de Lite/Pro (CRM, Ciberseguridad, Flujos a medida, Llamadas). Sube de Departamento solo cuando el caso real lo pida, explicando por qué ese concreto y no otro:
 - Start, el punto de entrada: ochenta y nueve euros al mes de precio estándar, con precio de fundador de sesenta y nueve euros al mes para los diez primeros clientes si la oferta sigue activa y quedan plazas. Sin web. Una automatización gratis a elegir entre IA para WhatsApp, IA para tu Web, IA para Correo, Reservas y Agenda, o Facturación automática TruKi. Ojo, Firma Digital no entra en el pool gratis pero sí se puede añadir pagando aparte. IA para Llamadas, Ciberseguridad Pyme y Flujos automáticos a medida no están disponibles en Start de ninguna forma, ni pagando — son exclusivas desde Lite en adelante. Mantiene hasta dos automatizaciones en total.
 - Basic: ciento sesenta y nueve euros al mes de precio estándar, con precio de fundador de ciento cuarenta y nueve euros al mes para los diez primeros clientes si la oferta sigue activa y quedan plazas. Web Profesional que ya incluye de fábrica un chat que responde dudas y agenda citas, igual que en Pro, más una automatización gratis más a elegir entre IA para WhatsApp, IA para Correo, o Facturación automática TruKi — aquí IA para tu Web y Reservas y Agenda no aparecen para elegir porque ya vienen incluidas en la web, sin gastar ningún hueco. Firma Digital se puede añadir pagando aparte; igual que en Start, IA para Llamadas, Ciberseguridad Pyme y Flujos automáticos a medida no están disponibles en Basic, ni pagando. Mantiene hasta dos automatizaciones en total.
 - Lite: precio estándar doscientos setenta y nueve euros al mes, con precio de fundador si la oferta sigue activa y quedan plazas — esto no ha cambiado. Web: la suya reacondicionada, o una Web Profesional nueva si no tiene ninguna, ya no existe la Web Esencial como opción. Más dos automatizaciones gratis a elegir entre siete: IA para WhatsApp, IA para Correo, Reservas y Agenda, Facturación automática TruKi, IA para Llamadas, Firma Digital, o IA para tu Web. IA para Llamadas, ojo, es exclusiva desde Lite en adelante, ya no está disponible en Start ni en Basic, ni pagando aparte. Mantiene hasta tres automatizaciones en total, con una reunión mensual de treinta minutos. El combo más potente para recomendar: WhatsApp, Llamadas y Web juntos cubren todos los canales por los que puede llegar un cliente, contestados por IA las veinticuatro horas.
@@ -187,10 +210,11 @@ REGLAS:
 
 RESERVAR CITAS POR VOZ:
 Tienes dos herramientas para gestionar la consultoría gratuita de 20-30 minutos directamente en la llamada: `consultar_disponibilidad` y `reservar_cita`. Cuando el cliente quiera reservar o tú se lo propongas y acepte:
-1. Llama a `consultar_disponibilidad` y ofrécele uno o dos huecos en voz alta (por ejemplo "tengo el jueves a las 11 o el viernes a las 17, ¿cuál te viene mejor?").
-2. Si le interesa un hueco, pídele en la conversación los datos que falten: nombre completo, email y teléfono.
-3. Cuando tengas el hueco elegido y los datos, llama a `reservar_cita` con esa información, y confírmaselo en voz alta.
-4. Si alguna herramienta indica que no hay huecos o falla, dile que no ha podido completarse y ofrece que alguien del equipo le llame."""
+1. Llama a `consultar_disponibilidad` (con `a_partir_de="hoy"`) y ofrécele uno o dos huecos en voz alta (por ejemplo "tengo el jueves a las 11 o el viernes a las 17, ¿cuál te viene mejor?").
+2. Si esos huecos no le van bien y pide otro momento — mañana, otro día, la semana que viene — NO le digas que no hay hueco: vuelve a llamar a `consultar_disponibilidad` con `a_partir_de="manana"` o `a_partir_de="semana_que_viene"` según lo que te haya pedido, y ofrécele los huecos nuevos. Nunca calcules tú una fecha concreta ni le digas que no hay disponibilidad sin haber vuelto a llamar a la herramienta con el parámetro que toque.
+3. Si le interesa un hueco, pídele en la conversación los datos que falten: nombre completo, email y teléfono.
+4. Cuando tengas el hueco elegido y los datos, llama a `reservar_cita` con esa información, y confírmaselo en voz alta.
+5. Si alguna herramienta indica que no hay huecos o falla, dile que no ha podido completarse y ofrece que alguien del equipo le llame."""
 
 
 class TrucoAgent(Agent):
@@ -198,24 +222,52 @@ class TrucoAgent(Agent):
         super().__init__(instructions=SYSTEM_INSTRUCTIONS)
 
     @function_tool
-    async def consultar_disponibilidad(self, context: RunContext) -> str:
+    async def consultar_disponibilidad(
+        self,
+        context: RunContext,
+        a_partir_de: Annotated[
+            Literal["hoy", "manana", "semana_que_viene"],
+            Field(description="Desde cuándo buscar hueco. Usa 'hoy' la primera vez que la llames en la conversación. Si el cliente rechaza los huecos que le ofreces porque le van mal esas fechas y pide más tarde, otro día, o la semana que viene, vuelve a llamar a esta herramienta con 'manana' o 'semana_que_viene' según lo que te haya pedido — nunca calcules tú mismo una fecha concreta, deja que la herramienta lo haga."),
+        ] = "hoy",
+    ) -> str:
         """Consulta los próximos huecos libres de 20-30 minutos en el calendario de
         consultorías gratuitas. Úsala cuando el cliente quiera reservar una cita, antes
         de pedirle ningún dato. Devuelve como máximo 2 huecos disponibles."""
         service = _get_calendar_service()
         if service is None:
             return "La agenda no está disponible ahora mismo. Ofrece que alguien del equipo le llame."
+        now = datetime.datetime.now(MADRID_TZ)
+        earliest = None
+        if a_partir_de == "manana":
+            earliest = datetime.datetime.combine(
+                now.date() + datetime.timedelta(days=1), datetime.time(BUSINESS_HOURS[0], 0), tzinfo=MADRID_TZ
+            )
+        elif a_partir_de == "semana_que_viene":
+            dias_hasta_lunes = (7 - now.weekday()) % 7 or 7
+            earliest = datetime.datetime.combine(
+                now.date() + datetime.timedelta(days=dias_hasta_lunes), datetime.time(BUSINESS_HOURS[0], 0), tzinfo=MADRID_TZ
+            )
         try:
-            slots = _find_free_slots(service)
+            slots = _find_free_slots(service, earliest=earliest)
         except Exception:
             logger.exception("Error consultando disponibilidad")
             return "No se pudo consultar la agenda ahora mismo. Ofrece que alguien del equipo le llame."
         if not slots:
             return "No hay huecos libres en los próximos días. Ofrece que alguien del equipo le llame."
+        # Cada hueco lleva su ISO exacto al lado del texto en español — al
+        # llamar a reservar_cita hay que copiar ESE valor literal, nunca
+        # reconstruir la fecha/hora de memoria a partir de lo dicho en voz
+        # alta (ahí es donde se cuelan la mayoría de errores de reserva: el
+        # modelo calcula mal el día del mes o la zona horaria al convertir).
         opciones = "; ".join(
-            s.strftime("%A %d de %B a las %H:%M") for s in slots
+            f'{_formatear_fecha_es(s)} [iso: {s.isoformat()}]' for s in slots
         )
-        return f"Huecos disponibles: {opciones}. Pídele al cliente que elija uno."
+        return (
+            f"Huecos disponibles: {opciones}. Dile al cliente la fecha en español de forma "
+            f"natural (nunca leas el [iso: ...] en voz alta, es solo para ti). Cuando el "
+            f"cliente elija uno y llames a reservar_cita, usa EXACTAMENTE ese valor iso tal "
+            f"cual aparece aquí, sin recalcularlo tú."
+        )
 
     @function_tool
     async def reservar_cita(
@@ -223,7 +275,7 @@ class TrucoAgent(Agent):
         context: RunContext,
         fecha_hora_iso: Annotated[
             str,
-            Field(description="Fecha y hora exactas del hueco elegido, en formato ISO 8601 con zona horaria, ej. 2026-07-10T11:00:00+02:00"),
+            Field(description="El valor [iso: ...] EXACTO de ese hueco tal como lo devolvió consultar_disponibilidad — cópialo literal, no lo calcules ni lo reescribas a partir de la fecha en español que le dijiste al cliente."),
         ],
         nombre: Annotated[str, Field(description="Nombre completo del cliente")],
         email: Annotated[str, Field(description="Email del cliente")],
@@ -254,9 +306,9 @@ class TrucoAgent(Agent):
             nombre=nombre,
             email=email,
             telefono=telefono,
-            nota=f"Reservó consultoría por voz para el {start.strftime('%A %d de %B a las %H:%M')}.",
+            nota=f"Reservó consultoría por voz para el {_formatear_fecha_es(start)}.",
         )
-        return f"Reserva confirmada para {nombre} el {start.strftime('%A %d de %B a las %H:%M')}. Confírmaselo al cliente."
+        return f"Reserva confirmada para {nombre} el {_formatear_fecha_es(start)}. Confírmaselo al cliente."
 
 
 server = AgentServer()
@@ -274,6 +326,14 @@ async def entrypoint(ctx: agents.JobContext):
                 automatic_activity_detection=types.AutomaticActivityDetection(
                     silence_duration_ms=300,
                     prefix_padding_ms=20,
+                    # Con ruido de fondo, el detector por defecto tarda en darse
+                    # cuenta de que alguien ha empezado a hablar (o directamente
+                    # no lo detecta) — alta sensibilidad de inicio hace que
+                    # reaccione antes a la voz real aunque haya ruido de por
+                    # medio. Baja sensibilidad de fin evita que un hueco breve
+                    # entre ruido corte al cliente a mitad de frase.
+                    start_of_speech_sensitivity=types.StartSensitivity.START_SENSITIVITY_HIGH,
+                    end_of_speech_sensitivity=types.EndSensitivity.END_SENSITIVITY_LOW,
                 )
             ),
         ),

@@ -2517,7 +2517,14 @@ async function toggleVoiceAgent() {
 
     status.textContent = 'Conectando con el agente...';
     await room.connect(data.url, data.token);
-    await room.localParticipant.setMicrophoneEnabled(true);
+    // Supresión de ruido, cancelación de eco y control de ganancia explícitos
+    // — con ruido de fondo en el entorno del cliente, dejarlo en manos del
+    // valor por defecto del navegador puede no bastar.
+    await room.localParticipant.setMicrophoneEnabled(true, {
+      noiseSuppression: true,
+      echoCancellation: true,
+      autoGainControl: true,
+    });
 
     voiceActive = true;
     btn.textContent = 'Colgar';
