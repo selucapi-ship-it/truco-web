@@ -79,6 +79,62 @@ exports.handler = async function (event) {
   }
 
   const session = stripeEvent.data.object;
+
+  // Presupuesto personalizado (create-quote-checkout.js) — flujo aparte del
+  // de Departamentos/catálogo: no hay plan_key ni tier, así que
+  // confirm_client_purchase() no encaja aquí. Marca el presupuesto como
+  // pagado y da de alta/enlaza al cliente con las soluciones de sus líneas
+  // de catálogo, vía create_client_manual (mismo RPC que usa el alta manual
+  // del panel).
+  if (session.metadata && session.metadata.source === 'custom_quote') {
+    const quoteId = session.metadata.quote_id;
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (supabaseUrl && serviceKey && quoteId) {
+      const headers = { 'Content-Type': 'application/json', apikey: serviceKey };
+      if (!serviceKey.startsWith('sb_secret_') && !serviceKey.startsWith('sb_publishable_')) {
+        headers.Authorization = `Bearer ${serviceKey}`;
+      }
+      try {
+        const quoteResp = await fetch(`${supabaseUrl}/rest/v1/quotes?id=eq.${quoteId}&select=*`, { headers });
+        const quoteRows = quoteResp.ok ? await quoteResp.json() : [];
+        const quote = quoteRows[0];
+        if (quote) {
+          const emailContacto = quote.email_contacto || (session.customer_details && session.customer_details.email);
+          const solutionKeys = (quote.lineas || [])
+            .filter(l => l.tipo === 'catalogo' && l.solution_key)
+            .map(l => l.solution_key);
+
+          // confirm_quote_payment() hace todo en un solo RPC (security definer,
+          // concedido solo a service_role — no a is_founder(), porque esta
+          // llamada no tiene ningún usuario logueado detrás): crea/enlaza el
+          // cliente, adjunta sus soluciones, marca el presupuesto pagado y
+          // registra el pago real.
+          await fetch(`${supabaseUrl}/rest/v1/rpc/confirm_quote_payment`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({
+              p_quote_id: quoteId,
+              p_nombre: quote.nombre_contacto,
+              p_email: emailContacto,
+              p_telefono: quote.telefono,
+              p_negocio: quote.negocio,
+              p_solutions: solutionKeys.length ? solutionKeys : null,
+              p_stripe_session_id: session.id || null,
+              p_stripe_payment_intent_id: session.payment_intent || null,
+              p_stripe_customer_id: session.customer || null,
+              p_amount_total_cents: typeof session.amount_total === 'number' ? session.amount_total : null,
+            }),
+          });
+        }
+      } catch (err) {
+        // El pago ya está cobrado; un fallo aquí solo significa marcar el
+        // presupuesto y enlazar el cliente a mano desde el panel.
+      }
+    }
+    return { statusCode: 200, body: JSON.stringify({ ok: true, source: 'custom_quote' }) };
+  }
+
   const email = session.customer_details ? session.customer_details.email : session.customer_email;
   const planKey = (session.metadata && session.metadata.plan_key) || '';
   const arranqueTier = (session.metadata && session.metadata.arranque_tier) || '';

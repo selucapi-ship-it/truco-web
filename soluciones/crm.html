@@ -373,7 +373,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="scope-box">
       <div class="scope-row"><div class="scope-label">Incluye</div><div class="scope-value">Sistema de gestión de clientes y leads adaptado a tu flujo de trabajo, con las etapas y campos configurados para tu negocio.</div></div>
       <div class="scope-row"><div class="scope-label">Límites</div><div class="scope-value">El precio final depende de cuántos usuarios lo van a usar, si hay que migrar datos de un Excel o sistema anterior, y cuántas integraciones necesitas con otras herramientas.</div></div>
-      <div class="scope-row"><div class="scope-label">Precio</div><div class="scope-value"><b>Desde 950€ + IVA.</b> Hacemos una auditoría inicial gratuita antes de cerrar el número exacto — lo sabrás antes de firmar nada, no después.</div></div>
+      <div class="scope-row"><div class="scope-label">Precio</div><div class="scope-value"><b>Desde <span id="crm-price-scope">950</span>€ + IVA.</b> Hacemos una auditoría inicial gratuita antes de cerrar el número exacto — lo sabrás antes de firmar nada, no después.</div></div>
       <div class="scope-row"><div class="scope-label">Disponible en</div><div class="scope-value">Departamento <b>Lite™</b> o <b>Pro™</b> — no se ofrece en Start™ ni Basic™, ni siquiera pagándola aparte.</div></div>
       <div class="scope-row"><div class="scope-label">Plazo</div><div class="scope-value">Se confirma en la propia auditoría, normalmente 2-3 semanas desde que empezamos.</div></div>
     </div>
@@ -385,7 +385,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="cta-inner">
       <div>
         <h2>¿Listo para dejar de perder clientes por falta de seguimiento?</h2>
-        <p>Desde 950 € + IVA de implantación (requiere una auditoría inicial para cerrar el precio final). Se mantiene después dentro de tu Departamento Tecnológico.</p>
+        <p>Desde <span id="crm-price-cta">950</span> € + IVA de implantación (requiere una auditoría inicial para cerrar el precio final). Se mantiene después dentro de tu Departamento Tecnológico.</p>
       </div>
       <div class="cta-btns">
         <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>
@@ -471,6 +471,19 @@ function toggleFaq(btn){
     kio.observe(kanban);
   }
 })();
+</script>
+
+<script src="../solutions-pricing.js"></script>
+<script>
+function renderCrmPrice(){
+  const p = solutionStandalonePrice('crm');
+  if(p === null) return;
+  const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  set('crm-price-scope', p);
+  set('crm-price-cta', p);
+}
+renderCrmPrice();
+window.onSolutionsPricingUpdated.push(renderCrmPrice);
 </script>
 </body>
 </html>

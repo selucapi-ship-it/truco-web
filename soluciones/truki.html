@@ -442,7 +442,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="scope-box">
       <div class="scope-row"><div class="scope-label">Incluye</div><div class="scope-value">Chatbot que genera facturas y presupuestos a partir de una descripción en lenguaje natural (chat o voz), calculado con tu propio catálogo de precios, con firma de conformidad del cliente y control de cobros.</div></div>
       <div class="scope-row"><div class="scope-label">Límites</div><div class="scope-value"><b>Sin límite de facturas ni presupuestos al mes.</b></div></div>
-      <div class="scope-row"><div class="scope-label">Precio</div><div class="scope-value"><b>580€ + IVA, cerrado.</b> El alojamiento va incluido sin coste, siempre dentro de tu Departamento Tecnológico.</div></div>
+      <div class="scope-row"><div class="scope-label">Precio</div><div class="scope-value"><b><span id="truki-price-scope">580</span>€ + IVA, cerrado.</b> El alojamiento va incluido sin coste, siempre dentro de tu Departamento Tecnológico.</div></div>
       <div class="scope-row"><div class="scope-label">Plazo</div><div class="scope-value">Implantación dentro del periodo estándar de implantación de 90 días.</div></div>
     </div>
   </div>
@@ -453,7 +453,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="cta-inner">
       <div>
         <h2>¿Listo para dejar el papeleo atrás y facturar en el momento?</h2>
-        <p>580 € + IVA de implantación, alojamiento incluido. Se mantiene después dentro de tu Departamento Tecnológico.</p>
+        <p><span id="truki-price-cta">580</span> € + IVA de implantación, alojamiento incluido. Se mantiene después dentro de tu Departamento Tecnológico.</p>
       </div>
       <div class="cta-btns">
         <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>
@@ -546,6 +546,19 @@ function toggleFaq(btn){
     tio.observe(mock);
   }
 })();
+</script>
+
+<script src="../solutions-pricing.js"></script>
+<script>
+function renderTrukiPrice(){
+  const p = solutionPrice('truki');
+  if(p === null) return;
+  const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  set('truki-price-scope', p);
+  set('truki-price-cta', p);
+}
+renderTrukiPrice();
+window.onSolutionsPricingUpdated.push(renderTrukiPrice);
 </script>
 </body>
 </html>

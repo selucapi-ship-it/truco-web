@@ -332,7 +332,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="cta-inner">
       <div>
         <h2>¿Listo para dejar de perder ese mensaje o esa cita?</h2>
-        <p>Empieza con el Departamento Tecnológico Start™, 69€/mes + IVA.</p>
+        <p>Empieza con el Departamento Tecnológico Start™, <span id="cta-price-start">69€</span>/mes + IVA.</p>
       </div>
       <div class="cta-btns">
         <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>
@@ -374,6 +374,15 @@ setTimeout(function(){
 </script>
 
 <script src="../founding-offer.js"></script>
+<script>
+function renderFoundingPricesStart(){
+  const mStart=currentPrice('start');
+  const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
+  set('cta-price-start',mStart+'€');
+}
+renderFoundingPricesStart();
+window.onFoundingSpotsUpdated.push(renderFoundingPricesStart);
+</script>
 <script>
 function toggleFaq(btn){
   const item=btn.closest('.faq-item');

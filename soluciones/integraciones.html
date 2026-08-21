@@ -373,7 +373,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="scope-box">
       <div class="scope-row"><div class="scope-label">Incluye</div><div class="scope-value">Conexión entre las herramientas que ya usas (por ejemplo tu web, tu CRM y tu facturación) para que los datos viajen solos entre ellas, sin copiar nada a mano.</div></div>
       <div class="scope-row"><div class="scope-label">Límites</div><div class="scope-value">El esfuerzo depende de cuántas herramientas se conectan y de si tienen API abierta o no — no es lo mismo conectar 2 sistemas modernos que 4 sistemas dispares.</div></div>
-      <div class="scope-row"><div class="scope-label">Precio</div><div class="scope-value"><b>Desde 600€ + IVA.</b> Te damos el número exacto después de conocer qué herramientas usas, antes de que decidas nada.</div></div>
+      <div class="scope-row"><div class="scope-label">Precio</div><div class="scope-value"><b>Desde <span id="integr-price-scope">600</span>€ + IVA.</b> Te damos el número exacto después de conocer qué herramientas usas, antes de que decidas nada.</div></div>
       <div class="scope-row"><div class="scope-label">Disponible en</div><div class="scope-value">Departamento <b>Lite™</b> o <b>Pro™</b> — no se ofrece en Start™ ni Basic™, ni siquiera pagándola aparte.</div></div>
       <div class="scope-row"><div class="scope-label">Plazo</div><div class="scope-value">Se confirma al conocer tu caso, normalmente 1-2 semanas.</div></div>
     </div>
@@ -385,7 +385,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="cta-inner">
       <div>
         <h2>¿Listo para que tus herramientas dejen de trabajar cada una por su lado?</h2>
-        <p>Desde 600 € + IVA de implantación (consulta tu caso, precio final sin sorpresas). Se mantiene después dentro de tu Departamento Tecnológico.</p>
+        <p>Desde <span id="integr-price-cta">600</span> € + IVA de implantación (consulta tu caso, precio final sin sorpresas). Se mantiene después dentro de tu Departamento Tecnológico.</p>
       </div>
       <div class="cta-btns">
         <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>
@@ -475,6 +475,19 @@ function toggleFaq(btn){
     hio.observe(hub);
   }
 })();
+</script>
+
+<script src="../solutions-pricing.js"></script>
+<script>
+function renderIntegracionesPrice(){
+  const p = solutionStandalonePrice('integraciones');
+  if(p === null) return;
+  const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  set('integr-price-scope', p);
+  set('integr-price-cta', p);
+}
+renderIntegracionesPrice();
+window.onSolutionsPricingUpdated.push(renderIntegracionesPrice);
 </script>
 </body>
 </html>

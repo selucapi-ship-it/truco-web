@@ -369,7 +369,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="scope-box">
       <div class="scope-row"><div class="scope-label">Incluye</div><div class="scope-value">Auditoría inicial de tus puntos débiles, activación de 2FA en tus plataformas críticas, gestor de contraseñas para todo el equipo, copias de seguridad automáticas en la nube y formación preventiva de 30 minutos.</div></div>
       <div class="scope-row"><div class="scope-label">Límites</div><div class="scope-value">No incluye respuesta a un ataque ya ocurrido ni auditoría de código avanzada — es prevención real, no investigación forense.</div></div>
-      <div class="scope-row"><div class="scope-label">Precio</div><div class="scope-value"><b>450€ + IVA, cerrado</b> — hasta 5 puestos de trabajo. Cada 5 puestos adicionales: +150€ + IVA.</div></div>
+      <div class="scope-row"><div class="scope-label">Precio</div><div class="scope-value"><b><span id="ciber-price-scope">450</span>€ + IVA, cerrado</b> — hasta 5 puestos de trabajo. Cada 5 puestos adicionales: +150€ + IVA.</div></div>
       <div class="scope-row"><div class="scope-label">Disponible en</div><div class="scope-value">Departamento <b>Lite™</b> o <b>Pro™</b> — no se ofrece en Start™ ni Basic™, ni siquiera pagándola aparte.</div></div>
       <div class="scope-row"><div class="scope-label">Plazo</div><div class="scope-value">Implantación dentro del periodo estándar de implantación de 90 días.</div></div>
     </div>
@@ -381,7 +381,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="cta-inner">
       <div>
         <h2>¿Listo para proteger tu empresa antes de que haga falta?</h2>
-        <p>450 € + IVA de implantación, precio cerrado hasta 5 puestos — seguridad básica imprescindible, no una garantía de protección total. Se mantiene después dentro de tu Departamento Tecnológico.</p>
+        <p><span id="ciber-price-cta">450</span> € + IVA de implantación, precio cerrado hasta 5 puestos — seguridad básica imprescindible, no una garantía de protección total. Se mantiene después dentro de tu Departamento Tecnológico.</p>
       </div>
       <div class="cta-btns">
         <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>
@@ -466,6 +466,19 @@ function toggleFaq(btn){
     sio.observe(mock);
   }
 })();
+</script>
+
+<script src="../solutions-pricing.js"></script>
+<script>
+function renderCiberseguridadPrice(){
+  const p = solutionPrice('ciberseguridad');
+  if(p === null) return;
+  const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val;};
+  set('ciber-price-scope', p);
+  set('ciber-price-cta', p);
+}
+renderCiberseguridadPrice();
+window.onSolutionsPricingUpdated.push(renderCiberseguridadPrice);
 </script>
 </body>
 </html>

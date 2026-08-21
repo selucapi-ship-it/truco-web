@@ -1590,6 +1590,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </div>
 
 <script src="founding-offer.js"></script>
+<script src="solutions-pricing.js"></script>
 <script>
 function renderFoundingPricesHome(){
   const prices={lite:currentPrice('lite'),pro:currentPrice('pro'),start:currentPrice('start'),basic:currentPrice('basic')};
@@ -1787,7 +1788,7 @@ const KB = {
   digitaliza: {
     patterns: ['digitalizar','digitaliza','600','soluciones tecnológicas','implantar','automatizar','digitalizar mi negocio','digitalizar mi empresa'],
     responses: [
-      `<b>Digitaliza tu Empresa</b> es hoy nuestra guía informativa de automatizaciones tecnológicas — no se compran sueltas, se instalan dentro de tu Departamento (Start™, Basic™, Lite™ o Pro™). Cada automatización tiene un precio de catálogo si la añades más allá de tu pool gratis, ya con todo incluido (sin recargos aparte).\n\nAutomatizaciones disponibles:\nIA para WhatsApp — 590€ + IVA (Oferta Lanzamiento 2026, precio normal 890€)\nIA para Web — 350€ + IVA (Oferta Lanzamiento 2026, precio normal 650€)\nIA para Correo — 350€ + IVA (Oferta Lanzamiento 2026, precio normal 590€)\nIA para Llamadas — 690€ + IVA (Oferta Lanzamiento 2026, precio normal 890€ — todo incluido, 150 llamadas/mes) — exclusiva desde Lite™ en adelante\nReservas online — 350€ + IVA\nFacturación automática (TruKi) — 580€ + IVA\nGestión documental — desde 400€ + IVA — exclusiva desde Lite™ en adelante\nCiberseguridad Pyme — 450€ + IVA (hasta 5 puestos) — solo gratis en Pro™, y exclusiva desde Lite™ en adelante\nFirma digital — 500€ + IVA\nIntegraciones — desde 600€ + IVA (consulta previa) — exclusiva desde Lite™ en adelante\nFlujos automáticos a medida — 350€/650€/1.200€ + IVA, precio cerrado según complejidad (simple/media/varias herramientas) — solo gratis en Pro™, y exclusiva desde Lite™ en adelante\nCRM — desde 950€ + IVA (auditoría previa) — exclusiva desde Lite™ en adelante\n\n<b>Importante:</b> en Start™ y Basic™ solo puedes añadir, como automatización de pago extra, del siguiente grupo: WhatsApp, Web, Correo, Reservas, TruKi o Firma Digital. Llamadas, Ciberseguridad, Flujos a medida, CRM, Integraciones y Gestión documental solo se pueden añadir desde Lite™ en adelante, ni siquiera pagando aparte en Start™/Basic™.\n\n<b>Cuántas entran gratis según tu Departamento:</b>\nStart™ (${currentPrice('start')}€/mes): 1 gratis, sin web\nBasic™ (${currentPrice('basic')}€/mes): 1 gratis, con Web Profesional siempre incluida\nLite™ (${currentPrice('lite')}€/mes): 2 gratis, de un pool de 7\nPro™ (${currentPrice('pro')}€/mes): 3 gratis, de un pool de 6\n\nTodos con 12 meses de permanencia y período de implantación incluido. ¿Qué automatizaciones necesita tu empresa?`,
+      `<b>Digitaliza tu Empresa</b> es hoy nuestra guía informativa de automatizaciones tecnológicas — no se compran sueltas, se instalan dentro de tu Departamento (Start™, Basic™, Lite™ o Pro™). Cada automatización tiene un precio de catálogo si la añades más allá de tu pool gratis, ya con todo incluido (sin recargos aparte).\n\nAutomatizaciones disponibles:\nIA para WhatsApp — ${solutionPrice('whatsapp')}€ + IVA (Oferta Lanzamiento 2026, precio normal 890€)\nIA para Web — ${solutionPrice('web-ia')}€ + IVA (Oferta Lanzamiento 2026, precio normal 650€)\nIA para Correo — ${solutionPrice('email-ia')}€ + IVA (Oferta Lanzamiento 2026, precio normal 590€)\nIA para Llamadas — ${solutionPrice('llamadas')}€ + IVA (Oferta Lanzamiento 2026, precio normal 890€ — todo incluido, 150 llamadas/mes) — exclusiva desde Lite™ en adelante\nReservas online — ${solutionPrice('reservas')}€ + IVA\nFacturación automática (TruKi) — ${solutionPrice('truki')}€ + IVA\nGestión documental — desde ${solutionStandalonePrice('docs')}€ + IVA — exclusiva desde Lite™ en adelante\nCiberseguridad Pyme — ${solutionPrice('ciberseguridad')}€ + IVA (hasta 5 puestos) — solo gratis en Pro™, y exclusiva desde Lite™ en adelante\nFirma digital — ${solutionPrice('firma')}€ + IVA\nIntegraciones — desde ${solutionStandalonePrice('integraciones')}€ + IVA (consulta previa) — exclusiva desde Lite™ en adelante\nFlujos automáticos a medida — ${solutionPrice('automatizaciones')}€/650€/1.200€ + IVA, precio cerrado según complejidad (simple/media/varias herramientas) — solo gratis en Pro™, y exclusiva desde Lite™ en adelante\nCRM — desde ${solutionStandalonePrice('crm')}€ + IVA (auditoría previa) — exclusiva desde Lite™ en adelante\n\n<b>Importante:</b> en Start™ y Basic™ solo puedes añadir, como automatización de pago extra, del siguiente grupo: WhatsApp, Web, Correo, Reservas, TruKi o Firma Digital. Llamadas, Ciberseguridad, Flujos a medida, CRM, Integraciones y Gestión documental solo se pueden añadir desde Lite™ en adelante, ni siquiera pagando aparte en Start™/Basic™.\n\n<b>Cuántas entran gratis según tu Departamento:</b>\nStart™ (${currentPrice('start')}€/mes): 1 gratis, sin web\nBasic™ (${currentPrice('basic')}€/mes): 1 gratis, con Web Profesional siempre incluida\nLite™ (${currentPrice('lite')}€/mes): 2 gratis, de un pool de 7\nPro™ (${currentPrice('pro')}€/mes): 3 gratis, de un pool de 6\n\nTodos con 12 meses de permanencia y período de implantación incluido. ¿Qué automatizaciones necesita tu empresa?`,
       'Las automatizaciones de Digitaliza se instalan siempre dentro de un Departamento — no existe compra suelta. No tienes que saber qué herramienta necesitas — nos lo cuentas y nosotros diseñamos la automatización correcta, y va gratis si entra en el pool de tu tier (Start™ 1, Basic™ 1, Lite™ 2, Pro™ 3). ¿Cuál es el mayor problema que quieres resolver en tu empresa ahora mismo?'
     ]
   },
@@ -1795,84 +1796,84 @@ const KB = {
   sol_whatsapp: {
     patterns: ['ia para whatsapp','whatsapp ia','asistente de whatsapp','bot de whatsapp','automatizar whatsapp','whatsapp business ia','cuánto cuesta el whatsapp','precio del whatsapp','precio de la ia de whatsapp'],
     responses: [
-      'La <b>IA para WhatsApp</b> cuesta 590€ + IVA ahora mismo — <b>Oferta de Lanzamiento 2026</b>, precio normal 890€. Es un asistente que responde automáticamente a tus clientes en WhatsApp Business: resuelve dudas frecuentes, agenda citas y filtra lo urgente de lo que puede esperar, las 24 horas. Es, de lejos, la automatización que más contratan nuestros clientes. Incluye 1.000 interacciones al mes (de sobra para el uso normal de un negocio), con exceso a 0,02€/interacción si algún mes se dispara mucho. ¿Recibes muchos mensajes por WhatsApp que se quedan sin respuesta a tiempo?'
+      `La <b>IA para WhatsApp</b> cuesta ${solutionPrice('whatsapp')}€ + IVA ahora mismo — <b>Oferta de Lanzamiento 2026</b>, precio normal 890€. Es un asistente que responde automáticamente a tus clientes en WhatsApp Business: resuelve dudas frecuentes, agenda citas y filtra lo urgente de lo que puede esperar, las 24 horas. Es, de lejos, la automatización que más contratan nuestros clientes. Incluye 1.000 interacciones al mes (de sobra para el uso normal de un negocio), con exceso a 0,02€/interacción si algún mes se dispara mucho. ¿Recibes muchos mensajes por WhatsApp que se quedan sin respuesta a tiempo?`
     ]
   },
 
   sol_web_ia: {
     patterns: ['ia para web','ia para mi web','asistente en la web','chat en la web','chatbot en mi página','cuánto cuesta la ia para web','precio de la ia web'],
     responses: [
-      'La <b>IA para Web</b> cuesta 350€ + IVA ahora mismo — <b>Oferta de Lanzamiento 2026</b>, precio normal 650€. Es un asistente integrado en tu web actual (como el que estás usando ahora mismo) que responde dudas de tus visitantes al instante y agenda la cita directamente en tu calendario, igual que la versión de WhatsApp. Incluye 1.000 interacciones al mes, con exceso a 0,02€/interacción si se dispara mucho el tráfico. ¿Ya tienes una web donde integrarlo, o necesitarías construirla primero?'
+      `La <b>IA para Web</b> cuesta ${solutionPrice('web-ia')}€ + IVA ahora mismo — <b>Oferta de Lanzamiento 2026</b>, precio normal 650€. Es un asistente integrado en tu web actual (como el que estás usando ahora mismo) que responde dudas de tus visitantes al instante y agenda la cita directamente en tu calendario, igual que la versión de WhatsApp. Incluye 1.000 interacciones al mes, con exceso a 0,02€/interacción si se dispara mucho el tráfico. ¿Ya tienes una web donde integrarlo, o necesitarías construirla primero?`
     ]
   },
 
   sol_email_ia: {
     patterns: ['ia para correo','ia para email','automatizar correos','clasificar correos','gestionar el email','cuánto cuesta la ia de correo','precio de la ia de correo'],
     responses: [
-      'La <b>IA para Correo</b> cuesta 350€ + IVA ahora mismo — <b>Oferta de Lanzamiento 2026</b>, precio normal 590€. Clasifica y responde automáticamente los correos de tus clientes: separa lo urgente, contesta preguntas frecuentes y te avisa solo cuando de verdad hace falta que intervengas tú. Incluye 1.000 correos procesados al mes, con exceso a 0,02€/correo si algún mes se dispara mucho. ¿Recibes muchos correos repetitivos que te quitan tiempo?'
+      `La <b>IA para Correo</b> cuesta ${solutionPrice('email-ia')}€ + IVA ahora mismo — <b>Oferta de Lanzamiento 2026</b>, precio normal 590€. Clasifica y responde automáticamente los correos de tus clientes: separa lo urgente, contesta preguntas frecuentes y te avisa solo cuando de verdad hace falta que intervengas tú. Incluye 1.000 correos procesados al mes, con exceso a 0,02€/correo si algún mes se dispara mucho. ¿Recibes muchos correos repetitivos que te quitan tiempo?`
     ]
   },
 
   sol_crm: {
     patterns: ['crm','gestión de clientes','base de datos de clientes','seguimiento de clientes','cuánto cuesta el crm','precio del crm','precio de crm'],
     responses: [
-      'El <b>CRM</b> es desde 950€ + IVA — el alcance de un CRM varía mucho de una empresa a otra, así que antes de dar un precio cerrado hacemos una auditoría inicial rápida de cómo llevas hoy tus clientes. Guarda el historial de cada cliente, en qué punto está cada oportunidad de venta, y te avisa de seguimientos pendientes. Se integra con el resto de automatizaciones que tengas. ¿Ahora mismo llevas el seguimiento de clientes en Excel, cuadernos, o no lo llevas de forma organizada?'
+      `El <b>CRM</b> es desde ${solutionStandalonePrice('crm')}€ + IVA — el alcance de un CRM varía mucho de una empresa a otra, así que antes de dar un precio cerrado hacemos una auditoría inicial rápida de cómo llevas hoy tus clientes. Guarda el historial de cada cliente, en qué punto está cada oportunidad de venta, y te avisa de seguimientos pendientes. Se integra con el resto de automatizaciones que tengas. ¿Ahora mismo llevas el seguimiento de clientes en Excel, cuadernos, o no lo llevas de forma organizada?`
     ]
   },
 
   sol_reservas: {
     patterns: ['reservas online','sistema de citas','agenda online','reservas y agenda','citas automáticas','cuánto cuesta las reservas online','precio de las reservas'],
     responses: [
-      'Las <b>Reservas online</b> cuestan 350€ + IVA. Tus clientes reservan cita o mesa directamente, se integra con tu calendario actual, y evita los huecos vacíos por cancelaciones de última hora sin que nadie los ocupe. ¿Actualmente gestionas las citas por teléfono, WhatsApp, o ya tienes algún sistema?'
+      `Las <b>Reservas online</b> cuestan ${solutionPrice('reservas')}€ + IVA. Tus clientes reservan cita o mesa directamente, se integra con tu calendario actual, y evita los huecos vacíos por cancelaciones de última hora sin que nadie los ocupe. ¿Actualmente gestionas las citas por teléfono, WhatsApp, o ya tienes algún sistema?`
     ]
   },
 
   sol_automatizaciones: {
     patterns: ['automatizaciones','automatizar tareas','flujos automáticos','tareas repetitivas','cuánto cuestan las automatizaciones','precio de las automatizaciones'],
     responses: [
-      'Los <b>Flujos automáticos a medida</b> tienen 3 precios cerrados según la complejidad del flujo: 350€ + IVA una automatización simple (ej. formulario → CRM → email), 650€ + IVA un flujo de varios pasos (ej. pedido → factura → aviso a almacén), 1.200€ + IVA un proceso que conecta varias herramientas distintas. En la primera llamada te decimos en qué banda encaja tu caso, y ese es el precio final, sin sorpresas. ¿Qué tarea repetitiva te quita más tiempo cada semana?'
+      `Los <b>Flujos automáticos a medida</b> tienen 3 precios cerrados según la complejidad del flujo: ${solutionPrice('automatizaciones')}€ + IVA una automatización simple (ej. formulario → CRM → email), 650€ + IVA un flujo de varios pasos (ej. pedido → factura → aviso a almacén), 1.200€ + IVA un proceso que conecta varias herramientas distintas. En la primera llamada te decimos en qué banda encaja tu caso, y ese es el precio final, sin sorpresas. ¿Qué tarea repetitiva te quita más tiempo cada semana?`
     ]
   },
 
   sol_integraciones: {
     patterns: ['integraciones','conectar herramientas','unir programas','conectar mis aplicaciones','cuánto cuestan las integraciones','precio de las integraciones'],
     responses: [
-      'Las <b>Integraciones</b> son desde 600€ + IVA. Como cada integración depende de las herramientas concretas que uses, primero consultamos tu caso y cerramos el precio final antes de empezar, sin sorpresas. Conectamos entre sí las herramientas que ya usas (por ejemplo tu CRM con tu WhatsApp, o tu agenda con tu facturación) para que la información fluya sola, sin que tengas que copiarla a mano de un sitio a otro. ¿Qué herramientas tienes hoy que no se hablan entre ellas?'
+      `Las <b>Integraciones</b> son desde ${solutionStandalonePrice('integraciones')}€ + IVA. Como cada integración depende de las herramientas concretas que uses, primero consultamos tu caso y cerramos el precio final antes de empezar, sin sorpresas. Conectamos entre sí las herramientas que ya usas (por ejemplo tu CRM con tu WhatsApp, o tu agenda con tu facturación) para que la información fluya sola, sin que tengas que copiarla a mano de un sitio a otro. ¿Qué herramientas tienes hoy que no se hablan entre ellas?`
     ]
   },
 
   sol_gestion_documental: {
     patterns: ['gestión documental','organizar documentos','contratos digitales','archivo digital','cuánto cuesta la gestión documental','precio de la gestión documental'],
     responses: [
-      'La <b>Gestión documental</b> es desde 400€ + IVA. Organiza y automatiza tus documentos y contratos: plantillas, almacenamiento ordenado y acceso rápido a lo que necesites, sin carpetas perdidas. ¿Ahora mismo cómo gestionas los documentos y contratos de tus clientes?'
+      `La <b>Gestión documental</b> es desde ${solutionStandalonePrice('docs')}€ + IVA. Organiza y automatiza tus documentos y contratos: plantillas, almacenamiento ordenado y acceso rápido a lo que necesites, sin carpetas perdidas. ¿Ahora mismo cómo gestionas los documentos y contratos de tus clientes?`
     ]
   },
 
   sol_firma_digital: {
     patterns: ['firma digital','firmar documentos online','firma electrónica','cuánto cuesta la firma digital','precio de la firma digital'],
     responses: [
-      'La <b>Firma digital</b> es 500€ + IVA, precio cerrado. Permite que tus clientes firmen contratos y documentos online, con validez legal, sin imprimir ni desplazarse. Encaja muy bien combinada con Gestión documental o CRM. ¿Tus clientes firman contratos actualmente en papel?'
+      `La <b>Firma digital</b> es ${solutionPrice('firma')}€ + IVA, precio cerrado. Permite que tus clientes firmen contratos y documentos online, con validez legal, sin imprimir ni desplazarse. Encaja muy bien combinada con Gestión documental o CRM. ¿Tus clientes firman contratos actualmente en papel?`
     ]
   },
 
   sol_ciberseguridad: {
     patterns: ['ciberseguridad','ciberseguridad pyme','seguridad informática','proteger mi empresa','hackeo','me pueden hackear','2fa','doble factor','gestor de contraseñas','copias de seguridad'],
     responses: [
-      'La <b>Ciberseguridad Pyme</b> son 450€ + IVA, precio cerrado hasta 5 puestos de trabajo (+150€ por cada 5 adicionales). Es una revisión e instalación de la seguridad básica imprescindible, ni más ni menos:\n✓ Auditoría inicial básica\n✓ Activación de verificación en dos pasos (2FA) en tus plataformas críticas\n✓ Configuración de un gestor de contraseñas seguro\n✓ Automatización de copias de seguridad en la nube\n✓ Instrucción básica para tu equipo (30 minutos)\n\nEs importante que quede claro: no incluye respuesta a incidentes de hackeo ya ocurridos ni auditorías avanzadas — no prometemos protección total, nadie puede. Es la base necesaria que toda empresa debería tener, no una garantía de seguridad. Se puede contratar sola o combinada dentro de Digitaliza. ¿Ya has tenido algún susto de seguridad o quieres prevenir antes de que pase?'
+      `La <b>Ciberseguridad Pyme</b> son ${solutionPrice('ciberseguridad')}€ + IVA, precio cerrado hasta 5 puestos de trabajo (+150€ por cada 5 adicionales). Es una revisión e instalación de la seguridad básica imprescindible, ni más ni menos:\n✓ Auditoría inicial básica\n✓ Activación de verificación en dos pasos (2FA) en tus plataformas críticas\n✓ Configuración de un gestor de contraseñas seguro\n✓ Automatización de copias de seguridad en la nube\n✓ Instrucción básica para tu equipo (30 minutos)\n\nEs importante que quede claro: no incluye respuesta a incidentes de hackeo ya ocurridos ni auditorías avanzadas — no prometemos protección total, nadie puede. Es la base necesaria que toda empresa debería tener, no una garantía de seguridad. Se puede contratar sola o combinada dentro de Digitaliza. ¿Ya has tenido algún susto de seguridad o quieres prevenir antes de que pase?`
     ]
   },
 
   sol_truki: {
     patterns: ['truki','facturación automática','facturas automáticas','factura por chat','presupuesto por chat','generar facturas','facturar automáticamente','cuánto cuesta truki','precio de truki'],
     responses: [
-      '<b>Facturación automática (TruKi)</b> es 580€ + IVA. Describes el trabajo por chat — "5 metros de cable, 3 horas de mano de obra" — y TruKi, tu aliado, genera al instante la factura o el presupuesto, listo para el cliente y guardado en tu propia base de datos. Factura legal desde el primer día. Si la contratas suelta (sin Departamento) tiene 29€/mes de hosting aparte; una vez instalada dentro de cualquier Departamento ya va incluido. Puedes elegirla como tu automatización gratis en Start™, Basic™ o Lite™ — en Pro™ no entra en el pool de 3 gratis, pero se añade a precio de catálogo y su mantenimiento va incluido igualmente. ¿Ahora mismo cómo haces tus facturas y presupuestos?'
+      `<b>Facturación automática (TruKi)</b> es ${solutionPrice('truki')}€ + IVA. Describes el trabajo por chat — "5 metros de cable, 3 horas de mano de obra" — y TruKi, tu aliado, genera al instante la factura o el presupuesto, listo para el cliente y guardado en tu propia base de datos. Factura legal desde el primer día. Si la contratas suelta (sin Departamento) tiene 29€/mes de hosting aparte; una vez instalada dentro de cualquier Departamento ya va incluido. Puedes elegirla como tu automatización gratis en Start™, Basic™ o Lite™ — en Pro™ no entra en el pool de 3 gratis, pero se añade a precio de catálogo y su mantenimiento va incluido igualmente. ¿Ahora mismo cómo haces tus facturas y presupuestos?`
     ]
   },
 
   sol_llamadas: {
     patterns: ['ia para llamadas','asistente de voz','asistente de llamadas','agente de voz','contestar el teléfono','contestador ia','llamadas perdidas','cuánto cuesta ia para llamadas','precio de ia para llamadas','ia para el teléfono'],
     responses: [
-      'La <b>IA para Llamadas</b> cuesta 690€ + IVA ahora mismo — <b>Oferta de Lanzamiento 2026</b>, precio normal 890€ — todo incluido (línea + IA, sin coste aparte). Un agente de voz natural contesta tu teléfono a cualquier hora, entiende lo que pide el cliente y agenda la cita directamente en tu calendario mientras hablan — nada de menús de "pulse 1 para...". Incluye 150 llamadas al mes; el exceso se factura a 0,50€ + IVA por llamada adicional. Exclusiva desde Lite™ en adelante — no disponible en Start™ ni Basic™, ni siquiera pagando aparte. ¿Cuántas llamadas se te escapan ahora mismo por no poder contestar a tiempo?'
+      `La <b>IA para Llamadas</b> cuesta ${solutionPrice('llamadas')}€ + IVA ahora mismo — <b>Oferta de Lanzamiento 2026</b>, precio normal 890€ — todo incluido (línea + IA, sin coste aparte). Un agente de voz natural contesta tu teléfono a cualquier hora, entiende lo que pide el cliente y agenda la cita directamente en tu calendario mientras hablan — nada de menús de "pulse 1 para...". Incluye 150 llamadas al mes; el exceso se factura a 0,50€ + IVA por llamada adicional. Exclusiva desde Lite™ en adelante — no disponible en Start™ ni Basic™, ni siquiera pagando aparte. ¿Cuántas llamadas se te escapan ahora mismo por no poder contestar a tiempo?`
     ]
   },
 

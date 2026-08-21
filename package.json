@@ -3,6 +3,8 @@
   "private": true,
   "dependencies": {
     "livekit-server-sdk": "^2.9.2",
-    "stripe": "^17.4.0"
+    "stripe": "^17.4.0",
+    "pdf-lib": "^1.17.1",
+    "nodemailer": "^6.9.14"
   }
 }

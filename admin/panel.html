@@ -272,6 +272,42 @@
   .truki-register{display:flex;flex-direction:column;gap:8px;margin-top:20px;padding-top:18px;border-top:1px solid var(--grey-line);}
   .truki-register input,.truki-register select{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.84rem;outline:none;}
   .truki-register button{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:9px;font-size:.82rem;font-weight:600;cursor:pointer;}
+
+  /* ── PRESUPUESTOS (overlay, founder-only) ── */
+  #quotes-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
+  #quotes-btn:hover{border-color:var(--gold);color:var(--gold);}
+  #quotes-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+  .quotes-layout{display:grid;grid-template-columns:280px 1fr;gap:0;width:100%;max-width:980px;margin:0 auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:18px;box-shadow:var(--shadow-card);overflow:hidden;}
+  @media(max-width:760px){.quotes-layout{grid-template-columns:1fr;}}
+  .quotes-sidebar{border-right:1px solid var(--grey-line);padding:24px 18px;max-height:85vh;overflow-y:auto;}
+  .quotes-sidebar h2{font-family:var(--font-d);font-size:1.1rem;margin:0 0 14px;}
+  .quotes-sidebar button.new{width:100%;background:var(--blue);border:none;border-radius:8px;color:#fff;padding:9px;font-size:.8rem;font-weight:600;cursor:pointer;margin-bottom:14px;}
+  .quote-row{padding:10px 8px;border-radius:8px;cursor:pointer;font-size:.78rem;margin-bottom:4px;}
+  .quote-row:hover{background:rgba(255,255,255,.04);}
+  .quote-row.active{background:rgba(47,123,255,.12);}
+  .quote-row .q-name{color:var(--white);font-weight:600;}
+  .quote-row .q-meta{color:var(--grey);font-size:.7rem;font-family:var(--font-m);margin-top:2px;}
+  .quotes-main{padding:24px 26px;max-height:85vh;overflow-y:auto;position:relative;}
+  .quotes-main .stats-close{position:absolute;top:20px;right:20px;}
+  .quotes-main h2{font-family:var(--font-d);font-size:1.2rem;margin:0 0 16px;}
+  .quotes-main .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+  .quotes-main input,.quotes-main textarea,.quotes-main select{width:100%;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.84rem;outline:none;}
+  .quotes-main textarea{resize:vertical;min-height:50px;}
+  .quote-line{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--grey-line);font-size:.8rem;}
+  .quote-line .ql-desc{color:var(--white);}
+  .quote-line .ql-price{font-family:var(--font-m);color:var(--grey);white-space:nowrap;}
+  .quote-add-row{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
+  .quote-add-row select,.quote-add-row input{flex:1;min-width:120px;}
+  .quote-add-row button{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:9px 12px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;}
+  .quote-total{text-align:right;font-size:1rem;font-weight:700;color:var(--white);margin:14px 0;}
+  .quotes-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+  .quotes-actions button{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 13px;border-radius:8px;font-size:.78rem;cursor:pointer;}
+  .quotes-actions button:hover{border-color:var(--blue);color:var(--blue-light);}
+  .quotes-actions button.primary{background:var(--blue);border:none;color:#fff;}
+  .quotes-actions button.primary:hover{opacity:.9;}
+  .price-row{display:grid;grid-template-columns:1fr 60px 60px;gap:6px;align-items:center;margin-bottom:6px;}
+  .price-row span{font-size:.72rem;color:var(--grey);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .price-row input{width:100%;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:6px;padding:5px 6px;color:var(--white);font-size:.72rem;outline:none;}
   .stats-table td:last-child{text-align:right;color:var(--grey);font-family:var(--font-m);font-size:.72rem;}
 </style>
 </head>
@@ -299,6 +335,7 @@
     <div>
       <button id="stats-btn" onclick="openStatsOverlay()" style="display:none;">Estadísticas</button>
       <button id="truki-btn" onclick="openTrukiOverlay()" style="display:none;">TruKi</button>
+      <button id="quotes-btn" onclick="openQuotesOverlay()" style="display:none;">Presupuestos</button>
       <button id="team-btn" onclick="openTeamOverlay()" style="display:none;">Equipo</button>
       <button id="logout-btn" onclick="doLogout()">Cerrar sesión</button>
     </div>
@@ -373,6 +410,73 @@
       <p id="nc-tier-hint" style="color:var(--grey);font-size:.74rem;margin:-4px 0 10px;"></p>
       <div class="new-client-solutions" id="nc-solutions"></div>
       <button class="submit" onclick="crearClienteManual()">Dar de alta</button>
+    </div>
+  </div>
+
+  <div id="quotes-overlay">
+    <div class="quotes-layout">
+      <div class="quotes-sidebar">
+        <h2>Presupuestos</h2>
+        <button class="new" onclick="nuevoPresupuesto()">+ Nuevo presupuesto</button>
+        <div id="quotes-list"></div>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--grey-line);">
+          <div class="empty-mini" style="margin-bottom:8px;">Precios de Departamentos</div>
+          <p style="color:var(--grey);font-size:.7rem;margin:0 0 10px;">Start™/Basic™/Lite™/Pro™ — se aplican solos en toda la web. Para una oferta puntual (ej. Navidad), baja "Fundador" temporalmente.</p>
+          <div id="tiers-editor"></div>
+          <button class="new" style="margin-top:10px;" onclick="guardarPreciosTiers()">Guardar Departamentos</button>
+        </div>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--grey-line);">
+          <div class="empty-mini" style="margin-bottom:8px;">Precios de tus servicios</div>
+          <p style="color:var(--grey);font-size:.7rem;margin:0 0 10px;">Se aplican solos en toda la web (soluciones, sectores, chat) y en los presupuestos nuevos.</p>
+          <div id="prices-editor"></div>
+          <button class="new" style="margin-top:10px;" onclick="guardarPreciosCatalogo()">Guardar precios</button>
+        </div>
+      </div>
+      <div class="quotes-main">
+        <button class="stats-close" onclick="closeQuotesOverlay()">✕</button>
+        <h2 id="quote-form-title">Nuevo presupuesto</h2>
+        <div class="form-grid">
+          <input type="text" id="q-nombre" placeholder="Persona de contacto">
+          <input type="email" id="q-email" placeholder="Email">
+          <input type="text" id="q-telefono" placeholder="Teléfono">
+          <input type="text" id="q-negocio" placeholder="Negocio / empresa">
+        </div>
+        <textarea id="q-notas" placeholder="Notas internas u observaciones para el presupuesto (opcional)"></textarea>
+
+        <div style="margin-top:16px;">
+          <div class="empty-mini">Líneas del presupuesto</div>
+          <div id="quote-lineas"></div>
+          <div class="quote-total" id="quote-total">Total: 0,00 €</div>
+
+          <div class="quote-add-row">
+            <select id="q-catalogo-select"></select>
+            <button onclick="anadirLineaCatalogo()">Añadir del catálogo</button>
+          </div>
+          <div class="quote-add-row">
+            <input type="text" id="q-custom-desc" placeholder="Descripción (ej. CRM a medida)">
+            <input type="number" id="q-custom-precio" placeholder="Precio €" style="max-width:110px;">
+            <label style="display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--grey);white-space:nowrap;">
+              <input type="checkbox" id="q-custom-desde" style="width:auto;"> Es "desde"
+            </label>
+            <button onclick="anadirLineaCustom()">Añadir línea</button>
+          </div>
+        </div>
+
+        <div class="quotes-actions">
+          <button class="primary" onclick="guardarPresupuesto()">Guardar</button>
+          <button onclick="descargarPdfPresupuesto()">Descargar PDF</button>
+          <button onclick="enviarPresupuestoEmail()">Enviar por email</button>
+          <select id="q-estado" onchange="cambiarEstadoPresupuesto()" style="max-width:150px;">
+            <option value="borrador">Borrador</option>
+            <option value="enviado">Enviado</option>
+            <option value="aceptado">Aceptado</option>
+            <option value="rechazado">Rechazado</option>
+            <option value="pagado">Pagado</option>
+          </select>
+          <button onclick="generarEnlacePago()">Generar enlace de pago</button>
+        </div>
+        <div id="quote-pago-url" class="empty-mini" style="margin-top:8px;"></div>
+      </div>
     </div>
   </div>
 
@@ -641,6 +745,7 @@ async function checkFounderStatus() {
   document.getElementById('stats-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('truki-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('new-client-btn').style.display = isFounder ? 'inline-block' : 'none';
+  document.getElementById('quotes-btn').style.display = isFounder ? 'inline-block' : 'none';
 }
 
 function openTeamOverlay() {
@@ -726,6 +831,294 @@ async function crearClienteManual() {
   openFicha(data);
   if (solutions.includes('truki')) {
     alert('Cliente dado de alta. Para que use TruKi de verdad, todavía hace falta crear su instancia (proyecto Supabase + sitio) — desde la pestaña "TruKi" puedes registrarla en cuanto exista.');
+  }
+}
+
+// ── PRESUPUESTOS (founder-only) ─────────────────────────────────────────────
+let allQuotes = [];
+let quoteLineas = [];
+let editingQuoteId = null;
+
+function fmtEurPanel(n) {
+  return Number(n || 0).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+}
+
+async function openQuotesOverlay() {
+  document.getElementById('quotes-overlay').style.display = 'block';
+  const catalog = await getSolutionsCatalog();
+  document.getElementById('q-catalogo-select').innerHTML = catalog.map(s => {
+    const precio = s.standalone_price_eur ?? s.price_eur;
+    return `<option value="${escapeHtml(s.solution_key)}">${escapeHtml(s.name)}${precio ? ' (' + fmtEurPanel(precio) + ')' : ' (a consultar)'}</option>`;
+  }).join('');
+  renderPricesEditor(catalog);
+  await loadTiersEditor();
+  await loadQuotesList();
+  nuevoPresupuesto();
+}
+
+async function loadTiersEditor() {
+  const { data } = await sb.from('tier_config').select('tier,name,founder_price_eur,standard_price_eur').order('founder_price_eur');
+  const wrap = document.getElementById('tiers-editor');
+  if (!data || !data.length) { wrap.innerHTML = '<div class="empty-mini">Sin Departamentos.</div>'; return; }
+  wrap.innerHTML = `<div class="price-row"><span></span><span style="text-align:center;">Fundador</span><span style="text-align:center;">Normal</span></div>` +
+    data.map(t => `
+      <div class="price-row" data-tier="${escapeHtml(t.tier)}">
+        <span title="${escapeHtml(t.name)}">${escapeHtml(t.name)}</span>
+        <input type="number" class="tier-founder" value="${t.founder_price_eur ?? ''}" placeholder="—">
+        <input type="number" class="tier-standard" value="${t.standard_price_eur ?? ''}" placeholder="—">
+      </div>
+    `).join('');
+}
+
+async function guardarPreciosTiers() {
+  const rows = document.querySelectorAll('#tiers-editor .price-row[data-tier]');
+  for (const row of rows) {
+    const founder = row.querySelector('.tier-founder').value;
+    const standard = row.querySelector('.tier-standard').value;
+    if (founder === '' || standard === '') continue;
+    await sb.from('tier_config').update({
+      founder_price_eur: Number(founder), standard_price_eur: Number(standard), updated_at: new Date().toISOString()
+    }).eq('tier', row.dataset.tier);
+  }
+  alert('Precios de Departamentos guardados — ya se reflejan en toda la web.');
+  await loadTiersEditor();
+}
+
+function renderPricesEditor(catalog) {
+  const wrap = document.getElementById('prices-editor');
+  wrap.innerHTML = `<div class="price-row"><span></span><span style="text-align:center;">Depto.</span><span style="text-align:center;">Suelto</span></div>` +
+    catalog.map(s => `
+      <div class="price-row" data-key="${escapeHtml(s.solution_key)}">
+        <span title="${escapeHtml(s.name)}">${escapeHtml(s.name)}</span>
+        <input type="number" class="price-bundled" value="${s.price_eur ?? ''}" placeholder="—">
+        <input type="number" class="price-standalone" value="${s.standalone_price_eur ?? ''}" placeholder="—">
+      </div>
+    `).join('');
+}
+
+async function guardarPreciosCatalogo() {
+  const rows = document.querySelectorAll('#prices-editor .price-row[data-key]');
+  const updates = Array.from(rows).map(row => ({
+    solution_key: row.dataset.key,
+    price_eur: row.querySelector('.price-bundled').value === '' ? null : Number(row.querySelector('.price-bundled').value),
+    standalone_price_eur: row.querySelector('.price-standalone').value === '' ? null : Number(row.querySelector('.price-standalone').value),
+  }));
+  for (const u of updates) {
+    await sb.from('solutions_catalog').update({ price_eur: u.price_eur, standalone_price_eur: u.standalone_price_eur }).eq('solution_key', u.solution_key);
+  }
+  solutionsCatalogCache = null; // fuerza a releer en la próxima apertura
+  alert('Precios guardados — ya se reflejan en toda la web (puede tardar unos segundos en llegar a páginas ya abiertas).');
+  await openQuotesOverlay();
+}
+function closeQuotesOverlay() {
+  document.getElementById('quotes-overlay').style.display = 'none';
+}
+
+async function loadQuotesList() {
+  const { data, error } = await sb.from('quotes').select('*').order('created_at', { ascending: false });
+  allQuotes = error ? [] : (data || []);
+  renderQuotesList();
+}
+function renderQuotesList() {
+  const list = document.getElementById('quotes-list');
+  if (!allQuotes.length) { list.innerHTML = '<div class="empty-mini">Todavía no hay presupuestos.</div>'; return; }
+  list.innerHTML = allQuotes.map(q => `
+    <div class="quote-row${q.id === editingQuoteId ? ' active' : ''}" onclick="cargarPresupuestoEnFormulario('${q.id}')">
+      <div class="q-name">${escapeHtml(q.negocio || q.nombre_contacto || q.email_contacto || 'Sin nombre')}</div>
+      <div class="q-meta">${escapeHtml(q.estado)} · ${fmtEurPanel(q.total_estimado)}</div>
+    </div>
+  `).join('');
+}
+
+function nuevoPresupuesto() {
+  editingQuoteId = null;
+  quoteLineas = [];
+  document.getElementById('quote-form-title').textContent = 'Nuevo presupuesto';
+  ['q-nombre', 'q-email', 'q-telefono', 'q-negocio', 'q-notas'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('q-estado').value = 'borrador';
+  document.getElementById('quote-pago-url').textContent = '';
+  renderQuoteLineas();
+  renderQuotesList();
+}
+
+function cargarPresupuestoEnFormulario(id) {
+  const q = allQuotes.find(x => x.id === id);
+  if (!q) return;
+  editingQuoteId = id;
+  document.getElementById('quote-form-title').textContent = 'Editar presupuesto';
+  document.getElementById('q-nombre').value = q.nombre_contacto || '';
+  document.getElementById('q-email').value = q.email_contacto || '';
+  document.getElementById('q-telefono').value = q.telefono || '';
+  document.getElementById('q-negocio').value = q.negocio || '';
+  document.getElementById('q-notas').value = q.notas || '';
+  document.getElementById('q-estado').value = q.estado || 'borrador';
+  document.getElementById('quote-pago-url').textContent = q.stripe_checkout_url ? 'Enlace de pago: ' + q.stripe_checkout_url : '';
+  quoteLineas = Array.isArray(q.lineas) ? q.lineas.slice() : [];
+  renderQuoteLineas();
+  renderQuotesList();
+}
+
+function renderQuoteLineas() {
+  const wrap = document.getElementById('quote-lineas');
+  if (!quoteLineas.length) {
+    wrap.innerHTML = '<div class="empty-mini">Sin líneas todavía.</div>';
+  } else {
+    wrap.innerHTML = quoteLineas.map((l, i) => `
+      <div class="quote-line">
+        <span class="ql-desc">${escapeHtml(l.descripcion)}</span>
+        <span class="ql-price">${l.precio ? (l.es_desde ? 'desde ' : '') + fmtEurPanel(l.precio) : 'a consultar'} <button class="del-btn" style="margin-left:8px;" onclick="quitarLineaPresupuesto(${i})">✕</button></span>
+      </div>
+    `).join('');
+  }
+  const total = quoteLineas.reduce((s, l) => s + (Number(l.precio) || 0), 0);
+  document.getElementById('quote-total').textContent = 'Total: ' + fmtEurPanel(total);
+}
+
+function quitarLineaPresupuesto(i) {
+  quoteLineas.splice(i, 1);
+  renderQuoteLineas();
+}
+
+async function anadirLineaCatalogo() {
+  const key = document.getElementById('q-catalogo-select').value;
+  if (!key) return;
+  const catalog = await getSolutionsCatalog();
+  const sol = catalog.find(s => s.solution_key === key);
+  if (!sol) return;
+  quoteLineas.push({
+    tipo: 'catalogo', solution_key: key, descripcion: sol.name,
+    precio: sol.standalone_price_eur ?? sol.price_eur ?? null, es_desde: false
+  });
+  renderQuoteLineas();
+}
+
+function anadirLineaCustom() {
+  const desc = document.getElementById('q-custom-desc').value.trim();
+  const precio = document.getElementById('q-custom-precio').value;
+  const esDesde = document.getElementById('q-custom-desde').checked;
+  if (!desc) { alert('Falta la descripción de la línea.'); return; }
+  quoteLineas.push({ tipo: 'custom', descripcion: desc, precio: precio ? Number(precio) : null, es_desde: esDesde });
+  document.getElementById('q-custom-desc').value = '';
+  document.getElementById('q-custom-precio').value = '';
+  document.getElementById('q-custom-desde').checked = false;
+  renderQuoteLineas();
+}
+
+function datosFormularioPresupuesto() {
+  const total = quoteLineas.reduce((s, l) => s + (Number(l.precio) || 0), 0);
+  return {
+    nombre_contacto: document.getElementById('q-nombre').value.trim() || null,
+    email_contacto: document.getElementById('q-email').value.trim() || null,
+    telefono: document.getElementById('q-telefono').value.trim() || null,
+    negocio: document.getElementById('q-negocio').value.trim() || null,
+    notas: document.getElementById('q-notas').value.trim() || null,
+    lineas: quoteLineas,
+    total_estimado: total,
+  };
+}
+
+async function guardarPresupuesto() {
+  const datos = datosFormularioPresupuesto();
+  if (!datos.email_contacto && !datos.nombre_contacto) { alert('Pon al menos un nombre o un email de contacto.'); return; }
+
+  if (editingQuoteId) {
+    const { error } = await sb.from('quotes').update({ ...datos, updated_at: new Date().toISOString() }).eq('id', editingQuoteId);
+    if (error) { alert('No se pudo guardar: ' + error.message); return; }
+  } else {
+    const { data, error } = await sb.from('quotes').insert(datos).select('id').single();
+    if (error) { alert('No se pudo guardar: ' + error.message); return; }
+    editingQuoteId = data.id;
+  }
+  await loadQuotesList();
+  cargarPresupuestoEnFormulario(editingQuoteId);
+  alert('Presupuesto guardado.');
+}
+
+async function cambiarEstadoPresupuesto() {
+  if (!editingQuoteId) { alert('Guarda el presupuesto primero.'); return; }
+  const estado = document.getElementById('q-estado').value;
+  const { error } = await sb.from('quotes').update({ estado, updated_at: new Date().toISOString() }).eq('id', editingQuoteId);
+  if (error) { alert('No se pudo cambiar el estado: ' + error.message); return; }
+  await loadQuotesList();
+}
+
+async function descargarPdfPresupuesto() {
+  if (!editingQuoteId) { alert('Guarda el presupuesto primero.'); return; }
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch('/.netlify/functions/generate-quote-pdf', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ quote_id: editingQuoteId })
+    });
+    const data = await resp.json();
+    if (!data.ok) { alert('No se pudo generar el PDF (' + (data.reason || 'error') + ').'); return; }
+    const bytes = Uint8Array.from(atob(data.pdf_base64), c => c.charCodeAt(0));
+    const blob = new Blob([bytes], { type: 'application/pdf' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'presupuesto-truco-' + editingQuoteId.slice(0, 8) + '.pdf';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  } catch (e) {
+    alert('Error de conexión al generar el PDF.');
+  }
+}
+
+async function enviarPresupuestoEmail() {
+  if (!editingQuoteId) { alert('Guarda el presupuesto primero.'); return; }
+  const quote = allQuotes.find(q => q.id === editingQuoteId) || datosFormularioPresupuesto();
+  const destinatario = prompt('¿A qué email se lo mando?', quote.email_contacto || '');
+  if (!destinatario) return;
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const pdfResp = await fetch('/.netlify/functions/generate-quote-pdf', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ quote_id: editingQuoteId })
+    });
+    const pdfData = await pdfResp.json();
+    if (!pdfData.ok) { alert('No se pudo generar el PDF (' + (pdfData.reason || 'error') + ').'); return; }
+
+    const sendResp = await fetch('/.netlify/functions/send-quote-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({
+        destinatario, pdf_base64: pdfData.pdf_base64,
+        enlace_pago: quote.stripe_checkout_url || ''
+      })
+    });
+    const sendData = await sendResp.json();
+    if (!sendData.ok) {
+      alert(sendData.reason === 'not_configured'
+        ? 'El envío por email no está configurado todavía en este sitio (falta el SMTP) — descarga el PDF y mándalo tú por ahora.'
+        : 'No se pudo enviar el correo.');
+      return;
+    }
+    await sb.from('quotes').update({ estado: 'enviado', updated_at: new Date().toISOString() }).eq('id', editingQuoteId);
+    await loadQuotesList();
+    cargarPresupuestoEnFormulario(editingQuoteId);
+    alert('Presupuesto enviado a ' + destinatario + '.');
+  } catch (e) {
+    alert('Error de conexión al enviar el correo.');
+  }
+}
+
+async function generarEnlacePago() {
+  if (!editingQuoteId) { alert('Guarda el presupuesto primero.'); return; }
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch('/.netlify/functions/create-quote-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ quote_id: editingQuoteId })
+    });
+    const data = await resp.json();
+    if (!data.ok) { alert('No se pudo generar el enlace (' + (data.reason || 'error') + ').'); return; }
+    document.getElementById('quote-pago-url').textContent = 'Enlace de pago: ' + data.url;
+    await loadQuotesList();
+  } catch (e) {
+    alert('Error de conexión al generar el enlace de pago.');
   }
 }
 
@@ -1125,7 +1518,7 @@ async function updateAutomationStatus(id, status) {
 let solutionsCatalogCache = null;
 async function getSolutionsCatalog() {
   if (solutionsCatalogCache) return solutionsCatalogCache;
-  const { data } = await sb.from('solutions_catalog').select('solution_key,name,monthly_usage_limit,overage_rate_eur');
+  const { data } = await sb.from('solutions_catalog').select('solution_key,name,price_eur,standalone_price_eur,monthly_usage_limit,overage_rate_eur');
   solutionsCatalogCache = data || [];
   return solutionsCatalogCache;
 }
