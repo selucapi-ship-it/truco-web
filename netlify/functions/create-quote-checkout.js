@@ -93,7 +93,11 @@ exports.handler = async function (event) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Importe inválido' }) };
     }
 
-    const origin = event.headers.origin || 'https://' + event.headers.host;
+    // El enlace de pago va al CLIENTE, no al founder — así que tiene que
+    // apuntar siempre al dominio público real, nunca a la URL desde la que
+    // el founder esté usando el panel en ese momento (ej. una URL de
+    // despliegue de pruebas, que puede dejar de existir).
+    const origin = 'https://trucotechnology.com';
     const Stripe = require('stripe');
     const stripe = Stripe(stripeSecret);
 
