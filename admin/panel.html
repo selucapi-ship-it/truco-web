@@ -325,6 +325,10 @@
   .prices-table input:focus{border-color:var(--blue);}
   .prices-table input.price-changed{border-color:var(--gold);background:rgba(217,168,63,.08);}
   .prices-card button.new{margin-top:4px;}
+  .offer-form{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px;}
+  .offer-form select,.offer-form input{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:7px;padding:8px 10px;color:var(--white);font-size:.8rem;outline:none;width:100%;}
+  .offer-form select:focus,.offer-form input:focus{border-color:var(--blue);}
+  @media (max-width:900px){.offer-form{grid-template-columns:1fr 1fr;}}
   .stats-table td:last-child{text-align:right;color:var(--grey);font-family:var(--font-m);font-size:.72rem;}
 </style>
 </head>
@@ -466,10 +470,15 @@
             <select id="q-tier-select"></select>
             <button onclick="anadirLineaTier()">Añadir Departamento</button>
           </div>
+          <div id="quote-included-wrap" style="display:none;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:10px 12px;margin-bottom:8px;">
+            <div id="quote-included-title" style="font-size:.76rem;color:var(--gold);margin-bottom:6px;"></div>
+            <div id="quote-included-list" style="display:flex;flex-wrap:wrap;gap:10px;"></div>
+          </div>
           <div class="quote-add-row">
             <select id="q-catalogo-select"></select>
-            <button onclick="anadirLineaCatalogo()">Añadir automatización</button>
+            <button onclick="anadirLineaCatalogo()">Añadir automatización extra</button>
           </div>
+          <p id="q-catalogo-hint" style="color:var(--grey);font-size:.72rem;margin:-4px 0 8px;"></p>
           <div class="quote-add-row">
             <input type="text" id="q-custom-desc" placeholder="Descripción (ej. CRM a medida)">
             <input type="number" id="q-custom-precio" placeholder="Precio €" style="max-width:110px;">
@@ -522,6 +531,36 @@
         </div>
         <div id="prices-editor"></div>
         <button class="new" onclick="guardarPreciosCatalogo()">Guardar servicios</button>
+      </div>
+
+      <div class="prices-card">
+        <div class="prices-card-head">
+          <h3>Ofertas por tiempo</h3>
+          <span>Se aplican solas durante esas fechas y desaparecen solas al terminar — el precio de arriba nunca se toca</span>
+        </div>
+        <div class="offer-form">
+          <select id="offer-target-type" onchange="renderOfferTargetOptions()">
+            <option value="tier">Departamento</option>
+            <option value="solution">Servicio</option>
+          </select>
+          <select id="offer-target-key"></select>
+          <select id="offer-price-field"></select>
+          <input type="number" id="offer-precio" placeholder="Precio de oferta €">
+        </div>
+        <div class="offer-form">
+          <select id="offer-nombre-preset" onchange="toggleOfferNombreCustom()">
+            <option value="Oferta Navidad">Oferta Navidad</option>
+            <option value="Oferta Primavera">Oferta Primavera</option>
+            <option value="Oferta Verano">Oferta Verano</option>
+            <option value="Oferta Black Friday">Oferta Black Friday</option>
+            <option value="__custom">Otro nombre...</option>
+          </select>
+          <input type="text" id="offer-nombre-custom" placeholder="Nombre de la oferta" style="display:none;">
+          <input type="date" id="offer-desde">
+          <input type="date" id="offer-hasta">
+        </div>
+        <button class="new" onclick="crearOferta()">Crear oferta</button>
+        <div id="offers-list" style="margin-top:16px;"></div>
       </div>
     </div>
   </div>
@@ -885,6 +924,7 @@ async function crearClienteManual() {
 let allQuotes = [];
 let quoteLineas = [];
 let editingQuoteId = null;
+let quoteActiveTier = null; // tier_key del Departamento en el presupuesto actual, o null si es venta suelta
 
 function fmtEurPanel(n) {
   return Number(n || 0).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
@@ -894,12 +934,9 @@ let quoteTiersCache = [];
 
 async function openQuotesOverlay() {
   document.getElementById('quotes-overlay').style.display = 'block';
-  const catalog = await getSolutionsCatalog();
-  document.getElementById('q-catalogo-select').innerHTML = catalog.map(s => {
-    const precio = s.standalone_price_eur ?? s.price_eur;
-    return `<option value="${escapeHtml(s.solution_key)}">${escapeHtml(s.name)}${precio ? ' (' + fmtEurPanel(precio) + ')' : ' (a consultar)'}</option>`;
-  }).join('');
-  const { data: tiers } = await sb.from('tier_config').select('tier,name,founder_price_eur').order('founder_price_eur');
+  // tier_config_effective ya devuelve el precio de oferta si hay una activa hoy —
+  // así un presupuesto nuevo parte del precio real que se va a cobrar ahora mismo.
+  const { data: tiers } = await sb.from('tier_config_effective').select('tier,name,founder_price_eur').order('founder_price_eur');
   quoteTiersCache = tiers || [];
   document.getElementById('q-tier-select').innerHTML = quoteTiersCache.map(t =>
     `<option value="${escapeHtml(t.tier)}">${escapeHtml(t.name)} (${fmtEurPanel(t.founder_price_eur)}/mes)</option>`
@@ -912,21 +949,101 @@ function anadirLineaTier() {
   const tierKey = document.getElementById('q-tier-select').value;
   const tier = quoteTiersCache.find(t => t.tier === tierKey);
   if (!tier) return;
+  // Un presupuesto tiene un solo Departamento — si ya había uno, lo sustituimos
+  // junto con las automatizaciones que llevaba incluidas gratis (ya no aplican).
+  quoteLineas = quoteLineas.filter(l => l.tipo !== 'departamento' && !l.es_incluida);
+  quoteActiveTier = tierKey;
   quoteLineas.push({
     tipo: 'departamento', tier_key: tierKey,
     descripcion: 'Departamento ' + tier.name + ' (mensual, alta y gestión)',
     precio: tier.founder_price_eur, es_desde: false
   });
   renderQuoteLineas();
+  renderIncludedSolutionsPicker();
+  renderCatalogSelectForActiveTier();
+}
+
+// Checklist de automatizaciones incluidas gratis en el Departamento elegido —
+// capadas al número de gratis de ese tier (TIER_INFO[tier].gratis). Van como
+// líneas a precio 0 ("incluida"), distintas de las que se añaden de pago abajo.
+async function renderIncludedSolutionsPicker() {
+  const wrap = document.getElementById('quote-included-wrap');
+  if (!quoteActiveTier) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  const info = TIER_INFO[quoteActiveTier];
+  const pool = TIER_SOLUTIONS[quoteActiveTier] || [];
+  const catalog = await getSolutionsCatalog();
+  const incluidaKeys = new Set(quoteLineas.filter(l => l.es_incluida).map(l => l.solution_key));
+  document.getElementById('quote-included-title').textContent =
+    `Automatizaciones incluidas gratis con ${info.nombre} (elige hasta ${info.gratis}):`;
+  document.getElementById('quote-included-list').innerHTML = pool.map(key => {
+    const sol = catalog.find(s => s.solution_key === key);
+    if (!sol) return '';
+    const checked = incluidaKeys.has(key);
+    return `<label style="display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--grey);">
+      <input type="checkbox" style="width:auto;" ${checked ? 'checked' : ''} onchange="toggleLineaIncluida('${escapeHtml(key)}', this.checked)"> ${escapeHtml(sol.name)}
+    </label>`;
+  }).join('');
+}
+
+async function toggleLineaIncluida(key, checked) {
+  const info = TIER_INFO[quoteActiveTier];
+  const incluidaCount = quoteLineas.filter(l => l.es_incluida).length;
+  if (checked) {
+    if (incluidaCount >= info.gratis) {
+      alert(`${info.nombre} solo incluye ${info.gratis} automatización(es) gratis. Desmarca otra antes de elegir esta, o añádela como extra de pago más abajo.`);
+      renderIncludedSolutionsPicker();
+      return;
+    }
+    const catalog = await getSolutionsCatalog();
+    const sol = catalog.find(s => s.solution_key === key);
+    quoteLineas.push({
+      tipo: 'catalogo', solution_key: key,
+      descripcion: (sol ? sol.name : key) + ' (incluida en el Departamento)',
+      precio: 0, es_desde: false, es_incluida: true
+    });
+  } else {
+    quoteLineas = quoteLineas.filter(l => !(l.solution_key === key && l.es_incluida));
+  }
+  renderQuoteLineas();
+  renderCatalogSelectForActiveTier();
+}
+
+// El desplegable de "añadir extra": si hay un Departamento elegido, solo deja
+// ver las automatizaciones de SU pool (TIER_SOLUTIONS) — el resto no se puede
+// vender en ese Departamento ni pagando aparte. Sin Departamento (venta suelta)
+// se ve el catálogo completo.
+async function renderCatalogSelectForActiveTier() {
+  const catalog = await getSolutionsCatalog();
+  const pool = quoteActiveTier ? (TIER_SOLUTIONS[quoteActiveTier] || []) : null;
+  const yaIncluidas = new Set(quoteLineas.filter(l => l.es_incluida).map(l => l.solution_key));
+  const visibles = (pool ? catalog.filter(s => pool.includes(s.solution_key)) : catalog)
+    .filter(s => !yaIncluidas.has(s.solution_key));
+  document.getElementById('q-catalogo-select').innerHTML = visibles.map(s => {
+    const precio = s.standalone_price_eur ?? s.price_eur;
+    return `<option value="${escapeHtml(s.solution_key)}">${escapeHtml(s.name)}${precio ? ' (' + fmtEurPanel(precio) + ')' : ' (a consultar)'}</option>`;
+  }).join('');
+  document.getElementById('q-catalogo-hint').textContent = quoteActiveTier
+    ? `Solo se pueden añadir automatizaciones del pool de ${TIER_INFO[quoteActiveTier].nombre} (hasta ${TIER_INFO[quoteActiveTier].max} en total, incluidas + extra) — el resto no está disponible en ese Departamento, ni pagando aparte.`
+    : 'Venta suelta, sin Departamento — cualquier automatización del catálogo.';
 }
 
 // ── PRECIOS (apartado propio, independiente de Presupuestos) ───────────────
+// rawTiersCache/rawSolutionsCache: SIEMPRE el precio real de tier_config/
+// solutions_catalog directamente (nunca las vistas *_effective) — este editor
+// es la fuente de verdad, tiene que mostrar y guardar el precio de siempre,
+// sin que una oferta activa lo tape ni se pueda sobrescribir sin querer.
+let rawTiersCache = [];
+let rawSolutionsCache = [];
+
 async function openPricesOverlay() {
   document.getElementById('prices-overlay').style.display = 'block';
-  solutionsCatalogCache = null;
-  const catalog = await getSolutionsCatalog();
-  renderPricesEditor(catalog);
+  const { data: solData } = await sb.from('solutions_catalog').select('solution_key,name,price_eur,standalone_price_eur').order('name');
+  rawSolutionsCache = solData || [];
+  renderPricesEditor(rawSolutionsCache);
   await loadTiersEditor();
+  renderOfferTargetOptions();
+  await loadOffersList();
 }
 function closePricesOverlay() {
   document.getElementById('prices-overlay').style.display = 'none';
@@ -942,6 +1059,7 @@ function marcarSiCambiado(input, original) {
 
 async function loadTiersEditor() {
   const { data } = await sb.from('tier_config').select('tier,name,founder_price_eur,standard_price_eur').order('founder_price_eur');
+  rawTiersCache = data || [];
   const wrap = document.getElementById('tiers-editor');
   if (!data || !data.length) { wrap.innerHTML = '<div class="empty-mini">Sin Departamentos.</div>'; return; }
   tiersOriginal = {};
@@ -954,6 +1072,92 @@ async function loadTiersEditor() {
         <td class="num"><span class="price-input-wrap"><input type="number" class="tier-standard" value="${t.standard_price_eur ?? ''}" placeholder="—" oninput="marcarSiCambiado(this, ${t.standard_price_eur ?? 'null'})"></span></td>
       </tr>
     `).join('') + '</tbody></table>';
+}
+
+// ── OFERTAS POR TIEMPO ──────────────────────────────────────────────────────
+const OFFER_PRICE_FIELDS = {
+  tier: [{ value: 'founder_price_eur', label: 'Precio fundador' }, { value: 'standard_price_eur', label: 'Precio normal' }],
+  solution: [{ value: 'price_eur', label: 'Valor en Departamento' }, { value: 'standalone_price_eur', label: 'Precio suelto' }]
+};
+
+function renderOfferTargetOptions() {
+  const type = document.getElementById('offer-target-type').value;
+  const keySel = document.getElementById('offer-target-key');
+  const fieldSel = document.getElementById('offer-price-field');
+  keySel.innerHTML = type === 'tier'
+    ? rawTiersCache.map(t => `<option value="${escapeHtml(t.tier)}">${escapeHtml(t.name)}</option>`).join('')
+    : rawSolutionsCache.map(s => `<option value="${escapeHtml(s.solution_key)}">${escapeHtml(s.name)}</option>`).join('');
+  fieldSel.innerHTML = OFFER_PRICE_FIELDS[type].map(f => `<option value="${f.value}">${f.label}</option>`).join('');
+}
+
+function toggleOfferNombreCustom() {
+  const isCustom = document.getElementById('offer-nombre-preset').value === '__custom';
+  document.getElementById('offer-nombre-custom').style.display = isCustom ? 'block' : 'none';
+}
+
+async function crearOferta() {
+  const targetType = document.getElementById('offer-target-type').value;
+  const targetKey = document.getElementById('offer-target-key').value;
+  const priceField = document.getElementById('offer-price-field').value;
+  const precio = document.getElementById('offer-precio').value;
+  const nombrePreset = document.getElementById('offer-nombre-preset').value;
+  const nombre = nombrePreset === '__custom' ? document.getElementById('offer-nombre-custom').value.trim() : nombrePreset;
+  const desde = document.getElementById('offer-desde').value;
+  const hasta = document.getElementById('offer-hasta').value;
+
+  if (!targetKey || precio === '' || !nombre || !desde || !hasta) { alert('Rellena todos los campos de la oferta.'); return; }
+  if (hasta < desde) { alert('La fecha "hasta" no puede ser antes que "desde".'); return; }
+
+  const baseObj = targetType === 'tier' ? rawTiersCache.find(t => t.tier === targetKey) : rawSolutionsCache.find(s => s.solution_key === targetKey);
+  const precioBase = baseObj ? baseObj[priceField] : null;
+  const targetNombre = baseObj ? baseObj.name : targetKey;
+  const campoNombre = OFFER_PRICE_FIELDS[targetType].find(f => f.value === priceField).label;
+
+  const resumen = `Vas a crear la oferta "${nombre}" para ${targetNombre} (${campoNombre}):\n\n` +
+    `Precio de siempre: ${precioBase ?? '—'}€  →  Precio de oferta: ${precio}€\n` +
+    `Del ${desde} al ${hasta} — después vuelve sola al precio de siempre, sin tocar nada.\n\n¿Confirmas?`;
+  if (!confirm(resumen)) return;
+
+  const { error } = await sb.from('pricing_offers').insert({
+    target_type: targetType, target_key: targetKey, price_field: priceField,
+    nombre, precio_oferta: Number(precio), desde, hasta
+  });
+  if (error) { alert('No se pudo crear la oferta: ' + error.message); return; }
+  document.getElementById('offer-precio').value = '';
+  document.getElementById('offer-nombre-custom').value = '';
+  solutionsCatalogCache = null; // fuerza a releer el precio efectivo en presupuestos/nuevo-cliente
+  alert('Oferta creada — se aplica sola durante esas fechas, en toda la web.');
+  await loadOffersList();
+}
+
+async function loadOffersList() {
+  const { data } = await sb.from('pricing_offers').select('*').order('hasta', { ascending: false });
+  const wrap = document.getElementById('offers-list');
+  if (!data || !data.length) { wrap.innerHTML = '<div class="empty-mini">Sin ofertas creadas.</div>'; return; }
+  const hoy = new Date().toISOString().slice(0, 10);
+  wrap.innerHTML = `<table class="prices-table"><thead><tr><th>Oferta</th><th>Objetivo</th><th class="num">Precio oferta</th><th>Fechas</th><th>Estado</th><th></th></tr></thead><tbody>` +
+    data.map(o => {
+      const targetNombre = o.target_type === 'tier'
+        ? (rawTiersCache.find(t => t.tier === o.target_key)?.name || o.target_key)
+        : (rawSolutionsCache.find(s => s.solution_key === o.target_key)?.name || o.target_key);
+      const estado = hoy < o.desde ? 'Programada' : (hoy > o.hasta ? 'Terminada' : 'Activa ahora');
+      const color = estado === 'Activa ahora' ? 'var(--green)' : (estado === 'Programada' ? 'var(--gold)' : 'var(--grey)');
+      return `<tr>
+        <td>${escapeHtml(o.nombre)}</td>
+        <td>${escapeHtml(targetNombre)}</td>
+        <td class="num">${fmtEurPanel(o.precio_oferta)}</td>
+        <td style="font-size:.72rem;color:var(--grey);white-space:nowrap;">${o.desde} → ${o.hasta}</td>
+        <td style="color:${color};font-size:.72rem;white-space:nowrap;">${estado}</td>
+        <td><button class="del-btn" onclick="eliminarOferta('${o.id}')">✕</button></td>
+      </tr>`;
+    }).join('') + '</tbody></table>';
+}
+
+async function eliminarOferta(id) {
+  if (!confirm('¿Eliminar esta oferta? Si estaba activa, el precio vuelve al de siempre al instante.')) return;
+  await sb.from('pricing_offers').delete().eq('id', id);
+  solutionsCatalogCache = null;
+  await loadOffersList();
 }
 
 async function guardarPreciosTiers() {
@@ -1075,12 +1279,15 @@ function renderQuotesList() {
 function nuevoPresupuesto() {
   editingQuoteId = null;
   quoteLineas = [];
+  quoteActiveTier = null;
   document.getElementById('quote-form-title').textContent = 'Nuevo presupuesto';
   ['q-nombre', 'q-email', 'q-telefono', 'q-negocio', 'q-notas'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('q-estado').value = 'borrador';
   document.getElementById('quote-pago-url').textContent = '';
   document.getElementById('quote-delete-btn').style.display = 'none';
   renderQuoteLineas();
+  renderIncludedSolutionsPicker();
+  renderCatalogSelectForActiveTier();
   renderQuotesList();
 }
 
@@ -1098,7 +1305,11 @@ function cargarPresupuestoEnFormulario(id) {
   document.getElementById('quote-pago-url').textContent = q.stripe_checkout_url ? 'Enlace de pago: ' + q.stripe_checkout_url : '';
   document.getElementById('quote-delete-btn').style.display = 'inline-block';
   quoteLineas = Array.isArray(q.lineas) ? q.lineas.slice() : [];
+  const deptoLinea = quoteLineas.find(l => l.tipo === 'departamento');
+  quoteActiveTier = deptoLinea ? deptoLinea.tier_key : null;
   renderQuoteLineas();
+  renderIncludedSolutionsPicker();
+  renderCatalogSelectForActiveTier();
   renderQuotesList();
 }
 
@@ -1119,9 +1330,9 @@ function renderQuoteLineas() {
   } else {
     wrap.innerHTML = quoteLineas.map((l, i) => `
       <div class="quote-line">
-        <span class="ql-desc">${escapeHtml(l.descripcion)}${l.es_desde ? ' <span style="color:var(--grey);font-size:.7rem;">(desde)</span>' : ''}</span>
+        <span class="ql-desc">${escapeHtml(l.descripcion)}${l.es_desde ? ' <span style="color:var(--grey);font-size:.7rem;">(desde)</span>' : ''}${l.es_incluida ? ' <span style="color:var(--green);font-size:.7rem;">(incluida gratis)</span>' : ''}</span>
         <span class="ql-price" style="display:flex;align-items:center;gap:6px;">
-          <input type="number" value="${l.precio ?? ''}" placeholder="a consultar" style="width:80px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:6px;padding:4px 6px;color:var(--white);font-size:.78rem;" onchange="actualizarPrecioLinea(${i}, this.value)">€
+          <input type="number" value="${l.precio ?? ''}" placeholder="a consultar" ${l.es_incluida ? 'disabled' : ''} style="width:80px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:6px;padding:4px 6px;color:var(--white);font-size:.78rem;${l.es_incluida ? 'opacity:.6;' : ''}" onchange="actualizarPrecioLinea(${i}, this.value)">€
           <button class="del-btn" onclick="quitarLineaPresupuesto(${i})">✕</button>
         </span>
       </div>
@@ -1140,13 +1351,33 @@ function actualizarPrecioLinea(i, value) {
 }
 
 function quitarLineaPresupuesto(i) {
+  const linea = quoteLineas[i];
   quoteLineas.splice(i, 1);
+  if (linea.tipo === 'departamento') {
+    // Sin Departamento no hay "incluidas gratis" ni pool restringido — se quitan también.
+    quoteActiveTier = null;
+    quoteLineas = quoteLineas.filter(l => !l.es_incluida);
+    renderIncludedSolutionsPicker();
+    renderCatalogSelectForActiveTier();
+  } else if (linea.es_incluida) {
+    renderIncludedSolutionsPicker();
+    renderCatalogSelectForActiveTier();
+  }
   renderQuoteLineas();
 }
 
 async function anadirLineaCatalogo() {
   const key = document.getElementById('q-catalogo-select').value;
   if (!key) return;
+  if (quoteLineas.some(l => l.solution_key === key)) { alert('Esa automatización ya está en el presupuesto.'); return; }
+  if (quoteActiveTier) {
+    const info = TIER_INFO[quoteActiveTier];
+    const totalAutomatizaciones = quoteLineas.filter(l => l.tipo === 'catalogo').length;
+    if (totalAutomatizaciones >= info.max) {
+      alert(`${info.nombre} admite como mucho ${info.max} automatizaciones en total (incluidas + extra). Quita alguna antes de añadir otra.`);
+      return;
+    }
+  }
   const catalog = await getSolutionsCatalog();
   const sol = catalog.find(s => s.solution_key === key);
   if (!sol) return;
@@ -1155,6 +1386,7 @@ async function anadirLineaCatalogo() {
     precio: sol.standalone_price_eur ?? sol.price_eur ?? null, es_desde: false
   });
   renderQuoteLineas();
+  renderCatalogSelectForActiveTier();
 }
 
 function anadirLineaCustom() {
@@ -1697,10 +1929,13 @@ async function updateAutomationStatus(id, status) {
 
 // Se piden una sola vez para todo el panel (precios/límites cambian poco) en
 // vez de volver a leer solutions_catalog cada vez que se abre una ficha.
+// Se usa en Nuevo Cliente y Presupuestos — lee solutions_catalog_effective, que
+// ya devuelve el precio de oferta si hay una activa hoy (nunca en el editor de
+// Precios, ese siempre lee la tabla real: ver rawSolutionsCache).
 let solutionsCatalogCache = null;
 async function getSolutionsCatalog() {
   if (solutionsCatalogCache) return solutionsCatalogCache;
-  const { data } = await sb.from('solutions_catalog').select('solution_key,name,price_eur,standalone_price_eur,monthly_usage_limit,overage_rate_eur');
+  const { data } = await sb.from('solutions_catalog_effective').select('solution_key,name,price_eur,standalone_price_eur,monthly_usage_limit,overage_rate_eur');
   solutionsCatalogCache = data || [];
   return solutionsCatalogCache;
 }

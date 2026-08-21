@@ -30,7 +30,10 @@ window.onSolutionsPricingUpdated = window.onSolutionsPricingUpdated || [];
 (function fetchLiveSolutionsPricing() {
   const SUPABASE_URL = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
-  fetch(SUPABASE_URL + '/rest/v1/solutions_catalog?select=solution_key,price_eur,standalone_price_eur', {
+  // solutions_catalog_effective: mismos campos que solutions_catalog, pero ya
+  // devuelve el precio de una oferta por tiempo si hay una activa hoy — se
+  // revierte solo al precio real al terminar la oferta, sin tocar nada aquí.
+  fetch(SUPABASE_URL + '/rest/v1/solutions_catalog_effective?select=solution_key,price_eur,standalone_price_eur', {
     headers: { apikey: SUPABASE_ANON_KEY }
   })
     .then(r => r.ok ? r.json() : null)

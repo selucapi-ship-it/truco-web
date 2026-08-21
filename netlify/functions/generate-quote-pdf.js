@@ -175,7 +175,7 @@ exports.handler = async function (event) {
         page.drawText(l, { x: colDescX, y: textY, size: 9.5, font, color: dark });
         textY -= 13;
       }
-      const precioTexto = linea.precio ? (linea.es_desde ? 'desde ' : '') + fmtEur(linea.precio) : 'A consultar';
+      const precioTexto = linea.precio === 0 ? 'Incluida' : (linea.precio ? (linea.es_desde ? 'desde ' : '') + fmtEur(linea.precio) : 'A consultar');
       page.drawText(precioTexto, { x: colPrecioX - fontBold.widthOfTextAtSize(precioTexto, 9.5), y: y - 15, size: 9.5, font: fontBold, color: dark });
 
       y -= filaAltura;

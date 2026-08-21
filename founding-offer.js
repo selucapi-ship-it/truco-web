@@ -60,7 +60,10 @@ window.onFoundingSpotsUpdated = window.onFoundingSpotsUpdated || [];
 (function fetchLiveTierConfig(){
   const SUPABASE_URL = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
-  fetch(SUPABASE_URL + '/rest/v1/tier_config?select=tier,founder_price_eur,standard_price_eur', {
+  // tier_config_effective: mismos campos que tier_config, pero ya devuelve el
+  // precio de una oferta por tiempo si hay una activa hoy (pricing_offers) —
+  // se revierte sola al precio real al terminar la oferta, sin tocar nada aquí.
+  fetch(SUPABASE_URL + '/rest/v1/tier_config_effective?select=tier,founder_price_eur,standard_price_eur', {
     headers: { apikey: SUPABASE_ANON_KEY }
   })
     .then(r => r.ok ? r.json() : null)
