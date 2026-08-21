@@ -120,6 +120,17 @@
   .stat-card .l{font-family:var(--font-m);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);margin-top:6px;}
   #export-csv-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 13px;border-radius:8px;font-size:.78rem;cursor:pointer;white-space:nowrap;transition:border-color .15s,color .15s;}
   #export-csv-btn:hover{border-color:var(--blue);color:var(--blue-light);}
+  #new-client-btn{background:var(--blue);border:none;color:#fff;padding:8px 13px;border-radius:8px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;}
+  #new-client-btn:hover{opacity:.9;}
+  #new-client-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;padding:20px;}
+  .new-client-box{width:100%;max-width:440px;max-height:85vh;overflow-y:auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:16px;padding:26px;box-shadow:var(--shadow-card);}
+  .new-client-box h2{font-family:var(--font-d);font-size:1.2rem;margin:0 0 6px;}
+  .new-client-box p{color:var(--grey);font-size:.82rem;margin:0 0 18px;line-height:1.5;}
+  .new-client-box input,.new-client-box select{width:100%;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.84rem;outline:none;margin-bottom:10px;}
+  .new-client-solutions{display:flex;flex-wrap:wrap;gap:8px 14px;margin:4px 0 18px;font-size:.78rem;color:var(--grey);}
+  .new-client-solutions label{display:flex;align-items:center;gap:6px;cursor:pointer;}
+  .new-client-solutions input{width:auto;margin:0;}
+  .new-client-box button.submit{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:10px;font-size:.84rem;font-weight:600;cursor:pointer;width:100%;}
 
   /* ── FICHA PANEL ── */
   .ficha-panel{padding:20px 22px;}
@@ -340,6 +351,21 @@
     </div>
   </div>
 
+  <div id="new-client-overlay">
+    <div class="new-client-box">
+      <button class="team-close" onclick="closeNewClientOverlay()">✕</button>
+      <h2>Nuevo cliente</h2>
+      <p>Alta manual — para cuando alguien contrata por teléfono, o le regalas un servicio. No pasa por Stripe: el cliente queda como "Cliente" desde ya.</p>
+      <input type="text" id="nc-nombre" placeholder="Nombre / persona de contacto">
+      <input type="email" id="nc-email" placeholder="Email *">
+      <input type="text" id="nc-telefono" placeholder="Teléfono">
+      <input type="text" id="nc-negocio" placeholder="Negocio / empresa">
+      <input type="text" id="nc-tipo" placeholder="Sector (ej. electricista, restaurante...)">
+      <div class="new-client-solutions" id="nc-solutions"></div>
+      <button class="submit" onclick="crearClienteManual()">Dar de alta</button>
+    </div>
+  </div>
+
   <div id="truki-overlay">
     <div class="truki-box">
       <button class="stats-close" onclick="closeTrukiOverlay()">✕</button>
@@ -364,6 +390,7 @@
         <h2>Clientes</h2>
         <div style="display:flex;gap:8px;">
           <input type="text" id="search" placeholder="Buscar por nombre, email, negocio..." oninput="renderClients()">
+          <button id="new-client-btn" onclick="openNewClientOverlay()" style="display:none;">+ Nuevo cliente</button>
           <button id="export-csv-btn" onclick="exportCSV()">⬇ CSV</button>
         </div>
       </div>
@@ -589,6 +616,7 @@ async function checkFounderStatus() {
   document.getElementById('team-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('stats-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('truki-btn').style.display = isFounder ? 'inline-block' : 'none';
+  document.getElementById('new-client-btn').style.display = isFounder ? 'inline-block' : 'none';
 }
 
 function openTeamOverlay() {
@@ -605,6 +633,43 @@ function openStatsOverlay() {
 }
 function closeStatsOverlay() {
   document.getElementById('stats-overlay').style.display = 'none';
+}
+
+// ── NUEVO CLIENTE (alta manual, founder-only) ───────────────────────────────
+async function openNewClientOverlay() {
+  document.getElementById('new-client-overlay').style.display = 'flex';
+  const catalog = await getSolutionsCatalog();
+  document.getElementById('nc-solutions').innerHTML = catalog.map(s => `
+    <label><input type="checkbox" value="${escapeHtml(s.solution_key)}"> ${escapeHtml(s.name)}</label>
+  `).join('');
+}
+function closeNewClientOverlay() {
+  document.getElementById('new-client-overlay').style.display = 'none';
+  ['nc-nombre', 'nc-email', 'nc-telefono', 'nc-negocio', 'nc-tipo'].forEach(id => document.getElementById(id).value = '');
+}
+
+async function crearClienteManual() {
+  const nombre = document.getElementById('nc-nombre').value.trim();
+  const email = document.getElementById('nc-email').value.trim();
+  const telefono = document.getElementById('nc-telefono').value.trim();
+  const negocio = document.getElementById('nc-negocio').value.trim();
+  const tipo = document.getElementById('nc-tipo').value.trim();
+  const solutions = Array.from(document.querySelectorAll('#nc-solutions input:checked')).map(el => el.value);
+  if (!email) { alert('El email es obligatorio.'); return; }
+
+  const { data, error } = await sb.rpc('create_client_manual', {
+    p_nombre: nombre || null, p_email: email, p_telefono: telefono || null,
+    p_negocio: negocio || null, p_tipo: tipo || null,
+    p_solutions: solutions.length ? solutions : null
+  });
+  if (error) { alert('No se pudo dar de alta: ' + error.message); return; }
+
+  closeNewClientOverlay();
+  await loadClients();
+  openFicha(data);
+  if (solutions.includes('truki')) {
+    alert('Cliente dado de alta. Para que use TruKi de verdad, todavía hace falta crear su instancia (proyecto Supabase + sitio) — desde la pestaña "TruKi" puedes registrarla en cuanto exista.');
+  }
 }
 
 function openTrukiOverlay() {
