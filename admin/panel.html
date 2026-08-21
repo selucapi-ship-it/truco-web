@@ -237,6 +237,28 @@
   .stats-legend i{width:9px;height:9px;border-radius:2px;display:inline-block;}
   .stats-table{width:100%;border-collapse:collapse;font-size:.78rem;}
   .stats-table td{padding:7px 4px;border-bottom:1px solid var(--grey-line);}
+
+  /* ── TRUKI (overlay, founder-only) ── */
+  #truki-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
+  #truki-btn:hover{border-color:var(--gold);color:var(--gold);}
+  #truki-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+  .truki-box{width:100%;max-width:920px;margin:0 auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:18px;padding:30px 32px;box-shadow:var(--shadow-card);}
+  .truki-box h2{font-family:var(--font-d);font-size:1.5rem;margin:0 0 6px;letter-spacing:-.01em;}
+  .truki-box>p{color:var(--grey);font-size:.82rem;margin:0 0 18px;line-height:1.5;}
+  .truki-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--grey-line);font-size:.82rem;flex-wrap:wrap;}
+  .truki-row:last-child{border-bottom:none;}
+  .truki-row .tr-name{color:var(--white);font-weight:600;}
+  .truki-row .tr-meta{color:var(--grey);font-size:.72rem;font-family:var(--font-m);}
+  .truki-row .tr-counts{display:flex;gap:16px;font-family:var(--font-m);font-size:.74rem;color:var(--grey);}
+  .truki-row .tr-counts b{color:var(--white);}
+  .truki-status{font-family:var(--font-m);font-size:.6rem;text-transform:uppercase;padding:2px 8px;border-radius:10px;letter-spacing:.03em;}
+  .truki-status.active{background:rgba(34,197,94,.15);color:var(--green);}
+  .truki-status.suspended,.truki-status.failed{background:rgba(239,68,68,.12);color:var(--red);}
+  .truki-status.provisioning{background:rgba(217,168,63,.15);color:var(--gold);}
+  .truki-error{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:8px 10px;margin-top:6px;font-size:.72rem;color:#ff8a80;line-height:1.5;width:100%;}
+  .truki-register{display:flex;flex-direction:column;gap:8px;margin-top:20px;padding-top:18px;border-top:1px solid var(--grey-line);}
+  .truki-register input,.truki-register select{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.84rem;outline:none;}
+  .truki-register button{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:9px;font-size:.82rem;font-weight:600;cursor:pointer;}
   .stats-table td:last-child{text-align:right;color:var(--grey);font-family:var(--font-m);font-size:.72rem;}
 </style>
 </head>
@@ -263,6 +285,7 @@
     </div>
     <div>
       <button id="stats-btn" onclick="openStatsOverlay()" style="display:none;">Estadísticas</button>
+      <button id="truki-btn" onclick="openTrukiOverlay()" style="display:none;">TruKi</button>
       <button id="team-btn" onclick="openTeamOverlay()" style="display:none;">Equipo</button>
       <button id="logout-btn" onclick="doLogout()">Cerrar sesión</button>
     </div>
@@ -314,6 +337,23 @@
         <button onclick="addStaff()">Añadir al equipo</button>
       </div>
       <div id="staff-list"></div>
+    </div>
+  </div>
+
+  <div id="truki-overlay">
+    <div class="truki-box">
+      <button class="stats-close" onclick="closeTrukiOverlay()">✕</button>
+      <h2>TruKi</h2>
+      <p>Clientes con TruKi contratado — sus facturas y presupuestos nunca salen de su propio Supabase, aquí solo se ven los contadores que ellos mismos reportan.</p>
+      <div id="truki-list"></div>
+
+      <div class="truki-register">
+        <p style="color:var(--grey);font-size:.78rem;margin:0 0 4px;">Registrar una instancia que ya existe (cliente de prueba u onboarding manual de hoy):</p>
+        <select id="truki-reg-client"></select>
+        <input type="text" id="truki-reg-netlify" placeholder="URL de Netlify, ej. https://truki-prueba-electricidad.netlify.app">
+        <input type="text" id="truki-reg-supabase" placeholder="URL de Supabase, ej. https://xxxx.supabase.co">
+        <button onclick="registrarInstanciaTruki()">Registrar instancia</button>
+      </div>
     </div>
   </div>
 
@@ -548,6 +588,7 @@ async function checkFounderStatus() {
   isFounder = !!(data && data.role === 'founder');
   document.getElementById('team-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('stats-btn').style.display = isFounder ? 'inline-block' : 'none';
+  document.getElementById('truki-btn').style.display = isFounder ? 'inline-block' : 'none';
 }
 
 function openTeamOverlay() {
@@ -564,6 +605,18 @@ function openStatsOverlay() {
 }
 function closeStatsOverlay() {
   document.getElementById('stats-overlay').style.display = 'none';
+}
+
+function openTrukiOverlay() {
+  document.getElementById('truki-overlay').style.display = 'block';
+  const sel = document.getElementById('truki-reg-client');
+  sel.innerHTML = '<option value="">— Elige cliente —</option>' +
+    allClients.slice().sort((a, b) => (a.nombre || '').localeCompare(b.nombre || ''))
+      .map(c => `<option value="${escapeHtml(c.id)}">${escapeHtml(c.nombre || c.email || c.id)}</option>`).join('');
+  loadTrukiOverview();
+}
+function closeTrukiOverlay() {
+  document.getElementById('truki-overlay').style.display = 'none';
 }
 
 async function loadStaffList() {
@@ -1169,6 +1222,80 @@ async function deleteAnonInteraction(id) {
 // founder_dashboard_stats() agrega todo en el servidor (security definer,
 // founder-exclusiva) — aquí solo se pinta el jsonb que devuelve, no se hacen
 // cálculos de negocio en el navegador.
+// ── TRUKI: instancias, contadores de uso y baja/reactivación remota ────────
+// founder_truki_overview() agrega todo en el servidor (security definer,
+// founder-exclusiva) — aquí solo se pinta el jsonb que devuelve, mismo
+// patrón que founder_dashboard_stats().
+async function loadTrukiOverview() {
+  const list = document.getElementById('truki-list');
+  list.innerHTML = '<div class="empty-mini">Cargando…</div>';
+  const { data, error } = await sb.rpc('founder_truki_overview');
+  if (error) { list.innerHTML = '<div class="empty-mini">No se pudo cargar.</div>'; return; }
+  renderTrukiList(data || []);
+}
+
+function renderTrukiList(instancias) {
+  const list = document.getElementById('truki-list');
+  if (!instancias.length) { list.innerHTML = '<div class="empty-mini">Todavía no hay ninguna instancia de TruKi registrada.</div>'; return; }
+  const etiquetas = { provisioning: 'aprovisionando', active: 'activa', suspended: 'suspendida', failed: 'fallo' };
+  list.innerHTML = instancias.map(i => `
+    <div class="truki-row">
+      <div>
+        <div class="tr-name">${escapeHtml(i.nombre || i.negocio || i.email || 'Cliente sin nombre')}</div>
+        <div class="tr-meta">${escapeHtml(i.netlify_site_url || 'sin URL')} · desde ${new Date(i.created_at).toLocaleDateString('es-ES')}</div>
+        ${i.provisioning_error ? `<div class="truki-error">${escapeHtml(i.provisioning_error)}</div>` : ''}
+        ${i.ultimo_error ? `<div class="truki-error">Último error (${new Date(i.ultimo_error_at).toLocaleString('es-ES')}): ${escapeHtml(i.ultimo_error)}</div>` : ''}
+      </div>
+      <div class="tr-counts">
+        <span>Facturas <b>${i.facturas_mes}</b>/mes · <b>${i.facturas_total}</b> total</span>
+        <span>Presupuestos <b>${i.presupuestos_mes}</b>/mes · <b>${i.presupuestos_total}</b> total</span>
+        <span>Errores 7d <b>${i.errores_7d}</b></span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="truki-status ${escapeHtml(i.status)}">${etiquetas[i.status] || escapeHtml(i.status)}</span>
+        ${i.status === 'active'
+          ? `<button class="del-btn" onclick="gestionarInstanciaTruki('${i.instance_id}','suspender')">Dar de baja</button>`
+          : i.status === 'suspended'
+            ? `<button class="del-btn" onclick="gestionarInstanciaTruki('${i.instance_id}','reactivar')">Reactivar</button>`
+            : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+async function registrarInstanciaTruki() {
+  const clientId = document.getElementById('truki-reg-client').value;
+  const netlifyUrl = document.getElementById('truki-reg-netlify').value.trim().replace(/\/$/, '');
+  const supabaseUrl = document.getElementById('truki-reg-supabase').value.trim().replace(/\/$/, '');
+  if (!clientId || !netlifyUrl || !supabaseUrl) { alert('Rellena cliente, URL de Netlify y URL de Supabase.'); return; }
+  const { data, error } = await sb.rpc('truki_register_instance', {
+    p_client_id: clientId, p_netlify_site_url: netlifyUrl, p_supabase_url: supabaseUrl
+  });
+  if (error) { alert('No se pudo registrar: ' + error.message); return; }
+  alert(`Instancia registrada.\n\nCopia esto en las variables de entorno de Netlify de esa instancia (TRUKI_MASTER_SECRET):\n\n${data.master_secret}\n\nTambién hace falta MAIN_CRM_REPORT_URL (la URL de truki-usage-intake.js de este sitio) y TRUKI_CLIENT_ID = ${clientId}.`);
+  document.getElementById('truki-reg-netlify').value = '';
+  document.getElementById('truki-reg-supabase').value = '';
+  loadTrukiOverview();
+}
+
+async function gestionarInstanciaTruki(instanceId, accion) {
+  const verbo = accion === 'suspender' ? 'dar de baja (cortar el acceso a todo el equipo de)' : 'reactivar';
+  if (!confirm(`¿Seguro que quieres ${verbo} esta instancia de TruKi?`)) return;
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch('/.netlify/functions/truki-remote-manage', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ instance_id: instanceId, accion })
+    });
+    const data = await resp.json();
+    if (!data.ok) { alert('No se pudo completar la acción (' + (data.reason || 'error') + ').'); return; }
+    loadTrukiOverview();
+  } catch (e) {
+    alert('Error de conexión.');
+  }
+}
+
 async function loadStats() {
   const w = id => document.getElementById(id);
   const { data, error } = await sb.rpc('founder_dashboard_stats');
