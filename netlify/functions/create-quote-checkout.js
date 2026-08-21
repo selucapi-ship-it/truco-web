@@ -81,10 +81,14 @@ exports.handler = async function (event) {
       return { statusCode: 200, body: JSON.stringify({ ok: false, reason: 'presupuesto_no_encontrado' }) };
     }
 
-    // El founder puede ajustar el importe justo antes de generar el enlace
-    // (ej. redondear, aplicar un pequeño descuento de cierre) sin tener que
-    // reeditar las líneas del presupuesto.
-    const amountCents = Math.round(Number(payload.amount_cents_override ?? quote.total_estimado * 100));
+    // total_estimado es la BASE sin IVA (mismo criterio que el resto de la
+    // web: todos los precios se guardan sin IVA, el 21% se añade siempre al
+    // final) — aquí es "al final" de verdad, así que se cobra con IVA
+    // incluido. El founder puede ajustar el importe justo antes de generar
+    // el enlace (ej. redondear, aplicar un pequeño descuento de cierre) —
+    // en ese caso el valor que mande YA debe incluir el IVA, es el importe
+    // final a cobrar.
+    const amountCents = Math.round(Number(payload.amount_cents_override ?? quote.total_estimado * 1.21 * 100));
     if (!Number.isFinite(amountCents) || amountCents < 50) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Importe inválido' }) };
     }

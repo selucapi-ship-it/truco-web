@@ -306,13 +306,25 @@
   .quotes-actions button:hover{border-color:var(--blue);color:var(--blue-light);}
   .quotes-actions button.primary{background:var(--blue);border:none;color:#fff;}
   .quotes-actions button.primary:hover{opacity:.9;}
-  .price-row{display:grid;grid-template-columns:1fr 60px 60px;gap:6px;align-items:center;margin-bottom:6px;}
-  .price-row span{font-size:.72rem;color:var(--grey);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .price-row input{width:100%;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:6px;padding:5px 6px;color:var(--white);font-size:.72rem;outline:none;}
   #prices-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
   #prices-btn:hover{border-color:var(--gold);color:var(--gold);}
   #prices-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
-  #prices-overlay .price-row{grid-template-columns:1fr 90px 90px;}
+  .prices-card{background:linear-gradient(165deg,var(--bg-card),var(--bg-panel));border:1px solid var(--grey-line);border-radius:14px;padding:20px 22px;margin-bottom:20px;}
+  .prices-card-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;}
+  .prices-card-head h3{font-family:var(--font-d);font-size:1.02rem;margin:0;color:var(--white);}
+  .prices-card-head span{font-family:var(--font-m);font-size:.7rem;color:var(--grey);}
+  .prices-table{width:100%;border-collapse:collapse;margin-bottom:14px;}
+  .prices-table thead th{text-align:left;font-family:var(--font-m);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);padding:0 8px 8px;font-weight:600;}
+  .prices-table thead th.num{text-align:right;}
+  .prices-table tbody tr{border-top:1px solid var(--grey-line);}
+  .prices-table td{padding:9px 8px;font-size:.84rem;color:var(--white);vertical-align:middle;}
+  .prices-table td.num{text-align:right;}
+  .prices-table .price-input-wrap{position:relative;display:inline-block;}
+  .prices-table .price-input-wrap::after{content:'€';position:absolute;right:9px;top:50%;transform:translateY(-50%);color:var(--grey);font-size:.76rem;pointer-events:none;}
+  .prices-table input{width:100px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:7px;padding:7px 22px 7px 9px;color:var(--white);font-size:.82rem;text-align:right;outline:none;transition:border-color .15s;}
+  .prices-table input:focus{border-color:var(--blue);}
+  .prices-table input.price-changed{border-color:var(--gold);background:rgba(217,168,63,.08);}
+  .prices-card button.new{margin-top:4px;}
   .stats-table td:last-child{text-align:right;color:var(--grey);font-family:var(--font-m);font-size:.72rem;}
 </style>
 </head>
@@ -424,7 +436,14 @@
       <div class="quotes-sidebar">
         <h2>Presupuestos</h2>
         <button class="new" onclick="nuevoPresupuesto()">+ Nuevo presupuesto</button>
-        <input type="text" id="quotes-search" placeholder="Buscar por número (P0001) o nombre..." oninput="renderQuotesList()" style="width:100%;margin-bottom:10px;">
+        <input type="text" id="quotes-search" placeholder="Buscar por número (P0001) o nombre..." oninput="renderQuotesList()" style="width:100%;margin-bottom:8px;">
+        <select id="quotes-sort" onchange="renderQuotesList()" style="width:100%;margin-bottom:10px;">
+          <option value="numero_desc">Ordenar: más reciente (nº)</option>
+          <option value="numero_asc">Ordenar: más antiguo (nº)</option>
+          <option value="nombre_asc">Ordenar: nombre (A-Z)</option>
+          <option value="total_desc">Ordenar: importe (mayor)</option>
+          <option value="estado">Ordenar: estado</option>
+        </select>
         <div id="quotes-list"></div>
       </div>
       <div class="quotes-main">
@@ -444,8 +463,12 @@
           <div class="quote-total" id="quote-total">Total: 0,00 €</div>
 
           <div class="quote-add-row">
+            <select id="q-tier-select"></select>
+            <button onclick="anadirLineaTier()">Añadir Departamento</button>
+          </div>
+          <div class="quote-add-row">
             <select id="q-catalogo-select"></select>
-            <button onclick="anadirLineaCatalogo()">Añadir del catálogo</button>
+            <button onclick="anadirLineaCatalogo()">Añadir automatización</button>
           </div>
           <div class="quote-add-row">
             <input type="text" id="q-custom-desc" placeholder="Descripción (ej. CRM a medida)">
@@ -459,6 +482,7 @@
 
         <div class="quotes-actions">
           <button class="primary" onclick="guardarPresupuesto()">Guardar</button>
+          <button onclick="verPdfPresupuesto()">Ver PDF</button>
           <button onclick="descargarPdfPresupuesto()">Descargar PDF</button>
           <button onclick="enviarPresupuestoEmail()">Enviar por email</button>
           <select id="q-estado" onchange="cambiarEstadoPresupuesto()" style="max-width:150px;">
@@ -479,16 +503,26 @@
   <div id="prices-overlay">
     <div class="truki-box">
       <button class="stats-close" onclick="closePricesOverlay()">✕</button>
-      <h2>Precios</h2>
-      <p style="color:var(--grey);font-size:.82rem;margin:0 0 18px;">Cambia cualquier precio aquí y se aplica solo en toda la web (páginas de soluciones, sectores, el chat, y los presupuestos nuevos) — sin tocar código. Para una oferta puntual (ej. Navidad), baja el precio "Fundador" de los Departamentos temporalmente.</p>
+      <h2>Precios oficiales de TRUCO technology</h2>
+      <p style="color:var(--grey);font-size:.82rem;margin:0 0 22px;max-width:640px;">Esta es la fuente única de precios de todo el negocio — al guardar un cambio aquí se aplica solo en toda la web (páginas de soluciones, sectores, el chat) y en los presupuestos/cobros nuevos, sin tocar código. Los precios son <b>sin IVA</b> — el 21% se añade siempre después, en cada sitio donde se muestra o se cobra. Para una oferta puntual (ej. Navidad), baja el precio "Fundador" de los Departamentos temporalmente y súbelo cuando termine.</p>
 
-      <div class="empty-mini" style="margin-bottom:8px;">Departamentos</div>
-      <div id="tiers-editor"></div>
-      <button class="new" style="margin-top:10px;margin-bottom:24px;" onclick="guardarPreciosTiers()">Guardar Departamentos</button>
+      <div class="prices-card">
+        <div class="prices-card-head">
+          <h3>Departamentos</h3>
+          <span>Start™ · Basic™ · Lite™ · Pro™</span>
+        </div>
+        <div id="tiers-editor"></div>
+        <button class="new" onclick="guardarPreciosTiers()">Guardar Departamentos</button>
+      </div>
 
-      <div class="empty-mini" style="margin-bottom:8px;">Todos tus servicios</div>
-      <div id="prices-editor"></div>
-      <button class="new" style="margin-top:10px;" onclick="guardarPreciosCatalogo()">Guardar precios</button>
+      <div class="prices-card">
+        <div class="prices-card-head">
+          <h3>Automatizaciones y servicios</h3>
+          <span id="prices-count"></span>
+        </div>
+        <div id="prices-editor"></div>
+        <button class="new" onclick="guardarPreciosCatalogo()">Guardar servicios</button>
+      </div>
     </div>
   </div>
 
@@ -856,6 +890,8 @@ function fmtEurPanel(n) {
   return Number(n || 0).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
 }
 
+let quoteTiersCache = [];
+
 async function openQuotesOverlay() {
   document.getElementById('quotes-overlay').style.display = 'block';
   const catalog = await getSolutionsCatalog();
@@ -863,8 +899,25 @@ async function openQuotesOverlay() {
     const precio = s.standalone_price_eur ?? s.price_eur;
     return `<option value="${escapeHtml(s.solution_key)}">${escapeHtml(s.name)}${precio ? ' (' + fmtEurPanel(precio) + ')' : ' (a consultar)'}</option>`;
   }).join('');
+  const { data: tiers } = await sb.from('tier_config').select('tier,name,founder_price_eur').order('founder_price_eur');
+  quoteTiersCache = tiers || [];
+  document.getElementById('q-tier-select').innerHTML = quoteTiersCache.map(t =>
+    `<option value="${escapeHtml(t.tier)}">${escapeHtml(t.name)} (${fmtEurPanel(t.founder_price_eur)}/mes)</option>`
+  ).join('');
   await loadQuotesList();
   nuevoPresupuesto();
+}
+
+function anadirLineaTier() {
+  const tierKey = document.getElementById('q-tier-select').value;
+  const tier = quoteTiersCache.find(t => t.tier === tierKey);
+  if (!tier) return;
+  quoteLineas.push({
+    tipo: 'departamento', tier_key: tierKey,
+    descripcion: 'Departamento ' + tier.name + ' (mensual, alta y gestión)',
+    precio: tier.founder_price_eur, es_desde: false
+  });
+  renderQuoteLineas();
 }
 
 // ── PRECIOS (apartado propio, independiente de Presupuestos) ───────────────
@@ -879,29 +932,56 @@ function closePricesOverlay() {
   document.getElementById('prices-overlay').style.display = 'none';
 }
 
+let tiersOriginal = {};
+let catalogOriginal = {};
+
+function marcarSiCambiado(input, original) {
+  const val = input.value === '' ? null : Number(input.value);
+  input.classList.toggle('price-changed', val !== original);
+}
+
 async function loadTiersEditor() {
   const { data } = await sb.from('tier_config').select('tier,name,founder_price_eur,standard_price_eur').order('founder_price_eur');
   const wrap = document.getElementById('tiers-editor');
   if (!data || !data.length) { wrap.innerHTML = '<div class="empty-mini">Sin Departamentos.</div>'; return; }
-  wrap.innerHTML = `<div class="price-row"><span></span><span style="text-align:center;">Fundador</span><span style="text-align:center;">Normal</span></div>` +
+  tiersOriginal = {};
+  data.forEach(t => { tiersOriginal[t.tier] = { founder: t.founder_price_eur, standard: t.standard_price_eur }; });
+  wrap.innerHTML = `<table class="prices-table"><thead><tr><th>Departamento</th><th class="num">Precio fundador</th><th class="num">Precio normal</th></tr></thead><tbody>` +
     data.map(t => `
-      <div class="price-row" data-tier="${escapeHtml(t.tier)}">
-        <span title="${escapeHtml(t.name)}">${escapeHtml(t.name)}</span>
-        <input type="number" class="tier-founder" value="${t.founder_price_eur ?? ''}" placeholder="—">
-        <input type="number" class="tier-standard" value="${t.standard_price_eur ?? ''}" placeholder="—">
-      </div>
-    `).join('');
+      <tr data-tier="${escapeHtml(t.tier)}">
+        <td>${escapeHtml(t.name)}</td>
+        <td class="num"><span class="price-input-wrap"><input type="number" class="tier-founder" value="${t.founder_price_eur ?? ''}" placeholder="—" oninput="marcarSiCambiado(this, ${t.founder_price_eur ?? 'null'})"></span></td>
+        <td class="num"><span class="price-input-wrap"><input type="number" class="tier-standard" value="${t.standard_price_eur ?? ''}" placeholder="—" oninput="marcarSiCambiado(this, ${t.standard_price_eur ?? 'null'})"></span></td>
+      </tr>
+    `).join('') + '</tbody></table>';
 }
 
 async function guardarPreciosTiers() {
-  const rows = document.querySelectorAll('#tiers-editor .price-row[data-tier]');
+  const rows = document.querySelectorAll('#tiers-editor tbody tr[data-tier]');
+  const cambios = [];
+  const updates = [];
   for (const row of rows) {
-    const founder = row.querySelector('.tier-founder').value;
-    const standard = row.querySelector('.tier-standard').value;
-    if (founder === '' || standard === '') continue;
+    const tier = row.dataset.tier;
+    const founderVal = row.querySelector('.tier-founder').value;
+    const standardVal = row.querySelector('.tier-standard').value;
+    if (founderVal === '' || standardVal === '') continue;
+    const founder = Number(founderVal), standard = Number(standardVal);
+    const orig = tiersOriginal[tier] || {};
+    if (founder !== orig.founder || standard !== orig.standard) {
+      const nombre = row.querySelector('td').textContent;
+      cambios.push(`${nombre}: fundador ${orig.founder ?? '—'}€ → ${founder}€  ·  normal ${orig.standard ?? '—'}€ → ${standard}€`);
+      updates.push({ tier, founder, standard });
+    }
+  }
+  if (!updates.length) { alert('No has cambiado ningún precio de Departamentos.'); return; }
+  const resumen = 'Vas a cambiar estos precios de Departamentos:\n\n' + cambios.join('\n') +
+    '\n\nSe aplica en toda la web al momento (marketing, chat y lo que se cobra en el checkout). ¿Confirmas el cambio?';
+  if (!confirm(resumen)) return;
+
+  for (const u of updates) {
     await sb.from('tier_config').update({
-      founder_price_eur: Number(founder), standard_price_eur: Number(standard), updated_at: new Date().toISOString()
-    }).eq('tier', row.dataset.tier);
+      founder_price_eur: u.founder, standard_price_eur: u.standard, updated_at: new Date().toISOString()
+    }).eq('tier', u.tier);
   }
   alert('Precios de Departamentos guardados — ya se reflejan en toda la web.');
   await loadTiersEditor();
@@ -909,23 +989,41 @@ async function guardarPreciosTiers() {
 
 function renderPricesEditor(catalog) {
   const wrap = document.getElementById('prices-editor');
-  wrap.innerHTML = `<div class="price-row"><span></span><span style="text-align:center;">Depto.</span><span style="text-align:center;">Suelto</span></div>` +
+  document.getElementById('prices-count').textContent = catalog.length + ' servicios';
+  catalogOriginal = {};
+  catalog.forEach(s => { catalogOriginal[s.solution_key] = { bundled: s.price_eur, standalone: s.standalone_price_eur }; });
+  wrap.innerHTML = `<table class="prices-table"><thead><tr><th>Servicio</th><th class="num">Valor en Departamento</th><th class="num">Precio suelto</th></tr></thead><tbody>` +
     catalog.map(s => `
-      <div class="price-row" data-key="${escapeHtml(s.solution_key)}">
-        <span title="${escapeHtml(s.name)}">${escapeHtml(s.name)}</span>
-        <input type="number" class="price-bundled" value="${s.price_eur ?? ''}" placeholder="—">
-        <input type="number" class="price-standalone" value="${s.standalone_price_eur ?? ''}" placeholder="—">
-      </div>
-    `).join('');
+      <tr data-key="${escapeHtml(s.solution_key)}">
+        <td>${escapeHtml(s.name)}</td>
+        <td class="num"><span class="price-input-wrap"><input type="number" class="price-bundled" value="${s.price_eur ?? ''}" placeholder="—" oninput="marcarSiCambiado(this, ${s.price_eur ?? 'null'})"></span></td>
+        <td class="num"><span class="price-input-wrap"><input type="number" class="price-standalone" value="${s.standalone_price_eur ?? ''}" placeholder="—" oninput="marcarSiCambiado(this, ${s.standalone_price_eur ?? 'null'})"></span></td>
+      </tr>
+    `).join('') + '</tbody></table>';
 }
 
 async function guardarPreciosCatalogo() {
-  const rows = document.querySelectorAll('#prices-editor .price-row[data-key]');
-  const updates = Array.from(rows).map(row => ({
-    solution_key: row.dataset.key,
-    price_eur: row.querySelector('.price-bundled').value === '' ? null : Number(row.querySelector('.price-bundled').value),
-    standalone_price_eur: row.querySelector('.price-standalone').value === '' ? null : Number(row.querySelector('.price-standalone').value),
-  }));
+  const rows = document.querySelectorAll('#prices-editor tbody tr[data-key]');
+  const cambios = [];
+  const updates = [];
+  for (const row of rows) {
+    const key = row.dataset.key;
+    const bundledVal = row.querySelector('.price-bundled').value;
+    const standaloneVal = row.querySelector('.price-standalone').value;
+    const bundled = bundledVal === '' ? null : Number(bundledVal);
+    const standalone = standaloneVal === '' ? null : Number(standaloneVal);
+    const orig = catalogOriginal[key] || {};
+    if (bundled !== (orig.bundled ?? null) || standalone !== (orig.standalone ?? null)) {
+      const nombre = row.querySelector('td').textContent;
+      cambios.push(`${nombre}: en Departamento ${orig.bundled ?? '—'}€ → ${bundled ?? '—'}€  ·  suelto ${orig.standalone ?? '—'}€ → ${standalone ?? '—'}€`);
+      updates.push({ solution_key: key, price_eur: bundled, standalone_price_eur: standalone });
+    }
+  }
+  if (!updates.length) { alert('No has cambiado ningún precio de servicios.'); return; }
+  const resumen = 'Vas a cambiar estos precios de servicios:\n\n' + cambios.join('\n') +
+    '\n\nSe aplica en toda la web al momento (soluciones, sectores, chat, presupuestos nuevos y lo que se cobra en el checkout). ¿Confirmas el cambio?';
+  if (!confirm(resumen)) return;
+
   for (const u of updates) {
     await sb.from('solutions_catalog').update({ price_eur: u.price_eur, standalone_price_eur: u.standalone_price_eur }).eq('solution_key', u.solution_key);
   }
@@ -949,13 +1047,22 @@ async function loadQuotesList() {
 function renderQuotesList() {
   const list = document.getElementById('quotes-list');
   const q = (document.getElementById('quotes-search').value || '').trim().toLowerCase();
-  const filtered = !q ? allQuotes : allQuotes.filter(x => {
+  let filtered = !q ? allQuotes.slice() : allQuotes.filter(x => {
     const numeroTexto = formatQuoteNumero(x.numero).toLowerCase(); // ej. "p0007"
     const numeroDigitos = String(x.numero); // ej. "7"
     const qDigitos = q.replace(/^p0*/, ''); // "P0007", "p7", "0007" o "7" -> "7"
     return numeroTexto.includes(q) || (qDigitos && numeroDigitos === qDigitos) ||
       [x.negocio, x.nombre_contacto, x.email_contacto].some(v => (v || '').toLowerCase().includes(q));
   });
+  const sorters = {
+    numero_desc: (a, b) => b.numero - a.numero,
+    numero_asc: (a, b) => a.numero - b.numero,
+    nombre_asc: (a, b) => (a.negocio || a.nombre_contacto || '').localeCompare(b.negocio || b.nombre_contacto || ''),
+    total_desc: (a, b) => b.total_estimado - a.total_estimado,
+    estado: (a, b) => a.estado.localeCompare(b.estado),
+  };
+  const sortKey = document.getElementById('quotes-sort').value;
+  filtered.sort(sorters[sortKey] || sorters.numero_desc);
   if (!filtered.length) { list.innerHTML = '<div class="empty-mini">' + (allQuotes.length ? 'Ningún presupuesto coincide.' : 'Todavía no hay presupuestos.') + '</div>'; return; }
   list.innerHTML = filtered.map(x => `
     <div class="quote-row${x.id === editingQuoteId ? ' active' : ''}" onclick="cargarPresupuestoEnFormulario('${x.id}')">
@@ -1020,8 +1127,11 @@ function renderQuoteLineas() {
       </div>
     `).join('');
   }
-  const total = quoteLineas.reduce((s, l) => s + (Number(l.precio) || 0), 0);
-  document.getElementById('quote-total').textContent = 'Total: ' + fmtEurPanel(total);
+  const base = quoteLineas.reduce((s, l) => s + (Number(l.precio) || 0), 0);
+  const iva = base * 0.21;
+  document.getElementById('quote-total').innerHTML =
+    `<div style="font-size:.78rem;font-weight:400;color:var(--grey);">Base: ${fmtEurPanel(base)} &nbsp;·&nbsp; IVA (21%): ${fmtEurPanel(iva)}</div>` +
+    `Total con IVA: ${fmtEurPanel(base + iva)}`;
 }
 
 function actualizarPrecioLinea(i, value) {
@@ -1097,22 +1207,38 @@ async function cambiarEstadoPresupuesto() {
   await loadQuotesList();
 }
 
+async function fetchQuotePdfBlob() {
+  const { data: { session } } = await sb.auth.getSession();
+  const resp = await fetch('/.netlify/functions/generate-quote-pdf', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+    body: JSON.stringify({ quote_id: editingQuoteId })
+  });
+  const data = await resp.json();
+  if (!data.ok) { alert('No se pudo generar el PDF (' + (data.reason || 'error') + ').'); return null; }
+  const bytes = Uint8Array.from(atob(data.pdf_base64), c => c.charCodeAt(0));
+  return { blob: new Blob([bytes], { type: 'application/pdf' }), pdf_base64: data.pdf_base64 };
+}
+
+async function verPdfPresupuesto() {
+  if (!editingQuoteId) { alert('Guarda el presupuesto primero.'); return; }
+  try {
+    const result = await fetchQuotePdfBlob();
+    if (!result) return;
+    window.open(URL.createObjectURL(result.blob), '_blank');
+  } catch (e) {
+    alert('Error de conexión al generar el PDF.');
+  }
+}
+
 async function descargarPdfPresupuesto() {
   if (!editingQuoteId) { alert('Guarda el presupuesto primero.'); return; }
   try {
-    const { data: { session } } = await sb.auth.getSession();
-    const resp = await fetch('/.netlify/functions/generate-quote-pdf', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
-      body: JSON.stringify({ quote_id: editingQuoteId })
-    });
-    const data = await resp.json();
-    if (!data.ok) { alert('No se pudo generar el PDF (' + (data.reason || 'error') + ').'); return; }
-    const bytes = Uint8Array.from(atob(data.pdf_base64), c => c.charCodeAt(0));
-    const blob = new Blob([bytes], { type: 'application/pdf' });
+    const result = await fetchQuotePdfBlob();
+    if (!result) return;
     const q = allQuotes.find(x => x.id === editingQuoteId);
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+    a.href = URL.createObjectURL(result.blob);
     a.download = 'presupuesto-' + (q ? formatQuoteNumero(q.numero) : editingQuoteId.slice(0, 8)) + '.pdf';
     a.click();
     URL.revokeObjectURL(a.href);

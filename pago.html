@@ -622,6 +622,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script src="founding-offer.js"></script>
+<script src="solutions-pricing.js"></script>
 <script>
 // Al crear cada Stripe Payment Link real, configura su redirección tras el pago
 // a bienvenida.html?plan=<clave> (ej. bienvenida.html?plan=arranque-lite) para
@@ -866,16 +867,28 @@ const ARRANQUES={
   pro:{name:'Pro™',monthly:currentPrice('pro'),permanenciaMeses:12,freeSols:3,maintainMax:6}
 };
 const CLOSED_PRICE_SOLUTIONS=[
-  {value:'whatsapp',name:'IA para WhatsApp',price:590},
-  {value:'web-ia',name:'IA para tu Web',price:350},
-  {value:'llamadas',name:'IA para Llamadas',price:690},
-  {value:'email-ia',name:'IA para Correo',price:350},
-  {value:'reservas',name:'Reservas y Agenda',price:350},
-  {value:'firma',name:'Firma Digital',price:500},
-  {value:'ciberseguridad',name:'Ciberseguridad Pyme',price:450},
-  {value:'automatizaciones',name:'Flujos automáticos a medida',price:350},
-  {value:'truki',name:'Facturación automática (TruKi)',price:580}
+  {value:'whatsapp',name:'IA para WhatsApp',price:solutionPrice('whatsapp')},
+  {value:'web-ia',name:'IA para tu Web',price:solutionPrice('web-ia')},
+  {value:'llamadas',name:'IA para Llamadas',price:solutionPrice('llamadas')},
+  {value:'email-ia',name:'IA para Correo',price:solutionPrice('email-ia')},
+  {value:'reservas',name:'Reservas y Agenda',price:solutionPrice('reservas')},
+  {value:'firma',name:'Firma Digital',price:solutionPrice('firma')},
+  {value:'ciberseguridad',name:'Ciberseguridad Pyme',price:solutionPrice('ciberseguridad')},
+  {value:'automatizaciones',name:'Flujos automáticos a medida',price:solutionPrice('automatizaciones')},
+  {value:'truki',name:'Facturación automática (TruKi)',price:solutionPrice('truki')}
 ];
+// Igual que ARRANQUES.*.monthly con los Departamentos: el valor de arriba se
+// fija al cargar el script con el fallback de solutions-pricing.js — si el
+// precio real de Supabase llega después (async), hay que refrescar esto o el
+// checkout seguiría cobrando el precio antiguo aunque la pantalla ya
+// muestre el nuevo.
+function refreshClosedPriceSolutions(){
+  CLOSED_PRICE_SOLUTIONS.forEach(s=>{ s.price=solutionPrice(s.value); });
+}
+window.onSolutionsPricingUpdated.push(function(){
+  refreshClosedPriceSolutions();
+  if(typeof selectedDirect!=='undefined'&&selectedDirect&&DIRECT[selectedDirect])updateAll();
+});
 
 function renderFoundingPrices(){
   const renewEl=document.getElementById('renew-price-esencial');if(renewEl)renewEl.textContent=STANDARD_PRICES.lite;
