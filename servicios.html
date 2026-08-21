@@ -147,7 +147,7 @@ a.solution-chip{display:block;color:inherit;}
 .di-item{padding:16px 20px;border-right:1px solid var(--grey-line);font-size:.88rem;color:var(--grey);display:flex;align-items:flex-start;gap:8px;}
 .di-item:last-child{border-right:none;}
 .di-item::before{content:'✔';color:var(--blue);font-weight:700;flex-shrink:0;}
-@media(max-width:640px){.digitaliza-includes{grid-template-columns:1fr 1fr;}.di-item:nth-child(2n){border-right:none;}.di-item{border-bottom:1px solid var(--grey-line);}}
+@media(max-width:640px){.digitaliza-includes{grid-template-columns:1fr;}.di-item{border-right:none;border-bottom:1px solid var(--grey-line);padding:14px 4px;}.di-item:last-child{border-bottom:none;}}
 
 /* SOLUTION WHAT IS */
 .what-is-block{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:28px 32px;margin:48px 0;}
@@ -157,6 +157,16 @@ a.solution-chip{display:block;color:inherit;}
 .wib-item{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:12px 14px;font-size:.88rem;color:var(--grey);}
 .wib-item b{display:block;color:var(--white);margin-bottom:3px;font-size:.9rem;}
 @media(max-width:640px){.wib-grid{grid-template-columns:1fr 1fr;}}
+
+/* DEFINICIONES DE AUTOMATIZACIONES — solo descripción + enlace, sin nombre */
+.def-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.def-card{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:12px 14px;transition:border-color var(--tr);}
+.def-card:hover{border-color:var(--blue);}
+.def-card p{font-size:.8rem;color:var(--grey);line-height:1.5;margin-bottom:8px;}
+.def-card a{font-size:.74rem;color:var(--blue);font-weight:600;white-space:nowrap;}
+.def-card a:hover{text-decoration:underline;}
+@media(max-width:768px){.def-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:420px){.def-grid{grid-template-columns:1fr;}}
 
 .onboard-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
 .tiers-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
@@ -291,89 +301,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <!-- TIERS -->
     <div class="tiers-cols">
 
-      <!-- PRO -->
-      <div class="service-card" id="pro" onclick="if(!event.target.closest('.sc-footer'))location.href='departamentos/pro.html'" style="cursor:pointer;">
-        <div class="sc-header">
-          <div>
-            <div class="sc-cat blue">Departamento Tecnológico · 12 meses</div>
-            <span class="sc-badge blue">Para empresas en crecimiento</span>
-            <h2 class="sc-title" style="font-size:1.4rem;">Departamento Tecnológico Pro™</h2>
-            <p class="sc-desc" style="font-size:.85rem;">Web Profesional regalada — con chat que responde y agenda citas de fábrica — + 3 automatizaciones más a elegir, instaladas gratis. Mantiene hasta 6 automatizaciones tecnológicas con optimización continua, mayor prioridad y revisiones avanzadas.</p>
-          </div>
-        </div>
-        <div style="padding:20px 24px;border-top:1px solid var(--grey-line);">
-          <div style="font-size:.7rem;margin-bottom:6px;" id="sc-founding-badge-pro"></div>
-          <div style="font-size:2rem;font-weight:700;font-family:var(--font-d);" id="sc-price-pro"></div>
-          <div style="font-size:.80rem;color:var(--grey);margin-bottom:4px;" id="sc-vat-pro"></div>
-          <div style="font-size:.7rem;color:var(--grey);" id="sc-founding-old-pro"></div>
-          <div style="font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Integración + gestión de tu Departamento incluidas · Permanencia: 12 meses</div>
-        </div>
-        <div class="value-highlight">
-          <div class="vh-eyebrow">Lo que incluye tu Departamento</div>
-          <div class="vh-save">Web + 3 automatizaciones <b>incluidas en la cuota</b>, sin pagarlas aparte</div>
-          <ul class="vh-list">
-            <li>Web Profesional <span class="vh-tag">valor 1.390 €</span></li>
-            <li>Chat + agenda en tu web <span class="vh-tag">de fábrica</span></li>
-            <li>3 automatizaciones a elegir <span class="vh-tag">valor 1.150-1.780 €</span></li>
-            <li>Gestión de tu Departamento <span class="vh-tag">cada mes, sin parar</span></li>
-          </ul>
-        </div>
-        <div style="padding:0 24px 16px;">
-          <div class="sc-col-title">Incluye</div>
-          <ul class="sc-list">
-            <li><b>Optimización continua</b> de todas las automatizaciones activas</li>
-            <li><b>Supervisión continua</b> de todas tus automatizaciones activas</li>
-            <li><b>Mayor prioridad</b> en incidencias, respuesta &lt;24h</li>
-            <li><b>Reunión mensual</b> de revisión y estrategia tecnológica (45 min)</li>
-          </ul>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-footer-left" style="font-size:.86rem;">Pago único con 12% dto., o fracciona con SeQura. Permanencia de 12 meses: integración completa, configurada con los datos reales de tu negocio, y gestión de tu Departamento cada mes, incluidas.</div>
-          <a class="btn-primary" href="pago.html?plan=arranque-pro">Contratar Pro™</a>
-        </div>
-      </div>
-
-      <!-- LITE -->
-      <div class="service-card" id="lite" onclick="if(!event.target.closest('.sc-footer'))location.href='departamentos/lite.html'" style="cursor:pointer;">
-        <div class="sc-header">
-          <div>
-            <div class="sc-cat blue">Departamento Tecnológico · 12 meses</div>
-            <span class="sc-badge green">Para pymes pequeñas</span>
-            <h2 class="sc-title" style="font-size:1.4rem;">Departamento Tecnológico Lite™</h2>
-            <p class="sc-desc" style="font-size:.85rem;">Tu web (reacondicionada o una Web Profesional nueva) + 2 automatizaciones a elegir, todo instalado <b style="color:var(--white);">completamente gratis.</b> Después, mantenimiento, seguridad, actualizaciones e incidencias resueltas.</p>
-          </div>
-        </div>
-        <div style="padding:20px 24px;border-top:1px solid var(--grey-line);">
-          <div style="font-size:.7rem;margin-bottom:6px;" id="sc-founding-badge-lite"></div>
-          <div style="font-size:2rem;font-weight:700;font-family:var(--font-d);" id="sc-price-lite"></div>
-          <div style="font-size:.80rem;color:var(--grey);margin-bottom:4px;" id="sc-vat-lite"></div>
-          <div style="font-size:.7rem;color:var(--grey);" id="sc-founding-old-lite"></div>
-          <div style="font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Integración + gestión de tu Departamento incluidas · Permanencia: 12 meses</div>
-        </div>
-        <div class="value-highlight">
-          <div class="vh-eyebrow">Lo que incluye tu Departamento</div>
-          <div class="vh-save">Web + 2 automatizaciones <b>incluidas en la cuota</b>, sin pagarlas aparte</div>
-          <ul class="vh-list">
-            <li>Web Profesional o reacondicionada <span class="vh-tag">valor 1.390 €</span></li>
-            <li>2 automatizaciones a elegir <span class="vh-tag">valor 700-1.280 €</span></li>
-            <li>Gestión de tu Departamento <span class="vh-tag">cada mes, sin parar</span></li>
-          </ul>
-        </div>
-        <div style="padding:0 24px 16px;">
-          <div class="sc-col-title">Incluye</div>
-          <ul class="sc-list">
-            <li><b>Mantenimiento web</b> — actualizaciones, seguridad y rendimiento</li>
-            <li><b>Copias de seguridad</b> periódicas y verificadas</li>
-            <li><b>Resolución de incidencias</b> técnicas sin coste adicional</li>
-            <li><b>Reunión mensual</b> de revisión y asesoramiento (30 min)</li>
-          </ul>
-        </div>
-        <div class="sc-footer">
-          <div class="sc-footer-left" style="font-size:.86rem;">Pago único con 12% dto., o fracciona con SeQura. Permanencia de 12 meses: integración completa, configurada con los datos reales de tu negocio, y gestión de tu Departamento cada mes, incluidas.</div>
-          <a class="btn-primary" href="pago.html?plan=arranque-lite">Contratar Lite™</a>
-        </div>
-      </div>
-
       <!-- START (clave interna: start) -->
       <div class="service-card" id="start" onclick="if(!event.target.closest('.sc-footer'))location.href='departamentos/start.html'" style="cursor:pointer;">
         <div class="sc-header">
@@ -438,22 +365,108 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         </div>
       </div>
 
+      <!-- LITE -->
+      <div class="service-card" id="lite" onclick="if(!event.target.closest('.sc-footer'))location.href='departamentos/lite.html'" style="cursor:pointer;">
+        <div class="sc-header">
+          <div>
+            <div class="sc-cat blue">Departamento Tecnológico · 12 meses</div>
+            <span class="sc-badge green">Para pymes pequeñas</span>
+            <h2 class="sc-title" style="font-size:1.4rem;">Departamento Tecnológico Lite™</h2>
+            <p class="sc-desc" style="font-size:.85rem;">Tu web (reacondicionada o una Web Profesional nueva) + 2 automatizaciones a elegir, todo instalado <b style="color:var(--white);">completamente gratis.</b> Después, mantenimiento, seguridad, actualizaciones e incidencias resueltas.</p>
+          </div>
+        </div>
+        <div style="padding:20px 24px;border-top:1px solid var(--grey-line);">
+          <div style="font-size:.7rem;margin-bottom:6px;" id="sc-founding-badge-lite"></div>
+          <div style="font-size:2rem;font-weight:700;font-family:var(--font-d);" id="sc-price-lite"></div>
+          <div style="font-size:.80rem;color:var(--grey);margin-bottom:4px;" id="sc-vat-lite"></div>
+          <div style="font-size:.7rem;color:var(--grey);" id="sc-founding-old-lite"></div>
+          <div style="font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Integración + gestión de tu Departamento incluidas · Permanencia: 12 meses</div>
+        </div>
+        <div class="value-highlight">
+          <div class="vh-eyebrow">Lo que incluye tu Departamento</div>
+          <div class="vh-save">Web + 2 automatizaciones <b>incluidas en la cuota</b>, sin pagarlas aparte</div>
+          <ul class="vh-list">
+            <li>Web Profesional o reacondicionada <span class="vh-tag">valor 1.390 €</span></li>
+            <li>2 automatizaciones a elegir <span class="vh-tag">valor 700-1.280 €</span></li>
+            <li>Gestión de tu Departamento <span class="vh-tag">cada mes, sin parar</span></li>
+          </ul>
+        </div>
+        <div style="padding:0 24px 16px;">
+          <div class="sc-col-title">Incluye</div>
+          <ul class="sc-list">
+            <li><b>Mantenimiento web</b> — actualizaciones, seguridad y rendimiento</li>
+            <li><b>Copias de seguridad</b> periódicas y verificadas</li>
+            <li><b>Resolución de incidencias</b> técnicas sin coste adicional</li>
+            <li><b>Reunión mensual</b> de revisión y asesoramiento (30 min)</li>
+          </ul>
+        </div>
+        <div class="sc-footer">
+          <div class="sc-footer-left" style="font-size:.86rem;">Pago único con 12% dto., o fracciona con SeQura. Permanencia de 12 meses: integración completa, configurada con los datos reales de tu negocio, y gestión de tu Departamento cada mes, incluidas.</div>
+          <a class="btn-primary" href="pago.html?plan=arranque-lite">Contratar Lite™</a>
+        </div>
+      </div>
+
+      <!-- PRO -->
+      <div class="service-card" id="pro" onclick="if(!event.target.closest('.sc-footer'))location.href='departamentos/pro.html'" style="cursor:pointer;">
+        <div class="sc-header">
+          <div>
+            <div class="sc-cat blue">Departamento Tecnológico · 12 meses</div>
+            <span class="sc-badge blue">Para empresas en crecimiento</span>
+            <h2 class="sc-title" style="font-size:1.4rem;">Departamento Tecnológico Pro™</h2>
+            <p class="sc-desc" style="font-size:.85rem;">Web Profesional regalada — con chat que responde y agenda citas de fábrica — + 3 automatizaciones más a elegir, instaladas gratis. Mantiene hasta 6 automatizaciones tecnológicas con optimización continua, mayor prioridad y revisiones avanzadas.</p>
+          </div>
+        </div>
+        <div style="padding:20px 24px;border-top:1px solid var(--grey-line);">
+          <div style="font-size:.7rem;margin-bottom:6px;" id="sc-founding-badge-pro"></div>
+          <div style="font-size:2rem;font-weight:700;font-family:var(--font-d);" id="sc-price-pro"></div>
+          <div style="font-size:.80rem;color:var(--grey);margin-bottom:4px;" id="sc-vat-pro"></div>
+          <div style="font-size:.7rem;color:var(--grey);" id="sc-founding-old-pro"></div>
+          <div style="font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Integración + gestión de tu Departamento incluidas · Permanencia: 12 meses</div>
+        </div>
+        <div class="value-highlight">
+          <div class="vh-eyebrow">Lo que incluye tu Departamento</div>
+          <div class="vh-save">Web + 3 automatizaciones <b>incluidas en la cuota</b>, sin pagarlas aparte</div>
+          <ul class="vh-list">
+            <li>Web Profesional <span class="vh-tag">valor 1.390 €</span></li>
+            <li>Chat + agenda en tu web <span class="vh-tag">de fábrica</span></li>
+            <li>3 automatizaciones a elegir <span class="vh-tag">valor 1.150-1.780 €</span></li>
+            <li>Gestión de tu Departamento <span class="vh-tag">cada mes, sin parar</span></li>
+          </ul>
+        </div>
+        <div style="padding:0 24px 16px;">
+          <div class="sc-col-title">Incluye</div>
+          <ul class="sc-list">
+            <li><b>Optimización continua</b> de todas las automatizaciones activas</li>
+            <li><b>Supervisión continua</b> de todas tus automatizaciones activas</li>
+            <li><b>Mayor prioridad</b> en incidencias, respuesta &lt;24h</li>
+            <li><b>Reunión mensual</b> de revisión y estrategia tecnológica (45 min)</li>
+          </ul>
+        </div>
+        <div class="sc-footer">
+          <div class="sc-footer-left" style="font-size:.86rem;">Pago único con 12% dto., o fracciona con SeQura. Permanencia de 12 meses: integración completa, configurada con los datos reales de tu negocio, y gestión de tu Departamento cada mes, incluidas.</div>
+          <a class="btn-primary" href="pago.html?plan=arranque-pro">Contratar Pro™</a>
+        </div>
+      </div>
+
     </div>
 
     <!-- WHAT IS SOLUTION -->
     <div class="what-is-block">
       <h3 class="wib-title">¿Qué es una automatización?</h3>
       <p class="wib-sub">Cada sistema implantado que requiere mantenimiento periódico. El Pro™ mantiene hasta 6, el Lite™ hasta 3, el Basic™ 1 (además de su Web Profesional) y el Start™ 1 (sin web). Cuando creces y añades nueva tecnología, evolucionamos contigo.</p>
-      <div class="wib-grid">
-        <div class="wib-item"><b>IA para WhatsApp</b>Atiende y agenda citas 24/7</div>
-        <div class="wib-item"><b>IA para tu Web</b>Atiende y agenda citas en tu web</div>
-        <div class="wib-item"><b>IA para Llamadas</b>Contesta el teléfono y agenda citas — exclusiva desde Lite™</div>
-        <div class="wib-item"><b>IA para Correo</b>Gestión automática de emails</div>
-        <div class="wib-item"><b>Reservas y Agenda</b>Citas online integradas</div>
-        <div class="wib-item"><b>Firma Digital</b>Firma con validez legal</div>
-        <div class="wib-item"><b>Ciberseguridad Pyme</b>Protección y copias de seguridad hasta 5 puestos — solo gratis en Pro™</div>
-        <div class="wib-item"><b>Flujos a medida (banda Simple)</b>Un flujo interno automatizado a medida — solo gratis en Pro™</div>
-        <div class="wib-item"><b>Facturación automática (TruKi)</b>Factura por chat — disponible en los 4 Departamentos</div>
+      <div class="def-grid">
+        <div class="def-card"><p>Atiende y agenda citas 24/7 por WhatsApp</p><a href="soluciones/whatsapp.html">¿Quieres saber más? →</a></div>
+        <div class="def-card"><p>Atiende y agenda citas directamente en tu web</p><a href="soluciones/web-ia.html">¿Quieres saber más? →</a></div>
+        <div class="def-card"><p>Contesta el teléfono y agenda citas — exclusiva desde Lite™</p><a href="soluciones/llamadas.html">¿Quieres saber más? →</a></div>
+        <div class="def-card"><p>Gestión automática de tu correo</p><a href="soluciones/email-ia.html">¿Quieres saber más? →</a></div>
+        <div class="def-card"><p>Citas online integradas, sin pasar por chat</p><a href="soluciones/reservas.html">¿Quieres saber más? →</a></div>
+        <div class="def-card"><p>Firma con validez legal, sin desplazamientos</p><a href="soluciones/firma.html">¿Quieres saber más? →</a></div>
+        <div class="def-card"><p>Protección y copias de seguridad hasta 5 puestos — solo gratis en Pro™</p><a href="soluciones/ciberseguridad.html">¿Quieres saber más? →</a></div>
+        <div class="def-card"><p>Un flujo interno automatizado a medida — solo gratis en Pro™</p><a href="soluciones/flujos-a-medida.html">¿Quieres saber más? →</a></div>
+        <div class="def-card"><p>Factura y presupuesta por chat, en segundos</p><a href="soluciones/truki.html">¿Quieres saber más? →</a></div>
+        <div class="def-card"><p>Seguimiento de cada cliente y oportunidad, sin hojas sueltas</p><a href="soluciones/crm.html">¿Quieres saber más? →</a></div>
+        <div class="def-card"><p>Expedientes y documentos siempre localizables</p><a href="soluciones/docs.html">¿Quieres saber más? →</a></div>
+        <div class="def-card"><p>Conecta tus herramientas entre sí, sin duplicar trabajo</p><a href="soluciones/integraciones.html">¿Quieres saber más? →</a></div>
       </div>
     </div>
 
@@ -486,7 +499,14 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
     </div>
 
-    <!-- LO QUE HACEMOS EN CADA IMPLANTACIÓN -->
+    <p style="text-align:center;font-size:.88rem;color:var(--grey);margin-top:8px;">¿Dudas sobre qué automatización elegir, sus límites o qué entra gratis en cada Departamento? <a href="digitaliza.html" style="color:var(--gold);font-weight:700;">Resuélvelas en Digitaliza tu Empresa →</a></p>
+
+  </div>
+</div>
+
+<!-- LO QUE HACEMOS EN CADA IMPLANTACIÓN -->
+<div class="section-block reveal" style="padding-top:56px;padding-bottom:0;">
+  <div class="container">
     <div class="what-is-block">
       <h3 class="wib-title">Lo que hacemos en cada implantación</h3>
       <p class="wib-sub">Cada automatización que eliges dentro de tu Departamento pasa por el mismo proceso, la elijas cuando la elijas.</p>
@@ -501,9 +521,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <div class="di-item">Documentación completa entregada</div>
       </div>
     </div>
-
-    <p style="text-align:center;font-size:.88rem;color:var(--grey);margin-top:8px;">¿Dudas sobre qué automatización elegir, sus límites o qué entra gratis en cada Departamento? <a href="digitaliza.html" style="color:var(--gold);font-weight:700;">Resuélvelas en Digitaliza tu Empresa →</a></p>
-
   </div>
 </div>
 

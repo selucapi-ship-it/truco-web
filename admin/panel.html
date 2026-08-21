@@ -889,15 +889,24 @@ async function renderMfaStatus() {
   const verified = data.totp.find(f => f.status === 'verified');
   if (verified) {
     wrap.innerHTML = `
-      <p style="color:var(--green);font-size:.88rem;">✓ Verificación en dos pasos activada.</p>
-      <p style="color:var(--grey);font-size:.8rem;margin-bottom:14px;">Si cambias de móvil o pierdes acceso a tu app, desactívala aquí y vuelve a configurarla con el nuevo dispositivo.</p>
-      <button style="border:1px solid var(--red);color:var(--red);background:none;border-radius:8px;padding:10px 16px;cursor:pointer;" onclick="desactivarMfa('${verified.id}')">Desactivar verificación en dos pasos</button>
+      <div class="prices-card" style="margin:0;">
+        <div class="prices-card-head">
+          <h3 style="display:flex;align-items:center;gap:10px;">Verificación en dos pasos <span class="status-badge status-cliente">Activada</span></h3>
+        </div>
+        <p style="color:var(--grey);font-size:.85rem;margin-bottom:18px;max-width:480px;">Cada vez que inicies sesión, además de la contraseña te pedirá el código de tu app autenticadora. Si cambias de móvil o pierdes acceso a ella, desactívala aquí y vuelve a configurarla con el nuevo dispositivo.</p>
+        <button style="border:1px solid var(--red);color:var(--red);background:none;border-radius:8px;padding:10px 16px;cursor:pointer;font-size:.84rem;" onclick="desactivarMfa('${verified.id}')">Desactivar verificación en dos pasos</button>
+      </div>
     `;
   } else {
     wrap.innerHTML = `
-      <p style="color:var(--grey);font-size:.85rem;margin-bottom:14px;">Añade una app autenticadora (Google Authenticator, Authy, 1Password...) para que entrar al panel pida también un código de tu móvil, además de la contraseña.</p>
-      <button class="new" onclick="iniciarEnrolamientoMfa()">Activar verificación en dos pasos</button>
-      <div id="mfa-enroll-wrap" style="margin-top:16px;"></div>
+      <div class="prices-card" style="margin:0;">
+        <div class="prices-card-head">
+          <h3 style="display:flex;align-items:center;gap:10px;">Verificación en dos pasos <span class="status-badge status-descartado">Sin activar</span></h3>
+        </div>
+        <p style="color:var(--grey);font-size:.85rem;margin-bottom:18px;max-width:480px;">Añade una app autenticadora (Google Authenticator, Authy, 1Password...) para que entrar al panel pida también un código de tu móvil, además de la contraseña.</p>
+        <button class="new" onclick="iniciarEnrolamientoMfa()">Activar verificación en dos pasos</button>
+        <div id="mfa-enroll-wrap" style="margin-top:20px;"></div>
+      </div>
     `;
   }
 }
@@ -907,14 +916,21 @@ async function iniciarEnrolamientoMfa() {
   if (error) { alert('No se pudo iniciar la activación: ' + error.message); return; }
   const enrollWrap = document.getElementById('mfa-enroll-wrap');
   enrollWrap.innerHTML = `
-    <p style="font-size:.82rem;color:var(--grey);margin-bottom:8px;">Escanea este código QR con tu app autenticadora:</p>
-    <div style="background:#fff;padding:12px;border-radius:8px;display:inline-block;"><img src="${data.totp.qr_code}" alt="Código QR de verificación en dos pasos" style="display:block;width:180px;height:180px;"></div>
-    <p style="font-size:.72rem;color:var(--grey);margin-top:8px;">¿No puedes escanear? Clave manual: <code style="color:var(--white);">${escapeHtml(data.totp.secret)}</code></p>
-    <div style="margin-top:14px;display:flex;gap:8px;align-items:center;">
-      <input type="text" id="mfa-enroll-code" placeholder="Código de 6 dígitos" inputmode="numeric" maxlength="6" style="max-width:160px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.85rem;">
-      <button onclick="confirmarEnrolamientoMfa('${data.id}')">Verificar y activar</button>
+    <div style="background:var(--bg-card);border:1px solid var(--grey-line);border-radius:12px;padding:20px;max-width:400px;">
+      <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+        <div style="background:#fff;padding:10px;border-radius:10px;flex-shrink:0;line-height:0;"><img src="${data.totp.qr_code}" alt="Código QR de verificación en dos pasos" style="display:block;width:150px;height:150px;"></div>
+        <div style="flex:1;min-width:160px;">
+          <p style="font-size:.8rem;color:var(--grey);margin-bottom:10px;">1. Escanea este código con tu app autenticadora.</p>
+          <p style="font-size:.7rem;color:var(--grey);">¿No puedes escanear? Clave manual:</p>
+          <code style="color:var(--white);word-break:break-all;font-size:.72rem;">${escapeHtml(data.totp.secret)}</code>
+        </div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <input type="text" id="mfa-enroll-code" placeholder="2. Código de 6 dígitos" inputmode="numeric" maxlength="6" style="max-width:180px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.85rem;">
+        <button onclick="confirmarEnrolamientoMfa('${data.id}')">Verificar y activar</button>
+      </div>
+      <div class="login-error" id="mfa-enroll-error"></div>
     </div>
-    <div class="login-error" id="mfa-enroll-error"></div>
   `;
 }
 

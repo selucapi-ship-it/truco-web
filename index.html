@@ -1887,7 +1887,7 @@ const KB = {
   soluciones_por_sector: {
     patterns: ['qué necesito para mi sector','recomiéndame algo','no sé qué elegir','según mi negocio','qué soluciones necesito'],
     responses: [
-      'Depende de a qué te dediques — cuéntame tu sector y te digo exactamente qué automatizaciones encajan mejor. Por ejemplo: negocios con citas (peluquerías, clínicas, gimnasios) suelen necesitar IA para WhatsApp + Reservas y Agenda; despachos (abogados, asesorías, inmobiliarias) suelen necesitar CRM + Firma Digital; hostelería suele necesitar Reservas + IA para WhatsApp. Elige las que quieras dentro de tu Departamento Start™, Basic™, Lite™ o Pro™ — no van en combos cerrados, tú decides. <a href="pago.html" target="_blank">Ver el checkout →</a>\n\n¿A qué te dedicas?'
+      'Depende de a qué te dediques — cuéntame tu sector y te digo exactamente qué automatizaciones encajan mejor. Por ejemplo: negocios con citas (peluquerías, clínicas, gimnasios) suelen necesitar IA para WhatsApp + web con agenda; despachos (abogados, asesorías, inmobiliarias) suelen necesitar CRM + Firma Digital; hostelería suele necesitar IA para WhatsApp + web con agenda. Elige las que quieras dentro de tu Departamento Start™, Basic™, Lite™ o Pro™ — no van en combos cerrados, tú decides, y para la mayoría de autónomos y pequeños negocios el Basic™ ya es más que suficiente para arrancar.\n\n¿A qué te dedicas?'
     ]
   },
 
@@ -1967,7 +1967,7 @@ const KB = {
   caro_objecion: {
     patterns: ['caro','muy caro','no me llega','precio alto','es mucho','no puedo','fuera de presupuesto','demasiado','me parece caro'],
     responses: [
-      `Entiendo la duda. Permíteme ponerlo en perspectiva:\n\nUn técnico informático externo en España cobra 50-80€/hora. Una incidencia técnica media te lleva 2-3 horas. Solo eso son 100-240€.\n\nEl Departamento Lite™ son ${currentPrice('lite')}€/mes. Incluye supervisión continua, seguridad, copias de seguridad, resolución de incidencias sin coste y reunión mensual.\n\n¿Cuántas incidencias tecnológicas tienes aproximadamente al mes, o cuánto tiempo pierdes gestionando aspectos técnicos?`
+      `Entiendo la duda, es lo primero que piensa cualquiera. Vamos a ponerlo en perspectiva:\n\nUn técnico informático externo en España cobra 50-80€/hora, y una incidencia media te lleva 2-3 horas — solo eso ya son 100-240€, una vez. El Departamento Start™ arranca en ${currentPrice('start')}€/mes y el Basic™ (con web incluida) en ${currentPrice('basic')}€/mes, e incluyen mucho más: supervisión continua, resolución de incidencias sin coste extra, y la implantación regalada.\n\n¿Cuántas incidencias tecnológicas tienes aproximadamente al mes, o cuánto tiempo pierdes gestionando aspectos técnicos?`
     ]
   },
 
@@ -2003,56 +2003,56 @@ const KB = {
   abogado: {
     patterns: ['abogado','bufete','jurídico','legal','letrado','despacho'],
     responses: [
-      `Para despachos de abogados, asesorías, gestorías e inmobiliarias solemos recomendar: CRM (seguimiento de expedientes), Firma digital (contratos sin desplazamientos) y Gestión documental (expedientes organizados). Si además se os escapan consultas por WhatsApp fuera de horario, se añade IA para WhatsApp sin problema.\n\nDentro del Departamento Pro™ (${currentPrice('pro')}€/mes, permanencia 12 meses), van gratis las que entren en tu pool de automatizaciones a elegir; el resto se añade a precio de catálogo y se mantiene sin coste una vez instalada.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Tienes actualmente alguna herramienta de gestión de agenda o casos?`
+      `Para despachos de abogados, asesorías, gestorías e inmobiliarias solemos recomendar: CRM (seguimiento de expedientes), Firma digital (contratos sin desplazamientos) y Gestión documental (expedientes organizados) — estas tres solo están disponibles desde el Departamento Lite™ en adelante. Si además se os escapan consultas por WhatsApp fuera de horario, se añade sin problema.\n\nPara esto normalmente encaja bien el Lite™ (${currentPrice('lite')}€/mes + IVA, 2 automatizaciones gratis y hasta 3 en total) — échale un vistazo con calma: <a href="departamentos/lite.html" target="_blank">la página del Lite™ aquí</a>, sin compromiso, y si te quedan dudas después de verla seguimos hablando.\n\n¿Tienes actualmente alguna herramienta de gestión de agenda o casos?`
     ]
   },
 
   dental: {
     patterns: ['dental','dentista','clínica dental','odontología'],
     responses: [
-      'Para clínicas dentales solemos recomendar: IA para WhatsApp (conectada a tu software de clínica, tipo Gesden o Clinicpro), Reservas online y Flujos a medida para recordatorios de cita. El asistente recoge solicitudes mientras estás en consulta y avisa al paciente, sin perder ninguna.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Qué software usas actualmente para la agenda?'
+      `Para clínicas dentales solemos recomendar: IA para WhatsApp (conectada a tu software de clínica, tipo Gesden o Clinicpro) y la web con chat y agenda incluidos. El asistente recoge solicitudes mientras estás en consulta y avisa al paciente, sin perder ninguna.\n\nPara empezar suele bastar con el Basic™ (${currentPrice('basic')}€/mes + IVA) — te la enseño sin compromiso: <a href="departamentos/basic.html" target="_blank">la página del Basic™ aquí</a>. Si más adelante quieres también recordatorios automáticos de cita, eso ya es cosa del Lite™. Cualquier duda después de verla, aquí sigo.\n\n¿Qué software usas actualmente para la agenda?`
     ]
   },
 
   clinica_general: {
     patterns: ['clínica médica','centro médico','consulta médica','médico privado','fisioterapia','psicólogo'],
     responses: [
-      'Para clínicas y consultas médicas solemos recomendar: IA para WhatsApp + Reservas online + Flujos a medida (recordatorios de cita). Así ningún paciente se queda sin respuesta y la recepción deja de estar desbordada con llamadas repetitivas.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Qué canal usan más tus pacientes para pedir cita: llamada, WhatsApp o ambos?'
+      `Para clínicas y consultas médicas solemos recomendar: IA para WhatsApp + la web con chat y agenda ya incluidos. Así ningún paciente se queda sin respuesta y la recepción deja de estar desbordada con llamadas repetitivas.\n\nPara arrancar suele bastar con el Basic™ (${currentPrice('basic')}€/mes + IVA): <a href="departamentos/basic.html" target="_blank">su página aquí</a>, sin compromiso. Si más adelante recibís muchas llamadas, el Lite™ añade IA para contestarlas también. Después de verla, si tienes dudas seguimos hablando.\n\n¿Qué canal usan más tus pacientes para pedir cita: llamada, WhatsApp o ambos?`
     ]
   },
 
   inmobiliaria: {
     patterns: ['inmobiliaria','agente inmobiliario','venta de pisos','alquiler de pisos','agencia inmobiliaria'],
     responses: [
-      'Para inmobiliarias solemos recomendar: CRM (seguimiento de cada lead e interesado), Firma digital (contratos de arras/alquiler sin desplazamientos) y Gestión documental. Y si la velocidad de respuesta es tu prioridad número uno, se añade IA para WhatsApp sin problema — el que responde primero, suele vender.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Cuántos leads recibís al mes aproximadamente?'
+      `Para inmobiliarias solemos recomendar: CRM (seguimiento de cada lead e interesado), Firma digital (contratos de arras/alquiler sin desplazamientos) y Gestión documental — estas tres piden Lite™ como mínimo. Y si la velocidad de respuesta es tu prioridad número uno, se añade IA para WhatsApp sin problema — el que responde primero, suele vender.\n\nEl Lite™ (${currentPrice('lite')}€/mes + IVA) suele encajar bien aquí — mírala con calma: <a href="departamentos/lite.html" target="_blank">la página del Lite™ aquí</a>, sin compromiso, y seguimos hablando si te quedan dudas.\n\n¿Cuántos leads recibís al mes aproximadamente?`
     ]
   },
 
   estetica: {
     patterns: ['centro de estética','clínica estética','peluquería','salón de belleza','centro de belleza'],
     responses: [
-      'Para centros de estética y belleza solemos recomendar: Reservas online + IA para WhatsApp + Flujos a medida (recordatorios, para reducir los "no show"). Los clientes reservan solos a cualquier hora y el asistente resuelve dudas de precio y disponibilidad.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Cómo gestionáis ahora mismo las reservas?'
+      `Para centros de estética y belleza solemos recomendar: IA para WhatsApp + la web con chat y agenda ya incluidos. Los clientes reservan solos a cualquier hora y el asistente resuelve dudas de precio y disponibilidad.\n\nPara empezar suele bastar con el Basic™ (${currentPrice('basic')}€/mes + IVA): <a href="departamentos/basic.html" target="_blank">su página aquí</a>, sin compromiso — y si más adelante quieres recordatorios automáticos para reducir los "no show", eso ya es cosa del Lite™. Cualquier duda después de verla, aquí sigo.\n\n¿Cómo gestionáis ahora mismo las reservas?`
     ]
   },
 
   autonomo_oficio: {
     patterns: ['electricista','fontanero','pintor','carpintero','instalador','oficio','reformas'],
     responses: [
-      'Para autónomos de oficios solemos recomendar: IA para WhatsApp (recoge la solicitud mientras estás en obra y agenda la visita), Reservas online y Flujos a medida para el seguimiento de presupuestos.\n\nCuando terminas en obra, el cliente ya tiene confirmación y tú tienes todo organizado.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Recibes muchos mensajes de WhatsApp que se quedan sin respuesta?'
+      `Para autónomos de oficios (electricistas, fontaneros, pintores, cerrajeros...) casi siempre es más que suficiente con el Basic™ (${currentPrice('basic')}€/mes + IVA): te da presencia web propia + IA para WhatsApp (recoge la solicitud mientras estás en obra y agenda la visita) + Facturación automática con TruKi, para hacer presupuestos y facturas por chat sin perder tiempo con papeleo. No hace falta nada más grande para arrancar.\n\nMírala con calma, sin compromiso: <a href="departamentos/basic.html" target="_blank">la página del Basic™ aquí</a>. Si después de verla te quedan dudas, aquí sigo.\n\n¿Recibes muchos mensajes de WhatsApp que se quedan sin respuesta?`
     ]
   },
 
   gimnasio: {
     patterns: ['gimnasio','centro deportivo','box de crossfit','estudio de yoga','centro de entrenamiento'],
     responses: [
-      'Para gimnasios y centros deportivos solemos recomendar: IA para WhatsApp (altas, dudas de horarios y tarifas), Reservas online (clases y horarios) y Flujos a medida (seguimiento de socios para evitar bajas por falta de atención).\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Cuántos socios activos gestionáis aproximadamente ahora mismo?'
+      `Para gimnasios y centros deportivos solemos recomendar: IA para WhatsApp (altas, dudas de horarios y tarifas) + la web con chat y agenda ya incluidos para clases y horarios.\n\nPara empezar suele bastar con el Basic™ (${currentPrice('basic')}€/mes + IVA): <a href="departamentos/basic.html" target="_blank">su página aquí</a>, sin compromiso — y si más adelante quieres seguimiento automático de socios para evitar bajas, eso ya es cosa del Lite™. Después de verla, si tienes dudas seguimos hablando.\n\n¿Cuántos socios activos gestionáis aproximadamente ahora mismo?`
     ]
   },
 
   restaurante: {
     patterns: ['restaurante','bar','cafetería','hostelería','local de comida'],
     responses: [
-      'Para restaurantes y hostelería solemos recomendar: Reservas online + IA para WhatsApp + Flujos a medida (confirmaciones y recordatorios, para reducir los no-shows). Reservas de mesa sin llamadas perdidas y menos mesas vacías.\n\n<a href="pago.html?plan=arranque-pro" target="_blank">Ver el Departamento Pro™ →</a>\n\n¿Tomáis reservas ahora mismo por teléfono, redes sociales, o no lleváis un sistema fijo?'
+      `Para restaurantes y hostelería solemos recomendar: IA para WhatsApp + la web con chat y agenda ya incluidos, para reservas de mesa sin llamadas perdidas.\n\nPara empezar suele bastar con el Basic™ (${currentPrice('basic')}€/mes + IVA): <a href="departamentos/basic.html" target="_blank">su página aquí</a>, sin compromiso — y si más adelante quieres confirmaciones y recordatorios automáticos para reducir los no-shows, eso ya es cosa del Lite™. Cualquier duda después de verla, aquí sigo.\n\n¿Tomáis reservas ahora mismo por teléfono, redes sociales, o no lleváis un sistema fijo?`
     ]
   },
 
