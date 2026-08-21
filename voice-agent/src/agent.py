@@ -87,66 +87,71 @@ def _log_crm_interaction(nombre=None, email=None, telefono=None, nota=None):
         logger.exception("Error registrando en el CRM")
 
 
-def _find_free_slots(service, max_slots=2, days_ahead=7, min_lead_minutes=60, earliest=None):
-    """earliest: si se da, no busca antes de ese instante (aware, o naive y se
-    asume Madrid) — así se puede pedir "más tarde" o "la semana que viene" sin
-    que siga devolviendo los mismos huecos de hoy una y otra vez."""
+_DIAS_SEMANA = {"lunes": 0, "martes": 1, "miercoles": 2, "jueves": 3, "viernes": 4}
+
+
+def _resolver_fecha_dia(now, dia, semana_que_viene):
+    """Convierte 'hoy'/'manana'/un día de la semana en una fecha concreta, sin
+    que el modelo tenga que calcular ninguna fecha él mismo — la cuenta la
+    hace siempre Python. semana_que_viene fuerza a saltar a la semana
+    siguiente cuando el cliente lo dice explícitamente."""
+    if dia == "hoy":
+        return now.date()
+    if dia == "manana":
+        return now.date() + datetime.timedelta(days=1)
+    if dia in _DIAS_SEMANA:
+        dias_hasta = (_DIAS_SEMANA[dia] - now.weekday()) % 7
+        if semana_que_viene:
+            dias_hasta += 7
+        return now.date() + datetime.timedelta(days=dias_hasta)
+    return None
+
+
+def _find_slots_on_day(service, target_date, excluir_horas=None, max_slots=1, min_lead_minutes=60):
+    """Busca huecos SOLO dentro de target_date, nunca en otros días — así el
+    cliente elige el día y el agente solo mira disponibilidad ahí, en vez de
+    ofrecer una lista larga de días y horas de golpe. excluir_horas deja
+    fuera los huecos que ya se le ofrecieron a este cliente y rechazó, para
+    que la siguiente llamada en el mismo día devuelva uno distinto."""
+    excluir_horas = set(excluir_horas or [])
     now = datetime.datetime.now(MADRID_TZ)
-    if earliest is not None:
-        if earliest.tzinfo is None:
-            earliest = earliest.replace(tzinfo=MADRID_TZ)
-        search_start = max(earliest, now)
-    else:
-        search_start = now
-    window_end = search_start + datetime.timedelta(days=days_ahead)
+    if target_date.weekday() >= 5:  # sábado o domingo, no se trabaja
+        return []
+    day_start = datetime.datetime.combine(target_date, datetime.time(BUSINESS_HOURS[0], 0), tzinfo=MADRID_TZ)
+    day_end = datetime.datetime.combine(target_date, datetime.time(BUSINESS_HOURS[1], 0), tzinfo=MADRID_TZ)
+    if day_end <= now:
+        return []  # ese día ya ha pasado por completo
     busy = service.freebusy().query(
         body={
-            "timeMin": search_start.isoformat(),
-            "timeMax": window_end.isoformat(),
+            "timeMin": day_start.isoformat(),
+            "timeMax": day_end.isoformat(),
             "timeZone": "Europe/Madrid",
             "items": [{"id": CALENDAR_ID}],
         }
     ).execute()
-    busy_ranges = busy["calendars"][CALENDAR_ID]["busy"]
     busy_ranges = [
         (
             datetime.datetime.fromisoformat(b["start"]).astimezone(MADRID_TZ),
             datetime.datetime.fromisoformat(b["end"]).astimezone(MADRID_TZ),
         )
-        for b in busy_ranges
+        for b in busy["calendars"][CALENDAR_ID]["busy"]
     ]
 
-    earliest_bookable = max(search_start, now + datetime.timedelta(minutes=min_lead_minutes))
+    earliest_bookable = max(day_start, now + datetime.timedelta(minutes=min_lead_minutes))
+    slot_start = earliest_bookable
+    minutes_over = slot_start.minute % SLOT_MINUTES
+    if minutes_over or slot_start.second or slot_start.microsecond:
+        slot_start += datetime.timedelta(minutes=SLOT_MINUTES - minutes_over)
+        slot_start = slot_start.replace(second=0, microsecond=0)
+
     slots = []
-    day_date = search_start.date()
-    days_checked = 0
-
-    while len(slots) < max_slots and days_checked <= days_ahead:
-        day_start = datetime.datetime.combine(
-            day_date, datetime.time(BUSINESS_HOURS[0], 0), tzinfo=MADRID_TZ
-        )
-        day_end = datetime.datetime.combine(
-            day_date, datetime.time(BUSINESS_HOURS[1], 0), tzinfo=MADRID_TZ
-        )
-        if day_date.weekday() < 5:  # lunes a viernes
-            slot_start = max(day_start, earliest_bookable)
-            # redondear al siguiente múltiplo de SLOT_MINUTES
-            minutes_over = slot_start.minute % SLOT_MINUTES
-            if minutes_over or slot_start.second or slot_start.microsecond:
-                slot_start += datetime.timedelta(minutes=SLOT_MINUTES - minutes_over)
-                slot_start = slot_start.replace(second=0, microsecond=0)
-
-            while slot_start + datetime.timedelta(minutes=SLOT_MINUTES) <= day_end and len(slots) < max_slots:
-                slot_end = slot_start + datetime.timedelta(minutes=SLOT_MINUTES)
-                overlaps = any(
-                    slot_start < b_end and slot_end > b_start
-                    for b_start, b_end in busy_ranges
-                )
-                if not overlaps:
-                    slots.append(slot_start)
-                slot_start += datetime.timedelta(minutes=SLOT_MINUTES)
-        day_date += datetime.timedelta(days=1)
-        days_checked += 1
+    while slot_start + datetime.timedelta(minutes=SLOT_MINUTES) <= day_end and len(slots) < max_slots:
+        slot_end = slot_start + datetime.timedelta(minutes=SLOT_MINUTES)
+        overlaps = any(slot_start < b_end and slot_end > b_start for b_start, b_end in busy_ranges)
+        ya_ofrecido = slot_start.isoformat() in excluir_horas
+        if not overlaps and not ya_ofrecido:
+            slots.append(slot_start)
+        slot_start += datetime.timedelta(minutes=SLOT_MINUTES)
     return slots
 
 SYSTEM_INSTRUCTIONS = """Eres el "Asistente TRUCO PRO", el operador telefónico de TRUCO technology. Hablas en español de España, con voz cercana y natural, como una persona real del departamento tecnológico con años de trato con clientes — nunca suenas como un robot ni con frases genéricas. Como es una llamada de voz, responde en frases cortas y naturales, sin listas, sin markdown, sin leer símbolos en voz alta.
@@ -208,66 +213,92 @@ REGLAS:
 3. Si la pregunta es charla casual o algo totalmente fuera de TRUCO (el tiempo, opiniones personales, cultura general, bromas, insultos...), dilo con naturalidad en una frase corta y respetuosa tipo "eso se sale de lo mío, no corresponde a TRUCOtechnology" — y NO ofrezcas cita, una pregunta random no debe empujar a reservar. Si en cambio la pregunta SÍ es de negocio pero no la puedes resolver (asesoría legal o fiscal muy personalizada, un caso demasiado específico), dilo con naturalidad y ahí sí ofrece directamente reservarle ya una cita con el equipo usando `consultar_disponibilidad` — nunca dejes esa conversación en un simple "no puedo ayudarte con eso" sin más. En cualquiera de los dos casos, si el cliente pide una cita explícitamente, atiende esa petición de inmediato con las herramientas de reserva.
 4. Cuando necesites un instante antes de responder (una pregunta más larga o que requiera pensar), empieza la frase con una muletilla natural como "mmm", "a ver", "pues", o "vale, déjame pensar" — así suena a una persona real pensando, no a un silencio robótico. No lo hagas en cada turno, solo cuando de verdad haga falta un momento.
 
-RESERVAR CITAS POR VOZ:
-Tienes dos herramientas para gestionar la consultoría gratuita de 20-30 minutos directamente en la llamada: `consultar_disponibilidad` y `reservar_cita`. Cuando el cliente quiera reservar o tú se lo propongas y acepte:
-1. Llama a `consultar_disponibilidad` (con `a_partir_de="hoy"`) y ofrécele uno o dos huecos en voz alta (por ejemplo "tengo el jueves a las 11 o el viernes a las 17, ¿cuál te viene mejor?").
-2. Si esos huecos no le van bien y pide otro momento — mañana, otro día, la semana que viene — NO le digas que no hay hueco: vuelve a llamar a `consultar_disponibilidad` con `a_partir_de="manana"` o `a_partir_de="semana_que_viene"` según lo que te haya pedido, y ofrécele los huecos nuevos. Nunca calcules tú una fecha concreta ni le digas que no hay disponibilidad sin haber vuelto a llamar a la herramienta con el parámetro que toque.
-3. Si le interesa un hueco, pídele en la conversación los datos que falten: nombre completo, email y teléfono.
-4. Cuando tengas el hueco elegido y los datos, llama a `reservar_cita` con esa información, y confírmaselo en voz alta.
-5. Si alguna herramienta indica que no hay huecos o falla, dile que no ha podido completarse y ofrece que alguien del equipo le llame."""
+RESERVAR CITAS POR VOZ — el cliente elige el día, tú solo confirmas hueco a hueco:
+Tienes tres herramientas para la consultoría gratuita de 20-30 minutos: `consultar_disponibilidad`, `reservar_cita` y `mostrar_calendario_en_pantalla`. Cuando el cliente quiera reservar o tú se lo propongas y acepte:
+1. NUNCA sueltes tú una lista de días u horas de golpe. Pregúntale primero: "¿qué día te vendría bien?" y espera a que él proponga uno (hoy, mañana, o un día de la semana — "el miércoles", "el miércoles que viene", etc.).
+2. En cuanto diga un día, llama a `consultar_disponibilidad` con ese día y ofrécele en voz alta SOLO el hueco que te devuelva (una hora, no una lista) — por ejemplo "para el miércoles tengo las 11, ¿te viene bien?".
+3. Si ese hueco no le viene bien pero quiere seguir ese mismo día, vuelve a llamar a `consultar_disponibilidad` con el mismo día y añadiendo el [iso: ...] que acabas de ofrecer a `excluir_horas`, para que te dé otro distinto ese mismo día. Repite esto tantas veces como haga falta dentro del mismo día.
+4. Si la herramienta te dice que ya no quedan huecos ese día, o si el cliente prefiere directamente otro día, pregúntale qué otro día le viene bien y repite el proceso desde el paso 2 — nunca calcules tú tampoco qué día es "el siguiente", eso lo hace la herramienta.
+5. Si después de un par de días probados no conseguís cuadrar nada, o el cliente en cualquier momento prefiere elegir él mismo la hora exacta, llama a `mostrar_calendario_en_pantalla` — le aparece un calendario en la pantalla del chat de la web para que reserve él mismo sin más vueltas por voz. Dile algo como "te acabo de dejar un calendario en la pantalla del chat, ahí puedes elegir tú mismo el día y la hora que mejor te venga". Nunca dejes al cliente colgado diciendo simplemente que no hay hueco — siempre termina en una reserva confirmada o en el calendario en pantalla.
+6. Si el hueco le interesa, pídele en la conversación los datos que falten: nombre completo, email y teléfono.
+7. Cuando tengas el hueco elegido y los datos, llama a `reservar_cita` con esa información, y confírmaselo en voz alta."""
 
 
 class TrucoAgent(Agent):
-    def __init__(self):
+    def __init__(self, room=None):
         super().__init__(instructions=SYSTEM_INSTRUCTIONS)
+        self._room = room
 
     @function_tool
     async def consultar_disponibilidad(
         self,
         context: RunContext,
-        a_partir_de: Annotated[
-            Literal["hoy", "manana", "semana_que_viene"],
-            Field(description="Desde cuándo buscar hueco. Usa 'hoy' la primera vez que la llames en la conversación. Si el cliente rechaza los huecos que le ofreces porque le van mal esas fechas y pide más tarde, otro día, o la semana que viene, vuelve a llamar a esta herramienta con 'manana' o 'semana_que_viene' según lo que te haya pedido — nunca calcules tú mismo una fecha concreta, deja que la herramienta lo haga."),
-        ] = "hoy",
+        dia: Annotated[
+            Literal["hoy", "manana", "lunes", "martes", "miercoles", "jueves", "viernes"],
+            Field(description="El día que ha propuesto EL CLIENTE — pregúntaselo siempre primero ('¿qué día te vendría bien?'), nunca elijas tú un día ni ofrezcas una lista de días. Solo llama a esta herramienta cuando el cliente ya haya dicho un día concreto."),
+        ],
+        semana_que_viene: Annotated[
+            bool,
+            Field(description="True solo si el cliente ha dicho explícitamente 'la semana que viene' u otra forma de saltar a la semana siguiente junto con el día. False si no lo ha dicho (se busca el próximo de ese día, aunque caiga esta misma semana)."),
+        ] = False,
+        excluir_horas: Annotated[
+            list[str],
+            Field(description="Los valores [iso: ...] que ya le has ofrecido a este cliente EN ESTE MISMO DÍA y ha rechazado, para que la herramienta te dé un hueco distinto ese mismo día. Vacío la primera vez que preguntas por ese día."),
+        ] = [],
     ) -> str:
-        """Consulta los próximos huecos libres de 20-30 minutos en el calendario de
-        consultorías gratuitas. Úsala cuando el cliente quiera reservar una cita, antes
-        de pedirle ningún dato. Devuelve como máximo 2 huecos disponibles."""
+        """Busca UN único hueco disponible en el día concreto que ha propuesto el
+        cliente. Nunca la uses para ofrecer varios huecos o varios días de golpe:
+        primero pregúntale qué día le viene bien, y llama a esta herramienta solo
+        con ese día."""
         service = _get_calendar_service()
         if service is None:
-            return "La agenda no está disponible ahora mismo. Ofrece que alguien del equipo le llame."
+            return "La agenda no está disponible ahora mismo. Ofrece que alguien del equipo le llame, o usa mostrar_calendario_en_pantalla."
         now = datetime.datetime.now(MADRID_TZ)
-        earliest = None
-        if a_partir_de == "manana":
-            earliest = datetime.datetime.combine(
-                now.date() + datetime.timedelta(days=1), datetime.time(BUSINESS_HOURS[0], 0), tzinfo=MADRID_TZ
-            )
-        elif a_partir_de == "semana_que_viene":
-            dias_hasta_lunes = (7 - now.weekday()) % 7 or 7
-            earliest = datetime.datetime.combine(
-                now.date() + datetime.timedelta(days=dias_hasta_lunes), datetime.time(BUSINESS_HOURS[0], 0), tzinfo=MADRID_TZ
-            )
+        target_date = _resolver_fecha_dia(now, dia, semana_que_viene)
+        if target_date is None or target_date.weekday() >= 5:
+            return "Ese día no es laborable (cae en fin de semana) o no se ha entendido bien. Pregunta al cliente por otro día, o usa mostrar_calendario_en_pantalla si prefiere elegir él mismo."
         try:
-            slots = _find_free_slots(service, earliest=earliest)
+            slots = _find_slots_on_day(service, target_date, excluir_horas=excluir_horas)
         except Exception:
             logger.exception("Error consultando disponibilidad")
             return "No se pudo consultar la agenda ahora mismo. Ofrece que alguien del equipo le llame."
         if not slots:
-            return "No hay huecos libres en los próximos días. Ofrece que alguien del equipo le llame."
-        # Cada hueco lleva su ISO exacto al lado del texto en español — al
-        # llamar a reservar_cita hay que copiar ESE valor literal, nunca
-        # reconstruir la fecha/hora de memoria a partir de lo dicho en voz
-        # alta (ahí es donde se cuelan la mayoría de errores de reserva: el
-        # modelo calcula mal el día del mes o la zona horaria al convertir).
-        opciones = "; ".join(
-            f'{_formatear_fecha_es(s)} [iso: {s.isoformat()}]' for s in slots
-        )
+            return (
+                "No quedan huecos libres ese día (o ya se los has ofrecido todos y los ha rechazado). "
+                "Pregúntale si quiere probar otro día, o si prefiere que le muestres el calendario para "
+                "elegir él mismo — en ese caso llama a mostrar_calendario_en_pantalla."
+            )
+        s = slots[0]
+        # El hueco lleva su ISO exacto al lado del texto en español — al llamar a
+        # reservar_cita hay que copiar ESE valor literal, nunca reconstruir la
+        # fecha/hora de memoria a partir de lo dicho en voz alta (ahí es donde se
+        # cuelan la mayoría de errores de reserva: el modelo calcula mal el día
+        # o la zona horaria al convertir).
         return (
-            f"Huecos disponibles: {opciones}. Dile al cliente la fecha en español de forma "
-            f"natural (nunca leas el [iso: ...] en voz alta, es solo para ti). Cuando el "
-            f"cliente elija uno y llames a reservar_cita, usa EXACTAMENTE ese valor iso tal "
-            f"cual aparece aquí, sin recalcularlo tú."
+            f"Hueco disponible: {_formatear_fecha_es(s)} [iso: {s.isoformat()}]. Ofrécele SOLO este hueco "
+            f"al cliente en voz alta, nunca leas el [iso: ...]. Si no le viene bien, vuelve a llamar a esta "
+            f"misma herramienta con el mismo día y añade este iso a excluir_horas para que te dé otro "
+            f"distinto ese mismo día. Si prefiere otro día, repite el proceso con el día nuevo que te diga."
         )
+
+    @function_tool
+    async def mostrar_calendario_en_pantalla(self, context: RunContext) -> str:
+        """Llama a esta herramienta cuando, después de un par de intentos, no
+        consigas cuadrar un hueco con el cliente por voz, o en cualquier momento
+        en que el cliente prefiera elegir él mismo el día y la hora exactos. Le
+        hace aparecer un calendario de autoservicio en la pantalla del chat de
+        la web (si está en la web viendo el chat) para que reserve él mismo, sin
+        más idas y vueltas por voz. Nunca dejes al cliente sin ninguna forma de
+        reservar — usa siempre esto como última opción antes de colgar sin cita."""
+        if self._room is None:
+            return "No se pudo activar el calendario en pantalla. Dile que también puede reservar escribiendo por el chat de la web, o que alguien del equipo le llamará."
+        try:
+            payload = json.dumps({"type": "mostrar_calendario"}).encode("utf-8")
+            await self._room.local_participant.publish_data(payload, reliable=True)
+        except Exception:
+            logger.exception("Error mandando la señal de mostrar calendario")
+            return "No se pudo activar el calendario en pantalla. Dile que también puede reservar escribiendo por el chat de la web, o que alguien del equipo le llamará."
+        return "Hecho. Dile al cliente que mire la pantalla — le ha aparecido un botón para elegir día y hora él mismo, sin compromiso."
 
     @function_tool
     async def reservar_cita(
@@ -339,7 +370,7 @@ async def entrypoint(ctx: agents.JobContext):
         ),
     )
 
-    agent = TrucoAgent()
+    agent = TrucoAgent(room=ctx.room)
 
     await session.start(room=ctx.room, agent=agent)
 

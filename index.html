@@ -2514,6 +2514,19 @@ async function toggleVoiceAgent() {
       }
     });
     room.on(LivekitClient.RoomEvent.Disconnected, resetVoiceUI);
+    // El agente de voz puede pedir que aparezca el calendario de autoservicio
+    // en el chat de texto (cuando no consigue cuadrar una cita por voz, o si
+    // el cliente prefiere elegir él mismo) — misma tarjeta que usa el chat.
+    room.on(LivekitClient.RoomEvent.DataReceived, (payload) => {
+      try {
+        const msg = JSON.parse(new TextDecoder().decode(payload));
+        if (msg.type === 'mostrar_calendario') {
+          addMsg('bot', 'Te dejo aquí un calendario para que elijas tú mismo el día y la hora que mejor te venga:');
+          showBookingCard();
+          document.getElementById('chat-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } catch (e) { /* ignorar mensajes que no sean los nuestros */ }
+    });
 
     status.textContent = 'Conectando con el agente...';
     await room.connect(data.url, data.token);
