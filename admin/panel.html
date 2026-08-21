@@ -205,6 +205,8 @@
 
   /* ── EQUIPO (overlay) ── */
   #team-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
+  #settings-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
+  #settings-btn:hover{border-color:var(--gold);color:var(--gold);}
   #team-btn:hover{border-color:var(--gold);color:var(--gold);}
   #team-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;padding:20px;}
   .team-box{width:100%;max-width:460px;max-height:80vh;overflow-y:auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:16px;padding:26px;box-shadow:var(--shadow-card);}
@@ -259,7 +261,7 @@
   /* ── TRUKI (overlay, founder-only) ── */
   #truki-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
   #truki-btn:hover{border-color:var(--gold);color:var(--gold);}
-  #truki-overlay,#security-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+  #truki-overlay,#settings-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
   .truki-box{width:100%;max-width:920px;margin:0 auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:18px;padding:30px 32px;box-shadow:var(--shadow-card);}
   .truki-box h2{font-family:var(--font-d);font-size:1.5rem;margin:0 0 6px;letter-spacing:-.01em;}
   .truki-box>p{color:var(--grey);font-size:.82rem;margin:0 0 18px;line-height:1.5;}
@@ -371,7 +373,7 @@
       <div><b>TRUCO<span style="color:var(--blue);">technology</span></b><span>Panel CRM</span></div>
     </div>
     <div>
-      <button id="security-btn" onclick="openSecurityOverlay()">Seguridad</button>
+      <button id="settings-btn" onclick="openSettingsOverlay()">Ajustes</button>
       <button id="stats-btn" onclick="openStatsOverlay()" style="display:none;">Estadísticas</button>
       <button id="truki-btn" onclick="openTrukiOverlay()" style="display:none;">TruKi</button>
       <button id="quotes-btn" onclick="openQuotesOverlay()" style="display:none;">Presupuestos</button>
@@ -583,12 +585,32 @@
     </div>
   </div>
 
-  <div id="security-overlay">
+  <div id="settings-overlay">
     <div class="truki-box">
-      <button class="stats-close" onclick="closeSecurityOverlay()">✕</button>
-      <h2>Seguridad</h2>
-      <p style="color:var(--grey);font-size:.82rem;margin:0 0 22px;max-width:560px;">Verificación en dos pasos para tu propia cuenta — además de la contraseña, el panel te pedirá un código de una app autenticadora (Google Authenticator, Authy, 1Password...) en tu móvil cada vez que inicies sesión.</p>
-      <div id="mfa-status-wrap"></div>
+      <button class="stats-close" onclick="closeSettingsOverlay()">✕</button>
+      <h2>Ajustes</h2>
+      <p style="color:var(--grey);font-size:.82rem;margin:0 0 22px;max-width:560px;">Configuración de tu propia cuenta de acceso al panel.</p>
+
+      <div class="prices-card" style="margin-bottom:20px;">
+        <div class="prices-card-head">
+          <h3>Contraseña</h3>
+        </div>
+        <p style="color:var(--grey);font-size:.85rem;margin-bottom:16px;max-width:480px;">Cámbiala cuando quieras, no hace falta ningún motivo especial. Se aplica al instante — la próxima vez que inicies sesión, usa la nueva.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;max-width:460px;">
+          <input type="password" id="settings-new-pass" placeholder="Contraseña nueva" autocomplete="new-password" style="flex:1;min-width:180px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.85rem;outline:none;">
+          <input type="password" id="settings-new-pass-repeat" placeholder="Repítela" autocomplete="new-password" style="flex:1;min-width:180px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.85rem;outline:none;">
+        </div>
+        <button class="new" style="margin-top:12px;" onclick="cambiarPassword()">Cambiar contraseña</button>
+        <div class="login-error" id="settings-pass-error"></div>
+      </div>
+
+      <div class="prices-card" style="margin-bottom:0;">
+        <div class="prices-card-head">
+          <h3>Verificación en dos pasos</h3>
+        </div>
+        <p style="color:var(--grey);font-size:.82rem;margin-bottom:20px;max-width:560px;">Además de la contraseña, el panel te pedirá un código de una app autenticadora (Google Authenticator, Authy, 1Password...) en tu móvil cada vez que inicies sesión.</p>
+        <div id="mfa-status-wrap"></div>
+      </div>
     </div>
   </div>
 
@@ -817,6 +839,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 // recortaba todos los datos y acciones que no le correspondían vía RLS —
 // esto cierra también la puerta de entrada, no solo lo que hay detrás.
 async function verifyAdminAndShowApp() {
+  // El reto de MFA va SIEMPRE antes de comprobar el acceso: is_founder() ya
+  // exige aal2 en el servidor si hay un factor verificado, así que si
+  // comprobáramos is_authorized_staff() primero, una cuenta con el 2FA
+  // activado se rechazaría aquí mismo (sigue en aal1, "primer factor", hasta
+  // completar el código) sin darle nunca la oportunidad de introducirlo.
+  const mfaOk = await ensureMfaVerified();
+  if (!mfaOk) return; // cancelMfaChallenge() ya cerró sesión y mostró el login
+
   const { data: isAdminResult, error } = await sb.rpc('is_authorized_staff');
   if (error || !isAdminResult) {
     await sb.auth.signOut();
@@ -826,8 +856,6 @@ async function verifyAdminAndShowApp() {
     errEl.style.display = 'block';
     return;
   }
-  const mfaOk = await ensureMfaVerified();
-  if (!mfaOk) return; // cancelMfaChallenge() ya cerró sesión y mostró el login
   showApp();
 }
 
@@ -879,12 +907,29 @@ async function cancelMfaChallenge() {
   if (_mfaResolve) { _mfaResolve(false); _mfaResolve = null; }
 }
 
-async function openSecurityOverlay() {
-  document.getElementById('security-overlay').style.display = 'block';
+async function openSettingsOverlay() {
+  document.getElementById('settings-overlay').style.display = 'block';
+  document.getElementById('settings-new-pass').value = '';
+  document.getElementById('settings-new-pass-repeat').value = '';
+  document.getElementById('settings-pass-error').style.display = 'none';
   await renderMfaStatus();
 }
-function closeSecurityOverlay() {
-  document.getElementById('security-overlay').style.display = 'none';
+function closeSettingsOverlay() {
+  document.getElementById('settings-overlay').style.display = 'none';
+}
+
+async function cambiarPassword() {
+  const pass = document.getElementById('settings-new-pass').value;
+  const repeat = document.getElementById('settings-new-pass-repeat').value;
+  const errEl = document.getElementById('settings-pass-error');
+  errEl.style.display = 'none';
+  if (pass.length < 8) { errEl.textContent = 'La contraseña debe tener al menos 8 caracteres.'; errEl.style.display = 'block'; return; }
+  if (pass !== repeat) { errEl.textContent = 'Las dos contraseñas no coinciden.'; errEl.style.display = 'block'; return; }
+  const { error } = await sb.auth.updateUser({ password: pass });
+  if (error) { errEl.textContent = 'No se pudo cambiar: ' + error.message; errEl.style.display = 'block'; return; }
+  document.getElementById('settings-new-pass').value = '';
+  document.getElementById('settings-new-pass-repeat').value = '';
+  toast('Contraseña cambiada — úsala la próxima vez que inicies sesión.');
 }
 
 async function renderMfaStatus() {
@@ -894,24 +939,16 @@ async function renderMfaStatus() {
   const verified = data.totp.find(f => f.status === 'verified');
   if (verified) {
     wrap.innerHTML = `
-      <div class="prices-card" style="margin:0;">
-        <div class="prices-card-head">
-          <h3 style="display:flex;align-items:center;gap:10px;">Verificación en dos pasos <span class="status-badge status-cliente">Activada</span></h3>
-        </div>
-        <p style="color:var(--grey);font-size:.85rem;margin-bottom:18px;max-width:480px;">Cada vez que inicies sesión, además de la contraseña te pedirá el código de tu app autenticadora. Si cambias de móvil o pierdes acceso a ella, desactívala aquí y vuelve a configurarla con el nuevo dispositivo.</p>
-        <button style="border:1px solid var(--red);color:var(--red);background:none;border-radius:8px;padding:10px 16px;cursor:pointer;font-size:.84rem;" onclick="desactivarMfa('${verified.id}')">Desactivar verificación en dos pasos</button>
-      </div>
+      <div style="margin-bottom:12px;"><span class="status-badge status-cliente">Activada</span></div>
+      <p style="color:var(--grey);font-size:.85rem;margin-bottom:18px;max-width:480px;">Cada vez que inicies sesión, además de la contraseña te pedirá el código de tu app autenticadora. Si cambias de móvil o pierdes acceso a ella, desactívala aquí y vuelve a configurarla con el nuevo dispositivo.</p>
+      <button style="border:1px solid var(--red);color:var(--red);background:none;border-radius:8px;padding:10px 16px;cursor:pointer;font-size:.84rem;" onclick="desactivarMfa('${verified.id}')">Desactivar verificación en dos pasos</button>
     `;
   } else {
     wrap.innerHTML = `
-      <div class="prices-card" style="margin:0;">
-        <div class="prices-card-head">
-          <h3 style="display:flex;align-items:center;gap:10px;">Verificación en dos pasos <span class="status-badge status-descartado">Sin activar</span></h3>
-        </div>
-        <p style="color:var(--grey);font-size:.85rem;margin-bottom:18px;max-width:480px;">Añade una app autenticadora (Google Authenticator, Authy, 1Password...) para que entrar al panel pida también un código de tu móvil, además de la contraseña.</p>
-        <button class="new" onclick="iniciarEnrolamientoMfa()">Activar verificación en dos pasos</button>
-        <div id="mfa-enroll-wrap" style="margin-top:20px;"></div>
-      </div>
+      <div style="margin-bottom:12px;"><span class="status-badge status-descartado">Sin activar</span></div>
+      <p style="color:var(--grey);font-size:.85rem;margin-bottom:18px;max-width:480px;">Añade una app autenticadora (Google Authenticator, Authy, 1Password...) para que entrar al panel pida también un código de tu móvil, además de la contraseña.</p>
+      <button class="new" onclick="iniciarEnrolamientoMfa()">Activar verificación en dos pasos</button>
+      <div id="mfa-enroll-wrap" style="margin-top:20px;"></div>
     `;
   }
 }
