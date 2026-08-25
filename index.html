@@ -775,6 +775,46 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 @media(max-width:480px){
   .process-steps-grid{grid-template-columns:1fr;gap:28px;}
 }
+
+/* ── GOLPE DE REALIDAD (comparativa web) — prueba local, no enlazada aún ── */
+.gr-compare{display:grid;grid-template-columns:1fr auto 1fr;gap:28px;align-items:center;}
+@media(max-width:900px){.gr-compare{grid-template-columns:1fr;}}
+.gr-label{font-family:var(--font-body);font-weight:800;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);margin-bottom:14px;}
+.gr-label.gold{color:var(--gold);}
+.gr-vs{width:40px;height:40px;border-radius:50%;background:var(--gold);color:#1a1206;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:.85rem;flex-shrink:0;justify-self:center;}
+@media(max-width:900px){.gr-vs{margin:4px 0;}}
+.gr-browser{border-radius:10px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35);}
+.gr-browser.gold{box-shadow:0 24px 70px rgba(217,168,63,.25),0 20px 50px rgba(0,0,0,.4);border:1px solid rgba(217,168,63,.5);}
+.gr-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#dcdcdc;}
+.gr-dot{width:9px;height:9px;border-radius:50%;}
+.gr-url{flex:1;background:#f2f2f2;border-radius:5px;padding:5px 12px;font-family:Arial,sans-serif;font-size:.68rem;color:#888;margin-left:8px;}
+.gr-caption{color:var(--grey);font-size:.88rem;margin-top:14px;line-height:1.55;}
+
+/* Demo del chat + calendario animándose sola al hacer scroll — ver #gr-demo */
+@keyframes gr-fade-in{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+@keyframes gr-pop{0%{opacity:0;transform:scale(.7);}60%{opacity:1;transform:scale(1.12);}100%{opacity:1;transform:scale(1);}}
+@keyframes gr-pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+@keyframes gr-bounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-3px);}}
+@keyframes gr-typing-window{0%{opacity:0;}8%{opacity:1;}92%{opacity:1;}100%{opacity:0;}}
+.gr-online-dot{animation:gr-pulse 1.6s ease-in-out infinite;}
+.gr-demo .gr-msg{opacity:0;}
+.gr-demo .gr-cal-day,.gr-demo .gr-cal-card{opacity:0;}
+.gr-demo .gr-cal-day{transform:scale(.7);}
+.gr-typing{display:inline-flex;gap:4px;padding:7px 10px;background:#2e2e2e;border-radius:10px 10px 10px 2px;opacity:0;}
+.gr-typing span{width:5px;height:5px;border-radius:50%;background:#8a8f98;animation:gr-bounce 1s infinite ease-in-out;}
+.gr-typing span:nth-child(2){animation-delay:.15s;}
+.gr-typing span:nth-child(3){animation-delay:.3s;}
+.gr-demo.gr-play .gr-msg1{animation:gr-fade-in .4s ease forwards;animation-delay:.2s;}
+.gr-demo.gr-play .gr-typing-wrap .gr-typing{animation:gr-typing-window 1s ease forwards;animation-delay:.9s;}
+.gr-demo.gr-play .gr-msg2{animation:gr-fade-in .4s ease forwards;animation-delay:1.9s;}
+.gr-demo.gr-play .gr-msg3{animation:gr-fade-in .4s ease forwards;animation-delay:2.7s;}
+.gr-demo.gr-play .gr-msg4{animation:gr-fade-in .4s ease forwards;animation-delay:4s;}
+.gr-demo.gr-play .gr-cal-day{animation:gr-pop .45s ease forwards;animation-delay:4.4s;}
+.gr-demo.gr-play .gr-cal-card{animation:gr-fade-in .4s ease forwards;animation-delay:4.8s;}
+@media(prefers-reduced-motion:reduce){
+  .gr-online-dot,.gr-demo .gr-msg,.gr-demo .gr-cal-day,.gr-demo .gr-cal-card,.gr-typing span{animation:none !important;opacity:1 !important;transform:none !important;}
+  .gr-typing-wrap{display:none;}
+}
 </style>
 <!-- Open Graph -->
 <meta property="og:title" content="TRUCO technology — Tu Departamento Tecnológico">
@@ -879,7 +919,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <li><a href="servicios.html">Servicios</a></li>
     <li><a href="#como-empezamos">Cómo empezamos</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
-    <li><a href="#sectores">¿Es esto para ti?</a></li>
+    <li><a href="#sectores" class="nav-links-pack">¿Es esto para ti?</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="portal/login.html" style="opacity:.75;">Acceso clientes</a></li>
     <li><a href="pago.html">Contratar</a></li>
@@ -1331,6 +1371,178 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <a class="sol-showcase-more" href="digitaliza.html">Ver todas las automatizaciones y precios <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
   </div>
 </section>
+
+<!-- ── GOLPE DE REALIDAD (comparativa web) — PRUEBA LOCAL, no enlazada aún ── -->
+<section id="golpe-realidad" class="section reveal">
+  <div class="container">
+    <div class="section-tag gold">La diferencia real</div>
+    <h2 class="section-h2">Esto es lo que te hacen. Esto es lo que hacemos.</h2>
+    <p class="section-sub">Una la monta una plantilla en una tarde. La otra la piensa una persona para ti — y encima, sigue trabajando sola mientras tú duermes.</p>
+
+    <div class="gr-compare">
+      <div>
+        <div class="gr-label">Lo que te hacen</div>
+        <div class="gr-browser">
+          <div class="gr-bar">
+            <div class="gr-dot" style="background:#ff5f57;"></div>
+            <div class="gr-dot" style="background:#febc2e;"></div>
+            <div class="gr-dot" style="background:#28c840;"></div>
+            <div class="gr-url">tuempresa-electricista-2024.wixsite.com</div>
+          </div>
+          <div style="background:#f4f4f4;padding:22px 24px 26px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+              <div style="font-family:Arial,sans-serif;font-weight:700;font-size:.95rem;color:#333;">LOGO EMPRESA</div>
+              <div style="display:flex;gap:12px;font-family:Arial,sans-serif;font-size:.62rem;color:#555;">
+                <span>Inicio</span><span>Nosotros</span><span>Servicios</span><span>Contacto</span>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center;">
+              <div>
+                <div style="font-family:Arial,sans-serif;font-weight:700;font-size:1.1rem;color:#222;line-height:1.3;">Bienvenidos a nuestra empresa</div>
+                <div style="font-family:Arial,sans-serif;font-size:.7rem;color:#777;margin-top:6px;line-height:1.5;">Somos una empresa dedicada a ofrecer servicios de calidad a nuestros clientes desde hace años.</div>
+                <div style="display:inline-block;background:#4267b2;color:#fff;font-family:Arial,sans-serif;font-size:.68rem;font-weight:700;padding:8px 16px;border-radius:3px;margin-top:12px;">Contactar</div>
+              </div>
+              <div style="aspect-ratio:4/3;background:repeating-linear-gradient(45deg,#d9d9d9,#d9d9d9 10px,#cfcfcf 10px,#cfcfcf 20px);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:Arial,sans-serif;font-size:.6rem;color:#999;">FOTO STOCK GENÉRICA</div>
+            </div>
+            <div style="margin-top:22px;padding-top:18px;border-top:1px solid #ddd;">
+              <div style="font-family:Arial,sans-serif;font-weight:700;font-size:.72rem;color:#444;margin-bottom:12px;">Nuestros servicios</div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+                <div style="background:#e8e8e8;border-radius:3px;padding:16px 8px;text-align:center;font-family:Arial,sans-serif;font-size:.6rem;color:#777;">Servicio 1</div>
+                <div style="background:#e8e8e8;border-radius:3px;padding:16px 8px;text-align:center;font-family:Arial,sans-serif;font-size:.6rem;color:#777;">Servicio 2</div>
+                <div style="background:#e8e8e8;border-radius:3px;padding:16px 8px;text-align:center;font-family:Arial,sans-serif;font-size:.6rem;color:#777;">Servicio 3</div>
+              </div>
+            </div>
+            <div style="margin-top:20px;padding-top:16px;border-top:1px solid #ddd;">
+              <div style="font-family:Arial,sans-serif;font-weight:700;font-size:.72rem;color:#444;margin-bottom:10px;">Contacta con nosotros</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="background:#f0f0f0;border:1px solid #ddd;border-radius:3px;height:26px;"></div>
+                <div style="background:#f0f0f0;border:1px solid #ddd;border-radius:3px;height:26px;"></div>
+                <div style="background:#f0f0f0;border:1px solid #ddd;border-radius:3px;height:48px;"></div>
+                <div style="display:inline-block;background:#4267b2;color:#fff;font-family:Arial,sans-serif;font-size:.62rem;font-weight:700;padding:8px 16px;border-radius:3px;width:fit-content;">Enviar</div>
+              </div>
+            </div>
+            <div style="margin-top:20px;padding-top:16px;border-top:1px solid #ddd;display:flex;justify-content:space-between;align-items:center;">
+              <div style="font-family:Arial,sans-serif;font-size:.58rem;color:#999;">© 2019 Todos los derechos reservados</div>
+              <div style="display:flex;gap:8px;">
+                <div style="width:20px;height:20px;border-radius:50%;background:#d9d9d9;"></div>
+                <div style="width:20px;height:20px;border-radius:50%;background:#d9d9d9;"></div>
+                <div style="width:20px;height:20px;border-radius:50%;background:#d9d9d9;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="gr-caption">Una plantilla que ya han usado otros cien negocios, con el mismo pie de página que traen mil plantillas más. Si mañana quieres cambiar algo, te toca aprenderlo tú — o pagar de nuevo a quien te la hizo.</p>
+      </div>
+
+      <div class="gr-vs">VS</div>
+
+      <div>
+        <div class="gr-label gold">Lo que hacemos nosotros</div>
+        <div class="gr-browser gold">
+          <div class="gr-bar">
+            <div class="gr-dot" style="background:#ff5f57;"></div>
+            <div class="gr-dot" style="background:#febc2e;"></div>
+            <div class="gr-dot" style="background:#28c840;"></div>
+            <div class="gr-url" style="font-family:var(--font-body);">electricistamartinez.es</div>
+          </div>
+          <div style="background:linear-gradient(165deg,#0f1620,#0a0d12 55%,#0d1826);padding:24px 26px 26px;position:relative;overflow:hidden;">
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse 380px 260px at 85% -10%,rgba(47,123,255,.22),transparent 65%);"></div>
+            <div style="position:relative;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <div style="font-family:var(--font-display);font-weight:800;font-size:1rem;color:#eef1f5;">Electricista Martínez</div>
+                <div style="display:flex;gap:14px;align-items:center;font-family:var(--font-body);font-size:.62rem;color:#8fa3b8;font-weight:600;">
+                  <span>Servicios</span><span>Trabajos</span><span style="background:var(--blue);color:#fff;padding:5px 13px;border-radius:20px;font-weight:700;">Pedir cita</span>
+                </div>
+              </div>
+              <div style="font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:#eef1f5;line-height:1.25;margin-bottom:4px;">Instalaciones eléctricas <span style="color:#5b9fff;font-style:italic;">sin sorpresas</span></div>
+              <div style="display:flex;gap:12px;margin-bottom:14px;font-family:var(--font-body);font-size:.58rem;color:#7d8fa3;">
+                <span>★★★★★ 4.9 (127)</span><span>+300 clientes</span>
+              </div>
+
+              <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;">
+                <span style="font-family:var(--font-body);font-size:.6rem;font-weight:600;color:#5b9fff;background:rgba(47,123,255,.12);border:1px solid rgba(47,123,255,.3);padding:5px 12px;border-radius:20px;">Instalaciones</span>
+                <span style="font-family:var(--font-body);font-size:.6rem;font-weight:600;color:#5b9fff;background:rgba(47,123,255,.12);border:1px solid rgba(47,123,255,.3);padding:5px 12px;border-radius:20px;">Averías</span>
+                <span style="font-family:var(--font-body);font-size:.6rem;font-weight:600;color:#5b9fff;background:rgba(47,123,255,.12);border:1px solid rgba(47,123,255,.3);padding:5px 12px;border-radius:20px;">Cuadros eléctricos</span>
+                <span style="font-family:var(--font-body);font-size:.6rem;font-weight:600;color:#5b9fff;background:rgba(47,123,255,.12);border:1px solid rgba(47,123,255,.3);padding:5px 12px;border-radius:20px;">Urgencias</span>
+              </div>
+
+              <div style="display:flex;gap:18px;margin-bottom:18px;flex-wrap:wrap;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#5b9fff,#1b3a66);display:flex;align-items:center;justify-content:center;font-family:var(--font-body);font-weight:700;font-size:.58rem;color:#fff;flex-shrink:0;">AM</div>
+                  <div style="font-family:var(--font-body);font-size:.58rem;color:#8fa3b8;line-height:1.3;">Antonio Martínez<br><span style="color:#556575;">Instalaciones</span></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#5b9fff,#1b3a66);display:flex;align-items:center;justify-content:center;font-family:var(--font-body);font-weight:700;font-size:.58rem;color:#fff;flex-shrink:0;">CR</div>
+                  <div style="font-family:var(--font-body);font-size:.58rem;color:#8fa3b8;line-height:1.3;">Carlos Ruiz<br><span style="color:#556575;">Averías</span></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#5b9fff,#1b3a66);display:flex;align-items:center;justify-content:center;font-family:var(--font-body);font-weight:700;font-size:.58rem;color:#fff;flex-shrink:0;">SM</div>
+                  <div style="font-family:var(--font-body);font-size:.58rem;color:#8fa3b8;line-height:1.3;">Sonia Martín<br><span style="color:#556575;">Urgencias</span></div>
+                </div>
+              </div>
+
+              <!-- Demo grande, animada al hacer scroll: el chat que responde + la cita que se agenda sola -->
+              <div id="gr-demo" class="gr-demo" style="border-radius:12px;overflow:hidden;position:relative;display:flex;box-shadow:0 14px 40px rgba(0,0,0,.35);border:1px solid rgba(47,123,255,.35);margin-bottom:16px;">
+                <div style="flex:1.15;background:#0e1114;padding:16px;display:flex;flex-direction:column;gap:9px;min-height:230px;">
+                  <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
+                    <div class="gr-online-dot" style="width:6px;height:6px;border-radius:50%;background:#4ade80;"></div>
+                    <span style="font-family:var(--font-body);font-size:.6rem;color:#7d8fa3;">Asistente IA · en línea ahora</span>
+                  </div>
+                  <div class="gr-msg gr-msg1" style="align-self:flex-end;background:linear-gradient(135deg,#5b9fff,#2f7bff);color:#fff;font-family:var(--font-body);font-weight:600;font-size:.68rem;padding:7px 11px;border-radius:10px 10px 2px 10px;max-width:88%;">¿Tenéis hueco esta semana?</div>
+                  <div class="gr-typing-wrap" style="align-self:flex-start;">
+                    <div class="gr-typing"><span></span><span></span><span></span></div>
+                  </div>
+                  <div class="gr-msg gr-msg2" style="align-self:flex-start;background:#1e252c;color:#eef1f5;font-family:var(--font-body);font-size:.68rem;padding:7px 11px;border-radius:10px 10px 10px 2px;max-width:88%;line-height:1.4;">Sí, tengo el jueves a las 17:00 o el viernes a las 10:00</div>
+                  <div class="gr-msg gr-msg3" style="align-self:flex-end;background:linear-gradient(135deg,#5b9fff,#2f7bff);color:#fff;font-family:var(--font-body);font-weight:600;font-size:.68rem;padding:7px 11px;border-radius:10px 10px 2px 10px;">El jueves genial</div>
+                  <div class="gr-msg gr-msg4" style="align-self:flex-start;background:#1e252c;color:#eef1f5;font-family:var(--font-body);font-size:.68rem;padding:7px 11px;border-radius:10px 10px 10px 2px;max-width:88%;">Perfecto, cita confirmada para el jueves 👍</div>
+                </div>
+                <div style="flex:.85;background:#0c1017;padding:16px;display:flex;flex-direction:column;">
+                  <div style="font-family:var(--font-body);font-weight:700;font-size:.66rem;color:#eef1f5;margin-bottom:10px;">Jueves 17:00</div>
+                  <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px;">
+                    <div style="aspect-ratio:1;border-radius:4px;background:#1c2530;"></div>
+                    <div style="aspect-ratio:1;border-radius:4px;background:#1c2530;"></div>
+                    <div style="aspect-ratio:1;border-radius:4px;background:#1c2530;"></div>
+                    <div class="gr-cal-day" style="aspect-ratio:1;border-radius:4px;background:linear-gradient(135deg,#5b9fff,#2f7bff);"></div>
+                    <div style="aspect-ratio:1;border-radius:4px;background:#1c2530;"></div>
+                    <div style="aspect-ratio:1;border-radius:4px;background:#1c2530;"></div>
+                    <div style="aspect-ratio:1;border-radius:4px;background:#1c2530;"></div>
+                  </div>
+                  <div class="gr-cal-card" style="background:rgba(47,123,255,.12);border:1px solid rgba(91,159,255,.4);border-radius:8px;padding:10px 11px;">
+                    <div style="font-family:var(--font-body);font-weight:700;font-size:.64rem;color:#eef1f5;">Revisión eléctrica</div>
+                    <div style="font-family:var(--font-body);font-size:.56rem;color:#7d8fa3;margin-top:3px;">17:00 · Confirmada ✓</div>
+                  </div>
+                  <div style="flex:1;"></div>
+                  <div style="font-family:var(--font-mono);font-size:.48rem;letter-spacing:.08em;text-transform:uppercase;color:#5b9fff;text-align:right;">Agendado solo, sin llamadas</div>
+                </div>
+              </div>
+
+              <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(217,168,63,.12);border:1px solid rgba(217,168,63,.3);border-radius:20px;padding:5px 12px;font-family:var(--font-body);font-size:.58rem;font-weight:700;color:#e0ac4c;margin-bottom:10px;"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Mantenimiento y actualizaciones incluidas</div>
+              <p style="font-family:var(--font-body);font-size:.66rem;color:#7d8fa3;line-height:1.55;margin-bottom:6px;">Cambios de tarifas, nuevos servicios, fotos de tus trabajos — tu Departamento Tecnológico lo actualiza en cuanto lo necesitas, sin que abras un editor web.</p>
+              <div style="font-family:var(--font-mono);font-size:.54rem;letter-spacing:.06em;text-transform:uppercase;color:#556575;">Última actualización: hace 3 días</div>
+            </div>
+          </div>
+        </div>
+        <p class="gr-caption">Diseñada para ti, con tu historia — y con un asistente que responde y agenda solo, en directo, mientras la miras.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var demo = document.getElementById('gr-demo');
+  if (!demo || !('IntersectionObserver' in window)) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        demo.classList.add('gr-play');
+        obs.unobserve(demo);
+      }
+    });
+  }, { threshold: 0.35 });
+  obs.observe(demo);
+})();
+</script>
 
 <!-- ── SERVICIOS ── -->
 <section id="servicios" class="section reveal" style="padding-top:0;">
@@ -2579,7 +2791,7 @@ setTimeout(() => {
   <a href="servicios.html">Servicios</a>
   <a href="#como-empezamos">Cómo empezamos</a>
   <a href="#nosotros">Nosotros</a>
-  <a href="#sectores">¿Es esto para ti?</a>
+  <a href="#sectores" style="background:linear-gradient(90deg,#f2c14e,var(--gold) 55%,#c98f1f);color:#1a1206;font-weight:800;">¿Es esto para ti?</a>
   <a href="#faq">FAQ</a>
   <a href="pago.html" style="color:var(--blue);font-weight:700;">Ir a contratación →</a>
   <a href="#chat-section">Hablar con el asistente →</a>

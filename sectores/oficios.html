@@ -95,6 +95,33 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .pm-typing .dot:nth-child(3){animation-delay:.3s;}
 @keyframes dotPulse{0%,60%,100%{opacity:.3;transform:translateY(0);}30%{opacity:1;transform:translateY(-3px);}}
 
+.example-wrap{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;}
+.example-col{text-align:center;}
+.example-label{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-m);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;padding:5px 14px;border-radius:20px;}
+.example-label svg{width:13px;height:13px;}
+.example-label.before{background:var(--red-dim);color:var(--red);}
+.example-label.after{background:var(--green-dim);color:var(--green);}
+.pm-note{display:flex;align-items:center;gap:6px;font-size:.66rem;color:var(--red);margin-top:10px;justify-content:center;}
+.pm-note.good{color:var(--green);}
+.pm-note svg{width:13px;height:13px;}
+@media(max-width:800px){.example-wrap{grid-template-columns:1fr;}}
+
+.wc-compare{display:grid;grid-template-columns:1fr auto 1fr;gap:28px;align-items:start;margin-top:8px;}
+@media(max-width:900px){.wc-compare{grid-template-columns:1fr;}}
+.wc-label{font-family:var(--font-b);font-weight:800;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);margin-bottom:14px;}
+.wc-label.gold{color:var(--gold);}
+.wc-vs{width:40px;height:40px;border-radius:50%;background:var(--gold);color:#1a1206;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:800;font-size:.85rem;flex-shrink:0;justify-self:center;margin-top:200px;}
+@media(max-width:900px){.wc-vs{margin:4px 0;}}
+.wc-cal-reveal{opacity:0;transform:translateY(6px);transition:opacity .5s ease,transform .5s ease;}
+.wc-cal-reveal.show{opacity:1;transform:translateY(0);}
+@media(prefers-reduced-motion:reduce){.wc-cal-reveal{opacity:1;transform:none;transition:none;}}
+.wc-browser{border-radius:10px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35);}
+.wc-browser.gold{box-shadow:0 24px 70px rgba(217,168,63,.25),0 20px 50px rgba(0,0,0,.4);border:1px solid rgba(217,168,63,.5);}
+.wc-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#dcdcdc;}
+.wc-dot{width:9px;height:9px;border-radius:50%;}
+.wc-url{flex:1;background:#f2f2f2;border-radius:5px;padding:5px 12px;font-family:Arial,sans-serif;font-size:.68rem;color:#888;margin-left:8px;}
+.wc-caption{color:var(--grey);font-size:.88rem;margin-top:14px;line-height:1.55;}
+
 .section-block{padding:64px 0;}
 .section-divider{display:flex;align-items:center;gap:16px;margin-bottom:32px;flex-wrap:wrap;}
 .sd-tag{font-family:var(--font-m);font-size:.70rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 16px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
@@ -296,6 +323,196 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Ejemplo práctico</span><div class="sd-line"></div></div>
+    <div class="example-wrap">
+      <div class="example-col">
+        <span class="example-label before"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Antes</span>
+        <div class="phone-mock" style="margin:0 auto;">
+          <div class="pm-topbar">
+            <div class="pm-avatar" style="background:#3a3940;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+            <div><div class="pm-name">Un cliente</div><div class="pm-status" style="color:var(--grey);">desconectado</div></div>
+          </div>
+          <div class="pm-body">
+            <div class="pm-bubble in">¿Cuánto cuesta arreglar un grifo que gotea?<span class="pm-time">Cliente</span></div>
+            <div class="pm-bubble in" style="background:#2e1f22;">¿Hola?<span class="pm-time">+3h</span></div>
+          </div>
+        </div>
+        <div class="pm-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Ya llamó a otro fontanero</div>
+      </div>
+      <div class="example-col">
+        <span class="example-label after"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Después</span>
+        <div class="phone-mock" style="margin:0 auto;">
+          <div class="pm-topbar">
+            <div class="pm-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+            <div><div class="pm-name">Un cliente</div><div class="pm-status">en línea</div></div>
+          </div>
+          <div class="pm-body">
+            <div class="pm-bubble in">¿Cuánto cuesta arreglar un grifo que gotea?<span class="pm-time">Cliente</span></div>
+            <div class="pm-bubble out">Depende del tipo de grifo, pero suele rondar los 45-60€. ¿Quieres que te agende una visita para confirmarlo?<span class="pm-time">Asistente IA</span></div>
+            <div class="pm-bubble in">Sí, mañana si puede ser<span class="pm-time">Cliente</span></div>
+            <div class="pm-bubble out">Visita agendada mañana a las 10:00 ✓<span class="pm-time">Asistente IA</span></div>
+          </div>
+        </div>
+        <div class="pm-note good"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Trabajo cerrado sin soltar las herramientas</div>
+      </div>
+    </div>
+
+    <div class="wc-compare">
+      <div>
+        <div class="wc-label">Sin TruKi</div>
+        <div class="wc-browser">
+          <div class="wc-bar">
+            <div class="wc-dot" style="background:#ff5f57;"></div>
+            <div class="wc-dot" style="background:#febc2e;"></div>
+            <div class="wc-dot" style="background:#28c840;"></div>
+            <div class="wc-url">facturas_2024_v3_FINAL.xlsx</div>
+          </div>
+          <div style="background:#fff;">
+            <div style="background:#f4f4f4;border-bottom:1px solid #ddd;padding:8px 14px;display:flex;gap:14px;">
+              <div style="width:16px;height:16px;border-radius:2px;background:#e0e0e0;"></div>
+              <div style="width:16px;height:16px;border-radius:2px;background:#e0e0e0;"></div>
+              <div style="width:16px;height:16px;border-radius:2px;background:#e0e0e0;"></div>
+              <div style="width:1px;height:16px;background:#ccc;"></div>
+              <div style="width:16px;height:16px;border-radius:2px;background:#e0e0e0;"></div>
+              <div style="width:16px;height:16px;border-radius:2px;background:#e0e0e0;"></div>
+            </div>
+            <div style="padding:14px 16px 10px;">
+              <div style="font-family:Arial,sans-serif;font-weight:700;font-size:.74rem;color:#333;">Hoja1 — Facturas</div>
+            </div>
+            <div style="display:grid;grid-template-columns:22px repeat(4,1fr);background:#f0f0f0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;">
+              <div style="padding:6px 4px;border-right:1px solid #ccc;"></div>
+              <div style="padding:6px 8px;border-right:1px solid #ccc;font-family:Arial,sans-serif;font-size:.56rem;color:#666;font-weight:700;">Cliente</div>
+              <div style="padding:6px 8px;border-right:1px solid #ccc;font-family:Arial,sans-serif;font-size:.56rem;color:#666;font-weight:700;">Fecha</div>
+              <div style="padding:6px 8px;border-right:1px solid #ccc;font-family:Arial,sans-serif;font-size:.56rem;color:#666;font-weight:700;">Importe</div>
+              <div style="padding:6px 8px;font-family:Arial,sans-serif;font-size:.56rem;color:#666;font-weight:700;">IVA</div>
+            </div>
+            <div style="display:grid;grid-template-columns:22px repeat(4,1fr);border-bottom:1px solid #eee;">
+              <div style="padding:6px 4px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.54rem;color:#aaa;text-align:center;">1</div>
+              <div style="padding:6px 8px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">García S.L.</div>
+              <div style="padding:6px 8px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">03/02</div>
+              <div style="padding:6px 8px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">450€</div>
+              <div style="padding:6px 8px;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">21%</div>
+            </div>
+            <div style="display:grid;grid-template-columns:22px repeat(4,1fr);border-bottom:1px solid #eee;">
+              <div style="padding:6px 4px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.54rem;color:#aaa;text-align:center;">2</div>
+              <div style="padding:6px 8px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">Comunidad Pinar</div>
+              <div style="padding:6px 8px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">07/02</div>
+              <div style="padding:6px 8px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">1.200€</div>
+              <div style="padding:6px 8px;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">21%</div>
+            </div>
+            <div style="display:grid;grid-template-columns:22px repeat(4,1fr);border-bottom:1px solid #f5c6c6;background:#fde8e8;">
+              <div style="padding:6px 4px;border-right:1px solid #f5c6c6;font-family:Arial,sans-serif;font-size:.54rem;color:#c0392b;text-align:center;">3</div>
+              <div style="padding:6px 8px;border-right:1px solid #f5c6c6;font-family:Arial,sans-serif;font-size:.56rem;color:#c0392b;">Martínez</div>
+              <div style="padding:6px 8px;border-right:1px solid #f5c6c6;font-family:Arial,sans-serif;font-size:.56rem;color:#c0392b;">12/02</div>
+              <div style="padding:6px 8px;border-right:1px solid #f5c6c6;font-family:Arial,sans-serif;font-size:.56rem;color:#c0392b;font-weight:700;">#¡REF!</div>
+              <div style="padding:6px 8px;font-family:Arial,sans-serif;font-size:.56rem;color:#c0392b;">—</div>
+            </div>
+            <div style="display:grid;grid-template-columns:22px repeat(4,1fr);border-bottom:1px solid #eee;">
+              <div style="padding:6px 4px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.54rem;color:#aaa;text-align:center;">4</div>
+              <div style="padding:6px 8px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">Ruiz</div>
+              <div style="padding:6px 8px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">15/02</div>
+              <div style="padding:6px 8px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">180€</div>
+              <div style="padding:6px 8px;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">21%</div>
+            </div>
+            <div style="display:grid;grid-template-columns:22px repeat(4,1fr);border-bottom:1px solid #eee;">
+              <div style="padding:6px 4px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.54rem;color:#aaa;text-align:center;">5</div>
+              <div style="padding:6px 8px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">Pérez Hnos.</div>
+              <div style="padding:6px 8px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">18/02</div>
+              <div style="padding:6px 8px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">320€</div>
+              <div style="padding:6px 8px;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">21%</div>
+            </div>
+            <div style="display:grid;grid-template-columns:22px repeat(4,1fr);border-bottom:1px solid #eee;">
+              <div style="padding:6px 4px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.54rem;color:#aaa;text-align:center;">6</div>
+              <div style="padding:6px 8px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">López, M.</div>
+              <div style="padding:6px 8px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">21/02</div>
+              <div style="padding:6px 8px;border-right:1px solid #eee;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">95€</div>
+              <div style="padding:6px 8px;font-family:Arial,sans-serif;font-size:.56rem;color:#333;">21%</div>
+            </div>
+            <div style="background:#fff9d6;border-top:2px dashed #e0c840;padding:12px 16px;">
+              <div style="font-family:Arial,sans-serif;font-size:.62rem;color:#8a6d00;font-weight:700;">📌 Trimestral vence en 3 días — falta cuadrar todo</div>
+            </div>
+            <div style="padding:12px 16px;">
+              <div style="font-family:Arial,sans-serif;font-size:.58rem;color:#999;">6 de 47 facturas de este trimestre</div>
+            </div>
+            <div style="display:flex;gap:1px;background:#ddd;border-top:1px solid #ccc;">
+              <div style="background:#e0e0e0;padding:8px 14px;font-family:Arial,sans-serif;font-size:.56rem;color:#666;font-weight:700;">Enero</div>
+              <div style="background:#f4f4f4;padding:8px 14px;font-family:Arial,sans-serif;font-size:.56rem;color:#333;font-weight:700;border-bottom:2px solid #4267b2;">Febrero</div>
+              <div style="background:#e0e0e0;padding:8px 14px;font-family:Arial,sans-serif;font-size:.56rem;color:#666;">Marzo</div>
+            </div>
+          </div>
+        </div>
+        <p class="wc-caption">Facturas a mano en una hoja de cálculo, fórmulas que se rompen, y cada trimestre la misma carrera contra el reloj para cuadrarlo todo.</p>
+      </div>
+
+      <div class="wc-vs">VS</div>
+
+      <div>
+        <div class="wc-label gold">Con TruKi</div>
+        <div class="wc-browser gold">
+          <div class="wc-bar">
+            <div class="wc-dot" style="background:#ff5f57;"></div>
+            <div class="wc-dot" style="background:#febc2e;"></div>
+            <div class="wc-dot" style="background:#28c840;"></div>
+            <div class="wc-url" style="font-family:var(--font-b);">truki.fontaneriaramirez.es</div>
+          </div>
+          <div style="background:linear-gradient(165deg,#14171a,#0c0e10 55%,#161c22);padding:24px 26px 26px;position:relative;overflow:hidden;">
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse 380px 260px at 85% -10%,rgba(74,144,194,.18),transparent 65%);"></div>
+            <div style="position:relative;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <div style="font-family:var(--font-d);font-weight:800;font-size:1rem;color:#eef1f3;">TruKi <span style="color:#6bafd9;font-weight:600;font-size:.85rem;">· Fontanería Ramírez</span></div>
+                <span style="background:#4a90c2;color:#0a1218;padding:5px 13px;border-radius:20px;font-weight:700;font-family:var(--font-b);font-size:.62rem;">Facturación automática</span>
+              </div>
+              <div style="font-family:var(--font-d);font-weight:700;font-size:1.05rem;color:#eef1f3;line-height:1.25;margin-bottom:4px;">Factura hablando. <span style="color:#6bafd9;font-style:italic;">Ya está.</span></div>
+              <div style="display:flex;gap:12px;margin-bottom:16px;font-family:var(--font-b);font-size:.58rem;color:#758a9c;">
+                <span>+180 facturas este año</span><span>0 errores de cuadre</span>
+              </div>
+
+              <div id="oficios-truki-demo" style="background:#0e1114;border:1.5px solid rgba(74,144,194,.4);border-radius:12px;padding:14px 16px;margin-bottom:14px;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                  <div style="width:9px;height:9px;border-radius:50%;background:#e0573f;animation:dotPulse 1.4s ease-in-out infinite;"></div>
+                  <span style="font-family:var(--font-b);font-size:.62rem;color:#eef1f3;font-weight:600;">Grabando factura por voz...</span>
+                </div>
+                <div style="display:flex;gap:2px;align-items:flex-end;height:18px;margin-bottom:10px;">
+                  <div style="width:2px;height:6px;background:#6bafd9;"></div>
+                  <div style="width:2px;height:14px;background:#6bafd9;"></div>
+                  <div style="width:2px;height:9px;background:#6bafd9;"></div>
+                  <div style="width:2px;height:17px;background:#6bafd9;"></div>
+                  <div style="width:2px;height:11px;background:#6bafd9;"></div>
+                  <div style="width:2px;height:15px;background:#6bafd9;"></div>
+                  <div style="width:2px;height:7px;background:#6bafd9;"></div>
+                  <div style="width:2px;height:13px;background:#6bafd9;"></div>
+                  <div style="width:2px;height:10px;background:#6bafd9;"></div>
+                  <div style="width:2px;height:16px;background:#6bafd9;"></div>
+                  <div style="width:2px;height:8px;background:#6bafd9;"></div>
+                  <div style="width:2px;height:12px;background:#6bafd9;"></div>
+                </div>
+                <div style="font-family:var(--font-b);font-size:.62rem;color:#8fa3b5;font-style:italic;line-height:1.5;">"Factura para García S.L., instalación de cuadro eléctrico, cuatrocientos cincuenta euros más IVA"</div>
+              </div>
+
+              <div class="wc-cal-reveal" style="background:rgba(107,175,217,.1);border:1px solid rgba(107,175,217,.35);border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                  <div style="font-family:var(--font-b);font-weight:700;font-size:.66rem;color:#eef1f3;">Factura #0142</div>
+                  <div style="font-family:var(--font-b);font-size:.58rem;color:#4ade80;font-weight:700;">✓ Generada</div>
+                </div>
+                <div style="font-family:var(--font-b);font-size:.6rem;color:#8fa3b5;">García S.L. · 450€ + IVA (94,50€) = 544,50€</div>
+              </div>
+
+              <div class="wc-cal-reveal" style="display:inline-flex;align-items:center;gap:6px;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35);border-radius:20px;padding:6px 14px;font-family:var(--font-b);font-size:.62rem;font-weight:700;color:#4ade80;margin-bottom:16px;"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Trimestral lista para presentar</div>
+
+              <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(217,168,63,.12);border:1px solid rgba(217,168,63,.3);border-radius:20px;padding:5px 12px;font-family:var(--font-b);font-size:.58rem;font-weight:700;color:#e0ac4c;margin-bottom:10px;"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Cálculos y normativa fiscal siempre al día</div>
+              <p style="font-family:var(--font-b);font-size:.66rem;color:#758a9c;line-height:1.55;margin-bottom:6px;">Cambios en el IVA, en el modelo trimestral, en la normativa — tu Departamento Tecnológico mantiene TruKi actualizado, sin que tengas que enterarte.</p>
+              <div style="font-family:var(--font-m);font-size:.54rem;letter-spacing:.06em;text-transform:uppercase;color:#556575;">Última actualización: hace 3 días</div>
+            </div>
+          </div>
+        </div>
+        <p class="wc-caption">Dictas la factura y ya está — generada, enviada y contando para el trimestral. Sin hojas de cálculo, sin sustos.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-top:0;">
+  <div class="container">
     <div class="section-divider"><span class="sd-tag depto">Beneficios para tu negocio</span><div class="sd-line"></div></div>
     <ul class="benefits-list">
       <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Ninguna llamada perdida por estar en obra</li>
@@ -444,6 +661,29 @@ function toggleFaq(btn){
     });
   },{threshold:.35});
   phones.forEach(function(p){ pio.observe(p); });
+})();
+</script>
+<script>
+(function(){
+  var chat = document.getElementById('oficios-truki-demo');
+  if(!chat) return;
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reveals = document.querySelectorAll('.wc-cal-reveal');
+  if(reduced){
+    reveals.forEach(function(el){ el.classList.add('show'); });
+    return;
+  }
+  var cio = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        setTimeout(function(){
+          reveals.forEach(function(el){ el.classList.add('show'); });
+        }, 4000);
+        cio.unobserve(e.target);
+      }
+    });
+  },{threshold:.35});
+  cio.observe(chat);
 })();
 </script>
 </body>
