@@ -617,6 +617,14 @@
       <h2>TruKi</h2>
       <p>Todas las empresas con TruKi contratado, en la infraestructura compartida — datos leídos en vivo, no reportes que el cliente envía.</p>
       <div id="truki-list"></div>
+
+      <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--grey-line);">
+        <h3 style="margin:0 0 6px;">Declaración responsable del software</h3>
+        <p style="color:var(--grey);font-size:.78rem;margin:0 0 12px;line-height:1.5;">Certifica que TruKi (el software) cumple el RD 1007/2023 — es la MISMA para todas las empresas cliente, la controlas solo tú aquí. Ningún cliente puede editarla ni verla editable desde su propia app. Mientras contenga la palabra "RELLENAR", TruKi bloquea la emisión de facturas reales para todos los clientes a la vez (los presupuestos siguen funcionando).</p>
+        <textarea id="truki-declaracion-texto" style="width:100%;min-height:260px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:12px;color:var(--white);font-size:.82rem;font-family:monospace;line-height:1.5;outline:none;"></textarea>
+        <p style="color:var(--grey);font-size:.72rem;margin:6px 0 12px;" id="truki-declaracion-meta"></p>
+        <button class="new" onclick="guardarDeclaracionTruki()">Guardar declaración</button>
+      </div>
     </div>
   </div>
 
@@ -2373,8 +2381,32 @@ async function loadTrukiOverview() {
     const data = await resp.json();
     if (!data.ok) { list.innerHTML = `<div class="empty-mini">No se pudo cargar (${escapeHtml(data.reason || 'error')}).</div>`; return; }
     renderTrukiList(data.clientes || []);
+    document.getElementById('truki-declaracion-texto').value = data.declaracion_responsable_software || '';
+    const pendiente = (data.declaracion_responsable_software || '').includes('RELLENAR');
+    document.getElementById('truki-declaracion-meta').innerHTML = (pendiente
+      ? '<span style="color:var(--red,#d64545);">⚠️ Todavía tiene "RELLENAR" puesto — bloquea la emisión de facturas reales para TODOS los clientes de TruKi a la vez.</span> · '
+      : '') + (data.declaracion_updated_at ? 'Última actualización: ' + new Date(data.declaracion_updated_at).toLocaleString('es-ES') : '');
   } catch (e) {
     list.innerHTML = '<div class="empty-mini">Error de conexión.</div>';
+  }
+}
+
+async function guardarDeclaracionTruki() {
+  const texto = document.getElementById('truki-declaracion-texto').value.trim();
+  if (!texto) { alert('El texto no puede estar vacío.'); return; }
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch('/.netlify/functions/truki-set-declaracion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ texto })
+    });
+    const data = await resp.json();
+    if (!data.ok) { alert('No se pudo guardar (' + (data.reason || 'error') + ').'); return; }
+    alert('Declaración guardada — se aplica al momento a todas las empresas de TruKi.');
+    loadTrukiOverview();
+  } catch (e) {
+    alert('Error de conexión.');
   }
 }
 
@@ -2391,7 +2423,6 @@ function renderTrukiList(clientes) {
       <div>
         <div class="tr-name">${escapeHtml(c.nombre || 'Empresa sin nombre')} <span style="color:var(--grey);font-weight:400;">· ${escapeHtml(c.nif || 'sin NIF')}</span></div>
         <div class="tr-meta">${equipoTxt} · desde ${new Date(c.created_at).toLocaleDateString('es-ES')}</div>
-        ${c.declaracion_pendiente ? `<div class="truki-error">⚠️ Declaración responsable del software sin rellenar todavía — no puede emitir facturas reales.</div>` : ''}
         ${!dpaOk ? `<div class="truki-error">⚠️ Contrato de encargado de tratamiento (RGPD) todavía sin aceptar — la app se lo bloquea hasta que un admin lo acepte.</div>` : ''}
       </div>
       <div class="tr-counts">

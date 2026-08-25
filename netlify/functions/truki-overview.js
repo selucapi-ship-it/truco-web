@@ -63,12 +63,13 @@ exports.handler = async function (event) {
   }
 
   try {
-    const [empresasResp, miembrosResp, facturasResp, eventosResp, usersResp] = await Promise.all([
-      fetch(`${trukiUrl}/rest/v1/truki_empresa?select=id,nombre,nif,email_empresa,declaracion_responsable,dpa_aceptado_en,dpa_aceptado_por,created_at&order=created_at.asc`, { headers: trukiHeaders }),
+    const [empresasResp, miembrosResp, facturasResp, eventosResp, usersResp, configResp] = await Promise.all([
+      fetch(`${trukiUrl}/rest/v1/truki_empresa?select=id,nombre,nif,email_empresa,dpa_aceptado_en,dpa_aceptado_por,created_at&order=created_at.asc`, { headers: trukiHeaders }),
       fetch(`${trukiUrl}/rest/v1/truki_client_members?select=user_id,client_id,rol`, { headers: trukiHeaders }),
       fetch(`${trukiUrl}/rest/v1/truki_invoices?select=client_id,tipo,total,estado,creado_en`, { headers: trukiHeaders }),
       fetch(`${trukiUrl}/rest/v1/truki_events?tipo_evento=eq.error_cliente&select=client_id,creado_en&order=creado_en.desc&limit=500`, { headers: trukiHeaders }),
-      fetch(`${trukiUrl}/auth/v1/admin/users?per_page=1000`, { headers: trukiHeaders })
+      fetch(`${trukiUrl}/auth/v1/admin/users?per_page=1000`, { headers: trukiHeaders }),
+      fetch(`${trukiUrl}/rest/v1/truki_config?id=eq.1&select=declaracion_responsable_software,updated_at`, { headers: trukiHeaders })
     ]);
     if (!empresasResp.ok || !miembrosResp.ok || !facturasResp.ok || !eventosResp.ok || !usersResp.ok) {
       return { statusCode: 200, body: JSON.stringify({ ok: false, reason: 'supabase_error' }) };
@@ -79,6 +80,7 @@ exports.handler = async function (event) {
     const facturas = await facturasResp.json();
     const eventos = await eventosResp.json();
     const usersData = await usersResp.json();
+    const configRows = configResp.ok ? await configResp.json() : [];
     const users = Array.isArray(usersData) ? usersData : (usersData.users || []);
 
     const emailPorUserId = new Map(users.map(u => [u.id, u.email]));
@@ -101,7 +103,6 @@ exports.handler = async function (event) {
         nif: emp.nif,
         email_empresa: emp.email_empresa,
         equipo,
-        declaracion_pendiente: (emp.declaracion_responsable || '').startsWith('RELLENAR'),
         dpa_aceptado_en: emp.dpa_aceptado_en,
         dpa_aceptado_por: emp.dpa_aceptado_por,
         created_at: emp.created_at,
@@ -114,7 +115,15 @@ exports.handler = async function (event) {
       };
     });
 
-    return { statusCode: 200, body: JSON.stringify({ ok: true, clientes: resultado }) };
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        ok: true,
+        clientes: resultado,
+        declaracion_responsable_software: configRows[0]?.declaracion_responsable_software || '',
+        declaracion_updated_at: configRows[0]?.updated_at || null
+      })
+    };
   } catch (e) {
     return { statusCode: 200, body: JSON.stringify({ ok: false, reason: 'exception' }) };
   }
