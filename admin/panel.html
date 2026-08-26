@@ -460,6 +460,10 @@
       <h2>Estadísticas del negocio</h2>
       <div class="stats-bar" id="stats-summary-bar"></div>
       <div class="stats-grid">
+        <div class="stats-card wide">
+          <h3>Ingresos recurrentes (MRR)</h3>
+          <div class="stats-bar" id="stats-mrr-bar"></div>
+        </div>
         <div class="stats-card">
           <h3>Altas por mes</h3>
           <div id="chart-altas"></div>
@@ -861,6 +865,11 @@
           <option value="tasks">Tareas</option>
           <option value="client_automations">Automatizaciones de cliente</option>
           <option value="data_retention_requests">Solicitudes RGPD</option>
+          <option value="fiscal_income">Fiscalidad: ingresos</option>
+          <option value="fiscal_expenses">Fiscalidad: gastos</option>
+          <option value="fiscal_expense_templates">Contrataciones</option>
+          <option value="pricing_offers">Ofertas de precio</option>
+          <option value="quotes">Presupuestos</option>
         </select>
       </div>
       <div id="audit-list"></div>
@@ -3610,6 +3619,21 @@ async function loadStats() {
     { n: activos, l: 'Activos' },
     { n: ingresosTotales + ' €', l: 'Ingresos totales' },
     { n: (data.proximas_renovaciones || []).length, l: 'Renuevan en 30 días' },
+  ].map(s => `<div class="stat-card"><div class="n">${s.n}</div><div class="l">${s.l}</div></div>`).join('');
+
+  const mrrPotencial = (data.mrr_potencial_cents || 0) / 100;
+  const mrrCobrado = (data.mrr_cobrado_mes_cents || 0) / 100;
+  const mrrPendiente = Math.max(0, mrrPotencial - mrrCobrado);
+  const bajas3m = data.bajas_ultimos_3_meses || 0;
+  const activosAhora = data.clientes_activos_ahora || 0;
+  const baseTasa = activosAhora + bajas3m;
+  const tasaBaja = baseTasa > 0 ? ((bajas3m / baseTasa) * 100).toFixed(1) + '%' : '—';
+  const fmtEur = n => n.toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 }) + ' €';
+  w('stats-mrr-bar').innerHTML = [
+    { n: fmtEur(mrrPotencial), l: 'MRR potencial (domiciliación activa)' },
+    { n: fmtEur(mrrCobrado), l: 'Cobrado ya este mes' },
+    { n: fmtEur(mrrPendiente), l: 'Pendiente de marcar cobrado' },
+    { n: tasaBaja, l: `Tasa de baja · últimos 3 meses (${bajas3m})` },
   ].map(s => `<div class="stat-card"><div class="n">${s.n}</div><div class="l">${s.l}</div></div>`).join('');
 
   const altasData = (data.altas_por_mes || []).map(m => ({ label: m.mes.slice(2), value: m.n }));

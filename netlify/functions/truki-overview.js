@@ -27,7 +27,7 @@ exports.handler = async function (event) {
     mainHeaders.Authorization = `Bearer ${serviceKey}`;
   }
 
-  // Founder-exclusiva: mismo patrón de verificación que truki-remote-manage.js
+  // Founder-exclusiva: mismo patrón de verificación que truki-client-action.js
   const authHeader = event.headers.authorization || event.headers.Authorization || '';
   const userToken = authHeader.replace(/^Bearer\s+/i, '').trim();
   let authorized = false;
