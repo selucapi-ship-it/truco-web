@@ -1808,7 +1808,17 @@ async function applyFiscalTemplatesThisMonth() {
     .select('template_id').gte('fecha', mesInicio).lte('fecha', mesFin).not('template_id', 'is', null);
   const templatesYaAplicados = new Set((yaExisten || []).map(g => g.template_id));
 
-  const nuevos = templates
+  // Un trimestral/anual solo se aplica el mes en que le toca renovar (según
+  // proxima_renovacion) — si no, "aplicar gastos fijos" cada mes lo metería
+  // como gasto TODOS los meses en vez de cada 3/12. Sin fecha de renovación
+  // puesta se trata como mensual, para no perder gastos fijos antiguos
+  // creados antes de que existiera este campo.
+  const templatesAplicables = templates.filter(t => {
+    if (t.periodicidad === 'mensual' || !t.proxima_renovacion) return true;
+    return t.proxima_renovacion >= mesInicio && t.proxima_renovacion <= mesFin;
+  });
+
+  const nuevos = templatesAplicables
     .filter(t => !templatesYaAplicados.has(t.id))
     .map(t => ({
       fecha: new Date().toISOString().slice(0, 10),
@@ -1820,6 +1830,20 @@ async function applyFiscalTemplatesThisMonth() {
   if (!nuevos.length) { alert('Todos los gastos fijos ya están aplicados este mes — no se ha duplicado nada.'); return; }
   const { error: insErr } = await sb.from('fiscal_expenses').insert(nuevos);
   if (insErr) { alert('No se pudieron crear los gastos: ' + insErr.message); return; }
+
+  // Adelanta la renovación de los trimestrales/anuales recién aplicados para
+  // que no vuelvan a saltar hasta que toque de verdad.
+  const mesesSiguientes = { trimestral: 3, anual: 12 };
+  const actualizaciones = nuevos
+    .map(n => templatesAplicables.find(t => t.id === n.template_id))
+    .filter(t => t && mesesSiguientes[t.periodicidad] && t.proxima_renovacion)
+    .map(t => {
+      const siguiente = new Date(t.proxima_renovacion);
+      siguiente.setMonth(siguiente.getMonth() + mesesSiguientes[t.periodicidad]);
+      return sb.from('fiscal_expense_templates').update({ proxima_renovacion: siguiente.toISOString().slice(0, 10) }).eq('id', t.id);
+    });
+  if (actualizaciones.length) await Promise.all(actualizaciones);
+
   alert(nuevos.length + ' gasto(s) fijo(s) añadido(s) a este mes.');
   loadFiscalResumen();
 }
@@ -1930,16 +1954,18 @@ async function loadCobros() {
   const sessionPrefix = 'domiciliacion-';
   const sessionSuffix = '-' + anio + '-' + String(mes).padStart(2, '0');
 
-  const [{ data: clientesDom }, { data: pagosDelMes }, { data: soluciones }] = await Promise.all([
+  const [{ data: clientesDom }, { data: pagosDelMes }, { data: soluciones }, { data: tiers }] = await Promise.all([
     sb.from('clients').select('id,nombre,negocio,arranque_tier').eq('domiciliacion_activa', true).eq('status', 'cliente'),
     sb.from('payments').select('client_id,stripe_checkout_session_id').like('stripe_checkout_session_id', sessionPrefix + '%' + sessionSuffix),
     sb.from('client_solutions').select('client_id,price_eur,is_free'),
+    sb.from('tier_config_effective').select('tier,founder_price_eur'), // precio EN VIVO (recoge ofertas activas), nunca hardcodeado
   ]);
   if (!clientesDom) { list.innerHTML = '<div class="empty-mini">No se pudo cargar.</div>'; return; }
   if (!clientesDom.length) { list.innerHTML = '<div class="empty-mini">Ningún cliente activo tiene domiciliación activa todavía.</div>'; return; }
 
   const yaClientIds = new Set((pagosDelMes || []).map(p => p.client_id));
-  const tierPrices = { start: 69, basic: 149, lite: 229, pro: 449 }; // fallback si tier_config no cargó aún
+  const tierPrices = {};
+  (tiers || []).forEach(t => { tierPrices[t.tier] = t.founder_price_eur; });
   const solucionesPorCliente = {};
   (soluciones || []).forEach(s => { if (!s.is_free) solucionesPorCliente[s.client_id] = (solucionesPorCliente[s.client_id] || 0) + Number(s.price_eur || 0); });
 
