@@ -300,7 +300,7 @@ img{display:block;max-width:100%;}
 @media(max-width:640px){.pillars-grid{grid-template-columns:1fr 1fr;}.pillar-item:nth-child(2){border-right:none;}.pillar-item{border-bottom:1px solid var(--grey-line);}}
 .pillars-head{max-width:1120px;margin:0 auto;padding:22px 24px 0;text-align:center;}
 .pillars-head .ph-eyebrow{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
-.pillars-head h2{font-family:var(--font-display);font-size:clamp(1.35rem,2.6vw,1.75rem);font-weight:800;color:var(--white);max-width:640px;margin:0 auto;line-height:1.4;}
+.pillars-head h2{font-family:var(--font-display);font-size:clamp(1.35rem,2.6vw,1.75rem);font-weight:800;color:var(--white);max-width:1020px;margin:0 auto;line-height:1.4;}
 .pillars-footer{max-width:1120px;margin:0 auto;padding:16px 24px 22px;text-align:center;font-size:.92rem;color:var(--grey);border-top:1px solid var(--grey-line);}
 .pillars-footer b{color:var(--white);}
 
@@ -332,7 +332,7 @@ img{display:block;max-width:100%;}
 .section-tag::before{content:'';width:24px;height:1px;background:var(--blue);}
 .section-tag.gold{color:var(--gold);}
 .section-tag.gold::before{background:var(--gold);}
-.section-h2{font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:700;margin-bottom:12px;max-width:640px;text-wrap:balance;}
+.section-h2{font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:700;margin-bottom:12px;max-width:900px;text-wrap:balance;}
 .section-sub{font-size:1rem;color:var(--grey);max-width:580px;line-height:1.7;margin-bottom:40px;}
 
 /* ── ENTRY STRIP ── */
@@ -815,6 +815,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   .gr-online-dot,.gr-demo .gr-msg,.gr-demo .gr-cal-day,.gr-demo .gr-cal-card,.gr-typing span{animation:none !important;opacity:1 !important;transform:none !important;}
   .gr-typing-wrap{display:none;}
 }
+@media(max-width:560px){.gr-demo{flex-direction:column;}}
 </style>
 <!-- Open Graph -->
 <meta property="og:title" content="TRUCO technology — Tu Departamento Tecnológico">
@@ -2142,9 +2143,9 @@ const KB = {
   },
 
   seguridad_datos: {
-    patterns: ['rgpd','protección de datos','mis datos están seguros','privacidad','quién ve mis datos','es seguro'],
+    patterns: ['rgpd','protección de datos','protección de los datos','mis datos están seguros','privacidad','quién ve mis datos','es seguro','datos de salud','datos médicos','datos de mis pacientes','datos de pacientes','historial clínico','información médica','datos sensibles','confidencialidad','encargado de tratamiento','datos de mis clientes están seguros'],
     responses: [
-      'Cumplimos el RGPD y la LOPD-GDD en todo momento. Tus datos y los de tus clientes solo se usan para prestar el servicio, no se venden ni se ceden a terceros salvo los proveedores estrictamente necesarios (como Stripe para pagos). Los pagos van cifrados con 256-bit a través de Stripe — nunca pasan por nuestros servidores. Puedes leer el detalle completo en nuestra <a href="privacidad.html" target="_blank">Política de Privacidad</a>. ¿Tenías alguna preocupación concreta sobre tus datos o los de tus clientes?'
+      'Cumplimos el RGPD y la LOPD-GDD en todo momento. Tus datos y los de tus clientes o pacientes solo se usan para prestar el servicio, no se venden ni se ceden a terceros salvo los proveedores estrictamente necesarios (como Stripe para pagos). Si tu negocio maneja datos especialmente sensibles (salud, por ejemplo), lo tratamos como corresponde a esa categoría y podemos formalizar un contrato de encargado de tratamiento contigo. Los pagos van cifrados con 256-bit a través de Stripe — nunca pasan por nuestros servidores. Puedes leer el detalle completo en nuestra <a href="privacidad.html" target="_blank">Política de Privacidad</a>. ¿Tenías alguna preocupación concreta sobre tus datos o los de tus clientes?'
     ]
   },
 
@@ -2164,7 +2165,7 @@ const KB = {
 
   // ── OBJECIONES ──
   software_objecion: {
-    patterns: ['ya tengo programa','ya tengo software','tengo agenda','tengo crm','ya uso','mi programa ya','ya gestiono','ya tengo herramientas'],
+    patterns: ['ya tengo programa','ya tengo software','tengo agenda','tengo crm','ya uso','mi programa ya','ya gestiono','ya tengo herramientas','se integra con lo que ya tengo','esto se integra con','compatible con lo que ya uso','tengo que cambiar de programa','sustituir mi programa actual','reemplazar mi software actual','se integra con mi'],
     responses: [
       'Perfecto — no tienes que cambiar nada de lo que ya funciona.\n\nNosotros podemos <b>auditar, adaptar e integrar cualquier automatización que ya tengas</b> dentro de tu Departamento Tecnológico. Si ya tienes un CRM, una agenda o cualquier herramienta, la incorporamos al sistema.\n\nNo empezamos desde cero si no hace falta. ¿Qué herramientas tienes actualmente activas?'
     ]
@@ -2555,6 +2556,55 @@ let chatTurnCount = 0;
 let chatDiscussedTopics = new Set();
 let chatCtaOffered = false;
 
+// ── Identificación del visitante — ninguna conversación se queda anónima ──
+let chatStage = 'ask_name'; // 'ask_name' → 'ask_help' → 'normal'
+let chatUserName = null;
+let chatUserSector = null;
+let chatSectorAsked = false;
+let chatAwaitingSectorAnswer = false;
+let chatLeadLoggedOnce = false;
+
+function parseNameFromReply(text) {
+  // La gente casi nunca responde solo con el nombre — quita las muletillas
+  // más comunes ("me llamo X", "soy X", "hola, X") para quedarnos con el
+  // nombre limpio, y nos quedamos solo con la primera palabra (+1 apellido
+  // si lo dan) en vez de una frase larga.
+  let t = text.trim().replace(/^(hola,?\s*)?(me llamo|mi nombre es|soy)\s+/i, '').replace(/[.,!¡¿?]+$/, '').trim();
+  if (!t) t = text.trim();
+  const nombre = t.split(/\s+/).slice(0, 2).join(' ').slice(0, 40);
+  return nombre ? nombre.charAt(0).toUpperCase() + nombre.slice(1) : 'ahí';
+}
+
+function logChatLead(nota, extra) {
+  extra = extra || {};
+  // log_interaction solo guarda p_nombre en una ficha de cliente cuando hay
+  // email o teléfono — sin ninguno de los dos (el caso normal de un chat),
+  // el nombre se perdería del todo si no va también dentro del propio texto
+  // de la nota. Así queda siempre legible, tenga o no cliente vinculado.
+  const notaConNombre = (chatUserName ? chatUserName + ' — ' : '') + nota;
+  fetch('/.netlify/functions/save-lead', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(Object.assign({
+      source: 'chat',
+      session_id: trucoSessionId(),
+      nombre: chatUserName,
+      negocio: chatUserSector,
+      nota: notaConNombre.slice(0, 1900)
+    }, extra))
+  }).catch(() => {});
+}
+
+function logChatLeadFinalSummary() {
+  if (!chatUserName) return; // aún ni siquiera nos ha dicho su nombre
+  const preguntas = chatHistory.filter(h => h.role === 'user').map(h => h.text).join(' | ').slice(0, 1500);
+  const resumen = 'Resumen de la conversación — preguntó: ' + (preguntas || '(sin preguntas)') +
+    (chatUserSector ? ' · Sector/negocio: ' + chatUserSector : '') +
+    (chatCtaOffered ? ' · Se le ofreció reservar cita' : '');
+  logChatLead(resumen);
+}
+window.addEventListener('beforeunload', logChatLeadFinalSummary);
+
 function addMsg(role, text, label) {
   const div = document.createElement('div');
   div.className = 'msg ' + role;
@@ -2573,6 +2623,7 @@ function showTyping() {
 function hideTyping() { const e = document.getElementById('typing'); if(e) e.remove(); }
 
 function showBookingCard() {
+  logChatLead('Se le mostró el calendario de reserva de consultoría gratuita.');
   const card = document.createElement('div');
   card.className = 'msg bot booking-card';
   card.innerHTML = `
@@ -2611,11 +2662,7 @@ function trucoSessionId() {
 }
 
 function logChatQuestion(text) {
-  fetch('/.netlify/functions/save-lead', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ source: 'chat', session_id: trucoSessionId(), nota: text.slice(0, 500) })
-  }).catch(() => {});
+  logChatLead('Preguntó (sin resolver por el asistente básico): ' + text.slice(0, 500));
 }
 
 async function askTrucoPro(message, history) {
@@ -2632,6 +2679,19 @@ async function askTrucoPro(message, history) {
   }
 }
 
+function maybeAskSector() {
+  // Un único empujón suave, nunca insistente, y solo si de verdad no
+  // sabemos todavía a qué se dedica ni si solo quiere información general.
+  if (chatSectorAsked || chatUserSector || chatStage !== 'normal') return;
+  chatSectorAsked = true;
+  chatAwaitingSectorAnswer = true;
+  setTimeout(() => {
+    const msg = 'Por cierto, ¿a qué se dedica tu negocio? Así te lo explico mejor para tu caso — o si prefieres, dime solo que quieres información general y seguimos.';
+    addMsg('bot', msg);
+    chatHistory.push({ role: 'bot', text: msg });
+  }, 900);
+}
+
 function sendMsg() {
   const inp = document.getElementById('chatIn');
   const text = inp.value.trim();
@@ -2639,6 +2699,34 @@ function sendMsg() {
   inp.value = '';
   addMsg('user', text);
   chatHistory.push({ role: 'user', text });
+
+  // ── Fase 1: nombre ── nunca dejamos pasar una conversación sin nombre.
+  if (chatStage === 'ask_name') {
+    chatUserName = parseNameFromReply(text);
+    chatStage = 'ask_help';
+    const msg = 'Encantado, ' + chatUserName + '. ¿En qué puedo ayudarte hoy?';
+    setTimeout(() => { addMsg('bot', msg); chatHistory.push({ role: 'bot', text: msg }); }, 500);
+    return;
+  }
+
+  // ── Fase 2: motivo ── su respuesta aquí es la primera pregunta real;
+  // se registra el lead YA (nombre + motivo), y esa misma pregunta sigue
+  // su camino normal hacia el motor de respuestas de abajo, sin perderla.
+  if (chatStage === 'ask_help') {
+    chatStage = 'normal';
+    if (!chatLeadLoggedOnce) {
+      chatLeadLoggedOnce = true;
+      logChatLead('Preguntó: ' + text);
+    }
+  } else if (chatAwaitingSectorAnswer) {
+    chatAwaitingSectorAnswer = false;
+    const loQuiereSoloInfo = /solo (quiero |información|info)/i.test(text);
+    chatUserSector = loQuiereSoloInfo ? 'Solo quiere información general (sin sector concreto)' : text.slice(0, 150);
+    logChatLead('Actualización — ' + (loQuiereSoloInfo ? 'solo quiere información general' : 'sector/negocio: ' + text.slice(0, 150)));
+    // Si la respuesta es SOLO "solo quiero información", no hace falta
+    // meterla también en el motor de intents (no es una pregunta real).
+    if (loQuiereSoloInfo) return;
+  }
 
   chatTurnCount++;
   const intentKey = TRUCO_CHAT.detectIntent(text);
@@ -2653,6 +2741,7 @@ function sendMsg() {
         // TRUCO PRO lo resuelve directamente.
         addMsg('bot', aiResp.text, 'Asistente TRUCO PRO');
         chatHistory.push({ role: 'bot', text: aiResp.text });
+        maybeAskSector();
       } else if (aiResp.reason === 'off_topic') {
         // Pregunta genuinamente fuera de tema (que la IA detectó, no el
         // matcher local): rechazo educado, SIN ofrecer cita — un "¿eres
@@ -2693,6 +2782,7 @@ function sendMsg() {
       chatCtaOffered = true;
       setTimeout(() => showBookingCard(), 400);
     }
+    maybeAskSector();
   }, delay);
 }
 
@@ -2780,9 +2870,9 @@ function resetVoiceUI() {
   if (audioEl) audioEl.remove();
 }
 
-// Bienvenida inicial
+// Bienvenida inicial — primero el nombre, así ninguna conversación queda anónima.
 setTimeout(() => {
-  addMsg('bot', 'Hola, soy el asistente de <b>TRUCOtechnology</b>. ¿En qué te puedo ayudar?');
+  addMsg('bot', 'Hola, soy el asesor de <b>TRUCOtechnology</b>. ¿Cómo te llamas, para saber cómo dirigirme a ti?');
 }, 600);
 </script>
 

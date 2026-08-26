@@ -114,6 +114,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 @media(max-width:900px){.wc-vs{margin:4px 0;}}
 .wc-cal-reveal{opacity:0;transform:translateY(6px);transition:opacity .5s ease,transform .5s ease;}
 .wc-cal-reveal.show{opacity:1;transform:translateY(0);}
+.wc-flow-row{display:flex;gap:12px;margin-bottom:16px;align-items:stretch;}
+@media(max-width:520px){.wc-flow-row{flex-direction:column;}.wc-flow-row .phone-mock{width:100%!important;}}
 @media(prefers-reduced-motion:reduce){.wc-cal-reveal{opacity:1;transform:none;transition:none;}}
 .wc-browser{border-radius:10px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.35);}
 .wc-browser.gold{box-shadow:0 24px 70px rgba(217,168,63,.25),0 20px 50px rgba(0,0,0,.4);border:1px solid rgba(217,168,63,.5);}
@@ -475,7 +477,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
                 </div>
               </div>
 
-              <div style="display:flex;gap:12px;margin-bottom:16px;align-items:stretch;">
+              <div class="wc-flow-row">
                 <div style="flex:1;background:#0c1616;border-radius:12px;border:1.5px solid rgba(63,184,168,.4);padding:14px;display:flex;flex-direction:column;box-shadow:0 16px 40px rgba(0,0,0,.35);">
                   <div style="font-family:var(--font-b);font-weight:700;font-size:.62rem;color:#ecf5f3;margin-bottom:10px;">Miércoles 10:00</div>
                   <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:12px;">
@@ -561,6 +563,10 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Cuántas consultas puede atender al mes? <span class="faq-icon">+</span></button>
         <div class="faq-a"><p>Incluye 1.000 interacciones al mes, más que suficiente para la mayoría de clínicas.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Cómo protegéis los datos de mis pacientes? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Cumplimos el RGPD y la LOPD-GDD, y los tratamos con las garantías reforzadas que corresponden a datos de salud — no se ceden a terceros salvo lo estrictamente necesario para el servicio. Podemos formalizar un contrato de encargado de tratamiento contigo si lo necesitas.</p></div>
       </div>
     </div>
   </div>
