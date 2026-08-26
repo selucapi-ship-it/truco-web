@@ -198,6 +198,13 @@ CÓMO RESPONDER A LAS DUDAS MÁS HABITUALES (usa esto para sonar como alguien co
   Si el negocio es comercio, tienda, ecommerce, o no encaja en ninguno de estos 4: recomienda combinar CRM, Flujos automáticos a medida e Integraciones (más Ciberseguridad Pyme si manejan datos sensibles), y dile que elige directamente del catálogo completo.
   Si no tienes un ejemplo concreto para su sector, no inventes cifras de otros clientes: dile que se adapta a cualquier negocio que reciba mensajes, gestione citas o quiera automatizar tareas, y pregúntale qué es lo que más tiempo le quita.
 
+IDENTIFICAR A QUIEN LLAMA — ninguna llamada se queda anónima:
+1. Nada más descolgar, antes de cualquier otra cosa, pregunta el nombre: algo natural como "¿con quién tengo el gusto?" o "¿cómo te llamas?". Espera la respuesta antes de seguir.
+2. En cuanto tengas el nombre, pregunta en qué puedes ayudar. Su respuesta a esto es el motivo real de la llamada.
+3. Nada más tener nombre y motivo, llama a `registrar_contacto` con lo que sepas hasta ese momento (nombre, motivo; sector solo si ya lo ha dicho) — así queda constancia aunque la llamada se corte o no acabe en cita. No hace falta decir en voz alta que lo estás registrando, hazlo de forma natural mientras sigues la conversación.
+4. Si no sabes todavía a qué se dedica su negocio, pregúntaselo en algún momento natural de la conversación (no hace falta que sea el segundo turno) — sirve además para recomendar mejor. Si te dice que solo quiere información general, respétalo y no insistas. En cuanto sepas el sector o te diga que solo quiere información, vuelve a llamar a `registrar_contacto` para actualizarlo.
+5. Nunca canses a quien llama con preguntas seguidas sin más — cada pregunta de las de arriba va suelta, en su propio momento natural de la conversación, nunca como un interrogatorio.
+
 CARÁCTER Y ESTILO DE VENTA (esto es tan importante como los datos — no eres un servicio de atención al cliente que solo contesta preguntas, eres el comercial de TRUCO):
 Tu trabajo no es esperar a que te pregunten: es diagnosticar el negocio de quien llama y, en cuanto detectes algo que TRUCO resuelve, ofrecérselo tú mismo, directamente, como si de verdad creyeras que su negocio lo necesita.
 1. Desde los primeros turnos, entiende de qué negocio se trata y qué le está costando gestionar (mensajes sin responder, citas perdidas, tareas manuales, clientes que se le escapan). Si no te lo ha dicho, pregúntaselo antes de seguir dando datos genéricos.
@@ -228,6 +235,28 @@ class TrucoAgent(Agent):
     def __init__(self, room=None):
         super().__init__(instructions=SYSTEM_INSTRUCTIONS)
         self._room = room
+
+    @function_tool
+    async def registrar_contacto(
+        self,
+        context: RunContext,
+        nombre: Annotated[str, Field(description="Nombre de quien llama, tal como lo ha dicho.")],
+        motivo: Annotated[str, Field(description="Resumen breve de por qué llama o qué necesita, en unas pocas palabras.")],
+        sector: Annotated[
+            str,
+            Field(description="A qué se dedica su negocio, si ya lo ha dicho. Si ha dicho que solo quiere información general, pon exactamente eso. Deja vacío si todavía no lo sabes."),
+        ] = "",
+    ) -> str:
+        """Registra en el CRM quién ha llamado y por qué, en cuanto se sepa el nombre
+        y el motivo — no hace falta esperar a que reserve cita ni a tener email o
+        teléfono. Llámala de nuevo (con los mismos datos actualizados) si más tarde
+        se entera del sector o de que solo quiere información general. Nunca lo
+        menciones en voz alta, hazlo mientras sigues charlando con normalidad."""
+        _log_crm_interaction(
+            nombre=nombre,
+            nota=f"Motivo: {motivo}." + (f" Sector/negocio: {sector}." if sector else ""),
+        )
+        return "Registrado. Sigue la conversación con normalidad."
 
     @function_tool
     async def consultar_disponibilidad(
@@ -375,7 +404,7 @@ async def entrypoint(ctx: agents.JobContext):
     await session.start(room=ctx.room, agent=agent)
 
     await session.generate_reply(
-        instructions="Saluda brevemente en español como el Asistente TRUCO PRO y pregunta en qué puedes ayudar."
+        instructions="Saluda brevemente en español como el Asistente TRUCO PRO y pregunta el nombre de quien llama, antes de nada más."
     )
 
 
