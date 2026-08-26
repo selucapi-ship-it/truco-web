@@ -2872,11 +2872,7 @@ async function loadTrukiOverview() {
       headers: { Authorization: 'Bearer ' + session.access_token }
     });
     const data = await resp.json();
-    if (!data.ok) {
-      const detalle = data.debug ? '<br><pre style="white-space:pre-wrap;font-size:.7rem;color:var(--grey);margin-top:8px;">' + escapeHtml(JSON.stringify(data.debug, null, 2)) + '</pre>' : '';
-      list.innerHTML = `<div class="empty-mini">No se pudo cargar (${escapeHtml(data.reason || 'error')}).${detalle}</div>`;
-      return;
-    }
+    if (!data.ok) { list.innerHTML = `<div class="empty-mini">No se pudo cargar (${escapeHtml(data.reason || 'error')}).</div>`; return; }
     renderTrukiList(data.clientes || []);
     document.getElementById('truki-declaracion-texto').value = data.declaracion_responsable_software || '';
     const pendiente = (data.declaracion_responsable_software || '').includes('RELLENAR');
