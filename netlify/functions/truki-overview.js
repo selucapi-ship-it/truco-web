@@ -67,7 +67,7 @@ exports.handler = async function (event) {
       fetch(`${trukiUrl}/rest/v1/truki_empresa?select=id,nombre,nif,email_empresa,dpa_aceptado_en,dpa_aceptado_por,created_at&order=created_at.asc`, { headers: trukiHeaders }),
       fetch(`${trukiUrl}/rest/v1/truki_client_members?select=user_id,client_id,rol`, { headers: trukiHeaders }),
       fetch(`${trukiUrl}/rest/v1/truki_invoices?select=client_id,tipo,total,estado,creado_en`, { headers: trukiHeaders }),
-      fetch(`${trukiUrl}/rest/v1/truki_events?tipo_evento=eq.error_cliente&select=client_id,creado_en&order=creado_en.desc&limit=500`, { headers: trukiHeaders }),
+      fetch(`${trukiUrl}/rest/v1/truki_events?tipo_evento=eq.error_cliente&select=client_id,creado_en,detalle&order=creado_en.desc&limit=500`, { headers: trukiHeaders }),
       fetch(`${trukiUrl}/auth/v1/admin/users?per_page=1000`, { headers: trukiHeaders }),
       fetch(`${trukiUrl}/rest/v1/truki_config?id=eq.1&select=declaracion_responsable_software,updated_at`, { headers: trukiHeaders })
     ]);
@@ -84,18 +84,25 @@ exports.handler = async function (event) {
     const users = Array.isArray(usersData) ? usersData : (usersData.users || []);
 
     const emailPorUserId = new Map(users.map(u => [u.id, u.email]));
-    const hace7dias = Date.now() - 7 * 24 * 60 * 60 * 1000;
+    const userPorId = new Map(users.map(u => [u.id, u]));
+    const ahora = Date.now();
+    const hace7dias = ahora - 7 * 24 * 60 * 60 * 1000;
     const inicioMes = new Date(); inicioMes.setDate(1); inicioMes.setHours(0, 0, 0, 0);
 
     const resultado = empresas.map(emp => {
-      const equipo = miembros
-        .filter(m => m.client_id === emp.id)
-        .map(m => ({ email: emailPorUserId.get(m.user_id) || '(usuario borrado)', rol: m.rol }));
+      const miembrosEmpresa = miembros.filter(m => m.client_id === emp.id);
+      const equipo = miembrosEmpresa.map(m => ({ email: emailPorUserId.get(m.user_id) || '(usuario borrado)', rol: m.rol }));
+      const suspendida = miembrosEmpresa.length > 0 && miembrosEmpresa.every(m => {
+        const u = userPorId.get(m.user_id);
+        return u && u.banned_until && new Date(u.banned_until).getTime() > ahora;
+      });
 
       const facturasEmpresa = facturas.filter(f => f.client_id === emp.id);
       const conTipo = tipo => facturasEmpresa.filter(f => f.tipo === tipo);
       const delMes = arr => arr.filter(f => new Date(f.creado_en) >= inicioMes);
       const facturasVigentes = conTipo('factura').filter(f => f.estado !== 'anulada');
+      const eventosEmpresa = eventos.filter(e => e.client_id === emp.id); // ya vienen ordenados por creado_en.desc
+      const ultimoError = eventosEmpresa[0];
 
       return {
         client_id: emp.id,
@@ -103,6 +110,7 @@ exports.handler = async function (event) {
         nif: emp.nif,
         email_empresa: emp.email_empresa,
         equipo,
+        suspendida,
         dpa_aceptado_en: emp.dpa_aceptado_en,
         dpa_aceptado_por: emp.dpa_aceptado_por,
         created_at: emp.created_at,
@@ -111,7 +119,9 @@ exports.handler = async function (event) {
         presupuestos_total: conTipo('presupuesto').length,
         presupuestos_mes: delMes(conTipo('presupuesto')).length,
         ingresos_total: facturasVigentes.reduce((s, f) => s + Number(f.total || 0), 0),
-        errores_7d: eventos.filter(e => e.client_id === emp.id && new Date(e.creado_en).getTime() >= hace7dias).length
+        errores_7d: eventosEmpresa.filter(e => new Date(e.creado_en).getTime() >= hace7dias).length,
+        ultimo_error_mensaje: ultimoError ? ultimoError.detalle : null,
+        ultimo_error_en: ultimoError ? ultimoError.creado_en : null
       };
     });
 

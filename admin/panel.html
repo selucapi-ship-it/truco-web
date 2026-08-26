@@ -127,6 +127,7 @@
   .stat-card .n{font-family:var(--font-d);font-size:1.55rem;font-weight:800;line-height:1;color:var(--white);}
   .stat-card .l{font-family:var(--font-m);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);margin-top:6px;}
   #new-client-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;padding:20px;}
+  #truki-declaracion-overlay,#truki-create-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:250;align-items:center;justify-content:center;padding:20px;}
   .new-client-box{width:100%;max-width:440px;max-height:85vh;overflow-y:auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:16px;padding:26px;box-shadow:var(--shadow-card);}
   .new-client-box h2{font-family:var(--font-d);font-size:1.2rem;margin:0 0 6px;}
   .new-client-box p{color:var(--grey);font-size:.82rem;margin:0 0 18px;line-height:1.5;}
@@ -255,6 +256,26 @@
   .truki-status.suspended,.truki-status.failed{background:rgba(239,68,68,.12);color:var(--red);}
   .truki-status.provisioning{background:rgba(217,168,63,.15);color:var(--gold);}
   .truki-error{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:8px 10px;margin-top:6px;font-size:.72rem;color:#ff8a80;line-height:1.5;width:100%;}
+
+  /* ── TruKi: consola real (sidebar de empresas + detalle), no solo lista ── */
+  .truki-layout{display:grid;grid-template-columns:300px 1fr;gap:0;width:100%;max-width:1120px;margin:0 auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:18px;box-shadow:var(--shadow-card);overflow:hidden;}
+  @media(max-width:820px){.truki-layout{grid-template-columns:1fr;}}
+  .truki-sidebar{border-right:1px solid var(--grey-line);padding:22px 16px;max-height:85vh;overflow-y:auto;}
+  .truki-sidebar h2{font-family:var(--font-d);font-size:1.15rem;margin:0 0 14px;}
+  .truki-sidebar input,.truki-sidebar select{width:100%;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:8px 10px;color:var(--white);font-size:.78rem;outline:none;margin-bottom:8px;}
+  .truki-company-row{padding:10px 10px;border-radius:8px;cursor:pointer;font-size:.78rem;margin-bottom:4px;border:1px solid transparent;}
+  .truki-company-row:hover{background:rgba(255,255,255,.04);}
+  .truki-company-row.active{background:rgba(47,123,255,.12);border-color:rgba(47,123,255,.3);}
+  .truki-company-row .tc-name{color:var(--white);font-weight:600;display:flex;align-items:center;gap:6px;justify-content:space-between;}
+  .truki-company-row .tc-meta{color:var(--grey);font-size:.7rem;font-family:var(--font-m);margin-top:3px;}
+  .truki-company-row .tc-error{color:#ff8a80;font-size:.7rem;margin-top:4px;line-height:1.4;}
+  .truki-main{padding:24px 26px;max-height:85vh;overflow-y:auto;position:relative;}
+  .truki-main .stats-close{position:absolute;top:20px;right:20px;}
+  .truki-empty-detail{color:var(--grey);font-size:.85rem;text-align:center;margin-top:80px;}
+  .truki-detail-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:4px;padding-right:40px;}
+  .truki-detail-head h2{font-family:var(--font-d);font-size:1.3rem;margin:0;}
+  .truki-detail-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+  .truki-section-title{font-family:var(--font-m);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:22px 0 8px;}
 
   /* ── PRESUPUESTOS (overlay, founder-only) ── */
   #quotes-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
@@ -786,19 +807,50 @@
   </div>
 
   <div id="truki-overlay">
-    <div class="truki-box">
-      <button class="stats-close" onclick="closeTrukiOverlay()">✕</button>
-      <h2>TruKi</h2>
-      <p>Todas las empresas con TruKi contratado, en la infraestructura compartida — datos leídos en vivo, no reportes que el cliente envía.</p>
-      <div id="truki-list"></div>
-
-      <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--grey-line);">
-        <h3 style="margin:0 0 6px;">Declaración responsable del software</h3>
-        <p style="color:var(--grey);font-size:.78rem;margin:0 0 12px;line-height:1.5;">Certifica que TruKi (el software) cumple el RD 1007/2023 — es la MISMA para todas las empresas cliente, la controlas solo tú aquí. Ningún cliente puede editarla ni verla editable desde su propia app. Mientras contenga la palabra "RELLENAR", TruKi bloquea la emisión de facturas reales para todos los clientes a la vez (los presupuestos siguen funcionando).</p>
-        <textarea id="truki-declaracion-texto" style="width:100%;min-height:260px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:12px;color:var(--white);font-size:.82rem;font-family:monospace;line-height:1.5;outline:none;"></textarea>
-        <p style="color:var(--grey);font-size:.72rem;margin:6px 0 12px;" id="truki-declaracion-meta"></p>
-        <button class="btn" onclick="guardarDeclaracionTruki()">Guardar declaración</button>
+    <div class="truki-layout">
+      <div class="truki-sidebar">
+        <h2>TruKi</h2>
+        <button class="btn sm block" style="margin-bottom:10px;" onclick="openTrukiCreateForm()">＋ Nueva empresa</button>
+        <input type="text" id="truki-search" placeholder="Buscar por nombre o NIF..." oninput="renderTrukiCompanyList()">
+        <select id="truki-sort" onchange="renderTrukiCompanyList()">
+          <option value="nombre_asc">Ordenar: nombre (A-Z)</option>
+          <option value="errores_desc">Ordenar: más errores (7d)</option>
+          <option value="ingresos_desc">Ordenar: más ingresos</option>
+          <option value="reciente">Ordenar: alta más reciente</option>
+        </select>
+        <button class="btn sm ghost" style="width:100%;margin-bottom:10px;" onclick="openTrukiDeclaracionForm()">📋 Declaración del software</button>
+        <div id="truki-company-list"></div>
       </div>
+      <div class="truki-main">
+        <button class="stats-close" onclick="closeTrukiOverlay()">✕</button>
+        <div id="truki-detail"><div class="truki-empty-detail">Selecciona una empresa para ver su detalle, o crea una nueva.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="truki-declaracion-overlay">
+    <div class="new-client-box">
+      <button class="team-close" onclick="closeTrukiDeclaracionForm()">✕</button>
+      <h2>Declaración responsable del software</h2>
+      <p>Certifica que TruKi (el software) cumple el RD 1007/2023 — es la MISMA para todas las empresas cliente, la controlas solo tú aquí. Ningún cliente puede editarla ni verla editable desde su propia app. Mientras contenga la palabra "RELLENAR", TruKi bloquea la emisión de facturas reales para todos los clientes a la vez (los presupuestos siguen funcionando).</p>
+      <textarea id="truki-declaracion-texto" style="width:100%;min-height:260px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:12px;color:var(--white);font-size:.82rem;font-family:monospace;line-height:1.5;outline:none;"></textarea>
+      <p style="color:var(--grey);font-size:.72rem;margin:6px 0 12px;" id="truki-declaracion-meta"></p>
+      <button class="btn block" onclick="guardarDeclaracionTruki()">Guardar declaración</button>
+    </div>
+  </div>
+
+  <div id="truki-create-overlay">
+    <div class="new-client-box">
+      <button class="team-close" onclick="closeTrukiCreateForm()">✕</button>
+      <h2>Nueva empresa TruKi</h2>
+      <p>Crea la empresa y su primer usuario admin directamente en el proyecto compartido de TruKi.</p>
+      <input type="text" id="tc-nombre" placeholder="Nombre de la empresa *">
+      <input type="text" id="tc-nif" placeholder="NIF">
+      <input type="email" id="tc-email-empresa" placeholder="Email de la empresa">
+      <hr style="border-color:var(--grey-line);margin:14px 0;">
+      <input type="email" id="tc-admin-email" placeholder="Email del primer admin *">
+      <input type="password" id="tc-admin-password" placeholder="Contraseña inicial del admin * (mín. 8)" autocomplete="new-password">
+      <button class="btn block" onclick="crearEmpresaTruki()">Dar de alta</button>
     </div>
   </div>
 
@@ -2863,8 +2915,12 @@ async function deleteAnonInteraction(id) {
 // del lado servidor). Sustituye al antiguo founder_truki_overview()/
 // truki_instances, construidos para "un Supabase por cliente" (obsoleto tras
 // la migración multi-tenant — ver plantillas/06-truki-facturas/).
+let allTrukiClientes = [];
+let trukiSelectedId = null;
+let trukiDeclaracionData = { texto: '', updated_at: null };
+
 async function loadTrukiOverview() {
-  const list = document.getElementById('truki-list');
+  const list = document.getElementById('truki-company-list');
   list.innerHTML = '<div class="empty-mini">Cargando…</div>';
   try {
     const { data: { session } } = await sb.auth.getSession();
@@ -2873,15 +2929,170 @@ async function loadTrukiOverview() {
     });
     const data = await resp.json();
     if (!data.ok) { list.innerHTML = `<div class="empty-mini">No se pudo cargar (${escapeHtml(data.reason || 'error')}).</div>`; return; }
-    renderTrukiList(data.clientes || []);
-    document.getElementById('truki-declaracion-texto').value = data.declaracion_responsable_software || '';
-    const pendiente = (data.declaracion_responsable_software || '').includes('RELLENAR');
-    document.getElementById('truki-declaracion-meta').innerHTML = (pendiente
-      ? '<span style="color:var(--red,#d64545);">⚠️ Todavía tiene "RELLENAR" puesto — bloquea la emisión de facturas reales para TODOS los clientes de TruKi a la vez.</span> · '
-      : '') + (data.declaracion_updated_at ? 'Última actualización: ' + new Date(data.declaracion_updated_at).toLocaleString('es-ES') : '');
+    allTrukiClientes = data.clientes || [];
+    trukiDeclaracionData = { texto: data.declaracion_responsable_software || '', updated_at: data.declaracion_updated_at || null };
+    renderTrukiCompanyList();
   } catch (e) {
     list.innerHTML = '<div class="empty-mini">Error de conexión.</div>';
   }
+}
+
+function renderTrukiCompanyList() {
+  const list = document.getElementById('truki-company-list');
+  const q = (document.getElementById('truki-search').value || '').trim().toLowerCase();
+  const sortKey = document.getElementById('truki-sort').value;
+  let filtered = !q ? allTrukiClientes.slice() : allTrukiClientes.filter(c =>
+    (c.nombre || '').toLowerCase().includes(q) || (c.nif || '').toLowerCase().includes(q)
+  );
+  const sorters = {
+    nombre_asc: (a, b) => (a.nombre || '').localeCompare(b.nombre || ''),
+    errores_desc: (a, b) => b.errores_7d - a.errores_7d,
+    ingresos_desc: (a, b) => b.ingresos_total - a.ingresos_total,
+    reciente: (a, b) => new Date(b.created_at) - new Date(a.created_at),
+  };
+  filtered.sort(sorters[sortKey] || sorters.nombre_asc);
+
+  if (!allTrukiClientes.length) { list.innerHTML = '<div class="empty-mini">Todavía no hay ninguna empresa con TruKi.</div>'; return; }
+  if (!filtered.length) { list.innerHTML = '<div class="empty-mini">Ninguna empresa coincide con la búsqueda.</div>'; return; }
+
+  list.innerHTML = filtered.map(c => {
+    const dpaOk = !!c.dpa_aceptado_en;
+    return `
+    <div class="truki-company-row${c.client_id === trukiSelectedId ? ' active' : ''}" onclick="abrirTrukiDetalle('${c.client_id}')">
+      <div class="tc-name">
+        <span>${escapeHtml(c.nombre || 'Empresa sin nombre')}</span>
+        ${c.suspendida ? '<span class="truki-status suspended">Suspendida</span>' : (!dpaOk ? '<span class="truki-status suspended">RGPD</span>' : '')}
+      </div>
+      <div class="tc-meta">${c.errores_7d} error${c.errores_7d === 1 ? '' : 'es'} 7d · ${c.ingresos_total.toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 })} €</div>
+      ${c.ultimo_error_mensaje ? `<div class="tc-error">⚠️ ${escapeHtml(c.ultimo_error_mensaje)}</div>` : ''}
+    </div>
+  `; }).join('');
+}
+
+async function abrirTrukiDetalle(clientId) {
+  trukiSelectedId = clientId;
+  renderTrukiCompanyList();
+  const detail = document.getElementById('truki-detail');
+  detail.innerHTML = '<div class="empty-mini">Cargando…</div>';
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch('/.netlify/functions/truki-client-detail?client_id=' + encodeURIComponent(clientId), {
+      headers: { Authorization: 'Bearer ' + session.access_token }
+    });
+    const data = await resp.json();
+    if (!data.ok) { detail.innerHTML = `<div class="empty-mini">No se pudo cargar (${escapeHtml(data.reason || 'error')}).</div>`; return; }
+    renderTrukiDetalle(data);
+  } catch (e) {
+    detail.innerHTML = '<div class="empty-mini">Error de conexión.</div>';
+  }
+}
+
+function renderTrukiDetalle(data) {
+  const emp = data.empresa;
+  const dpaOk = !!emp.dpa_aceptado_en;
+  const detail = document.getElementById('truki-detail');
+
+  const equipoHtml = data.equipo.length ? data.equipo.map(m => `
+    <div class="truki-row">
+      <div><div class="tr-name">${escapeHtml(m.email)}${m.rol === 'admin' ? ' (admin)' : ''}</div>
+      <div class="tr-meta">${m.activo ? 'Activo' : 'Baneado individualmente'}</div></div>
+      <span class="truki-status ${m.activo ? 'active' : 'suspended'}">${m.activo ? 'Activo' : 'Bloqueado'}</span>
+    </div>`).join('') : '<div class="empty-mini">Sin usuarios vinculados.</div>';
+
+  const facturasHtml = data.facturas.length ? data.facturas.map(f => `
+    <div class="truki-row">
+      <div><div class="tr-name">${f.tipo === 'factura' ? '🧾' : '📄'} ${escapeHtml(f.serie || '')}${f.numero || ''} — ${escapeHtml(f.cliente_nombre || 'sin nombre')}</div>
+      <div class="tr-meta">${new Date(f.fecha || f.creado_en).toLocaleDateString('es-ES')} · ${escapeHtml(f.estado)}${f.estado_cobro ? ' · ' + escapeHtml(f.estado_cobro) : ''}</div></div>
+      <span class="tr-counts"><b>${Number(f.total || 0).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</b></span>
+    </div>`).join('') : '<div class="empty-mini">Sin facturas ni presupuestos todavía.</div>';
+
+  const eventosHtml = data.eventos.length ? data.eventos.map(e => `
+    <div class="truki-row">
+      <div><div class="tr-name">${e.tipo_evento === 'error_cliente' ? '⚠️' : '•'} ${escapeHtml(e.tipo_evento)}</div>
+      <div class="tr-meta">${new Date(e.creado_en).toLocaleString('es-ES')}${e.actor_email ? ' · ' + escapeHtml(e.actor_email) : ''}</div>
+      ${e.detalle ? `<div style="color:var(--grey);font-size:.78rem;margin-top:3px;max-width:480px;">${escapeHtml(e.detalle)}</div>` : ''}</div>
+    </div>`).join('') : '<div class="empty-mini">Sin eventos registrados.</div>';
+
+  detail.innerHTML = `
+    <div class="truki-detail-head">
+      <div>
+        <h2>${escapeHtml(emp.nombre || 'Empresa sin nombre')}</h2>
+        <div style="color:var(--grey);font-size:.8rem;margin-top:4px;">${escapeHtml(emp.nif || 'sin NIF')}${emp.email_empresa ? ' · ' + escapeHtml(emp.email_empresa) : ''} · desde ${new Date(emp.created_at).toLocaleDateString('es-ES')}</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <span class="truki-status ${dpaOk ? 'active' : 'suspended'}">${dpaOk ? 'RGPD aceptado' : 'RGPD pendiente'}</span>
+        <span class="truki-status ${data.suspendida ? 'suspended' : 'active'}">${data.suspendida ? 'Suspendida' : 'Activa'}</span>
+      </div>
+    </div>
+    ${!dpaOk ? '<div class="truki-error">⚠️ Contrato de encargado de tratamiento (RGPD) sin aceptar — bloquea toda la app para su equipo hasta que un admin lo acepte (o tú lo hagas en su nombre abajo).</div>' : ''}
+
+    <div class="truki-detail-actions">
+      ${data.suspendida
+        ? `<button class="btn green sm" onclick="trukiSuspenderReactivar('${emp.id}','reactivar')">▶ Reactivar todo el equipo</button>`
+        : `<button class="btn danger sm" onclick="trukiSuspenderReactivar('${emp.id}','suspender')">⛔ Suspender todo el equipo</button>`}
+      ${!dpaOk ? `<button class="btn sm ghost" onclick="trukiAceptarDpaManual('${emp.id}')">Marcar RGPD como aceptado</button>` : ''}
+    </div>
+
+    <div class="truki-section-title">Equipo</div>
+    ${equipoHtml}
+
+    <div class="truki-section-title">Últimas facturas y presupuestos</div>
+    ${facturasHtml}
+
+    <div class="truki-section-title">Últimos eventos</div>
+    ${eventosHtml}
+  `;
+}
+
+async function trukiSuspenderReactivar(clientId, accion) {
+  const verbo = accion === 'suspender' ? 'suspender' : 'reactivar';
+  if (!confirm(`¿Seguro que quieres ${verbo} a TODO el equipo de esta empresa? ${accion === 'suspender' ? 'Ningún usuario suyo podrá entrar a TruKi hasta que lo reactives.' : 'Todos sus usuarios recuperarán el acceso.'}`)) return;
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch('/.netlify/functions/truki-client-action', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ client_id: clientId, accion })
+    });
+    const data = await resp.json();
+    if (!data.ok) { alert('No se pudo ' + verbo + ' (' + (data.reason || 'error') + ').'); return; }
+    toast(accion === 'suspender' ? 'Equipo suspendido.' : 'Equipo reactivado.');
+    await loadTrukiOverview();
+    abrirTrukiDetalle(clientId);
+  } catch (e) {
+    alert('Error de conexión.');
+  }
+}
+
+async function trukiAceptarDpaManual(clientId) {
+  if (!confirm('¿Marcar el RGPD como aceptado en nombre de esta empresa? Úsalo solo cuando su admin no esté disponible para hacerlo él mismo.')) return;
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch('/.netlify/functions/truki-client-action', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ client_id: clientId, accion: 'aceptar_dpa_manual' })
+    });
+    const data = await resp.json();
+    if (!data.ok) { alert('No se pudo aceptar (' + (data.reason || 'error') + ').'); return; }
+    toast('RGPD marcado como aceptado.');
+    await loadTrukiOverview();
+    abrirTrukiDetalle(clientId);
+  } catch (e) {
+    alert('Error de conexión.');
+  }
+}
+
+function openTrukiDeclaracionForm() {
+  document.getElementById('truki-declaracion-overlay').style.display = 'flex';
+  document.getElementById('truki-declaracion-texto').value = trukiDeclaracionData.texto;
+  const pendiente = trukiDeclaracionData.texto.includes('RELLENAR');
+  document.getElementById('truki-declaracion-meta').innerHTML = (pendiente
+    ? '<span style="color:var(--red,#d64545);">⚠️ Todavía tiene "RELLENAR" puesto — bloquea la emisión de facturas reales para TODOS los clientes de TruKi a la vez.</span> · '
+    : '') + (trukiDeclaracionData.updated_at ? 'Última actualización: ' + new Date(trukiDeclaracionData.updated_at).toLocaleString('es-ES') : '');
+}
+function closeTrukiDeclaracionForm() {
+  document.getElementById('truki-declaracion-overlay').style.display = 'none';
 }
 
 async function guardarDeclaracionTruki() {
@@ -2896,39 +3107,45 @@ async function guardarDeclaracionTruki() {
     });
     const data = await resp.json();
     if (!data.ok) { alert('No se pudo guardar (' + (data.reason || 'error') + ').'); return; }
-    alert('Declaración guardada — se aplica al momento a todas las empresas de TruKi.');
+    toast('Declaración guardada — se aplica al momento a todas las empresas de TruKi.');
+    closeTrukiDeclaracionForm();
     loadTrukiOverview();
   } catch (e) {
     alert('Error de conexión.');
   }
 }
 
-function renderTrukiList(clientes) {
-  const list = document.getElementById('truki-list');
-  if (!clientes.length) { list.innerHTML = '<div class="empty-mini">Todavía no hay ninguna empresa con TruKi.</div>'; return; }
-  list.innerHTML = clientes.map(c => {
-    const dpaOk = !!c.dpa_aceptado_en;
-    const equipoTxt = c.equipo.length
-      ? c.equipo.map(m => `${escapeHtml(m.email)}${m.rol === 'admin' ? ' (admin)' : ''}`).join(', ')
-      : 'sin usuarios vinculados';
-    return `
-    <div class="truki-row">
-      <div>
-        <div class="tr-name">${escapeHtml(c.nombre || 'Empresa sin nombre')} <span style="color:var(--grey);font-weight:400;">· ${escapeHtml(c.nif || 'sin NIF')}</span></div>
-        <div class="tr-meta">${equipoTxt} · desde ${new Date(c.created_at).toLocaleDateString('es-ES')}</div>
-        ${!dpaOk ? `<div class="truki-error">⚠️ Contrato de encargado de tratamiento (RGPD) todavía sin aceptar — la app se lo bloquea hasta que un admin lo acepte.</div>` : ''}
-      </div>
-      <div class="tr-counts">
-        <span>Facturas <b>${c.facturas_mes}</b>/mes · <b>${c.facturas_total}</b> total</span>
-        <span>Presupuestos <b>${c.presupuestos_mes}</b>/mes · <b>${c.presupuestos_total}</b> total</span>
-        <span>Ingresos facturados <b>${c.ingresos_total.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</b></span>
-        <span>Errores 7d <b>${c.errores_7d}</b></span>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <span class="truki-status ${dpaOk ? 'active' : 'suspended'}">${dpaOk ? 'RGPD aceptado' : 'RGPD pendiente'}</span>
-      </div>
-    </div>
-  `; }).join('');
+function openTrukiCreateForm() {
+  ['tc-nombre', 'tc-nif', 'tc-email-empresa', 'tc-admin-email', 'tc-admin-password'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('truki-create-overlay').style.display = 'flex';
+}
+function closeTrukiCreateForm() {
+  document.getElementById('truki-create-overlay').style.display = 'none';
+}
+
+async function crearEmpresaTruki() {
+  const nombre = document.getElementById('tc-nombre').value.trim();
+  const nif = document.getElementById('tc-nif').value.trim();
+  const emailEmpresa = document.getElementById('tc-email-empresa').value.trim();
+  const adminEmail = document.getElementById('tc-admin-email').value.trim();
+  const adminPassword = document.getElementById('tc-admin-password').value;
+  if (!nombre || !adminEmail || !adminPassword) { alert('Rellena al menos el nombre de la empresa y el email/contraseña del primer admin.'); return; }
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch('/.netlify/functions/truki-client-create', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ nombre, nif, email_empresa: emailEmpresa, admin_email: adminEmail, admin_password: adminPassword })
+    });
+    const data = await resp.json();
+    if (!data.ok) { alert('No se pudo dar de alta (' + (data.reason || 'error') + (data.detalle ? ': ' + JSON.stringify(data.detalle) : '') + ').'); return; }
+    toast('Empresa dada de alta en TruKi.');
+    closeTrukiCreateForm();
+    await loadTrukiOverview();
+    abrirTrukiDetalle(data.empresa.id);
+  } catch (e) {
+    alert('Error de conexión.');
+  }
 }
 
 async function loadStats() {
