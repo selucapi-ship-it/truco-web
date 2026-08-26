@@ -308,7 +308,8 @@
   .quotes-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px;}
   #prices-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
   #prices-btn:hover{border-color:var(--gold);color:var(--gold);}
-  #fiscal-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
+  #fiscal-btn,#contrataciones-btn,#cobros-btn,#audit-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
+  #contrataciones-btn:hover,#cobros-btn:hover,#audit-btn:hover{border-color:var(--gold);color:var(--gold);}
   #fiscal-btn:hover{border-color:var(--gold);color:var(--gold);}
   #prices-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
   #fiscal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
@@ -3209,16 +3210,22 @@ let allTrukiClientes = [];
 let trukiSelectedId = null;
 let trukiDeclaracionData = { texto: '', updated_at: null };
 
-async function loadTrukiOverview() {
+async function loadTrukiOverview(esReintento) {
   const list = document.getElementById('truki-company-list');
-  list.innerHTML = '<div class="empty-mini">Cargando…</div>';
+  if (!esReintento) list.innerHTML = '<div class="empty-mini">Cargando…</div>';
   try {
     const { data: { session } } = await sb.auth.getSession();
     const resp = await fetch('/.netlify/functions/truki-overview', {
       headers: { Authorization: 'Bearer ' + session.access_token }
     });
     const data = await resp.json();
-    if (!data.ok) { list.innerHTML = `<div class="empty-mini">No se pudo cargar (${escapeHtml(data.reason || 'error')}).</div>`; return; }
+    if (!data.ok) {
+      // El proyecto de TruKi puede tardar en "despertar" — un reintento
+      // silencioso antes de darlo por fallido de verdad.
+      if (!esReintento && data.reason === 'supabase_error') { await new Promise(r => setTimeout(r, 1200)); return loadTrukiOverview(true); }
+      list.innerHTML = `<div class="empty-mini">No se pudo cargar (${escapeHtml(data.reason || 'error')}). <button class="btn sm ghost" style="margin-top:8px;" onclick="loadTrukiOverview()">Reintentar</button></div>`;
+      return;
+    }
     allTrukiClientes = data.clientes || [];
     trukiDeclaracionData = { texto: data.declaracion_responsable_software || '', updated_at: data.declaracion_updated_at || null };
     renderTrukiCompanyList();
@@ -3259,18 +3266,22 @@ function renderTrukiCompanyList() {
   `; }).join('');
 }
 
-async function abrirTrukiDetalle(clientId) {
+async function abrirTrukiDetalle(clientId, esReintento) {
   trukiSelectedId = clientId;
-  renderTrukiCompanyList();
+  if (!esReintento) renderTrukiCompanyList();
   const detail = document.getElementById('truki-detail');
-  detail.innerHTML = '<div class="empty-mini">Cargando…</div>';
+  if (!esReintento) detail.innerHTML = '<div class="empty-mini">Cargando…</div>';
   try {
     const { data: { session } } = await sb.auth.getSession();
     const resp = await fetch('/.netlify/functions/truki-client-detail?client_id=' + encodeURIComponent(clientId), {
       headers: { Authorization: 'Bearer ' + session.access_token }
     });
     const data = await resp.json();
-    if (!data.ok) { detail.innerHTML = `<div class="empty-mini">No se pudo cargar (${escapeHtml(data.reason || 'error')}).</div>`; return; }
+    if (!data.ok) {
+      if (!esReintento && data.reason === 'supabase_error') { await new Promise(r => setTimeout(r, 1200)); return abrirTrukiDetalle(clientId, true); }
+      detail.innerHTML = `<div class="empty-mini">No se pudo cargar (${escapeHtml(data.reason || 'error')}). <button class="btn sm ghost" style="margin-top:8px;" onclick="abrirTrukiDetalle('${clientId}')">Reintentar</button></div>`;
+      return;
+    }
     renderTrukiDetalle(data);
   } catch (e) {
     detail.innerHTML = '<div class="empty-mini">Error de conexión.</div>';

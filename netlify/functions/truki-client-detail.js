@@ -61,16 +61,32 @@ exports.handler = async function (event) {
     trukiHeaders.Authorization = `Bearer ${trukiKey}`;
   }
 
+  // Mismo motivo que truki-overview.js: un proyecto Supabase con poco
+  // tráfico puede tardar en "despertar" justo tras un despliegue nuevo —
+  // se reintenta un par de veces antes de dar supabase_error.
+  const dormir = ms => new Promise(r => setTimeout(r, ms));
+  async function fetchConReintentos(url, opciones, intentos = 3) {
+    let ultimaResp;
+    for (let i = 0; i < intentos; i++) {
+      try {
+        ultimaResp = await fetch(url, opciones);
+        if (ultimaResp.ok) return ultimaResp;
+      } catch (e) {}
+      if (i < intentos - 1) await dormir(400 * (i + 1));
+    }
+    return ultimaResp;
+  }
+
   try {
     const cid = encodeURIComponent(clientId);
     const [empresaResp, miembrosResp, facturasResp, eventosResp, usersResp] = await Promise.all([
-      fetch(`${trukiUrl}/rest/v1/truki_empresa?id=eq.${cid}&select=*`, { headers: trukiHeaders }),
-      fetch(`${trukiUrl}/rest/v1/truki_client_members?client_id=eq.${cid}&select=user_id,rol,nombre_completo,puede_emitir_facturas,puede_anular_facturas,puede_emitir_gastos,puede_borrar_gastos,puede_generar_informes`, { headers: trukiHeaders }),
-      fetch(`${trukiUrl}/rest/v1/truki_invoices?client_id=eq.${cid}&select=id,tipo,serie,numero,fecha,cliente_nombre,total,estado,estado_cobro,creado_en&order=creado_en.desc&limit=30`, { headers: trukiHeaders }),
-      fetch(`${trukiUrl}/rest/v1/truki_events?client_id=eq.${cid}&select=tipo_evento,actor_email,detalle,creado_en&order=creado_en.desc&limit=20`, { headers: trukiHeaders }),
-      fetch(`${trukiUrl}/auth/v1/admin/users?per_page=1000`, { headers: trukiHeaders })
+      fetchConReintentos(`${trukiUrl}/rest/v1/truki_empresa?id=eq.${cid}&select=*`, { headers: trukiHeaders }),
+      fetchConReintentos(`${trukiUrl}/rest/v1/truki_client_members?client_id=eq.${cid}&select=user_id,rol,nombre_completo,puede_emitir_facturas,puede_anular_facturas,puede_emitir_gastos,puede_borrar_gastos,puede_generar_informes`, { headers: trukiHeaders }),
+      fetchConReintentos(`${trukiUrl}/rest/v1/truki_invoices?client_id=eq.${cid}&select=id,tipo,serie,numero,fecha,cliente_nombre,total,estado,estado_cobro,creado_en&order=creado_en.desc&limit=30`, { headers: trukiHeaders }),
+      fetchConReintentos(`${trukiUrl}/rest/v1/truki_events?client_id=eq.${cid}&select=tipo_evento,actor_email,detalle,creado_en&order=creado_en.desc&limit=20`, { headers: trukiHeaders }),
+      fetchConReintentos(`${trukiUrl}/auth/v1/admin/users?per_page=1000`, { headers: trukiHeaders })
     ]);
-    if (!empresaResp.ok || !miembrosResp.ok || !facturasResp.ok || !eventosResp.ok || !usersResp.ok) {
+    if (!empresaResp || !empresaResp.ok || !miembrosResp || !miembrosResp.ok || !facturasResp || !facturasResp.ok || !eventosResp || !eventosResp.ok || !usersResp || !usersResp.ok) {
       return { statusCode: 200, body: JSON.stringify({ ok: false, reason: 'supabase_error' }) };
     }
 

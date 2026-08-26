@@ -62,16 +62,36 @@ exports.handler = async function (event) {
     trukiHeaders.Authorization = `Bearer ${trukiKey}`;
   }
 
+  // Los proyectos Supabase en pausa/con poco tráfico a veces tardan en
+  // "despertar" (cold start) y la primera petición justo después de un
+  // despliegue nuevo puede fallar sin motivo real — se reintenta un par de
+  // veces con una pequeña espera antes de rendirse, en vez de dar
+  // supabase_error a la primera.
+  const dormir = ms => new Promise(r => setTimeout(r, ms));
+  async function fetchConReintentos(url, opciones, intentos = 3) {
+    let ultimaResp;
+    for (let i = 0; i < intentos; i++) {
+      try {
+        ultimaResp = await fetch(url, opciones);
+        if (ultimaResp.ok) return ultimaResp;
+      } catch (e) {
+        // fallo de red puro (no HTTP) — se trata igual que un !ok, se reintenta
+      }
+      if (i < intentos - 1) await dormir(400 * (i + 1));
+    }
+    return ultimaResp;
+  }
+
   try {
     const [empresasResp, miembrosResp, facturasResp, eventosResp, usersResp, configResp] = await Promise.all([
-      fetch(`${trukiUrl}/rest/v1/truki_empresa?select=id,nombre,nif,email_empresa,dpa_aceptado_en,dpa_aceptado_por,created_at&order=created_at.asc`, { headers: trukiHeaders }),
-      fetch(`${trukiUrl}/rest/v1/truki_client_members?select=user_id,client_id,rol`, { headers: trukiHeaders }),
-      fetch(`${trukiUrl}/rest/v1/truki_invoices?select=client_id,tipo,total,estado,creado_en`, { headers: trukiHeaders }),
-      fetch(`${trukiUrl}/rest/v1/truki_events?tipo_evento=eq.error_cliente&select=client_id,creado_en,detalle&order=creado_en.desc&limit=500`, { headers: trukiHeaders }),
-      fetch(`${trukiUrl}/auth/v1/admin/users?per_page=1000`, { headers: trukiHeaders }),
-      fetch(`${trukiUrl}/rest/v1/truki_config?id=eq.1&select=declaracion_responsable_software,updated_at`, { headers: trukiHeaders })
+      fetchConReintentos(`${trukiUrl}/rest/v1/truki_empresa?select=id,nombre,nif,email_empresa,dpa_aceptado_en,dpa_aceptado_por,created_at&order=created_at.asc`, { headers: trukiHeaders }),
+      fetchConReintentos(`${trukiUrl}/rest/v1/truki_client_members?select=user_id,client_id,rol`, { headers: trukiHeaders }),
+      fetchConReintentos(`${trukiUrl}/rest/v1/truki_invoices?select=client_id,tipo,total,estado,creado_en`, { headers: trukiHeaders }),
+      fetchConReintentos(`${trukiUrl}/rest/v1/truki_events?tipo_evento=eq.error_cliente&select=client_id,creado_en,detalle&order=creado_en.desc&limit=500`, { headers: trukiHeaders }),
+      fetchConReintentos(`${trukiUrl}/auth/v1/admin/users?per_page=1000`, { headers: trukiHeaders }),
+      fetchConReintentos(`${trukiUrl}/rest/v1/truki_config?id=eq.1&select=declaracion_responsable_software,updated_at`, { headers: trukiHeaders })
     ]);
-    if (!empresasResp.ok || !miembrosResp.ok || !facturasResp.ok || !eventosResp.ok || !usersResp.ok) {
+    if (!empresasResp || !empresasResp.ok || !miembrosResp || !miembrosResp.ok || !facturasResp || !facturasResp.ok || !eventosResp || !eventosResp.ok || !usersResp || !usersResp.ok) {
       return { statusCode: 200, body: JSON.stringify({ ok: false, reason: 'supabase_error' }) };
     }
 
