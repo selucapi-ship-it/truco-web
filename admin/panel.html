@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
   :root{
     --bg:#16151a; --bg-panel:#201f24; --bg-card:#2b2a30;
@@ -125,10 +126,6 @@
   .stat-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),var(--blue));opacity:.7;}
   .stat-card .n{font-family:var(--font-d);font-size:1.55rem;font-weight:800;line-height:1;color:var(--white);}
   .stat-card .l{font-family:var(--font-m);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);margin-top:6px;}
-  #export-csv-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 13px;border-radius:8px;font-size:.78rem;cursor:pointer;white-space:nowrap;transition:border-color .15s,color .15s;}
-  #export-csv-btn:hover{border-color:var(--blue);color:var(--blue-light);}
-  #new-client-btn{background:var(--blue);border:none;color:#fff;padding:8px 13px;border-radius:8px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;}
-  #new-client-btn:hover{opacity:.9;}
   #new-client-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;padding:20px;}
   .new-client-box{width:100%;max-width:440px;max-height:85vh;overflow-y:auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:16px;padding:26px;box-shadow:var(--shadow-card);}
   .new-client-box h2{font-family:var(--font-d);font-size:1.2rem;margin:0 0 6px;}
@@ -137,7 +134,6 @@
   .new-client-solutions{display:flex;flex-wrap:wrap;gap:8px 14px;margin:4px 0 18px;font-size:.78rem;color:var(--grey);}
   .new-client-solutions label{display:flex;align-items:center;gap:6px;cursor:pointer;}
   .new-client-solutions input{width:auto;margin:0;}
-  .new-client-box button.submit{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:10px;font-size:.84rem;font-weight:600;cursor:pointer;width:100%;}
 
   /* ── FICHA PANEL ── */
   .ficha-panel{padding:20px 22px;}
@@ -149,9 +145,6 @@
   .ficha-row{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;padding:9px 0;border-bottom:1px solid var(--grey-line);}
   .ficha-row:last-of-type{border-bottom:none;}
   .ficha-row span:first-child{color:var(--grey);}
-  .card-action-btn{display:block;width:100%;margin-top:12px;padding:10px;border-radius:9px;font-size:.8rem;font-weight:600;cursor:pointer;text-align:center;transition:background .15s,border-color .15s;}
-  .card-action-btn.blue{background:none;border:1px solid var(--blue);color:var(--blue-light);}
-  .card-action-btn.blue:hover{background:var(--blue-dim);}
   select#status-select,select#stage-select{background:var(--bg-card);border:1px solid var(--grey-line);color:var(--white);font-family:var(--font-m);font-size:.75rem;padding:5px 8px;border-radius:6px;}
   .churn-risk-badge{display:inline-block;background:rgba(239,68,68,.12);border:1px solid var(--red);color:var(--red);font-size:.7rem;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:8px;}
   .renewal-badge{display:inline-block;background:rgba(217,168,63,.14);border:1px solid var(--gold);color:var(--gold);font-size:.7rem;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:8px;margin-left:6px;}
@@ -176,19 +169,8 @@
   .add-note{display:flex;gap:8px;margin-top:10px;}
   .add-note input{flex:1;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.82rem;outline:none;}
   .add-note input:focus{border-color:var(--blue);}
-  .add-note button{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:0 16px;font-size:.8rem;font-weight:600;cursor:pointer;}
 
-  /* ── DAR DE BAJA / REACTIVAR / RGPD (zona de gestión) ── */
-  #deactivate-client-btn,#reactivate-client-btn,#rgpd-btn{
-    width:100%;background:none;padding:10px;border-radius:9px;font-size:.8rem;font-weight:600;
-    cursor:pointer;transition:background .15s;margin-top:0;
-  }
-  #deactivate-client-btn{border:1px solid var(--red);color:var(--red);}
-  #deactivate-client-btn:hover{background:rgba(239,68,68,.1);}
-  #reactivate-client-btn{border:1px solid var(--green);color:var(--green);}
-  #reactivate-client-btn:hover{background:rgba(34,197,94,.1);}
-  #rgpd-btn{border:1px solid var(--grey-line);color:var(--grey);}
-  #rgpd-btn:hover{border-color:var(--gold);color:var(--gold-light);}
+  /* ── DAR DE BAJA / REACTIVAR / RGPD (zona de gestión) — usan .btn ── */
   .card.danger > button + button{margin-top:10px;}
 
   /* ── TAREAS / AUTOMATIZACIONES (ficha) ── */
@@ -200,7 +182,6 @@
   .add-task{display:flex;gap:8px;margin-top:8px;}
   .add-task input{flex:1;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:8px 10px;color:var(--white);font-size:.8rem;outline:none;}
   .add-task input:focus{border-color:var(--blue);}
-  .add-task button{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:0 14px;font-size:.78rem;font-weight:600;cursor:pointer;}
   .empty-mini{color:var(--grey);font-size:.78rem;padding:6px 0;}
 
   /* ── EQUIPO (overlay) ── */
@@ -215,12 +196,10 @@
   .team-close{float:right;background:none;border:none;color:var(--grey);font-size:1.1rem;cursor:pointer;}
   .add-staff{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--grey-line);}
   .add-staff input,.add-staff select{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.84rem;outline:none;}
-  .add-staff button{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:9px;font-size:.82rem;font-weight:600;cursor:pointer;}
 
   /* ── ACCESOS (ficha, founder-only) ── */
   .add-access{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
   .add-access input,.add-access select{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.84rem;outline:none;}
-  .add-access button{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:9px;font-size:.82rem;font-weight:600;cursor:pointer;}
   .del-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);border-radius:6px;padding:3px 9px;font-size:.7rem;cursor:pointer;flex-shrink:0;}
   .del-btn:hover{border-color:var(--red);color:var(--red);}
 
@@ -286,7 +265,6 @@
   .quotes-sidebar{border-right:1px solid var(--grey-line);padding:24px 18px;max-height:85vh;overflow-y:auto;}
   .quotes-sidebar h2{font-family:var(--font-d);font-size:1.1rem;margin:0 0 14px;}
   .quotes-sidebar input{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:8px 10px;color:var(--white);font-size:.78rem;outline:none;}
-  .quotes-sidebar button.new{width:100%;background:var(--blue);border:none;border-radius:8px;color:#fff;padding:9px;font-size:.8rem;font-weight:600;cursor:pointer;margin-bottom:14px;}
   .quote-row{padding:10px 8px;border-radius:8px;cursor:pointer;font-size:.78rem;margin-bottom:4px;}
   .quote-row:hover{background:rgba(255,255,255,.04);}
   .quote-row.active{background:rgba(47,123,255,.12);}
@@ -303,16 +281,85 @@
   .quote-line .ql-price{font-family:var(--font-m);color:var(--grey);white-space:nowrap;}
   .quote-add-row{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
   .quote-add-row select,.quote-add-row input{flex:1;min-width:120px;}
-  .quote-add-row button{background:var(--blue);border:none;border-radius:8px;color:#fff;padding:9px 12px;font-size:.78rem;font-weight:600;cursor:pointer;white-space:nowrap;}
   .quote-total{text-align:right;font-size:1rem;font-weight:700;color:var(--white);margin:14px 0;}
-  .quotes-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
-  .quotes-actions button{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 13px;border-radius:8px;font-size:.78rem;cursor:pointer;}
-  .quotes-actions button:hover{border-color:var(--blue);color:var(--blue-light);}
-  .quotes-actions button.primary{background:var(--blue);border:none;color:#fff;}
-  .quotes-actions button.primary:hover{opacity:.9;}
+  .quotes-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px;}
   #prices-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
   #prices-btn:hover{border-color:var(--gold);color:var(--gold);}
+  #fiscal-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
+  #fiscal-btn:hover{border-color:var(--gold);color:var(--gold);}
   #prices-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+  #fiscal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+  .periodo-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:9px 16px;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;}
+  .periodo-btn:hover{border-color:var(--gold);color:var(--gold);}
+  .periodo-btn.active{border-color:var(--blue);color:var(--white);background:var(--blue-dim);}
+
+  /* ── Fiscalidad: campos con etiqueta propia, más legibles que placeholder-only ── */
+  .fiscal-card{border-radius:14px;padding:22px 24px;margin-bottom:22px;background:linear-gradient(165deg,var(--bg-card),var(--bg-panel));border:1px solid var(--grey-line);border-left-width:4px;}
+  .fiscal-card.ingresos{border-left-color:var(--green);}
+  .fiscal-card.gastos{border-left-color:#e8993a;}
+  .fiscal-card.periodo{border-left-color:var(--blue);}
+  .fiscal-card.declaraciones{border-left-color:var(--gold);}
+  .fiscal-card-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;flex-wrap:wrap;gap:6px;}
+  .fiscal-card-head h3{font-family:var(--font-d);font-size:1.15rem;margin:0;color:var(--white);}
+  .fiscal-card-head span{font-family:var(--font-m);font-size:.72rem;color:var(--grey);}
+  .fiscal-field-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:14px;}
+  @media(max-width:900px){.fiscal-field-row{grid-template-columns:1fr 1fr;}}
+  @media(max-width:560px){.fiscal-field-row{grid-template-columns:1fr;}}
+  .fiscal-field{display:flex;flex-direction:column;gap:6px;}
+  .fiscal-field label{font-family:var(--font-m);font-size:.66rem;letter-spacing:.05em;text-transform:uppercase;color:var(--grey);}
+  .fiscal-field input,.fiscal-field select{color-scheme:dark;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:10px 12px;color:var(--white);font-family:var(--font-b,inherit);font-size:.9rem;outline:none;width:100%;}
+  .fiscal-field input:focus,.fiscal-field select:focus{border-color:var(--blue);}
+  .fiscal-field input::placeholder{color:#6b6b78;}
+  .fiscal-summary-heading{font-family:var(--font-m);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);margin:18px 0 10px;}
+  .fiscal-summary-heading:first-child{margin-top:0;}
+  .fiscal-stat-card{position:relative;background:linear-gradient(165deg,var(--bg-card),var(--bg-panel));border:1px solid var(--grey-line);border-radius:12px;padding:16px 18px;overflow:hidden;}
+  .fiscal-stat-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;opacity:.8;}
+  .fiscal-stat-card.iva::before{background:var(--blue);}
+  .fiscal-stat-card.irpf::before{background:var(--gold);}
+  .fiscal-stat-card .n{font-family:var(--font-d);font-size:1.7rem;font-weight:800;line-height:1.1;color:var(--white);}
+  .fiscal-stat-card .l{font-family:var(--font-b,inherit);font-size:.76rem;color:var(--grey);margin-top:6px;}
+  .fiscal-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media(max-width:700px){.fiscal-stats-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:480px){.fiscal-stats-grid{grid-template-columns:1fr;}}
+  .fiscal-caveat{background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.3);border-radius:10px;padding:12px 16px;color:var(--grey);font-size:.82rem;line-height:1.55;margin-bottom:22px;}
+  .fiscal-caveat b{color:var(--gold);}
+  .fiscal-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:13px 4px;border-bottom:1px solid var(--grey-line);font-size:.85rem;flex-wrap:wrap;}
+  .fiscal-row:last-child{border-bottom:none;}
+  .fiscal-row .fr-main{color:var(--white);font-weight:600;}
+  .fiscal-row .fr-meta{color:var(--grey);font-size:.75rem;font-family:var(--font-m);margin-top:2px;}
+  .fiscal-row .fr-nums{display:flex;gap:18px;font-family:var(--font-m);font-size:.78rem;color:var(--grey);white-space:nowrap;}
+  .fiscal-row .fr-nums b{color:var(--white);}
+  .fiscal-row.clickable{cursor:pointer;transition:background .12s;border-radius:8px;}
+  .fiscal-row.clickable:hover{background:rgba(255,255,255,.04);}
+
+  /* ── Sistema de botones unificado — antes cada sección tenía el suyo, o
+     directamente <button class="new"> sin ningún estilo propio (Precios,
+     Ajustes, TruKi). .btn es ahora el sistema de todo el panel; .fiscal-btn
+     se mantiene como alias para no tocar el HTML de Fiscalidad ya en uso. ── */
+  .btn,.fiscal-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--blue);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-family:var(--font-b);font-size:.88rem;font-weight:700;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s,color .15s;box-shadow:0 4px 14px rgba(47,123,255,.28);white-space:nowrap;}
+  .btn:hover,.fiscal-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(47,123,255,.38);}
+  .btn.gold,.fiscal-btn.gold{background:linear-gradient(135deg,#f2c14e,var(--gold));color:#1a1206;box-shadow:0 4px 14px rgba(217,168,63,.3);}
+  .btn.gold:hover,.fiscal-btn.gold:hover{box-shadow:0 6px 20px rgba(217,168,63,.4);}
+  .btn.green,.fiscal-btn.green{background:var(--green);color:#08240f;box-shadow:0 4px 14px rgba(34,197,94,.28);}
+  .btn.green:hover,.fiscal-btn.green:hover{box-shadow:0 6px 20px rgba(34,197,94,.38);}
+  .btn.danger{background:var(--red);color:#fff;box-shadow:0 4px 14px rgba(239,68,68,.28);}
+  .btn.danger:hover{box-shadow:0 6px 20px rgba(239,68,68,.38);}
+  .btn.ghost,.fiscal-btn.ghost{background:var(--bg-card);border:1.5px solid var(--grey-line);color:var(--white);box-shadow:none;}
+  .btn.ghost:hover,.fiscal-btn.ghost:hover{border-color:var(--blue);color:var(--blue-light);transform:none;box-shadow:none;}
+  .btn.ghost.danger{border-color:rgba(239,68,68,.4);color:#ff8a80;}
+  .btn.ghost.danger:hover{border-color:var(--red);color:var(--red);background:rgba(239,68,68,.08);}
+  .btn.sm{padding:8px 14px;font-size:.78rem;border-radius:8px;gap:5px;box-shadow:none;}
+  .btn.sm:hover{transform:none;}
+  .btn.block{display:flex;width:100%;}
+  .btn:disabled,.fiscal-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
+
+  /* ── Aviso de fecha tope ── */
+  .fiscal-deadline-banner{display:flex;align-items:center;gap:14px;border-radius:12px;padding:16px 20px;margin-bottom:22px;font-size:.9rem;border:1px solid;}
+  .fiscal-deadline-banner.ok{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3);color:var(--white);}
+  .fiscal-deadline-banner.warn{background:rgba(217,168,63,.1);border-color:rgba(217,168,63,.4);color:var(--white);}
+  .fiscal-deadline-banner.urgent{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.45);color:var(--white);}
+  .fiscal-deadline-banner b{font-family:var(--font-d);}
+  .fiscal-deadline-banner .fdb-icon{font-size:1.4rem;flex-shrink:0;}
   .prices-card{background:linear-gradient(165deg,var(--bg-card),var(--bg-panel));border:1px solid var(--grey-line);border-radius:14px;padding:20px 22px;margin-bottom:20px;}
   .prices-card-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;}
   .prices-card-head h3{font-family:var(--font-d);font-size:1.02rem;margin:0;color:var(--white);}
@@ -328,7 +375,6 @@
   .prices-table input{width:100px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:7px;padding:7px 22px 7px 9px;color:var(--white);font-size:.82rem;text-align:right;outline:none;transition:border-color .15s;}
   .prices-table input:focus{border-color:var(--blue);}
   .prices-table input.price-changed{border-color:var(--gold);background:rgba(217,168,63,.08);}
-  .prices-card button.new{margin-top:4px;}
   .offer-form{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px;}
   .offer-form select,.offer-form input{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:7px;padding:8px 10px;color:var(--white);font-size:.8rem;outline:none;width:100%;}
   .offer-form select:focus,.offer-form input:focus{border-color:var(--blue);}
@@ -376,6 +422,7 @@
       <button id="quotes-btn" onclick="openQuotesOverlay()" style="display:none;">Presupuestos</button>
       <button id="prices-btn" onclick="openPricesOverlay()" style="display:none;">Precios</button>
       <button id="team-btn" onclick="openTeamOverlay()" style="display:none;">Equipo</button>
+      <button id="fiscal-btn" onclick="openFiscalOverlay()" style="display:none;">Fiscalidad</button>
       <button id="logout-btn" onclick="doLogout()">Cerrar sesión</button>
     </div>
   </div>
@@ -406,6 +453,11 @@
           <h3>Próximas renovaciones (30 días)</h3>
           <table class="stats-table" id="stats-renewals-table"></table>
         </div>
+        <div class="stats-card wide">
+          <h3>Actividad reciente del chat y del asistente de voz</h3>
+          <p style="color:var(--grey);font-size:.78rem;margin:-8px 0 12px;">Cada conversación queda con nombre y motivo — ya no hay entradas anónimas. Si aparece sin nombre a un cliente ya existente, es que ha escrito antes de identificarse.</p>
+          <div id="recent-activity-list"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -423,7 +475,7 @@
           <option value="readonly">Readonly</option>
           <option value="founder">Founder</option>
         </select>
-        <button onclick="addStaff()">Añadir al equipo</button>
+        <button class="btn sm" onclick="addStaff()">Añadir al equipo</button>
       </div>
       <div id="staff-list"></div>
     </div>
@@ -448,7 +500,7 @@
       </select>
       <p id="nc-tier-hint" style="color:var(--grey);font-size:.74rem;margin:-4px 0 10px;"></p>
       <div class="new-client-solutions" id="nc-solutions"></div>
-      <button class="submit" onclick="crearClienteManual()">Dar de alta</button>
+      <button class="btn block" onclick="crearClienteManual()">Dar de alta</button>
     </div>
   </div>
 
@@ -456,7 +508,7 @@
     <div class="quotes-layout">
       <div class="quotes-sidebar">
         <h2>Presupuestos</h2>
-        <button class="new" onclick="nuevoPresupuesto()">+ Nuevo presupuesto</button>
+        <button class="btn block" style="margin-bottom:14px;" onclick="nuevoPresupuesto()">+ Nuevo presupuesto</button>
         <input type="text" id="quotes-search" placeholder="Buscar por número (P0001) o nombre..." oninput="renderQuotesList()" style="width:100%;margin-bottom:8px;">
         <select id="quotes-sort" onchange="renderQuotesList()" style="width:100%;margin-bottom:10px;">
           <option value="numero_desc">Ordenar: más reciente (nº)</option>
@@ -485,7 +537,7 @@
 
           <div class="quote-add-row">
             <select id="q-tier-select"></select>
-            <button onclick="anadirLineaTier()">Añadir Departamento</button>
+            <button class="btn sm" onclick="anadirLineaTier()">Añadir Departamento</button>
           </div>
           <div id="quote-included-wrap" style="display:none;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:10px 12px;margin-bottom:8px;">
             <div id="quote-included-title" style="font-size:.76rem;color:var(--gold);margin-bottom:6px;"></div>
@@ -493,7 +545,7 @@
           </div>
           <div class="quote-add-row">
             <select id="q-catalogo-select"></select>
-            <button onclick="anadirLineaCatalogo()">Añadir automatización extra</button>
+            <button class="btn sm ghost" onclick="anadirLineaCatalogo()">Añadir automatización extra</button>
           </div>
           <p id="q-catalogo-hint" style="color:var(--grey);font-size:.72rem;margin:-4px 0 8px;"></p>
           <div class="quote-add-row">
@@ -502,15 +554,15 @@
             <label style="display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--grey);white-space:nowrap;">
               <input type="checkbox" id="q-custom-desde" style="width:auto;"> Es "desde"
             </label>
-            <button onclick="anadirLineaCustom()">Añadir línea</button>
+            <button class="btn sm ghost" onclick="anadirLineaCustom()">Añadir línea</button>
           </div>
         </div>
 
         <div class="quotes-actions">
-          <button class="primary" onclick="guardarPresupuesto()">Guardar</button>
-          <button onclick="verPdfPresupuesto()">Ver PDF</button>
-          <button onclick="descargarPdfPresupuesto()">Descargar PDF</button>
-          <button onclick="enviarPresupuestoEmail()">Enviar por email</button>
+          <button class="btn sm" onclick="guardarPresupuesto()">Guardar</button>
+          <button class="btn sm ghost" onclick="verPdfPresupuesto()">Ver PDF</button>
+          <button class="btn sm ghost" onclick="descargarPdfPresupuesto()">Descargar PDF</button>
+          <button class="btn sm ghost" onclick="enviarPresupuestoEmail()">Enviar por email</button>
           <select id="q-estado" onchange="cambiarEstadoPresupuesto()" style="max-width:150px;">
             <option value="borrador">Borrador</option>
             <option value="enviado">Enviado</option>
@@ -518,8 +570,8 @@
             <option value="rechazado">Rechazado</option>
             <option value="pagado">Pagado</option>
           </select>
-          <button onclick="generarEnlacePago()">Generar enlace de pago</button>
-          <button id="quote-delete-btn" onclick="eliminarPresupuesto()" style="display:none;border-color:var(--red);color:var(--red);">Eliminar</button>
+          <button class="btn sm ghost" onclick="generarEnlacePago()">Generar enlace de pago</button>
+          <button id="quote-delete-btn" class="btn sm ghost danger" onclick="eliminarPresupuesto()" style="display:none;">Eliminar</button>
         </div>
         <div id="quote-pago-url" class="empty-mini" style="margin-top:8px;"></div>
       </div>
@@ -538,7 +590,7 @@
           <span>Start™ · Basic™ · Lite™ · Pro™</span>
         </div>
         <div id="tiers-editor"></div>
-        <button class="new" onclick="guardarPreciosTiers()">Guardar Departamentos</button>
+        <button class="btn" onclick="guardarPreciosTiers()">Guardar Departamentos</button>
       </div>
 
       <div class="prices-card">
@@ -547,7 +599,7 @@
           <span id="prices-count"></span>
         </div>
         <div id="prices-editor"></div>
-        <button class="new" onclick="guardarPreciosCatalogo()">Guardar servicios</button>
+        <button class="btn" onclick="guardarPreciosCatalogo()">Guardar servicios</button>
       </div>
 
       <div class="prices-card">
@@ -576,8 +628,130 @@
           <input type="date" id="offer-desde">
           <input type="date" id="offer-hasta">
         </div>
-        <button class="new" onclick="crearOferta()">Crear oferta</button>
+        <button class="btn green" onclick="crearOferta()">Crear oferta</button>
         <div id="offers-list" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="fiscal-overlay">
+    <div class="truki-box" style="max-width:1080px;">
+      <button class="stats-close" onclick="closeFiscalOverlay()">✕</button>
+      <h2>Fiscalidad</h2>
+      <p style="color:var(--grey);font-size:.85rem;margin:0 0 18px;max-width:720px;">Modelo 130 (IRPF) y Modelo 303 (IVA), calculados solos cada trimestre a partir de tus ingresos y gastos reales.</p>
+
+      <div class="fiscal-caveat">
+        <b>Esto es una calculadora, no un asesor.</b> Los ingresos de Stripe se añaden solos; revisa igualmente la lista antes de presentar. Las categorías de gasto y los porcentajes deducibles son orientativos — verifica el % de suministros de vivienda y qué cuenta como deducible con la normativa AEAT vigente o una consulta puntual, ya que no usas gestor.
+      </div>
+
+      <div id="fiscal-deadline-banner-wrap"></div>
+
+      <div class="fiscal-card periodo">
+        <div class="fiscal-card-head">
+          <h3>Periodo</h3>
+          <span id="fiscal-periodo-label"></span>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;margin-bottom:18px;">
+          <div class="fiscal-field" style="width:100px;">
+            <label for="fiscal-anio">Año</label>
+            <input type="number" id="fiscal-anio" onchange="elegirTrimestreFiscal(fiscalTrimestre)">
+          </div>
+          <button class="periodo-btn" id="periodo-btn-1" onclick="elegirTrimestreFiscal(1)">T1 · Ene-Mar</button>
+          <button class="periodo-btn" id="periodo-btn-2" onclick="elegirTrimestreFiscal(2)">T2 · Abr-Jun</button>
+          <button class="periodo-btn" id="periodo-btn-3" onclick="elegirTrimestreFiscal(3)">T3 · Jul-Sep</button>
+          <button class="periodo-btn" id="periodo-btn-4" onclick="elegirTrimestreFiscal(4)">T4 · Oct-Dic</button>
+          <button class="fiscal-btn gold" style="margin-left:auto;" onclick="exportFiscalExcel()">📥 Generar Excel del trimestre</button>
+        </div>
+
+        <div class="fiscal-summary-heading">IVA — Modelo 303 (este trimestre)</div>
+        <div class="fiscal-stats-grid" id="fiscal-summary-iva"></div>
+
+        <div class="fiscal-summary-heading">IRPF — Modelo 130 (acumulado del año)</div>
+        <div class="fiscal-stats-grid" id="fiscal-summary-irpf"></div>
+      </div>
+
+      <div class="fiscal-card ingresos">
+        <div class="fiscal-card-head">
+          <h3>💶 Ingresos</h3>
+          <span id="fiscal-income-count"></span>
+        </div>
+        <div class="fiscal-field-row">
+          <div class="fiscal-field"><label for="fi-fecha">Fecha</label><input type="date" id="fi-fecha"></div>
+          <div class="fiscal-field"><label for="fi-concepto">Concepto</label><input type="text" id="fi-concepto" placeholder="Ej. Transferencia cliente X"></div>
+          <div class="fiscal-field"><label for="fi-total">Total € (con IVA)</label><input type="number" id="fi-total" placeholder="0,00"></div>
+          <div class="fiscal-field"><label for="fi-iva-pct">% IVA</label><input type="number" id="fi-iva-pct" value="21"></div>
+        </div>
+        <button class="fiscal-btn green" onclick="addFiscalIncomeManual()">＋ Añadir ingreso manual</button>
+        <div id="fiscal-income-list" style="margin-top:14px;"></div>
+      </div>
+
+      <div class="fiscal-card gastos">
+        <div class="fiscal-card-head">
+          <h3>🧾 Gastos</h3>
+          <span id="fiscal-expense-count"></span>
+        </div>
+        <div class="fiscal-field-row">
+          <div class="fiscal-field"><label for="fe-fecha">Fecha</label><input type="date" id="fe-fecha"></div>
+          <div class="fiscal-field"><label for="fe-concepto">Concepto</label><input type="text" id="fe-concepto" placeholder="Ej. Suscripción Supabase"></div>
+          <div class="fiscal-field">
+            <label for="fe-categoria">Categoría</label>
+            <select id="fe-categoria" onchange="onFiscalCategoriaChange()">
+              <option value="software_saas">Software/SaaS</option>
+              <option value="suministros_vivienda">Suministros de vivienda</option>
+              <option value="equipos_informaticos">Equipos informáticos</option>
+              <option value="marketing">Marketing</option>
+              <option value="comisiones_bancarias">Comisiones bancarias/Stripe</option>
+              <option value="formacion">Formación</option>
+              <option value="cuota_autonomo">Cuota de autónomo/Seg. Social</option>
+              <option value="gestoria_puntual">Gestoría puntual</option>
+              <option value="material_oficina">Material de oficina</option>
+              <option value="desplazamientos_vehiculo">Desplazamientos/vehículo</option>
+              <option value="otros">Otros</option>
+            </select>
+          </div>
+          <div class="fiscal-field"><label for="fe-base">Base €</label><input type="number" id="fe-base" placeholder="0,00"></div>
+        </div>
+        <div id="fiscal-categoria-caveat" style="display:none;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.35);border-radius:9px;padding:10px 14px;font-size:.8rem;color:var(--grey);margin-bottom:14px;line-height:1.5;"></div>
+        <div class="fiscal-field-row">
+          <div class="fiscal-field"><label for="fe-iva-pct">% IVA</label><input type="number" id="fe-iva-pct" value="21"></div>
+          <div class="fiscal-field"><label for="fe-deducible-pct">% deducible</label><input type="number" id="fe-deducible-pct" value="100"></div>
+          <div class="fiscal-field"><label for="fe-proveedor">Proveedor</label><input type="text" id="fe-proveedor" placeholder="Opcional"></div>
+          <div class="fiscal-field"><label for="fe-recibo">Foto del recibo</label><input type="file" id="fe-recibo" accept="image/*" onchange="handleReceiptPhoto(this)"></div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="fiscal-btn" onclick="addFiscalExpense()">＋ Añadir gasto</button>
+          <button class="fiscal-btn ghost" onclick="saveFiscalExpenseAsTemplate()">💾 Guardar como gasto fijo</button>
+        </div>
+        <div id="fiscal-expense-list" style="margin-top:14px;"></div>
+      </div>
+
+      <div class="fiscal-card gastos" style="border-left-color:var(--grey-line);">
+        <div class="fiscal-card-head">
+          <h3>🔁 Gastos fijos (plantillas)</h3>
+          <span id="fiscal-template-count"></span>
+        </div>
+        <p style="color:var(--grey);font-size:.82rem;margin:-6px 0 14px;">Los que se repiten cada mes — cuota de autónomo, Supabase, Netlify... Guarda uno desde el formulario de arriba, y luego un clic los añade todos como gastos de este mes, sin duplicar los que ya estén.</p>
+        <button class="fiscal-btn ghost" onclick="applyFiscalTemplatesThisMonth()">▶ Aplicar gastos fijos de este mes</button>
+        <div id="fiscal-template-list" style="margin-top:14px;"></div>
+      </div>
+
+      <div class="fiscal-card declaraciones">
+        <div class="fiscal-card-head">
+          <h3>📋 Declaraciones presentadas</h3>
+          <span>Registra el resultado real cada vez que presentes en la Sede</span>
+        </div>
+        <div class="fiscal-field-row">
+          <div class="fiscal-field">
+            <label for="fd-modelo">Modelo</label>
+            <select id="fd-modelo"><option value="130">Modelo 130</option><option value="303">Modelo 303</option></select>
+          </div>
+          <div class="fiscal-field"><label for="fd-resultado">Resultado €</label><input type="number" id="fd-resultado" placeholder="+ a ingresar, − a devolver"></div>
+          <div class="fiscal-field"><label for="fd-fecha-presentacion">Fecha de presentación</label><input type="date" id="fd-fecha-presentacion"></div>
+          <div class="fiscal-field"><label for="fd-notas">Notas</label><input type="text" id="fd-notas" placeholder="Opcional"></div>
+        </div>
+        <button class="fiscal-btn" onclick="saveFiscalDeclaracion()">✓ Guardar declaración de este trimestre</button>
+        <p style="color:var(--grey);font-size:.76rem;margin:14px 0 4px;">Historial — toca cualquiera para volver a ver ese trimestre completo</p>
+        <div id="fiscal-declarations-list"></div>
       </div>
     </div>
   </div>
@@ -597,7 +771,7 @@
           <input type="password" id="settings-new-pass" placeholder="Contraseña nueva" autocomplete="new-password" style="flex:1;min-width:180px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.85rem;outline:none;">
           <input type="password" id="settings-new-pass-repeat" placeholder="Repítela" autocomplete="new-password" style="flex:1;min-width:180px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.85rem;outline:none;">
         </div>
-        <button class="new" style="margin-top:12px;" onclick="cambiarPassword()">Cambiar contraseña</button>
+        <button class="btn" style="margin-top:12px;" onclick="cambiarPassword()">Cambiar contraseña</button>
         <div class="login-error" id="settings-pass-error"></div>
       </div>
 
@@ -623,7 +797,7 @@
         <p style="color:var(--grey);font-size:.78rem;margin:0 0 12px;line-height:1.5;">Certifica que TruKi (el software) cumple el RD 1007/2023 — es la MISMA para todas las empresas cliente, la controlas solo tú aquí. Ningún cliente puede editarla ni verla editable desde su propia app. Mientras contenga la palabra "RELLENAR", TruKi bloquea la emisión de facturas reales para todos los clientes a la vez (los presupuestos siguen funcionando).</p>
         <textarea id="truki-declaracion-texto" style="width:100%;min-height:260px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:12px;color:var(--white);font-size:.82rem;font-family:monospace;line-height:1.5;outline:none;"></textarea>
         <p style="color:var(--grey);font-size:.72rem;margin:6px 0 12px;" id="truki-declaracion-meta"></p>
-        <button class="new" onclick="guardarDeclaracionTruki()">Guardar declaración</button>
+        <button class="btn" onclick="guardarDeclaracionTruki()">Guardar declaración</button>
       </div>
     </div>
   </div>
@@ -635,8 +809,8 @@
         <h2>Clientes</h2>
         <div style="display:flex;gap:8px;">
           <input type="text" id="search" placeholder="Buscar por nombre, email, negocio..." oninput="renderClients()">
-          <button id="new-client-btn" onclick="openNewClientOverlay()" style="display:none;">+ Nuevo cliente</button>
-          <button id="export-csv-btn" onclick="exportCSV()">⬇ CSV</button>
+          <button id="new-client-btn" class="btn sm" onclick="openNewClientOverlay()" style="display:none;">+ Nuevo cliente</button>
+          <button id="export-csv-btn" class="btn sm ghost" onclick="exportCSV()">⬇ CSV</button>
         </div>
       </div>
       <div class="filters-bar">
@@ -665,7 +839,7 @@
           <option value="interacciones_desc">Más interacciones</option>
           <option value="nombre_asc">Nombre A-Z</option>
         </select>
-        <button id="filters-clear" onclick="clearFilters()">Limpiar</button>
+        <button id="filters-clear" class="btn sm ghost" onclick="clearFilters()">Limpiar</button>
       </div>
       <div id="loading-state">Cargando...</div>
       <div id="empty-state" style="display:none;">Todavía no hay ningún cliente registrado.</div>
@@ -729,7 +903,7 @@
           <div class="ficha-row"><span>Fecha de alta</span><span id="ficha-alta"></span></div>
           <div class="ficha-row"><span>Fecha de baja</span><span id="ficha-baja"></span></div>
           <div class="ficha-row"><span>Acceso al portal</span><span id="ficha-portal-status"></span></div>
-          <button id="invite-portal-btn" onclick="invitePortal()" class="card-action-btn blue">Invitar al portal</button>
+          <button id="invite-portal-btn" onclick="invitePortal()" class="btn sm block ghost" style="margin-top:12px;">Invitar al portal</button>
         </div>
 
         <div class="card">
@@ -737,7 +911,7 @@
           <div id="ficha-tasks"><div class="empty-mini">Cargando…</div></div>
           <div class="add-task">
             <input type="text" id="task-title-input" placeholder="Nueva tarea (ej: cambiar horario del bot)">
-            <button onclick="addTask()">Añadir</button>
+            <button class="btn sm" onclick="addTask()">Añadir</button>
           </div>
         </div>
 
@@ -764,7 +938,7 @@
             <label style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--white);">
               <input type="checkbox" id="banking-activa" style="width:auto;"> Domiciliación activa
             </label>
-            <button onclick="guardarDomiciliacion()">Guardar</button>
+            <button class="btn sm" onclick="guardarDomiciliacion()">Guardar</button>
           </div>
           <div id="banking-fecha" class="empty-mini" style="margin-top:8px;"></div>
         </div>
@@ -778,7 +952,7 @@
               <option value="view">Ver</option>
               <option value="edit">Editar</option>
             </select>
-            <button onclick="grantAccess()">Conceder acceso</button>
+            <button class="btn sm" onclick="grantAccess()">Conceder acceso</button>
           </div>
         </div>
 
@@ -786,16 +960,16 @@
           <div class="card-tag">Historial</div>
           <div class="add-note">
             <input type="text" id="note-input" placeholder="Añadir nota (ej: llamé, no contestó)...">
-            <button onclick="addManualNote()">Añadir</button>
+            <button class="btn sm" onclick="addManualNote()">Añadir</button>
           </div>
           <div id="ficha-timeline" style="margin-top:14px;"></div>
         </div>
 
         <div class="card danger" id="danger-card">
           <div class="card-tag">Zona de gestión</div>
-          <button id="deactivate-client-btn" onclick="deactivateClient()" style="display:none;">Dar de baja</button>
-          <button id="reactivate-client-btn" onclick="reactivateClient()" style="display:none;">Reactivar cliente</button>
-          <button id="rgpd-btn" onclick="requestRgpdErasure()" style="display:none;">Solicitar borrado RGPD</button>
+          <button id="deactivate-client-btn" class="btn block danger" onclick="deactivateClient()" style="display:none;">Dar de baja</button>
+          <button id="reactivate-client-btn" class="btn block green" onclick="reactivateClient()" style="display:none;">Reactivar cliente</button>
+          <button id="rgpd-btn" class="btn block ghost" onclick="requestRgpdErasure()" style="display:none;">Solicitar borrado RGPD</button>
         </div>
       </div>
     </div>
@@ -938,13 +1112,13 @@ async function renderMfaStatus() {
     wrap.innerHTML = `
       <div style="margin-bottom:12px;"><span class="status-badge status-cliente">Activada</span></div>
       <p style="color:var(--grey);font-size:.85rem;margin-bottom:18px;max-width:480px;">Cada vez que inicies sesión, además de la contraseña te pedirá el código de tu app autenticadora. Si cambias de móvil o pierdes acceso a ella, desactívala aquí y vuelve a configurarla con el nuevo dispositivo.</p>
-      <button style="border:1px solid var(--red);color:var(--red);background:none;border-radius:8px;padding:10px 16px;cursor:pointer;font-size:.84rem;" onclick="desactivarMfa('${verified.id}')">Desactivar verificación en dos pasos</button>
+      <button class="btn sm ghost danger" onclick="desactivarMfa('${verified.id}')">Desactivar verificación en dos pasos</button>
     `;
   } else {
     wrap.innerHTML = `
       <div style="margin-bottom:12px;"><span class="status-badge status-descartado">Sin activar</span></div>
       <p style="color:var(--grey);font-size:.85rem;margin-bottom:18px;max-width:480px;">Añade una app autenticadora (Google Authenticator, Authy, 1Password...) para que entrar al panel pida también un código de tu móvil, además de la contraseña.</p>
-      <button class="new" onclick="iniciarEnrolamientoMfa()">Activar verificación en dos pasos</button>
+      <button class="btn" onclick="iniciarEnrolamientoMfa()">Activar verificación en dos pasos</button>
       <div id="mfa-enroll-wrap" style="margin-top:20px;"></div>
     `;
   }
@@ -966,7 +1140,7 @@ async function iniciarEnrolamientoMfa() {
       </div>
       <div style="margin-top:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
         <input type="text" id="mfa-enroll-code" placeholder="2. Código de 6 dígitos" inputmode="numeric" maxlength="6" style="max-width:180px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.85rem;">
-        <button onclick="confirmarEnrolamientoMfa('${data.id}')">Verificar y activar</button>
+        <button class="btn sm" onclick="confirmarEnrolamientoMfa('${data.id}')">Verificar y activar</button>
       </div>
       <div class="login-error" id="mfa-enroll-error"></div>
     </div>
@@ -1023,6 +1197,7 @@ async function checkFounderStatus() {
   document.getElementById('new-client-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('quotes-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('prices-btn').style.display = isFounder ? 'inline-block' : 'none';
+  document.getElementById('fiscal-btn').style.display = isFounder ? 'inline-block' : 'none';
 }
 
 function openTeamOverlay() {
@@ -1238,6 +1413,324 @@ async function openPricesOverlay() {
 }
 function closePricesOverlay() {
   document.getElementById('prices-overlay').style.display = 'none';
+}
+
+// ── Fiscalidad ──────────────────────────────────────────────────────────
+let fiscalAnio = new Date().getFullYear();
+let fiscalTrimestre = Math.ceil((new Date().getMonth() + 1) / 3);
+let fiscalLastResumen = null;
+
+function eurFromCents(c) {
+  return ((c || 0) / 100).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+}
+
+function openFiscalOverlay() {
+  document.getElementById('fiscal-overlay').style.display = 'block';
+  document.getElementById('fiscal-anio').value = fiscalAnio;
+  elegirTrimestreFiscal(fiscalTrimestre);
+  renderFiscalDeadlineBanner();
+  loadFiscalTemplatesList();
+}
+
+// ── Fecha tope del trimestre en curso — Modelo 130 y 303 comparten plazos:
+// 1-20 abril/julio/octubre, 1-30 enero (del T4 del año anterior).
+function nextFiscalDeadline() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const windows = [
+    { open: new Date(y, 0, 1), close: new Date(y, 0, 30, 23, 59), label: 'Modelo 130 y 303 del T4 (año anterior)' },
+    { open: new Date(y, 3, 1), close: new Date(y, 3, 20, 23, 59), label: 'Modelo 130 y 303 del T1' },
+    { open: new Date(y, 6, 1), close: new Date(y, 6, 20, 23, 59), label: 'Modelo 130 y 303 del T2' },
+    { open: new Date(y, 9, 1), close: new Date(y, 9, 20, 23, 59), label: 'Modelo 130 y 303 del T3' },
+    { open: new Date(y + 1, 0, 1), close: new Date(y + 1, 0, 30, 23, 59), label: 'Modelo 130 y 303 del T4' },
+  ];
+  for (const w of windows) {
+    if (now <= w.close) return w;
+  }
+  return windows[windows.length - 1];
+}
+
+function renderFiscalDeadlineBanner() {
+  const wrap = document.getElementById('fiscal-deadline-banner-wrap');
+  const w = nextFiscalDeadline();
+  const now = new Date();
+  const dentroDePlazo = now >= w.open && now <= w.close;
+  const diasHastaCierre = Math.ceil((w.close - now) / 86400000);
+  const diasHastaApertura = Math.ceil((w.open - now) / 86400000);
+
+  let cls = 'ok', icon = '🗓️', texto;
+  if (dentroDePlazo) {
+    cls = diasHastaCierre <= 5 ? 'urgent' : 'warn';
+    icon = diasHastaCierre <= 5 ? '⚠️' : '📌';
+    texto = `<b>${w.label}</b> — plazo abierto ahora mismo, quedan <b>${diasHastaCierre} día${diasHastaCierre === 1 ? '' : 's'}</b> para presentar (hasta el ${w.close.toLocaleDateString('es-ES')}).`;
+  } else {
+    texto = `Próxima fecha tope: <b>${w.label}</b>, se abre el ${w.open.toLocaleDateString('es-ES')} (en ${diasHastaApertura} días).`;
+  }
+  wrap.innerHTML = `<div class="fiscal-deadline-banner ${cls}"><span class="fdb-icon">${icon}</span><span>${texto}</span></div>`;
+}
+
+function onFiscalCategoriaChange() {
+  const cat = document.getElementById('fe-categoria').value;
+  const box = document.getElementById('fiscal-categoria-caveat');
+  if (cat === 'desplazamientos_vehiculo') {
+    box.style.display = 'block';
+    box.innerHTML = '⚠️ La gasolina y demás gastos de un coche de uso <b>mixto</b> (personal + trabajo) generalmente <b>no son deducibles en el IRPF</b>, salvo que el vehículo tenga afectación exclusiva o pertenezcas a una lista cerrada de actividades (transportistas, autoescuelas, taxistas, agentes comerciales colegiados, vigilancia). En IVA sí hay una presunción del 50% aunque el uso sea mixto. Pon el % deducible con esto en cuenta, o consúltalo antes de presentar.';
+  } else {
+    box.style.display = 'none';
+  }
+}
+function closeFiscalOverlay() {
+  document.getElementById('fiscal-overlay').style.display = 'none';
+}
+
+function elegirTrimestreFiscal(t) {
+  fiscalTrimestre = t;
+  fiscalAnio = parseInt(document.getElementById('fiscal-anio').value, 10) || fiscalAnio;
+  document.querySelectorAll('.periodo-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('periodo-btn-' + t);
+  if (btn) btn.classList.add('active');
+  loadFiscalResumen();
+  loadFiscalDeclarationsList();
+}
+
+async function loadFiscalResumen() {
+  const ivaGrid = document.getElementById('fiscal-summary-iva');
+  const irpfGrid = document.getElementById('fiscal-summary-irpf');
+  const { data, error } = await sb.rpc('founder_fiscal_resumen', { p_anio: fiscalAnio, p_trimestre: fiscalTrimestre });
+  if (error || !data) {
+    ivaGrid.innerHTML = '<div class="empty-mini">No se pudo cargar el resumen fiscal.</div>';
+    irpfGrid.innerHTML = '';
+    return;
+  }
+  fiscalLastResumen = data;
+  document.getElementById('fiscal-periodo-label').textContent = data.periodo ? (data.periodo.desde + ' → ' + data.periodo.hasta) : '';
+
+  ivaGrid.innerHTML = [
+    { l: 'IVA devengado', n: eurFromCents(data.iva_devengado_cents) },
+    { l: 'IVA deducible', n: eurFromCents(data.iva_deducible_cents) },
+    { l: 'Resultado Modelo 303', n: eurFromCents(data.resultado_303_cents) },
+  ].map(s => `<div class="fiscal-stat-card iva"><div class="n">${s.n}</div><div class="l">${s.l}</div></div>`).join('');
+
+  irpfGrid.innerHTML = [
+    { l: 'Rendimiento neto acumulado', n: eurFromCents(data.rendimiento_neto_acumulado_cents) },
+    { l: '20% acumulado', n: eurFromCents(data.pago_fraccionado_20pct_acumulado_cents) },
+    { l: 'Ya declarado en trimestres previos', n: eurFromCents(data.pagos_fraccionados_declarados_previos_cents) },
+    { l: 'Pendiente este trimestre', n: eurFromCents(data.pago_fraccionado_pendiente_130_cents) },
+  ].map(s => `<div class="fiscal-stat-card irpf"><div class="n">${s.n}</div><div class="l">${s.l}</div></div>`).join('');
+
+  const ingresos = data.ingresos_lista || [];
+  document.getElementById('fiscal-income-count').textContent = ingresos.length + ' entradas';
+  document.getElementById('fiscal-income-list').innerHTML = ingresos.map(i => `
+    <div class="fiscal-row">
+      <div><div class="fr-main">${escapeHtml(i.concepto)}${i.anulado ? ' <span style="color:var(--red);">(anulado)</span>' : ''}</div>
+      <div class="fr-meta">${i.fecha} · ${i.origen}${i.cliente ? ' · ' + escapeHtml(i.cliente) : ''}</div></div>
+      <div class="fr-nums"><span>Base ${eurFromCents(i.base_cents)}</span><span>IVA ${eurFromCents(i.iva_cents)}</span><span><b>${eurFromCents(i.total_cents)}</b></span></div>
+    </div>`).join('') || '<div class="empty-mini">Sin ingresos en este trimestre.</div>';
+
+  const gastos = data.gastos_lista || [];
+  document.getElementById('fiscal-expense-count').textContent = gastos.length + ' entradas';
+  document.getElementById('fiscal-expense-list').innerHTML = gastos.map(e => `
+    <div class="fiscal-row">
+      <div><div class="fr-main">${escapeHtml(e.concepto)}</div>
+      <div class="fr-meta">${e.fecha} · ${e.categoria} · ${e.deducible_pct}% deducible${e.proveedor_nombre ? ' · ' + escapeHtml(e.proveedor_nombre) : ''}</div></div>
+      <div class="fr-nums"><span>Base ${eurFromCents(e.base_cents)}</span><span>IVA ${eurFromCents(e.iva_cents)}</span><span><b>${eurFromCents(e.total_cents)}</b></span></div>
+    </div>`).join('') || '<div class="empty-mini">Sin gastos en este trimestre.</div>';
+}
+
+async function addFiscalIncomeManual() {
+  const concepto = document.getElementById('fi-concepto').value.trim();
+  const totalEur = parseFloat(document.getElementById('fi-total').value || '0');
+  if (!concepto || !totalEur) { alert('Concepto y total son obligatorios.'); return; }
+  const payload = {
+    origen: 'manual',
+    fecha: document.getElementById('fi-fecha').value || new Date().toISOString().slice(0, 10),
+    concepto,
+    total_cents: Math.round(totalEur * 100),
+    iva_pct: parseFloat(document.getElementById('fi-iva-pct').value || '21'),
+  };
+  const { error } = await sb.from('fiscal_income').insert(payload);
+  if (error) { alert('No se pudo guardar el ingreso: ' + error.message); return; }
+  document.getElementById('fi-concepto').value = '';
+  document.getElementById('fi-total').value = '';
+  loadFiscalResumen();
+}
+
+let pendingReceiptBase64 = null;
+function handleReceiptPhoto(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const maxDim = 1200;
+      let w = img.width, h = img.height;
+      if (w > maxDim || h > maxDim) { const s = maxDim / Math.max(w, h); w = Math.round(w * s); h = Math.round(h * s); }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      pendingReceiptBase64 = canvas.toDataURL('image/jpeg', 0.7);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function addFiscalExpense() {
+  const concepto = document.getElementById('fe-concepto').value.trim();
+  const baseEur = parseFloat(document.getElementById('fe-base').value || '0');
+  if (!concepto || !baseEur) { alert('Concepto y base son obligatorios.'); return; }
+  const payload = {
+    fecha: document.getElementById('fe-fecha').value || new Date().toISOString().slice(0, 10),
+    concepto,
+    categoria: document.getElementById('fe-categoria').value,
+    importe_base_cents: Math.round(baseEur * 100),
+    iva_pct: parseFloat(document.getElementById('fe-iva-pct').value || '21'),
+    deducible_pct: parseFloat(document.getElementById('fe-deducible-pct').value || '100'),
+    proveedor_nombre: document.getElementById('fe-proveedor').value.trim() || null,
+    recibo_base64: pendingReceiptBase64,
+  };
+  const { error } = await sb.from('fiscal_expenses').insert(payload);
+  pendingReceiptBase64 = null;
+  document.getElementById('fe-recibo').value = '';
+  if (error) { alert('No se pudo guardar el gasto: ' + error.message); return; }
+  document.getElementById('fe-concepto').value = '';
+  document.getElementById('fe-base').value = '';
+  document.getElementById('fe-proveedor').value = '';
+  loadFiscalResumen();
+}
+
+async function saveFiscalExpenseAsTemplate() {
+  const concepto = document.getElementById('fe-concepto').value.trim();
+  const baseEur = parseFloat(document.getElementById('fe-base').value || '0');
+  if (!concepto || !baseEur) { alert('Rellena concepto y base antes de guardarlo como gasto fijo.'); return; }
+  const payload = {
+    concepto,
+    categoria: document.getElementById('fe-categoria').value,
+    importe_base_cents: Math.round(baseEur * 100),
+    iva_pct: parseFloat(document.getElementById('fe-iva-pct').value || '21'),
+    deducible_pct: parseFloat(document.getElementById('fe-deducible-pct').value || '100'),
+    proveedor_nombre: document.getElementById('fe-proveedor').value.trim() || null,
+  };
+  const { error } = await sb.from('fiscal_expense_templates').insert(payload);
+  if (error) { alert('No se pudo guardar la plantilla: ' + error.message); return; }
+  loadFiscalTemplatesList();
+}
+
+async function loadFiscalTemplatesList() {
+  const { data, error } = await sb.from('fiscal_expense_templates').select('*').order('concepto');
+  const box = document.getElementById('fiscal-template-list');
+  if (error) { box.innerHTML = '<div class="empty-mini">No se pudieron cargar los gastos fijos.</div>'; return; }
+  const templates = data || [];
+  document.getElementById('fiscal-template-count').textContent = templates.length + (templates.length === 1 ? ' plantilla' : ' plantillas');
+  box.innerHTML = templates.map(t => `
+    <div class="fiscal-row">
+      <div><div class="fr-main">${escapeHtml(t.concepto)}${t.activo ? '' : ' <span style="color:var(--grey);">(pausado)</span>'}</div>
+      <div class="fr-meta">${t.categoria}${t.proveedor_nombre ? ' · ' + escapeHtml(t.proveedor_nombre) : ''}</div></div>
+      <div class="fr-nums">
+        <span><b>${eurFromCents(t.importe_base_cents)}</b> + ${t.iva_pct}% IVA</span>
+        <button class="btn sm ghost" onclick="toggleFiscalTemplate('${t.id}', ${!t.activo})">${t.activo ? 'Pausar' : 'Reactivar'}</button>
+        <button class="btn sm ghost danger" onclick="deleteFiscalTemplate('${t.id}')">Eliminar</button>
+      </div>
+    </div>`).join('') || '<div class="empty-mini">Todavía no tienes ningún gasto fijo guardado.</div>';
+}
+
+async function toggleFiscalTemplate(id, activo) {
+  await sb.from('fiscal_expense_templates').update({ activo, updated_at: new Date().toISOString() }).eq('id', id);
+  loadFiscalTemplatesList();
+}
+
+async function deleteFiscalTemplate(id) {
+  if (!confirm('¿Eliminar este gasto fijo? Los gastos ya creados a partir de él no se tocan.')) return;
+  await sb.from('fiscal_expense_templates').delete().eq('id', id);
+  loadFiscalTemplatesList();
+}
+
+async function applyFiscalTemplatesThisMonth() {
+  const { data: templates, error } = await sb.from('fiscal_expense_templates').select('*').eq('activo', true);
+  if (error) { alert('No se pudieron leer los gastos fijos.'); return; }
+  if (!templates || !templates.length) { alert('No tienes ningún gasto fijo activo todavía. Guarda uno desde el formulario de gastos.'); return; }
+
+  const now = new Date();
+  const mesInicio = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0, 10);
+  const mesFin = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().slice(0, 10);
+
+  const { data: yaExisten } = await sb.from('fiscal_expenses')
+    .select('concepto').gte('fecha', mesInicio).lte('fecha', mesFin);
+  const conceptosYaAplicados = new Set((yaExisten || []).map(g => g.concepto));
+
+  const nuevos = templates
+    .filter(t => !conceptosYaAplicados.has(t.concepto))
+    .map(t => ({
+      fecha: new Date().toISOString().slice(0, 10),
+      concepto: t.concepto, categoria: t.categoria,
+      importe_base_cents: t.importe_base_cents, iva_pct: t.iva_pct, deducible_pct: t.deducible_pct,
+      proveedor_nombre: t.proveedor_nombre, proveedor_nif: t.proveedor_nif,
+    }));
+
+  if (!nuevos.length) { alert('Todos los gastos fijos ya están aplicados este mes — no se ha duplicado nada.'); return; }
+  const { error: insErr } = await sb.from('fiscal_expenses').insert(nuevos);
+  if (insErr) { alert('No se pudieron crear los gastos: ' + insErr.message); return; }
+  alert(nuevos.length + ' gasto(s) fijo(s) añadido(s) a este mes.');
+  loadFiscalResumen();
+}
+
+async function saveFiscalDeclaracion() {
+  const payload = {
+    anio: fiscalAnio, trimestre: fiscalTrimestre,
+    modelo: document.getElementById('fd-modelo').value,
+    resultado_cents: Math.round(parseFloat(document.getElementById('fd-resultado').value || '0') * 100),
+    fecha_presentacion: document.getElementById('fd-fecha-presentacion').value || new Date().toISOString().slice(0, 10),
+    notas: document.getElementById('fd-notas').value.trim() || null,
+  };
+  const { error } = await sb.from('fiscal_declarations').upsert(payload, { onConflict: 'anio,trimestre,modelo' });
+  if (error) { alert('No se pudo guardar la declaración: ' + error.message); return; }
+  document.getElementById('fd-resultado').value = '';
+  document.getElementById('fd-notas').value = '';
+  loadFiscalResumen();
+  loadFiscalDeclarationsList();
+}
+
+async function loadFiscalDeclarationsList() {
+  const { data } = await sb.from('fiscal_declarations').select('*').order('anio', { ascending: false }).order('trimestre');
+  document.getElementById('fiscal-declarations-list').innerHTML = (data || []).map(d => `
+    <div class="fiscal-row clickable" onclick="verFiscalDeclaracionHistorica(${d.anio}, ${d.trimestre})">
+      <div class="fr-main">Modelo ${d.modelo} · T${d.trimestre} ${d.anio}</div>
+      <div class="fr-nums"><b>${eurFromCents(d.resultado_cents)}</b> · presentado ${d.fecha_presentacion}</div>
+    </div>
+  `).join('') || '<div class="empty-mini">Nada declarado todavía.</div>';
+}
+
+function verFiscalDeclaracionHistorica(anio, trimestre) {
+  fiscalAnio = anio;
+  document.getElementById('fiscal-anio').value = anio;
+  elegirTrimestreFiscal(trimestre);
+}
+
+function exportFiscalExcel() {
+  if (!fiscalLastResumen) { alert('Espera a que cargue el resumen del trimestre.'); return; }
+  const d = fiscalLastResumen;
+  const eur = c => Math.round(c || 0) / 100;
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet([
+    { concepto: 'IVA devengado', importe: eur(d.iva_devengado_cents) },
+    { concepto: 'IVA deducible', importe: eur(d.iva_deducible_cents) },
+    { concepto: 'Resultado Modelo 303', importe: eur(d.resultado_303_cents) },
+    { concepto: 'Rendimiento neto acumulado (año)', importe: eur(d.rendimiento_neto_acumulado_cents) },
+    { concepto: '20% acumulado', importe: eur(d.pago_fraccionado_20pct_acumulado_cents) },
+    { concepto: 'Ya declarado trimestres previos (130)', importe: eur(d.pagos_fraccionados_declarados_previos_cents) },
+    { concepto: 'Pendiente Modelo 130', importe: eur(d.pago_fraccionado_pendiente_130_cents) },
+  ]), 'Resumen');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet((d.ingresos_lista || []).map(i => ({
+    fecha: i.fecha, concepto: i.concepto, origen: i.origen, cliente: i.cliente,
+    base: eur(i.base_cents), iva: eur(i.iva_cents), total: eur(i.total_cents), anulado: i.anulado
+  }))), 'Ingresos');
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet((d.gastos_lista || []).map(e => ({
+    fecha: e.fecha, concepto: e.concepto, categoria: e.categoria,
+    base: eur(e.base_cents), iva: eur(e.iva_cents), total: eur(e.total_cents),
+    deducible_pct: e.deducible_pct, proveedor: e.proveedor_nombre
+  }))), 'Gastos');
+  XLSX.writeFile(wb, `truco-fiscal-${d.anio}-T${d.trimestre}.xlsx`);
 }
 
 let tiersOriginal = {};
@@ -2475,6 +2968,32 @@ async function loadStats() {
   w('stats-renewals-table').innerHTML = renewals.length
     ? renewals.map(r => `<tr><td>${escapeHtml(r.nombre || '—')}${r.negocio ? ' · ' + escapeHtml(r.negocio) : ''}</td><td>${new Date(r.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}</td></tr>`).join('')
     : '<tr><td class="empty-mini">Ninguna en los próximos 30 días.</td></tr>';
+
+  loadRecentActivity();
+}
+
+// Actividad reciente del chat/voz — incluye interacciones sin cliente
+// vinculado todavía (client_id null), que antes no se veían en ningún sitio
+// del panel. "admin read interactions" ya permite leerlas todas sin RLS nueva.
+async function loadRecentActivity() {
+  const box = document.getElementById('recent-activity-list');
+  const { data, error } = await sb
+    .from('interactions')
+    .select('source, nota, created_at, client_id, clients(nombre, negocio)')
+    .order('created_at', { ascending: false })
+    .limit(40);
+  if (error || !data) { box.innerHTML = '<div class="empty-mini">No se pudo cargar la actividad reciente.</div>'; return; }
+
+  const sourceLabels = { chat: '💬 Chat', voice: '📞 Voz', manual: '📝 Manual', checkout: '💳 Compra', whatsapp: '💬 WhatsApp' };
+  box.innerHTML = data.map(i => {
+    const nombreCliente = i.clients && i.clients.nombre;
+    const negocio = i.clients && i.clients.negocio;
+    return `<div class="truki-row">
+      <div><div class="tr-name">${nombreCliente ? escapeHtml(nombreCliente) + (negocio ? ' · ' + escapeHtml(negocio) : '') : '<span style="color:var(--grey);">(sin identificar todavía)</span>'}</div>
+      <div class="tr-meta">${sourceLabels[i.source] || i.source} · ${new Date(i.created_at).toLocaleString('es-ES', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</div>
+      ${i.nota ? `<div style="color:var(--grey);font-size:.78rem;margin-top:4px;max-width:520px;">${escapeHtml(i.nota)}</div>` : ''}</div>
+    </div>`;
+  }).join('') || '<div class="empty-mini">Todavía no hay actividad registrada.</div>';
 }
 
 // Gráfico de barras hecho a mano en SVG — sin librería externa, coherente con

@@ -8,6 +8,11 @@
   # Sin esto, el escáner de secretos de Netlify bloquea el build al encontrarla ahí.
   SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL"
 
+[functions."fiscal-deadline-reminder"]
+  # Una vez por semana basta: solo crea en Google Calendar los eventos de plazo
+  # 130/303 que todavía no existan (es idempotente), no manda nada por su cuenta.
+  schedule = "0 8 * * 1"
+
 [[headers]]
   for = "/*"
   [headers.values]
