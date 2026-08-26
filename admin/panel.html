@@ -2992,11 +2992,23 @@ function renderTrukiDetalle(data) {
   const dpaOk = !!emp.dpa_aceptado_en;
   const detail = document.getElementById('truki-detail');
 
+  const PERMISO_LABELS = { puede_emitir_facturas: 'Emitir facturas', puede_anular_facturas: 'Anular facturas', puede_emitir_gastos: 'Emitir gastos', puede_borrar_gastos: 'Borrar gastos', puede_generar_informes: 'Ver informes' };
   const equipoHtml = data.equipo.length ? data.equipo.map(m => `
-    <div class="truki-row">
-      <div><div class="tr-name">${escapeHtml(m.email)}${m.rol === 'admin' ? ' (admin)' : ''}</div>
-      <div class="tr-meta">${m.activo ? 'Activo' : 'Baneado individualmente'}</div></div>
-      <span class="truki-status ${m.activo ? 'active' : 'suspended'}">${m.activo ? 'Activo' : 'Bloqueado'}</span>
+    <div class="truki-row" style="flex-direction:column;align-items:stretch;">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div><div class="tr-name">${escapeHtml(m.email)}${m.rol === 'admin' ? ' (admin)' : ''}</div>
+        <div class="tr-meta">${m.activo ? 'Activo' : 'Baneado individualmente'}</div></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;">
+          <span class="truki-status ${m.activo ? 'active' : 'suspended'}">${m.activo ? 'Activo' : 'Bloqueado'}</span>
+          <button class="btn sm ${m.activo ? 'ghost danger' : 'ghost'}" onclick="trukiMemberAction('${emp.id}','${m.user_id}','${m.activo ? 'banear_usuario' : 'desbanear_usuario'}')">${m.activo ? 'Banear' : 'Desbanear'}</button>
+          <button class="btn sm ghost" onclick="trukiMemberAction('${emp.id}','${m.user_id}','${m.rol === 'admin' ? 'quitar_admin' : 'hacer_admin'}')">${m.rol === 'admin' ? 'Quitar admin' : 'Hacer admin'}</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">
+        ${Object.entries(PERMISO_LABELS).map(([key, label]) => `
+          <button class="btn sm ${m[key] ? '' : 'ghost'}" style="padding:5px 10px;font-size:.7rem;" onclick="trukiMemberAction('${emp.id}','${m.user_id}','set_permiso','${key}',${!m[key]})">${m[key] ? '✓ ' : ''}${label}</button>
+        `).join('')}
+      </div>
     </div>`).join('') : '<div class="empty-mini">Sin usuarios vinculados.</div>';
 
   const facturasHtml = data.facturas.length ? data.facturas.map(f => `
@@ -3031,6 +3043,29 @@ function renderTrukiDetalle(data) {
         ? `<button class="btn green sm" onclick="trukiSuspenderReactivar('${emp.id}','reactivar')">▶ Reactivar todo el equipo</button>`
         : `<button class="btn danger sm" onclick="trukiSuspenderReactivar('${emp.id}','suspender')">⛔ Suspender todo el equipo</button>`}
       ${!dpaOk ? `<button class="btn sm ghost" onclick="trukiAceptarDpaManual('${emp.id}')">Marcar RGPD como aceptado</button>` : ''}
+      <button class="btn sm ghost" onclick="trukiToggleEditForm()">✎ Editar datos de la empresa</button>
+    </div>
+
+    <div id="truki-edit-form" style="display:none;margin-top:16px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:10px;padding:16px;">
+      <div class="fiscal-field-row" style="margin-bottom:10px;">
+        <div class="fiscal-field"><label>Nombre</label><input type="text" id="te-nombre" value="${escapeHtml(emp.nombre || '')}"></div>
+        <div class="fiscal-field"><label>NIF</label><input type="text" id="te-nif" value="${escapeHtml(emp.nif || '')}"></div>
+        <div class="fiscal-field"><label>Email empresa</label><input type="email" id="te-email" value="${escapeHtml(emp.email_empresa || '')}"></div>
+        <div class="fiscal-field"><label>Email informes</label><input type="email" id="te-email-informes" value="${escapeHtml(emp.email_informes || '')}"></div>
+      </div>
+      <div class="fiscal-field-row" style="margin-bottom:10px;">
+        <div class="fiscal-field"><label>IVA por defecto</label><input type="number" id="te-iva" value="${emp.iva_default ?? 21}"></div>
+        <div class="fiscal-field"><label>Precio/hora mano de obra</label><input type="number" id="te-precio-hora" value="${emp.precio_hora_mano_obra ?? 0}"></div>
+        <div class="fiscal-field"><label>Serie factura</label><input type="text" id="te-serie-factura" value="${escapeHtml(emp.serie_factura || 'A')}"></div>
+        <div class="fiscal-field"><label>Serie presupuesto</label><input type="text" id="te-serie-presupuesto" value="${escapeHtml(emp.serie_presupuesto || 'PRE')}"></div>
+      </div>
+      <div class="fiscal-field-row" style="margin-bottom:14px;">
+        <div class="fiscal-field"><label>Dirección</label><input type="text" id="te-direccion" value="${escapeHtml(emp.direccion || '')}"></div>
+        <div class="fiscal-field"><label>Código postal</label><input type="text" id="te-cp" value="${escapeHtml(emp.codigo_postal || '')}"></div>
+        <div class="fiscal-field"><label>Localidad</label><input type="text" id="te-localidad" value="${escapeHtml(emp.localidad || '')}"></div>
+        <div class="fiscal-field"><label>Provincia</label><input type="text" id="te-provincia" value="${escapeHtml(emp.provincia || '')}"></div>
+      </div>
+      <button class="btn sm" onclick="trukiGuardarEdicionEmpresa('${emp.id}')">Guardar cambios</button>
     </div>
 
     <div class="truki-section-title">Equipo</div>
@@ -3041,7 +3076,92 @@ function renderTrukiDetalle(data) {
 
     <div class="truki-section-title">Últimos eventos</div>
     ${eventosHtml}
+
+    <div class="truki-section-title" style="color:var(--red);">Zona de peligro</div>
+    <button class="btn sm danger" onclick="trukiEliminarEmpresa('${emp.id}','${escapeHtml(emp.nombre || '')}')">🗑 Eliminar esta empresa por completo</button>
   `;
+}
+
+function trukiToggleEditForm() {
+  const form = document.getElementById('truki-edit-form');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+async function trukiGuardarEdicionEmpresa(clientId) {
+  const campos = {
+    nombre: document.getElementById('te-nombre').value.trim(),
+    nif: document.getElementById('te-nif').value.trim() || null,
+    email_empresa: document.getElementById('te-email').value.trim() || null,
+    email_informes: document.getElementById('te-email-informes').value.trim() || null,
+    iva_default: Number(document.getElementById('te-iva').value || 21),
+    precio_hora_mano_obra: Number(document.getElementById('te-precio-hora').value || 0),
+    serie_factura: document.getElementById('te-serie-factura').value.trim() || 'A',
+    serie_presupuesto: document.getElementById('te-serie-presupuesto').value.trim() || 'PRE',
+    direccion: document.getElementById('te-direccion').value.trim() || null,
+    codigo_postal: document.getElementById('te-cp').value.trim() || null,
+    localidad: document.getElementById('te-localidad').value.trim() || null,
+    provincia: document.getElementById('te-provincia').value.trim() || null,
+  };
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch('/.netlify/functions/truki-client-action', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ client_id: clientId, accion: 'editar_empresa', campos })
+    });
+    const data = await resp.json();
+    if (!data.ok) { alert('No se pudo guardar (' + (data.reason || 'error') + ').'); return; }
+    toast('Datos de la empresa actualizados.');
+    await loadTrukiOverview();
+    abrirTrukiDetalle(clientId);
+  } catch (e) {
+    alert('Error de conexión.');
+  }
+}
+
+async function trukiMemberAction(clientId, userId, accion, permiso, valor) {
+  const confirmaciones = {
+    banear_usuario: '¿Banear a este usuario? No podrá entrar a TruKi hasta que lo desbanees.',
+    hacer_admin: '¿Hacer admin a este usuario?',
+    quitar_admin: '¿Quitarle el rol de admin a este usuario?'
+  };
+  if (confirmaciones[accion] && !confirm(confirmaciones[accion])) return;
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const body = { client_id: clientId, user_id: userId, accion };
+    if (accion === 'set_permiso') { body.permiso = permiso; body.valor = valor; }
+    const resp = await fetch('/.netlify/functions/truki-client-action', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify(body)
+    });
+    const data = await resp.json();
+    if (!data.ok) { alert('No se pudo aplicar (' + (data.reason || 'error') + ').'); return; }
+    abrirTrukiDetalle(clientId);
+  } catch (e) {
+    alert('Error de conexión.');
+  }
+}
+
+async function trukiEliminarEmpresa(clientId, nombre) {
+  const escrito = prompt(`Esto elimina "${nombre}" y todos sus datos de TruKi de forma permanente. Escribe el nombre exacto de la empresa para confirmar:`);
+  if (escrito !== nombre) { if (escrito !== null) alert('El nombre no coincide, no se ha eliminado nada.'); return; }
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch('/.netlify/functions/truki-client-action', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ client_id: clientId, accion: 'eliminar_empresa' })
+    });
+    const data = await resp.json();
+    if (!data.ok) { alert('No se pudo eliminar (' + (data.reason || 'error') + ').'); return; }
+    toast('Empresa eliminada.');
+    trukiSelectedId = null;
+    document.getElementById('truki-detail').innerHTML = '<div class="truki-empty-detail">Selecciona una empresa para ver su detalle, o crea una nueva.</div>';
+    await loadTrukiOverview();
+  } catch (e) {
+    alert('Error de conexión.');
+  }
 }
 
 async function trukiSuspenderReactivar(clientId, accion) {
