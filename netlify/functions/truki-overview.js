@@ -72,7 +72,12 @@ exports.handler = async function (event) {
       fetch(`${trukiUrl}/rest/v1/truki_config?id=eq.1&select=declaracion_responsable_software,updated_at`, { headers: trukiHeaders })
     ]);
     if (!empresasResp.ok || !miembrosResp.ok || !facturasResp.ok || !eventosResp.ok || !usersResp.ok) {
-      return { statusCode: 200, body: JSON.stringify({ ok: false, reason: 'supabase_error' }) };
+      // DEBUG TEMPORAL — quitar en cuanto TruKi cargue bien otra vez.
+      const debug = {};
+      for (const [name, resp] of [['empresas', empresasResp], ['miembros', miembrosResp], ['facturas', facturasResp], ['eventos', eventosResp], ['users', usersResp]]) {
+        if (!resp.ok) debug[name] = { status: resp.status, body: (await resp.text()).slice(0, 300) };
+      }
+      return { statusCode: 200, body: JSON.stringify({ ok: false, reason: 'supabase_error', debug }) };
     }
 
     const empresas = await empresasResp.json();
