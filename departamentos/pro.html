@@ -261,7 +261,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
       <a class="btn-primary" href="../pago.html?plan=arranque-pro">Contratar Pro™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </div>
-    <div class="necessity-note"><b>La web y las automatizaciones ya no se pagan aparte, van incluidas.</b> Es lo que hace posible este regalo: 12 meses de permanencia. Lo notas en cuanto combinas 3 o más herramientas (WhatsApp IA, reservas, web...) o cuando cada incidencia necesita respuesta con prioridad, no por orden de llegada.</div>
+    <div class="necessity-note"><b>La web y las automatizaciones ya no se pagan aparte, van incluidas.</b> Es lo que hace posible este regalo: tu primer año de Departamento va pagado por adelantado, no una cuota mensual que se cobre poco a poco. Lo notas en cuanto combinas 3 o más herramientas (WhatsApp IA, reservas, web...) o cuando cada incidencia necesita respuesta con prioridad, no por orden de llegada.</div>
     <div class="value-highlight">
       <div class="vh-eyebrow">Lo que incluye tu Departamento</div>
       <div class="vh-save">Web + 3 automatizaciones <b>incluidas en la cuota</b>, sin pagarlas aparte</div>
@@ -345,7 +345,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <tr><td>Web incluida</td><td class="cell-limit">No incluida</td><td><b>Web Profesional</b></td><td>Reacondicionada o nueva</td><td class="col-this"><b>Web Profesional</b></td></tr>
           <tr><td>Automatizaciones a elegir</td><td>1 a elegir</td><td>1 a elegir</td><td>2 a elegir</td><td class="col-this"><b>3 a elegir</b></td></tr>
           <tr><td>Automatizaciones mantenidas (rango)</td><td class="cell-limit">Hasta 2</td><td class="cell-limit">Hasta 2</td><td class="cell-limit">Hasta 3</td><td class="col-this"><b>Hasta 6</b></td></tr>
-          <tr><td>Permanencia</td><td>12 meses</td><td>12 meses</td><td>12 meses</td><td class="col-this">12 meses</td></tr>
+          <tr><td>Primer año incluido</td><td>Sí</td><td>Sí</td><td>Sí</td><td class="col-this">Sí</td></tr>
           <tr><td>Resolución de incidencias</td><td class="cell-limit">Por orden de llegada</td><td class="cell-limit">Por orden de llegada</td><td class="cell-limit">Por orden de llegada</td><td class="col-this"><b>Prioridad alta, &lt;24h</b></td></tr>
           <tr><td>Revisión de rendimiento</td><td class="cell-limit">—</td><td class="cell-limit">Salud técnica automática</td><td class="cell-limit">Mensual básica</td><td class="col-this"><b>Continua</b></td></tr>
           <tr><td>Reunión de seguimiento</td><td class="cell-limit">—</td><td class="cell-limit">—</td><td class="cell-limit">30 min/mes</td><td class="col-this"><b>45 min/mes + estrategia</b></td></tr>
@@ -399,7 +399,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Por qué hay permanencia de 12 meses? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Porque regalamos la Web Profesional + 3 automatizaciones desde el primer día — eso solo tiene sentido económico con un compromiso mínimo de 12 meses. Si buscas un compromiso más ligero, <a href="lite.html">Lite™</a>, <a href="basic.html">Basic™</a> o <a href="start.html">Start™</a> tienen la misma lógica pero con menos incluido de entrada.</p></div>
+        <div class="faq-a"><p>No es una permanencia al uso: tu primer año va pagado por adelantado (de una vez o con SeQura), y es ese pago el que nos permite regalarte la Web Profesional + 3 automatizaciones desde el primer día. Al terminar el año, sigues mes a mes si quieres, sin más compromiso. Si buscas un primer año todavía más ligero, <a href="lite.html">Lite™</a>, <a href="basic.html">Basic™</a> o <a href="start.html">Start™</a> tienen la misma lógica pero con menos incluido de entrada.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Cómo se paga? <span class="faq-icon">+</span></button>
@@ -414,7 +414,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="cta-inner">
       <div>
         <h2>Este es tu ecosistema tecnológico completo.</h2>
-        <p>Web + 3 automatizaciones a elegir, mantenimiento de hasta 6 y prioridad máxima — no hay nada más arriba. Pago único con 12% dto., o fracciona con SeQura. 12 meses de permanencia.</p>
+        <p>Web + 3 automatizaciones a elegir, mantenimiento de hasta 6 y prioridad máxima — no hay nada más arriba. Pago único con 12% dto., o fracciona con SeQura. Tu primer año va incluido, luego sigues mes a mes sin permanencia.</p>
       </div>
       <div class="cta-btns">
         <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>
@@ -458,17 +458,17 @@ setTimeout(function(){
 <script src="../founding-offer.js"></script>
 <script>
 function renderFoundingPricesPro(){
-  const mLite=currentPrice('lite'),mPro=currentPrice('pro');
-  const pagoUnicoPro=(Math.round(mPro*12*0.88*100)/100).toFixed(2).replace('.',',');
+  const p=annualPricing('pro');
+  const mLite=currentPrice('lite');
   const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
-  set('hp-main-pro',mPro+' €<sub>/mes</sub>');
-  set('hp-vat-pro','+ IVA · '+(mPro*1.21).toFixed(2).replace('.',',')+' €/mes con IVA');
-  set('hp-annual-pro','Pago único con 12% dto.: '+pagoUnicoPro+' € + IVA (sin facturación mensual directa) · o fracciona con SeQura · Permanencia 12 meses. Integración completa de tu web y tus automatizaciones, configuradas con los datos reales de tu negocio, y gestión de tu Departamento cada mes — incluidas.');
+  set('hp-main-pro',fmtEuro(p.total)+' €<sub>primer año, pago único</sub>');
+  set('hp-vat-pro',fmtEuro(p.totalIva)+' € con IVA · o fracciona con SeQura');
+  set('hp-annual-pro','Luego '+p.monthly+' €/mes + IVA, sin permanencia. Tu primer año ya incluye la integración completa de tu web y tus automatizaciones, configuradas con los datos reales de tu negocio, y la gestión de tu Departamento cada mes.');
   set('table-price-lite',mLite+' €');
-  set('table-price-pro',mPro+' €');
+  set('table-price-pro',p.monthly+' €');
   set('table-price-start',currentPrice('start')+' €');
   set('table-price-basic',currentPrice('basic')+' €');
-  set('faq-total-pro',pagoUnicoPro+'€');
+  set('faq-total-pro',fmtEuro(p.total)+'€');
   if(foundingActive('pro')){
     set('hp-founding-badge-pro','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT.pro+' de 10 plazas');
     set('hp-founding-old-pro','Lo mantienes para siempre · nuevos clientes después: '+STANDARD_PRICES.pro+'€/mes + IVA');

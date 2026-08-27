@@ -906,21 +906,18 @@ function renderFoundingPrices(){
   ARRANQUES.start.monthly=currentPrice('start');
   ARRANQUES.basic.monthly=currentPrice('basic');
   ['lite','pro','start','basic'].forEach(tier=>{
-    const m=ARRANQUES[tier].monthly;
-    const meses=ARRANQUES[tier].permanenciaMeses;
     // El precio que se ve primero es el real que se paga al empezar (año 1,
     // pago único con el 12% de dto. — misma fórmula que getActivePlan()),
     // no la cuota mensual que solo aplica a partir del segundo año.
-    const totalAnio1=Math.round(m*meses*0.88*100)/100;
-    const totalAnio1Fmt=totalAnio1.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2});
-    const ivaAnio1=(totalAnio1*1.21).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2});
+    const p=annualPricing(tier);
+    const m=p.monthly;
     const priceEl=document.getElementById('pc-price-'+tier);
     const vatEl=document.getElementById('pc-vat-'+tier);
     const afterEl=document.getElementById('pc-after-'+tier);
     const badgeEl=document.getElementById('pc-founding-badge-'+tier);
     const oldEl=document.getElementById('pc-founding-old-'+tier);
-    if(priceEl)priceEl.innerHTML=totalAnio1Fmt+' €<sub>primer año, pago único</sub>';
-    if(vatEl)vatEl.textContent=ivaAnio1+' € con IVA · o fracciona con SeQura';
+    if(priceEl)priceEl.innerHTML=fmtEuro(p.total)+' €<sub>primer año, pago único</sub>';
+    if(vatEl)vatEl.textContent=fmtEuro(p.totalIva)+' € con IVA · o fracciona con SeQura';
     if(afterEl)afterEl.textContent='Luego '+m+' €/mes + IVA, sin permanencia';
     if(badgeEl&&oldEl){
       if(foundingActive(tier)){
@@ -1341,7 +1338,7 @@ function getActivePlan(){
     const solLines=arr.freeSols===0?[]:solNames.length?solNames.map(n=>({l:n,v:'GRATIS',cls:'free'})):[{l:solWord+' a elegir',v:'Pendiente de elegir'}];
     const extraSols=selectedExtraSolutions.map(v=>CLOSED_PRICE_SOLUTIONS.find(x=>x.value===v)).filter(Boolean);
     const extraTotal=extraSols.reduce((s,x)=>s+x.price,0);
-    const extraLines=extraSols.map(x=>({l:'+ '+x.name+' (adicional)',v:x.price.toFixed(2).replace('.',',')+' € + IVA'}));
+    const extraLines=extraSols.map(x=>({l:'+ '+x.name+' (adicional)',v:fmtEuro(x.price)+' € + IVA'}));
     const isUnico=tierPaymentMode==='unico';
     let priceLines,totalCommitment,subPago;
     if(isUnico){
@@ -1349,17 +1346,17 @@ function getActivePlan(){
       const baseImponible=tot+extraTotal;const iva=baseImponible*0.21;
       totalCommitment=baseImponible+iva;
       subPago='Pago único';
-      priceLines=[{l:'Pago único ('+arr.permanenciaMeses+' meses, 12% dto.)',v:tot.toFixed(2).replace('.',',')+' €'}];
-      if(extraTotal>0)priceLines.push({l:'Automatizaciones adicionales, instalación única',v:extraTotal.toFixed(2).replace('.',',')+' €'});
-      priceLines.push({l:'IVA (21%)',v:iva.toFixed(2).replace('.',',')+' €'},{l:'Total con IVA',v:totalCommitment.toFixed(2).replace('.',',')+' €',total:true});
+      priceLines=[{l:'Pago único ('+arr.permanenciaMeses+' meses, 12% dto.)',v:fmtEuro(tot)+' €'}];
+      if(extraTotal>0)priceLines.push({l:'Automatizaciones adicionales, instalación única',v:fmtEuro(extraTotal)+' €'});
+      priceLines.push({l:'IVA (21%)',v:fmtEuro(iva)+' €'},{l:'Total con IVA',v:fmtEuro(totalCommitment)+' €',total:true});
     }else{
       const ivaM=arr.monthly*0.21;const totMes=arr.monthly+ivaM;
       const extraConIva=extraTotal*1.21;
       totalCommitment=totMes*arr.permanenciaMeses+extraConIva;
       subPago='Financiado con SeQura';
-      priceLines=[{l:'Cuota (vía SeQura)',v:arr.monthly.toFixed(2).replace('.',',')+' €'},{l:'IVA (21%)',v:ivaM.toFixed(2).replace('.',',')+' €'},{l:'Total / mes con IVA',v:totMes.toFixed(2).replace('.',',')+' €',total:true}];
-      if(extraTotal>0)priceLines.push({l:'+ Automatizaciones adicionales, pago único aparte',v:extraConIva.toFixed(2).replace('.',',')+' € con IVA'});
-      priceLines.push({l:'Compromiso total ('+arr.permanenciaMeses+' meses)',v:totalCommitment.toFixed(2).replace('.',',')+' €'});
+      priceLines=[{l:'Cuota (vía SeQura)',v:fmtEuro(arr.monthly)+' €'},{l:'IVA (21%)',v:fmtEuro(ivaM)+' €'},{l:'Total / mes con IVA',v:fmtEuro(totMes)+' €',total:true}];
+      if(extraTotal>0)priceLines.push({l:'+ Automatizaciones adicionales, pago único aparte',v:fmtEuro(extraConIva)+' € con IVA'});
+      priceLines.push({l:'Compromiso total ('+arr.permanenciaMeses+' meses)',v:fmtEuro(totalCommitment)+' €'});
     }
     const renewalMsg='Tu primer año de Departamento va incluido en este pago — no es una cuota que vayas abonando mes a mes esperando poder cancelar, ya es tuyo, y es lo que hace posible que la implantación completa vaya gratis. Por eso ese año no tiene reembolso si decides no usarlo. Pasado el año, sigues solo si quieres, mes a mes, sin ningún compromiso nuevo.';
     const auditSols=selectedAuditSolutions.map(v=>OPEN_PRICE_SOLUTIONS.find(x=>x.value===v)).filter(Boolean);

@@ -25,6 +25,29 @@ const STANDARD_PRICES = { start: 89, basic: 169, lite: 279, pro: 549 };
 function foundingActive(tier){ return FOUNDING_SPOTS_LEFT[tier] > 0; }
 function currentPrice(tier){ return foundingActive(tier) ? FOUNDING_PRICES[tier] : STANDARD_PRICES[tier]; }
 
+// Formato de precio único para toda la web: coma para los decimales, punto
+// para los miles (1.573,44) — no depende de Intl.toLocaleString('es-ES'),
+// que ha dado resultados inconsistentes entre navegadores (a veces sin el
+// punto de los miles). Antes cada página formateaba a mano con
+// .toFixed(2).replace('.',',') y ninguna agrupaba los miles.
+function fmtEuro(n){
+  const partes=Math.abs(n).toFixed(2).split('.');
+  const conMiles=partes[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  return (n<0?'-':'')+conMiles+','+partes[1];
+}
+
+// El precio real de un Departamento es el de su primer año: un bono anual
+// pagado por adelantado (de una vez, con 12% dto., o fraccionado con
+// SeQura) — nunca una cuota mensual que TRUCO cobre directamente durante
+// esos 12 meses. La renovación automática a partir del segundo año sí es
+// mensual, y es ese número el que se muestra como "luego X €/mes".
+function annualPricing(tier){
+  const monthly=currentPrice(tier);
+  const total=Math.round(monthly*12*0.88*100)/100;
+  const totalIva=Math.round(total*1.21*100)/100;
+  return { monthly, total, totalIva };
+}
+
 // Cada página que pinta un precio/badge de fundador registra aquí su propia
 // función de renderizado (empujándola a este array justo después de llamarla
 // la primera vez). Así, si el número real de Supabase llega después de ese
