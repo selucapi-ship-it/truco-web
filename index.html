@@ -1826,15 +1826,13 @@ function renderFoundingPricesHome(){
     if(priceEl)priceEl.innerHTML=fmtEuro(p.total)+' €<sub>primer año</sub>';
     if(vatEl)vatEl.textContent=fmtEuro(p.totalIva)+' € con IVA, pago único';
     if(afterEl)afterEl.textContent='Luego '+p.monthly+' €/mes + IVA, sin permanencia';
-    if(badgeEl&&oldEl){
+    if(oldEl)oldEl.innerHTML='';
+    if(badgeEl){
       if(foundingActive(tier)){
-        const std=STANDARD_PRICES[tier];
         const total=FOUNDING_SPOTS_TOTAL[tier];
         badgeEl.innerHTML='🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[tier]+' de '+total+' plazas';
-        oldEl.innerHTML='Lo mantienes para siempre · nuevos clientes después: '+std+'€/mes + IVA';
       }else{
         badgeEl.innerHTML='';
-        oldEl.innerHTML='';
       }
     }
   });

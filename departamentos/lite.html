@@ -69,6 +69,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .hp-founding-badge:empty{display:none;margin-bottom:0;}
 .hp-main{font-size:2.2rem;font-weight:700;font-family:var(--font-d);}
 .hp-main sub{font-size:.9rem;font-weight:500;color:var(--grey);}
+.hp-main .price-old{font-size:.5em;font-weight:500;color:var(--grey);text-decoration:line-through;margin-right:8px;}
 .hp-vat{font-size:.84rem;color:var(--grey);margin-top:2px;}
 .hp-annual{font-size:.84rem;color:var(--gold);margin-top:6px;}
 .hp-founding-old{font-size:.74rem;color:var(--grey);margin-top:6px;}
@@ -470,7 +471,9 @@ function renderFoundingPricesLite(){
   const p=annualPricing('lite');
   const mPro=currentPrice('pro');
   const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
-  set('hp-main-lite',fmtEuro(p.total)+' €<sub>primer año, pago único</sub>');
+  const esFundador=foundingActive('lite');
+  const tachado=esFundador?'<span class="price-old">'+fmtEuro(standardAnnualPricing('lite').total)+' €</span> ':'';
+  set('hp-main-lite',tachado+fmtEuro(p.total)+' €<sub>primer año, pago único</sub>');
   set('hp-vat-lite',fmtEuro(p.totalIva)+' € con IVA · o fracciona con SeQura');
   set('hp-annual-lite','Luego '+p.monthly+' €/mes + IVA, sin permanencia. Tu primer año ya incluye la integración completa de tu web y tus automatizaciones, configuradas con los datos reales de tu negocio, y la gestión de tu Departamento cada mes.');
   set('table-price-lite',p.monthly+' €');
@@ -478,9 +481,9 @@ function renderFoundingPricesLite(){
   set('table-price-start',currentPrice('start')+' €');
   set('table-price-basic',currentPrice('basic')+' €');
   set('faq-total-lite',fmtEuro(p.total)+'€');
-  if(foundingActive('lite')){
+  if(esFundador){
     set('hp-founding-badge-lite','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT.lite+' de 10 plazas');
-    set('hp-founding-old-lite','Lo mantienes para siempre · nuevos clientes después: '+STANDARD_PRICES.lite+'€/mes + IVA');
+    set('hp-founding-old-lite','Lo mantienes para siempre');
   }else{
     set('hp-founding-badge-lite','');
     set('hp-founding-old-lite','');

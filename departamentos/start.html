@@ -70,6 +70,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .hp-founding-badge:empty{display:none;margin-bottom:0;}
 .hp-main{font-size:2.2rem;font-weight:700;font-family:var(--font-d);}
 .hp-main sub{font-size:.9rem;font-weight:500;color:var(--grey);}
+.hp-main .price-old{font-size:.5em;font-weight:500;color:var(--grey);text-decoration:line-through;margin-right:8px;}
 .hp-vat{font-size:.84rem;color:var(--grey);margin-top:2px;}
 .hp-annual{font-size:.84rem;color:var(--gold);margin-top:6px;}
 .hp-founding-old{font-size:.74rem;color:var(--grey);margin-top:6px;}
@@ -451,7 +452,9 @@ function renderFoundingPricesBasic(){
   const p=annualPricing('start');
   const mElemental=currentPrice('basic'),mLite=currentPrice('lite'),mPro=currentPrice('pro');
   const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
-  set('hp-main-basic',fmtEuro(p.total)+' €<sub>primer año, pago único</sub>');
+  const esFundador=foundingActive('start');
+  const tachado=esFundador?'<span class="price-old">'+fmtEuro(standardAnnualPricing('start').total)+' €</span> ':'';
+  set('hp-main-basic',tachado+fmtEuro(p.total)+' €<sub>primer año, pago único</sub>');
   set('hp-vat-basic',fmtEuro(p.totalIva)+' € con IVA · o fracciona con SeQura');
   set('hp-annual-basic','Luego '+p.monthly+' €/mes + IVA, sin permanencia. Tu primer año ya incluye la integración completa de tu automatización, configurada con los datos reales de tu negocio, y la gestión de tu Departamento cada mes.');
   set('table-price-start',p.monthly+' €');
@@ -459,9 +462,9 @@ function renderFoundingPricesBasic(){
   set('table-price-lite',mLite+' €');
   set('table-price-pro',mPro+' €');
   set('faq-total-basic',fmtEuro(p.total)+'€');
-  if(foundingActive('start')){
+  if(esFundador){
     set('hp-founding-badge-basic','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT.start+' de '+FOUNDING_SPOTS_TOTAL.start+' plazas');
-    set('hp-founding-old-basic','Lo mantienes para siempre · nuevos clientes después: '+STANDARD_PRICES.start+'€/mes + IVA');
+    set('hp-founding-old-basic','Lo mantienes para siempre');
   }else{
     set('hp-founding-badge-basic','');
     set('hp-founding-old-basic','');

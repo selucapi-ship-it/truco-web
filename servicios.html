@@ -627,15 +627,13 @@ function renderFoundingPricesServicios(){
     if(priceEl)priceEl.innerHTML=fmtEuro(p.total)+' €<span style="font-size:.9rem;font-weight:500;color:var(--grey);">/1er año</span>';
     if(vatEl)vatEl.textContent=fmtEuro(p.totalIva)+' € con IVA, pago único · o fracciona con SeQura';
     if(afterEl)afterEl.textContent='Luego '+p.monthly+' €/mes + IVA, sin permanencia';
-    if(badgeEl&&oldEl){
+    if(oldEl)oldEl.innerHTML='';
+    if(badgeEl){
       if(foundingActive(tier)){
-        const std=STANDARD_PRICES[tier];
         const total=FOUNDING_SPOTS_TOTAL[tier];
         badgeEl.innerHTML='<span class="launch-tag">🏷 Precio de fundador</span> <span class="spots-left" style="color:var(--gold);font-weight:700;">Quedan '+FOUNDING_SPOTS_LEFT[tier]+' de '+total+' plazas</span>';
-        oldEl.innerHTML='Lo mantienes para siempre · nuevos clientes después: '+std+'€/mes + IVA';
       }else{
         badgeEl.innerHTML='';
-        oldEl.innerHTML='';
       }
     }
   });

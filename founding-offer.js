@@ -41,12 +41,16 @@ function fmtEuro(n){
 // SeQura) — nunca una cuota mensual que TRUCO cobre directamente durante
 // esos 12 meses. La renovación automática a partir del segundo año sí es
 // mensual, y es ese número el que se muestra como "luego X €/mes".
-function annualPricing(tier){
-  const monthly=currentPrice(tier);
+function annualPricingFor(monthly){
   const total=Math.round(monthly*12*0.88*100)/100;
   const totalIva=Math.round(total*1.21*100)/100;
   return { monthly, total, totalIva };
 }
+function annualPricing(tier){ return annualPricingFor(currentPrice(tier)); }
+// El mismo cálculo pero con el precio estándar (sin fundador) — para poder
+// tachar "lo que pagarías sin la oferta" al lado del precio real de fundador,
+// en vez de una frase aparte explicando el precio de otros clientes.
+function standardAnnualPricing(tier){ return annualPricingFor(STANDARD_PRICES[tier]); }
 
 // Cada página que pinta un precio/badge de fundador registra aquí su propia
 // función de renderizado (empujándola a este array justo después de llamarla
