@@ -259,8 +259,8 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <div class="hp-founding-badge" id="hp-founding-badge-basic"></div>
         <div class="hp-main" id="hp-main-basic"></div>
         <div class="hp-vat" id="hp-vat-basic"></div>
-        <div class="hp-founding-old" id="hp-founding-old-basic"></div>
         <div class="hp-annual" id="hp-annual-basic"></div>
+        <div class="hp-founding-old" id="hp-founding-old-basic"></div>
       </div>
       <a class="btn-primary" href="../pago.html?plan=arranque-start">Contratar Start™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </div>
@@ -475,7 +475,8 @@ function renderFoundingPricesBasic(){
   set('faq-total-basic',fmtEuro(p.total)+'€');
   if(esFundador){
     set('hp-founding-badge-basic','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT.start+' de '+FOUNDING_SPOTS_TOTAL.start+' plazas');
-    set('hp-founding-old-basic','Lo mantienes para siempre');
+    const stdStart=standardAnnualPricing('start');
+    set('hp-founding-old-basic','Si eres fundador, mantienes este precio para siempre. Si no, el precio estándar es '+stdStart.monthly+' €/mes ('+fmtEuro(stdStart.total)+' €/año).');
   }else{
     set('hp-founding-badge-basic','');
     set('hp-founding-old-basic','');

@@ -627,7 +627,6 @@ function renderFoundingPricesServicios(){
     if(priceEl)priceEl.innerHTML=fmtEuro(p.total)+' €<span style="font-size:.9rem;font-weight:500;color:var(--grey);">/1er año</span>';
     if(vatEl)vatEl.textContent=fmtEuro(p.totalIva)+' € con IVA, pago único · o fracciona con SeQura';
     if(afterEl)afterEl.textContent='Luego '+p.monthly+' €/mes + IVA, sin permanencia';
-    if(oldEl)oldEl.innerHTML='';
     if(badgeEl){
       if(foundingActive(tier)){
         const total=FOUNDING_SPOTS_TOTAL[tier];
@@ -636,6 +635,7 @@ function renderFoundingPricesServicios(){
         badgeEl.innerHTML='';
       }
     }
+    if(oldEl)oldEl.innerHTML='';
   });
 }
 renderFoundingPricesServicios();

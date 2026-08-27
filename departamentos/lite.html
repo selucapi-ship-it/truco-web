@@ -264,8 +264,8 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <div class="hp-founding-badge" id="hp-founding-badge-lite"></div>
         <div class="hp-main" id="hp-main-lite"></div>
         <div class="hp-vat" id="hp-vat-lite"></div>
-        <div class="hp-founding-old" id="hp-founding-old-lite"></div>
         <div class="hp-annual" id="hp-annual-lite"></div>
+        <div class="hp-founding-old" id="hp-founding-old-lite"></div>
       </div>
       <a class="btn-primary" href="../pago.html?plan=arranque-lite">Contratar Lite™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
     </div>
@@ -494,7 +494,8 @@ function renderFoundingPricesLite(){
   set('faq-total-lite',fmtEuro(p.total)+'€');
   if(esFundador){
     set('hp-founding-badge-lite','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT.lite+' de 10 plazas');
-    set('hp-founding-old-lite','Lo mantienes para siempre');
+    const stdLite=standardAnnualPricing('lite');
+    set('hp-founding-old-lite','Si eres fundador, mantienes este precio para siempre. Si no, el precio estándar es '+stdLite.monthly+' €/mes ('+fmtEuro(stdLite.total)+' €/año).');
   }else{
     set('hp-founding-badge-lite','');
     set('hp-founding-old-lite','');

@@ -1826,7 +1826,6 @@ function renderFoundingPricesHome(){
     if(priceEl)priceEl.innerHTML=fmtEuro(p.total)+' €<sub>primer año</sub>';
     if(vatEl)vatEl.textContent=fmtEuro(p.totalIva)+' € con IVA, pago único';
     if(afterEl)afterEl.textContent='Luego '+p.monthly+' €/mes + IVA, sin permanencia';
-    if(oldEl)oldEl.innerHTML='';
     if(badgeEl){
       if(foundingActive(tier)){
         const total=FOUNDING_SPOTS_TOTAL[tier];
@@ -1835,6 +1834,7 @@ function renderFoundingPricesHome(){
         badgeEl.innerHTML='';
       }
     }
+    if(oldEl)oldEl.innerHTML='';
   });
 }
 renderFoundingPricesHome();
