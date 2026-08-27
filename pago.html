@@ -1341,10 +1341,14 @@ function getActivePlan(){
     let priceLines,totalCommitment,subPago;
     if(isUnico){
       const totBase=arr.monthly*arr.permanenciaMeses;const tot=Math.round(totBase*0.88*100)/100;
+      const descuento=totBase-tot;
       const baseImponible=tot+extraTotal;const iva=baseImponible*0.21;
       totalCommitment=baseImponible+iva;
       subPago='Pago único';
-      priceLines=[{l:'Pago único ('+arr.permanenciaMeses+' meses, 12% dto.)',v:fmtEuro(tot)+' €'}];
+      priceLines=[
+        {l:arr.permanenciaMeses+' meses × '+arr.monthly+' €/mes',v:fmtEuro(totBase)+' €'},
+        {l:'Descuento por pago único (12%)',v:'-'+fmtEuro(descuento)+' €'},
+      ];
       if(extraTotal>0)priceLines.push({l:'Automatizaciones adicionales, instalación única',v:fmtEuro(extraTotal)+' €'});
       priceLines.push({l:'IVA (21%)',v:fmtEuro(iva)+' €'},{l:'Total con IVA',v:fmtEuro(totalCommitment)+' €',total:true});
     }else{
