@@ -985,7 +985,7 @@ function setTierPaymentMode(mode){
     desc.textContent='Se cobra tu primer año de Departamento de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.';
   }else{
     title.textContent='Fracciona el pago con SeQura, sin que dependa de nosotros.';
-    desc.textContent='SeQura nos paga el total de golpe y a ti te deja elegir en cuántos meses lo devuelves, con su propio análisis de riesgo — no depende de tu tarjeta ni de que nosotros pasemos un cargo cada mes. Te lo proponemos al formalizar el contrato.';
+    desc.textContent='SeQura nos paga el total de golpe y a ti te deja elegir en cuántos meses lo devuelves, con su propio análisis de riesgo — no depende de tu tarjeta ni de que nosotros pasemos un cargo cada mes. El importe de arriba es nuestro precio, sin la comisión o el interés que aplique la financiera — eso se cierra directamente con ellos al formalizar el contrato.';
   }
   updateAll();
 }
@@ -1358,7 +1358,7 @@ function getActivePlan(){
       subPago='Financiado con SeQura';
       priceLines=[{l:'Cuota (vía SeQura)',v:fmtEuro(arr.monthly)+' €'},{l:'IVA (21%)',v:fmtEuro(ivaM)+' €'},{l:'Total / mes con IVA',v:fmtEuro(totMes)+' €',total:true}];
       if(extraTotal>0)priceLines.push({l:'+ Automatizaciones adicionales, pago único aparte',v:fmtEuro(extraConIva)+' € con IVA'});
-      priceLines.push({l:'Compromiso total ('+arr.permanenciaMeses+' meses)',v:fmtEuro(totalCommitment)+' €'});
+      priceLines.push({l:'Precio a TRUCO ('+arr.permanenciaMeses+' meses, sin comisión de la financiera)',v:fmtEuro(totalCommitment)+' €'});
     }
     const renewalMsg='Tu primer año de Departamento va incluido en este pago — no es una cuota que vayas abonando mes a mes esperando poder cancelar, ya es tuyo, y es lo que hace posible que la implantación completa vaya gratis. Por eso ese año no tiene reembolso si decides no usarlo. Pasado el año, sigues solo si quieres, mes a mes, sin ningún compromiso nuevo.';
     const auditSols=selectedAuditSolutions.map(v=>OPEN_PRICE_SOLUTIONS.find(x=>x.value===v)).filter(Boolean);
