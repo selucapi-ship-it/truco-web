@@ -172,6 +172,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .pc-base-price{font-size:1.3rem;font-weight:700;font-family:var(--font-d);line-height:1;}
 .pc-base-price sub{font-size:.7rem;font-weight:500;color:var(--grey);vertical-align:bottom;}
 .pc-vat{font-size:.7rem;color:var(--grey);margin-top:3px;}
+.pc-after{font-size:.76rem;color:var(--tc);font-weight:600;margin-top:6px;}
 .pc-founding-old{font-size:.7rem;color:var(--grey);margin-top:4px;}
 .pc-includes{font-size:.84rem;color:var(--grey);margin-top:8px;padding-top:8px;border-top:1px solid var(--grey-line);}
 .pc-includes span{color:var(--tc);}
@@ -327,8 +328,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pc-founding-badge" id="pc-founding-badge-pro"></div>
             <div class="pc-base-price" id="pc-price-pro"></div>
             <div class="pc-vat" id="pc-vat-pro"></div>
+            <div class="pc-after" id="pc-after-pro"></div>
             <div class="pc-founding-old" id="pc-founding-old-pro"></div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 12 meses — integración completa y gestión de tu Departamento, incluidas</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
             <div class="pc-save-tag">🎁 Ahorras 2.540-3.170 € en instalación</div>
           </div>
           <div class="pc-breakdown">
@@ -350,8 +352,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pc-founding-badge" id="pc-founding-badge-lite"></div>
             <div class="pc-base-price" id="pc-price-lite"></div>
             <div class="pc-vat" id="pc-vat-lite"></div>
+            <div class="pc-after" id="pc-after-lite"></div>
             <div class="pc-founding-old" id="pc-founding-old-lite"></div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 12 meses — integración completa y gestión de tu Departamento, incluidas</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
             <div class="pc-save-tag">🎁 Ahorras 1.490-2.070 € en instalación</div>
           </div>
           <div class="pc-breakdown">
@@ -371,8 +374,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pc-founding-badge" id="pc-founding-badge-start"></div>
             <div class="pc-base-price" id="pc-price-start"></div>
             <div class="pc-vat" id="pc-vat-start"></div>
+            <div class="pc-after" id="pc-after-start"></div>
             <div class="pc-founding-old" id="pc-founding-old-start"></div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 12 meses — integración completa y gestión de tu Departamento, incluidas</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
           </div>
           <div class="pc-breakdown">
             <div class="pb-row"><span class="pb-label">1 automatización a elegir, gratis</span><span class="pb-val">✓</span></div>
@@ -390,8 +394,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pc-founding-badge" id="pc-founding-badge-basic"></div>
             <div class="pc-base-price" id="pc-price-basic"></div>
             <div class="pc-vat" id="pc-vat-basic"></div>
+            <div class="pc-after" id="pc-after-basic"></div>
             <div class="pc-founding-old" id="pc-founding-old-basic"></div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Permanencia 12 meses — integración completa y gestión de tu Departamento, incluidas</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
           </div>
           <div class="pc-breakdown">
             <div class="pb-row"><span class="pb-label">Web Profesional, gratis</span><span class="pb-val">✓</span></div>
@@ -586,7 +591,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         <div class="billing-btn" id="btn-financiado" onclick="setTierPaymentMode('financiado')">Fracciona con SeQura</div>
       </div>
       <div class="annual-highlight" id="annual-note">
-        <b id="payment-mode-title">Pago único por adelantado — ahorras un 12%.</b> <span id="payment-mode-desc">Se cobra todo el periodo de permanencia de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.</span>
+        <b id="payment-mode-title">Pago único por adelantado — ahorras un 12%.</b> <span id="payment-mode-desc">Se cobra tu primer año de Departamento de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.</span>
       </div>
     </div>
     <div id="sb-empty" class="sb-empty">Selecciona un plan arriba.</div>
@@ -902,13 +907,21 @@ function renderFoundingPrices(){
   ARRANQUES.basic.monthly=currentPrice('basic');
   ['lite','pro','start','basic'].forEach(tier=>{
     const m=ARRANQUES[tier].monthly;
-    const iva=(m*1.21).toFixed(2).replace('.',',');
+    const meses=ARRANQUES[tier].permanenciaMeses;
+    // El precio que se ve primero es el real que se paga al empezar (año 1,
+    // pago único con el 12% de dto. — misma fórmula que getActivePlan()),
+    // no la cuota mensual que solo aplica a partir del segundo año.
+    const totalAnio1=Math.round(m*meses*0.88*100)/100;
+    const totalAnio1Fmt=totalAnio1.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2});
+    const ivaAnio1=(totalAnio1*1.21).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2});
     const priceEl=document.getElementById('pc-price-'+tier);
     const vatEl=document.getElementById('pc-vat-'+tier);
+    const afterEl=document.getElementById('pc-after-'+tier);
     const badgeEl=document.getElementById('pc-founding-badge-'+tier);
     const oldEl=document.getElementById('pc-founding-old-'+tier);
-    if(priceEl)priceEl.innerHTML=m+' €<sub>/mes + IVA</sub>';
-    if(vatEl)vatEl.textContent=iva+' €/mes con IVA';
+    if(priceEl)priceEl.innerHTML=totalAnio1Fmt+' €<sub>primer año, pago único</sub>';
+    if(vatEl)vatEl.textContent=ivaAnio1+' € con IVA · o fracciona con SeQura';
+    if(afterEl)afterEl.textContent='Luego '+m+' €/mes + IVA, sin permanencia';
     if(badgeEl&&oldEl){
       if(foundingActive(tier)){
         const std=STANDARD_PRICES[tier];
@@ -974,7 +987,7 @@ function setTierPaymentMode(mode){
   const title=document.getElementById('payment-mode-title'),desc=document.getElementById('payment-mode-desc');
   if(mode==='unico'){
     title.textContent='Pago único por adelantado — ahorras un 12%.';
-    desc.textContent='Se cobra todo el periodo de permanencia de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.';
+    desc.textContent='Se cobra tu primer año de Departamento de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.';
   }else{
     title.textContent='Fracciona el pago con SeQura, sin que dependa de nosotros.';
     desc.textContent='SeQura nos paga el total de golpe y a ti te deja elegir en cuántos meses lo devuelves, con su propio análisis de riesgo — no depende de tu tarjeta ni de que nosotros pasemos un cargo cada mes. Te lo proponemos al formalizar el contrato.';
@@ -1017,7 +1030,7 @@ function selectDirect(id){
   document.getElementById('card-'+id).classList.add('selected');
   resetDigitalAddon();
   const pp=document.getElementById('project-panel');if(pp)pp.style.display='none';
-  const pm=document.getElementById('payment-mode-block');if(pm){pm.style.display='block';document.getElementById('btn-unico').classList.add('active');document.getElementById('btn-financiado').classList.remove('active');document.getElementById('payment-mode-title').textContent='Pago único por adelantado — ahorras un 12%.';document.getElementById('payment-mode-desc').textContent='Se cobra todo el periodo de permanencia de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.';}
+  const pm=document.getElementById('payment-mode-block');if(pm){pm.style.display='block';document.getElementById('btn-unico').classList.add('active');document.getElementById('btn-financiado').classList.remove('active');document.getElementById('payment-mode-title').textContent='Pago único por adelantado — ahorras un 12%.';document.getElementById('payment-mode-desc').textContent='Se cobra tu primer año de Departamento de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.';}
   const ep=document.getElementById('extra-solutions-panel');if(ep)ep.style.display='none';
   const et=document.getElementById('extra-sol-toggle');if(et)et.classList.remove('open');
   renderTierSolutionsPicker();
@@ -1348,10 +1361,10 @@ function getActivePlan(){
       if(extraTotal>0)priceLines.push({l:'+ Automatizaciones adicionales, pago único aparte',v:extraConIva.toFixed(2).replace('.',',')+' € con IVA'});
       priceLines.push({l:'Compromiso total ('+arr.permanenciaMeses+' meses)',v:totalCommitment.toFixed(2).replace('.',',')+' €'});
     }
-    const renewalMsg='Permanencia mínima de '+arr.permanenciaMeses+' meses — cubre la integración completa de tu Departamento y hace posible este regalo. Al terminar, sigues mes a mes con la misma gestión de tu Departamento, sin más compromiso, o te vas cuando quieras.';
+    const renewalMsg='Tu primer año de Departamento va incluido en este pago — no es una cuota que vayas abonando mes a mes esperando poder cancelar, ya es tuyo, y es lo que hace posible que la implantación completa vaya gratis. Por eso ese año no tiene reembolso si decides no usarlo. Pasado el año, sigues solo si quieres, mes a mes, sin ningún compromiso nuevo.';
     const auditSols=selectedAuditSolutions.map(v=>OPEN_PRICE_SOLUTIONS.find(x=>x.value===v)).filter(Boolean);
     const auditLines=auditSols.map(x=>({l:'+ '+x.name+' (pendiente de auditoría)',v:'desde '+x.from+' € — sin cerrar'}));
-    return{key:selectedDirect,name:d.name,sub:subPago+' · Permanencia '+arr.permanenciaMeses+' meses'+(solWord?' · '+solWord+' gratis':'')+(extraSols.length?' + '+extraSols.length+' adicional'+(extraSols.length>1?'es':''):''),arranqueType:d.arranque,breakdown:[...webLine,...solLines,...extraLines,...auditLines,{divider:true},...priceLines],monthlyAfter:arr.monthly,stripe:STRIPE[selectedDirect],totalRaw:isUnico?totalCommitment:null,timeline:selectedDirect,renewalMsg,solutionsIncomplete:selectedTierSolutions.length<arr.freeSols,needsAudit:auditSols.length>0,founding:foundingActive(d.arranque)};
+    return{key:selectedDirect,name:d.name,sub:subPago+' · '+arr.permanenciaMeses+' meses incluidos'+(solWord?' · '+solWord+' gratis':'')+(extraSols.length?' + '+extraSols.length+' adicional'+(extraSols.length>1?'es':''):''),arranqueType:d.arranque,breakdown:[...webLine,...solLines,...extraLines,...auditLines,{divider:true},...priceLines],monthlyAfter:arr.monthly,stripe:STRIPE[selectedDirect],totalRaw:isUnico?totalCommitment:null,timeline:selectedDirect,renewalMsg,solutionsIncomplete:selectedTierSolutions.length<arr.freeSols,needsAudit:auditSols.length>0,founding:foundingActive(d.arranque)};
   }
   return null;
 }
