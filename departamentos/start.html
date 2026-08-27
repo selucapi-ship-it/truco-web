@@ -466,7 +466,7 @@ function renderFoundingPricesBasic(){
   const esFundador=foundingActive('start');
   const tachado=esFundador?'<span class="price-old">'+fmtEuro(standardAnnualPricing('start').total)+' €</span> ':'';
   set('hp-main-basic',tachado+fmtEuro(p.total)+' €<sub>primer año, pago único</sub>');
-  set('hp-vat-basic',fmtEuro(p.totalIva)+' € con IVA · o fracciona con SeQura');
+  set('hp-vat-basic',fmtEuro(p.totalIva)+' € con IVA · pago único (12% dto.) o fracciona con SeQura');
   set('hp-annual-basic','Luego '+p.monthly+' €/mes + IVA, sin permanencia. Tu primer año ya incluye la integración completa de tu automatización, configurada con los datos reales de tu negocio, y la gestión de tu Departamento cada mes.');
   set('table-price-start',p.monthly+' €');
   set('table-price-basic',mElemental+' €');
