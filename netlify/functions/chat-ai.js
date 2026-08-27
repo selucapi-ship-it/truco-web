@@ -10,7 +10,7 @@ QUÉ ES: Departamento Tecnológico externalizado para pymes y autónomos en Espa
 - Lite™: precio estándar 279€/mes + IVA (precio de fundador 229€/mes + IVA si la oferta sigue activa y quedan plazas — sin cambio respecto a antes). Web: la del cliente reacondicionada, o una Web Profesional nueva si no tiene ninguna (ya no existe "Web Esencial" como opción) + 2 automatizaciones gratis a elegir de este pool de 7: IA para WhatsApp, IA para Correo, Reservas y Agenda, Facturación automática (TruKi), IA para Llamadas (exclusiva desde Lite™ en adelante — ya no está disponible en Start™ ni Basic™, ni pagando aparte), Firma Digital, IA para tu Web. Mantiene hasta 3 automatizaciones en total. Reunión mensual de 30 min. El ejemplo más potente para vender Lite/Pro: WhatsApp + Llamadas + Web ya cubre TODOS los canales por los que puede llegar un cliente (chat, teléfono, web) contestados 24/7 por IA.
 - Pro™: precio estándar 549€/mes + IVA (precio de fundador 449€/mes + IVA si la oferta sigue activa y quedan plazas — sin cambio respecto a antes). Web Profesional que YA incluye de fábrica un chat que responde dudas y agenda citas (por eso "IA para tu Web" y "Reservas y Agenda" NO están en su pool — ya las tiene, gratis, sin gastar ningún pick) + 3 automatizaciones gratis a elegir de un pool de 6: IA para WhatsApp, IA para Llamadas, IA para Correo, Firma Digital, Ciberseguridad Pyme, Flujos automáticos a medida (solo banda Simple, 350€). Mantiene hasta 6 automatizaciones en total, supervisión continua, mayor prioridad en incidencias (<24h), reunión mensual de 45 min.
 - IMPORTANTE — restricción por escalón de las automatizaciones "avanzadas": IA para Llamadas, Ciberseguridad Pyme, Flujos automáticos a medida, CRM, Integraciones y Gestión documental SOLO se pueden tener desde Lite™ en adelante (gratis si entran en el pool, o pagando aparte si no) — en Start™ y Basic™ NO están disponibles bajo ningún concepto, ni siquiera pagando el precio de catálogo completo. Si un cliente de Start™/Basic™ las pide, la respuesta es que tendría que subir a Lite™ o Pro™ para tenerlas. Ciberseguridad Pyme y Flujos automáticos a medida además SOLO entran gratis en Pro™ (en Lite™ se pagan aparte si no están en tu pool). Facturación automática (TruKi) no tiene esta restricción — está en el pool gratis de Start™, Basic™ y Lite™, y disponible pagando en Pro™.
-- Ahora mismo puede haber una OFERTA DE FUNDADOR activa en cualquiera de los 4 Departamentos (precio más bajo que el estándar, solo para un número limitado de los primeros clientes de cada escalón) — no sabes si sigue activa, ni cuántas plazas quedan en cada uno, ni el precio exacto, porque cambia en tiempo real; si preguntan por el precio de fundador o las plazas concretas, di que consulten pago.html o que lo confirmen contigo/con el equipo — nunca inventes un número de plazas ni un precio de oferta concreto.
+- Los precios y las plazas de fundador de cada Departamento están al principio de este mensaje, en el bloque "PRECIOS Y PLAZAS DE FUNDADOR — EN VIVO" — ese bloque es la fuente única de verdad ahora mismo, consultada en el momento de esta conversación. Si algún precio de más abajo en este documento no coincide con ese bloque, ignora el de aquí abajo y usa siempre el del bloque de arriba.
 - Cualquier otra automatización del catálogo que NO esté en el pool gratis de su escalón se puede añadir pagando su precio de implantación (y a partir de ahí su mantenimiento va incluido en la cuota, sin recargo de alta) — EXCEPTO IA para Llamadas, Ciberseguridad Pyme, Flujos automáticos a medida, CRM, Integraciones y Gestión documental, que en Start™/Basic™ no se pueden añadir de ninguna forma, ni pagando (ver restricción por escalón más arriba). Dentro de Pro™, las bandas de Flujos automáticos a medida por encima de la Simple (650€/1.200€) también se pueden añadir pagando.
 - Cómo se paga: SOLO dos formas — pago único por adelantado de tu primer año (12% de descuento), o fraccionado a través de SeQura, nuestro partner de financiación regulado por el Banco de España (SeQura nos paga el total de golpe y el cliente les devuelve a ellos en los plazos que elija). TRUCO NUNCA hace facturación mensual directa — es una decisión deliberada para no depender de que nadie recuerde pagar cada mes.
 - Servicio: supervisión continua de las automatizaciones activas (no una revisión en una fecha fija del calendario), reunión mensual (Lite/Pro), incidencias técnicas siempre sin coste.
@@ -40,6 +40,86 @@ REGLAS DE RESPUESTA:
 3. Si la pregunta requiere datos personales del negocio del cliente que no tienes, pregunta.
 4. Si la pregunta es algo genuinamente fuera del ámbito de TRUCO — charla casual, opinión personal, cultura general, el tiempo, deportes, insultos, bromas, o cualquier tema sin relación con negocios o tecnología empresarial — responde EXACTAMENTE empezando con el texto "[FUERA_DE_TEMA]" seguido de una frase breve y respetuosa tipo "Lo siento, pero ese tema no corresponde a TRUCOtechnology", sin ofrecer nada más y SIN invitar a reservar cita — una pregunta random nunca debe empujar a agendar.
 5. Si la pregunta SÍ es sobre negocios/tecnología pero es genuinamente imposible de responder con esta información (ej. pide asesoría legal/fiscal muy personalizada, o un caso tan específico que no lo puedes resolver con estos datos), responde EXACTAMENTE empezando con el texto "[NO_SE_RESPONDER]" seguido de una frase breve y amable explicando que eso se sale de lo tuyo, y termina SIEMPRE invitando a reservar la consultoría gratuita con el equipo para resolverlo ahí — nunca dejes la respuesta en un simple "no puedo ayudarte". No uses ninguno de estos dos textos en ningún otro caso.`;
+
+// ── PRECIOS Y OFERTAS EN VIVO ──
+// El bloque de arriba (SYSTEM_INSTRUCTION) es texto fijo y no se entera solo
+// si cambia un precio en Precios, si se agotan las plazas de fundador de un
+// escalón, o si hay una oferta de temporada activa (pricing_offers). En vez
+// de reescribir a mano cada número dentro de ese texto (fácil de dejar uno
+// suelto y frágil de mantener), se consulta la BD real y se antepone un
+// bloque corto que el propio SYSTEM_INSTRUCTION ya indica que manda por
+// encima de cualquier cifra que aparezca más abajo.
+// Mismo proyecto y misma clave pública (no es un secreto: ya va expuesta tal
+// cual en el navegador de cualquier visitante, dentro de founding-offer.js).
+const SUPABASE_URL = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
+const TIER_NAMES = { start: 'Start™', basic: 'Basic™', lite: 'Lite™', pro: 'Pro™' };
+const FALLBACK_TIER_PRICES = {
+  start: { founder: 69, standard: 89 }, basic: { founder: 149, standard: 169 },
+  lite: { founder: 229, standard: 279 }, pro: { founder: 449, standard: 549 },
+};
+const FALLBACK_SPOTS = { start: 10, basic: 10, lite: 10, pro: 10 };
+const SOLUTION_NAMES = {
+  whatsapp: 'IA para WhatsApp', 'web-ia': 'IA para Web', 'email-ia': 'IA para Correo',
+  llamadas: 'IA para Llamadas', reservas: 'Reservas online', truki: 'Facturación automática (TruKi)',
+  firma: 'Firma digital', ciberseguridad: 'Ciberseguridad Pyme', automatizaciones: 'Flujos automáticos a medida (banda simple)',
+};
+const FALLBACK_SOLUTION_PRICES = {
+  whatsapp: 590, 'web-ia': 350, llamadas: 690, 'email-ia': 350,
+  reservas: 350, firma: 500, ciberseguridad: 450, automatizaciones: 350, truki: 580,
+};
+
+// Cache a nivel de módulo: una función de Netlify puede reutilizar la misma
+// instancia "caliente" entre invocaciones durante unos minutos — sin caché,
+// cada mensaje del chat dispararía 2 llamadas nuevas a Supabase de forma
+// innecesaria, ya que un precio no cambia segundo a segundo.
+let _pricingCache = null;
+let _pricingCacheAt = 0;
+const PRICING_CACHE_MS = 5 * 60 * 1000;
+
+async function fetchLivePricingBlock() {
+  if (_pricingCache && (Date.now() - _pricingCacheAt) < PRICING_CACHE_MS) return _pricingCache;
+
+  const headers = { apikey: SUPABASE_ANON_KEY };
+  let tiers = null, spots = null, solutions = null;
+  try {
+    const [tiersResp, spotsResp, solResp] = await Promise.all([
+      fetch(`${SUPABASE_URL}/rest/v1/tier_config_effective?select=tier,founder_price_eur,standard_price_eur`, { headers }),
+      fetch(`${SUPABASE_URL}/rest/v1/founding_spots?select=tier,spots_left`, { headers }),
+      fetch(`${SUPABASE_URL}/rest/v1/solutions_catalog_effective?select=solution_key,price_eur`, { headers }),
+    ]);
+    if (tiersResp.ok) tiers = await tiersResp.json();
+    if (spotsResp.ok) spots = await spotsResp.json();
+    if (solResp.ok) solutions = await solResp.json();
+  } catch (e) { /* se queda con los valores de fallback de abajo */ }
+
+  const tierLines = ['start', 'basic', 'lite', 'pro'].map(tier => {
+    const row = Array.isArray(tiers) ? tiers.find(t => t.tier === tier) : null;
+    const founder = row ? Number(row.founder_price_eur) : FALLBACK_TIER_PRICES[tier].founder;
+    const standard = row ? Number(row.standard_price_eur) : FALLBACK_TIER_PRICES[tier].standard;
+    const spotsRow = Array.isArray(spots) ? spots.find(s => s.tier === tier) : null;
+    const left = spotsRow ? Math.max(0, Number(spotsRow.spots_left)) : FALLBACK_SPOTS[tier];
+    const name = TIER_NAMES[tier];
+    if (left > 0) {
+      return `- ${name}: ${founder}€/mes + IVA de fundador (quedan ${left} plazas a este precio) — precio estándar sin fundador ${standard}€/mes + IVA.`;
+    }
+    return `- ${name}: ${standard}€/mes + IVA, precio estándar (la oferta de fundador de este escalón ya está agotada, no la ofrezcas).`;
+  });
+
+  const solLines = Object.keys(SOLUTION_NAMES).map(key => {
+    const row = Array.isArray(solutions) ? solutions.find(s => s.solution_key === key) : null;
+    const price = row && row.price_eur != null ? Number(row.price_eur) : FALLBACK_SOLUTION_PRICES[key];
+    return `${SOLUTION_NAMES[key]} ${price}€`;
+  }).join(' · ');
+
+  const block = 'PRECIOS Y PLAZAS DE FUNDADOR — EN VIVO, CONSULTADO AHORA MISMO (fuente única de verdad; manda sobre cualquier cifra distinta que aparezca más abajo):\n'
+    + tierLines.join('\n') + '\n'
+    + 'Automatizaciones individuales, + IVA: ' + solLines + '.\n';
+
+  _pricingCache = block;
+  _pricingCacheAt = Date.now();
+  return block;
+}
 
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') {
@@ -74,13 +154,14 @@ exports.handler = async function (event) {
   contents.push({ role: 'user', parts: [{ text: message.slice(0, 1000) }] });
 
   try {
+    const livePricingBlock = await fetchLivePricingBlock();
     const resp = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          system_instruction: { parts: [{ text: SYSTEM_INSTRUCTION }] },
+          system_instruction: { parts: [{ text: livePricingBlock + '\n' + SYSTEM_INSTRUCTION }] },
           contents,
           generationConfig: {
             temperature: 0.6,

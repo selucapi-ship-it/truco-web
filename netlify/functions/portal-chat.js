@@ -23,7 +23,7 @@ QUÉ ES: Departamento Tecnológico externalizado para pymes y autónomos en Espa
 - Lite™: 279€/mes + IVA estándar (precio de fundador 229€/mes + IVA si sigue activa la oferta y quedan plazas — sin cambio respecto a antes). Web: la del cliente reacondicionada, o una Web Profesional nueva si no tiene ninguna (ya no existe Web Esencial). + 2 automatizaciones gratis (pool de 7: WhatsApp, IA Correo, Reservas, TruKi, IA Llamadas —exclusiva desde Lite™ en adelante, ya no está en Start™ ni Basic™, ni pagando—, Firma Digital, IA Web). Mantiene hasta 3 automatizaciones en total. Reunión mensual 30 min.
 - Pro™: 549€/mes + IVA estándar (precio de fundador 449€/mes + IVA si sigue activa la oferta y quedan plazas — sin cambio respecto a antes). Web Profesional que ya incluye de fábrica chat + agenda de citas (por eso IA para tu Web y Reservas no están en su pool de elegir, ya las tiene gratis) + 3 automatizaciones gratis a elegir de un pool de 6 (WhatsApp, Llamadas, Correo, Firma Digital, Ciberseguridad, Flujos automáticos a medida (banda Simple)). Mantiene hasta 6 automatizaciones en total. Reunión mensual 45 min, mayor prioridad en incidencias.
 - IMPORTANTE: IA Llamadas, Ciberseguridad Pyme, Flujos automáticos a medida, CRM, Integraciones y Gestión documental SOLO se pueden tener desde Lite™ en adelante — en Start™ y Basic™ no están disponibles ni pagando el precio de catálogo completo. Ciberseguridad Pyme y Flujos automáticos a medida además SOLO son gratis en Pro™ (en Lite™ se pagan aparte si no están en el pool elegido). TruKi no tiene esta restricción — está en el pool gratis de Start™, Basic™ y Lite™, y disponible pagando en Pro™.
-- La oferta de fundador (cuando esté activa) puede aplicar a cualquiera de los 4 escalones, cada uno con su propio cupo — no sabes si sigue activa ni cuántas plazas quedan en cada uno, cambia en tiempo real.
+- Los precios y las plazas de fundador de cada Departamento están arriba, en el bloque "PRECIOS Y PLAZAS DE FUNDADOR — EN VIVO" — esa es la fuente única de verdad ahora mismo; si algún precio de aquí abajo no coincide, ignóralo y usa siempre el de ese bloque.
 - Pago: solo pago único con 12% de descuento, o financiado con SeQura. Nunca facturación mensual directa.
 - Al terminar el primer año: el cliente sigue mes a mes si quiere, sin más compromiso, o se lo lleva todo — incluido el código fuente de su web, en un pen drive personalizado.
 
@@ -36,7 +36,46 @@ CONDICIONES GENERALES:
 - Dominio y hosting siempre a nombre y coste del cliente.
 - Auditoría de servicios: reunión de revisión de lo contratado, se agenda desde el propio panel del portal.`;
 
-function buildSystemInstruction(client, solutions) {
+// ── PRECIOS Y OFERTAS EN VIVO ──
+// Mismo motivo que en chat-ai.js: CATALOG_TEXT es texto fijo y no se entera
+// solo si cambia un precio, se agotan plazas de fundador, o hay una oferta de
+// temporada activa. Reutiliza el supabaseUrl/serviceHeaders que ya resuelve
+// el propio handler, sin duplicar credenciales.
+const TIER_NAMES_PORTAL = { start: 'Start™', basic: 'Basic™', lite: 'Lite™', pro: 'Pro™' };
+const FALLBACK_TIER_PRICES_PORTAL = {
+  start: { founder: 69, standard: 89 }, basic: { founder: 149, standard: 169 },
+  lite: { founder: 229, standard: 279 }, pro: { founder: 449, standard: 549 },
+};
+const FALLBACK_SPOTS_PORTAL = { start: 10, basic: 10, lite: 10, pro: 10 };
+
+async function fetchLivePricingBlock(supabaseUrl, headers) {
+  let tiers = null, spots = null;
+  try {
+    const [tiersResp, spotsResp] = await Promise.all([
+      fetch(`${supabaseUrl}/rest/v1/tier_config_effective?select=tier,founder_price_eur,standard_price_eur`, { headers }),
+      fetch(`${supabaseUrl}/rest/v1/founding_spots?select=tier,spots_left`, { headers }),
+    ]);
+    if (tiersResp.ok) tiers = await tiersResp.json();
+    if (spotsResp.ok) spots = await spotsResp.json();
+  } catch (e) { /* se queda con los valores de fallback */ }
+
+  const tierLines = ['start', 'basic', 'lite', 'pro'].map(tier => {
+    const row = Array.isArray(tiers) ? tiers.find(t => t.tier === tier) : null;
+    const founder = row ? Number(row.founder_price_eur) : FALLBACK_TIER_PRICES_PORTAL[tier].founder;
+    const standard = row ? Number(row.standard_price_eur) : FALLBACK_TIER_PRICES_PORTAL[tier].standard;
+    const spotsRow = Array.isArray(spots) ? spots.find(s => s.tier === tier) : null;
+    const left = spotsRow ? Math.max(0, Number(spotsRow.spots_left)) : FALLBACK_SPOTS_PORTAL[tier];
+    const name = TIER_NAMES_PORTAL[tier];
+    if (left > 0) {
+      return `- ${name}: ${founder}€/mes + IVA de fundador (quedan ${left} plazas a este precio) — precio estándar sin fundador ${standard}€/mes + IVA.`;
+    }
+    return `- ${name}: ${standard}€/mes + IVA, precio estándar (la oferta de fundador de este escalón ya está agotada, no la ofrezcas).`;
+  });
+
+  return 'PRECIOS Y PLAZAS DE FUNDADOR — EN VIVO, CONSULTADO AHORA MISMO (fuente única de verdad; manda sobre cualquier cifra distinta que aparezca más abajo):\n' + tierLines.join('\n');
+}
+
+function buildSystemInstruction(client, solutions, livePricingBlock) {
   const nombre = client.nombre || 'este cliente';
   const negocio = client.negocio ? ` (${client.negocio})` : '';
   const plan = client.plan_key || 'sin plan registrado';
@@ -51,6 +90,8 @@ DATOS DE ESTE CLIENTE (úsalos para personalizar tu respuesta, no los repitas li
 - Plan contratado: ${plan}
 - Automatizaciones activas:
 ${solLines}
+
+${livePricingBlock}
 
 ${CATALOG_TEXT}
 
@@ -135,7 +176,8 @@ exports.handler = async function (event) {
     const solutions = solsResp.ok ? await solsResp.json() : [];
     const recentPortalHistory = historyResp.ok ? await historyResp.json() : [];
 
-    const systemInstruction = buildSystemInstruction(client, solutions);
+    const livePricingBlock = await fetchLivePricingBlock(supabaseUrl, serviceHeaders);
+    const systemInstruction = buildSystemInstruction(client, solutions, livePricingBlock);
 
     // El historial reciente del portal se manda como turnos de conversación
     // pasados para que la IA "recuerde" — mismo patrón que whatsapp_recent_history.

@@ -87,6 +87,81 @@ def _log_crm_interaction(nombre=None, email=None, telefono=None, nota=None):
         logger.exception("Error registrando en el CRM")
 
 
+# ── PRECIOS Y OFERTAS EN VIVO ──
+# SYSTEM_INSTRUCTIONS (más abajo) es texto fijo y no se entera solo si cambia
+# un precio, se agotan plazas de fundador de un escalón, o hay una oferta de
+# temporada activa. En vez de reescribir a mano cada cifra dentro de ese
+# texto tan largo, se consulta la BD real una vez por llamada (en
+# entrypoint, antes de crear el agente) y se antepone un bloque corto que el
+# propio SYSTEM_INSTRUCTIONS ya indica que manda por encima de cualquier
+# cifra distinta que aparezca más abajo.
+_TIER_NAMES = {"start": "Start", "basic": "Basic", "lite": "Lite", "pro": "Pro"}
+_FALLBACK_TIER_PRICES = {
+    "start": {"founder": 69, "standard": 89},
+    "basic": {"founder": 149, "standard": 169},
+    "lite": {"founder": 229, "standard": 279},
+    "pro": {"founder": 449, "standard": 549},
+}
+_FALLBACK_SPOTS = {"start": 10, "basic": 10, "lite": 10, "pro": 10}
+# Misma clave pública ya expuesta en founding-offer.js — no es un secreto,
+# solo lee precios y plazas, que ya son datos públicos en la propia web.
+_SUPABASE_URL_PUBLIC = "https://oxdopzvbrxdsjvzxmpxy.supabase.co"
+_SUPABASE_ANON_KEY_PUBLIC = "sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX"
+
+
+def _fetch_live_pricing_block() -> str:
+    """Consulta el precio y las plazas de fundador reales de los 4 Departamentos.
+    Nunca lanza excepción: si Supabase no responde, se queda con los valores de
+    fallback de arriba en vez de romper el arranque de la llamada."""
+    headers = {"apikey": _SUPABASE_ANON_KEY_PUBLIC}
+    tiers, spots = None, None
+    try:
+        tiers_resp = requests.get(
+            f"{_SUPABASE_URL_PUBLIC}/rest/v1/tier_config_effective",
+            params={"select": "tier,founder_price_eur,standard_price_eur"},
+            headers=headers, timeout=4,
+        )
+        if tiers_resp.ok:
+            tiers = tiers_resp.json()
+        spots_resp = requests.get(
+            f"{_SUPABASE_URL_PUBLIC}/rest/v1/founding_spots",
+            params={"select": "tier,spots_left"},
+            headers=headers, timeout=4,
+        )
+        if spots_resp.ok:
+            spots = spots_resp.json()
+    except Exception:
+        logger.exception("No se pudo consultar el precio en vivo, se usan valores de fallback")
+
+    def _find(rows, tier):
+        return next((r for r in rows if r.get("tier") == tier), None) if isinstance(rows, list) else None
+
+    lineas = []
+    for tier in ("start", "basic", "lite", "pro"):
+        row = _find(tiers, tier)
+        founder = int(row["founder_price_eur"]) if row else _FALLBACK_TIER_PRICES[tier]["founder"]
+        standard = int(row["standard_price_eur"]) if row else _FALLBACK_TIER_PRICES[tier]["standard"]
+        spots_row = _find(spots, tier)
+        left = max(0, int(spots_row["spots_left"])) if spots_row else _FALLBACK_SPOTS[tier]
+        nombre = _TIER_NAMES[tier]
+        if left > 0:
+            lineas.append(
+                f"{nombre}: {founder} euros al mes más IVA de fundador, quedan {left} plazas a ese precio "
+                f"— precio estándar sin fundador, {standard} euros al mes más IVA."
+            )
+        else:
+            lineas.append(
+                f"{nombre}: {standard} euros al mes más IVA, precio estándar "
+                f"— la oferta de fundador de este escalón ya está agotada, no la ofrezcas."
+            )
+
+    return (
+        "PRECIOS Y PLAZAS DE FUNDADOR — EN VIVO, CONSULTADO JUSTO ANTES DE ESTA LLAMADA "
+        "(fuente única de verdad; si más abajo aparece cualquier cifra distinta, ignórala):\n"
+        + "\n".join(f"- {l}" for l in lineas)
+    )
+
+
 _DIAS_SEMANA = {"lunes": 0, "martes": 1, "miercoles": 2, "jueves": 3, "viernes": 4}
 
 
@@ -169,7 +244,7 @@ LOS CUATRO DEPARTAMENTOS (primer año pagado por adelantado en los cuatro, + IVA
 - Lite: precio estándar doscientos setenta y nueve euros al mes, con precio de fundador si la oferta sigue activa y quedan plazas — esto no ha cambiado. Web: la suya reacondicionada, o una Web Profesional nueva si no tiene ninguna, ya no existe la Web Esencial como opción. Más dos automatizaciones gratis a elegir entre siete: IA para WhatsApp, IA para Correo, Reservas y Agenda, Facturación automática TruKi, IA para Llamadas, Firma Digital, o IA para tu Web. IA para Llamadas, ojo, es exclusiva desde Lite en adelante, ya no está disponible en Start ni en Basic, ni pagando aparte. Mantiene hasta tres automatizaciones en total, con una reunión mensual de treinta minutos. El combo más potente para recomendar: WhatsApp, Llamadas y Web juntos cubren todos los canales por los que puede llegar un cliente, contestados por IA las veinticuatro horas.
 - Pro: precio estándar quinientos cuarenta y nueve euros al mes, con precio de fundador si la oferta sigue activa y quedan plazas — esto tampoco ha cambiado. Web Profesional que ya incluye de fábrica un chat que responde dudas y agenda citas — por eso IA para tu Web y Reservas y Agenda no aparecen como opción a elegir en Pro, porque ya las tiene, gratis, sin gastar ningún hueco — más tres automatizaciones gratis a elegir entre un grupo de seis: IA para WhatsApp, IA para Llamadas, IA para Correo, Firma Digital, Ciberseguridad Pyme, o Flujos automáticos a medida en su banda simple. Mantiene hasta seis automatizaciones en total, con supervisión continua, prioridad alta en incidencias con respuesta en menos de veinticuatro horas, y una reunión mensual de cuarenta y cinco minutos.
 - Ciberseguridad Pyme y Flujos automáticos a medida solo son gratis en el Pro, y solo se pueden añadir pagando desde el Lite en adelante — en Start y Basic no están disponibles ni pagando. Lo mismo aplica a IA para Llamadas, CRM, Integraciones y Gestión documental: en Start y Basic no se pueden contratar de ninguna forma, hace falta subir a Lite o Pro. La Facturación automática TruKi no tiene esta restricción — está gratis en el pool de Start, Basic y Lite, y se puede añadir pagando en Pro.
-- Ahora mismo puede haber una oferta de fundador activa en cualquiera de los cuatro Departamentos, con un precio más bajo para un número limitado de los primeros clientes de cada uno. No sabes si sigue activa ni cuántas plazas quedan en cada Departamento porque cambia en tiempo real — si preguntan por ella, di que lo confirmen en la web o contigo mismo, nunca inventes un número de plazas ni un precio de oferta concreto.
+- Los precios y las plazas de fundador de cada Departamento están al principio de estas instrucciones, en el bloque "PRECIOS Y PLAZAS DE FUNDADOR — EN VIVO" — esa es la fuente única de verdad ahora mismo, consultada justo antes de que empezara esta llamada. Si algún precio más abajo en este documento no coincide, ignóralo y usa siempre el de ese bloque.
 - Cómo se paga: solo hay dos formas. Pago único por adelantado de tu primer año, con un doce por ciento de descuento. O fraccionado a través de SeQura, nuestro partner de financiación regulado por el Banco de España, que le paga a TRUCO de golpe y luego cobra al cliente en los plazos que este elija. TRUCO nunca hace facturación mensual directa — es una decisión pensada para no depender de que nadie se acuerde de pagar cada mes.
 - Al terminar el primer año, el cliente sigue mes a mes si quiere, sin más compromiso, o se lo lleva absolutamente todo — incluido el código fuente completo de su web, entregado en un pen drive personalizado. Nunca se queda sin nada de lo que ha construido.
 
@@ -232,8 +307,8 @@ Tienes tres herramientas para la consultoría gratuita de 20-30 minutos: `consul
 
 
 class TrucoAgent(Agent):
-    def __init__(self, room=None):
-        super().__init__(instructions=SYSTEM_INSTRUCTIONS)
+    def __init__(self, room=None, instructions=SYSTEM_INSTRUCTIONS):
+        super().__init__(instructions=instructions)
         self._room = room
 
     @function_tool
@@ -399,7 +474,8 @@ async def entrypoint(ctx: agents.JobContext):
         ),
     )
 
-    agent = TrucoAgent(room=ctx.room)
+    live_pricing_block = _fetch_live_pricing_block()
+    agent = TrucoAgent(room=ctx.room, instructions=live_pricing_block + "\n\n" + SYSTEM_INSTRUCTIONS)
 
     await session.start(room=ctx.room, agent=agent)
 
