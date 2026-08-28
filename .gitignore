@@ -6,3 +6,4 @@ node_modules/
 *.json.key
 truco-voice-agent-*.json
 *service-account*.json
+TRIMESTRALES/
