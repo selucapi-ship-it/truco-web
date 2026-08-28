@@ -50,14 +50,15 @@ async function fetchFiscal(supabaseUrl, key) {
       body: JSON.stringify({ p_anio: anio, p_trimestre: trimestre }),
     });
     if (!resp.ok) {
-      console.error('[ANTONIA] fetchFiscal fallo', resp.status, await resp.text());
-      return 'No disponible ahora mismo.';
+      const errText = await resp.text();
+      console.error('[ANTONIA] fetchFiscal fallo', resp.status, errText);
+      return `No disponible ahora mismo (HTTP ${resp.status}: ${errText.slice(0, 200)}).`;
     }
     const r = await resp.json();
     return `Trimestre ${trimestre} de ${anio} (en curso): ingresos ${eur(r.ingresos_netos_acumulados_cents)}, gastos deducibles ${eur(r.gastos_deducibles_acumulados_cents)}, resultado Modelo 303 del trimestre ${eur(r.resultado_303_cents)}, pendiente Modelo 130 ${eur(r.pago_fraccionado_pendiente_130_cents)}.`;
   } catch (e) {
     console.error('[ANTONIA] fetchFiscal excepcion', e.message);
-    return 'No disponible ahora mismo.';
+    return `No disponible ahora mismo (excepción: ${e.message}).`;
   }
 }
 
@@ -68,8 +69,9 @@ async function fetchClientes(supabaseUrl, key) {
       { headers: authHeaders(key) }
     );
     if (!resp.ok) {
-      console.error('[ANTONIA] fetchClientes fallo', resp.status, await resp.text());
-      return 'No disponible ahora mismo.';
+      const errText = await resp.text();
+      console.error('[ANTONIA] fetchClientes fallo', resp.status, errText);
+      return `No disponible ahora mismo (HTTP ${resp.status}: ${errText.slice(0, 200)}).`;
     }
     const rows = await resp.json();
     const porStatus = {};
@@ -82,7 +84,7 @@ async function fetchClientes(supabaseUrl, key) {
     return `Últimos 30 registros por estado — ${resumenEstados}. Leads sin cerrar más recientes: ${sinCerrar.length ? sinCerrar.join('; ') : 'ninguno'}.`;
   } catch (e) {
     console.error('[ANTONIA] fetchClientes excepcion', e.message);
-    return 'No disponible ahora mismo.';
+    return `No disponible ahora mismo (excepción: ${e.message}).`;
   }
 }
 
