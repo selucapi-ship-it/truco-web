@@ -49,10 +49,14 @@ async function fetchFiscal(supabaseUrl, key) {
       headers: authHeaders(key),
       body: JSON.stringify({ p_anio: anio, p_trimestre: trimestre }),
     });
-    if (!resp.ok) return 'No disponible ahora mismo.';
+    if (!resp.ok) {
+      console.error('[ANTONIA] fetchFiscal fallo', resp.status, await resp.text());
+      return 'No disponible ahora mismo.';
+    }
     const r = await resp.json();
     return `Trimestre ${trimestre} de ${anio} (en curso): ingresos ${eur(r.ingresos_netos_acumulados_cents)}, gastos deducibles ${eur(r.gastos_deducibles_acumulados_cents)}, resultado Modelo 303 del trimestre ${eur(r.resultado_303_cents)}, pendiente Modelo 130 ${eur(r.pago_fraccionado_pendiente_130_cents)}.`;
   } catch (e) {
+    console.error('[ANTONIA] fetchFiscal excepcion', e.message);
     return 'No disponible ahora mismo.';
   }
 }
@@ -63,7 +67,10 @@ async function fetchClientes(supabaseUrl, key) {
       `${supabaseUrl}/rest/v1/clients?select=nombre,status,created_at&order=created_at.desc&limit=30`,
       { headers: authHeaders(key) }
     );
-    if (!resp.ok) return 'No disponible ahora mismo.';
+    if (!resp.ok) {
+      console.error('[ANTONIA] fetchClientes fallo', resp.status, await resp.text());
+      return 'No disponible ahora mismo.';
+    }
     const rows = await resp.json();
     const porStatus = {};
     rows.forEach((c) => { porStatus[c.status] = (porStatus[c.status] || 0) + 1; });
@@ -74,6 +81,7 @@ async function fetchClientes(supabaseUrl, key) {
       .map((c) => `${c.nombre || '(sin nombre)'} (${c.status})`);
     return `Últimos 30 registros por estado — ${resumenEstados}. Leads sin cerrar más recientes: ${sinCerrar.length ? sinCerrar.join('; ') : 'ninguno'}.`;
   } catch (e) {
+    console.error('[ANTONIA] fetchClientes excepcion', e.message);
     return 'No disponible ahora mismo.';
   }
 }
@@ -85,13 +93,17 @@ async function fetchTruki(trukiUrl, trukiKey) {
       `${trukiUrl}/rest/v1/truki_invoices?select=cliente_nombre,tipo,total,estado,estado_cobro,fecha&order=fecha.desc&limit=10`,
       { headers: authHeaders(trukiKey) }
     );
-    if (!resp.ok) return 'No disponible ahora mismo.';
+    if (!resp.ok) {
+      console.error('[ANTONIA] fetchTruki fallo', resp.status, await resp.text());
+      return 'No disponible ahora mismo.';
+    }
     const rows = await resp.json();
     if (!rows.length) return 'Sin facturas ni presupuestos registrados.';
     return rows
       .map((r) => `${r.tipo} de ${r.cliente_nombre || '(sin nombre)'} — ${r.total}€, estado "${r.estado}"${r.estado_cobro ? ` / cobro "${r.estado_cobro}"` : ''}, ${r.fecha}`)
       .join('\n');
   } catch (e) {
+    console.error('[ANTONIA] fetchTruki excepcion', e.message);
     return 'No disponible ahora mismo.';
   }
 }
@@ -123,7 +135,10 @@ async function getGoogleAccessToken() {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: `grant_type=${encodeURIComponent('urn:ietf:params:oauth:grant-type:jwt-bearer')}&assertion=${jwt}`,
   });
-  if (!resp.ok) return null;
+  if (!resp.ok) {
+    console.error('[ANTONIA] getGoogleAccessToken fallo', resp.status, await resp.text());
+    return null;
+  }
   const data = await resp.json();
   return data.access_token || null;
 }
@@ -137,7 +152,10 @@ async function fetchCalendario() {
     const en7dias = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
     const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?timeMin=${now.toISOString()}&timeMax=${en7dias.toISOString()}&singleEvents=true&orderBy=startTime`;
     const resp = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-    if (!resp.ok) return 'No disponible ahora mismo.';
+    if (!resp.ok) {
+      console.error('[ANTONIA] fetchCalendario fallo', resp.status, await resp.text());
+      return 'No disponible ahora mismo.';
+    }
     const data = await resp.json();
     const items = data.items || [];
     if (!items.length) return 'Sin eventos en los próximos 7 días.';
@@ -145,6 +163,7 @@ async function fetchCalendario() {
       .map((e) => `- ${e.summary || '(sin título)'} — ${(e.start && (e.start.dateTime || e.start.date)) || '?'}`)
       .join('\n');
   } catch (e) {
+    console.error('[ANTONIA] fetchCalendario excepcion', e.message);
     return 'No disponible ahora mismo.';
   }
 }
@@ -185,6 +204,9 @@ exports.handler = async function (event) {
   const supabaseUrl = process.env.SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!botToken || !geminiKey || !supabaseUrl || !supabaseKey) {
+    console.error('[ANTONIA] faltan variables de entorno obligatorias', {
+      botToken: !!botToken, geminiKey: !!geminiKey, supabaseUrl: !!supabaseUrl, supabaseKey: !!supabaseKey,
+    });
     return { statusCode: 200, body: 'ok' };
   }
   const trukiUrl = process.env.TRUKI_SUPABASE_URL;
@@ -232,10 +254,15 @@ ${calendario}`;
       const data = await resp.json();
       const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
       if (rawText) respuesta = rawText;
+      else console.error('[ANTONIA] Gemini respondio sin texto', JSON.stringify(data).slice(0, 500));
+    } else {
+      console.error('[ANTONIA] Gemini fallo', resp.status, await resp.text());
     }
   } catch (e) {
-    // se queda el mensaje de fallback
+    console.error('[ANTONIA] Gemini excepcion', e.message);
   }
+
+  console.log('[ANTONIA] contexto usado:', contexto.replace(/\n/g, ' | '));
 
   for (let i = 0; i < respuesta.length; i += 4000) {
     await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
