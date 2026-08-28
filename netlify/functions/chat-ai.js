@@ -178,8 +178,8 @@ exports.handler = async function (event) {
     if (!resp.ok) {
       let errText = '';
       try { errText = await resp.text(); } catch (e) { /* ignorar */ }
-      console.error('[chat-ai] Gemini API error', resp.status, errText.slice(0, 500));
-      return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'api_error', debug: `HTTP ${resp.status}: ${errText.slice(0, 300)}` }) };
+      console.error('[chat-ai] Gemini API error', resp.status, errText.slice(0, 1500));
+      return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'api_error', debug: `HTTP ${resp.status}: ${errText.slice(0, 1200)}` }) };
     }
 
     const data = await resp.json();
