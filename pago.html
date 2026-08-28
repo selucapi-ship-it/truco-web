@@ -1329,6 +1329,7 @@ function getRenewalDate(days){
 function getActivePlan(){
   if(selectedDirect){
     const d=DIRECT[selectedDirect];const arr=ARRANQUES[d.arranque];
+    const esFundador=foundingActive(d.arranque);
     const pool=TIER_POOLS[d.arranque];
     const solNames=pool?selectedTierSolutions.map(v=>{const s=pool.sols.find(x=>x.value===v);return s?s.name:v;}):[];
     const webLine=d.arranque==='lite'?[{l:'Web (reacondicionada, o Web Profesional nueva si no tienes)',v:'GRATIS',cls:'free'}]:d.arranque==='pro'?[{l:'Web Profesional',v:'GRATIS',cls:'free'},{l:'IA para tu Web',v:'GRATIS',cls:'free'},{l:'Reservas y Agenda',v:'GRATIS',cls:'free'}]:d.arranque==='basic'?[{l:'Web Profesional',v:'GRATIS',cls:'free'},{l:'Chat + agenda en tu web, de fábrica',v:'GRATIS',cls:'free'},{l:'Salud técnica de posicionamiento',v:'INCLUIDA',cls:'free'}]:[];
@@ -1345,10 +1346,13 @@ function getActivePlan(){
       const baseImponible=tot+extraTotal;const iva=baseImponible*0.21;
       totalCommitment=baseImponible+iva;
       subPago='Pago único';
-      priceLines=[
-        {l:arr.permanenciaMeses+' meses × '+arr.monthly+' €/mes',v:fmtEuro(totBase)+' €'},
+      priceLines=[];
+      if(esFundador)priceLines.push({l:'🏷️ Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[d.arranque]+' de '+FOUNDING_SPOTS_TOTAL[d.arranque]+' plazas',v:'Aplicado ✓',cls:'free'});
+      priceLines.push(
+        {l:arr.permanenciaMeses+' meses × '+arr.monthly+' €/mes'+(esFundador?' (fundador)':''),v:fmtEuro(totBase)+' €'},
         {l:'Descuento por pago único (12%)',v:'-'+fmtEuro(descuento)+' €'},
-      ];
+        {l:'Precio tras el descuento',v:fmtEuro(tot)+' €'},
+      );
       if(extraTotal>0)priceLines.push({l:'Automatizaciones adicionales, instalación única',v:fmtEuro(extraTotal)+' €'});
       priceLines.push({l:'IVA (21%)',v:fmtEuro(iva)+' €'},{l:'Total con IVA',v:fmtEuro(totalCommitment)+' €',total:true});
     }else{
@@ -1356,14 +1360,16 @@ function getActivePlan(){
       const extraConIva=extraTotal*1.21;
       totalCommitment=totMes*arr.permanenciaMeses+extraConIva;
       subPago='Financiado con SeQura';
-      priceLines=[{l:'Cuota (vía SeQura)',v:fmtEuro(arr.monthly)+' €'},{l:'IVA (21%)',v:fmtEuro(ivaM)+' €'},{l:'Total / mes con IVA',v:fmtEuro(totMes)+' €',total:true}];
+      priceLines=[];
+      if(esFundador)priceLines.push({l:'🏷️ Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[d.arranque]+' de '+FOUNDING_SPOTS_TOTAL[d.arranque]+' plazas',v:'Aplicado ✓',cls:'free'});
+      priceLines.push({l:'Cuota (vía SeQura)'+(esFundador?' (fundador)':''),v:fmtEuro(arr.monthly)+' €'},{l:'IVA (21%)',v:fmtEuro(ivaM)+' €'},{l:'Total / mes con IVA',v:fmtEuro(totMes)+' €',total:true});
       if(extraTotal>0)priceLines.push({l:'+ Automatizaciones adicionales, pago único aparte',v:fmtEuro(extraConIva)+' € con IVA'});
       priceLines.push({l:'Precio a TRUCO ('+arr.permanenciaMeses+' meses, sin comisión de la financiera)',v:fmtEuro(totalCommitment)+' €'});
     }
-    const renewalMsg='Tu primer año de Departamento va incluido en este pago — no es una cuota que vayas abonando mes a mes esperando poder cancelar, ya es tuyo, y es lo que hace posible que la implantación completa vaya gratis. Por eso ese año no tiene reembolso si decides no usarlo. Pasado el año, sigues solo si quieres, mes a mes, sin ningún compromiso nuevo.';
+    const renewalMsg='<b>Paga una vez. Olvídate 365 días.</b> Nada de facturas mensuales — tu primer año de Departamento (web, automatización, mantenimiento, reuniones) va incluido en este pago y funciona los 365 días, sin reembolso si decides no usarlo. Pasado el año, sigues mes a mes si quieres, sin compromiso nuevo.';
     const auditSols=selectedAuditSolutions.map(v=>OPEN_PRICE_SOLUTIONS.find(x=>x.value===v)).filter(Boolean);
     const auditLines=auditSols.map(x=>({l:'+ '+x.name+' (pendiente de auditoría)',v:'desde '+x.from+' € — sin cerrar'}));
-    return{key:selectedDirect,name:d.name,sub:subPago+' · '+arr.permanenciaMeses+' meses incluidos'+(solWord?' · '+solWord+' gratis':'')+(extraSols.length?' + '+extraSols.length+' adicional'+(extraSols.length>1?'es':''):''),arranqueType:d.arranque,breakdown:[...webLine,...solLines,...extraLines,...auditLines,{divider:true},...priceLines],monthlyAfter:arr.monthly,stripe:STRIPE[selectedDirect],totalRaw:isUnico?totalCommitment:null,timeline:selectedDirect,renewalMsg,solutionsIncomplete:selectedTierSolutions.length<arr.freeSols,needsAudit:auditSols.length>0,founding:foundingActive(d.arranque)};
+    return{key:selectedDirect,name:d.name,sub:subPago+' · '+arr.permanenciaMeses+' meses incluidos'+(solWord?' · '+solWord+' gratis':'')+(extraSols.length?' + '+extraSols.length+' adicional'+(extraSols.length>1?'es':''):''),arranqueType:d.arranque,breakdown:[...webLine,...solLines,...extraLines,...auditLines,{divider:true},...priceLines],monthlyAfter:arr.monthly,stripe:STRIPE[selectedDirect],totalRaw:isUnico?totalCommitment:null,timeline:selectedDirect,renewalMsg,solutionsIncomplete:selectedTierSolutions.length<arr.freeSols,needsAudit:auditSols.length>0,founding:esFundador};
   }
   return null;
 }

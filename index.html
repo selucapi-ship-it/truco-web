@@ -1900,11 +1900,19 @@ let chatOpened = false;
 function openChat(){
   const box = document.getElementById('chatBox');
   if(!box) return;
+  if(!chatRestoreAttempted){
+    chatRestoreAttempted = true;
+    if(restoreChatState()){
+      document.getElementById('chatIn')?.focus();
+      return;
+    }
+  }
   box.classList.add('open');
   const floatChat = document.getElementById('float-chat');
   if(floatChat) floatChat.style.display = 'none';
   if(!chatOpened){
     chatOpened = true;
+    saveChatState();
     showTyping();
     setTimeout(() => {
       hideTyping();
@@ -2620,6 +2628,18 @@ let chatSectorAsked = false;
 let chatAwaitingSectorAnswer = false;
 let chatLeadLoggedOnce = false;
 
+// ── Persistencia de la conversación — sin esto, cerrar/reabrir el panel en
+// móvil parece "olvidar" todo, porque iOS/Android descargan de memoria una
+// pestaña en segundo plano y la reconstruyen desde cero al volver a ella; en
+// escritorio nunca se nota porque la página casi nunca llega a recargarse.
+// sessionStorage sobrevive a esa recarga (misma pestaña/sesión) sin arrastrar
+// conversaciones de otro día u otro visitante.
+const CHAT_STATE_KEY = 'truco_chat_state_v1';
+let chatRenderLog = [];
+let chatHadBookingCard = false;
+let isRestoringChat = false;
+let chatRestoreAttempted = false;
+
 function pareceUnNombre(text) {
   // Heurística simple: si trae signo de interrogación, es larga (más de 4
   // palabras) o empieza por una palabra interrogativa típica, no es un
@@ -2685,6 +2705,53 @@ function addMsg(role, text, label) {
   div.innerHTML = (label ? '<div style="font-size:.65rem;font-weight:700;letter-spacing:.04em;color:var(--gold);margin-bottom:5px;">' + label + '</div>' : '') + mdLinksToHtml(text);
   document.getElementById('chatMsgs').appendChild(div);
   document.getElementById('chatMsgs').scrollTop = 99999;
+  chatRenderLog.push({ role, text, label: label || null });
+  saveChatState();
+}
+
+function saveChatState() {
+  if (isRestoringChat) return;
+  try {
+    sessionStorage.setItem(CHAT_STATE_KEY, JSON.stringify({
+      opened: chatOpened,
+      stage: chatStage,
+      userName: chatUserName,
+      userSector: chatUserSector,
+      sectorAsked: chatSectorAsked,
+      awaitingSectorAnswer: chatAwaitingSectorAnswer,
+      leadLoggedOnce: chatLeadLoggedOnce,
+      ctaOffered: chatCtaOffered,
+      hadBookingCard: chatHadBookingCard,
+      history: chatHistory,
+      log: chatRenderLog
+    }));
+  } catch (e) { /* almacenamiento no disponible (privado/lleno) — se sigue sin persistir, no rompe el chat */ }
+}
+
+function restoreChatState() {
+  let data;
+  try { data = JSON.parse(sessionStorage.getItem(CHAT_STATE_KEY) || 'null'); } catch (e) { data = null; }
+  if (!data || !data.opened) return false;
+  isRestoringChat = true;
+  chatStage = data.stage || 'normal';
+  chatUserName = data.userName || null;
+  chatUserSector = data.userSector || null;
+  chatSectorAsked = !!data.sectorAsked;
+  chatAwaitingSectorAnswer = !!data.awaitingSectorAnswer;
+  chatLeadLoggedOnce = !!data.leadLoggedOnce;
+  chatCtaOffered = !!data.ctaOffered;
+  chatHistory = Array.isArray(data.history) ? data.history : [];
+  chatRenderLog = [];
+  chatOpened = true;
+  const box = document.getElementById('chatBox');
+  if (box) box.classList.add('open');
+  const floatChat = document.getElementById('float-chat');
+  if (floatChat) floatChat.style.display = 'none';
+  (Array.isArray(data.log) ? data.log : []).forEach(m => addMsg(m.role, m.text, m.label));
+  isRestoringChat = false;
+  if (data.hadBookingCard) { chatHadBookingCard = false; showBookingCard(); }
+  saveChatState();
+  return true;
 }
 
 function showTyping() {
@@ -2703,6 +2770,8 @@ function showBookingCard() {
     return;
   }
   logChatLead('Se le mostró el calendario de reserva de consultoría gratuita.');
+  chatHadBookingCard = true;
+  saveChatState();
   const card = document.createElement('div');
   card.className = 'msg bot booking-card';
   card.innerHTML = `
