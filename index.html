@@ -2672,10 +2672,17 @@ function logChatLeadFinalSummary() {
 }
 window.addEventListener('beforeunload', logChatLeadFinalSummary);
 
+function mdLinksToHtml(text) {
+  // La IA a veces escribe enlaces en formato markdown [texto](url) — sin
+  // esto se veían tal cual en el chat, como texto plano, no como un enlace
+  // pinchable. Se abre en pestaña nueva para no perder la conversación.
+  return text.replace(/\[([^\]]+)\]\(([^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+}
+
 function addMsg(role, text, label) {
   const div = document.createElement('div');
   div.className = 'msg ' + role;
-  div.innerHTML = (label ? '<div style="font-size:.65rem;font-weight:700;letter-spacing:.04em;color:var(--gold);margin-bottom:5px;">' + label + '</div>' : '') + text;
+  div.innerHTML = (label ? '<div style="font-size:.65rem;font-weight:700;letter-spacing:.04em;color:var(--gold);margin-bottom:5px;">' + label + '</div>' : '') + mdLinksToHtml(text);
   document.getElementById('chatMsgs').appendChild(div);
   document.getElementById('chatMsgs').scrollTop = 99999;
 }
