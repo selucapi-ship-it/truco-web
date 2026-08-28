@@ -587,11 +587,22 @@ img{display:block;max-width:100%;}
 .chat-intro .section-tag{justify-content:center;}
 .chat-intro .section-h2{max-width:640px;margin:0 auto 12px;}
 .chat-intro p{font-size:.95rem;color:var(--grey);line-height:1.75;margin:0 auto 24px;max-width:560px;}
-.chat-box{
-  width:480px;max-width:100%;
-  background:var(--bg);border:1px solid var(--grey-line);border-radius:16px;
-  overflow:hidden;height:520px;display:flex;flex-direction:column;
+.chat-cta-btn{
+  background:var(--blue);border:none;border-radius:10px;color:#fff;
+  padding:14px 28px;font-size:.95rem;font-weight:700;cursor:pointer;
+  transition:opacity var(--tr);
 }
+.chat-cta-btn:hover{opacity:.88;}
+.chat-box{
+  position:fixed;bottom:24px;right:24px;z-index:900;
+  width:380px;max-width:calc(100vw - 32px);
+  background:var(--bg);border:1px solid var(--grey-line);border-radius:16px;
+  overflow:hidden;height:520px;max-height:calc(100vh - 48px);display:flex;flex-direction:column;
+  box-shadow:0 12px 48px rgba(0,0,0,.4);
+  opacity:0;transform:translateY(16px) scale(.97);pointer-events:none;
+  transition:opacity .22s ease,transform .22s ease;
+}
+.chat-box.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
 .chat-header{
   padding:14px 18px;border-bottom:1px solid var(--grey-line);
   display:flex;align-items:center;gap:10px;background:var(--bg-panel);
@@ -600,6 +611,8 @@ img{display:block;max-width:100%;}
 .chat-hname{font-size:.88rem;font-weight:700;}
 .chat-hsub{font-size:.72rem;color:var(--grey);}
 .chat-status{width:8px;height:8px;border-radius:50%;background:var(--green);margin-left:auto;flex-shrink:0;}
+.chat-close-btn{background:none;border:none;color:var(--grey);font-size:1.1rem;line-height:1;cursor:pointer;padding:4px 6px;margin-left:4px;flex-shrink:0;}
+.chat-close-btn:hover{color:var(--white);}
 .chat-msgs{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:10px;}
 .chat-msgs::-webkit-scrollbar{width:3px;}
 .chat-msgs::-webkit-scrollbar-thumb{background:var(--grey-line);}
@@ -624,10 +637,12 @@ img{display:block;max-width:100%;}
 .voice-agent-btn:hover{border-color:var(--blue);}
 .voice-agent-btn.active{background:var(--green-dim);border-color:var(--green);color:var(--green);}
 .voice-agent-btn:disabled{opacity:.6;cursor:not-allowed;}
+.audit-btn{background:var(--blue) !important;border-color:var(--blue) !important;color:#fff !important;}
+.audit-btn:hover{opacity:.88;border-color:var(--blue) !important;}
 .voice-agent-status{font-size:.76rem;color:var(--grey);text-align:center;}
 @media(max-width:900px){.chat-box{height:420px;}}
 @media(max-width:600px){
-  .chat-box{height:min(72vh,540px);border-radius:12px;}
+  .chat-box{height:min(72vh,540px);border-radius:12px;bottom:0;right:0;width:100%;max-width:100%;}
   .chat-header{padding:12px 14px;}
   .chat-hname{font-size:.94rem;}
   .chat-hsub{font-size:.78rem;}
@@ -1713,25 +1728,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="section-tag">Asistente TRUCO</div>
           <h2 class="section-h2">Habla con nuestro asistente ahora mismo</h2>
           <p>Pregúntale cualquier cosa: precios, servicios, cómo empezar, si somos la opción correcta para tu negocio. Nuestro asistente está disponible ahora mismo para resolver todas tus dudas.</p>
-        </div>
-        <div class="chat-box" id="chatBox">
-          <div class="chat-header">
-            <div class="chat-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-            <div>
-              <div class="chat-hname">Asistente TRUCO</div>
-              <div class="chat-hsub">Departamento Tecnológico</div>
-            </div>
-            <div class="chat-status"></div>
-          </div>
-          <div class="chat-msgs" id="chatMsgs"></div>
-          <div class="chat-input-row">
-            <input class="chat-input" id="chatIn" type="text" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendMsg()">
-            <button class="chat-send" onclick="sendMsg()">Enviar</button>
-          </div>
-          <div class="voice-agent-row">
-            <button class="voice-agent-btn" id="voiceAgentBtn" onclick="toggleVoiceAgent()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg> Hablar con asistente virtual</button>
-            <div class="voice-agent-status" id="voiceAgentStatus" style="display:none;"></div>
-          </div>
+          <button class="chat-cta-btn" onclick="openChat()">Empezar a chatear</button>
         </div>
       </div>
     </div>
@@ -1801,10 +1798,33 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 <!-- ── FLOAT CHAT BTN ── -->
 <div id="float-chat">
   <div class="float-label" id="floatLabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:3px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> ¿Hablamos?</div>
-  <button class="float-btn" onclick="scrollToChat()" title="Hablar con el asistente">
+  <button class="float-btn" onclick="openChat()" title="Hablar con el asistente">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
     <span class="float-notif" id="floatNotif"></span>
   </button>
+</div>
+
+<!-- ── PANEL DE CHAT (flotante, fuera de cualquier sección con transform) ── -->
+<div class="chat-box" id="chatBox">
+  <div class="chat-header">
+    <div class="chat-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    <div>
+      <div class="chat-hname">Asistente TRUCO</div>
+      <div class="chat-hsub">Departamento Tecnológico</div>
+    </div>
+    <div class="chat-status"></div>
+    <button class="chat-close-btn" onclick="closeChat()" title="Cerrar" aria-label="Cerrar chat">✕</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs"></div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chatIn" type="text" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendMsg()">
+    <button class="chat-send" onclick="sendMsg()">Enviar</button>
+  </div>
+  <div class="voice-agent-row">
+    <button class="voice-agent-btn audit-btn" onclick="showBookingCard()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Agenda auditoría</button>
+    <button class="voice-agent-btn" id="voiceAgentBtn" onclick="toggleVoiceAgent()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg> Hablar con asistente virtual</button>
+    <div class="voice-agent-status" id="voiceAgentStatus" style="display:none;"></div>
+  </div>
 </div>
 
 <script src="founding-offer.js"></script>
@@ -1873,8 +1893,43 @@ function toggleFaq(btn){
   }
 }
 
-/* ── FLOAT CHAT ── */
-function scrollToChat(){document.getElementById('chat-section').scrollIntoView({behavior:'smooth'});}
+/* ── PANEL DE CHAT — cerrado por defecto, nada se escribe hasta que el
+   usuario decide abrirlo (nunca se abre solo ni escribe nada al cargar la
+   página, para no parecer publicidad). ── */
+let chatOpened = false;
+function openChat(){
+  const box = document.getElementById('chatBox');
+  if(!box) return;
+  box.classList.add('open');
+  const floatChat = document.getElementById('float-chat');
+  if(floatChat) floatChat.style.display = 'none';
+  if(!chatOpened){
+    chatOpened = true;
+    showTyping();
+    setTimeout(() => {
+      hideTyping();
+      addMsg('bot', 'Hola, soy el asistente de <b>TRUCOtechnology</b>.');
+      showTyping();
+      setTimeout(() => {
+        hideTyping();
+        addMsg('bot', '¿Cómo te llamas, para dirigirme a ti?');
+      }, 900);
+    }, 700);
+  }
+  document.getElementById('chatIn')?.focus();
+}
+function closeChat(){
+  const box = document.getElementById('chatBox');
+  if(box) box.classList.remove('open');
+  const floatChat = document.getElementById('float-chat');
+  if(floatChat) floatChat.style.display = '';
+}
+// Llegar desde el botón flotante de otra página (index.html#chat-section) es
+// una señal explícita de que quiere hablar — ahí sí se abre solo. Una carga
+// normal de la portada nunca abre nada por su cuenta.
+if(location.hash === '#chat-section'){
+  window.addEventListener('DOMContentLoaded', () => setTimeout(openChat, 300));
+}
 setTimeout(()=>{
   document.getElementById('floatNotif').style.display='block';
   document.getElementById('floatLabel').classList.add('show');
@@ -2555,8 +2610,6 @@ return { detectIntent, getResponse };
 
 // ── CHAT UI ──
 let msgs_ctx = [];
-let chatTurnCount = 0;
-let chatDiscussedTopics = new Set();
 let chatCtaOffered = false;
 
 // ── Identificación del visitante — ninguna conversación se queda anónima ──
@@ -2566,6 +2619,17 @@ let chatUserSector = null;
 let chatSectorAsked = false;
 let chatAwaitingSectorAnswer = false;
 let chatLeadLoggedOnce = false;
+
+function pareceUnNombre(text) {
+  // Heurística simple: si trae signo de interrogación, es larga (más de 4
+  // palabras) o empieza por una palabra interrogativa típica, no es un
+  // nombre — es una pregunta real que no hay que descartar.
+  const t = text.trim();
+  if (/[?¿]/.test(t)) return false;
+  if (t.split(/\s+/).length > 4) return false;
+  if (/^(que|qué|como|cómo|cuando|cuándo|donde|dónde|cual|cuál|cuanto|cuánto|cuanta|cuánta|cuantos|cuántos|cuantas|cuántas|por qué|porque)\b/i.test(t)) return false;
+  return true;
+}
 
 function parseNameFromReply(text) {
   // La gente casi nunca responde solo con el nombre — quita las muletillas
@@ -2626,6 +2690,11 @@ function showTyping() {
 function hideTyping() { const e = document.getElementById('typing'); if(e) e.remove(); }
 
 function showBookingCard() {
+  const existing = document.querySelector('.booking-card');
+  if (existing) {
+    existing.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return;
+  }
   logChatLead('Se le mostró el calendario de reserva de consultoría gratuita.');
   const card = document.createElement('div');
   card.className = 'msg bot booking-card';
@@ -2703,13 +2772,19 @@ function sendMsg() {
   addMsg('user', text);
   chatHistory.push({ role: 'user', text });
 
-  // ── Fase 1: nombre ── nunca dejamos pasar una conversación sin nombre.
+  // ── Fase 1: nombre ── si de verdad responde con su nombre, lo usamos y
+  // saludamos. Si su primera respuesta ya es una pregunta real (lo más
+  // habitual), no la desperdiciamos fingiendo que nos ha dado un nombre —
+  // pasamos directo a resolvérsela, sin obligarle a repetirla.
   if (chatStage === 'ask_name') {
-    chatUserName = parseNameFromReply(text);
+    if (pareceUnNombre(text)) {
+      chatUserName = parseNameFromReply(text);
+      chatStage = 'ask_help';
+      const msg = 'Encantado, ' + chatUserName + '. ¿En qué puedo ayudarte hoy?';
+      setTimeout(() => { addMsg('bot', msg); chatHistory.push({ role: 'bot', text: msg }); }, 500);
+      return;
+    }
     chatStage = 'ask_help';
-    const msg = 'Encantado, ' + chatUserName + '. ¿En qué puedo ayudarte hoy?';
-    setTimeout(() => { addMsg('bot', msg); chatHistory.push({ role: 'bot', text: msg }); }, 500);
-    return;
   }
 
   // ── Fase 2: motivo ── su respuesta aquí es la primera pregunta real;
@@ -2731,62 +2806,39 @@ function sendMsg() {
     if (loQuiereSoloInfo) return;
   }
 
-  chatTurnCount++;
-  const intentKey = TRUCO_CHAT.detectIntent(text);
-
-  if (intentKey === 'fallback') {
-    // El asistente básico no lo tiene claro — pasa con TRUCO PRO (IA).
-    logChatQuestion(text);
-    showTyping();
-    askTrucoPro(text, chatHistory).then((aiResp) => {
-      hideTyping();
-      if (!aiResp.unresolved) {
-        // TRUCO PRO lo resuelve directamente.
-        addMsg('bot', aiResp.text, 'Asistente TRUCO PRO');
-        chatHistory.push({ role: 'bot', text: aiResp.text });
-        maybeAskSector();
-      } else if (aiResp.reason === 'off_topic') {
-        // Pregunta genuinamente fuera de tema (que la IA detectó, no el
-        // matcher local): rechazo educado, SIN ofrecer cita — un "¿eres
-        // tonto?" no debe acabar empujando a reservar.
-        const msg = aiResp.text || 'Lo siento, pero ese tema no corresponde a TRUCOtechnology.';
-        addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null);
-        chatHistory.push({ role: 'bot', text: msg });
-      } else {
-        // Pregunta relacionada con el negocio que ni TRUCO PRO ha podido
-        // resolver del todo (caso legal/fiscal muy específico, presupuesto
-        // a medida, fallo técnico...): muestra su explicación y ofrece
-        // agendar directamente — siempre, no solo la primera vez.
-        const msg = aiResp.text || 'Eso se sale de lo que puedo resolverte yo — pero si quieres, te reservo ahora mismo una consultoría gratuita con el equipo y lo resolvemos ahí.';
-        addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null);
-        chatHistory.push({ role: 'bot', text: msg });
-        chatCtaOffered = true;
-        setTimeout(() => showBookingCard(), 400);
-      }
-    });
-    return;
-  }
-
-  chatDiscussedTopics.add(intentKey);
-  const response = TRUCO_CHAT.getResponse(intentKey, {
-    turnCount: chatTurnCount,
-    discussedTopics: chatDiscussedTopics,
-    ctaOffered: chatCtaOffered
-  });
-
-  // Simular tiempo de escritura natural (más largo = más texto)
-  const delay = Math.min(600 + response.text.length * 2, 2200);
+  // Toda pregunta real va siempre al asistente de IA (TRUCO PRO) — nunca al
+  // motor de coincidencias local (TRUCO_CHAT): con una simple errata o una
+  // frase que no encajaba exactamente en sus patrones, ese motor podía
+  // responder "no puedo resolverte esa duda" a preguntas que la IA sí sabe
+  // responder perfectamente (ej. "cuantas plazas de funddor quedan?").
+  logChatQuestion(text);
   showTyping();
-  setTimeout(() => {
+  askTrucoPro(text, chatHistory).then((aiResp) => {
     hideTyping();
-    addMsg('bot', response.text);
-    chatHistory.push({ role: 'bot', text: response.text });
-    if (response.action === 'MOSTRAR_CITA') {
+    if (!aiResp.unresolved) {
+      // TRUCO PRO lo resuelve directamente.
+      addMsg('bot', aiResp.text, 'Asistente TRUCO PRO');
+      chatHistory.push({ role: 'bot', text: aiResp.text });
+      maybeAskSector();
+    } else if (aiResp.reason === 'off_topic') {
+      // Pregunta genuinamente fuera de tema (detectada por la IA): rechazo
+      // educado, SIN ofrecer cita — un "¿eres tonto?" no debe acabar
+      // empujando a reservar.
+      const msg = aiResp.text || 'Lo siento, pero ese tema no corresponde a TRUCOtechnology.';
+      addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null);
+      chatHistory.push({ role: 'bot', text: msg });
+    } else {
+      // Pregunta relacionada con el negocio que ni TRUCO PRO ha podido
+      // resolver del todo (caso legal/fiscal muy específico, presupuesto a
+      // medida, fallo técnico...): muestra su explicación y ofrece agendar
+      // directamente — siempre, no solo la primera vez.
+      const msg = aiResp.text || 'Eso se sale de lo que puedo resolverte yo — pero si quieres, te reservo ahora mismo una consultoría gratuita con el equipo y lo resolvemos ahí.';
+      addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null);
+      chatHistory.push({ role: 'bot', text: msg });
       chatCtaOffered = true;
       setTimeout(() => showBookingCard(), 400);
     }
-    maybeAskSector();
-  }, delay);
+  });
 }
 
 // ── AGENTE DE VOZ (LiveKit + Gemini) ──
@@ -2873,10 +2925,6 @@ function resetVoiceUI() {
   if (audioEl) audioEl.remove();
 }
 
-// Bienvenida inicial — primero el nombre, así ninguna conversación queda anónima.
-setTimeout(() => {
-  addMsg('bot', 'Hola, soy el asesor de <b>TRUCOtechnology</b>. ¿Cómo te llamas, para saber cómo dirigirme a ti?');
-}, 600);
 </script>
 
 <!-- MOBILE NAV -->
