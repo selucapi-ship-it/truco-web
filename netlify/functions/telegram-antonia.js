@@ -1,5 +1,5 @@
-// ANTONIA v3 — asistente administrativa personal del founder, por Telegram.
-// (fuerza redeploy para recoger GOOGLE_CALENDAR_ID / GOOGLE_SERVICE_ACCOUNT_JSON_B64)
+// ANTONIA v4 — asistente administrativa personal del founder, por Telegram.
+// (fuerza redeploy tras borrar la variable duplicada UPABASE_SERVICE_ROLE_KEY)
 // Webhook de Telegram: recibe cada mensaje, comprueba que es el founder
 // (nunca responde a nadie más, ni siquiera para decir que existe), recoge un
 // resumen en vivo de fiscalidad + clientes/leads + facturación TruKi +
