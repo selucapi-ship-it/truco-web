@@ -222,6 +222,32 @@ exports.handler = async function (event) {
     fetchCalendario(),
   ]);
 
+  // Comando de diagnóstico: manda de vuelta el estado real de cada fuente
+  // tal cual, sin pasar por Gemini — para depurar sin depender de los logs
+  // de Netlify (que no se han podido leer de forma fiable desde fuera).
+  if (texto.trim() === '/diag') {
+    const diag = `DIAGNÓSTICO ANTONIA
+Variables presentes: TRUKI_URL=${!!trukiUrl} TRUKI_KEY=${!!trukiKey} GOOGLE_SA=${!!process.env.GOOGLE_SERVICE_ACCOUNT_JSON_B64} GOOGLE_CAL_ID=${!!process.env.GOOGLE_CALENDAR_ID}
+
+[FISCALIDAD]
+${fiscal}
+
+[CLIENTES]
+${clientes}
+
+[TRUKI]
+${truki}
+
+[CALENDARIO]
+${calendario}`;
+    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, text: diag.slice(0, 4000) }),
+    });
+    return { statusCode: 200, body: 'ok' };
+  }
+
   const contexto = `DATOS REALES AHORA MISMO:
 
 [FISCALIDAD — trimestre en curso]
