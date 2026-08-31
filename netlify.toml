@@ -19,16 +19,23 @@
     X-Frame-Options = "SAMEORIGIN"
     # Cabeceras añadidas tras la auditoría de seguridad del 31 ago 2026 —
     # ninguna de estas cuatro puede romper nada del sitio (no restringen qué
-    # recursos externos se cargan, a diferencia de una Content-Security-Policy,
-    # que se deja fuera a propósito: el sitio carga Google Fonts, Supabase,
-    # Google Calendar, LiveKit y Stripe desde decenas de páginas distintas, y
-    # una CSP mal escrita rompería el chat, el pago o la reserva de citas en
-    # producción sin previo aviso. Se construye aparte, con tiempo para probar
-    # cada página, no de un tirón.
+    # recursos externos se cargan). La CSP que sí podría romper algo si está
+    # mal escrita (el chat, el pago, la reserva de citas) va aparte, más abajo,
+    # y de momento SOLO en modo informe — nunca bloquea nada todavía.
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
     Permissions-Policy = "geolocation=(), camera=(), payment=(self)"
+    # CSP en modo SOLO INFORME (Report-Only): no bloquea nada, solo avisa en la
+    # consola del navegador de cada visitante si algo carga fuera de esta
+    # lista — es el primer paso, seguro, antes de plantearse una CSP que sí
+    # bloquee de verdad. Lista construida repasando cada script/stylesheet
+    # externo real del sitio (Google Fonts, Supabase, el botón de citas de
+    # Google Calendar, LiveKit para el agente de voz, Supabase-js y xlsx vía
+    # unpkg, Google Tag Manager). 'unsafe-inline' en script-src/style-src
+    # porque el sitio entero usa <script>/style="" inline sin nonces — quitarlo
+    # sería una migración aparte, no algo para hacer de un tirón hoy.
+    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self' 'unsafe-inline' https://calendar.google.com https://cdn.jsdelivr.net https://unpkg.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://calendar.google.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://oxdopzvbrxdsjvzxmpxy.supabase.co wss://oxdopzvbrxdsjvzxmpxy.supabase.co https://www.google-analytics.com https://www.googletagmanager.com wss://*.livekit.cloud https://*.livekit.cloud; frame-src https://calendar.google.com; object-src 'none'; base-uri 'self'; form-action 'self' https://calendar.google.com"
 
 [[redirects]]
   from = "/sectores/clinicas-dentales.html"
