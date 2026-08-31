@@ -604,7 +604,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       <div class="trust-chip">Sin sorpresas</div>
     </div>
     <div class="sb-cta">
-      <button class="pay-btn" id="payBtn" disabled onclick="handlePay()">
+      <button class="pay-btn" id="payBtn" disabled onclick="trucoTrackClick('pago_confirmar_pagar');handlePay()">
         <span id="btn-text">Selecciona un plan</span>
       </button>
       <button class="sb-email-btn" id="sb-email-btn" style="display:none;" onclick="emailMeSummary()">✉ Enviarme este resumen, lo decido con calma</button>
@@ -1615,5 +1615,6 @@ function toggleFaq(btn){
   else if(plan==='esencial'||plan==='web'||plan==='digital')selectDirect('arranque-basic');
 })();
 </script>
+<script src="analytics-tracking.js"></script>
 </body>
 </html>

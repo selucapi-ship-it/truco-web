@@ -223,7 +223,7 @@
   /* ── ESTADÍSTICAS (overlay, founder-only) ── */
   #stats-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
   #stats-btn:hover{border-color:var(--gold);color:var(--gold);}
-  #stats-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+  #stats-overlay,#activity-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
   .stats-box{width:100%;max-width:920px;margin:0 auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:18px;padding:30px 32px;box-shadow:var(--shadow-card);}
   .stats-box h2{font-family:var(--font-d);font-size:1.5rem;margin:0 0 18px;letter-spacing:-.01em;}
   .stats-close{float:right;background:none;border:1px solid var(--grey-line);border-radius:8px;width:32px;height:32px;color:var(--grey);font-size:1rem;cursor:pointer;transition:border-color .15s,color .15s;}
@@ -442,6 +442,7 @@
     <div>
       <button id="settings-btn" onclick="openSettingsOverlay()">Ajustes</button>
       <button id="stats-btn" onclick="openStatsOverlay()" style="display:none;">Estadísticas</button>
+      <button id="activity-btn" onclick="openActivityOverlay()" style="display:none;">Interacciones</button>
       <button id="truki-btn" onclick="openTrukiOverlay()" style="display:none;">TruKi</button>
       <button id="quotes-btn" onclick="openQuotesOverlay()" style="display:none;">Presupuestos</button>
       <button id="prices-btn" onclick="openPricesOverlay()" style="display:none;">Precios</button>
@@ -451,6 +452,47 @@
       <button id="cobros-btn" onclick="openCobrosOverlay()" style="display:none;">Cobros</button>
       <button id="audit-btn" onclick="openAuditOverlay()" style="display:none;">Auditoría</button>
       <button id="logout-btn" onclick="doLogout()">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <div id="activity-overlay">
+    <div class="stats-box">
+      <button class="stats-close" onclick="closeActivityOverlay()">✕</button>
+      <h2>Interacciones y Actividad</h2>
+      <p style="color:var(--grey);font-size:.82rem;margin:-8px 0 20px;">Qué está haciendo la gente en tu web: conversaciones, páginas más vistas, botones más pulsados, y qué merece la pena revisar.</p>
+      <div class="stats-grid">
+        <div class="stats-card wide">
+          <h3>Actividad reciente del chat y del asistente de voz</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+            <select id="activity-filter-source" onchange="loadActivityFeed()">
+              <option value="">Todos los tipos</option>
+              <option value="chat">💬 Chat</option>
+              <option value="voice">📞 Voz</option>
+              <option value="checkout">💳 Compra</option>
+              <option value="manual">📝 Manual</option>
+            </select>
+            <select id="activity-filter-days" onchange="loadActivityFeed()">
+              <option value="7">Últimos 7 días</option>
+              <option value="30" selected>Últimos 30 días</option>
+              <option value="90">Últimos 90 días</option>
+              <option value="99999">Todo</option>
+            </select>
+          </div>
+          <div id="activity-feed-list"></div>
+        </div>
+        <div class="stats-card">
+          <h3>Páginas más vistas (30 días)</h3>
+          <table class="stats-table" id="top-pages-table"></table>
+        </div>
+        <div class="stats-card">
+          <h3>Botones más pulsados (30 días)</h3>
+          <table class="stats-table" id="top-buttons-table"></table>
+        </div>
+        <div class="stats-card wide">
+          <h3>Auto-diagnóstico</h3>
+          <div id="activity-diagnostico"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1348,6 +1390,7 @@ async function checkFounderStatus() {
   isFounder = !!(data && data.role === 'founder');
   document.getElementById('team-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('stats-btn').style.display = isFounder ? 'inline-block' : 'none';
+  document.getElementById('activity-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('truki-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('new-client-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('quotes-btn').style.display = isFounder ? 'inline-block' : 'none';
@@ -1372,6 +1415,102 @@ function openStatsOverlay() {
 }
 function closeStatsOverlay() {
   document.getElementById('stats-overlay').style.display = 'none';
+}
+
+// ── INTERACCIONES Y ACTIVIDAD — chat/voz filtrable + páginas y botones más
+// usados (page_views/button_clicks, ver supabase/migration_site_analytics.sql)
+// + un auto-diagnóstico de reglas simples sobre esos mismos datos. ──
+function openActivityOverlay() {
+  document.getElementById('activity-overlay').style.display = 'block';
+  loadActivityFeed();
+  loadActivityAnalytics();
+}
+function closeActivityOverlay() {
+  document.getElementById('activity-overlay').style.display = 'none';
+}
+
+async function loadActivityFeed() {
+  const box = document.getElementById('activity-feed-list');
+  const source = document.getElementById('activity-filter-source').value;
+  const days = Number(document.getElementById('activity-filter-days').value);
+  let q = sb.from('interactions').select('source, nota, created_at, client_id, clients(nombre, negocio)').order('created_at', { ascending: false }).limit(60);
+  if (source) q = q.eq('source', source);
+  if (days < 99999) q = q.gte('created_at', new Date(Date.now() - days * 86400000).toISOString());
+  const { data, error } = await q;
+  if (error || !data) { box.innerHTML = '<div class="empty-mini">No se pudo cargar la actividad.</div>'; return; }
+  const sourceLabels = { chat: '💬 Chat', voice: '📞 Voz', manual: '📝 Manual', checkout: '💳 Compra', whatsapp: '💬 WhatsApp' };
+  box.innerHTML = data.map(i => {
+    const nombreCliente = i.clients && i.clients.nombre;
+    const negocio = i.clients && i.clients.negocio;
+    return `<div class="truki-row">
+      <div><div class="tr-name">${nombreCliente ? escapeHtml(nombreCliente) + (negocio ? ' · ' + escapeHtml(negocio) : '') : '<span style="color:var(--grey);">(sin identificar todavía)</span>'}</div>
+      <div class="tr-meta">${sourceLabels[i.source] || i.source} · ${new Date(i.created_at).toLocaleString('es-ES', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</div>
+      ${i.nota ? `<div style="color:var(--grey);font-size:.78rem;margin-top:4px;max-width:520px;">${escapeHtml(i.nota)}</div>` : ''}</div>
+    </div>`;
+  }).join('') || '<div class="empty-mini">Nada con estos filtros todavía.</div>';
+}
+
+// Lista de páginas reales del sitio — sirve para detectar cuáles no han
+// recibido NINGUNA visita en el periodo (páginas "muertas"). Hay que
+// mantenerla a mano si se añaden o quitan páginas nuevas al sitio.
+const ALL_SITE_PAGES = [
+  '/', '/servicios.html', '/digitaliza.html', '/pago.html',
+  '/departamentos/start.html', '/departamentos/basic.html', '/departamentos/lite.html', '/departamentos/pro.html',
+  '/sectores/oficios.html', '/sectores/abogados.html', '/sectores/gimnasios.html', '/sectores/inmobiliarias.html', '/sectores/estetica.html', '/sectores/clinicas.html', '/sectores/comercio-pequeno.html',
+  '/soluciones/docs.html', '/soluciones/whatsapp.html', '/soluciones/crm.html', '/soluciones/ciberseguridad.html', '/soluciones/email-ia.html', '/soluciones/reservas.html', '/soluciones/flujos-a-medida.html', '/soluciones/web-ia.html', '/soluciones/truki.html', '/soluciones/integraciones.html', '/soluciones/llamadas.html', '/soluciones/firma.html',
+  '/proyectos/web-profesional.html'
+];
+
+async function loadActivityAnalytics() {
+  const pagesTable = document.getElementById('top-pages-table');
+  const buttonsTable = document.getElementById('top-buttons-table');
+  const diag = document.getElementById('activity-diagnostico');
+
+  const [{ data: pages, error: pagesErr }, { data: buttons, error: buttonsErr }] = await Promise.all([
+    sb.rpc('top_pages', { p_days: 30 }),
+    sb.rpc('top_buttons', { p_days: 30 }),
+  ]);
+
+  if (pagesErr || !pages) {
+    pagesTable.innerHTML = '<tr><td class="empty-mini">No se pudo cargar.</td></tr>';
+  } else {
+    pagesTable.innerHTML = '<tr><th>Página</th><th>Visitas</th></tr>' +
+      (pages.length ? pages.map(p => `<tr><td>${escapeHtml(p.page)}</td><td>${p.visitas}</td></tr>`).join('') : '<tr><td class="empty-mini" colspan="2">Todavía sin datos.</td></tr>');
+  }
+
+  if (buttonsErr || !buttons) {
+    buttonsTable.innerHTML = '<tr><td class="empty-mini">No se pudo cargar.</td></tr>';
+  } else {
+    buttonsTable.innerHTML = '<tr><th>Botón</th><th>Clics</th></tr>' +
+      (buttons.length ? buttons.map(b => `<tr><td>${escapeHtml(b.button_key)}</td><td>${b.clics}</td></tr>`).join('') : '<tr><td class="empty-mini" colspan="2">Todavía sin datos.</td></tr>');
+  }
+
+  // ── Auto-diagnóstico — reglas simples y transparentes sobre datos reales,
+  // nada de IA aquí: solo comparar lo esperado (todas las páginas del sitio)
+  // contra lo que de verdad ha recibido tráfico. ──
+  const notas = [];
+  if (pages && pages.length) {
+    const visitedSet = new Set(pages.map(p => p.page));
+    if (visitedSet.has('/index.html')) visitedSet.add('/');
+    if (visitedSet.has('/')) visitedSet.add('/index.html');
+    const deadPages = ALL_SITE_PAGES.filter(p => !visitedSet.has(p));
+    if (deadPages.length) {
+      notas.push(`<b>${deadPages.length} página(s) sin ninguna visita en 30 días:</b> ${deadPages.map(escapeHtml).join(', ')}. Si crees que deberían recibir tráfico, revisa si están enlazadas desde algún sitio visible (menú, otras páginas, redes) — una página sin enlaces de entrada no la ve nadie, por buen contenido que tenga.`);
+    } else {
+      notas.push('Todas las páginas del sitio han recibido al menos una visita en los últimos 30 días.');
+    }
+    const top = pages[0];
+    if (top) notas.push(`<b>La página más vista es "${escapeHtml(top.page)}"</b> con ${top.visitas} visita(s) — si vas a destacar algo en redes o anuncios, esa página ya demuestra que atrae atención.`);
+  } else {
+    notas.push('Todavía no hay suficientes visitas registradas para sacar conclusiones — vuelve a mirar esto dentro de unos días.');
+  }
+  if (buttons && buttons.length) {
+    const lowClicks = buttons.filter(b => Number(b.clics) <= 1);
+    if (lowClicks.length) {
+      notas.push(`<b>${lowClicks.length} botón(es) con muy poca actividad (1 clic o menos):</b> ${lowClicks.map(b => escapeHtml(b.button_key)).join(', ')}. Puede que su texto, color o posición no llame la atención — valora cambiarlos.`);
+    }
+  }
+  diag.innerHTML = notas.length ? notas.map(n => `<p style="margin:0 0 12px;font-size:.85rem;line-height:1.6;">${n}</p>`).join('') : '<div class="empty-mini">Sin datos suficientes todavía.</div>';
 }
 
 // ── NUEVO CLIENTE (alta manual, founder-only) ───────────────────────────────

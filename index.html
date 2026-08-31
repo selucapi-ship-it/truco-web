@@ -951,7 +951,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <li><a href="portal/login.html" style="opacity:.75;">Acceso clientes</a></li>
     <li><a href="pago.html">Contratar</a></li>
   </ul>
-  <a class="nav-cta" href="#chat-section">Hablar con el asistente</a>
+<a class="nav-cta" href="#chat-section" onclick="trucoTrackClick('nav_hablar_asistente')">Hablar con el asistente</a>
   <div class="nav-toggle" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </div>
@@ -971,8 +971,8 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <p class="hero-sub">Web con la visibilidad que nunca has tenido, y asistentes de IA <strong>entrenados para tu negocio</strong> — no un robot en blanco que tengas que enseñar tú. Trabajarán para ti desde el primer día en tu WhatsApp o en tu web, agendando citas solas. Cualquier duda, resuelta las 24 horas.</p>
       <p class="hero-question">Para eso ya estamos nosotros.</p>
       <div class="hero-btns">
-        <a class="btn-primary" href="#chat-section">Hablar con el asistente</a>
-        <a class="btn-ghost" href="servicios.html">Ver servicios</a>
+<a class="btn-primary" href="#chat-section" onclick="trucoTrackClick('hero_hablar_asistente')">Hablar con el asistente</a>
+<a class="btn-ghost" href="servicios.html" onclick="trucoTrackClick('hero_ver_servicios')">Ver servicios</a>
       </div>
       <div class="hero-trust">
         <div class="hero-trust-item">
@@ -1312,7 +1312,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     </div>
     <div class="sectores-cta">
       <p><b>¿Tu sector no está aquí?</b> Si recibes mensajes de clientes y quieres que alguien los atienda por ti sin que tengas que comprar nada nuevo, el Departamento Tecnológico es para ti.</p>
-      <a class="btn-primary" href="#chat-section">Cuéntanos tu caso →</a>
+<a class="btn-primary" href="#chat-section" onclick="trucoTrackClick('midpage_cuentanos_tu_caso')">Cuéntanos tu caso →</a>
     </div>
   </div>
 </section>
@@ -1739,7 +1739,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="section-tag">Asistente TRUCO</div>
           <h2 class="section-h2">Habla con nuestro asistente ahora mismo</h2>
           <p>Pregúntale cualquier cosa: precios, servicios, cómo empezar, si somos la opción correcta para tu negocio. Nuestro asistente está disponible ahora mismo para resolver todas tus dudas.</p>
-          <button class="chat-cta-btn" onclick="openChat()">Empezar a chatear</button>
+<button class="chat-cta-btn" onclick="trucoTrackClick('chatsection_empezar_a_chatear');openChat()">Empezar a chatear</button>
           <div class="social-follow">
             <span class="social-follow-label">Síguenos</span>
             <a href="https://www.instagram.com/trucotechnology/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none"/></svg></a>
@@ -1762,8 +1762,8 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <p>Reserva una consultoría gratuita y te decimos, sin compromiso, qué tamaño de departamento encaja con tu negocio hoy.</p>
       </div>
       <div class="cta-btns">
-        <a class="btn-primary" href="#chat-section">Hablar con el asistente</a>
-        <a class="btn-ghost" href="servicios.html">Ver servicios</a>
+<a class="btn-primary" href="#chat-section" onclick="trucoTrackClick('ctafinal_hablar_asistente')">Hablar con el asistente</a>
+<a class="btn-ghost" href="servicios.html" onclick="trucoTrackClick('ctafinal_ver_servicios')">Ver servicios</a>
       </div>
     </div>
   </div>
@@ -1822,7 +1822,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 <!-- ── FLOAT CHAT BTN ── -->
 <div id="float-chat">
   <div class="float-label" id="floatLabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:3px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> ¿Hablamos?</div>
-  <button class="float-btn" onclick="openChat()" title="Hablar con el asistente">
+  <button class="float-btn" onclick="trucoTrackClick('float_chat_btn');openChat()" title="Hablar con el asistente">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
     <span class="float-notif" id="floatNotif"></span>
   </button>
@@ -1845,8 +1845,8 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <button class="chat-send" onclick="sendMsg()">Enviar</button>
   </div>
   <div class="voice-agent-row">
-    <button class="voice-agent-btn audit-btn" onclick="showBookingCard()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Agenda auditoría</button>
-    <button class="voice-agent-btn" id="voiceAgentBtn" onclick="toggleVoiceAgent()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg> Hablar con asistente virtual</button>
+    <button class="voice-agent-btn audit-btn" onclick="trucoTrackClick('chat_agenda_auditoria');showBookingCard()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Agenda auditoría</button>
+    <button class="voice-agent-btn" id="voiceAgentBtn" onclick="trucoTrackClick('chat_hablar_asistente_virtual');toggleVoiceAgent()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg> Hablar con asistente virtual</button>
     <div class="voice-agent-status" id="voiceAgentStatus" style="display:none;"></div>
   </div>
 </div>
@@ -3114,8 +3114,8 @@ function resetVoiceUI() {
   <a href="#nosotros">Nosotros</a>
   <a href="#sectores" style="background:linear-gradient(90deg,#f2c14e,var(--gold) 55%,#c98f1f);color:#1a1206;font-weight:800;">¿Es esto para ti?</a>
   <a href="#faq">FAQ</a>
-  <a href="pago.html" style="color:var(--blue);font-weight:700;">Ir a contratación →</a>
-  <a href="#chat-section">Hablar con el asistente →</a>
+<a href="pago.html" style="color:var(--blue);font-weight:700;" onclick="trucoTrackClick('mobilemenu_ir_a_contratacion')">Ir a contratación →</a>
+<a href="#chat-section" onclick="trucoTrackClick('mobilemenu_hablar_asistente')">Hablar con el asistente →</a>
 </div>
 
 <script>
@@ -3339,5 +3339,6 @@ function loadGA(){
   }
 })();
 </script>
+<script src="analytics-tracking.js"></script>
 </body>
 </html>
