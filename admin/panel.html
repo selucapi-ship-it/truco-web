@@ -1049,6 +1049,11 @@
 
       <div class="anon-section" id="anon-section">
         <div class="timeline-title">Sesiones de chat sin identificar</div>
+        <div id="anon-toolbar" style="display:none;align-items:center;gap:10px;margin-bottom:8px;font-size:.78rem;">
+          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;"><input type="checkbox" id="anon-select-all" onchange="toggleSelectAllAnon(this.checked)"> Seleccionar todo</label>
+          <button class="del-btn" id="anon-delete-selected-btn" onclick="deleteSelectedAnonInteractions()" disabled>Borrar seleccionadas (0)</button>
+          <button class="del-btn" onclick="deleteAllAnonInteractions()">Borrar todas</button>
+        </div>
         <div id="anon-list"></div>
       </div>
     </div>
@@ -3350,24 +3355,60 @@ async function loadAnonymousSessions() {
     .order('created_at', { ascending: false })
     .limit(60);
   const list = document.getElementById('anon-list');
+  const toolbar = document.getElementById('anon-toolbar');
   if (!data || !data.length) {
     list.innerHTML = '<div style="color:var(--grey);font-size:.78rem;">Ninguna todavía.</div>';
+    toolbar.style.display = 'none';
     return;
   }
+  toolbar.style.display = 'flex';
+  document.getElementById('anon-select-all').checked = false;
   list.innerHTML = data.map(i => `
     <div class="anon-item">
-      <div>
-        <div class="q">${escapeHtml(i.nota || '(sin texto)')}</div>
-        <div class="meta">${new Date(i.created_at).toLocaleString('es-ES')} · sesión ${escapeHtml((i.session_id || '').slice(0, 8))}</div>
-      </div>
+      <label style="display:flex;align-items:center;gap:8px;flex:1;cursor:pointer;">
+        <input type="checkbox" class="anon-check" data-id="${i.id}" onchange="updateAnonSelectionCount()">
+        <div>
+          <div class="q">${escapeHtml(i.nota || '(sin texto)')}</div>
+          <div class="meta">${new Date(i.created_at).toLocaleString('es-ES')} · sesión ${escapeHtml((i.session_id || '').slice(0, 8))}</div>
+        </div>
+      </label>
       <button class="del-btn" onclick="deleteAnonInteraction('${i.id}')">Borrar</button>
     </div>
   `).join('');
+  updateAnonSelectionCount();
+}
+
+function toggleSelectAllAnon(checked) {
+  document.querySelectorAll('.anon-check').forEach(cb => { cb.checked = checked; });
+  updateAnonSelectionCount();
+}
+
+function updateAnonSelectionCount() {
+  const checked = document.querySelectorAll('.anon-check:checked');
+  const btn = document.getElementById('anon-delete-selected-btn');
+  btn.textContent = `Borrar seleccionadas (${checked.length})`;
+  btn.disabled = checked.length === 0;
 }
 
 async function deleteAnonInteraction(id) {
   if (!confirm('¿Borrar esta entrada? Esta acción no se puede deshacer.')) return;
   const { error } = await sb.from('interactions').delete().eq('id', id);
+  if (error) { alert('No se pudo borrar.'); return; }
+  await loadAnonymousSessions();
+}
+
+async function deleteSelectedAnonInteractions() {
+  const ids = [...document.querySelectorAll('.anon-check:checked')].map(cb => cb.dataset.id);
+  if (!ids.length) return;
+  if (!confirm(`¿Borrar ${ids.length} entrada(s) seleccionada(s)? Esta acción no se puede deshacer.`)) return;
+  const { error } = await sb.from('interactions').delete().in('id', ids);
+  if (error) { alert('No se pudo borrar.'); return; }
+  await loadAnonymousSessions();
+}
+
+async function deleteAllAnonInteractions() {
+  if (!confirm('¿Borrar TODAS las sesiones de chat sin identificar? Esta acción no se puede deshacer.')) return;
+  const { error } = await sb.from('interactions').delete().is('client_id', null);
   if (error) { alert('No se pudo borrar.'); return; }
   await loadAnonymousSessions();
 }
