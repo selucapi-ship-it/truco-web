@@ -2465,7 +2465,11 @@ const KB = {
       'que eres tu','tienes sentimientos','tienes novia','tienes novio','cuantos años tienes',
       'de donde eres','tienes nombre','como te llamas de verdad','eres una persona real',
       'te puedo insultar','cual es tu color favorito','que comida te gusta','tienes familia',
-      'puedes enamorarte','sueñas','tienes emociones','eres feliz','estas triste',
+      // 'sueñas' se quitó de aquí: a distancia 1 de Levenshtein de "buenas" (mismo
+      // largo, una sola letra distinta), colisionaba por error de tipeo con el
+      // saludo más común del chat. Si alguien pregunta esto igualmente, la IA
+      // lo resuelve bien de todas formas — no hace falta que lo capture el bot local.
+      'puedes enamorarte','tienes emociones','eres feliz','estas triste',
       'me caes mal','no me gustas','eres aburrido','eres util para algo','sirves para algo',
       'cuentame un chiste sobre ti','hazme reir','dime algo gracioso','eres inteligente',
       'cual es tu pelicula favorita','tienes alma','estas vivo','me quieres','te gusto',
@@ -2622,27 +2626,49 @@ function fuzzyIncludes(text, pattern) {
   return false;
 }
 
-function detectIntent(text) {
+// Devuelve no solo la intención ganadora, sino también con cuánta seguridad
+// se detectó — la usa detectIntent() de siempre (ignora la confianza,
+// comportamiento sin cambios) y también sendMsg() en el chat de la web, que
+// sí necesita saber si el acierto es lo bastante sólido como para responder
+// sin pasar por la IA.
+//
+// exactScore/exactSpecificity cuentan SOLO coincidencias literales (substring
+// exacto, sin tolerancia a erratas) — score/specificity cuentan además las
+// coincidencias difusas (wordsFuzzyMatch/Levenshtein), igual que siempre.
+// La distinción importa: una coincidencia difusa de una sola palabra corta
+// puede chocar por accidente con una palabra real distinta (p.ej. "buenas"
+// cae a distancia 1 de "sueñas", una palabra de fuera_de_tema) — suficiente
+// para el bot de reglas como red de seguridad ocasional, pero no para
+// confiarle saltarse la IA en cada mensaje. Por eso sendMsg() solo se fía
+// de exactSpecificity/exactScore para decidir si responde sin Gemini.
+function detectIntentWithConfidence(text) {
   const t = normalizeTxt(text);
-  let bestKey = 'fallback', bestScore = 0, bestSpecificity = 0, saludoMatched = false;
+  let bestKey = 'fallback', bestScore = 0, bestSpecificity = 0, bestExactScore = 0, bestExactSpecificity = 0, saludoMatched = false;
   for (const key in KB) {
     if (key === 'fallback') continue;
     const patterns = KB[key].patterns;
     if (!patterns) continue;
-    let score = 0, specificity = 0;
+    let score = 0, specificity = 0, exactScore = 0, exactSpecificity = 0;
     for (const pattern of patterns) {
       const np = normalizeTxt(pattern);
-      if (fuzzyIncludes(t, np)) { score++; specificity += np.length; }
+      if (t.includes(np)) { score++; specificity += np.length; exactScore++; exactSpecificity += np.length; }
+      else if (fuzzyIncludes(t, np)) { score++; specificity += np.length; }
     }
     // El saludo no compite: un "buenos días" no debe secuestrar la respuesta
     // cuando el mensaje trae una pregunta real detrás. Solo se usa como último recurso.
     if (key === 'saludo') { saludoMatched = score > 0; continue; }
     if (score > bestScore || (score === bestScore && specificity > bestSpecificity)) {
-      bestScore = score; bestSpecificity = specificity; bestKey = key;
+      bestScore = score; bestSpecificity = specificity;
+      bestExactScore = exactScore; bestExactSpecificity = exactSpecificity;
+      bestKey = key;
     }
   }
-  if (bestKey === 'fallback' && saludoMatched) return 'saludo';
-  return bestKey;
+  if (bestKey === 'fallback' && saludoMatched) return { key: 'saludo', score: 2, specificity: 10, exactScore: 2, exactSpecificity: 10 };
+  return { key: bestKey, score: bestScore, specificity: bestSpecificity, exactScore: bestExactScore, exactSpecificity: bestExactSpecificity };
+}
+
+function detectIntent(text) {
+  return detectIntentWithConfidence(text).key;
 }
 
 // Intenciones relacionadas con la decisi\u00f3n de compra \u2014 solo aqu\u00ed se puede
@@ -2680,7 +2706,7 @@ function getResponse(intentKey, state) {
 }
 
 // ── API PÚBLICA ──
-return { detectIntent, getResponse };
+return { detectIntent, detectIntentWithConfidence, getResponse };
 
 })();
 
@@ -2927,6 +2953,24 @@ function maybeAskSector() {
   }, 900);
 }
 
+// Responde con el motor de reglas local (sin gastar cuota de Gemini), tanto
+// cuando el bot local está seguro de entrada como cuando entra de red de
+// seguridad tras un fallo técnico de la IA — misma lógica en los dos casos.
+function answerWithLocalBot(intentKey) {
+  const { text: localMsg, action } = TRUCO_CHAT.getResponse(intentKey, {
+    turnCount: chatLocalBotTopics.size,
+    discussedTopics: chatLocalBotTopics,
+    ctaOffered: chatCtaOffered
+  });
+  chatLocalBotTopics.add(intentKey);
+  addMsg('bot', localMsg);
+  chatHistory.push({ role: 'bot', text: localMsg });
+  if (action === 'MOSTRAR_CITA') {
+    chatCtaOffered = true;
+    setTimeout(() => showBookingCard(), 400);
+  }
+}
+
 function sendMsg() {
   const inp = document.getElementById('chatIn');
   const text = inp.value.trim();
@@ -2969,10 +3013,20 @@ function sendMsg() {
     if (loQuiereSoloInfo) return;
   }
 
-  // Toda pregunta real va primero al asistente de IA (TRUCO PRO) — nunca al
-  // motor de coincidencias local para una respuesta normal, porque la IA
-  // entiende matices que ese motor no puede. El motor local (TRUCO_CHAT) solo
-  // entra en juego más abajo, como red de seguridad silenciosa, cuando la IA
+  // El bot local responde PRIMERO cuando está realmente seguro de la
+  // intención (dos o más patrones coincidentes, o uno lo bastante específico)
+  // — así la cuota diaria, muy limitada, de Gemini se reserva para las
+  // preguntas que el motor de reglas no puede resolver bien. Si no está
+  // seguro, se comporta exactamente igual que antes: pasa la pregunta a la IA.
+  const localGuess = TRUCO_CHAT.detectIntentWithConfidence(text);
+  if (localGuess.key !== 'fallback' && (localGuess.exactScore >= 2 || localGuess.exactSpecificity >= 6)) {
+    answerWithLocalBot(localGuess.key);
+    return;
+  }
+
+  // El resto de preguntas va al asistente de IA (TRUCO PRO), porque entiende
+  // matices que el motor local no puede. El motor local (TRUCO_CHAT) vuelve a
+  // entrar en juego más abajo, como red de seguridad silenciosa, cuando la IA
   // falla por un motivo técnico (cuota agotada, clave inválida, error de red)
   // — nunca cuando la IA sí ha entendido la pregunta y decide activamente que
   // no puede/no debe responderla (off_topic, ai_could_not_answer).
@@ -3001,18 +3055,7 @@ function sendMsg() {
       // depender de ningún servicio externo.
       const intentKey = TRUCO_CHAT.detectIntent(text);
       if (intentKey !== 'fallback') {
-        const { text: localMsg, action } = TRUCO_CHAT.getResponse(intentKey, {
-          turnCount: chatLocalBotTopics.size,
-          discussedTopics: chatLocalBotTopics,
-          ctaOffered: chatCtaOffered
-        });
-        chatLocalBotTopics.add(intentKey);
-        addMsg('bot', localMsg);
-        chatHistory.push({ role: 'bot', text: localMsg });
-        if (action === 'MOSTRAR_CITA') {
-          chatCtaOffered = true;
-          setTimeout(() => showBookingCard(), 400);
-        }
+        answerWithLocalBot(intentKey);
       } else {
         const msg = 'Ahora mismo tengo mucha demanda y no puedo darte una respuesta tan completa como me gustaría — pero si quieres, te reservo ahora mismo una consultoría gratuita con el equipo y lo resolvemos ahí.';
         addMsg('bot', msg);
