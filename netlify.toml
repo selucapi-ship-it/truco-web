@@ -17,6 +17,18 @@
   for = "/*"
   [headers.values]
     X-Frame-Options = "SAMEORIGIN"
+    # Cabeceras añadidas tras la auditoría de seguridad del 31 ago 2026 —
+    # ninguna de estas cuatro puede romper nada del sitio (no restringen qué
+    # recursos externos se cargan, a diferencia de una Content-Security-Policy,
+    # que se deja fuera a propósito: el sitio carga Google Fonts, Supabase,
+    # Google Calendar, LiveKit y Stripe desde decenas de páginas distintas, y
+    # una CSP mal escrita rompería el chat, el pago o la reserva de citas en
+    # producción sin previo aviso. Se construye aparte, con tiempo para probar
+    # cada página, no de un tirón.
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    Permissions-Policy = "geolocation=(), camera=(), payment=(self)"
 
 [[redirects]]
   from = "/sectores/clinicas-dentales.html"
