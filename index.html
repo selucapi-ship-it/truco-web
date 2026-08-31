@@ -2765,17 +2765,31 @@ function logChatLeadFinalSummary() {
 }
 window.addEventListener('beforeunload', logChatLeadFinalSummary);
 
-function mdLinksToHtml(text) {
+function mdLinksToHtml(text, escapeFirst) {
   // La IA a veces escribe enlaces en formato markdown [texto](url) — sin
   // esto se veían tal cual en el chat, como texto plano, no como un enlace
   // pinchable. Se abre en pestaña nueva para no perder la conversación.
-  return text.replace(/\[([^\]]+)\]\(([^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  //
+  // escapeFirst=true escapa el texto como HTML puro ANTES de convertir los
+  // enlaces — imprescindible para texto que no controlamos nosotros (lo que
+  // escribe el visitante, o lo que responde la IA): sin esto, alguien podría
+  // escribir "<img src=x onerror=...>" en el chat y que se ejecutara en su
+  // propio navegador al mostrárselo de vuelta. Los mensajes que SÍ escribimos
+  // nosotros (saludos, el bot de reglas local) siguen sin escaparse a
+  // propósito, porque llevan <b>/<a> intencionados que deben renderizarse.
+  let t = text;
+  if (escapeFirst) {
+    const esc = document.createElement('div');
+    esc.textContent = text;
+    t = esc.innerHTML;
+  }
+  return t.replace(/\[([^\]]+)\]\(([^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
 }
 
-function addMsg(role, text, label) {
+function addMsg(role, text, label, untrusted) {
   const div = document.createElement('div');
   div.className = 'msg ' + role;
-  div.innerHTML = (label ? '<div style="font-size:.65rem;font-weight:700;letter-spacing:.04em;color:var(--gold);margin-bottom:5px;">' + label + '</div>' : '') + mdLinksToHtml(text);
+  div.innerHTML = (label ? '<div style="font-size:.65rem;font-weight:700;letter-spacing:.04em;color:var(--gold);margin-bottom:5px;">' + label + '</div>' : '') + mdLinksToHtml(text, untrusted);
   document.getElementById('chatMsgs').appendChild(div);
   document.getElementById('chatMsgs').scrollTop = 99999;
   chatRenderLog.push({ role, text, label: label || null });
@@ -2918,7 +2932,7 @@ function sendMsg() {
   const text = inp.value.trim();
   if (!text) return;
   inp.value = '';
-  addMsg('user', text);
+  addMsg('user', text, null, true);
   chatHistory.push({ role: 'user', text });
 
   // ── Fase 1: nombre ── si de verdad responde con su nombre, lo usamos y
@@ -2968,7 +2982,7 @@ function sendMsg() {
     hideTyping();
     if (!aiResp.unresolved) {
       // TRUCO PRO lo resuelve directamente.
-      addMsg('bot', aiResp.text, 'Asistente TRUCO PRO');
+      addMsg('bot', aiResp.text, 'Asistente TRUCO PRO', true);
       chatHistory.push({ role: 'bot', text: aiResp.text });
       maybeAskSector();
     } else if (aiResp.reason === 'off_topic') {
@@ -2976,7 +2990,7 @@ function sendMsg() {
       // educado, SIN ofrecer cita — un "¿eres tonto?" no debe acabar
       // empujando a reservar.
       const msg = aiResp.text || 'Lo siento, pero ese tema no corresponde a TRUCOtechnology.';
-      addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null);
+      addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null, true);
       chatHistory.push({ role: 'bot', text: msg });
     } else if (['missing_api_key', 'api_error', 'empty_response', 'exception', 'http_error'].includes(aiResp.reason)) {
       // TRUCO PRO no está disponible ahora mismo por un fallo técnico (no
@@ -3013,7 +3027,7 @@ function sendMsg() {
       // haría mejor papel, así que se muestra su explicación y se ofrece
       // agendar directamente, siempre, no solo la primera vez.
       const msg = aiResp.text || 'Eso se sale de lo que puedo resolverte yo — pero si quieres, te reservo ahora mismo una consultoría gratuita con el equipo y lo resolvemos ahí.';
-      addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null);
+      addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null, true);
       chatHistory.push({ role: 'bot', text: msg });
       chatCtaOffered = true;
       setTimeout(() => showBookingCard(), 400);
