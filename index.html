@@ -593,6 +593,11 @@ img{display:block;max-width:100%;}
   transition:opacity var(--tr);
 }
 .chat-cta-btn:hover{opacity:.88;}
+.social-follow{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:22px;}
+.social-follow-label{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);margin-right:2px;}
+.social-follow a{width:36px;height:36px;border-radius:50%;border:1px solid var(--grey-line);display:flex;align-items:center;justify-content:center;color:var(--grey);transition:color var(--tr),border-color var(--tr),transform var(--tr);}
+.social-follow a:hover{color:var(--blue);border-color:var(--blue);transform:translateY(-2px);}
+.social-follow a svg{width:17px;height:17px;}
 .chat-box{
   position:fixed;bottom:24px;right:24px;z-index:900;
   width:380px;max-width:calc(100vw - 32px);
@@ -1735,6 +1740,13 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <h2 class="section-h2">Habla con nuestro asistente ahora mismo</h2>
           <p>Pregúntale cualquier cosa: precios, servicios, cómo empezar, si somos la opción correcta para tu negocio. Nuestro asistente está disponible ahora mismo para resolver todas tus dudas.</p>
           <button class="chat-cta-btn" onclick="openChat()">Empezar a chatear</button>
+          <div class="social-follow">
+            <span class="social-follow-label">Síguenos</span>
+            <a href="https://www.instagram.com/trucotechnology/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://www.tiktok.com/@trucotechnology" target="_blank" rel="noopener" aria-label="TikTok" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4v9.5a3.5 3.5 0 1 1-3-3.46"/><path d="M15 4a4.5 4.5 0 0 0 4.5 4.5"/></svg></a>
+            <a href="https://www.youtube.com/@TrucoTechnology" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="4"/><path d="M11 9.7v4.6l4-2.3z" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://www.facebook.com/SeluTechnology" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M14 8.5h-1.5A2 2 0 0 0 10.5 10.5V12M9 12h4.5M12 12v6.5"/></svg></a>
+          </div>
         </div>
       </div>
     </div>
