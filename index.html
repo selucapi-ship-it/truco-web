@@ -2931,7 +2931,7 @@ async function askTrucoPro(message, history) {
     const resp = await fetch('/.netlify/functions/chat-ai', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message, history })
+      body: JSON.stringify({ message, history, session_id: trucoSessionId() })
     });
     if (!resp.ok) return { text: '', unresolved: true, reason: 'http_error' };
     return await resp.json();
@@ -3046,7 +3046,7 @@ function sendMsg() {
       const msg = aiResp.text || 'Lo siento, pero ese tema no corresponde a TRUCOtechnology.';
       addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null, true);
       chatHistory.push({ role: 'bot', text: msg });
-    } else if (['missing_api_key', 'api_error', 'empty_response', 'exception', 'http_error'].includes(aiResp.reason)) {
+    } else if (['missing_api_key', 'api_error', 'empty_response', 'exception', 'http_error', 'rate_limited'].includes(aiResp.reason)) {
       // TRUCO PRO no está disponible ahora mismo por un fallo técnico (no
       // porque haya entendido la pregunta y decidido no responder) — antes de
       // rendirnos directamente a la cita, probamos con el bot de reglas

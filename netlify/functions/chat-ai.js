@@ -80,6 +80,27 @@ let _pricingCache = null;
 let _pricingCacheAt = 0;
 const PRICING_CACHE_MS = 5 * 60 * 1000;
 
+// ── LÍMITE DIARIO POR SESIÓN ──
+// Segunda capa de defensa junto al chat local-primero (TRUCO_CHAT en
+// index.html, que ya evita gastar cuota en preguntas que reconoce con
+// certeza): sin esto, una sola sesión insistiendo o un bot podría agotar ella
+// sola la cuota compartida de 20 peticiones/día del proyecto de Gemini.
+const CHAT_DAILY_LIMIT_PER_SESSION = 8;
+
+async function checkChatQuota(sessionId) {
+  try {
+    const resp = await fetch(`${SUPABASE_URL}/rest/v1/rpc/check_chat_quota`, {
+      method: 'POST',
+      headers: { apikey: SUPABASE_ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ p_session_id: sessionId, p_limit: CHAT_DAILY_LIMIT_PER_SESSION })
+    });
+    if (!resp.ok) return { allowed: true }; // si el propio límite falla, no bloqueamos el chat por eso
+    return await resp.json();
+  } catch (e) {
+    return { allowed: true };
+  }
+}
+
 async function fetchLivePricingBlock() {
   if (_pricingCache && (Date.now() - _pricingCacheAt) < PRICING_CACHE_MS) return _pricingCache;
 
@@ -146,8 +167,14 @@ exports.handler = async function (event) {
 
   const message = (payload.message || '').trim();
   const history = Array.isArray(payload.history) ? payload.history.slice(-10) : [];
+  const sessionId = String(payload.session_id || '').trim();
   if (!message) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Missing message' }) };
+  }
+
+  const quota = await checkChatQuota(sessionId);
+  if (quota && quota.allowed === false) {
+    return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'rate_limited' }) };
   }
 
   const contents = history.map(h => ({
