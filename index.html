@@ -2295,7 +2295,7 @@ const KB = {
   },
 
   clinica_general: {
-    patterns: ['clínica médica','centro médico','consulta médica','médico privado','fisioterapia','fisioterapeuta','rehabilitación','clínica de rehabilitación','centro de rehabilitación','psicólogo'],
+    patterns: ['clínica médica','centro médico','consulta médica','médico privado','fisioterapia','fisioterapeuta','rehabilitación','clínica de rehabilitación','centro de rehabilitación','psicólogo','veterinaria','veterinario','clínica veterinaria'],
     responses: [
       `Para clínicas y consultas médicas solemos recomendar: IA para WhatsApp + la web con chat y agenda ya incluidos. Así ningún paciente se queda sin respuesta y la recepción deja de estar desbordada con llamadas repetitivas.\n\nPara arrancar suele bastar con el Basic™ (${currentPrice('basic')}€/mes + IVA): <a href="departamentos/basic.html" target="_blank">su página aquí</a>, sin compromiso. Si más adelante recibís muchas llamadas, el Lite™ añade IA para contestarlas también. Después de verla, si tienes dudas seguimos hablando.\n\n¿Qué canal usan más tus pacientes para pedir cita: llamada, WhatsApp o ambos?`
     ]
@@ -2316,21 +2316,21 @@ const KB = {
   },
 
   autonomo_oficio: {
-    patterns: ['electricista','fontanero','pintor','carpintero','instalador','oficio','reformas'],
+    patterns: ['electricista','fontanero','cerrajero','pintor','carpintero','instalador','oficio','reformas'],
     responses: [
       `Para autónomos de oficios (electricistas, fontaneros, pintores, cerrajeros...) casi siempre es más que suficiente con el Start™ (${currentPrice('start')}€/mes + IVA): eliges gratis IA para WhatsApp (recoge la solicitud mientras estás en obra y agenda la visita) o Facturación automática con TruKi, para hacer presupuestos y facturas por chat sin perder tiempo con papeleo. No hace falta nada más grande para arrancar — y si más adelante también quieres presencia web propia, el paso natural es Basic™.\n\nMírala con calma, sin compromiso: <a href="departamentos/start.html" target="_blank">la página del Start™ aquí</a>. Si después de verla te quedan dudas, aquí sigo.\n\n¿Recibes muchos mensajes de WhatsApp que se quedan sin respuesta?`
     ]
   },
 
   gimnasio: {
-    patterns: ['gimnasio','centro deportivo','box de crossfit','estudio de yoga','centro de entrenamiento'],
+    patterns: ['gimnasio','gym','centro deportivo','box de crossfit','estudio de yoga','centro de entrenamiento'],
     responses: [
       `Para gimnasios y centros deportivos solemos recomendar: IA para WhatsApp (altas, dudas de horarios y tarifas) + la web con chat y agenda ya incluidos para clases y horarios.\n\nPara empezar suele bastar con el Basic™ (${currentPrice('basic')}€/mes + IVA): <a href="departamentos/basic.html" target="_blank">su página aquí</a>, sin compromiso — y si más adelante quieres seguimiento automático de socios para evitar bajas, eso ya es cosa del Lite™. Después de verla, si tienes dudas seguimos hablando.\n\n¿Cuántos socios activos gestionáis aproximadamente ahora mismo?`
     ]
   },
 
   restaurante: {
-    patterns: ['restaurante','bar','cafetería','hostelería','local de comida'],
+    patterns: ['restaurante','resto','bar','cafetería','hostelería','local de comida'],
     responses: [
       `Para restaurantes y hostelería solemos recomendar: IA para WhatsApp + la web con chat y agenda ya incluidos, para reservas de mesa sin llamadas perdidas.\n\nPara empezar suele bastar con el Basic™ (${currentPrice('basic')}€/mes + IVA): <a href="departamentos/basic.html" target="_blank">su página aquí</a>, sin compromiso — y si más adelante quieres confirmaciones y recordatorios automáticos para reducir los no-shows, eso ya es cosa del Lite™. Cualquier duda después de verla, aquí sigo.\n\n¿Tomáis reservas ahora mismo por teléfono, redes sociales, o no lleváis un sistema fijo?`
     ]
@@ -2553,6 +2553,51 @@ function normalizeTxt(s) {
   return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
+// ── Tolerancia a erratas y palabras cortadas/abreviadas ──
+// Sin esto, un simple "pelu" en vez de "peluquería", o una errata como
+// "peluqeria", hacía que el bot de reglas no reconociera nada y cayera
+// siempre en el fallback genérico. Solo se aplica a patrones de una sola
+// palabra de 4+ letras — las frases completas y las palabras cortas (p.ej.
+// "pro") siguen exigiendo coincidencia exacta, para no generar falsos
+// positivos ("pro" no debe confundirse con "pero").
+function levenshtein(a, b) {
+  if (a === b) return 0;
+  const al = a.length, bl = b.length;
+  if (al === 0) return bl;
+  if (bl === 0) return al;
+  let prev = Array.from({ length: bl + 1 }, (_, i) => i);
+  for (let i = 1; i <= al; i++) {
+    const cur = [i];
+    for (let j = 1; j <= bl; j++) {
+      cur[j] = a[i - 1] === b[j - 1] ? prev[j - 1] : 1 + Math.min(prev[j - 1], prev[j], cur[j - 1]);
+    }
+    prev = cur;
+  }
+  return prev[bl];
+}
+
+function wordsFuzzyMatch(w1, w2) {
+  if (w1 === w2) return true;
+  if (w1.length < 4 || w2.length < 4) return false;
+  // Truncamiento: "pelu" es un prefijo real de "peluqueria" — cubre la
+  // mayoría de abreviaturas/diminutivos coloquiales sin necesidad de
+  // listarlos todos a mano.
+  if (w1.startsWith(w2) || w2.startsWith(w1)) return true;
+  const maxLen = Math.max(w1.length, w2.length);
+  const threshold = maxLen <= 6 ? 1 : maxLen <= 10 ? 2 : 3;
+  return levenshtein(w1, w2) <= threshold;
+}
+
+function fuzzyIncludes(text, pattern) {
+  if (text.includes(pattern)) return true;
+  const pWords = pattern.split(/\s+/);
+  if (pWords.length === 1 && pattern.length >= 4) {
+    const tWords = text.split(/\s+/);
+    return tWords.some(tw => wordsFuzzyMatch(tw, pattern));
+  }
+  return false;
+}
+
 function detectIntent(text) {
   const t = normalizeTxt(text);
   let bestKey = 'fallback', bestScore = 0, bestSpecificity = 0, saludoMatched = false;
@@ -2563,7 +2608,7 @@ function detectIntent(text) {
     let score = 0, specificity = 0;
     for (const pattern of patterns) {
       const np = normalizeTxt(pattern);
-      if (t.includes(np)) { score++; specificity += np.length; }
+      if (fuzzyIncludes(t, np)) { score++; specificity += np.length; }
     }
     // El saludo no compite: un "buenos días" no debe secuestrar la respuesta
     // cuando el mensaje trae una pregunta real detrás. Solo se usa como último recurso.
@@ -2637,6 +2682,10 @@ let chatLeadLoggedOnce = false;
 const CHAT_STATE_KEY = 'truco_chat_state_v1';
 let chatRenderLog = [];
 let chatHadBookingCard = false;
+// Temas ya tocados por el bot de reglas local (TRUCO_CHAT) durante esta
+// conversación — solo alimenta su propia lógica de "ya hemos hablado de
+// bastante, ofrece la cita", separada de la que usa la IA real.
+let chatLocalBotTopics = new Set();
 let isRestoringChat = false;
 let chatRestoreAttempted = false;
 
@@ -2820,10 +2869,10 @@ async function askTrucoPro(message, history) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message, history })
     });
-    if (!resp.ok) return { text: '', unresolved: true };
+    if (!resp.ok) return { text: '', unresolved: true, reason: 'http_error' };
     return await resp.json();
   } catch (e) {
-    return { text: '', unresolved: true };
+    return { text: '', unresolved: true, reason: 'exception' };
   }
 }
 
@@ -2882,11 +2931,13 @@ function sendMsg() {
     if (loQuiereSoloInfo) return;
   }
 
-  // Toda pregunta real va siempre al asistente de IA (TRUCO PRO) — nunca al
-  // motor de coincidencias local (TRUCO_CHAT): con una simple errata o una
-  // frase que no encajaba exactamente en sus patrones, ese motor podía
-  // responder "no puedo resolverte esa duda" a preguntas que la IA sí sabe
-  // responder perfectamente (ej. "cuantas plazas de funddor quedan?").
+  // Toda pregunta real va primero al asistente de IA (TRUCO PRO) — nunca al
+  // motor de coincidencias local para una respuesta normal, porque la IA
+  // entiende matices que ese motor no puede. El motor local (TRUCO_CHAT) solo
+  // entra en juego más abajo, como red de seguridad silenciosa, cuando la IA
+  // falla por un motivo técnico (cuota agotada, clave inválida, error de red)
+  // — nunca cuando la IA sí ha entendido la pregunta y decide activamente que
+  // no puede/no debe responderla (off_topic, ai_could_not_answer).
   logChatQuestion(text);
   showTyping();
   askTrucoPro(text, chatHistory).then((aiResp) => {
@@ -2903,11 +2954,40 @@ function sendMsg() {
       const msg = aiResp.text || 'Lo siento, pero ese tema no corresponde a TRUCOtechnology.';
       addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null);
       chatHistory.push({ role: 'bot', text: msg });
+    } else if (['missing_api_key', 'api_error', 'empty_response', 'exception', 'http_error'].includes(aiResp.reason)) {
+      // TRUCO PRO no está disponible ahora mismo por un fallo técnico (no
+      // porque haya entendido la pregunta y decidido no responder) — antes de
+      // rendirnos directamente a la cita, probamos con el bot de reglas
+      // local: no entiende tan bien como la IA, pero resuelve de sobra las
+      // preguntas más habituales (precios, sector, condiciones...) sin
+      // depender de ningún servicio externo.
+      const intentKey = TRUCO_CHAT.detectIntent(text);
+      if (intentKey !== 'fallback') {
+        const { text: localMsg, action } = TRUCO_CHAT.getResponse(intentKey, {
+          turnCount: chatLocalBotTopics.size,
+          discussedTopics: chatLocalBotTopics,
+          ctaOffered: chatCtaOffered
+        });
+        chatLocalBotTopics.add(intentKey);
+        addMsg('bot', localMsg);
+        chatHistory.push({ role: 'bot', text: localMsg });
+        if (action === 'MOSTRAR_CITA') {
+          chatCtaOffered = true;
+          setTimeout(() => showBookingCard(), 400);
+        }
+      } else {
+        const msg = 'Ahora mismo tengo mucha demanda y no puedo darte una respuesta tan completa como me gustaría — pero si quieres, te reservo ahora mismo una consultoría gratuita con el equipo y lo resolvemos ahí.';
+        addMsg('bot', msg);
+        chatHistory.push({ role: 'bot', text: msg });
+        chatCtaOffered = true;
+        setTimeout(() => showBookingCard(), 400);
+      }
     } else {
-      // Pregunta relacionada con el negocio que ni TRUCO PRO ha podido
-      // resolver del todo (caso legal/fiscal muy específico, presupuesto a
-      // medida, fallo técnico...): muestra su explicación y ofrece agendar
-      // directamente — siempre, no solo la primera vez.
+      // ai_could_not_answer: la IA SÍ ha entendido la pregunta pero
+      // genuinamente no puede resolverla con estos datos (caso legal/fiscal
+      // muy específico, presupuesto a medida...) — aquí el bot local tampoco
+      // haría mejor papel, así que se muestra su explicación y se ofrece
+      // agendar directamente, siempre, no solo la primera vez.
       const msg = aiResp.text || 'Eso se sale de lo que puedo resolverte yo — pero si quieres, te reservo ahora mismo una consultoría gratuita con el equipo y lo resolvemos ahí.';
       addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null);
       chatHistory.push({ role: 'bot', text: msg });
