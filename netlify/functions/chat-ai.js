@@ -206,7 +206,7 @@ exports.handler = async function (event) {
       let errText = '';
       try { errText = await resp.text(); } catch (e) { /* ignorar */ }
       console.error('[chat-ai] Gemini API error', resp.status, errText.slice(0, 1500));
-      return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'api_error', debug: `HTTP ${resp.status}: ${errText.slice(0, 1200)}` }) };
+      return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'api_error' }) };
     }
 
     const data = await resp.json();
@@ -214,7 +214,7 @@ exports.handler = async function (event) {
 
     if (!rawText) {
       console.error('[chat-ai] Respuesta vacía de Gemini', JSON.stringify(data).slice(0, 500));
-      return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'empty_response', debug: JSON.stringify(data).slice(0, 300) }) };
+      return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'empty_response' }) };
     }
 
     if (rawText.includes('[FUERA_DE_TEMA]')) {
@@ -242,6 +242,6 @@ exports.handler = async function (event) {
     return { statusCode: 200, body: JSON.stringify({ text: rawText, unresolved: false }) };
   } catch (e) {
     console.error('[chat-ai] Excepción', e && e.message);
-    return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'exception', debug: String(e && e.message || e).slice(0, 300) }) };
+    return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'exception' }) };
   }
 };

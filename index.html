@@ -842,6 +842,11 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 <meta property="og:description" content="Deja de cargar con todo tú solo. Tu Departamento Tecnológico: WhatsApp 24/7, citas automáticas, IA y web para pymes y autónomos en España, desde 69€/mes.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.trucotechnology.com">
+<meta property="og:image" content="https://www.trucotechnology.com/assets/founder.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TRUCO technology — Tu Departamento Tecnológico">
+<meta name="twitter:description" content="Deja de cargar con todo tú solo. Tu Departamento Tecnológico: WhatsApp 24/7, citas automáticas, IA y web para pymes y autónomos en España, desde 69€/mes.">
+<meta name="twitter:image" content="https://www.trucotechnology.com/assets/founder.jpg">
 <meta name="theme-color" content="#141a24">
 <style>
 /* MOBILE MENU */
@@ -3222,17 +3227,23 @@ function cookieChoice(accepted){
   document.getElementById('cookie-banner').style.display='none';
   if(accepted) loadGA();
 }
+// RELLENAR: pon aquí el ID de medición real en cuanto crees la propiedad de
+// Google Analytics 4 (Admin → Flujos de datos → tu web → "ID de medición",
+// formato G-XXXXXXXXXX). Hasta entonces loadGA() no hace nada — antes cargaba
+// un ID de ejemplo que no funciona y da la falsa sensación de tener
+// analítica activa cuando en realidad no se registra ninguna visita.
+const GA_MEASUREMENT_ID = '';
 function loadGA(){
-  if(window.gaLoaded) return;
+  if(window.gaLoaded || !GA_MEASUREMENT_ID) return;
   window.gaLoaded = true;
   const s = document.createElement('script');
-  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX';
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
   s.async = true;
   document.head.appendChild(s);
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  gtag('config', GA_MEASUREMENT_ID);
 }
 </script>
 <script>
