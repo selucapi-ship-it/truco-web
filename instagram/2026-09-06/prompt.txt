@@ -1,0 +1,23 @@
+Ultra-realistic vertical photograph, 9:16 aspect ratio, professional advertising photography (not illustration, not 3D render, not CGI, no cartoon style). Dark, moody background in near-black charcoal tone (#16151a) filling most of the frame, with warm golden accent lighting (#d9a83f) and cream-white highlights. Cinematic, high-end tech-meets-small-business advertising aesthetic, shallow depth of field, soft directional light, subtle film grain, sharp focus on the main subject.
+
+SCENE: A split, layered composition. In the lower half of the frame, a small business owner's hand rests on a wooden café-terrace table on a bright Sunday afternoon in Cartagena — hints of warm haze and soft glare suggest real Mediterranean late-summer heat, with an out-of-focus hint of a coastal harbor town skyline silhouette in the deep background, rendered dark and moody to match the brand palette rather than a bright daylight photo. Resting on the table, a smartphone screen glows with a warm golden light, its screen overflowing with a cascade of stacked WhatsApp-style message bubbles rising upward into the dark space above the table like a tower of unanswered notifications, glowing gold and cream against the black background — visually representing messages piling up unattended. The upper half of the frame is dark negative space used for text overlays.
+
+TEXT ELEMENTS (render these exactly, as clean, modern, minimal sans-serif typography, in Spanish, well-composed and legible, not distorted or garbled):
+
+1. Top of the image, small logo lockup: "TRUCO technology" in bold cream-white letters, with the smaller subtitle directly beneath it in gold: "Departamento Tecnológico".
+
+2. Just below the logo, a small pill-shaped label in gold outline with cream text reading: "DOMINGO · 30°C EN CARTAGENA".
+
+3. Beneath that, a bold uppercase context label in gold, letter-spaced: "MENSAJES SIN CONTESTAR".
+
+4. The main two-line headline in large bold cream-white letters, centered in the upper-middle dark space, above the rising tower of message bubbles:
+"Tu WhatsApp no para."
+"Tú, por fin, sí."
+
+5. Below the headline, a short italic quote-style line in smaller cream-white text: "El negocio no cierra aunque tú descanses."
+
+6. In the lower third of the image, overlapping the edge of the table scene, a small golden badge (rounded rectangle with a thin gold border) containing two lines of bold dark text on a gold background: "PRECIO FUNDADOR" and below it, smaller, "Plazas limitadas".
+
+7. At the very bottom of the image, centered, the closing line in cream-white bold text: "Paga una vez. Olvídate 365 días." and directly beneath it, in smaller gold text: "trucotechnology.com".
+
+STYLE: Photorealistic commercial photography, warm gold rim lighting on the phone and message bubbles against deep charcoal-black shadows, high contrast, premium and trustworthy mood, minimal clutter, generous negative space around text for legibility, consistent brand palette of dark charcoal (#16151a), gold (#d9a83f), and cream white throughout.
