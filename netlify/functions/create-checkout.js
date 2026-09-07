@@ -24,6 +24,11 @@
 const SUPABASE_URL = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
 const PERMANENCIA_MESES = 12; // igual para los 4 tiers, ver ARRANQUES en pago.html
+// Cuántas automatizaciones gratis incluye cada tier — igual que ARRANQUES.freeSols
+// en pago.html. Con esto se puede saber cuántas de las que manda el cliente se
+// pueden tratar como gratis de verdad, sin fiarse de su propio campo "free".
+const FREE_SOLS_POR_TIER = { start: 1, basic: 1, lite: 2, pro: 3 };
+const ARRANQUE_TIERS_VALIDOS = Object.keys(FREE_SOLS_POR_TIER);
 
 // Reconstruye el precio mínimo legítimo de un pago único para el tier dado:
 // misma fórmula que getActivePlan() en pago.html (12 meses × mensualidad,
@@ -55,7 +60,30 @@ async function precioMinimoLegitimo(arranqueTier, solutionKeys, foundingClaimed)
   const monthly = Number(usaFundador ? tierRow.founder_price_eur : tierRow.standard_price_eur);
   if (!Number.isFinite(monthly)) return null;
 
-  const extraTotal = (Array.isArray(solutionKeys) ? solutionKeys : []).reduce((sum, key) => {
+  // ⚠️ Fallo real encontrado en la auditoría de seguridad del 5 de sept: aquí
+  // se comparaba "s.solution_key === key" donde "key" era en realidad el
+  // OBJETO {key,name,price,free} entero que manda pago.html (nunca una
+  // cadena) — la comparación nunca era cierta, así que extraTotal daba
+  // siempre 0 y cualquier automatización de pago (450-1200€+) se colaba
+  // gratis con solo tocar amountCents. Corregido: se usa solutionKeys[].key
+  // (la cadena real), y el PRECIO se busca siempre en el catálogo real —
+  // nunca se usa el precio que manda el propio cliente. Tampoco se confía en
+  // el campo "free" del cliente sin más: solo se dejan pasar como gratis
+  // hasta FREE_SOLS_POR_TIER[tier] unidades (las demás, aunque el cliente las
+  // marque "free", se cobran al precio real del catálogo) — si no, bastaría
+  // con marcar "free:true" en una automatización de pago para colársela igual.
+  const keysRecibidas = (Array.isArray(solutionKeys) ? solutionKeys : [])
+    .map(s => s && typeof s === 'object' ? s.key : s)
+    .filter(k => typeof k === 'string' && k);
+  const maxGratis = FREE_SOLS_POR_TIER[arranqueTier] || 0;
+  let gratisRestantes = maxGratis;
+  const extraTotal = keysRecibidas.reduce((sum, key, i) => {
+    const original = solutionKeys[i];
+    const reclamaGratis = !!(original && typeof original === 'object' && original.free);
+    if (reclamaGratis && gratisRestantes > 0) {
+      gratisRestantes -= 1;
+      return sum; // dentro del cupo real de gratis del tier — no se cobra
+    }
     const sol = solutions.find(s => s.solution_key === key);
     return sum + (sol ? Number(sol.price_eur) || 0 : 0);
   }, 0);
@@ -104,19 +132,28 @@ exports.handler = async function (event) {
   // para el tier indicado — evita que alguien manipule la petición desde las
   // herramientas de desarrollador del navegador para pagar menos del precio
   // real. Se permite un margen de 2 céntimos por redondeos de coma flotante.
-  // Si Supabase no responde, se deja pasar el pago en vez de bloquear a
-  // clientes reales por una caída puntual — el objetivo es cerrar el fraude
-  // fácil, no exigir disponibilidad perfecta de un tercero para poder cobrar.
-  if (arranqueTier) {
-    try {
-      const minimo = await precioMinimoLegitimo(arranqueTier, solutions, founding);
-      if (minimo !== null && amountCents < Math.round(minimo * 100) - 2) {
-        console.error(`create-checkout: importe sospechoso — recibido ${amountCents}c, mínimo esperado ${Math.round(minimo * 100)}c, tier ${arranqueTier}`);
-        return { statusCode: 400, body: JSON.stringify({ error: 'El importe no coincide con el precio real del plan' }) };
-      }
-    } catch (e) {
-      console.error('create-checkout: fallo al validar el precio mínimo, se deja pasar el pago:', e.message);
+  //
+  // ⚠️ Fallo real encontrado en la auditoría del 5 de sept: esta comprobación
+  // solo se hacía "if (arranqueTier)" — bastaba con no mandar arranqueTier
+  // (o mandarlo vacío) en una llamada directa a esta función para saltársela
+  // por completo. El único camino real de pago (pago.html) SIEMPRE manda un
+  // arranqueTier válido, así que una petición sin uno nunca es legítima —
+  // ahora se rechaza directamente en vez de dejarla pasar sin comprobar nada.
+  // Sí se deja pasar el pago cuando el tier es válido pero Supabase no
+  // responde (caída puntual de un tercero) — eso es un problema de
+  // disponibilidad, no la puerta de fraude fácil que se quiere cerrar aquí.
+  if (!ARRANQUE_TIERS_VALIDOS.includes(arranqueTier)) {
+    console.error(`create-checkout: intento de pago sin un tier válido — arranqueTier recibido: ${JSON.stringify(arranqueTier)}`);
+    return { statusCode: 400, body: JSON.stringify({ error: 'Falta el tipo de plan' }) };
+  }
+  try {
+    const minimo = await precioMinimoLegitimo(arranqueTier, solutions, founding);
+    if (minimo !== null && amountCents < Math.round(minimo * 100) - 2) {
+      console.error(`create-checkout: importe sospechoso — recibido ${amountCents}c, mínimo esperado ${Math.round(minimo * 100)}c, tier ${arranqueTier}`);
+      return { statusCode: 400, body: JSON.stringify({ error: 'El importe no coincide con el precio real del plan' }) };
     }
+  } catch (e) {
+    console.error('create-checkout: fallo al validar el precio mínimo, se deja pasar el pago:', e.message);
   }
 
   const origin = (event.headers.origin) || ('https://' + event.headers.host);
