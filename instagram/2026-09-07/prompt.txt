@@ -1,0 +1,23 @@
+Ultra-realistic vertical photograph, 9:16 aspect ratio, professional advertising photography (not illustration, not 3D render, not CGI, no cartoon style). Dark, moody background in near-black charcoal tone (#16151a) filling most of the frame, with warm golden accent lighting (#d9a83f) and cream-white highlights. Cinematic, high-end tech-meets-small-business advertising aesthetic, shallow depth of field, soft directional light, subtle film grain, sharp focus on the main subjects.
+
+SCENE: A left-right split composition on a small business counter (a hairdresser's or workshop reception desk) on a hot Monday morning in early September. On the left side of the frame, in cold, flat, slightly desaturated light, a worn paper appointment planner lies open, its pages covered in crossed-out handwritten entries, overlapping scribbles, and a coffee-ring stain — visual chaos and frustration. On the right side of the frame, in warm golden light, a smartphone stands upright in a small stand, its screen glowing gold and cream, displaying a clean, minimal calendar app interface with appointment slots that appear to be filling in on their own, softly glowing as if just booked. A thin vertical beam of golden light divides the two halves down the middle of the frame. The upper portion of the frame is dark negative space reserved for text overlays.
+
+TEXT ELEMENTS (render these exactly, as clean, modern, minimal sans-serif typography, in Spanish, well-composed and legible, not distorted or garbled):
+
+1. Top of the image, small logo lockup: "TRUCO technology" in bold cream-white letters, with the smaller subtitle directly beneath it in gold: "Departamento Tecnológico".
+
+2. Just below the logo, a small pill-shaped label in gold outline with cream text reading: "LUNES · 32°C EN LORCA".
+
+3. Beneath that, a bold uppercase context label in gold, letter-spaced: "AGENDA DESORDENADA".
+
+4. The main two-line headline in large bold cream-white letters, centered in the dark upper space, above the split counter scene:
+"Tu agenda decía no."
+"Ahora se rellena sola."
+
+5. Below the headline, a short italic quote-style line in smaller cream-white text: "Ni una llamada cruzada más."
+
+6. In the lower third of the image, overlapping the edge of the counter scene near the phone side, a small golden badge (rounded rectangle with a thin gold border) containing two lines of bold dark text on a gold background: "PRECIO FUNDADOR" and below it, smaller, "Plazas limitadas".
+
+7. At the very bottom of the image, centered, the closing line in cream-white bold text: "Paga una vez. Olvídate 365 días." and directly beneath it, in smaller gold text: "trucotechnology.com".
+
+STYLE: Photorealistic commercial photography, cold flat light on the paper-chaos side contrasted with warm gold rim lighting on the phone side, deep charcoal-black shadows, high contrast, premium and trustworthy mood, minimal clutter, generous negative space around text for legibility, consistent brand palette of dark charcoal (#16151a), gold (#d9a83f), and cream white throughout.
