@@ -571,7 +571,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         <div class="check-text"><b>Comunicaciones comerciales</b> <em style="color:var(--grey);">(opcional)</em> — Acepto recibir comunicaciones sobre novedades y mejoras del servicio.</div>
       </div>
     </div>
-    <p style="margin-top:12px;font-size:.86rem;color:var(--grey);line-height:1.6;padding:0 4px;">Al confirmar serás redirigido a <strong style="color:var(--white);">Stripe</strong>, la pasarela usada por millones de empresas en todo el mundo. Tu información bancaria nunca pasa por nuestros servidores.</p>
+    <p id="payment-note" style="margin-top:12px;font-size:.86rem;color:var(--grey);line-height:1.6;padding:0 4px;">Al confirmar serás redirigido a <strong style="color:var(--white);">Stripe</strong>, la pasarela usada por millones de empresas en todo el mundo. Tu información bancaria nunca pasa por nuestros servidores.</p>
   </div>
 
 </div><!-- /form-col -->
@@ -1401,7 +1401,13 @@ function updateSummary(plan){
     txt.textContent='Reserva la auditoría gratuita para cerrar el precio';
   }else{
     btn.disabled=false;
-    txt.textContent=plan.customQuote?'→ Solicitar presupuesto personalizado':'→ Confirmar y pagar con Stripe';
+    const financiado=selectedDirect&&tierPaymentMode!=='unico'&&!plan.customQuote;
+    txt.textContent=plan.customQuote?'→ Solicitar presupuesto personalizado':financiado?'→ Confirmar financiación por WhatsApp':'→ Confirmar y pagar con Stripe';
+  }
+  const paymentNote=document.getElementById('payment-note');
+  if(paymentNote){
+    const financiadoNote=selectedDirect&&tierPaymentMode!=='unico'&&!plan.customQuote;
+    paymentNote.innerHTML=financiadoNote?'Al confirmar te escribimos por <strong style="color:var(--white);">WhatsApp</strong> en menos de 24h para cerrar la financiación con SeQura — el importe que ves arriba es el precio a TRUCO, sin la comisión de la financiera (eso se cierra directamente con ellos).':'Al confirmar serás redirigido a <strong style="color:var(--white);">Stripe</strong>, la pasarela usada por millones de empresas en todo el mundo. Tu información bancaria nunca pasa por nuestros servidores.';
   }
   if(msbBar){
     const totalEls=be.querySelectorAll('.sbr-total .sbr-val');
