@@ -1,0 +1,23 @@
+Ultra-realistic vertical photograph, 9:16 aspect ratio, professional advertising photography (not illustration, not 3D render, not CGI, no cartoon style). Dark, moody background in near-black charcoal tone (#16151a) filling most of the frame, with warm golden accent lighting (#d9a83f) and cream-white highlights. Cinematic, high-end tech-meets-small-business advertising aesthetic, shallow depth of field, soft directional light, subtle film grain, sharp focus on the main subject.
+
+SCENE: A single quiet closing-time moment, not split and not a stat-number graphic. Outside a small family-run wine shop / bakery storefront in Yecla at dusk on a warm Thursday evening in early September, the last warm daylight fading into deep charcoal-blue shadow. The shop owner, seen from behind or in soft silhouette, is flipping the hanging door sign from "ABIERTO" to "CERRADO" and locking up right on time, keys still in hand. Beside the door, a small chalkboard A-frame sign stands on the pavement, handwritten in warm gold chalk-style lettering, functioning as the visual and emotional centerpiece of the image — a real handwritten quote rendered large and legible, taking up real visual weight in the composition, not a small caption. A smartphone rests forgotten and face-down on the windowsill nearby, its screen just barely glowing gold at the edge, quietly still handling messages and bookings on its own. The upper portion of the frame is dark negative space reserved for the logo and headline overlays.
+
+TEXT ELEMENTS (render these exactly, as clean, modern, minimal sans-serif typography, in Spanish, well-composed and legible, not distorted or garbled):
+
+1. Top of the image, small logo lockup: "TRUCO technology" in bold cream-white letters, with the smaller subtitle directly beneath it in gold: "Departamento Tecnológico".
+
+2. Just below the logo, a small pill-shaped label in gold outline with cream text reading: "JUEVES · 33°C EN YECLA".
+
+3. Beneath that, a bold uppercase context label in gold, letter-spaced: "HORARIO RECUPERADO".
+
+4. The main two-line headline in large bold cream-white letters, centered in the dark upper space, above the storefront scene:
+"Cerrar a tu hora."
+"Sí, se puede."
+
+5. On the handwritten chalkboard sign itself, rendered as real chalk-style lettering in warm gold, the centerpiece quote of the image: "Desde que uso TRUCO, ya no me llevo trabajo a casa."
+
+6. In the lower third of the image, overlapping the edge of the storefront scene near the door, a small golden badge (rounded rectangle with a thin gold border) containing two lines of bold dark text on a gold background: "PRECIO FUNDADOR" and below it, smaller, "Plazas limitadas".
+
+7. At the very bottom of the image, centered, the closing line in cream-white bold text: "Paga una vez. Olvídate 365 días." and directly beneath it, in smaller gold text: "trucotechnology.com".
+
+STYLE: Photorealistic commercial photography, warm fading dusk light on the storefront and chalkboard contrasted with deep charcoal-blue shadows, warm gold rim lighting on the sign lettering and the phone's glow, high contrast, premium and trustworthy mood, minimal clutter, generous negative space around text for legibility, consistent brand palette of dark charcoal (#16151a), gold (#d9a83f), and cream white throughout.
