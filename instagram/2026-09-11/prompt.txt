@@ -1,0 +1,23 @@
+Ultra-realistic vertical photograph, 9:16 aspect ratio, professional advertising photography (not illustration, not 3D render, not CGI, no cartoon style). Dark, moody background in near-black charcoal tone (#16151a) filling most of the frame, with warm golden accent lighting (#d9a83f) and cream-white highlights. Cinematic, high-end tech-meets-small-business advertising aesthetic, shallow depth of field, soft directional light, subtle film grain, sharp focus on the main subject.
+
+SCENE: A single close-up moment, not a stat-number graphic and not a left-right split counter. A customer's hand holds a smartphone at chest height on a warm Friday early-evening street in Caravaca de la Cruz, the historic hilltop castle and sanctuary silhouette softly blurred in the deep charcoal background behind them, warm dusk haze suggesting real late-summer heat. The phone screen fills the lower-middle of the frame, glowing brightly against the dark scene, showing a search-results list: the top two results are business cards with a soft golden glow, a star rating, and a small golden checkmark icon, looking active and findable. The third slot in the list, where this viewer's business should be, is a faded, desaturated, near-invisible outline card with a dashed gold border and a faint greyed-out question mark where a name and photo should be — visually representing a business that is invisible online. The upper portion of the frame is dark negative space reserved for text overlays.
+
+TEXT ELEMENTS (render these exactly, as clean, modern, minimal sans-serif typography, in Spanish, well-composed and legible, not distorted or garbled):
+
+1. Top of the image, small logo lockup: "TRUCO technology" in bold cream-white letters, with the smaller subtitle directly beneath it in gold: "Departamento Tecnológico".
+
+2. Just below the logo, a small pill-shaped label in gold outline with cream text reading: "VIERNES · 29°C EN CARAVACA DE LA CRUZ".
+
+3. Beneath that, a bold uppercase context label in gold, letter-spaced: "INVISIBLE EN GOOGLE".
+
+4. The main two-line headline in large bold cream-white letters, centered in the dark upper space, above the phone screen:
+"Te buscan y no te encuentran."
+"Tu web, lista para hoy."
+
+5. Below the headline, a short italic quote-style line in smaller cream-white text: "Sin web, cada búsqueda es un cliente perdido."
+
+6. In the lower third of the image, overlapping the edge of the phone near the faded search result, a small golden badge (rounded rectangle with a thin gold border) containing two lines of bold dark text on a gold background: "PRECIO FUNDADOR" and below it, smaller, "Plazas limitadas".
+
+7. At the very bottom of the image, centered, the closing line in cream-white bold text: "Paga una vez. Olvídate 365 días." and directly beneath it, in smaller gold text: "trucotechnology.com".
+
+STYLE: Photorealistic commercial photography, warm golden dusk light on the street and castle silhouette contrasted with the bright cool-gold glow of the phone screen, deep charcoal-black shadows, high contrast, premium and trustworthy mood, minimal clutter, generous negative space around text for legibility, consistent brand palette of dark charcoal (#16151a), gold (#d9a83f), and cream white throughout.
