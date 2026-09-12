@@ -1,0 +1,25 @@
+Ultra-realistic vertical photograph, 9:16 aspect ratio, professional advertising photography (not illustration, not 3D render, not CGI, no cartoon style). Dark, moody background in near-black charcoal tone (#16151a) filling most of the frame, with warm golden accent lighting (#d9a83f) and cream-white highlights. Cinematic, high-end tech-meets-small-business advertising aesthetic, shallow depth of field, soft directional light, subtle film grain, sharp focus on the main subjects.
+
+SCENE: A top-bottom before/after split composition, divided by a thin horizontal beam of golden light across the middle of the frame — a new layout, not a left-right split. TOP HALF ("antes"): a small beachfront bar/terrace business on the Mar Menor in San Javier on a busy, windy Saturday midday — sailboats and wind-blown flags visible in a hazy background, awnings flapping in the wind. The owner, in the foreground, is overwhelmed: one hand holding a ringing phone to their ear, the other hand gesturing at a customer waiting at the counter, while a second phone on the counter buzzes with a stack of overlapping WhatsApp-style message bubbles, and a notepad with scribbled notes flutters in the wind. Everything in this half is lit in a slightly colder, flatter light with a faint desaturated tension. BOTTOM HALF ("después"): the same terrace, same owner, now standing relaxed with arms loosely crossed, looking out at the Mar Menor view instead of at any device. A single smartphone rests calmly on the counter in warm golden light, its screen showing a clean unified dashboard with three small glowing icons quietly active — a chat bubble, a calendar tick, and a phone-call icon — all softly pulsing gold to show they are being handled automatically. The wind still moves the awning, but nothing on the counter is chaotic anymore. The very top edge of the frame, within the "antes" half, keeps a strip of dark negative space for logo and label overlays.
+
+TEXT ELEMENTS (render these exactly, as clean, modern, minimal sans-serif typography, in Spanish, well-composed and legible, not distorted or garbled):
+
+1. Top of the image, small logo lockup: "TRUCO technology" in bold cream-white letters, with the smaller subtitle directly beneath it in gold: "Departamento Tecnológico".
+
+2. Just below the logo, a small pill-shaped label in gold outline with cream text reading: "SÁBADO · 28°C Y VIENTO EN SAN JAVIER".
+
+3. Beneath that, a bold uppercase context label in gold, letter-spaced: "TODO A LA VEZ, NADA BAJO CONTROL".
+
+4. A small word in gold uppercase letter-spacing tucked in the top-left corner of the top half of the image: "ANTES". Mirrored in the top-left corner of the bottom half of the image: "DESPUÉS".
+
+5. The main two-line headline in large bold cream-white letters, centered on the thin golden dividing beam between the two halves, so it reads across both:
+"Un sábado a tope."
+"Todo bajo control."
+
+6. Below the headline, still on the dividing beam, a short italic quote-style line in smaller cream-white text: "WhatsApp, agenda y llamadas, a la vez, sin ti."
+
+7. In the lower third of the image, overlapping the edge of the "después" terrace scene near the calm phone, a small golden badge (rounded rectangle with a thin gold border) containing two lines of bold dark text on a gold background: "PRECIO FUNDADOR" and below it, smaller, "Plazas limitadas".
+
+8. At the very bottom of the image, centered, the closing line in cream-white bold text: "Paga una vez. Olvídate 365 días." and directly beneath it, in smaller gold text: "trucotechnology.com".
+
+STYLE: Photorealistic commercial photography, cooler flatter light in the chaotic top half contrasted with warm gold rim lighting in the calm bottom half, deep charcoal-black shadows, high contrast, premium and trustworthy mood, generous negative space around text for legibility, consistent brand palette of dark charcoal (#16151a), gold (#d9a83f), and cream white throughout.
