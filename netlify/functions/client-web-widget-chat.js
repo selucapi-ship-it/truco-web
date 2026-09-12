@@ -15,6 +15,12 @@
 // con uso normal (decenas de conversaciones al día) agotaría esa cuota
 // gratuita en minutos y rompería también el chat de venta de TRUCO.
 
+// Clave pública (anon) de Supabase — no es un secreto, ya va expuesta tal
+// cual en el navegador de cualquier visitante (mismo valor que usa
+// founding-offer.js/chat-ai.js en el propio sitio). Solo sirve para llamar a
+// check_chat_quota(), que internamente se limita sola por session_id.
+const SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
+
 function authHeaders(key) {
   const h = { 'Content-Type': 'application/json', apikey: key };
   if (!key.startsWith('sb_secret_') && !key.startsWith('sb_publishable_')) {
@@ -147,9 +153,9 @@ exports.handler = async function (event) {
 
   const supabaseUrl = process.env.SUPABASE_URL;
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const anonKey = process.env.SUPABASE_ANON_KEY;
+  const anonKey = SUPABASE_ANON_KEY;
   const geminiKey = process.env.GEMINI_API_KEY;
-  if (!supabaseUrl || !serviceKey || !anonKey || !geminiKey) {
+  if (!supabaseUrl || !serviceKey || !geminiKey) {
     return responder(200, { text: '', unresolved: true, reason: 'not_configured' });
   }
 
