@@ -13,6 +13,20 @@
   # 130/303 que todavía no existan (es idempotente), no manda nada por su cuenta.
   schedule = "0 8 * * 1"
 
+[functions."antonia-vigilancia"]
+  # Cada 15 minutos: compara el estado de las agendas personal y profesional
+  # contra la última vez que se ejecutó, y avisa por Telegram si algo se ha
+  # cancelado o alguien ha rechazado una cita — ver antonia-vigilancia.js.
+  schedule = "*/15 * * * *"
+
+[functions."email-ia-worker"]
+  # Cada 15 minutos revisa la bandeja de cada cliente con "IA para Correo"
+  # activa y deja preparada una respuesta en BORRADOR (nunca se envía sola)
+  # — ver email-ia-worker.js. Sin efecto hasta que exista al menos un
+  # cliente con oauth_refresh_token real (bloqueado en la app de OAuth de
+  # Google Cloud, ver pending-roadmap-checklist).
+  schedule = "*/15 * * * *"
+
 [[headers]]
   for = "/*"
   [headers.values]
