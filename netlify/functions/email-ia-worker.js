@@ -170,6 +170,23 @@ async function crearBorrador(accessToken, threadId, mimeBase64Url) {
   return true;
 }
 
+// Envío directo, sin pasar por borrador — solo para clientes con
+// auto_enviar=true (lo pide el propio cliente explícitamente, no es el
+// comportamiento por defecto). Mismo scope gmail.compose ya concedido
+// (incluye "send emails", no hace falta pedir gmail.send aparte).
+async function enviarCorreo(accessToken, threadId, mimeBase64Url) {
+  const resp = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ raw: mimeBase64Url, threadId }),
+  });
+  if (!resp.ok) {
+    console.error('[EMAIL_IA_WORKER] No se pudo enviar el correo', resp.status, await resp.text());
+    return false;
+  }
+  return true;
+}
+
 async function actualizarUltimaRevision(supabaseUrl, serviceKey, clientId) {
   await fetch(`${supabaseUrl}/rest/v1/client_email_bot_config?client_id=eq.${clientId}`, {
     method: 'PATCH',
@@ -225,9 +242,12 @@ async function procesarCliente(cfg, env) {
       textoRespuesta: respuesta,
       deAlias: cfg.gmail_address,
     });
-    const creado = await crearBorrador(accessToken, mensaje.threadId, mime);
-    if (creado) {
-      await registrarInteraccion(env.supabaseUrl, env.serviceKey, cfg.client_id, `Email de "${de}" (asunto: "${asunto}") — borrador de respuesta preparado con IA.`);
+    const hecho = cfg.auto_enviar
+      ? await enviarCorreo(accessToken, mensaje.threadId, mime)
+      : await crearBorrador(accessToken, mensaje.threadId, mime);
+    if (hecho) {
+      const detalle = cfg.auto_enviar ? 'respuesta enviada automáticamente con IA' : 'borrador de respuesta preparado con IA';
+      await registrarInteraccion(env.supabaseUrl, env.serviceKey, cfg.client_id, `Email de "${de}" (asunto: "${asunto}") — ${detalle}.`);
     }
   }
 
