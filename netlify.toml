@@ -22,10 +22,16 @@
 [functions."email-ia-worker"]
   # Cada 15 minutos revisa la bandeja de cada cliente con "IA para Correo"
   # activa y deja preparada una respuesta en BORRADOR (nunca se envía sola)
-  # — ver email-ia-worker.js. Sin efecto hasta que exista al menos un
-  # cliente con oauth_refresh_token real (bloqueado en la app de OAuth de
-  # Google Cloud, ver pending-roadmap-checklist).
-  schedule = "*/15 * * * *"
+  # — ver email-ia-worker.js.
+  #
+  # TEMPORALMENTE SIN "schedule" (2026-09-13): mientras el auto-publish de
+  # producción siga bloqueado a propósito, Netlify no ejecuta NINGUNA
+  # función programada (confirmado: "0 functions actively running in
+  # production" incluso en la rama main). Se quita el cron un momento
+  # para poder invocar la función a mano vía la rama y probar que la
+  # lógica real (Gmail + Gemini + borrador) funciona de extremo a
+  # extremo, sin esperar al desbloqueo de producción. Restaurar
+  # `schedule = "*/15 * * * *"` en cuanto termine la prueba manual.
 
 [[headers]]
   for = "/*"
