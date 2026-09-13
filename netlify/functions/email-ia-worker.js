@@ -62,7 +62,12 @@ async function listarMensajesNuevos(accessToken, ultimaRevisionEn) {
   // procesaron, así nunca se pierde un mensaje por redondeo de fecha.
   const desde = ultimaRevisionEn ? new Date(ultimaRevisionEn) : new Date(Date.now() - 24 * 60 * 60 * 1000);
   desde.setDate(desde.getDate() - 1);
-  const query = `is:unread in:inbox after:${desde.toISOString().slice(0, 10).replace(/-/g, '/')}`;
+  // category:primary evita contestar avisos automáticos que Gmail ya
+  // clasifica fuera de la bandeja principal (notificaciones de Google,
+  // recibos, newsletters...) — hueco real encontrado probando: sin esto
+  // el worker generó un borrador de respuesta a un aviso de seguridad de
+  // Google y a un email de Scalapay como si fueran consultas de clientes.
+  const query = `is:unread in:inbox category:primary after:${desde.toISOString().slice(0, 10).replace(/-/g, '/')}`;
   const resp = await fetch(
     `https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${encodeURIComponent(query)}&maxResults=20`,
     { headers: { Authorization: `Bearer ${accessToken}` } },
@@ -203,6 +208,10 @@ async function procesarCliente(cfg, env) {
     const references = cabecera(mensaje, 'References');
     const texto = extraerTextoPlano(mensaje.payload) || mensaje.snippet || '';
     if (!texto.trim()) continue;
+    // Segunda capa de defensa además de category:primary — remitentes
+    // automáticos habituales que a veces caen igualmente en la bandeja
+    // principal (avisos de seguridad, confirmaciones de terceros...).
+    if (/no-?reply|donotreply|notification|mailer-daemon|postmaster/i.test(de)) continue;
 
     const systemPrompt = construirSystemPrompt(cfg);
     const respuesta = await llamarGemini(env.geminiKey, systemPrompt, `De: ${de}\nAsunto: ${asunto}\n\n${texto}`);
