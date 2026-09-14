@@ -1,0 +1,23 @@
+Ultra-realistic vertical photograph, 9:16 aspect ratio, professional advertising photography (not illustration, not 3D render, not CGI, no cartoon style). Dark, moody background in near-black charcoal tone (#16151a) filling most of the frame, with warm golden accent lighting (#d9a83f) and cream-white highlights. Cinematic, high-end tech-meets-small-business advertising aesthetic, shallow depth of field, soft directional light, subtle film grain, sharp focus on the main subject.
+
+SCENE: A single continuous counter-service moment, not a split composition, not a floating giant-number graphic, and not a handwritten sign. Inside a small bar/cafetería near the port of Cartagena on a Monday afternoon, a sudden rain shower has just hit — through a large window in the background, rain streaks down the glass and a few blurred passersby hurry inside for shelter, their umbrellas still dripping, while distant harbor cranes and masts are softly visible in the grey-gold haze beyond. In the foreground, the business owner stands behind the counter with both hands full, pouring coffee and plating something at the same time, sleeves rolled up, focused and slightly overwhelmed by the sudden rush. On the counter beside them, a smartphone lies face-up, its screen crowded with a stack of small overlapping WhatsApp-style message bubbles in cream and grey, clearly piling up unanswered. Rising out of the phone into the dark space above the counter, one single message bubble breaks away from the stack, growing larger and sharper than the rest, rendered as a glowing gold-edged quote card floating in the air — this is the visual and emotional centerpiece of the image, not a small caption. Beside this floating quote card, a small soft golden checkmark and a faint "escribiendo…" indicator glow gently, showing the message is already being answered automatically. The upper portion of the frame is dark negative space reserved for the logo and headline overlays.
+
+TEXT ELEMENTS (render these exactly, as clean, modern, minimal sans-serif typography, in Spanish, well-composed and legible, not distorted or garbled):
+
+1. Top of the image, small logo lockup: "TRUCO technology" in bold cream-white letters, with the smaller subtitle directly beneath it in gold: "Departamento Tecnológico".
+
+2. Just below the logo, a small pill-shaped label in gold outline with cream text reading: "LUNES · CHUBASCO EN CARTAGENA".
+
+3. Beneath that, a bold uppercase context label in gold, letter-spaced: "TU WHATSAPP SE AMONTONA".
+
+4. The main two-line headline in large bold cream-white letters, centered in the dark upper space, directly above the counter scene:
+"Mientras llueve fuera, tu WhatsApp se te acumula dentro."
+"Nosotros contestamos por ti."
+
+5. Inside the floating gold-edged quote card that rises from the phone, rendered as the actual message text, in dark charcoal letters on the cream-gold bubble: "¿Seguís abiertos con la lluvia?"
+
+6. In the lower third of the image, overlapping the edge of the counter, a small golden badge (rounded rectangle with a thin gold border) containing two lines of bold dark text on a gold background: "PRECIO FUNDADOR" and below it, smaller, "Plazas limitadas".
+
+7. At the very bottom of the image, centered, the closing line in cream-white bold text: "Paga una vez. Olvídate 365 días." and directly beneath it, in smaller gold text: "trucotechnology.com".
+
+STYLE: Photorealistic commercial photography, warm gold rim lighting on the floating quote card and the rain-streaked window against deep charcoal-black shadows, high contrast, premium and trustworthy mood, minimal clutter, generous negative space around text for legibility, consistent brand palette of dark charcoal (#16151a), gold (#d9a83f), and cream white throughout.
