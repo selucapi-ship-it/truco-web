@@ -37,8 +37,8 @@ function fmtEuro(n){
 }
 
 // El precio real de un Departamento es el de su primer año: un bono anual
-// pagado por adelantado (de una vez, con 12% dto., o fraccionado con
-// SeQura) — nunca una cuota mensual que TRUCO cobre directamente durante
+// pagado por adelantado (con tarjeta, 12% dto., o con PayPal) — nunca una
+// cuota mensual que TRUCO cobre directamente durante
 // esos 12 meses. La renovación automática a partir del segundo año sí es
 // mensual, y es ese número el que se muestra como "luego X €/mes".
 function annualPricingFor(monthly){

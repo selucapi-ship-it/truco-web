@@ -329,7 +329,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pc-vat" id="pc-vat-start"></div>
             <div class="pc-after" id="pc-after-start"></div>
             <div class="pc-founding-old" id="pc-founding-old-start"></div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
           </div>
           <div class="pc-breakdown">
             <div class="pb-row"><span class="pb-label">1 automatización a elegir, gratis</span><span class="pb-val">✓</span></div>
@@ -349,7 +349,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pc-vat" id="pc-vat-basic"></div>
             <div class="pc-after" id="pc-after-basic"></div>
             <div class="pc-founding-old" id="pc-founding-old-basic"></div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
           </div>
           <div class="pc-breakdown">
             <div class="pb-row"><span class="pb-label">Web Profesional, gratis</span><span class="pb-val">✓</span></div>
@@ -369,7 +369,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pc-vat" id="pc-vat-lite"></div>
             <div class="pc-after" id="pc-after-lite"></div>
             <div class="pc-founding-old" id="pc-founding-old-lite"></div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
             <div class="pc-save-tag">🎁 Ahorras 1.490-2.070 € en instalación</div>
           </div>
           <div class="pc-breakdown">
@@ -392,7 +392,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pc-vat" id="pc-vat-pro"></div>
             <div class="pc-after" id="pc-after-pro"></div>
             <div class="pc-founding-old" id="pc-founding-old-pro"></div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con SeQura · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
             <div class="pc-save-tag">🎁 Ahorras 2.540-3.170 € en instalación</div>
           </div>
           <div class="pc-breakdown">
@@ -588,7 +588,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       <div class="cat-label" style="margin-top:0;">¿Cómo lo pagas?</div>
       <div class="billing-toggle">
         <div class="billing-btn active" id="btn-unico" onclick="setTierPaymentMode('unico')">Pago único<span class="billing-save-tag">— ahorra 12%</span></div>
-        <div class="billing-btn" id="btn-financiado" onclick="setTierPaymentMode('financiado')">Fracciona con SeQura</div>
+        <div class="billing-btn" id="btn-financiado" onclick="setTierPaymentMode('financiado')">Fracciona con PayPal</div>
       </div>
       <div class="annual-highlight" id="annual-note">
         <b id="payment-mode-title">Pago único por adelantado — ahorras un 12%.</b> <span id="payment-mode-desc">Se cobra tu primer año de Departamento de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.</span>
@@ -599,7 +599,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
     <div id="sb-renewal" class="sb-renewal" style="display:none"></div>
     <div class="trust-row">
       <div class="trust-chip">SSL</div>
-      <div class="trust-chip">Stripe</div>
+      <div class="trust-chip" id="trust-chip-provider">Stripe</div>
       <div class="trust-chip">🇪🇺 RGPD</div>
       <div class="trust-chip">Sin sorpresas</div>
     </div>
@@ -609,7 +609,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       </button>
       <button class="sb-email-btn" id="sb-email-btn" style="display:none;" onclick="emailMeSummary()">✉ Enviarme este resumen, lo decido con calma</button>
     </div>
-    <div class="sb-secure">Procesado por Stripe · Cifrado 256-bit</div>
+    <div class="sb-secure" id="sb-secure">Procesado por Stripe · Cifrado 256-bit</div>
   </div>
 </div>
 
@@ -917,7 +917,7 @@ function renderFoundingPrices(){
     const badgeEl=document.getElementById('pc-founding-badge-'+tier);
     const oldEl=document.getElementById('pc-founding-old-'+tier);
     if(priceEl)priceEl.innerHTML=fmtEuro(p.total)+' €<sub>primer año, pago único</sub>';
-    if(vatEl)vatEl.textContent=fmtEuro(p.totalIva)+' € con IVA · o fracciona con SeQura';
+    if(vatEl)vatEl.textContent=fmtEuro(p.totalIva)+' € con IVA · o fracciona con PayPal';
     if(afterEl)afterEl.textContent='Luego '+m+' €/mes + IVA, sin permanencia';
     if(badgeEl){
       if(foundingActive(tier)){
@@ -983,8 +983,8 @@ function setTierPaymentMode(mode){
     title.textContent='Pago único por adelantado — ahorras un 12%.';
     desc.textContent='Se cobra tu primer año de Departamento de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.';
   }else{
-    title.textContent='Fracciona el pago con SeQura, sin que dependa de nosotros.';
-    desc.textContent='SeQura nos paga el total de golpe y a ti te deja elegir en cuántos meses lo devuelves, con su propio análisis de riesgo — no depende de tu tarjeta ni de que nosotros pasemos un cargo cada mes. El importe de arriba es nuestro precio, sin la comisión o el interés que aplique la financiera — eso se cierra directamente con ellos al formalizar el contrato.';
+    title.textContent='Fracciona el pago con PayPal, sin que dependa de nosotros.';
+    desc.textContent='Pagas con PayPal y, si tu cuenta es elegible, PayPal te deja elegir en su propio checkout pagarlo en 3 plazos sin intereses — nosotros cobramos el total de golpe, tú decides con PayPal cómo devolvérselo. No depende de que nosotros pasemos un cargo cada mes.';
   }
   updateAll();
 }
@@ -1358,17 +1358,17 @@ function getActivePlan(){
       const ivaM=arr.monthly*0.21;const totMes=arr.monthly+ivaM;
       const extraConIva=extraTotal*1.21;
       totalCommitment=totMes*arr.permanenciaMeses+extraConIva;
-      subPago='Financiado con SeQura';
+      subPago='Financiado con PayPal';
       priceLines=[];
       if(esFundador)priceLines.push({l:'🏷️ Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[d.arranque]+' de '+FOUNDING_SPOTS_TOTAL[d.arranque]+' plazas',v:'Aplicado ✓',cls:'free'});
-      priceLines.push({l:'Cuota (vía SeQura)'+(esFundador?' (fundador)':''),v:fmtEuro(arr.monthly)+' €'},{l:'IVA (21%)',v:fmtEuro(ivaM)+' €'},{l:'Total / mes con IVA',v:fmtEuro(totMes)+' €',total:true});
+      priceLines.push({l:'Cuota base'+(esFundador?' (fundador)':''),v:fmtEuro(arr.monthly)+' €/mes'},{l:'IVA (21%)',v:fmtEuro(ivaM)+' €/mes'},{l:'Equivalente / mes con IVA',v:fmtEuro(totMes)+' €'});
       if(extraTotal>0)priceLines.push({l:'+ Automatizaciones adicionales, pago único aparte',v:fmtEuro(extraConIva)+' € con IVA'});
-      priceLines.push({l:'Precio a TRUCO ('+arr.permanenciaMeses+' meses, sin comisión de la financiera)',v:fmtEuro(totalCommitment)+' €'});
+      priceLines.push({l:'Cargo único a PayPal ('+arr.permanenciaMeses+' meses de golpe — luego eliges con PayPal en cuántos plazos devolverlo)',v:fmtEuro(totalCommitment)+' €',total:true});
     }
     const renewalMsg='<b>Paga una vez. Olvídate 365 días.</b> Nada de facturas mensuales — tu primer año de Departamento (web, automatización, mantenimiento, reuniones) va incluido en este pago y funciona los 365 días, sin reembolso si decides no usarlo. Pasado el año, sigues mes a mes si quieres, sin compromiso nuevo.';
     const auditSols=selectedAuditSolutions.map(v=>OPEN_PRICE_SOLUTIONS.find(x=>x.value===v)).filter(Boolean);
     const auditLines=auditSols.map(x=>({l:'+ '+x.name+' (pendiente de auditoría)',v:'desde '+x.from+' € — sin cerrar'}));
-    return{key:selectedDirect,name:d.name,sub:subPago+' · '+arr.permanenciaMeses+' meses incluidos'+(solWord?' · '+solWord+' gratis':'')+(extraSols.length?' + '+extraSols.length+' adicional'+(extraSols.length>1?'es':''):''),arranqueType:d.arranque,breakdown:[...webLine,...solLines,...extraLines,...auditLines,{divider:true},...priceLines],monthlyAfter:arr.monthly,totalRaw:isUnico?totalCommitment:null,timeline:selectedDirect,renewalMsg,solutionsIncomplete:selectedTierSolutions.length<arr.freeSols,needsAudit:auditSols.length>0,founding:esFundador};
+    return{key:selectedDirect,name:d.name,sub:subPago+' · '+arr.permanenciaMeses+' meses incluidos'+(solWord?' · '+solWord+' gratis':'')+(extraSols.length?' + '+extraSols.length+' adicional'+(extraSols.length>1?'es':''):''),arranqueType:d.arranque,breakdown:[...webLine,...solLines,...extraLines,...auditLines,{divider:true},...priceLines],monthlyAfter:arr.monthly,totalRaw:totalCommitment,paymentMode:tierPaymentMode,timeline:selectedDirect,renewalMsg,solutionsIncomplete:selectedTierSolutions.length<arr.freeSols,needsAudit:auditSols.length>0,founding:esFundador};
   }
   return null;
 }
@@ -1402,13 +1402,16 @@ function updateSummary(plan){
   }else{
     btn.disabled=false;
     const financiado=selectedDirect&&tierPaymentMode!=='unico'&&!plan.customQuote;
-    txt.textContent=plan.customQuote?'→ Solicitar presupuesto personalizado':financiado?'→ Confirmar financiación por WhatsApp':'→ Confirmar y pagar con Stripe';
+    txt.textContent=plan.customQuote?'→ Solicitar presupuesto personalizado':financiado?'→ Confirmar y pagar con PayPal':'→ Confirmar y pagar con Stripe';
   }
   const paymentNote=document.getElementById('payment-note');
+  const financiadoNote=selectedDirect&&tierPaymentMode!=='unico'&&!plan.customQuote;
   if(paymentNote){
-    const financiadoNote=selectedDirect&&tierPaymentMode!=='unico'&&!plan.customQuote;
-    paymentNote.innerHTML=financiadoNote?'Al confirmar te escribimos por <strong style="color:var(--white);">WhatsApp</strong> en menos de 24h para cerrar la financiación con SeQura — el importe que ves arriba es el precio a TRUCO, sin la comisión de la financiera (eso se cierra directamente con ellos).':'Al confirmar serás redirigido a <strong style="color:var(--white);">Stripe</strong>, la pasarela usada por millones de empresas en todo el mundo. Tu información bancaria nunca pasa por nuestros servidores.';
+    paymentNote.innerHTML=financiadoNote?'Al confirmar serás redirigido a <strong style="color:var(--white);">PayPal</strong> — si tu cuenta es elegible, podrás elegir en su propio checkout pagarlo en 3 plazos sin intereses. Tu información bancaria nunca pasa por nuestros servidores.':'Al confirmar serás redirigido a <strong style="color:var(--white);">Stripe</strong>, la pasarela usada por millones de empresas en todo el mundo. Tu información bancaria nunca pasa por nuestros servidores.';
   }
+  const trustChip=document.getElementById('trust-chip-provider'),sbSecure=document.getElementById('sb-secure');
+  if(trustChip)trustChip.textContent=financiadoNote?'PayPal':'Stripe';
+  if(sbSecure)sbSecure.textContent=financiadoNote?'Procesado por PayPal · Cifrado 256-bit':'Procesado por Stripe · Cifrado 256-bit';
   if(msbBar){
     const totalEls=be.querySelectorAll('.sbr-total .sbr-val');
     const totalTxt=totalEls.length?totalEls[totalEls.length-1].textContent:'';
@@ -1577,19 +1580,26 @@ async function handlePay(){
   }
 
   if(plan.customQuote){alert('Con más de 3 automatizaciones elaboramos un presupuesto personalizado. Te contactamos en menos de 24h. Mientras tanto, escríbenos por WhatsApp o reserva una consultoría gratuita.');return;}
-  if(!plan.totalRaw){alert(selectedDirect&&tierPaymentMode!=='unico'?'La financiación con SeQura se confirma por WhatsApp mientras terminamos de conectarla aquí. Te escribimos en menos de 24h.':'Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');return;}
+  if(!plan.totalRaw){alert('Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');return;}
+
+  // Pago único → Stripe (tarjeta). Financiado → PayPal (su checkout ofrece
+  // "Paga en 3" al comprador si es elegible) — sustituye al antiguo aviso de
+  // "te escribimos por WhatsApp para cerrar con SeQura", ver [[n8n-hosting-decision-and-payment-backup]].
+  const usaPaypal=selectedDirect&&plan.paymentMode==='financiado';
+  const endpoint=usaPaypal?'/.netlify/functions/create-paypal-order':'/.netlify/functions/create-checkout';
 
   const payBtn=document.getElementById('payBtn'),payBtnText=document.getElementById('btn-text');
   if(payBtn){payBtn.disabled=true;}
   if(payBtnText){payBtnText.dataset.origText=payBtnText.textContent;payBtnText.textContent='Conectando con el pago…';}
   try{
-    const resp=await fetch('/.netlify/functions/create-checkout',{
+    const resp=await fetch(endpoint,{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         name:'TRUCO technology — '+plan.name,
         description:plan.sub+' · IVA incluido',
         amountCents:Math.round(plan.totalRaw*100),
         customerEmail:e.value.trim(),
+        customerName:n.value.trim(),
         planKey:plan.key,
         arranqueTier:plan.arranqueType||'',
         founding:!!plan.founding,
@@ -1603,7 +1613,7 @@ async function handlePay(){
   }catch(err){/* sigue al aviso de abajo */}
   if(payBtn){payBtn.disabled=false;}
   if(payBtnText){payBtnText.textContent=payBtnText.dataset.origText;}
-  alert('Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');
+  alert(usaPaypal?'No hemos podido conectar con PayPal ahora mismo. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.':'Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');
 }
 
 function toggleFaq(btn){

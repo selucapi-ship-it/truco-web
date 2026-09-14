@@ -419,11 +419,11 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Por qué hay permanencia de 12 meses? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>No es una permanencia al uso: tu primer año va pagado por adelantado (de una vez o con SeQura), y es ese pago el que nos permite regalarte la Web Profesional + 1 automatización desde el primer día. Al terminar el año, sigues mes a mes si quieres, sin más compromiso. Si buscas un primer año todavía más ligero, <a href="start.html">Start™</a> tiene la misma lógica con solo 1 automatización, sin web.</p></div>
+        <div class="faq-a"><p>No es una permanencia al uso: tu primer año va pagado por adelantado (con tarjeta o con PayPal), y es ese pago el que nos permite regalarte la Web Profesional + 1 automatización desde el primer día. Al terminar el año, sigues mes a mes si quieres, sin más compromiso. Si buscas un primer año todavía más ligero, <a href="start.html">Start™</a> tiene la misma lógica con solo 1 automatización, sin web.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Cómo se paga? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Por defecto, pago único por adelantado de los 12 meses (<span id="faq-total-elemental"></span> + IVA), con un 12% de descuento por hacerlo de una vez. Si prefieres no adelantar todo de golpe, lo fraccionas a través de SeQura, nuestro partner de financiación — ellos nos pagan el total y tú les devuelves en los plazos que elijas. No hacemos facturación mensual directa con nosotros.</p></div>
+        <div class="faq-a"><p>Por defecto, pago único por adelantado de los 12 meses (<span id="faq-total-elemental"></span> + IVA) con tarjeta a través de Stripe, con un 12% de descuento por hacerlo de una vez. También puedes pagar con PayPal — si tu cuenta es elegible, PayPal te deja elegir en su propio checkout pagarlo en 3 plazos sin intereses; a nosotros nos llega igual, de golpe. No hacemos facturación mensual directa con nosotros.</p></div>
       </div>
     </div>
   </div>
@@ -434,7 +434,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div class="cta-inner">
       <div>
         <h2>¿Listo para una web que trabaje por ti?</h2>
-        <p>Pago único con 12% dto., o fracciona con SeQura. Tu primer año va incluido — Web Profesional + 1 automatización gratis, luego sigues mes a mes sin permanencia.</p>
+        <p>Pago único con 12% dto., con tarjeta o PayPal. Tu primer año va incluido — Web Profesional + 1 automatización gratis, luego sigues mes a mes sin permanencia.</p>
       </div>
       <div class="cta-btns">
         <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>
@@ -484,7 +484,7 @@ function renderFoundingPricesElemental(){
   const esFundador=foundingActive('basic');
   const tachado=esFundador?'<span class="price-old">'+fmtEuro(standardAnnualPricing('basic').total)+' €</span> ':'';
   set('hp-main-elemental',tachado+fmtEuro(p.total)+' €<sub>primer año, pago único</sub>');
-  set('hp-vat-elemental',fmtEuro(p.totalIva)+' € con IVA · pago único (12% dto.) o fracciona con SeQura');
+  set('hp-vat-elemental',fmtEuro(p.totalIva)+' € con IVA · pago único (12% dto.), con tarjeta o PayPal');
   set('hp-annual-elemental','Luego '+p.monthly+' €/mes + IVA, sin permanencia. Tu primer año ya incluye la integración completa de tu web y tu automatización, configuradas con los datos reales de tu negocio, y la gestión de tu Departamento cada mes.');
   set('table-price-start',mStart+' €');
   set('table-price-basic',p.monthly+' €');

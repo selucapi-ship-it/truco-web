@@ -23,12 +23,22 @@
 //
 // RELLENAR en Netlify antes de que esto funcione con clientes reales:
 //   - WHATSAPP_CLIENTS_VERIFY_TOKEN  (cadena que tú eliges, se la das a Meta
-//     al registrar este webhook — verifica que la petición GET es de Meta)
+//     al registrar este webhook — verifica que la petición GET es de Meta.
+//     Se reutiliza el mismo valor aunque el cliente tenga su propia app de
+//     Meta — el verify token lo elegimos nosotros al configurar CADA app)
 //   - META_WHATSAPP_SYSTEM_TOKEN     (el token del system user de TRUCO como
 //     Meta Tech Provider, una vez aprobado — válido para TODOS los números
-//     de clientes ya incorporados, no uno por cliente)
+//     de clientes ya incorporados bajo el Business Manager de TRUCO)
 // Ya existentes y reutilizadas sin cambios: SUPABASE_URL,
 // SUPABASE_SERVICE_ROLE_KEY, GEMINI_API_KEY.
+//
+// PUENTE TEMPORAL (mientras se espera la Advanced Access de TRUCOchat, ~20
+// días desde 2026-09-13): un cliente puede tener su PROPIA app de Meta bajo
+// su propio Business Manager ("Direct Developer", no necesita Advanced
+// Access) — en ese caso su fila en client_whatsapp_bot_config trae su
+// propio meta_access_token y se usa ESE en vez del compartido. Ver
+// supabase/migration_whatsapp_per_client_meta_token.sql — diseño aditivo:
+// si la columna es NULL, todo sigue igual que siempre.
 
 function authHeaders(key) {
   const h = { 'Content-Type': 'application/json', apikey: key };
@@ -91,10 +101,12 @@ async function llamarGemini(geminiKey, systemPrompt, mensajeUsuario) {
   return data?.candidates?.[0]?.content?.parts?.find((p) => p.text)?.text?.trim() || null;
 }
 
-async function enviarRespuestaWhatsapp(phoneNumberId, destinatario, texto) {
-  const token = process.env.META_WHATSAPP_SYSTEM_TOKEN;
+async function enviarRespuestaWhatsapp(phoneNumberId, destinatario, texto, tokenCliente) {
+  // Si el cliente tiene su propia app de Meta (puente temporal, ver cabecera
+  // del archivo), se usa su token. Si no, el compartido de TRUCO de siempre.
+  const token = tokenCliente || process.env.META_WHATSAPP_SYSTEM_TOKEN;
   if (!token) {
-    console.error('[WHATSAPP_CLIENT_BOT] Falta META_WHATSAPP_SYSTEM_TOKEN, no se puede enviar la respuesta');
+    console.error('[WHATSAPP_CLIENT_BOT] Falta token de envío (ni meta_access_token del cliente ni META_WHATSAPP_SYSTEM_TOKEN)');
     return false;
   }
   const resp = await fetch(`https://graph.facebook.com/v21.0/${phoneNumberId}/messages`, {
@@ -181,7 +193,7 @@ exports.handler = async function (event) {
     const respuesta = await llamarGemini(geminiKey, systemPrompt, textoUsuario);
     if (!respuesta) return { statusCode: 200, body: 'ok' };
 
-    await enviarRespuestaWhatsapp(phoneNumberId, mensaje.from, respuesta);
+    await enviarRespuestaWhatsapp(phoneNumberId, mensaje.from, respuesta, cfg.meta_access_token);
     await registrarInteraccion(supabaseUrl, serviceKey, cfg.client_id, `WhatsApp — cliente escribió: "${textoUsuario}" — bot respondió: "${respuesta}"`);
 
     return { statusCode: 200, body: 'ok' };

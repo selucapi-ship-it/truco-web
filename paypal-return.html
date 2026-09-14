@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Confirmando tu pago — TRUCOtechnology</title>
+<style>
+:root{
+  --bg:#16151a;--bg-panel:#201f24;
+  --gold:#d9a83f;--white:#f2f0ea;--grey:#9a96a0;--grey-line:#3d3b42;--red:#e05a5a;
+  --font-d:'Georgia',serif;--font-b:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--white);font-family:var(--font-b);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+.card{max-width:420px;text-align:center;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;padding:40px 28px;}
+.t-mark{width:44px;height:44px;margin:0 auto 20px;border:1.5px solid var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);color:var(--gold);font-size:22px;font-weight:700;}
+h1{font-family:var(--font-d);font-size:1.3rem;margin-bottom:10px;}
+p{color:var(--grey);font-size:.92rem;line-height:1.6;}
+.spinner{width:28px;height:28px;border:3px solid var(--grey-line);border-top-color:var(--gold);border-radius:50%;margin:20px auto 0;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.error p{color:var(--red);}
+.btn{display:inline-block;margin-top:18px;background:var(--gold);color:#1a1712;font-weight:700;padding:12px 24px;border-radius:10px;text-decoration:none;font-size:.9rem;}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="t-mark">T</div>
+  <h1>Confirmando tu pago con PayPal…</h1>
+  <p>No cierres esta ventana, tarda solo unos segundos.</p>
+  <div class="spinner"></div>
+</div>
+<script>
+(async function(){
+  const params = new URLSearchParams(location.search);
+  const orderId = params.get('token'); // PayPal siempre llama "token" al id de la orden al volver
+  const card = document.getElementById('card');
+  if(!orderId){
+    location.href = '/pago.html?cancelado=1';
+    return;
+  }
+  try{
+    const resp = await fetch('/.netlify/functions/paypal-capture-order?order_id=' + encodeURIComponent(orderId), { method: 'POST' });
+    const data = await resp.json();
+    if(data.ok && data.url){
+      location.href = data.url;
+      return;
+    }
+    throw new Error(data.reason || 'fallo desconocido');
+  }catch(err){
+    card.classList.add('error');
+    card.innerHTML = '<div class="t-mark">T</div><h1>No hemos podido confirmar el pago automáticamente</h1><p>Tranquilo, si PayPal te ha cobrado no se pierde nada — escríbenos por WhatsApp ahora mismo con una captura de tu pago y lo activamos a mano en minutos.</p><a class="btn" href="https://wa.me/34681899793" target="_blank" rel="noopener">Escribir por WhatsApp</a>';
+  }
+})();
+</script>
+</body>
+</html>
