@@ -20,13 +20,15 @@
 // GEMINI_API_KEY.
 
 const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 
 const ANTONIA_SYSTEM_PROMPT = `Eres ANTONIA, la asistente administrativa personal del founder de TRUCO technology. Te habla por Telegram, como a una compañera de confianza en el día a día del negocio — no como un robot ni con frases de manual.
 
 Reglas:
 1. Responde SOLO con los datos reales que se te dan en el bloque de abajo. Si algo que te pregunta no está ahí, dilo claramente ("no tengo ese dato ahora mismo, revísalo tú directamente") — nunca inventes ni supongas una cifra o un estado.
 2. Sé breve y directa — esto es un chat de trabajo rápido, no un informe.
-3. Si alguno de los 4 bloques de datos dice que no está disponible, dilo también en vez de ignorarlo en silencio.`;
+3. Si alguno de los 4 bloques de datos dice que no está disponible, dilo también en vez de ignorarlo en silencio.
+4. Si te pregunta si puedes mandar un documento por correo: sí puedes — dile que te escriba tal cual "mándale [documento] a [email]" o "/documentos" para ver qué hay disponible (eso no pasa por ti, se gestiona aparte, así que no lo intentes hacer tú desde esta respuesta).`;
 
 function authHeaders(key) {
   const h = { 'Content-Type': 'application/json', apikey: key };
@@ -115,7 +117,7 @@ function base64url(buf) {
   return Buffer.from(buf).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
-async function getGoogleAccessToken() {
+async function getGoogleAccessToken(scope) {
   const raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON_B64;
   if (!raw) return null;
   const sa = JSON.parse(Buffer.from(raw, 'base64').toString('utf8'));
@@ -123,7 +125,7 @@ async function getGoogleAccessToken() {
   const header = base64url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
   const claim = base64url(JSON.stringify({
     iss: sa.client_email,
-    scope: 'https://www.googleapis.com/auth/calendar.readonly',
+    scope: scope || 'https://www.googleapis.com/auth/calendar.readonly',
     aud: 'https://oauth2.googleapis.com/token',
     iat: now,
     exp: now + 3600,
@@ -169,6 +171,141 @@ async function fetchCalendario() {
     console.error('[ANTONIA] fetchCalendario excepcion', e.message);
     return 'No disponible ahora mismo.';
   }
+}
+
+// ── Enviar documentos por correo — misma carpeta de Drive y misma cuenta de
+// Brevo que ya usa ANTONIA por voz (antonia-agent/src/agent.py), solo que
+// aquí se dispara con un comando de texto en vez de function-calling: este
+// archivo deliberadamente no usa function-calling (ver cabecera), así que en
+// vez de dejar que Gemini "decida" mandar un correo real, se reconoce un
+// patrón de texto fijo antes de tocar la IA — una acción con efectos reales
+// (mandar un documento a un email) no debe depender de una interpretación
+// libre del modelo.
+const DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.readonly';
+
+async function listarDocumentosDrive(token, folderId) {
+  const url = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(`'${folderId}' in parents and trashed = false`)}&fields=${encodeURIComponent('files(id,name,mimeType)')}&pageSize=50`;
+  const resp = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+  if (!resp.ok) return null;
+  const data = await resp.json();
+  return data.files || [];
+}
+
+async function buscarDocumentoDrive(token, folderId, nombre) {
+  // Escapar \ antes que ' — si no, un nombre que ya trajera una barra
+  // invertida dejaría una comilla sin escapar de verdad y manipularía el
+  // filtro "q" de la API de Drive (mismo orden que la versión Python).
+  const nombreEscapado = nombre.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+  const q = `'${folderId}' in parents and trashed = false and name contains '${nombreEscapado}'`;
+  const url = `https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(q)}&fields=${encodeURIComponent('files(id,name,mimeType)')}&pageSize=5`;
+  const resp = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+  if (!resp.ok) return null;
+  const data = await resp.json();
+  return (data.files || [])[0] || null;
+}
+
+async function descargarDocumentoDrive(token, archivo) {
+  const esGoogleDoc = archivo.mimeType.startsWith('application/vnd.google-apps');
+  const url = esGoogleDoc
+    ? `https://www.googleapis.com/drive/v3/files/${archivo.id}/export?mimeType=application/pdf`
+    : `https://www.googleapis.com/drive/v3/files/${archivo.id}?alt=media`;
+  const resp = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+  if (!resp.ok) return null;
+  const buffer = Buffer.from(await resp.arrayBuffer());
+  const nombreFinal = esGoogleDoc ? archivo.name + '.pdf' : archivo.name;
+  return { buffer, nombreFinal };
+}
+
+// Misma cuenta de Brevo que ya usa antonia-agent (SMTP) — sin proveedor
+// nuevo, sin coste nuevo. Devuelve [ok, error].
+async function enviarEmailConAdjunto(destinatario, asunto, cuerpo, buffer, nombreArchivo) {
+  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM } = process.env;
+  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
+    return [false, 'No tengo el correo configurado todavía.'];
+  }
+  // Defensa en profundidad: aunque destinatario/asunto solo los escribe Jose
+  // por Telegram (no un formulario público), se quitan saltos de línea para
+  // que nada pueda inyectar cabeceras SMTP extra.
+  const destinatarioLimpio = destinatario.replace(/[\r\n]/g, ' ').trim();
+  const asuntoLimpio = asunto.replace(/[\r\n]/g, ' ').trim();
+  try {
+    const transporter = nodemailer.createTransport({
+      host: SMTP_HOST,
+      port: Number(SMTP_PORT) || 587,
+      secure: Number(SMTP_PORT) === 465,
+      auth: { user: SMTP_USER, pass: SMTP_PASS },
+    });
+    await transporter.sendMail({
+      from: SMTP_FROM || SMTP_USER,
+      to: destinatarioLimpio,
+      subject: asuntoLimpio,
+      text: cuerpo,
+      attachments: [{ filename: nombreArchivo, content: buffer }],
+    });
+    return [true, null];
+  } catch (e) {
+    console.error('[ANTONIA] fallo enviando correo', e.message);
+    return [false, 'No he podido enviar el correo ahora mismo, prueba en un momento.'];
+  }
+}
+
+// "manda/envía/pásame <documento> a <email>" — case-insensitive, con o sin
+// artículo. El email tiene que parecer un email real (usuario@dominio.algo);
+// si el mensaje no encaja con este patrón, se trata como conversación normal.
+const PATRON_ENVIAR_DOC = /^(?:m[aá]nda(?:le|me)?|env[ií]a(?:le|me)?|p[aá]same)\s+(?:el|la|los|las)\s+(.+?)\s+(?:a|por correo a)\s+([^\s@]+@[^\s@]+\.[^\s@]+?)\s*[.!]?$/i;
+
+async function manejarEnvioDocumento(texto, botToken, chatId) {
+  const match = texto.trim().match(PATRON_ENVIAR_DOC);
+  if (!match) return false;
+  const [, nombreDocumento, destinatario] = match;
+
+  const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
+  const enviarRespuesta = (texto) => fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: chatId, text: texto }),
+  });
+
+  if (!folderId) {
+    await enviarRespuesta('No tengo ninguna carpeta de Drive configurada todavía — falta dar de alta GOOGLE_DRIVE_FOLDER_ID.');
+    return true;
+  }
+  const token = await getGoogleAccessToken(DRIVE_SCOPE);
+  if (!token) {
+    await enviarRespuesta('No tengo acceso a Drive ahora mismo.');
+    return true;
+  }
+  let archivo;
+  try {
+    archivo = await buscarDocumentoDrive(token, folderId, nombreDocumento);
+  } catch (e) {
+    console.error('[ANTONIA] fallo buscando en Drive', e.message);
+    await enviarRespuesta('No he podido buscar en la carpeta de Drive ahora mismo.');
+    return true;
+  }
+  if (!archivo) {
+    await enviarRespuesta(`No he encontrado ningún documento que coincida con "${nombreDocumento}" en la carpeta.`);
+    return true;
+  }
+  let descarga;
+  try {
+    descarga = await descargarDocumentoDrive(token, archivo);
+  } catch (e) {
+    console.error('[ANTONIA] fallo descargando de Drive', e.message);
+    descarga = null;
+  }
+  if (!descarga) {
+    await enviarRespuesta('He encontrado el documento pero no he podido descargarlo ahora mismo.');
+    return true;
+  }
+  const [ok, error] = await enviarEmailConAdjunto(
+    destinatario,
+    'TRUCOtechnology — ' + archivo.name,
+    'Te adjunto el documento solicitado.',
+    descarga.buffer,
+    descarga.nombreFinal
+  );
+  await enviarRespuesta(ok ? `Hecho — "${archivo.name}" enviado a ${destinatario}.` : error);
+  return true;
 }
 
 exports.handler = async function (event) {
@@ -217,6 +354,35 @@ exports.handler = async function (event) {
 
   const chatId = message.chat.id;
   const texto = message.text.slice(0, 2000);
+
+  // "manda/envía/pásame X a email@dominio.com" — se comprueba ANTES de tocar
+  // Gemini o de pedir el resto de datos: es una acción real (mandar un
+  // documento a un email), así que se reconoce con un patrón de texto fijo
+  // en vez de dejar que el modelo "decida" — ver manejarEnvioDocumento().
+  if (await manejarEnvioDocumento(texto, botToken, chatId)) {
+    return { statusCode: 200, body: 'ok' };
+  }
+
+  if (texto.trim() === '/documentos') {
+    const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
+    let respuesta = 'No tengo ninguna carpeta de Drive configurada todavía.';
+    if (folderId) {
+      const token = await getGoogleAccessToken(DRIVE_SCOPE);
+      const archivos = token ? await listarDocumentosDrive(token, folderId) : null;
+      respuesta = !token
+        ? 'No tengo acceso a Drive ahora mismo.'
+        : !archivos
+          ? 'No he podido consultar la carpeta de Drive ahora mismo.'
+          : archivos.length
+            ? 'Documentos disponibles: ' + archivos.map((a) => a.name).join(', ') + '.'
+            : 'La carpeta de Drive está vacía ahora mismo.';
+    }
+    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, text: respuesta }),
+    });
+    return { statusCode: 200, body: 'ok' };
+  }
 
   const [fiscal, clientes, truki, calendario] = await Promise.all([
     fetchFiscal(supabaseUrl, supabaseKey),
