@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Transferencia bancaria — TRUCOtechnology</title>
+<style>
+:root{
+  --bg:#16151a;--bg-panel:#201f24;--bg-card:#2b2a30;
+  --gold:#d9a83f;--white:#f2f0ea;--grey:#9a96a0;--grey-line:#3d3b42;--green:#22c55e;
+  --font-d:'Georgia',serif;--font-b:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-m:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--white);font-family:var(--font-b);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;line-height:1.55;}
+.card{max-width:480px;width:100%;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;padding:36px 30px;}
+.t-mark{width:44px;height:44px;margin:0 auto 20px;border:1.5px solid var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);color:var(--gold);font-size:22px;font-weight:700;}
+h1{font-family:var(--font-d);font-size:1.35rem;margin-bottom:8px;text-align:center;}
+.sub{color:var(--grey);font-size:.9rem;text-align:center;margin-bottom:26px;}
+.field{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:10px;padding:14px 16px;margin-bottom:12px;}
+.field .lbl{font-family:var(--font-m);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);margin-bottom:5px;}
+.field .val{font-size:1.05rem;font-weight:600;color:var(--white);word-break:break-word;}
+.field.ref .val{font-family:var(--font-m);color:var(--gold);font-size:1.25rem;letter-spacing:.02em;}
+.field.amount .val{font-family:var(--font-d);font-size:1.6rem;color:var(--gold);}
+.warn{background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.3);border-radius:10px;padding:14px 16px;margin:18px 0;font-size:.86rem;color:var(--grey);}
+.warn b{color:var(--white);}
+.steps{margin:0 0 18px;padding-left:20px;font-size:.88rem;color:var(--grey);}
+.steps li{margin-bottom:6px;}
+.steps b{color:var(--white);}
+.btn{display:block;text-align:center;margin-top:8px;background:var(--gold);color:#1a1712;font-weight:700;padding:13px 24px;border-radius:10px;text-decoration:none;font-size:.9rem;}
+.btn-ghost{display:block;text-align:center;margin-top:10px;border:1px solid var(--grey-line);color:var(--grey);padding:11px 24px;border-radius:10px;text-decoration:none;font-size:.85rem;}
+.missing{text-align:center;}
+.missing p{color:var(--grey);font-size:.92rem;margin-top:10px;}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="t-mark">T</div>
+  <div id="content"></div>
+</div>
+<script>
+(function(){
+  // ref/plan llegan de la URL — aunque hoy solo los genera nuestro propio
+  // backend, un enlace manipulado a esta misma página con ?ref=<script>...
+  // sería XSS reflejado si se insertan tal cual en innerHTML. Se escapan
+  // siempre, sin excepción, antes de tocar el DOM.
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  const params = new URLSearchParams(location.search);
+  const ref = params.get('ref');
+  const amountCents = parseInt(params.get('amount'), 10);
+  const planName = escapeHtml(params.get('plan') || 'tu Departamento Tecnológico');
+  const content = document.getElementById('content');
+  const IBAN = 'ES57 0182 1294 1502 0516 4770';
+  const TITULAR = 'Jose Luis Robles Capitán (TRUCOtechnology)';
+
+  if(!ref || !Number.isFinite(amountCents)){
+    content.innerHTML = '<h1>Faltan datos de tu pedido</h1><div class="missing"><p>No hemos podido recuperar el código de tu transferencia. Vuelve al checkout e inténtalo de nuevo, o escríbenos si el problema persiste.</p></div><a class="btn" href="/pago.html">Volver al checkout</a>';
+    return;
+  }
+  const amountStr = (amountCents/100).toFixed(2).replace('.', ',') + ' €';
+  content.innerHTML = `
+    <h1>Ya casi está — solo falta tu transferencia</h1>
+    <p class="sub">${planName} · pago único por transferencia</p>
+    <div class="field ref"><div class="lbl">Código de referencia — inclúyelo en el concepto</div><div class="val">${escapeHtml(ref)}</div></div>
+    <div class="field amount"><div class="lbl">Importe exacto a transferir</div><div class="val">${amountStr}</div></div>
+    <div class="field"><div class="lbl">IBAN</div><div class="val">${IBAN}</div></div>
+    <div class="field"><div class="lbl">Titular</div><div class="val">${TITULAR}</div></div>
+    <ol class="steps">
+      <li>Entra en la app o web de tu banco.</li>
+      <li>Haz una transferencia por <b>${amountStr}</b> a ese IBAN.</li>
+      <li>En el <b>concepto</b>, escribe exactamente: <b>${escapeHtml(ref)}</b></li>
+    </ol>
+    <div class="warn">Sin el código de referencia en el concepto no podemos identificar tu pago. En cuanto la veamos entrar en nuestro banco (normalmente 1-2 días laborables) activamos tu cuenta y te avisamos por email.</div>
+    <a class="btn-ghost" href="https://wa.me/34681899793" target="_blank" rel="noopener">¿Dudas? Escríbenos por WhatsApp</a>
+  `;
+})();
+</script>
+</body>
+</html>

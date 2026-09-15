@@ -56,10 +56,23 @@ a{color:inherit;text-decoration:none;}
 .quick-sector-box select{width:100%;background:var(--bg-panel);border:1.5px solid var(--green);border-radius:8px;padding:11px 14px;color:var(--white);font-family:var(--font-b);font-size:.88rem;outline:none;-webkit-appearance:none;cursor:pointer;}
 .quick-sector-box select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,.15);}
 .quick-sector-box select option{background:var(--bg-panel);}
-.billing-toggle{display:flex;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:10px;padding:4px;margin-bottom:16px;}
-.billing-btn{flex:1;text-align:center;padding:9px 16px;border-radius:7px;font-size:.85rem;font-weight:600;color:var(--grey);cursor:pointer;transition:all var(--tr);}
-.billing-btn.active{background:var(--blue);color:#fff;}
-.billing-save-tag{font-size:.76rem;color:var(--gold);font-family:var(--font-m);margin-left:5px;}
+.pay-option-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+.pay-option{display:flex;align-items:center;gap:14px;background:var(--bg-panel);border:1.5px solid var(--grey-line);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all var(--tr);}
+.pay-option:hover{border-color:var(--grey);}
+.pay-option.active{border-color:var(--blue);background:var(--blue-dim);}
+.pay-option-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--grey-line);flex-shrink:0;position:relative;transition:all var(--tr);background:var(--bg-card);}
+.pay-option.active .pay-option-radio{border-color:var(--blue);}
+.pay-option.active .pay-option-radio::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--blue);}
+.pay-option-icon{flex-shrink:0;width:40px;height:26px;display:flex;align-items:center;justify-content:center;}
+.pay-option-icon svg{width:100%;height:100%;}
+.pay-option-body{flex:1;min-width:0;}
+.pay-option-title{font-size:.92rem;font-weight:700;color:var(--white);line-height:1.3;}
+.pay-option-sub{font-size:.76rem;color:var(--grey);margin-top:2px;line-height:1.3;}
+.pay-option-tag{font-family:var(--font-m);font-size:.72rem;color:var(--gold);font-weight:700;white-space:nowrap;flex-shrink:0;text-align:right;}
+@media(max-width:420px){
+  .pay-option{padding:12px;gap:10px;}
+  .pay-option-tag{font-size:.68rem;}
+}
 .annual-highlight{background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.2);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:.86rem;color:var(--gold);line-height:1.6;}
 .annual-highlight b{color:var(--white);}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
@@ -116,6 +129,27 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .step-hd{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
 .step-num{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-family:var(--font-m);font-size:.80rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .step-hd h2{font-size:1.05rem;font-weight:700;}
+
+/* ── WIZARD: 3 pasos, uno visible a la vez ── */
+.step-panel{display:none;}
+.step-panel.active{display:block;}
+.wizard-indicator{display:flex;align-items:center;gap:6px;margin-bottom:32px;}
+.wizard-dot{display:flex;align-items:center;gap:9px;}
+.wizard-dot .num{width:27px;height:27px;border-radius:50%;background:var(--bg-card);border:1.5px solid var(--grey-line);color:var(--grey);display:flex;align-items:center;justify-content:center;font-family:var(--font-m);font-size:.76rem;font-weight:700;flex-shrink:0;transition:all var(--tr);}
+.wizard-dot .lbl{font-size:.82rem;color:var(--grey);white-space:nowrap;transition:color var(--tr);}
+.wizard-dot.current .num{background:var(--blue);border-color:var(--blue);color:#fff;}
+.wizard-dot.current .lbl{color:var(--white);font-weight:700;}
+.wizard-dot.done .num{background:var(--green);border-color:var(--green);color:#0d1a12;}
+.wizard-dot.done .lbl{color:var(--grey);}
+.wizard-line{flex:1;height:1px;background:var(--grey-line);min-width:14px;margin:0 2px;}
+@media(max-width:600px){.wizard-dot .lbl{display:none;}.wizard-indicator{margin-bottom:24px;}}
+.wizard-back{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:var(--grey);cursor:pointer;margin-bottom:18px;background:none;border:none;font-family:var(--font-b);padding:0;}
+.wizard-back:hover{color:var(--white);}
+.wizard-back svg{width:15px;height:15px;}
+
+/* ── ICONOS DE MÉTODOS DE PAGO ── */
+.pay-methods-row{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap;align-items:center;}
+.pay-method-card{display:block;border-radius:5px;box-shadow:0 0 0 1px var(--grey-line);flex-shrink:0;}
 
 .cat-label{font-family:var(--font-m);font-size:.70rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
 .cat-label::before{content:'';width:20px;height:1px;background:currentColor;flex-shrink:0;}
@@ -310,6 +344,16 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 
 <div class="checkout">
 <div class="form-col">
+
+  <div class="wizard-indicator" id="wizard-indicator">
+    <div class="wizard-dot current" id="wdot-1"><div class="num">1</div><span class="lbl">Elige tu Departamento</span></div>
+    <div class="wizard-line"></div>
+    <div class="wizard-dot" id="wdot-2"><div class="num">2</div><span class="lbl">Tus datos</span></div>
+    <div class="wizard-line"></div>
+    <div class="wizard-dot" id="wdot-3"><div class="num">3</div><span class="lbl">Pago</span></div>
+  </div>
+
+  <div class="step-panel active" id="step-panel-1">
   <div class="step">
       <div class="step-hd"><div class="step-num">1</div><h2>Elige tu Departamento Tecnológico</h2></div>
       <p style="color:var(--grey);font-size:.88rem;margin:-8px 0 18px;max-width:640px;">Todo lo que ofrece TRUCO vive dentro de tu Departamento — nada se vende suelto. Elige el nivel que encaja con lo que necesitas ahora; siempre puedes subir de nivel más adelante.</p>
@@ -329,7 +373,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pc-vat" id="pc-vat-start"></div>
             <div class="pc-after" id="pc-after-start"></div>
             <div class="pc-founding-old" id="pc-founding-old-start"></div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o paga con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
           </div>
           <div class="pc-breakdown">
             <div class="pb-row"><span class="pb-label">1 automatización a elegir, gratis</span><span class="pb-val">✓</span></div>
@@ -349,7 +393,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pc-vat" id="pc-vat-basic"></div>
             <div class="pc-after" id="pc-after-basic"></div>
             <div class="pc-founding-old" id="pc-founding-old-basic"></div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o paga con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
           </div>
           <div class="pc-breakdown">
             <div class="pb-row"><span class="pb-label">Web Profesional, gratis</span><span class="pb-val">✓</span></div>
@@ -369,7 +413,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pc-vat" id="pc-vat-lite"></div>
             <div class="pc-after" id="pc-after-lite"></div>
             <div class="pc-founding-old" id="pc-founding-old-lite"></div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o paga con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
             <div class="pc-save-tag">🎁 Ahorras 1.490-2.070 € en instalación</div>
           </div>
           <div class="pc-breakdown">
@@ -392,7 +436,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pc-vat" id="pc-vat-pro"></div>
             <div class="pc-after" id="pc-after-pro"></div>
             <div class="pc-founding-old" id="pc-founding-old-pro"></div>
-            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o fracciona con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o paga con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
             <div class="pc-save-tag">🎁 Ahorras 2.540-3.170 € en instalación</div>
           </div>
           <div class="pc-breakdown">
@@ -453,6 +497,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
   <div id="hosting-note" style="display:none;background:rgba(217,168,63,.06);border:1px solid rgba(217,168,63,.2);border-radius:10px;padding:14px 18px;margin-bottom:28px;font-size:.82rem;color:var(--grey);line-height:1.65;">
     <b style="color:var(--gold);">Dominio y hosting: tu responsabilidad, no la nuestra.</b> El dominio (tu dirección web, ej. <em>tunegocio.com</em>) y el hosting (el servidor donde vive tu web) los contratas y pagas tú directamente con el proveedor que elijas. TRUCO technology te asesora y configura todo, pero la titularidad y el coste son siempre tuyos. Coste estimado: dominio desde 10-15 €/año · hosting desde 5-15 €/mes según proveedor.
   </div>
+
+  </div><!-- /step-panel-1 -->
+
+  <div class="step-panel" id="step-panel-2">
+  <button type="button" class="wizard-back" onclick="goToStep(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Cambiar Departamento</button>
 
   <!-- PASO 2 -->
   <div class="step">
@@ -554,9 +603,65 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
     </div>
   </div>
 
+  </div><!-- /step-panel-2 -->
+
+  <div class="step-panel" id="step-panel-3">
+  <button type="button" class="wizard-back" onclick="goToStep(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Volver a tus datos</button>
+
   <!-- PASO 3 -->
   <div class="step">
-    <div class="step-hd"><div class="step-num">3</div><h2>Acepta las condiciones</h2></div>
+    <div class="step-hd"><div class="step-num">3</div><h2>Método de pago</h2></div>
+
+    <div id="payment-mode-block" style="display:none;margin-bottom:24px;">
+      <div class="cat-label" style="margin-top:0;">¿Cómo lo pagas?</div>
+      <div class="pay-option-list">
+        <div class="pay-option active" id="btn-unico" onclick="setTierPaymentMode('unico')">
+          <div class="pay-option-radio"></div>
+          <div class="pay-option-icon"><svg viewBox="0 0 40 26" fill="none"><rect x="1" y="1" width="38" height="24" rx="4" stroke="currentColor" stroke-width="1.6" style="color:var(--grey);"/><rect x="1" y="7" width="38" height="4" fill="currentColor" style="color:var(--grey);"/><rect x="5" y="17" width="10" height="3" rx="1" fill="currentColor" style="color:var(--grey);"/></svg></div>
+          <div class="pay-option-body">
+            <div class="pay-option-title">Tarjeta</div>
+            <div class="pay-option-sub">Visa, Mastercard, Amex</div>
+          </div>
+          <div class="pay-option-tag">Ahorra 12%</div>
+        </div>
+        <div class="pay-option" id="btn-financiado" onclick="setTierPaymentMode('financiado')">
+          <div class="pay-option-radio"></div>
+          <div class="pay-option-icon"><svg viewBox="0 0 40 26"><text x="20" y="17" font-family="Arial,sans-serif" font-weight="800" font-style="italic" font-size="11" text-anchor="middle"><tspan fill="#1b3a66">Pay</tspan><tspan fill="#2f7bff">Pal</tspan></text></svg></div>
+          <div class="pay-option-body">
+            <div class="pay-option-title">PayPal</div>
+            <div class="pay-option-sub">Con tu saldo o tarjeta vinculada</div>
+          </div>
+        </div>
+        <div class="pay-option" id="btn-transferencia" onclick="setTierPaymentMode('transferencia')">
+          <div class="pay-option-radio"></div>
+          <div class="pay-option-icon"><svg viewBox="0 0 30 24"><path d="M15 3 L26 9.5 H4 Z" fill="currentColor" style="color:var(--grey);"/><rect x="6" y="10.5" width="2.6" height="9" fill="currentColor" style="color:var(--grey);"/><rect x="13.7" y="10.5" width="2.6" height="9" fill="currentColor" style="color:var(--grey);"/><rect x="21.4" y="10.5" width="2.6" height="9" fill="currentColor" style="color:var(--grey);"/><rect x="4" y="20.5" width="22" height="2.2" fill="currentColor" style="color:var(--grey);"/></svg></div>
+          <div class="pay-option-body">
+            <div class="pay-option-title">Transferencia bancaria</div>
+            <div class="pay-option-sub">Sin tarjeta — confirmación manual en 1-2 días</div>
+          </div>
+          <div class="pay-option-tag">Ahorra 12%</div>
+        </div>
+      </div>
+      <div class="pay-methods-row" id="pay-methods-unico">
+        <svg class="pay-method-card" width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="4" fill="#1A1F71"/><text x="19" y="16" font-family="Georgia,serif" font-style="italic" font-weight="700" font-size="10" fill="#fff" text-anchor="middle">VISA</text></svg>
+        <svg class="pay-method-card" width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="4" fill="#F7F7F7"/><circle cx="16" cy="12" r="7" fill="#EB001B"/><circle cx="22" cy="12" r="7" fill="#F79E1B" fill-opacity=".85"/></svg>
+        <svg class="pay-method-card" width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="4" fill="#2E2E2E"/><text x="19" y="15" font-family="Arial,sans-serif" font-weight="700" font-size="8" fill="#fff" text-anchor="middle" letter-spacing="0.5">AMEX</text></svg>
+      </div>
+      <div class="pay-methods-row" id="pay-methods-paypal" style="display:none;">
+        <svg class="pay-method-card" width="62" height="24" viewBox="0 0 62 24"><rect width="62" height="24" rx="4" fill="#F7F7F7"/><text x="31" y="16" font-family="Arial,sans-serif" font-weight="800" font-style="italic" font-size="10" text-anchor="middle"><tspan fill="#003087">Pay</tspan><tspan fill="#009cde">Pal</tspan></text></svg>
+      </div>
+      <div class="pay-methods-row" id="pay-methods-transferencia" style="display:none;">
+        <svg class="pay-method-card" width="30" height="24" viewBox="0 0 30 24"><rect width="30" height="24" rx="4" fill="#1b3a66"/><path d="M15 5 L24 10 H6 Z" fill="#d9a83f"/><rect x="8" y="11" width="2.5" height="7" fill="#f2f0ea"/><rect x="13.5" y="11" width="2.5" height="7" fill="#f2f0ea"/><rect x="19" y="11" width="2.5" height="7" fill="#f2f0ea"/><rect x="6" y="19" width="18" height="2" fill="#f2f0ea"/></svg>
+        <span style="font-size:.78rem;color:var(--grey);">Sin comisiones — pagas exactamente lo que ves aquí</span>
+      </div>
+      <div class="annual-highlight" id="annual-note" style="margin-top:14px;">
+        <b id="payment-mode-title">Pago único por adelantado — ahorras un 12%.</b> <span id="payment-mode-desc">Se cobra tu primer año de Departamento de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.</span>
+      </div>
+      <div id="transfer-instructions-box" style="display:none;margin-top:14px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:12px;padding:16px 18px;font-size:.86rem;color:var(--grey);line-height:1.6;">
+        Al confirmar te daremos <b style="color:var(--white);">nuestro IBAN y un código de referencia único</b> que debes escribir en el concepto de la transferencia. En cuanto la veamos entrar en nuestro banco (normalmente 1-2 días laborables), activamos tu cuenta y te avisamos por email.
+      </div>
+    </div>
+
     <div class="legal-box">
       <div class="check-row">
         <input type="checkbox" id="ch-rgpd" onchange="updateBtn()">
@@ -574,6 +679,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
     <p id="payment-note" style="margin-top:12px;font-size:.86rem;color:var(--grey);line-height:1.6;padding:0 4px;">Al confirmar serás redirigido a <strong style="color:var(--white);">Stripe</strong>, la pasarela usada por millones de empresas en todo el mundo. Tu información bancaria nunca pasa por nuestros servidores.</p>
   </div>
 
+  </div><!-- /step-panel-3 -->
+
 </div><!-- /form-col -->
 
 <!-- RESUMEN -->
@@ -583,16 +690,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       <div class="sb-tag">Resumen del pedido</div>
       <h3 id="sb-title">Ningún plan seleccionado</h3>
       <div class="sb-sub" id="sb-sub">Elige una opción para ver el resumen.</div>
-    </div>
-    <div id="payment-mode-block" style="display:none;padding:18px 22px 4px;">
-      <div class="cat-label" style="margin-top:0;">¿Cómo lo pagas?</div>
-      <div class="billing-toggle">
-        <div class="billing-btn active" id="btn-unico" onclick="setTierPaymentMode('unico')">Pago único<span class="billing-save-tag">— ahorra 12%</span></div>
-        <div class="billing-btn" id="btn-financiado" onclick="setTierPaymentMode('financiado')">Fracciona con PayPal</div>
-      </div>
-      <div class="annual-highlight" id="annual-note">
-        <b id="payment-mode-title">Pago único por adelantado — ahorras un 12%.</b> <span id="payment-mode-desc">Se cobra tu primer año de Departamento de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.</span>
-      </div>
     </div>
     <div id="sb-empty" class="sb-empty">Selecciona un plan arriba.</div>
     <div id="sb-breakdown" class="sb-breakdown" style="display:none"></div>
@@ -604,7 +701,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       <div class="trust-chip">Sin sorpresas</div>
     </div>
     <div class="sb-cta">
-      <button class="pay-btn" id="payBtn" disabled onclick="trucoTrackClick('pago_confirmar_pagar');handlePay()">
+      <button class="pay-btn" id="payBtn" disabled onclick="handleMainCtaClick()">
         <span id="btn-text">Selecciona un plan</span>
       </button>
       <button class="sb-email-btn" id="sb-email-btn" style="display:none;" onclick="emailMeSummary()">✉ Enviarme este resumen, lo decido con calma</button>
@@ -974,17 +1071,107 @@ const TIMELINES={'arranque-basic':[{l:'Web Profesional + tu automatización inst
 
 let selectedProject=null,selectedDirect=null,selectedTierSolutions=[],selectedExtraSolutions=[],selectedAuditSolutions=[],tierPaymentMode='unico',selectedDigitalPlan=null,digitalTotalPrice=590,digitalAddon=false;
 
+// ── WIZARD: 3 pasos (Departamento → Datos → Pago) en vez de todo en una sola
+// página larga. La lógica de precios/validación de abajo no cambia nada —
+// esto solo controla qué bloque se ve en cada momento.
+let wizardStep=1;
+
+function goToStep(n){
+  wizardStep=n;
+  for(let i=1;i<=3;i++){
+    const panel=document.getElementById('step-panel-'+i);
+    if(panel)panel.classList.toggle('active',i===n);
+  }
+  for(let i=1;i<=3;i++){
+    const dot=document.getElementById('wdot-'+i);
+    if(dot){dot.classList.toggle('current',i===n);dot.classList.toggle('done',i<n);}
+  }
+  syncCtaForStep();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Extraído de handlePay(): valida nombre/email/teléfono/negocio/sector (o el
+// login si es cliente existente) y la contraseña si es alta nueva. NO valida
+// RGPD/términos — eso es del Paso 3 (método de pago), se comprueba aparte en
+// handlePay() justo antes de cobrar.
+function validateContactAndAccount(){
+  const n=document.getElementById('f-nombre'),e=document.getElementById('f-email'),p=document.getElementById('f-telefono'),b=document.getElementById('f-negocio'),s=document.getElementById('f-tipo');
+  let ok=true;const missing=[];
+  if(clientMode==='existing'&&!loggedInClientData){
+    ok=false;missing.push('Inicia sesión como cliente arriba, o elige "Primera vez con TRUCO"');
+  }else{
+    const checkField=(f,label)=>{if(f&&!f.value.trim()){f.classList.add('error');ok=false;missing.push(label);}else if(f)f.classList.remove('error');};
+    checkField(n,'Nombre completo');
+    checkField(p,'Teléfono');
+    checkField(b,'Nombre del negocio');
+    checkField(s,'Sector');
+    if(e&&(!e.value.trim()||!e.value.includes('@'))){e.classList.add('error');ok=false;missing.push('Email válido');}else if(e)e.classList.remove('error');
+  }
+  if(clientMode==='new'){
+    const pw=document.getElementById('reg-password'),pw2=document.getElementById('reg-password2');
+    const checks=updatePasswordStrength();
+    const allOk=Object.values(checks).every(Boolean);
+    if(!allOk){pw.classList.add('error');ok=false;missing.push('Contraseña: mínimo 8 caracteres, 1 mayúscula, 1 minúscula y 1 carácter especial');}else pw.classList.remove('error');
+    if(pw.value!==pw2.value){pw2.classList.add('error');ok=false;missing.push('Las dos contraseñas no coinciden');}else pw2.classList.remove('error');
+  }
+  return{ok,missing};
+}
+
+function handleMainCtaClick(){
+  trucoTrackClick('pago_confirmar_pagar');
+  if(wizardStep===1){
+    const plan=getActivePlan();
+    if(!plan){alert('Elige un Departamento Tecnológico arriba antes de continuar.');return;}
+    if(plan.solutionsIncomplete){alert('Elige tu automatización gratis antes de continuar.');scrollToSolutionsPicker();return;}
+    goToStep(2);
+  }else if(wizardStep===2){
+    const v=validateContactAndAccount();
+    if(!v.ok){alert('Antes de continuar, completa lo siguiente:\n\n• '+v.missing.join('\n• '));return;}
+    goToStep(3);
+  }else{
+    handlePay();
+  }
+}
+
+// Ajusta el texto/estado del botón principal (en la barra lateral, siempre
+// visible) según el paso del wizard en el que se esté. En el Paso 3 no hace
+// nada — ahí manda updateSummary(), que ya calculaba el texto real
+// ("Confirmar y pagar con Stripe/PayPal") antes de que existiera el wizard.
+function syncCtaForStep(){
+  if(wizardStep===3)return;
+  const btn=document.getElementById('payBtn'),txt=document.getElementById('btn-text');
+  if(!btn||!txt)return;
+  if(wizardStep===1){
+    const plan=getActivePlan();
+    btn.disabled=!plan||plan.solutionsIncomplete;
+    txt.textContent=!plan?'Selecciona un plan':plan.solutionsIncomplete?'Elige tu automatización gratis arriba':'Siguiente: tus datos →';
+  }else if(wizardStep===2){
+    btn.disabled=false;
+    txt.textContent='Siguiente: método de pago →';
+  }
+}
+
 function setTierPaymentMode(mode){
   tierPaymentMode=mode;
   document.getElementById('btn-unico').classList.toggle('active',mode==='unico');
   document.getElementById('btn-financiado').classList.toggle('active',mode==='financiado');
+  document.getElementById('btn-transferencia').classList.toggle('active',mode==='transferencia');
   const title=document.getElementById('payment-mode-title'),desc=document.getElementById('payment-mode-desc');
+  const iconsUnico=document.getElementById('pay-methods-unico'),iconsPaypal=document.getElementById('pay-methods-paypal'),iconsTransfer=document.getElementById('pay-methods-transferencia');
+  const transferBox=document.getElementById('transfer-instructions-box');
+  if(iconsUnico)iconsUnico.style.display=mode==='unico'?'flex':'none';
+  if(iconsPaypal)iconsPaypal.style.display=mode==='financiado'?'flex':'none';
+  if(iconsTransfer)iconsTransfer.style.display=mode==='transferencia'?'flex':'none';
+  if(transferBox)transferBox.style.display=mode==='transferencia'?'block':'none';
   if(mode==='unico'){
-    title.textContent='Pago único por adelantado — ahorras un 12%.';
+    title.textContent='Pago único con tarjeta — ahorras un 12%.';
     desc.textContent='Se cobra tu primer año de Departamento de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.';
-  }else{
-    title.textContent='Fracciona el pago con PayPal, sin que dependa de nosotros.';
+  }else if(mode==='financiado'){
+    title.textContent='Paga con PayPal, sin que dependa de nosotros.';
     desc.textContent='Pagas con PayPal y, si tu cuenta es elegible, PayPal te deja elegir en su propio checkout pagarlo en 3 plazos sin intereses — nosotros cobramos el total de golpe, tú decides con PayPal cómo devolvérselo. No depende de que nosotros pasemos un cargo cada mes.';
+  }else{
+    title.textContent='Transferencia bancaria — ahorras un 12%, sin tarjeta ni cuenta de PayPal.';
+    desc.textContent='Ideal si tu empresa solo opera con cuenta bancaria. Es un pago único igual que con tarjeta, así que lleva el mismo 12% de descuento — la única diferencia es que la confirmación no es instantánea: activamos tu cuenta en cuanto veamos la transferencia en nuestro banco.';
   }
   updateAll();
 }
@@ -1338,13 +1525,14 @@ function getActivePlan(){
     const extraTotal=extraSols.reduce((s,x)=>s+x.price,0);
     const extraLines=extraSols.map(x=>({l:'+ '+x.name+' (adicional)',v:fmtEuro(x.price)+' € + IVA'}));
     const isUnico=tierPaymentMode==='unico';
+    const isTransferencia=tierPaymentMode==='transferencia';
     let priceLines,totalCommitment,subPago;
-    if(isUnico){
+    if(isUnico||isTransferencia){
       const totBase=arr.monthly*arr.permanenciaMeses;const tot=Math.round(totBase*0.88*100)/100;
       const descuento=totBase-tot;
       const baseImponible=tot+extraTotal;const iva=baseImponible*0.21;
       totalCommitment=baseImponible+iva;
-      subPago='Pago único';
+      subPago=isTransferencia?'Pago único por transferencia':'Pago único';
       priceLines=[];
       if(esFundador)priceLines.push({l:'🏷️ Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[d.arranque]+' de '+FOUNDING_SPOTS_TOTAL[d.arranque]+' plazas',v:'Aplicado ✓',cls:'free'});
       priceLines.push(
@@ -1358,7 +1546,7 @@ function getActivePlan(){
       const ivaM=arr.monthly*0.21;const totMes=arr.monthly+ivaM;
       const extraConIva=extraTotal*1.21;
       totalCommitment=totMes*arr.permanenciaMeses+extraConIva;
-      subPago='Financiado con PayPal';
+      subPago='Pago con PayPal';
       priceLines=[];
       if(esFundador)priceLines.push({l:'🏷️ Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[d.arranque]+' de '+FOUNDING_SPOTS_TOTAL[d.arranque]+' plazas',v:'Aplicado ✓',cls:'free'});
       priceLines.push({l:'Cuota base'+(esFundador?' (fundador)':''),v:fmtEuro(arr.monthly)+' €/mes'},{l:'IVA (21%)',v:fmtEuro(ivaM)+' €/mes'},{l:'Equivalente / mes con IVA',v:fmtEuro(totMes)+' €'});
@@ -1401,17 +1589,19 @@ function updateSummary(plan){
     txt.textContent='Reserva la auditoría gratuita para cerrar el precio';
   }else{
     btn.disabled=false;
-    const financiado=selectedDirect&&tierPaymentMode!=='unico'&&!plan.customQuote;
-    txt.textContent=plan.customQuote?'→ Solicitar presupuesto personalizado':financiado?'→ Confirmar y pagar con PayPal':'→ Confirmar y pagar con Stripe';
+    const esPaypal=selectedDirect&&tierPaymentMode==='financiado'&&!plan.customQuote;
+    const esTransferencia=selectedDirect&&tierPaymentMode==='transferencia'&&!plan.customQuote;
+    txt.textContent=plan.customQuote?'→ Solicitar presupuesto personalizado':esPaypal?'→ Confirmar y pagar con PayPal':esTransferencia?'→ Confirmar y ver el IBAN':'→ Confirmar y pagar con Stripe';
   }
   const paymentNote=document.getElementById('payment-note');
-  const financiadoNote=selectedDirect&&tierPaymentMode!=='unico'&&!plan.customQuote;
+  const esPaypalNote=selectedDirect&&tierPaymentMode==='financiado'&&!plan.customQuote;
+  const esTransferenciaNote=selectedDirect&&tierPaymentMode==='transferencia'&&!plan.customQuote;
   if(paymentNote){
-    paymentNote.innerHTML=financiadoNote?'Al confirmar serás redirigido a <strong style="color:var(--white);">PayPal</strong> — si tu cuenta es elegible, podrás elegir en su propio checkout pagarlo en 3 plazos sin intereses. Tu información bancaria nunca pasa por nuestros servidores.':'Al confirmar serás redirigido a <strong style="color:var(--white);">Stripe</strong>, la pasarela usada por millones de empresas en todo el mundo. Tu información bancaria nunca pasa por nuestros servidores.';
+    paymentNote.innerHTML=esPaypalNote?'Al confirmar serás redirigido a <strong style="color:var(--white);">PayPal</strong> — si tu cuenta es elegible, podrás elegir en su propio checkout pagarlo en 3 plazos sin intereses. Tu información bancaria nunca pasa por nuestros servidores.':esTransferenciaNote?'Al confirmar verás nuestro <strong style="color:var(--white);">IBAN y un código de referencia</strong> para hacer la transferencia. Activamos tu cuenta en cuanto la veamos entrar en nuestro banco.':'Al confirmar serás redirigido a <strong style="color:var(--white);">Stripe</strong>, la pasarela usada por millones de empresas en todo el mundo. Tu información bancaria nunca pasa por nuestros servidores.';
   }
   const trustChip=document.getElementById('trust-chip-provider'),sbSecure=document.getElementById('sb-secure');
-  if(trustChip)trustChip.textContent=financiadoNote?'PayPal':'Stripe';
-  if(sbSecure)sbSecure.textContent=financiadoNote?'Procesado por PayPal · Cifrado 256-bit':'Procesado por Stripe · Cifrado 256-bit';
+  if(trustChip)trustChip.textContent=esPaypalNote?'PayPal':esTransferenciaNote?'Transferencia':'Stripe';
+  if(sbSecure)sbSecure.textContent=esPaypalNote?'Procesado por PayPal · Cifrado 256-bit':esTransferenciaNote?'Sin comisiones · Confirmación manual':'Procesado por Stripe · Cifrado 256-bit';
   if(msbBar){
     const totalEls=be.querySelectorAll('.sbr-total .sbr-val');
     const totalTxt=totalEls.length?totalEls[totalEls.length-1].textContent:'';
@@ -1455,7 +1645,7 @@ function renderCrossSellNotes(){
     }
   }
 }
-function updateAll(){updateSummary(getActivePlan());renderCrossSellNotes();}
+function updateAll(){updateSummary(getActivePlan());renderCrossSellNotes();syncCtaForStep();}
 
 function vField(el){
   if(!el.value.trim()){el.classList.add('error');}else{el.classList.remove('error');}
@@ -1507,35 +1697,21 @@ function trucoSessionId(){
 async function handlePay(){
   const n=document.getElementById('f-nombre'),e=document.getElementById('f-email'),p=document.getElementById('f-telefono'),b=document.getElementById('f-negocio'),s=document.getElementById('f-tipo');
   const r=document.getElementById('ch-rgpd'),t=document.getElementById('ch-terminos');
-  let ok=true;
-  const missing=[];
 
-  if(clientMode==='existing'&&!loggedInClientData){
-    // Sin sesión iniciada los campos de datos están ocultos — no tiene
-    // sentido validarlos, solo pedimos que inicie sesión primero.
-    ok=false;missing.push('Inicia sesión como cliente arriba, o elige "Primera vez con TRUCO"');
-  }else{
-    const checkField=(f,label)=>{if(f&&!f.value.trim()){f.classList.add('error');ok=false;missing.push(label);}else if(f)f.classList.remove('error');};
-    checkField(n,'Nombre completo');
-    checkField(p,'Teléfono');
-    checkField(b,'Nombre del negocio');
-    checkField(s,'Sector');
-    if(e&&(!e.value.trim()||!e.value.includes('@'))){e.classList.add('error');ok=false;missing.push('Email válido');}else if(e)e.classList.remove('error');
-  }
+  // Los datos de contacto/cuenta ya se validaron al pasar del Paso 2 al Paso
+  // 3 (ver handleMainCtaClick) — se vuelve a comprobar aquí por si acaso
+  // (alguien llega al Paso 3 sin pasar por ahí, p. ej. con el botón
+  // atrás/adelante del navegador), y aquí además se comprueban RGPD/términos,
+  // que son del Paso 3.
+  const cv=validateContactAndAccount();
+  let ok=cv.ok;const missing=cv.missing.slice();
+
   if(r&&!r.checked){r.parentElement.style.outline='1px solid var(--red)';ok=false;missing.push('Aceptar la Protección de datos (RGPD)');}else if(r)r.parentElement.style.outline='';
   if(t&&!t.checked){t.parentElement.style.outline='1px solid var(--red)';ok=false;missing.push('Aceptar los Términos y condiciones');}else if(t)t.parentElement.style.outline='';
 
-  if(clientMode==='new'){
-    const pw=document.getElementById('reg-password'),pw2=document.getElementById('reg-password2');
-    const checks=updatePasswordStrength();
-    const allOk=Object.values(checks).every(Boolean);
-    if(!allOk){pw.classList.add('error');ok=false;missing.push('Contraseña: mínimo 8 caracteres, 1 mayúscula, 1 minúscula y 1 carácter especial');}else pw.classList.remove('error');
-    if(pw.value!==pw2.value){pw2.classList.add('error');ok=false;missing.push('Las dos contraseñas no coinciden');}else pw2.classList.remove('error');
-  }
-
   if(!ok){
     alert('Antes de continuar, completa o marca lo siguiente:\n\n• '+missing.join('\n• '));
-    document.querySelector('.form-col')?.scrollIntoView({behavior:'smooth',block:'start'});
+    if(cv.missing.length>0)goToStep(2);
     return;
   }
   const plan=getActivePlan();if(!plan)return;
@@ -1586,11 +1762,12 @@ async function handlePay(){
   // "Paga en 3" al comprador si es elegible) — sustituye al antiguo aviso de
   // "te escribimos por WhatsApp para cerrar con SeQura", ver [[n8n-hosting-decision-and-payment-backup]].
   const usaPaypal=selectedDirect&&plan.paymentMode==='financiado';
-  const endpoint=usaPaypal?'/.netlify/functions/create-paypal-order':'/.netlify/functions/create-checkout';
+  const usaTransferencia=selectedDirect&&plan.paymentMode==='transferencia';
+  const endpoint=usaPaypal?'/.netlify/functions/create-paypal-order':usaTransferencia?'/.netlify/functions/create-bank-transfer-order':'/.netlify/functions/create-checkout';
 
   const payBtn=document.getElementById('payBtn'),payBtnText=document.getElementById('btn-text');
   if(payBtn){payBtn.disabled=true;}
-  if(payBtnText){payBtnText.dataset.origText=payBtnText.textContent;payBtnText.textContent='Conectando con el pago…';}
+  if(payBtnText){payBtnText.dataset.origText=payBtnText.textContent;payBtnText.textContent=usaTransferencia?'Generando tu referencia…':'Conectando con el pago…';}
   try{
     const resp=await fetch(endpoint,{
       method:'POST',headers:{'Content-Type':'application/json'},
@@ -1609,11 +1786,16 @@ async function handlePay(){
       })
     });
     const data=await resp.json();
+    if(usaTransferencia&&data.ok&&data.referenceCode){
+      const params=new URLSearchParams({ref:data.referenceCode,amount:String(data.amountCents),plan:data.planName||plan.name});
+      window.location.href='transferencia.html?'+params.toString();
+      return;
+    }
     if(data.ok&&data.url){window.location.href=data.url;return;}
   }catch(err){/* sigue al aviso de abajo */}
   if(payBtn){payBtn.disabled=false;}
   if(payBtnText){payBtnText.textContent=payBtnText.dataset.origText;}
-  alert(usaPaypal?'No hemos podido conectar con PayPal ahora mismo. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.':'Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');
+  alert(usaPaypal?'No hemos podido conectar con PayPal ahora mismo. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.':usaTransferencia?'No hemos podido generar tu referencia de transferencia ahora mismo. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.':'Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');
 }
 
 function toggleFaq(btn){

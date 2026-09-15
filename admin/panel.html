@@ -243,7 +243,7 @@
   /* ── TRUKI (overlay, founder-only) ── */
   #truki-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
   #truki-btn:hover{border-color:var(--gold);color:var(--gold);}
-  #truki-overlay,#settings-overlay,#contrataciones-overlay,#cobros-overlay,#audit-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+  #truki-overlay,#settings-overlay,#contrataciones-overlay,#cobros-overlay,#transferencias-overlay,#audit-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
   .truki-box{width:100%;max-width:920px;margin:0 auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:18px;padding:30px 32px;box-shadow:var(--shadow-card);}
   .truki-box h2{font-family:var(--font-d);font-size:1.5rem;margin:0 0 6px;letter-spacing:-.01em;}
   .truki-box>p{color:var(--grey);font-size:.82rem;margin:0 0 18px;line-height:1.5;}
@@ -308,8 +308,8 @@
   .quotes-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px;}
   #prices-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
   #prices-btn:hover{border-color:var(--gold);color:var(--gold);}
-  #fiscal-btn,#contrataciones-btn,#cobros-btn,#audit-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
-  #contrataciones-btn:hover,#cobros-btn:hover,#audit-btn:hover{border-color:var(--gold);color:var(--gold);}
+  #fiscal-btn,#contrataciones-btn,#cobros-btn,#transferencias-btn,#audit-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
+  #contrataciones-btn:hover,#cobros-btn:hover,#transferencias-btn:hover,#audit-btn:hover{border-color:var(--gold);color:var(--gold);}
   #fiscal-btn:hover{border-color:var(--gold);color:var(--gold);}
   #prices-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
   #fiscal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
@@ -450,6 +450,7 @@
       <button id="fiscal-btn" onclick="openFiscalOverlay()" style="display:none;">Fiscalidad</button>
       <button id="contrataciones-btn" onclick="openContratacionesOverlay()" style="display:none;">Contrataciones</button>
       <button id="cobros-btn" onclick="openCobrosOverlay()" style="display:none;">Cobros</button>
+      <button id="transferencias-btn" onclick="openTransferenciasOverlay()" style="display:none;">Transferencias</button>
       <button id="audit-btn" onclick="openAuditOverlay()" style="display:none;">Auditoría</button>
       <button id="logout-btn" onclick="doLogout()">Cerrar sesión</button>
     </div>
@@ -888,6 +889,15 @@
       <h2>Cobros recurrentes</h2>
       <p style="color:var(--grey);font-size:.82rem;margin:0 0 18px;max-width:640px;">Tus clientes con domiciliación bancaria activa no dejan ningún rastro automático — Stripe no los cobra, tu banco sí. Márcalos aquí cada mes en cuanto veas el cobro en tu cuenta, y entran solos en tus ingresos y en Fiscalidad.</p>
       <div id="cobros-list"></div>
+    </div>
+  </div>
+
+  <div id="transferencias-overlay">
+    <div class="truki-box">
+      <button class="stats-close" onclick="closeTransferenciasOverlay()">✕</button>
+      <h2>Transferencias pendientes</h2>
+      <p style="color:var(--grey);font-size:.82rem;margin:0 0 18px;max-width:640px;">Igual que "Cobros": tu banco no avisa solo al sistema. En cuanto veas entrar una de estas transferencias (comprueba el código de referencia en el concepto), actívala aquí — da de alta al cliente exactamente igual que si hubiera pagado con Stripe o PayPal.</p>
+      <div id="transferencias-list"></div>
     </div>
   </div>
 
@@ -1403,6 +1413,7 @@ async function checkFounderStatus() {
   document.getElementById('fiscal-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('contrataciones-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('cobros-btn').style.display = isFounder ? 'inline-block' : 'none';
+  document.getElementById('transferencias-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('audit-btn').style.display = isFounder ? 'inline-block' : 'none';
 }
 
@@ -2150,6 +2161,65 @@ async function marcarCobrado(clientId) {
   if (error) { alert('No se pudo registrar: ' + error.message); return; }
   toast('Cobro registrado — ya se refleja en Fiscalidad.');
   loadCobros();
+}
+
+// ── TRANSFERENCIAS PENDIENTES — pago.html las crea, aquí se activan a mano ──
+function openTransferenciasOverlay() {
+  document.getElementById('transferencias-overlay').style.display = 'block';
+  loadTransferencias();
+}
+function closeTransferenciasOverlay() {
+  document.getElementById('transferencias-overlay').style.display = 'none';
+}
+
+async function loadTransferencias() {
+  const list = document.getElementById('transferencias-list');
+  list.innerHTML = '<div class="empty-mini">Cargando…</div>';
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch('/.netlify/functions/list-bank-transfers', {
+      headers: { Authorization: 'Bearer ' + session.access_token },
+    });
+    const data = await resp.json();
+    if (!data.ok || !Array.isArray(data.orders)) { list.innerHTML = '<div class="empty-mini">No se pudo cargar.</div>'; return; }
+    if (!data.orders.length) { list.innerHTML = '<div class="empty-mini">Ninguna transferencia registrada todavía.</div>'; return; }
+    list.innerHTML = data.orders.map(o => {
+      const p = o.payload || {};
+      const importe = ((p.amountTotalCents || 0) / 100).toFixed(2).replace('.', ',');
+      const fecha = new Date(o.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+      const estadoTag = o.status === 'confirmado'
+        ? '<span class="truki-status active">Activado</span>'
+        : o.status === 'cancelado'
+          ? '<span class="truki-status">Cancelado</span>'
+          : `<button class="btn sm green" onclick="activarTransferencia('${o.reference_code}')">✓ Activar</button>`;
+      return `
+      <div class="fiscal-row">
+        <div><div class="fr-main">${escapeHtml(p.nombre || p.email || 'Sin nombre')} — <span style="font-family:var(--font-m);color:var(--gold);">${escapeHtml(o.reference_code)}</span></div>
+        <div class="fr-meta">${escapeHtml(p.email || '')}${p.planName ? ' · ' + escapeHtml(p.planName) : ''} · ${fecha}</div></div>
+        <div class="fr-nums">${importe} € ${estadoTag}</div>
+      </div>`;
+    }).join('');
+  } catch (e) {
+    list.innerHTML = '<div class="empty-mini">No se pudo cargar.</div>';
+  }
+}
+
+async function activarTransferencia(referenceCode) {
+  if (!confirm('¿Confirmas que has visto entrar esta transferencia en el banco? Esto activa la cuenta del cliente de inmediato.')) return;
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch('/.netlify/functions/confirm-bank-transfer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ referenceCode }),
+    });
+    const data = await resp.json();
+    if (!data.ok) { alert('No se pudo activar: ' + (data.reason || 'error desconocido')); return; }
+    toast('Cliente activado.');
+    loadTransferencias();
+  } catch (e) {
+    alert('No se pudo activar — inténtalo de nuevo.');
+  }
 }
 
 // ── AUDITORÍA — audit_log ya se escribía solo, aquí se hace visible ──
