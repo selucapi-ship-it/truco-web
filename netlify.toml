@@ -27,7 +27,7 @@
   # para que llegue aunque ese día no abra el panel. Ver
   # antonia-resumen-diario.js. Como el resto de funciones programadas de este
   # archivo, no se ejecutará de verdad hasta que producción se desbloquee.
-  schedule = "0 7 * * *"
+  # schedule = "0 7 * * *" # quitado un momento para probarla a mano por HTTP (Netlify da 403 a una función con schedule activo) — restaurar tras la prueba
 
 [functions."email-ia-worker"]
   # Cada 15 minutos revisa la bandeja de cada cliente con "IA para Correo"
