@@ -1,0 +1,23 @@
+Ultra-realistic vertical photograph, 9:16 aspect ratio, professional advertising photography (not illustration, not 3D render, not CGI, no cartoon style). Dark, moody background in near-black charcoal tone (#16151a) filling most of the frame, with warm golden accent lighting (#d9a83f) and cream-white highlights. Cinematic, high-end tech-meets-small-business advertising aesthetic, shallow depth of field, soft directional light, subtle film grain, sharp focus on the main subject.
+
+SCENE: A single calm rooftop/doorway moment, not a split composition, not a floating message bubble, and no smartphone as the main prop. Late Tuesday afternoon in Murcia capital, the light shifting fast: behind the scene, the silhouette of the Murcia Cathedral bell tower rises softly out of focus against a dramatic sky in the middle of turning — the left side of the sky still holds a last warm streak of golden late-summer sun, while the right side is overtaken by heavy, dark storm clouds rolling in, with a single distant flash of lightning barely visible deep in the clouds. In the foreground, a small shop owner stands relaxed in the doorway of their storefront, one hand resting on the open door, looking calmly up at the changing sky rather than anxiously checking a phone — composed and unbothered, because whatever happens today, one part of their business is already taken care of. Between the owner and the stormy sky, filling the dark negative space in the upper-middle of the frame, a large flat rectangular gold-edged plaque made of light hovers in the air like an illuminated signboard, its surface glowing warm gold with a short handwritten-style quote — this plaque is the true visual and emotional centerpiece of the image, more prominent than the owner or the cathedral silhouette. The lower portion of the frame stays darker and quieter, keeping full attention on the glowing plaque against the turning sky.
+
+TEXT ELEMENTS (render these exactly, as clean, modern, minimal sans-serif typography, in Spanish, well-composed and legible, not distorted or garbled):
+
+1. Top of the image, small logo lockup: "TRUCO technology" in bold cream-white letters, with the smaller subtitle directly beneath it in gold: "Departamento Tecnológico".
+
+2. Just below the logo, a small pill-shaped label in gold outline with cream text reading: "MARTES · TORMENTA A LA VISTA EN MURCIA".
+
+3. Beneath that, a bold uppercase context label in gold, letter-spaced: "ELIGE SOLO LO QUE FALLA".
+
+4. The main two-line headline in large bold cream-white letters, centered in the dark upper space, above the glowing plaque:
+"No hace falta arreglarlo todo."
+"Solo lo que se te escapa cada día."
+
+5. Inside the glowing gold-edged plaque floating between the owner and the stormy sky, rendered as elegant italic-style lettering in dark charcoal on the warm gold surface, a short quote: "Antes se me escapaba una cosa. Ahora ya no."
+
+6. In the lower third of the image, near the shop doorway, a small golden badge (rounded rectangle with a thin gold border) containing two lines of bold dark text on a gold background: "PRECIO FUNDADOR" and below it, smaller, "Plazas limitadas".
+
+7. At the very bottom of the image, centered, the closing line in cream-white bold text: "Paga una vez. Olvídate 365 días." and directly beneath it, in smaller gold text: "trucotechnology.com".
+
+STYLE: Photorealistic commercial photography, warm gold rim lighting on the floating plaque and on the edge of the storm clouds against deep charcoal-black shadows, high contrast, premium and trustworthy mood, minimal clutter, generous negative space around text for legibility, consistent brand palette of dark charcoal (#16151a), gold (#d9a83f), and cream white throughout.
