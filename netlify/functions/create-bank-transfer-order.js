@@ -10,6 +10,8 @@
 // se recalcula el mínimo legítimo con los datos en vivo de Supabase antes de
 // aceptar el importe recibido.
 
+const webpush = require('web-push');
+
 const SUPABASE_URL = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
 const PERMANENCIA_MESES = 12;
@@ -93,16 +95,59 @@ async function avisarNuevaTransferencia(supabaseUrl, headers, referenceCode, amo
       body: JSON.stringify({ tipo: 'transferencia_pendiente', mensaje, enviado_telegram: !noMolestar }),
     });
 
-    if (!noMolestar && botToken && allowedId) {
-      await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: allowedId, text: mensaje }),
-      });
+    if (!noMolestar) {
+      if (botToken && allowedId) {
+        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: allowedId, text: mensaje }),
+        });
+      }
+      await enviarPush(supabaseUrl, headers, 'ANTONIA', mensaje);
     }
   } catch (e) {
     console.error('[TRANSFER] fallo avisando a ANTONIA (no crítico)', e.message);
   }
+}
+
+// Envía un aviso push (Web Push / VAPID) a los navegadores donde Jose haya
+// activado los avisos en antonia-app (antonia-truco.netlify.app) — el mismo
+// aviso que ya recibe por Telegram, pero llega también con el móvil
+// bloqueado o Telegram cerrado. Best-effort: nunca debe tumbar el resto del
+// aviso si esto falla. Borra las suscripciones que el navegador de destino
+// ya da por caducadas (404/410 del propio servicio push).
+async function enviarPush(supabaseUrl, headers, titulo, cuerpo) {
+  const vapidPublic = process.env.VAPID_PUBLIC_KEY;
+  const vapidPrivate = process.env.VAPID_PRIVATE_KEY;
+  const vapidSubject = process.env.VAPID_SUBJECT;
+  if (!vapidPublic || !vapidPrivate || !vapidSubject) return;
+  let subs = [];
+  try {
+    const resp = await fetch(`${supabaseUrl}/rest/v1/antonia_push_subscriptions?select=id,endpoint,p256dh,auth`, { headers });
+    if (resp.ok) subs = await resp.json();
+  } catch (e) {
+    console.error('[ANTONIA_PUSH] fallo leyendo suscripciones', e.message);
+    return;
+  }
+  if (!Array.isArray(subs) || !subs.length) return;
+
+  webpush.setVapidDetails(vapidSubject, vapidPublic, vapidPrivate);
+  const payload = JSON.stringify({ title: titulo, body: cuerpo, url: '/' });
+
+  await Promise.all(subs.map(async (s) => {
+    const subscription = { endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } };
+    try {
+      await webpush.sendNotification(subscription, payload);
+    } catch (e) {
+      if (e.statusCode === 404 || e.statusCode === 410) {
+        try {
+          await fetch(`${supabaseUrl}/rest/v1/antonia_push_subscriptions?id=eq.${s.id}`, { method: 'DELETE', headers });
+        } catch (e2) { /* se reintentará solo cuando llegue el próximo aviso */ }
+      } else {
+        console.error('[ANTONIA_PUSH] fallo enviando', e.message);
+      }
+    }
+  }));
 }
 
 function generarCodigoReferencia() {

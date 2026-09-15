@@ -20,6 +20,7 @@
 // Ya existentes y reutilizadas sin cambios: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY.
 
 const crypto = require('crypto');
+const webpush = require('web-push');
 
 const VENTANA_DIAS = 14; // cuántos días hacia adelante se vigilan
 
@@ -93,6 +94,43 @@ function formatearFechaEs(iso) {
   return d.toLocaleString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Madrid' });
 }
 
+// Mismo helper que create-bank-transfer-order.js — deliberadamente
+// duplicado, siguiendo la convención ya establecida de este proyecto de no
+// compartir código entre Netlify Functions independientes.
+async function enviarPush(supabaseUrl, headers, titulo, cuerpo) {
+  const vapidPublic = process.env.VAPID_PUBLIC_KEY;
+  const vapidPrivate = process.env.VAPID_PRIVATE_KEY;
+  const vapidSubject = process.env.VAPID_SUBJECT;
+  if (!vapidPublic || !vapidPrivate || !vapidSubject) return;
+  let subs = [];
+  try {
+    const resp = await fetch(`${supabaseUrl}/rest/v1/antonia_push_subscriptions?select=id,endpoint,p256dh,auth`, { headers });
+    if (resp.ok) subs = await resp.json();
+  } catch (e) {
+    console.error('[ANTONIA_PUSH] fallo leyendo suscripciones', e.message);
+    return;
+  }
+  if (!Array.isArray(subs) || !subs.length) return;
+
+  webpush.setVapidDetails(vapidSubject, vapidPublic, vapidPrivate);
+  const payload = JSON.stringify({ title: titulo, body: cuerpo, url: '/' });
+
+  await Promise.all(subs.map(async (s) => {
+    const subscription = { endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } };
+    try {
+      await webpush.sendNotification(subscription, payload);
+    } catch (e) {
+      if (e.statusCode === 404 || e.statusCode === 410) {
+        try {
+          await fetch(`${supabaseUrl}/rest/v1/antonia_push_subscriptions?id=eq.${s.id}`, { method: 'DELETE', headers });
+        } catch (e2) { /* se reintentará solo cuando llegue el próximo aviso */ }
+      } else {
+        console.error('[ANTONIA_PUSH] fallo enviando', e.message);
+      }
+    }
+  }));
+}
+
 async function enviarTelegram(botToken, chatId, texto) {
   try {
     await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
@@ -121,6 +159,7 @@ async function registrarAviso({ supabaseUrl, snapshotHeaders, botToken, allowedI
   }
   if (!noMolestar) {
     await enviarTelegram(botToken, allowedId, mensaje);
+    await enviarPush(supabaseUrl, snapshotHeaders, 'ANTONIA', mensaje);
   }
 }
 
