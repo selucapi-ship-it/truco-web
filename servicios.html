@@ -624,9 +624,9 @@ function renderFoundingPricesServicios(){
     const afterEl=document.getElementById('sc-after-'+tier);
     const badgeEl=document.getElementById('sc-founding-badge-'+tier);
     const oldEl=document.getElementById('sc-founding-old-'+tier);
-    if(priceEl)priceEl.innerHTML=fmtEuro(p.total)+' €<span style="font-size:.9rem;font-weight:500;color:var(--grey);">/1er año</span>';
-    if(vatEl)vatEl.textContent=fmtEuro(p.totalIva)+' € con IVA, pago único · con tarjeta o PayPal';
-    if(afterEl)afterEl.textContent='Luego '+p.monthly+' €/mes + IVA, sin permanencia';
+    if(priceEl)priceEl.innerHTML=fmtEuro(p.total)+' €<span style="font-size:.9rem;font-weight:500;color:var(--grey);">/1er año</span>';
+    if(vatEl)vatEl.textContent=fmtEuro(p.totalIva)+' € con IVA, pago único · con tarjeta o PayPal';
+    if(afterEl)afterEl.textContent='Luego '+p.monthly+' €/mes + IVA, sin permanencia';
     if(badgeEl){
       if(foundingActive(tier)){
         const total=FOUNDING_SPOTS_TOTAL[tier];

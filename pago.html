@@ -1013,9 +1013,9 @@ function renderFoundingPrices(){
     const afterEl=document.getElementById('pc-after-'+tier);
     const badgeEl=document.getElementById('pc-founding-badge-'+tier);
     const oldEl=document.getElementById('pc-founding-old-'+tier);
-    if(priceEl)priceEl.innerHTML=fmtEuro(p.total)+' €<sub>primer año, pago único</sub>';
-    if(vatEl)vatEl.textContent=fmtEuro(p.totalIva)+' € con IVA · o fracciona con PayPal';
-    if(afterEl)afterEl.textContent='Luego '+m+' €/mes + IVA, sin permanencia';
+    if(priceEl)priceEl.innerHTML=fmtEuro(p.total)+' €<sub>primer año, pago único</sub>';
+    if(vatEl)vatEl.textContent=fmtEuro(p.totalIva)+' € con IVA · o fracciona con PayPal';
+    if(afterEl)afterEl.textContent='Luego '+m+' €/mes + IVA, sin permanencia';
     if(badgeEl){
       if(foundingActive(tier)){
         const total=FOUNDING_SPOTS_TOTAL[tier];
@@ -1274,7 +1274,7 @@ function renderExtraSolutionsPanel(){
   grid.innerHTML=available.map(s=>{
     const checked=selectedExtraSolutions.includes(s.value);
     const disabled=(!checked&&atMax);
-    return '<label class="sol-chip'+(disabled?' sol-chip-disabled':'')+'"><input type="checkbox" value="'+s.value+'" '+(checked?'checked':'')+(disabled?' disabled':'')+' onchange="toggleExtraSolution(\''+s.value+'\')"><span>'+s.name+' — '+s.price+' € + IVA</span></label>';
+    return '<label class="sol-chip'+(disabled?' sol-chip-disabled':'')+'"><input type="checkbox" value="'+s.value+'" '+(checked?'checked':'')+(disabled?' disabled':'')+' onchange="toggleExtraSolution(\''+s.value+'\')"><span>'+s.name+' — '+s.price+' € + IVA</span></label>';
   }).join('');
   const note=document.getElementById('extra-solutions-note');
   const left=maxExtra-selectedExtraSolutions.length;
@@ -1316,7 +1316,7 @@ function renderOpenSolutionsGrid(){
   }
   grid.innerHTML=OPEN_PRICE_SOLUTIONS.map(s=>{
     const checked=selectedAuditSolutions.includes(s.value);
-    return '<label class="sol-chip'+(checked?' sol-chip-audit':'')+'"><input type="checkbox" value="'+s.value+'" '+(checked?'checked':'')+' onchange="toggleAuditSolution(\''+s.value+'\')"><span>'+s.name+' — desde '+s.from+' € + IVA</span></label>';
+    return '<label class="sol-chip'+(checked?' sol-chip-audit':'')+'"><input type="checkbox" value="'+s.value+'" '+(checked?'checked':'')+' onchange="toggleAuditSolution(\''+s.value+'\')"><span>'+s.name+' — desde '+s.from+' € + IVA</span></label>';
   }).join('');
   const note=document.getElementById('extra-solutions-open-note');
   if(note){
@@ -1483,10 +1483,10 @@ function updateSolutions(){
   }else{
     const discInfo=getBestDiscountInfo(count);
     const discounted=discInfo.applies?Math.round(total*(1-discInfo.rate)*100)/100:total;
-    priceEl.innerHTML=(discInfo.applies?'<s style="color:var(--grey);font-size:.7em;">'+(total+DIGITAL_BUYOUT)+' €</s> ':'')+(discounted+DIGITAL_BUYOUT)+' €<sub> + IVA</sub>';
+    priceEl.innerHTML=(discInfo.applies?'<s style="color:var(--grey);font-size:.7em;">'+(total+DIGITAL_BUYOUT)+' €</s> ':'')+(discounted+DIGITAL_BUYOUT)+' €<sub> + IVA</sub>';
     resultEl.style.display='block';
-    const packLine=discInfo.applies?'<div style="font-size:.80rem;color:var(--gold);font-weight:600;margin-bottom:4px;">'+discInfo.label+': -'+Math.round(discInfo.rate*100)+'% en automatizaciones (ahorras '+(total-discounted).toFixed(2).replace('.',',')+' €)</div>':'';
-    const desglose=packLine+'<div style="font-size:.80rem;color:var(--grey);margin-bottom:6px;">'+(discInfo.applies?'<s>'+total+' €</s> '+discounted.toFixed(2).replace('.',',')+' €':total+' €')+' + IVA — '+(count>1?'automatizaciones elegidas, alta e integración incluidas':'automatización elegida, alta e integración incluidas')+'</div>';
+    const packLine=discInfo.applies?'<div style="font-size:.80rem;color:var(--gold);font-weight:600;margin-bottom:4px;">'+discInfo.label+': -'+Math.round(discInfo.rate*100)+'% en automatizaciones (ahorras '+(total-discounted).toFixed(2).replace('.',',')+' €)</div>':'';
+    const desglose=packLine+'<div style="font-size:.80rem;color:var(--grey);margin-bottom:6px;">'+(discInfo.applies?'<s>'+total+' €</s> '+discounted.toFixed(2).replace('.',',')+' €':total+' €')+' + IVA — '+(count>1?'automatizaciones elegidas, alta e integración incluidas':'automatización elegida, alta e integración incluidas')+'</div>';
     if(count<=2){
       selectedDigitalPlan='lite';
       resultEl.style.background='rgba(34,197,94,.08)';resultEl.style.border='1px solid rgba(34,197,94,.25)';
@@ -1523,7 +1523,7 @@ function getActivePlan(){
     const solLines=arr.freeSols===0?[]:solNames.length?solNames.map(n=>({l:n,v:'GRATIS',cls:'free'})):[{l:solWord+' a elegir',v:'Pendiente de elegir'}];
     const extraSols=selectedExtraSolutions.map(v=>CLOSED_PRICE_SOLUTIONS.find(x=>x.value===v)).filter(Boolean);
     const extraTotal=extraSols.reduce((s,x)=>s+x.price,0);
-    const extraLines=extraSols.map(x=>({l:'+ '+x.name+' (adicional)',v:fmtEuro(x.price)+' € + IVA'}));
+    const extraLines=extraSols.map(x=>({l:'+ '+x.name+' (adicional)',v:fmtEuro(x.price)+' € + IVA'}));
     const isUnico=tierPaymentMode==='unico';
     const isTransferencia=tierPaymentMode==='transferencia';
     let priceLines,totalCommitment,subPago;
@@ -1536,12 +1536,12 @@ function getActivePlan(){
       priceLines=[];
       if(esFundador)priceLines.push({l:'🏷️ Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[d.arranque]+' de '+FOUNDING_SPOTS_TOTAL[d.arranque]+' plazas',v:'Aplicado ✓',cls:'free'});
       priceLines.push(
-        {l:arr.permanenciaMeses+' meses × '+arr.monthly+' €/mes'+(esFundador?' (fundador)':''),v:fmtEuro(totBase)+' €'},
-        {l:'Descuento por pago único (12%)',v:'-'+fmtEuro(descuento)+' €'},
-        {l:'Precio tras el descuento',v:fmtEuro(tot)+' €'},
+        {l:arr.permanenciaMeses+' meses × '+arr.monthly+' €/mes'+(esFundador?' (fundador)':''),v:fmtEuro(totBase)+' €'},
+        {l:'Descuento por pago único (12%)',v:'-'+fmtEuro(descuento)+' €'},
+        {l:'Precio tras el descuento',v:fmtEuro(tot)+' €'},
       );
-      if(extraTotal>0)priceLines.push({l:'Automatizaciones adicionales, instalación única',v:fmtEuro(extraTotal)+' €'});
-      priceLines.push({l:'IVA (21%)',v:fmtEuro(iva)+' €'},{l:'Total con IVA',v:fmtEuro(totalCommitment)+' €',total:true});
+      if(extraTotal>0)priceLines.push({l:'Automatizaciones adicionales, instalación única',v:fmtEuro(extraTotal)+' €'});
+      priceLines.push({l:'IVA (21%)',v:fmtEuro(iva)+' €'},{l:'Total con IVA',v:fmtEuro(totalCommitment)+' €',total:true});
     }else{
       const ivaM=arr.monthly*0.21;const totMes=arr.monthly+ivaM;
       const extraConIva=extraTotal*1.21;
@@ -1549,13 +1549,13 @@ function getActivePlan(){
       subPago='Pago con PayPal';
       priceLines=[];
       if(esFundador)priceLines.push({l:'🏷️ Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[d.arranque]+' de '+FOUNDING_SPOTS_TOTAL[d.arranque]+' plazas',v:'Aplicado ✓',cls:'free'});
-      priceLines.push({l:'Cuota base'+(esFundador?' (fundador)':''),v:fmtEuro(arr.monthly)+' €/mes'},{l:'IVA (21%)',v:fmtEuro(ivaM)+' €/mes'},{l:'Equivalente / mes con IVA',v:fmtEuro(totMes)+' €'});
-      if(extraTotal>0)priceLines.push({l:'+ Automatizaciones adicionales, pago único aparte',v:fmtEuro(extraConIva)+' € con IVA'});
-      priceLines.push({l:'Cargo único a PayPal ('+arr.permanenciaMeses+' meses de golpe — luego eliges con PayPal en cuántos plazos devolverlo)',v:fmtEuro(totalCommitment)+' €',total:true});
+      priceLines.push({l:'Cuota base'+(esFundador?' (fundador)':''),v:fmtEuro(arr.monthly)+' €/mes'},{l:'IVA (21%)',v:fmtEuro(ivaM)+' €/mes'},{l:'Equivalente / mes con IVA',v:fmtEuro(totMes)+' €'});
+      if(extraTotal>0)priceLines.push({l:'+ Automatizaciones adicionales, pago único aparte',v:fmtEuro(extraConIva)+' € con IVA'});
+      priceLines.push({l:'Cargo único a PayPal ('+arr.permanenciaMeses+' meses de golpe — luego eliges con PayPal en cuántos plazos devolverlo)',v:fmtEuro(totalCommitment)+' €',total:true});
     }
     const renewalMsg='<b>Paga una vez. Olvídate 365 días.</b> Nada de facturas mensuales — tu primer año de Departamento (web, automatización, mantenimiento, reuniones) va incluido en este pago y funciona los 365 días, sin reembolso si decides no usarlo. Pasado el año, sigues mes a mes si quieres, sin compromiso nuevo.';
     const auditSols=selectedAuditSolutions.map(v=>OPEN_PRICE_SOLUTIONS.find(x=>x.value===v)).filter(Boolean);
-    const auditLines=auditSols.map(x=>({l:'+ '+x.name+' (pendiente de auditoría)',v:'desde '+x.from+' € — sin cerrar'}));
+    const auditLines=auditSols.map(x=>({l:'+ '+x.name+' (pendiente de auditoría)',v:'desde '+x.from+' € — sin cerrar'}));
     return{key:selectedDirect,name:d.name,sub:subPago+' · '+arr.permanenciaMeses+' meses incluidos'+(solWord?' · '+solWord+' gratis':'')+(extraSols.length?' + '+extraSols.length+' adicional'+(extraSols.length>1?'es':''):''),arranqueType:d.arranque,breakdown:[...webLine,...solLines,...extraLines,...auditLines,{divider:true},...priceLines],monthlyAfter:arr.monthly,totalRaw:totalCommitment,paymentMode:tierPaymentMode,timeline:selectedDirect,renewalMsg,solutionsIncomplete:selectedTierSolutions.length<arr.freeSols,needsAudit:auditSols.length>0,founding:esFundador};
   }
   return null;
@@ -1576,8 +1576,8 @@ function updateSummary(plan){
   const renewDate=getRenewalDate(days);
   if(plan.renewalMsg){re.innerHTML=plan.renewalMsg;}
   else if(plan.renewalNote==='anual'){const da=new Date();da.setFullYear(da.getFullYear()+1);re.innerHTML='Renovación automática anual a partir del <span class="renewal-date">'+da.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'})+'</span> · Renueva o cancela al vencer el año';}
-  else if(hasGift){re.innerHTML='Pasados los '+days+' días de implantación, renovación automática de 1 mes a <span class="renewal-amount">'+plan.monthlyAfter.toFixed(2).replace('.',',')+' €&nbsp;+&nbsp;IVA</span> a partir del <span class="renewal-date">'+renewDate+'</span> · Cancela cuando quieras avisando con 7 días';}
-  else{re.innerHTML='Renovación automática de 1 mes a <span class="renewal-amount">'+plan.monthlyAfter.toFixed(2).replace('.',',')+' €&nbsp;+&nbsp;IVA</span> a partir del <span class="renewal-date">'+renewDate+'</span> · Cancela cuando quieras avisando con 7 días';}
+  else if(hasGift){re.innerHTML='Pasados los '+days+' días de implantación, renovación automática de 1 mes a <span class="renewal-amount">'+plan.monthlyAfter.toFixed(2).replace('.',',')+' €&nbsp;+&nbsp;IVA</span> a partir del <span class="renewal-date">'+renewDate+'</span> · Cancela cuando quieras avisando con 7 días';}
+  else{re.innerHTML='Renovación automática de 1 mes a <span class="renewal-amount">'+plan.monthlyAfter.toFixed(2).replace('.',',')+' €&nbsp;+&nbsp;IVA</span> a partir del <span class="renewal-date">'+renewDate+'</span> · Cancela cuando quieras avisando con 7 días';}
   re.style.display='block';
   const tl=TIMELINES[plan.timeline];
   if(tl&&tsteps&&tbox){const cols={gold:'var(--gold)',green:'var(--green)',blue:'var(--blue)',grey:'var(--grey)'};tsteps.innerHTML=tl.map(s=>`<div class="tl-step"><div class="tl-dot" style="background:${cols[s.c]||'var(--grey)'}"></div><div class="tl-info"><div class="tl-label">${s.l}</div><div class="tl-val" style="color:${cols[s.c]||'var(--grey)'}">${s.v}</div></div></div>`).join('');tbox.style.display='block';}

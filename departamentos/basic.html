@@ -482,19 +482,19 @@ function renderFoundingPricesElemental(){
   const mStart=currentPrice('start'),mLite=currentPrice('lite'),mPro=currentPrice('pro');
   const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
   const esFundador=foundingActive('basic');
-  const tachado=esFundador?'<span class="price-old">'+fmtEuro(standardAnnualPricing('basic').total)+' €</span> ':'';
-  set('hp-main-elemental',tachado+fmtEuro(p.total)+' €<sub>primer año, pago único</sub>');
-  set('hp-vat-elemental',fmtEuro(p.totalIva)+' € con IVA · pago único (12% dto.), con tarjeta o PayPal');
-  set('hp-annual-elemental','Luego '+p.monthly+' €/mes + IVA, sin permanencia. Tu primer año ya incluye la integración completa de tu web y tu automatización, configuradas con los datos reales de tu negocio, y la gestión de tu Departamento cada mes.');
-  set('table-price-start',mStart+' €');
-  set('table-price-basic',p.monthly+' €');
-  set('table-price-lite',mLite+' €');
-  set('table-price-pro',mPro+' €');
+  const tachado=esFundador?'<span class="price-old">'+fmtEuro(standardAnnualPricing('basic').total)+' €</span> ':'';
+  set('hp-main-elemental',tachado+fmtEuro(p.total)+' €<sub>primer año, pago único</sub>');
+  set('hp-vat-elemental',fmtEuro(p.totalIva)+' € con IVA · pago único (12% dto.), con tarjeta o PayPal');
+  set('hp-annual-elemental','Luego '+p.monthly+' €/mes + IVA, sin permanencia. Tu primer año ya incluye la integración completa de tu web y tu automatización, configuradas con los datos reales de tu negocio, y la gestión de tu Departamento cada mes.');
+  set('table-price-start',mStart+' €');
+  set('table-price-basic',p.monthly+' €');
+  set('table-price-lite',mLite+' €');
+  set('table-price-pro',mPro+' €');
   set('faq-total-elemental',fmtEuro(p.total)+'€');
   if(esFundador){
     set('hp-founding-badge-elemental','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT.basic+' de '+FOUNDING_SPOTS_TOTAL.basic+' plazas');
     const stdBasic=standardAnnualPricing('basic');
-    set('hp-founding-old-elemental','Si eres fundador, mantienes este precio para siempre. Si no, el precio estándar es '+stdBasic.monthly+' €/mes ('+fmtEuro(stdBasic.total)+' €/año).');
+    set('hp-founding-old-elemental','Si eres fundador, mantienes este precio para siempre. Si no, el precio estándar es '+stdBasic.monthly+' €/mes ('+fmtEuro(stdBasic.total)+' €/año).');
   }else{
     set('hp-founding-badge-elemental','');
     set('hp-founding-old-elemental','');

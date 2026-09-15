@@ -1873,9 +1873,9 @@ function renderFoundingPricesHome(){
     const afterEl=document.getElementById('tier-after-'+tier);
     const badgeEl=document.getElementById('tier-founding-badge-'+tier);
     const oldEl=document.getElementById('tier-founding-old-'+tier);
-    if(priceEl)priceEl.innerHTML=fmtEuro(p.total)+' €<sub>primer año</sub>';
-    if(vatEl)vatEl.textContent=fmtEuro(p.totalIva)+' € con IVA, pago único';
-    if(afterEl)afterEl.textContent='Luego '+p.monthly+' €/mes + IVA, sin permanencia';
+    if(priceEl)priceEl.innerHTML=fmtEuro(p.total)+' €<sub>primer año</sub>';
+    if(vatEl)vatEl.textContent=fmtEuro(p.totalIva)+' € con IVA, pago único';
+    if(afterEl)afterEl.textContent='Luego '+p.monthly+' €/mes + IVA, sin permanencia';
     if(badgeEl){
       if(foundingActive(tier)){
         const total=FOUNDING_SPOTS_TOTAL[tier];

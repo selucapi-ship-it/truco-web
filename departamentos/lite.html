@@ -483,19 +483,19 @@ function renderFoundingPricesLite(){
   const mPro=currentPrice('pro');
   const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
   const esFundador=foundingActive('lite');
-  const tachado=esFundador?'<span class="price-old">'+fmtEuro(standardAnnualPricing('lite').total)+' €</span> ':'';
-  set('hp-main-lite',tachado+fmtEuro(p.total)+' €<sub>primer año, pago único</sub>');
-  set('hp-vat-lite',fmtEuro(p.totalIva)+' € con IVA · pago único (12% dto.), con tarjeta o PayPal');
-  set('hp-annual-lite','Luego '+p.monthly+' €/mes + IVA, sin permanencia. Tu primer año ya incluye la integración completa de tu web y tus automatizaciones, configuradas con los datos reales de tu negocio, y la gestión de tu Departamento cada mes.');
-  set('table-price-lite',p.monthly+' €');
-  set('table-price-pro',mPro+' €');
-  set('table-price-start',currentPrice('start')+' €');
-  set('table-price-basic',currentPrice('basic')+' €');
+  const tachado=esFundador?'<span class="price-old">'+fmtEuro(standardAnnualPricing('lite').total)+' €</span> ':'';
+  set('hp-main-lite',tachado+fmtEuro(p.total)+' €<sub>primer año, pago único</sub>');
+  set('hp-vat-lite',fmtEuro(p.totalIva)+' € con IVA · pago único (12% dto.), con tarjeta o PayPal');
+  set('hp-annual-lite','Luego '+p.monthly+' €/mes + IVA, sin permanencia. Tu primer año ya incluye la integración completa de tu web y tus automatizaciones, configuradas con los datos reales de tu negocio, y la gestión de tu Departamento cada mes.');
+  set('table-price-lite',p.monthly+' €');
+  set('table-price-pro',mPro+' €');
+  set('table-price-start',currentPrice('start')+' €');
+  set('table-price-basic',currentPrice('basic')+' €');
   set('faq-total-lite',fmtEuro(p.total)+'€');
   if(esFundador){
     set('hp-founding-badge-lite','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT.lite+' de 10 plazas');
     const stdLite=standardAnnualPricing('lite');
-    set('hp-founding-old-lite','Si eres fundador, mantienes este precio para siempre. Si no, el precio estándar es '+stdLite.monthly+' €/mes ('+fmtEuro(stdLite.total)+' €/año).');
+    set('hp-founding-old-lite','Si eres fundador, mantienes este precio para siempre. Si no, el precio estándar es '+stdLite.monthly+' €/mes ('+fmtEuro(stdLite.total)+' €/año).');
   }else{
     set('hp-founding-badge-lite','');
     set('hp-founding-old-lite','');
