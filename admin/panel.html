@@ -74,6 +74,25 @@
   #logout-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;transition:border-color .15s,color .15s;}
   #logout-btn:hover{border-color:var(--red);color:var(--red);}
 
+  /* ── CAMPANA DE AVISOS ── */
+  .bell-wrap{position:relative;display:inline-block;margin-right:8px;vertical-align:middle;}
+  #bell-btn{position:relative;background:none;border:1px solid var(--grey-line);color:var(--grey);width:36px;height:36px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s;}
+  #bell-btn:hover,#bell-btn.open{border-color:var(--gold);color:var(--gold-light);}
+  #bell-btn svg{width:17px;height:17px;}
+  #bell-badge{position:absolute;top:-6px;right:-6px;background:var(--red);color:#fff;font-family:var(--font-m);font-size:.62rem;font-weight:700;line-height:1;min-width:17px;height:17px;border-radius:9px;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid var(--bg-panel);}
+  #bell-badge.show{display:flex;}
+  #bell-dropdown{display:none;position:absolute;top:calc(100% + 10px);right:0;width:320px;max-width:calc(100vw - 32px);background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:12px;box-shadow:var(--shadow-card);z-index:250;overflow:hidden;}
+  #bell-dropdown.open{display:block;}
+  .bell-dropdown-hd{padding:12px 16px;font-family:var(--font-m);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);border-bottom:1px solid var(--grey-line);}
+  .bell-item{display:flex;align-items:center;gap:12px;padding:13px 16px;cursor:pointer;border-bottom:1px solid var(--grey-line);transition:background .15s;text-align:left;}
+  .bell-item:last-child{border-bottom:none;}
+  .bell-item:hover{background:var(--blue-dim);}
+  .bell-item .bi-count{font-family:var(--font-d);font-weight:800;font-size:1.15rem;color:var(--gold);min-width:26px;text-align:center;flex-shrink:0;}
+  .bell-item .bi-text{flex:1;min-width:0;}
+  .bell-item .bi-title{font-size:.85rem;color:var(--white);font-weight:600;}
+  .bell-item .bi-sub{font-size:.72rem;color:var(--grey);margin-top:1px;}
+  .bell-empty{padding:22px 16px;text-align:center;color:var(--grey);font-size:.82rem;}
+
   .layout{display:grid;grid-template-columns:1fr 400px;gap:0;min-height:calc(100vh - 63px);}
   @media(max-width:900px){.layout{grid-template-columns:1fr;}}
 
@@ -440,6 +459,16 @@
       <div><b>TRUCO<span style="color:var(--blue);">technology</span></b><span>Panel CRM</span></div>
     </div>
     <div>
+      <div class="bell-wrap" id="bell-wrap" style="display:none;">
+        <button id="bell-btn" onclick="toggleBellDropdown()" aria-label="Avisos" title="Avisos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span id="bell-badge"></span>
+        </button>
+        <div id="bell-dropdown">
+          <div class="bell-dropdown-hd">Pendiente de revisar</div>
+          <div id="bell-items"></div>
+        </div>
+      </div>
       <button id="settings-btn" onclick="openSettingsOverlay()">Ajustes</button>
       <button id="stats-btn" onclick="openStatsOverlay()" style="display:none;">Estadísticas</button>
       <button id="activity-btn" onclick="openActivityOverlay()" style="display:none;">Interacciones</button>
@@ -1396,7 +1425,124 @@ async function showApp() {
   document.getElementById('anon-section').style.display = isFounder ? 'block' : 'none';
   if (isFounder) loadAnonymousSessions();
   loadClients();
+  if (isFounder) {
+    document.getElementById('bell-wrap').style.display = 'inline-block';
+    loadNotifications();
+    setInterval(loadNotifications, 120000); // refresco cada 2 min mientras el panel está abierto
+  }
 }
+
+// ── CAMPANA DE AVISOS — "qué tengo pendiente de revisar hoy" ──
+// Founder-exclusiva: se apoya en interactions sin cliente (leads anónimos
+// del chat/voz), que ya es un dato founder-only por RLS — ver
+// migration_panel_notifications.sql. Cada categoría se cuenta en vivo
+// contra su propia condición de "pendiente"; solo "conversaciones" necesita
+// recordar "hasta dónde ya has mirado" (panel_notification_state), porque
+// una conversación no tiene un estado de "resuelta" como sí lo tienen una
+// transferencia, un cobro o un lead.
+async function loadNotifications() {
+  if (!isFounder) return;
+  const counts = { conversaciones: 0, transferencias: 0, cobros: 0, leads: 0 };
+
+  try {
+    const { data: stateRow } = await sb.from('panel_notification_state').select('last_seen_at').eq('category', 'conversaciones').maybeSingle();
+    const lastSeen = stateRow?.last_seen_at || new Date(0).toISOString();
+    const { count } = await sb.from('interactions').select('id', { count: 'exact', head: true }).in('source', ['chat', 'voice']).gt('created_at', lastSeen);
+    counts.conversaciones = count || 0;
+  } catch (e) { /* se queda en 0 si falla */ }
+
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch('/.netlify/functions/list-bank-transfers', { headers: { Authorization: 'Bearer ' + session.access_token } });
+    const data = await resp.json();
+    if (data.ok && Array.isArray(data.orders)) counts.transferencias = data.orders.filter(o => o.status === 'pendiente').length;
+  } catch (e) { /* 0 */ }
+
+  try { counts.cobros = await countCobrosPendientes(); } catch (e) { /* 0 */ }
+
+  try {
+    const { count } = await sb.from('clients').select('id', { count: 'exact', head: true }).eq('status', 'nuevo');
+    counts.leads = count || 0;
+  } catch (e) { /* 0 */ }
+
+  renderBell(counts);
+}
+
+const BELL_LABELS = {
+  conversaciones: n => [n === 1 ? '1 conversación nueva' : `${n} conversaciones nuevas`, 'Chat y voz desde tu última visita'],
+  transferencias: n => [`${n} transferencia${n === 1 ? '' : 's'} sin confirmar`, 'Comprueba tu banco y actívalas'],
+  leads: n => [`${n} lead${n === 1 ? '' : 's'} nuevo${n === 1 ? '' : 's'} sin contactar`, 'Aún no les has escrito'],
+  cobros: n => [`${n} cobro${n === 1 ? '' : 's'} pendiente${n === 1 ? '' : 's'}`, 'Domiciliación bancaria de este mes'],
+};
+
+function renderBell(counts) {
+  const total = counts.conversaciones + counts.transferencias + counts.cobros + counts.leads;
+  const badge = document.getElementById('bell-badge');
+  badge.textContent = total > 99 ? '99+' : String(total);
+  badge.classList.toggle('show', total > 0);
+
+  const items = document.getElementById('bell-items');
+  const orderedKeys = ['transferencias', 'conversaciones', 'leads', 'cobros'];
+  const withCount = orderedKeys.filter(k => counts[k] > 0);
+  if (!withCount.length) { items.innerHTML = '<div class="bell-empty">Todo al día — nada pendiente de revisar.</div>'; return; }
+  items.innerHTML = withCount.map(k => {
+    const [title, sub] = BELL_LABELS[k](counts[k]);
+    return `<button type="button" class="bell-item" onclick="handleBellItemClick('${k}')" style="width:100%;background:none;border:none;font-family:inherit;cursor:pointer;">
+      <div class="bi-count">${counts[k]}</div>
+      <div class="bi-text"><div class="bi-title">${title}</div><div class="bi-sub">${sub}</div></div>
+    </button>`;
+  }).join('');
+}
+
+function handleBellItemClick(key) {
+  closeBellDropdown();
+  if (key === 'conversaciones') { openActivityOverlay(); markConversacionesSeen(); }
+  else if (key === 'transferencias') openTransferenciasOverlay();
+  else if (key === 'cobros') openCobrosOverlay();
+  else if (key === 'leads') { document.getElementById('filter-status').value = 'nuevo'; renderClients(); }
+}
+
+async function markConversacionesSeen() {
+  await sb.from('panel_notification_state').update({ last_seen_at: new Date().toISOString() }).eq('category', 'conversaciones');
+  loadNotifications();
+}
+
+function toggleBellDropdown() {
+  const dd = document.getElementById('bell-dropdown');
+  const willOpen = !dd.classList.contains('open');
+  dd.classList.toggle('open', willOpen);
+  document.getElementById('bell-btn').classList.toggle('open', willOpen);
+  // El CSS ancla con right:0 sobre .bell-wrap, que en pantallas estrechas
+  // (la topbar envuelve sus botones en varias líneas) puede quedar lejos del
+  // borde derecho real y sacar el desplegable por fuera de la izquierda.
+  // Si eso pasa, se re-ancla por la izquierda con un margen de seguridad.
+  if (willOpen) {
+    dd.style.position = '';
+    dd.style.top = '';
+    dd.style.left = '';
+    dd.style.right = '0';
+    const rect = dd.getBoundingClientRect();
+    if (rect.left < 8) {
+      // position:absolute sobre .bell-wrap no basta para corregirlo (el
+      // desbordamiento es respecto al viewport, no a .bell-wrap) — se pasa a
+      // fixed anclado al propio botón de la campana, que sí conocemos en
+      // coordenadas de viewport.
+      const btnRect = document.getElementById('bell-btn').getBoundingClientRect();
+      dd.style.position = 'fixed';
+      dd.style.top = (btnRect.bottom + 10) + 'px';
+      dd.style.right = 'auto';
+      dd.style.left = '8px';
+    }
+  }
+}
+function closeBellDropdown() {
+  document.getElementById('bell-dropdown').classList.remove('open');
+  document.getElementById('bell-btn').classList.remove('open');
+}
+document.addEventListener('click', (e) => {
+  const wrap = document.getElementById('bell-wrap');
+  if (wrap && wrap.style.display !== 'none' && !wrap.contains(e.target)) closeBellDropdown();
+});
 
 async function checkFounderStatus() {
   const { data: { user } } = await sb.auth.getUser();
@@ -2108,6 +2254,22 @@ function openCobrosOverlay() {
 }
 function closeCobrosOverlay() {
   document.getElementById('cobros-overlay').style.display = 'none';
+}
+
+// Misma condición de "pendiente" que loadCobros() de abajo, pero solo el
+// conteo — la campana de avisos no necesita nombres ni importes sugeridos.
+async function countCobrosPendientes() {
+  const now = new Date();
+  const anio = now.getFullYear(), mes = now.getMonth() + 1;
+  const sessionPrefix = 'domiciliacion-';
+  const sessionSuffix = '-' + anio + '-' + String(mes).padStart(2, '0');
+  const [{ data: clientesDom }, { data: pagosDelMes }] = await Promise.all([
+    sb.from('clients').select('id').eq('domiciliacion_activa', true).eq('status', 'cliente'),
+    sb.from('payments').select('client_id,stripe_checkout_session_id').like('stripe_checkout_session_id', sessionPrefix + '%' + sessionSuffix),
+  ]);
+  if (!clientesDom) return 0;
+  const yaClientIds = new Set((pagosDelMes || []).map(p => p.client_id));
+  return clientesDom.filter(c => !yaClientIds.has(c.id)).length;
 }
 
 async function loadCobros() {

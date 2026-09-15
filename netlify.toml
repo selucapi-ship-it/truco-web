@@ -19,6 +19,16 @@
   # cancelado o alguien ha rechazado una cita — ver antonia-vigilancia.js.
   schedule = "*/15 * * * *"
 
+[functions."antonia-resumen-diario"]
+  # Una vez al día (7:00 UTC ≈ 8-9h Madrid según horario de verano): manda un
+  # único Telegram con conversaciones nuevas, transferencias sin confirmar,
+  # cobros de domiciliación pendientes y leads sin contactar — el mismo
+  # resumen que ya muestra la campana de avisos del panel (admin/panel.html),
+  # para que llegue aunque ese día no abra el panel. Ver
+  # antonia-resumen-diario.js. Como el resto de funciones programadas de este
+  # archivo, no se ejecutará de verdad hasta que producción se desbloquee.
+  schedule = "0 7 * * *"
+
 [functions."email-ia-worker"]
   # Cada 15 minutos revisa la bandeja de cada cliente con "IA para Correo"
   # activa y deja preparada una respuesta en BORRADOR (nunca se envía sola)

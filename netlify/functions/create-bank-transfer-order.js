@@ -60,6 +60,51 @@ async function precioMinimoLegitimo(arranqueTier, solutionKeys, foundingClaimed)
   return baseImponible + iva;
 }
 
+// Avisa a ANTONIA de que ha entrado una transferencia pendiente — a
+// diferencia de "conversaciones nuevas"/"cobros"/"leads" (que la campana del
+// panel y el resumen diario cuentan en vivo contra su propia condición),
+// esto sí es un evento puntual real que merece un aviso inmediato: hay
+// dinero en camino que alguien tiene que confirmar a mano en cuanto entre en
+// el banco. Mismo patrón que registrarAviso() en antonia-vigilancia.js:
+// siempre queda en antonia_avisos (para que la voz lo cuente en el "buenos
+// días" aunque esté en no molestar), y solo se manda también por Telegram si
+// el modo no molestar no está activo ahora mismo. Best-effort: si esto falla,
+// el pedido ya se ha guardado bien y el founder lo verá igualmente en el
+// panel — nunca debe tumbar la respuesta al cliente.
+async function avisarNuevaTransferencia(supabaseUrl, headers, referenceCode, amountCents, customerName, customerEmail) {
+  try {
+    const botToken = process.env.TELEGRAM_BOT_TOKEN;
+    const allowedId = process.env.ANTONIA_TELEGRAM_ALLOWED_ID;
+    let noMolestar = false;
+    try {
+      const estadoResp = await fetch(`${supabaseUrl}/rest/v1/antonia_estado?id=eq.global&select=no_molestar_hasta`, { headers });
+      if (estadoResp.ok) {
+        const [estado] = await estadoResp.json();
+        noMolestar = !!(estado && estado.no_molestar_hasta && new Date(estado.no_molestar_hasta) > new Date());
+      }
+    } catch (e) { /* si falla, se asume que no está en no molestar */ }
+
+    const importe = (amountCents / 100).toFixed(2).replace('.', ',') + ' €';
+    const mensaje = `💶 Nueva transferencia pendiente: ${importe} de ${customerName || customerEmail} (ref. ${referenceCode}). Actívala en el panel en cuanto la veas entrar en el banco.`;
+
+    await fetch(`${supabaseUrl}/rest/v1/antonia_avisos`, {
+      method: 'POST',
+      headers: { ...headers, Prefer: 'return=minimal' },
+      body: JSON.stringify({ tipo: 'transferencia_pendiente', mensaje, enviado_telegram: !noMolestar }),
+    });
+
+    if (!noMolestar && botToken && allowedId) {
+      await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: allowedId, text: mensaje }),
+      });
+    }
+  } catch (e) {
+    console.error('[TRANSFER] fallo avisando a ANTONIA (no crítico)', e.message);
+  }
+}
+
 function generarCodigoReferencia() {
   // Sin caracteres ambiguos (0/O, 1/I/L) para que sea fácil de copiar a mano
   // en el concepto de la transferencia sin errores de transcripción.
@@ -138,6 +183,7 @@ exports.handler = async function (event) {
         }),
       });
       if (insertResp.ok) {
+        await avisarNuevaTransferencia(supabaseUrl, headers, referenceCode, amountCents, customerName, customerEmail);
         return {
           statusCode: 200,
           body: JSON.stringify({
