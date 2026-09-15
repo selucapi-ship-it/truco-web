@@ -327,8 +327,8 @@
   .quotes-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px;}
   #prices-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
   #prices-btn:hover{border-color:var(--gold);color:var(--gold);}
-  #fiscal-btn,#contrataciones-btn,#cobros-btn,#transferencias-btn,#audit-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
-  #contrataciones-btn:hover,#cobros-btn:hover,#transferencias-btn:hover,#audit-btn:hover{border-color:var(--gold);color:var(--gold);}
+  #fiscal-btn,#contrataciones-btn,#cobros-btn,#transferencias-btn,#audit-btn,#activity-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
+  #contrataciones-btn:hover,#cobros-btn:hover,#transferencias-btn:hover,#audit-btn:hover,#activity-btn:hover{border-color:var(--gold);color:var(--gold);}
   #fiscal-btn:hover{border-color:var(--gold);color:var(--gold);}
   #prices-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
   #fiscal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
@@ -640,6 +640,10 @@
 
           <div class="quote-add-row">
             <select id="q-tier-select"></select>
+            <select id="q-tier-modo" style="max-width:190px;">
+              <option value="mensual">Mensual</option>
+              <option value="anual">Pago único (año) — ahorra 12%</option>
+            </select>
             <button class="btn sm" onclick="anadirLineaTier()">Añadir Departamento</button>
           </div>
           <div id="quote-included-wrap" style="display:none;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:10px 12px;margin-bottom:8px;">
@@ -1774,15 +1778,23 @@ function anadirLineaTier() {
   const tierKey = document.getElementById('q-tier-select').value;
   const tier = quoteTiersCache.find(t => t.tier === tierKey);
   if (!tier) return;
+  const modo = document.getElementById('q-tier-modo').value;
   // Un presupuesto tiene un solo Departamento — si ya había uno, lo sustituimos
   // junto con las automatizaciones que llevaba incluidas gratis (ya no aplican).
   quoteLineas = quoteLineas.filter(l => l.tipo !== 'departamento' && !l.es_incluida);
   quoteActiveTier = tierKey;
-  quoteLineas.push({
-    tipo: 'departamento', tier_key: tierKey,
-    descripcion: 'Departamento ' + tier.name + ' (mensual, alta y gestión)',
-    precio: tier.founder_price_eur, es_desde: false
-  });
+  let descripcion, precio;
+  if (modo === 'anual') {
+    // Mismo 12 meses × 12% de descuento que pago.html/create-bank-transfer-order.js
+    // (precioMinimoLegitimo) — el presupuesto tiene que reflejar el mismo precio
+    // que se cobraría de verdad en el checkout, no un cálculo aparte.
+    precio = Math.round(tier.founder_price_eur * 12 * 0.88 * 100) / 100;
+    descripcion = 'Departamento ' + tier.name + ' (pago único, 12 meses incluidos, ahorra 12%)';
+  } else {
+    precio = tier.founder_price_eur;
+    descripcion = 'Departamento ' + tier.name + ' (mensual, alta y gestión)';
+  }
+  quoteLineas.push({ tipo: 'departamento', tier_key: tierKey, descripcion, precio, es_desde: false });
   renderQuoteLineas();
   renderIncludedSolutionsPicker();
   renderCatalogSelectForActiveTier();
@@ -2494,6 +2506,28 @@ function marcarSiCambiado(input, original) {
   input.classList.toggle('price-changed', val !== original);
 }
 
+// Mismo 12 meses × 12% de descuento que pago.html/create-bank-transfer-order.js
+// (precioMinimoLegitimo) — lo que un cliente nuevo paga de una vez al elegir
+// "pago único" en vez de mensual. No es un precio guardado aparte: sale
+// siempre de multiplicar el precio mensual de aquí, así que cambiar el
+// mensual YA cambia este número (y lo que se cobra de verdad) en toda la
+// web al momento. Esta columna solo lo hace visible mientras editas, para
+// que se vea de un vistazo sin tener que ir a comprobarlo a pago.html.
+function calcPagoUnicoAnual(monthly) {
+  const n = Number(monthly);
+  if (!Number.isFinite(n)) return null;
+  return Math.round(n * 12 * 0.88 * 100) / 100;
+}
+function fmtEurOrDash(n) {
+  return n == null ? '—' : n.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+}
+function actualizarPreviewAnual(row) {
+  const founder = row.querySelector('.tier-founder').value;
+  const standard = row.querySelector('.tier-standard').value;
+  row.querySelector('.tier-founder-anual').textContent = fmtEurOrDash(calcPagoUnicoAnual(founder));
+  row.querySelector('.tier-standard-anual').textContent = fmtEurOrDash(calcPagoUnicoAnual(standard));
+}
+
 async function loadTiersEditor() {
   const { data } = await sb.from('tier_config').select('tier,name,founder_price_eur,standard_price_eur').order('founder_price_eur');
   rawTiersCache = data || [];
@@ -2501,14 +2535,16 @@ async function loadTiersEditor() {
   if (!data || !data.length) { wrap.innerHTML = '<div class="empty-mini">Sin Departamentos.</div>'; return; }
   tiersOriginal = {};
   data.forEach(t => { tiersOriginal[t.tier] = { founder: t.founder_price_eur, standard: t.standard_price_eur }; });
-  wrap.innerHTML = `<table class="prices-table"><thead><tr><th>Departamento</th><th class="num">Precio fundador</th><th class="num">Precio normal</th></tr></thead><tbody>` +
+  wrap.innerHTML = '<div style="overflow-x:auto;">' + `<table class="prices-table"><thead><tr><th>Departamento</th><th class="num">Precio fundador /mes</th><th class="num">Pago único (año)</th><th class="num">Precio normal /mes</th><th class="num">Pago único (año)</th></tr></thead><tbody>` +
     data.map(t => `
       <tr data-tier="${escapeHtml(t.tier)}">
         <td>${escapeHtml(t.name)}</td>
-        <td class="num"><span class="price-input-wrap"><input type="number" class="tier-founder" value="${t.founder_price_eur ?? ''}" placeholder="—" oninput="marcarSiCambiado(this, ${t.founder_price_eur ?? 'null'})"></span></td>
-        <td class="num"><span class="price-input-wrap"><input type="number" class="tier-standard" value="${t.standard_price_eur ?? ''}" placeholder="—" oninput="marcarSiCambiado(this, ${t.standard_price_eur ?? 'null'})"></span></td>
+        <td class="num"><span class="price-input-wrap"><input type="number" class="tier-founder" value="${t.founder_price_eur ?? ''}" placeholder="—" oninput="marcarSiCambiado(this, ${t.founder_price_eur ?? 'null'}); actualizarPreviewAnual(this.closest('tr'))"></span></td>
+        <td class="num tier-founder-anual" style="color:var(--grey);">${fmtEurOrDash(calcPagoUnicoAnual(t.founder_price_eur))}</td>
+        <td class="num"><span class="price-input-wrap"><input type="number" class="tier-standard" value="${t.standard_price_eur ?? ''}" placeholder="—" oninput="marcarSiCambiado(this, ${t.standard_price_eur ?? 'null'}); actualizarPreviewAnual(this.closest('tr'))"></span></td>
+        <td class="num tier-standard-anual" style="color:var(--grey);">${fmtEurOrDash(calcPagoUnicoAnual(t.standard_price_eur))}</td>
       </tr>
-    `).join('') + '</tbody></table>';
+    `).join('') + '</tbody></table>' + '</div><p style="color:var(--grey);font-size:.72rem;margin-top:8px;">"Pago único (año)" se calcula solo a partir del precio mensual — es lo que ya se cobra hoy en el checkout al elegir pago único o transferencia. No se edita aparte: cambia sola en cuanto cambias el precio mensual.</p>';
 }
 
 // ── OFERTAS POR TIEMPO ──────────────────────────────────────────────────────
@@ -2610,13 +2646,13 @@ async function guardarPreciosTiers() {
     const orig = tiersOriginal[tier] || {};
     if (founder !== orig.founder || standard !== orig.standard) {
       const nombre = row.querySelector('td').textContent;
-      cambios.push(`${nombre}: fundador ${orig.founder ?? '—'}€ → ${founder}€  ·  normal ${orig.standard ?? '—'}€ → ${standard}€`);
+      cambios.push(`${nombre}: fundador ${orig.founder ?? '—'}€/mes → ${founder}€/mes (pago único: ${fmtEurOrDash(calcPagoUnicoAnual(founder))})  ·  normal ${orig.standard ?? '—'}€/mes → ${standard}€/mes (pago único: ${fmtEurOrDash(calcPagoUnicoAnual(standard))})`);
       updates.push({ tier, founder, standard });
     }
   }
   if (!updates.length) { alert('No has cambiado ningún precio de Departamentos.'); return; }
   const resumen = 'Vas a cambiar estos precios de Departamentos:\n\n' + cambios.join('\n') +
-    '\n\nSe aplica en toda la web al momento (marketing, chat y lo que se cobra en el checkout). ¿Confirmas el cambio?';
+    '\n\nSe aplica en toda la web al momento (marketing, chat, pago único/transferencia y lo que se cobra en el checkout mensual). ¿Confirmas el cambio?';
   if (!confirm(resumen)) return;
 
   for (const u of updates) {
