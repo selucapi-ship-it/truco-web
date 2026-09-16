@@ -61,7 +61,7 @@ exports.handler = async function (event) {
   const clientId = process.env.PAYPAL_CLIENT_ID;
   const secret = process.env.PAYPAL_CLIENT_SECRET;
   const apiBase = process.env.PAYPAL_API_BASE || 'https://api-m.paypal.com';
-  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseUrl = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!clientId || !secret || !supabaseUrl || !serviceKey) {
     return { statusCode: 200, body: JSON.stringify({ ok: false, reason: 'not_configured' }) };

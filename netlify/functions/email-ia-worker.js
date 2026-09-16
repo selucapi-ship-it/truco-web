@@ -256,10 +256,10 @@ async function procesarCliente(cfg, env) {
 
 exports.handler = async function () {
   const env = {
-    supabaseUrl: process.env.SUPABASE_URL,
+    supabaseUrl: 'https://oxdopzvbrxdsjvzxmpxy.supabase.co',
     serviceKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
     geminiKey: process.env.GEMINI_API_KEY,
-    googleClientId: process.env.GOOGLE_OAUTH_CLIENT_ID,
+    googleClientId: '468608076556-ag64c5hbk2cnkrg4acasrf4c4ctr179m.apps.googleusercontent.com',
     googleClientSecret: process.env.GOOGLE_OAUTH_CLIENT_SECRET,
   };
   if (!env.supabaseUrl || !env.serviceKey || !env.geminiKey || !env.googleClientId || !env.googleClientSecret) {

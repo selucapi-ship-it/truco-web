@@ -5,9 +5,9 @@ exports.handler = async function (event) {
     return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
-  const apiKey = process.env.LIVEKIT_API_KEY;
+  const apiKey = 'APIMpcG8qNhxBby';
   const apiSecret = process.env.LIVEKIT_API_SECRET;
-  const livekitUrl = process.env.LIVEKIT_URL;
+  const livekitUrl = 'wss://trucotechnology-lzyjerwx.livekit.cloud';
 
   if (!apiKey || !apiSecret || !livekitUrl) {
     return { statusCode: 200, body: JSON.stringify({ error: 'LiveKit no configurado' }) };

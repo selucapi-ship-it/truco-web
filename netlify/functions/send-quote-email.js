@@ -29,7 +29,7 @@ exports.handler = async function (event) {
     return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
-  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseUrl = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM } = process.env;
   if (!supabaseUrl || !serviceKey || !SMTP_HOST || !SMTP_USER || !SMTP_PASS) {

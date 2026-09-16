@@ -155,7 +155,7 @@ exports.handler = async function (event) {
     return responder(400, { error: 'Falta widget_key o accion inválida' });
   }
 
-  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseUrl = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!supabaseUrl || !serviceKey) {
     return responder(200, { ok: false, reason: 'not_configured' });

@@ -42,7 +42,7 @@ exports.handler = async function (event) {
     return { statusCode: 204, headers: CORS, body: '' };
   }
 
-  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseUrl = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!supabaseUrl || !serviceKey) {
     return { statusCode: 500, headers: CORS, body: 'ERROR: no configurado' };

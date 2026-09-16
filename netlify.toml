@@ -17,6 +17,20 @@
 # páginas de este sitio (ni frontend las llama, ni webhooks de terceros
 # apuntan aquí salvo el de Telegram, reapuntado al nuevo sitio en el mismo
 # cambio) — sacarlas les da su propio presupuesto de 4KB sin perder nada.
+#
+# El mismo 2026-09-16, tras mover esas 4 funciones el límite de 4KB SEGUÍA
+# superándose (todas nuestras funciones usan la firma clásica de AWS Lambda
+# — "exports.handler = async (event, context) => {}" — lo que Netlify llama
+# "Lambda compatibility mode", donde ese límite de 4KB sigue aplicando; ver
+# https://docs.netlify.com/build/functions/lambda-compatibility/). Migrar
+# las 32 funciones restantes a la firma moderna (Request/Response) es un
+# cambio demasiado grande para hacer a ciegas, así que en su lugar se
+# sacaron del conjunto de variables de entorno las que NO son secretas
+# (URLs públicas, IDs de cliente OAuth, clave pública VAPID) y se dejaron
+# fijas en el código de cada función que las usa — mismo dato, cero riesgo,
+# y libera sitio dentro del límite de 4KB: SUPABASE_URL,
+# TRUKI_SUPABASE_URL, GOOGLE_OAUTH_CLIENT_ID, VAPID_PUBLIC_KEY,
+# VAPID_SUBJECT, EMAIL_IA_OAUTH_REDIRECT_URI, LIVEKIT_URL, LIVEKIT_API_KEY.
 
 [functions."email-ia-worker"]
   # Cada 15 minutos revisa la bandeja de cada cliente con "IA para Correo"

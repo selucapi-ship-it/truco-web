@@ -110,7 +110,7 @@ exports.handler = async function (event) {
   }
 
   const apiKey = process.env.GEMINI_API_KEY;
-  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseUrl = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!apiKey || !supabaseUrl || !serviceKey) {
     return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'not_configured' }) };

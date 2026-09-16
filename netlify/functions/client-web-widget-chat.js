@@ -151,7 +151,7 @@ exports.handler = async function (event) {
     return responder(400, { error: 'Falta widget_key o message' });
   }
 
-  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseUrl = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   const anonKey = SUPABASE_ANON_KEY;
   const geminiKey = process.env.GEMINI_API_KEY;

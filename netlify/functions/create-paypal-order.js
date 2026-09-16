@@ -190,7 +190,7 @@ exports.handler = async function (event) {
 
     // Guarda lo que confirm_client_purchase necesitará al capturar el pago
     // tras el redirect de vuelta — ver cabecera del archivo.
-    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseUrl = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
     const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
     if (supabaseUrl && serviceKey) {
       const headers = { 'Content-Type': 'application/json', apikey: serviceKey, Prefer: 'return=minimal' };

@@ -44,13 +44,13 @@ exports.handler = async function (event) {
     return { statusCode: 400, body: 'Falta el parámetro client_id' };
   }
 
-  const googleClientId = process.env.GOOGLE_OAUTH_CLIENT_ID;
+  const googleClientId = '468608076556-ag64c5hbk2cnkrg4acasrf4c4ctr179m.apps.googleusercontent.com';
   const stateSecret = process.env.EMAIL_IA_OAUTH_STATE_SECRET;
-  const redirectUri = process.env.EMAIL_IA_OAUTH_REDIRECT_URI;
+  const redirectUri = 'https://main--chic-salamander-e640e7.netlify.app/.netlify/functions/email-ia-oauth-callback';
   if (!googleClientId || !stateSecret || !redirectUri) {
     return {
       statusCode: 500,
-      body: 'Falta configurar GOOGLE_OAUTH_CLIENT_ID / EMAIL_IA_OAUTH_STATE_SECRET / EMAIL_IA_OAUTH_REDIRECT_URI en Netlify.',
+      body: 'Falta configurar EMAIL_IA_OAUTH_STATE_SECRET en Netlify.',
     };
   }
 

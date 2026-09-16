@@ -11,9 +11,9 @@ exports.handler = async function (event) {
     return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
-  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseUrl = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const trukiUrl = process.env.TRUKI_SUPABASE_URL;
+  const trukiUrl = 'https://whvypufbsiofmxhmszgy.supabase.co';
   const trukiKey = process.env.TRUKI_SUPABASE_SERVICE_ROLE_KEY;
   if (!supabaseUrl || !serviceKey || !trukiUrl || !trukiKey) {
     return { statusCode: 200, body: JSON.stringify({ ok: false, reason: 'not_configured' }) };

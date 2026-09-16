@@ -88,7 +88,7 @@ exports.handler = async function (event) {
   // del panel).
   if (session.metadata && session.metadata.source === 'custom_quote') {
     const quoteId = session.metadata.quote_id;
-    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseUrl = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
     const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
     if (supabaseUrl && serviceKey && quoteId) {
       const headers = { 'Content-Type': 'application/json', apikey: serviceKey };
@@ -150,7 +150,7 @@ exports.handler = async function (event) {
   const refCode = (session.metadata && session.metadata.ref_code) || '';
   const consumeReferralCreditFor = (session.metadata && session.metadata.consume_referral_credit) || '';
 
-  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseUrl = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   let clientId = null;
 
