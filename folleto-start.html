@@ -44,7 +44,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1
 .price-block{display:flex;flex-wrap:wrap;align-items:flex-end;gap:28px;background:var(--bg-card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:16px;padding:28px 32px;}
 .price-main .old{font-family:var(--mono);font-size:1.1rem;color:var(--ink-faint);text-decoration:line-through;margin-bottom:4px;}
 .price-main .now{font-family:var(--serif);font-size:clamp(2.6rem,6vw,3.6rem);color:var(--gold-hot);line-height:.9;}
-.price-main .now sub{font-family:var(--sans);font-size:1rem;font-weight:600;color:var(--ink-dim);}
+.price-main .now sub{display:block;font-family:var(--sans);font-size:1rem;font-weight:600;color:var(--ink-dim);margin-top:4px;}
 .price-meta{display:flex;flex-direction:column;gap:6px;border-left:1px solid var(--line);padding-left:28px;min-width:220px;}
 .price-meta .line{font-size:.9rem;color:var(--ink-dim);}
 .price-meta .line b{color:var(--ink);}
@@ -103,7 +103,7 @@ section{padding:48px 40px;}
 .cta-price{display:inline-flex;align-items:baseline;gap:10px;background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:16px 26px;}
 .cta-price .old{font-family:var(--mono);color:var(--ink-faint);text-decoration:line-through;font-size:1rem;}
 .cta-price .now{font-family:var(--serif);color:var(--gold-hot);font-size:1.9rem;}
-.cta-price .now sub{font-family:var(--sans);font-size:.85rem;color:var(--ink-dim);font-weight:600;}
+.cta-price .now sub{display:block;font-family:var(--sans);font-size:.85rem;color:var(--ink-dim);font-weight:600;margin-top:2px;}
 .nudge{text-align:center;font-size:.88rem;color:var(--ink-dim);margin-top:18px;padding-top:18px;border-top:1px dashed var(--line);}
 .nudge b{color:var(--gold-hot);}
 .cta-final{display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;margin-top:6px;}
@@ -129,12 +129,12 @@ footer{padding:20px 40px 40px;text-align:center;font-family:var(--mono);font-siz
     <div class="founder-badge">🏷 Quedan 10 de 10 plazas de fundador</div>
     <div class="price-block">
       <div class="price-main">
-        <div class="old">939,84 €</div>
-        <div class="now">728,64 €<sub> primer año + IVA</sub></div>
+        <div class="old">939,84 €</div>
+        <div class="now">728,64 €<sub>primer año + IVA</sub></div>
       </div>
       <div class="price-meta">
         <div class="line">Pago único, <b>tarjeta, PayPal o transferencia</b></div>
-        <div class="line">Luego, <b>69 €/mes + IVA</b> si sigues</div>
+        <div class="line">Luego, <b>69 €/mes + IVA</b> si sigues</div>
         <div class="then">→ lo mantienes para siempre, sin permanencia</div>
       </div>
     </div>
@@ -183,15 +183,15 @@ footer{padding:20px 40px 40px;text-align:center;font-family:var(--mono);font-siz
     <div class="numbers">
       <div class="numbers-row">
         <div class="numbers-tag">App suelta tipo mercado</div>
-        <div class="numbers-val strike">1.068 €</div>
-        <div class="numbers-note">Un año de una herramienta suelta a 89 €/mes — la configuras tú, sin implantación ni seguimiento.</div>
+        <div class="numbers-val strike">1.068 €</div>
+        <div class="numbers-note">Un año de una herramienta suelta a 89 €/mes — la configuras tú, sin implantación ni seguimiento.</div>
       </div>
       <div class="numbers-row">
         <div class="numbers-tag">Departamento Start™</div>
-        <div class="numbers-val win">728,64 €</div>
+        <div class="numbers-val win">728,64 €</div>
         <div class="numbers-note">Tu automatización elegida, <b style="color:var(--ink);">instalada por nosotros</b>, con 365 días de acompañamiento incluidos.</div>
       </div>
-      <div class="verdict-strip">Pagas <b>339 € menos al año</b> que una app suelta — y la tuya viene configurada por un equipo, no por ti a base de prueba y error.</div>
+      <div class="verdict-strip">Pagas <b>339 € menos al año</b> que una app suelta — y la tuya viene configurada por un equipo, no por ti a base de prueba y error.</div>
     </div>
   </section>
 
@@ -218,8 +218,8 @@ footer{padding:20px 40px 40px;text-align:center;font-family:var(--mono);font-siz
       <div class="cta-col">
         <a class="cta-link" href="https://www.trucotechnology.com">trucotechnology.com</a>
         <div class="cta-price">
-          <span class="old">939,84 €</span>
-          <span class="now">728,64 €<sub> + IVA, primer año</sub></span>
+          <span class="old">939,84 €</span>
+          <span class="now">728,64 €<sub>+ IVA, primer año</sub></span>
         </div>
       </div>
       <div class="qr-box">

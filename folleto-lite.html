@@ -44,7 +44,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1
 .price-block{display:flex;flex-wrap:wrap;align-items:flex-end;gap:28px;background:var(--bg-card);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:16px;padding:28px 32px;}
 .price-main .old{font-family:var(--mono);font-size:1.1rem;color:var(--ink-faint);text-decoration:line-through;margin-bottom:4px;}
 .price-main .now{font-family:var(--serif);font-size:clamp(2.6rem,6vw,3.6rem);color:var(--gold-hot);line-height:.9;}
-.price-main .now sub{font-family:var(--sans);font-size:1rem;font-weight:600;color:var(--ink-dim);}
+.price-main .now sub{display:block;font-family:var(--sans);font-size:1rem;font-weight:600;color:var(--ink-dim);margin-top:4px;}
 .price-meta{display:flex;flex-direction:column;gap:6px;border-left:1px solid var(--line);padding-left:28px;min-width:220px;}
 .price-meta .line{font-size:.9rem;color:var(--ink-dim);}
 .price-meta .line b{color:var(--ink);}
@@ -103,7 +103,7 @@ section{padding:48px 40px;}
 .cta-price{display:inline-flex;align-items:baseline;gap:10px;background:var(--bg-card);border:1px solid var(--line);border-radius:14px;padding:16px 26px;}
 .cta-price .old{font-family:var(--mono);color:var(--ink-faint);text-decoration:line-through;font-size:1rem;}
 .cta-price .now{font-family:var(--serif);color:var(--gold-hot);font-size:1.9rem;}
-.cta-price .now sub{font-family:var(--sans);font-size:.85rem;color:var(--ink-dim);font-weight:600;}
+.cta-price .now sub{display:block;font-family:var(--sans);font-size:.85rem;color:var(--ink-dim);font-weight:600;margin-top:2px;}
 .fine-print{font-family:var(--mono);font-size:.7rem;color:var(--ink-faint);margin-top:8px;}
 .cta-final{display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;margin-top:6px;}
 .cta-col{display:flex;flex-direction:column;align-items:center;gap:14px;}
@@ -128,12 +128,12 @@ footer{padding:20px 40px 40px;text-align:center;font-family:var(--mono);font-siz
     <div class="founder-badge">🏷 Quedan 10 de 10 plazas de fundador</div>
     <div class="price-block">
       <div class="price-main">
-        <div class="old">2.946,24 €</div>
-        <div class="now">2.418,24 €<sub> primer año + IVA</sub></div>
+        <div class="old">2.946,24 €</div>
+        <div class="now">2.418,24 €<sub>primer año + IVA</sub></div>
       </div>
       <div class="price-meta">
         <div class="line">Pago único, <b>tarjeta, PayPal o transferencia</b></div>
-        <div class="line">Luego, <b>229 €/mes + IVA</b> si sigues</div>
+        <div class="line">Luego, <b>229 €/mes + IVA</b> si sigues</div>
         <div class="then">→ lo mantienes para siempre, sin permanencia</div>
       </div>
     </div>
@@ -184,25 +184,25 @@ footer{padding:20px 40px 40px;text-align:center;font-family:var(--mono);font-siz
     <div class="numbers">
       <div class="numbers-row">
         <div class="numbers-tag">Web a medida sola</div>
-        <div class="numbers-val">1.390 €</div>
+        <div class="numbers-val">1.390 €</div>
         <div class="numbers-note">Precio de una Web Profesional comprada aparte, sin ninguna automatización.</div>
       </div>
       <div class="numbers-row">
         <div class="numbers-tag">+ WhatsApp + Llamadas</div>
-        <div class="numbers-val">+ 1.280 €</div>
-        <div class="numbers-note">Las dos automatizaciones más demandadas del pool, añadidas sueltas (590 € + 690 €).</div>
+        <div class="numbers-val">+ 1.280 €</div>
+        <div class="numbers-note">Las dos automatizaciones más demandadas del pool, añadidas sueltas (590 € + 690 €).</div>
       </div>
       <div class="numbers-row">
         <div class="numbers-tag">Suma suelta</div>
-        <div class="numbers-val strike">2.670 €</div>
+        <div class="numbers-val strike">2.670 €</div>
         <div class="numbers-note">Y sin ni un mes de mantenimiento web, seguridad o gestión incluido todavía.</div>
       </div>
       <div class="numbers-row">
         <div class="numbers-tag">Departamento Lite™</div>
-        <div class="numbers-val win">2.418,24 €</div>
+        <div class="numbers-val win">2.418,24 €</div>
         <div class="numbers-note">Web + 2 automatizaciones + <b style="color:var(--ink);">365 días completos</b> de mantenimiento hasta 3 automatizaciones — todo dentro.</div>
       </div>
-      <div class="verdict-strip">Pagas <b>251 € menos</b> que comprar la web y esas dos automatizaciones sueltas, y encima te llevas un año entero de departamento de regalo.</div>
+      <div class="verdict-strip">Pagas <b>251 € menos</b> que comprar la web y esas dos automatizaciones sueltas, y encima te llevas un año entero de departamento de regalo.</div>
     </div>
   </section>
 
@@ -230,8 +230,8 @@ footer{padding:20px 40px 40px;text-align:center;font-family:var(--mono);font-siz
       <div class="cta-col">
         <a class="cta-link" href="https://www.trucotechnology.com">trucotechnology.com</a>
         <div class="cta-price">
-          <span class="old">2.946,24 €</span>
-          <span class="now">2.418,24 €<sub> + IVA, primer año</sub></span>
+          <span class="old">2.946,24 €</span>
+          <span class="now">2.418,24 €<sub>+ IVA, primer año</sub></span>
         </div>
       </div>
       <div class="qr-box">

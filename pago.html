@@ -236,18 +236,15 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .tl-title{font-family:var(--font-m);font-size:.70rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:14px;}
 .tl-steps{display:flex;gap:0;position:relative;}
 .tl-steps::before{content:'';position:absolute;top:11px;left:11px;right:11px;height:1px;background:var(--grey-line);z-index:0;}
-.tl-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;z-index:1;}
-.tl-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;font-family:var(--font-m);}
+.tl-step{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;z-index:1;padding:0 4px;}
+.tl-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;font-family:var(--font-m);flex-shrink:0;}
 .tl-dot.project{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(217,168,63,.4);}
 .tl-dot.free{background:var(--green-dim);color:var(--green);border:1px solid var(--green);}
 .tl-dot.paid{background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue);}
 .tl-dot.cont{background:var(--bg-card);color:var(--grey);border:1px solid var(--grey-line);}
-.tl-step-label{font-size:.76rem;color:var(--grey);text-align:center;line-height:1.3;}
-.tl-step-val{font-size:.76rem;font-weight:600;text-align:center;}
-.tl-step-val.green{color:var(--green);}
-.tl-step-val.blue{color:var(--blue);}
-.tl-step-val.gold{color:var(--gold);}
-.tl-step-val.grey{color:var(--grey);}
+.tl-info{display:flex;flex-direction:column;gap:2px;width:100%;min-width:0;}
+.tl-label{font-size:.76rem;color:var(--grey);text-align:center;line-height:1.3;word-break:break-word;}
+.tl-val{font-size:.76rem;font-weight:600;text-align:center;word-break:break-word;}
 
 /* FORM */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
@@ -339,7 +336,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 <div class="page-header">
   <div class="ph-tag">Contratación</div>
   <h1>Elige cómo empezar</h1>
-  <p>Elige cómo empezar. Todo detallado antes de confirmar.</p>
+  <p>Todo detallado antes de confirmar, sin sorpresas.</p>
 </div>
 
 <div class="checkout">
@@ -1551,7 +1548,7 @@ function getActivePlan(){
       if(esFundador)priceLines.push({l:'🏷️ Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[d.arranque]+' de '+FOUNDING_SPOTS_TOTAL[d.arranque]+' plazas',v:'Aplicado ✓',cls:'free'});
       priceLines.push({l:'Cuota base'+(esFundador?' (fundador)':''),v:fmtEuro(arr.monthly)+' €/mes'},{l:'IVA (21%)',v:fmtEuro(ivaM)+' €/mes'},{l:'Equivalente / mes con IVA',v:fmtEuro(totMes)+' €'});
       if(extraTotal>0)priceLines.push({l:'+ Automatizaciones adicionales, pago único aparte',v:fmtEuro(extraConIva)+' € con IVA'});
-      priceLines.push({l:'Cargo único a PayPal ('+arr.permanenciaMeses+' meses de golpe — luego eliges con PayPal en cuántos plazos devolverlo)',v:fmtEuro(totalCommitment)+' €',total:true});
+      priceLines.push({l:'Cargo único a PayPal ('+arr.permanenciaMeses+' meses de golpe)',v:fmtEuro(totalCommitment)+' €',total:true});
     }
     const renewalMsg='<b>Paga una vez. Olvídate 365 días.</b> Nada de facturas mensuales — tu primer año de Departamento (web, automatización, mantenimiento, reuniones) va incluido en este pago y funciona los 365 días, sin reembolso si decides no usarlo. Pasado el año, sigues mes a mes si quieres, sin compromiso nuevo.';
     const auditSols=selectedAuditSolutions.map(v=>OPEN_PRICE_SOLUTIONS.find(x=>x.value===v)).filter(Boolean);

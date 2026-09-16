@@ -41,8 +41,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .nav-back{font-size:.85rem;color:var(--grey);transition:color var(--tr);display:flex;align-items:center;gap:6px;}
 .nav-back svg{width:14px;height:14px;}
 .nav-back:hover{color:var(--white);}
-@media(max-width:600px){.nav-sub{display:none;}.nav-back{display:none;}.nav-cta{padding:8px 14px;font-size:.86rem;}.t-mark{width:34px;height:34px;font-size:18px;}}
-.nav-cta{background:var(--blue);color:#fff;padding:9px 20px;border-radius:7px;font-size:.85rem;font-weight:600;}
+@media(max-width:600px){.nav-sub{display:none;}.nav-back{display:none;}.nav-cta{padding:8px 12px;font-size:.72rem;}.t-mark{width:34px;height:34px;font-size:18px;}}
+.nav-cta{background:var(--blue);color:#fff;padding:9px 20px;border-radius:7px;font-size:.85rem;font-weight:600;white-space:nowrap;}
 
 .icon-badge{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .icon-badge svg{width:23px;height:23px;}
@@ -176,6 +176,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 @keyframes pageOut{to{opacity:0;}}
 @keyframes pageIn{from{opacity:0;}}
 @media(max-width:600px){.sd-tag{white-space:normal;}.btn-primary,.btn-ghost{white-space:normal;text-align:center;max-width:100%;}}
+@media(max-width:480px){.sdc-head{flex-wrap:wrap;}.sdc-price{align-items:flex-start;text-align:left;}}
 
 /* ── FLOATING CHAT ── */
 @keyframes floatPulse{
@@ -209,6 +210,9 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 @media(max-width:1024px){
   .float-btn{width:52px;height:52px;font-size:1.3rem;}
   .float-label{display:none;}
+}
+@media(max-width:600px){
+  footer{padding-bottom:100px;}
 }
 </style>
 </head>
@@ -357,7 +361,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="sol-detail-card">
         <div class="sdc-head">
           <div class="sdc-name">Reservas y Agenda<span>Citas online sin llamadas ni mensajes cruzados</span></div>
-          <div class="sdc-price"><span id="sol-price-reservas">350</span> € + IVA</div>
+          <div class="sdc-price"><span><span id="sol-price-reservas">350</span> € + IVA</span></div>
         </div>
         <p class="sdc-desc">Tus clientes reservan hora directamente desde tu web o WhatsApp, viendo tu disponibilidad real. Se acabaron los dobles huecos y los "¿tenéis hora libre el jueves?" por seis mensajes distintos.</p>
         <ul class="sdc-includes">
@@ -373,7 +377,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="sol-detail-card">
         <div class="sdc-head">
           <div class="sdc-name">Facturación automática (TruKi)<span>Describe el trabajo, recibe la factura</span></div>
-          <div class="sdc-price"><span id="sol-price-truki">580</span> € + IVA</div>
+          <div class="sdc-price"><span><span id="sol-price-truki">580</span> € + IVA</span></div>
         </div>
         <p class="sdc-desc">Le cuentas a TruKi por chat qué material y horas has usado en un trabajo — "6 metros de cable 2,5, 3 cajas de registro, 2 horas de mano de obra" — y genera al instante un presupuesto o una factura lista para el cliente, guardada también en tu propia base de datos.</p>
         <ul class="sdc-includes">
@@ -388,7 +392,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="sol-detail-card">
         <div class="sdc-head">
           <div class="sdc-name">Ciberseguridad Pyme<span>La seguridad básica que casi nadie tiene puesta</span></div>
-          <div class="sdc-price"><span id="sol-price-ciberseguridad">450</span> € + IVA</div>
+          <div class="sdc-price"><span><span id="sol-price-ciberseguridad">450</span> € + IVA</span></div>
         </div>
         <p class="sdc-desc">Revisamos e instalamos la seguridad imprescindible que la mayoría de pymes nunca llega a configurar: doble verificación, gestor de contraseñas del equipo y copias de seguridad automáticas, con una instrucción básica para que tu equipo la use bien.</p>
         <ul class="sdc-includes">
@@ -404,7 +408,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="sol-detail-card">
         <div class="sdc-head">
           <div class="sdc-name">Firma Digital<span>Contratos firmados sin imprimir ni escanear</span></div>
-          <div class="sdc-price"><span id="sol-price-firma">500</span> € + IVA</div>
+          <div class="sdc-price"><span><span id="sol-price-firma">500</span> € + IVA</span></div>
         </div>
         <p class="sdc-desc">Sistema de firma electrónica con validez legal para contratos, presupuestos y documentos — tu cliente firma desde el móvil en segundos, tú tienes el documento firmado guardado al momento.</p>
         <ul class="sdc-includes">
@@ -419,7 +423,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="sol-detail-card">
         <div class="sdc-head">
           <div class="sdc-name">Gestión Documental<span>Todos tus documentos, organizados y encontrables</span></div>
-          <div class="sdc-price">Desde <span id="sol-price-docs">400</span> € + IVA</div>
+          <div class="sdc-price"><span>Desde <span id="sol-price-docs">400</span> € + IVA</span></div>
         </div>
         <p class="sdc-desc">Ordenamos y automatizamos cómo guardas y encuentras contratos, facturas y documentación de clientes, para que dejes de perder diez minutos buscando un PDF que sabes que tienes en algún sitio.</p>
         <ul class="sdc-includes">
@@ -434,7 +438,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="sol-detail-card">
         <div class="sdc-head">
           <div class="sdc-name">Integraciones<span>Que tus herramientas por fin se hablen entre sí</span></div>
-          <div class="sdc-price">Desde <span id="sol-price-integraciones">600</span> € + IVA</div>
+          <div class="sdc-price"><span>Desde <span id="sol-price-integraciones">600</span> € + IVA</span></div>
         </div>
         <p class="sdc-desc">Conectamos las herramientas que ya usas — CRM, facturación, calendario, formularios web, hojas de cálculo — para que la información pase de una a otra sola, sin que nadie tenga que copiar y pegar datos a mano.</p>
         <ul class="sdc-includes">
@@ -450,7 +454,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="sol-detail-card">
         <div class="sdc-head">
           <div class="sdc-name">Flujos automáticos a medida<span>Tareas repetitivas que dejan de pasar por ti</span></div>
-          <div class="sdc-price"><span id="sol-price-automatizaciones-1">350</span>€ / 650€ / 1.200€ + IVA</div>
+          <div class="sdc-price"><span><span id="sol-price-automatizaciones-1">350</span>€ / 650€ / 1.200€ + IVA</span></div>
         </div>
         <p class="sdc-desc">Diseñamos un flujo a medida para las tareas que se repiten cada semana en tu negocio: crear un cliente nuevo en varios sitios a la vez, enviar recordatorios, generar informes, avisar cuando pasa algo concreto.</p>
         <ul class="sdc-includes">
@@ -466,7 +470,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="sol-detail-card">
         <div class="sdc-head">
           <div class="sdc-name">CRM<span>Un sitio único donde vive cada cliente</span></div>
-          <div class="sdc-price">Desde <span id="sol-price-crm">950</span> € + IVA</div>
+          <div class="sdc-price"><span>Desde <span id="sol-price-crm">950</span> € + IVA</span></div>
         </div>
         <p class="sdc-desc">Sistema de gestión de clientes hecho a medida de cómo vendes realmente — con las etapas, campos y automatizaciones que tiene sentido para tu negocio, no una plantilla genérica que luego nadie usa.</p>
         <ul class="sdc-includes">

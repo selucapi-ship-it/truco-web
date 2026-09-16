@@ -28,7 +28,14 @@
     position:relative;overflow:hidden;
     display:flex;flex-direction:column;
   }
-  @media print{ body{background:#000;} .page{margin:0;box-shadow:none;} }
+  @media print{ body{background:#000;height:auto!important;} .page{margin:0;box-shadow:none;transform:none!important;} }
+  /* Igual que en folleto-basic-hoja.html: esta hoja A4 se reescala entera
+     en pantallas más estrechas que ella (móvil) para verse completa sin
+     recortarse por la derecha. No afecta a la impresión. */
+  @media screen and (max-width:820px){
+    html,body{overflow-x:hidden;}
+    body{display:flex;justify-content:center;}
+  }
 
   /* ── HEADER ── */
   .head{display:flex;align-items:center;justify-content:space-between;padding:6mm 13mm 0;}
@@ -231,8 +238,8 @@
   <div class="pricing">
     <div class="pc">
       <div class="pc-name">Start™</div>
-      <div class="pc-price">728,64 € <small>primer año + IVA</small></div>
-      <div class="pc-old">Estándar <s>939,84 €</s> · luego <b>69 €/mes</b></div>
+      <div class="pc-price">728,64 € <small>primer año + IVA</small></div>
+      <div class="pc-old">Estándar <s>939,84 €</s> · luego <b>69 €/mes</b></div>
       <div class="pc-spots">🏷 10 de 10 plazas</div>
       <ul class="pc-list">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span><b>1 automatización</b> de IA a elegir, gratis</span></li>
@@ -243,8 +250,8 @@
     <div class="pc feat">
       <div class="pc-ribbon">Recomendado</div>
       <div class="pc-name">Basic™</div>
-      <div class="pc-price">1.573,44 € <small>primer año + IVA</small></div>
-      <div class="pc-old">Estándar <s>1.784,64 €</s> · luego <b>149 €/mes</b></div>
+      <div class="pc-price">1.573,44 € <small>primer año + IVA</small></div>
+      <div class="pc-old">Estándar <s>1.784,64 €</s> · luego <b>149 €/mes</b></div>
       <div class="pc-spots">🏷 10 de 10 plazas</div>
       <ul class="pc-list">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Web Profesional, <b>gratis</b> <small style="color:#8a8790;">(valor 1.390€)</small></span></li>
@@ -254,8 +261,8 @@
     </div>
     <div class="pc">
       <div class="pc-name">Lite™</div>
-      <div class="pc-price">2.418,24 € <small>primer año + IVA</small></div>
-      <div class="pc-old">Estándar <s>2.946,24 €</s> · luego <b>229 €/mes</b></div>
+      <div class="pc-price">2.418,24 € <small>primer año + IVA</small></div>
+      <div class="pc-old">Estándar <s>2.946,24 €</s> · luego <b>229 €/mes</b></div>
       <div class="pc-spots">🏷 10 de 10 plazas</div>
       <ul class="pc-list">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Tu web (mejorada o nueva), <b>gratis</b></span></li>
@@ -265,8 +272,8 @@
     </div>
     <div class="pc">
       <div class="pc-name">Pro™</div>
-      <div class="pc-price">4.741,44 € <small>primer año + IVA</small></div>
-      <div class="pc-old">Estándar <s>5.797,44 €</s> · luego <b>449 €/mes</b></div>
+      <div class="pc-price">4.741,44 € <small>primer año + IVA</small></div>
+      <div class="pc-old">Estándar <s>5.797,44 €</s> · luego <b>449 €/mes</b></div>
       <div class="pc-spots">🏷 10 de 10 plazas</div>
       <ul class="pc-list">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Web Profesional a medida, <b>gratis</b></span></li>
@@ -355,6 +362,31 @@ setTimeout(function(){
   if(fn) fn.style.display='block';
   if(fl) fl.classList.add('show');
 },4000);
+</script>
+<script>
+// Esta hoja es un folleto A4 de tamaño fijo (pensado para imprimir o
+// exportar a PDF). En una pantalla más estrecha que la hoja (móvil) la
+// reescalamos entera para que se vea completa sin recortarse por la
+// derecha ni obligar a hacer scroll horizontal. No afecta a la impresión:
+// @media print no aplica estilos de pantalla.
+(function(){
+  var page = document.querySelector('.page');
+  if(!page) return;
+  function fit(){
+    var full = 210 * 96 / 25.4; // 210mm en px a 96dpi
+    var scale = Math.min(1, (window.innerWidth - 16) / full);
+    if(scale < 1){
+      page.style.transform = 'scale(' + scale + ')';
+      page.style.transformOrigin = 'top center';
+      document.body.style.height = (page.offsetHeight * scale + 20) + 'px';
+    } else {
+      page.style.transform = '';
+      document.body.style.height = '';
+    }
+  }
+  window.addEventListener('resize', fit);
+  fit();
+})();
 </script>
 </body>
 </html>
