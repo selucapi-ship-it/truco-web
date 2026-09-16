@@ -1,0 +1,23 @@
+Ultra-realistic vertical photograph, 9:16 aspect ratio, professional advertising photography (not illustration, not 3D render, not CGI, no cartoon style). Dark, moody background in near-black charcoal tone (#16151a) filling most of the frame, with warm golden accent lighting (#d9a83f) and cream-white highlights. Cinematic, high-end tech-meets-small-business advertising aesthetic, shallow depth of field, soft directional light, subtle film grain, sharp focus on the main subject.
+
+SCENE: A single close-up tabletop moment, not a split composition, not a floating giant-number graphic, not a chalkboard or glowing plaque quote, and no phone-search screen. On the reception counter of a small hair salon or repair workshop in Totana on a dry, hot Wednesday afternoon in mid-September — through a softly blurred window in the background, sun-bleached whitewashed walls and a hint of dry inland hills typical of the Totana countryside shimmer faintly in heat haze, toned down into deep charcoal shadow to keep the dark brand mood rather than a bright daylight photo. Sharply in focus in the foreground, a row of real black dominoes stands mid-fall diagonally across the wooden counter, each one tipping into the next in a dramatic cascade lit with cold, flat, slightly desaturated light — visually representing one missed or overlapping appointment knocking into the next: a small crossed-out paper appointment slip is taped to one domino, a torn handwritten "OCUPADO" note to another, a scribbled phone-message note to a third. The falling cascade races toward the edge of the counter. Right before the last domino would topple off, it stops abruptly, leaning safely against the base of a smartphone standing upright in a small stand at the edge of the counter, its screen glowing warm gold, showing a clean, minimal calendar app with appointment slots filling in smoothly and evenly on their own. The contrast is stark: cold, flat, desaturated light on the falling dominoes versus a warm golden glow radiating outward from the phone that stopped them, spilling onto the last domino and the counter around it. The upper portion of the frame is dark negative space reserved for text overlays.
+
+TEXT ELEMENTS (render these exactly, as clean, modern, minimal sans-serif typography, in Spanish, well-composed and legible, not distorted or garbled):
+
+1. Top of the image, small logo lockup: "TRUCO technology" in bold cream-white letters, with the smaller subtitle directly beneath it in gold: "Departamento Tecnológico".
+
+2. Just below the logo, a small pill-shaped label in gold outline with cream text reading: "MIÉRCOLES · 31°C EN TOTANA".
+
+3. Beneath that, a bold uppercase context label in gold, letter-spaced: "EL EFECTO DOMINÓ DE TU AGENDA".
+
+4. The main two-line headline in large bold cream-white letters, centered in the dark upper space, above the falling dominoes:
+"Una cita mal apuntada"
+"arrastra toda tu tarde."
+
+5. Below the headline, a short italic quote-style line in smaller cream-white text: "Nosotros paramos la caída antes de que empiece."
+
+6. In the lower third of the image, overlapping the edge of the counter near the glowing phone, a small golden badge (rounded rectangle with a thin gold border) containing two lines of bold dark text on a gold background: "PRECIO FUNDADOR" and below it, smaller, "Plazas limitadas".
+
+7. At the very bottom of the image, centered, the closing line in cream-white bold text: "Paga una vez. Olvídate 365 días." and directly beneath it, in smaller gold text: "trucotechnology.com".
+
+STYLE: Photorealistic commercial photography, cold flat light on the falling dominoes contrasted with warm gold rim lighting radiating from the phone that stopped them, deep charcoal-black shadows, high contrast, premium and trustworthy mood, minimal clutter, generous negative space around text for legibility, consistent brand palette of dark charcoal (#16151a), gold (#d9a83f), and cream white throughout.
