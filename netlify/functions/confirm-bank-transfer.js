@@ -116,6 +116,8 @@ exports.handler = async function (event) {
     const refCode = info.refCode || '';
     const consumeReferralCreditFor = info.consumeReferralCredit || '';
     const amountTotalCents = Number(info.amountTotalCents) || null;
+    const anexoAceptado = !!info.anexoAceptado;
+    const anexoVersion = info.anexoVersion || null;
 
     let clientId2 = null;
     if (email) {
@@ -136,6 +138,8 @@ exports.handler = async function (event) {
             p_is_founder: isFounding,
             p_amount_total_cents: amountTotalCents,
             p_transfer_reference: referenceCode,
+            p_anexo_aceptado: anexoAceptado,
+            p_anexo_version: anexoVersion,
           }),
         });
         if (resp.ok) {
@@ -180,6 +184,21 @@ exports.handler = async function (event) {
           });
         } catch (e) { /* invitable a mano desde el panel si falla */ }
       }
+
+      // Acuse de recibo por email (LSSI-CE art. 23) — best-effort, igual que
+      // la invitación de arriba.
+      try {
+        const planDisplayNames = { start: 'Departamento Start™', basic: 'Departamento Basic™', lite: 'Departamento Lite™', pro: 'Departamento Pro™' };
+        await fetch('https://trucotechnology.com/.netlify/functions/send-purchase-confirmation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email, nombre,
+            planName: planDisplayNames[arranqueTier] || planKey || 'tu Departamento Tecnológico',
+            amountTotalCents, anexoVersion, provider: 'transfer',
+          }),
+        });
+      } catch (e) { /* no crítico */ }
     }
 
     const n8nUrl = process.env.N8N_ALTA_CLIENTE_WEBHOOK_URL;

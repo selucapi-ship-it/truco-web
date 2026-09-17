@@ -122,10 +122,21 @@ exports.handler = async function (event) {
   const solutions = Array.isArray(payload.solutions) ? payload.solutions : [];
   const refCode = payload.refCode ? String(payload.refCode).slice(0, 20) : '';
   const consumeReferralCredit = payload.consumeReferralCredit ? String(payload.consumeReferralCredit).slice(0, 100) : '';
+  const anexoAceptado = payload.anexoAceptado === true;
+  const anexoVersion = payload.anexoVersion ? String(payload.anexoVersion).slice(0, 20) : '';
 
   // Stripe exige un mínimo de 0,50€ en EUR y un importe entero en céntimos.
   if (!name || !Number.isFinite(amountCents) || amountCents < 50) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Datos de pago incompletos' }) };
+  }
+
+  // El Anexo de Autorización de Accesos y Tratamiento de Datos es de
+  // aceptación obligatoria (checkbox en pago.html) — igual que el resto de
+  // validaciones de esta función, no basta con que pago.html lo compruebe en
+  // el navegador: una petición directa a esta función sin el checkbox debe
+  // rechazarse igual, si no la validación del cliente no protegería nada.
+  if (!anexoAceptado || !anexoVersion) {
+    return { statusCode: 400, body: JSON.stringify({ error: 'Falta aceptar el Anexo de Autorización de Accesos' }) };
   }
 
   // Antes de cobrar, se comprueba que el importe no sea sospechosamente bajo
@@ -189,6 +200,8 @@ exports.handler = async function (event) {
         solutions: JSON.stringify(solutions).slice(0, 500),
         ref_code: refCode,
         consume_referral_credit: consumeReferralCredit,
+        anexo_aceptado: 'true',
+        anexo_version: anexoVersion,
       },
     });
 

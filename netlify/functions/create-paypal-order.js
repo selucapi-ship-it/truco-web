@@ -128,9 +128,14 @@ exports.handler = async function (event) {
   const solutions = Array.isArray(payload.solutions) ? payload.solutions : [];
   const refCode = payload.refCode ? String(payload.refCode).slice(0, 20) : '';
   const consumeReferralCredit = payload.consumeReferralCredit ? String(payload.consumeReferralCredit).slice(0, 100) : '';
+  const anexoAceptado = payload.anexoAceptado === true;
+  const anexoVersion = payload.anexoVersion ? String(payload.anexoVersion).slice(0, 20) : '';
 
   if (!name || !Number.isFinite(amountCents) || amountCents < 50) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Datos de pago incompletos' }) };
+  }
+  if (!anexoAceptado || !anexoVersion) {
+    return { statusCode: 400, body: JSON.stringify({ error: 'Falta aceptar el Anexo de Autorización de Accesos' }) };
   }
 
   if (!ARRANQUE_TIERS_VALIDOS.includes(arranqueTier)) {
@@ -205,6 +210,7 @@ exports.handler = async function (event) {
           payload: {
             email: customerEmail, nombre: customerName, planKey, arranqueTier, founding,
             solutions, refCode, consumeReferralCredit, amountTotalCents: amountCents,
+            anexoAceptado, anexoVersion,
           },
         }),
       });

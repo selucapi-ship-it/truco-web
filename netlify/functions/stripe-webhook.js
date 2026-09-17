@@ -149,6 +149,8 @@ exports.handler = async function (event) {
   }
   const refCode = (session.metadata && session.metadata.ref_code) || '';
   const consumeReferralCreditFor = (session.metadata && session.metadata.consume_referral_credit) || '';
+  const anexoAceptado = (session.metadata && session.metadata.anexo_aceptado) === 'true';
+  const anexoVersion = (session.metadata && session.metadata.anexo_version) || null;
 
   const supabaseUrl = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -178,6 +180,8 @@ exports.handler = async function (event) {
           p_stripe_payment_intent_id: session.payment_intent || null,
           p_stripe_customer_id: session.customer || null,
           p_amount_total_cents: typeof session.amount_total === 'number' ? session.amount_total : null,
+          p_anexo_aceptado: anexoAceptado,
+          p_anexo_version: anexoVersion,
         }),
       });
       if (resp.ok) {
@@ -269,6 +273,25 @@ exports.handler = async function (event) {
       } catch (err) {
         // Igual: el pago y el CRM ya están bien, un fallo aquí solo significa
         // invitar al cliente a mano.
+      }
+
+      // Acuse de recibo por email (LSSI-CE art. 23: confirmar la aceptación
+      // dentro de las 24h siguientes) — mismo patrón best-effort que la
+      // invitación de arriba, nunca bloquea el webhook de Stripe.
+      try {
+        const planDisplayNames = { start: 'Departamento Start™', basic: 'Departamento Basic™', lite: 'Departamento Lite™', pro: 'Departamento Pro™' };
+        await fetch('https://trucotechnology.com/.netlify/functions/send-purchase-confirmation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email, nombre,
+            planName: planDisplayNames[arranqueTier] || planKey || 'tu Departamento Tecnológico',
+            amountTotalCents: typeof session.amount_total === 'number' ? session.amount_total : null,
+            anexoVersion, provider: 'stripe',
+          }),
+        });
+      } catch (err) {
+        // No crítico — el pago y el alta ya están bien.
       }
     }
   }

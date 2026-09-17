@@ -187,9 +187,14 @@ exports.handler = async function (event) {
   const refCode = payload.refCode ? String(payload.refCode).slice(0, 20) : '';
   const consumeReferralCredit = payload.consumeReferralCredit ? String(payload.consumeReferralCredit).slice(0, 100) : '';
   const planName = payload.name ? String(payload.name).slice(0, 250) : '';
+  const anexoAceptado = payload.anexoAceptado === true;
+  const anexoVersion = payload.anexoVersion ? String(payload.anexoVersion).slice(0, 20) : '';
 
   if (!Number.isFinite(amountCents) || amountCents < 50 || !customerEmail) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Datos de pago incompletos' }) };
+  }
+  if (!anexoAceptado || !anexoVersion) {
+    return { statusCode: 400, body: JSON.stringify({ error: 'Falta aceptar el Anexo de Autorización de Accesos' }) };
   }
   if (!ARRANQUE_TIERS_VALIDOS.includes(arranqueTier)) {
     console.error(`create-bank-transfer-order: tier inválido recibido: ${JSON.stringify(arranqueTier)}`);
@@ -224,6 +229,7 @@ exports.handler = async function (event) {
           payload: {
             email: customerEmail, nombre: customerName, planKey, arranqueTier, founding,
             solutions, refCode, consumeReferralCredit, amountTotalCents: amountCents, planName,
+            anexoAceptado, anexoVersion,
           },
         }),
       });

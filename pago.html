@@ -669,6 +669,10 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         <div class="check-text"><b>Términos y condiciones *</b> — He revisado el <b style="color:var(--white);">Resumen del pedido</b> de la derecha (qué incluye, precio total y permanencia si la hay) y he leído y acepto los <a href="terminos.html" target="_blank">Términos y Condiciones</a>, incluyendo el período de implantación, la renovación automática mensual y los límites de uso incluidos en las automatizaciones de IA. <b style="color:var(--white);">Entiendo que el dominio y el hosting son contratados y pagados directamente por mí, y que TRUCO technology no asume su titularidad ni su coste.</b></div>
       </div>
       <div class="check-row">
+        <input type="checkbox" id="ch-anexo" onchange="updateBtn()">
+        <div class="check-text"><b>Anexo de Autorización de Accesos y Tratamiento de Datos *</b> — He leído y acepto el <a href="autorizacion-accesos.html" target="_blank">Anexo de Autorización de Accesos</a>, por el que autorizo a TRUCO technology a acceder a las cuentas y sistemas necesarios (correo, redes sociales, calendario, facturación, etc.) para prestar el servicio contratado como mi departamento tecnológico externalizado.</div>
+      </div>
+      <div class="check-row">
         <input type="checkbox" id="ch-comercial">
         <div class="check-text"><b>Comunicaciones comerciales</b> <em style="color:var(--grey);">(opcional)</em> — Acepto recibir comunicaciones sobre novedades y mejoras del servicio.</div>
       </div>
@@ -1650,10 +1654,12 @@ function vField(el){
 function vEmail(el){
   if(!el.value.trim()||!el.value.includes('@')){el.classList.add('error');}else{el.classList.remove('error');}
 }
+const ANEXO_VERSION='2026-09-17';
 function updateBtn(){
-  const r=document.getElementById('ch-rgpd'),t=document.getElementById('ch-terminos');
+  const r=document.getElementById('ch-rgpd'),t=document.getElementById('ch-terminos'),a=document.getElementById('ch-anexo');
   if(r&&r.checked)r.parentElement.style.outline='';
   if(t&&t.checked)t.parentElement.style.outline='';
+  if(a&&a.checked)a.parentElement.style.outline='';
 }
 
 // Solo se manda cuando hay 3 soluciones o menos — más de eso ya es
@@ -1693,18 +1699,19 @@ function trucoSessionId(){
 
 async function handlePay(){
   const n=document.getElementById('f-nombre'),e=document.getElementById('f-email'),p=document.getElementById('f-telefono'),b=document.getElementById('f-negocio'),s=document.getElementById('f-tipo');
-  const r=document.getElementById('ch-rgpd'),t=document.getElementById('ch-terminos');
+  const r=document.getElementById('ch-rgpd'),t=document.getElementById('ch-terminos'),a=document.getElementById('ch-anexo');
 
   // Los datos de contacto/cuenta ya se validaron al pasar del Paso 2 al Paso
   // 3 (ver handleMainCtaClick) — se vuelve a comprobar aquí por si acaso
   // (alguien llega al Paso 3 sin pasar por ahí, p. ej. con el botón
-  // atrás/adelante del navegador), y aquí además se comprueban RGPD/términos,
+  // atrás/adelante del navegador), y aquí además se comprueban RGPD/términos/Anexo,
   // que son del Paso 3.
   const cv=validateContactAndAccount();
   let ok=cv.ok;const missing=cv.missing.slice();
 
   if(r&&!r.checked){r.parentElement.style.outline='1px solid var(--red)';ok=false;missing.push('Aceptar la Protección de datos (RGPD)');}else if(r)r.parentElement.style.outline='';
   if(t&&!t.checked){t.parentElement.style.outline='1px solid var(--red)';ok=false;missing.push('Aceptar los Términos y condiciones');}else if(t)t.parentElement.style.outline='';
+  if(a&&!a.checked){a.parentElement.style.outline='1px solid var(--red)';ok=false;missing.push('Aceptar el Anexo de Autorización de Accesos');}else if(a)a.parentElement.style.outline='';
 
   if(!ok){
     alert('Antes de continuar, completa o marca lo siguiente:\n\n• '+missing.join('\n• '));
@@ -1779,7 +1786,8 @@ async function handlePay(){
         founding:!!plan.founding,
         solutions:buildSolutionsPayload(),
         refCode:(referralCodeValid&&clientMode==='new')?referralCodeUsed:'',
-        consumeReferralCredit:(loggedInClientData&&loggedInClientData.referral_credits>0)?loggedInClientData.id:''
+        consumeReferralCredit:(loggedInClientData&&loggedInClientData.referral_credits>0)?loggedInClientData.id:'',
+        anexoAceptado:true,anexoVersion:ANEXO_VERSION
       })
     });
     const data=await resp.json();
