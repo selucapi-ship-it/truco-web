@@ -1,0 +1,23 @@
+Ultra-realistic vertical photograph, 9:16 aspect ratio, professional advertising photography (not illustration, not 3D render, not CGI, no cartoon style). Dark, moody background in near-black charcoal tone (#16151a) filling most of the frame, with warm golden accent lighting (#d9a83f) and cream-white highlights. Cinematic, high-end tech-meets-small-business advertising aesthetic, shallow depth of field, soft directional light, subtle film grain, sharp focus on the main subject.
+
+SCENE: A single continuous late-night desk moment, not a split composition, not a before/after layout, and no smartphone as the main prop. Inside the small back office of a family-run shop or workshop in Molina de Segura on an overcast Thursday evening in mid-September, the first cloudy skies after weeks of summer heat visible faintly through a narrow window in the background, toned down into deep charcoal-blue shadow to keep the dark brand mood rather than a bright scene. Sharply in focus in the foreground, a tired hand rests on a pen beside a thick stack of handwritten paper invoices and delivery notes fanned across the desk, an old analog calculator next to them showing a long string of digits, all lit by the warm, slightly weary glow of a small desk lamp. Just beside this pile, in the same warm light, a compact thermal receipt printer sits quietly, a single clean printed slip curling out of it on its own with no hand touching it, reading in tiny realistic print "FACTURA · PAGADO" — a small, believable detail suggesting invoices completing themselves in the background while the hand keeps writing the old way. The upper portion of the frame is dark negative space reserved for text overlays.
+
+TEXT ELEMENTS (render these exactly, as clean, modern, minimal sans-serif typography, in Spanish, well-composed and legible, not distorted or garbled):
+
+1. Top of the image, small logo lockup: "TRUCO technology" in bold cream-white letters, with the smaller subtitle directly beneath it in gold: "Departamento Tecnológico".
+
+2. Just below the logo, a small pill-shaped label in gold outline with cream text reading: "JUEVES · 26°C EN MOLINA DE SEGURA".
+
+3. Beneath that, a bold uppercase context label in gold, letter-spaced: "EL CIERRE DE MES A MANO".
+
+4. The main two-line headline in large bold cream-white letters, centered in the dark upper space, treating the number as the visual centerpiece of the whole composition:
+"3 HORAS"
+"EN FACTURAS A MANO"
+
+5. Below the headline, a short italic quote-style line in smaller cream-white text: "Esas horas te las devolvemos nosotros."
+
+6. In the lower third of the image, resting near the edge of the desk beside the receipt printer, a small golden badge (rounded rectangle with a thin gold border) containing two lines of bold dark text on a gold background: "PRECIO FUNDADOR" and below it, smaller, "Plazas limitadas".
+
+7. At the very bottom of the image, centered, the closing line in cream-white bold text: "Paga una vez. Olvídate 365 días." and directly beneath it, in smaller gold text: "trucotechnology.com".
+
+STYLE: Photorealistic commercial photography, warm weary lamp light on the handwritten paperwork contrasted with the calm, clean golden glow of the receipt printer quietly finishing its own invoice, deep charcoal-black shadows, high contrast, premium and trustworthy mood, minimal clutter, generous negative space around text for legibility, consistent brand palette of dark charcoal (#16151a), gold (#d9a83f), and cream white throughout.
