@@ -200,18 +200,25 @@ def _fetch_live_pricing_block() -> str:
         spots_row = _find(spots, tier)
         left = max(0, int(spots_row["spots_left"])) if spots_row else _FALLBACK_SPOTS[tier]
         nombre = _TIER_NAMES[tier]
+        tot_f = f"{founder * 12 * 0.88:.2f}".replace(".", ",")
+        tot_s = f"{standard * 12 * 0.88:.2f}".replace(".", ",")
         if left > 0:
             lineas.append(
-                f"{nombre}: {founder} euros al mes más IVA de fundador, quedan {left} plazas a ese precio "
-                f"— precio estándar sin fundador, {standard} euros al mes más IVA."
+                f"{nombre}: el primer año se paga de una vez, {tot_f} euros más IVA con precio de fundador (12 por ciento de descuento ya aplicado), "
+                f"quedan {left} plazas; sin fundador serían {tot_s} euros el primer año. Después, mes a mes: {founder} euros al mes más IVA "
+                f"si es fundador (se mantiene para siempre), o {standard} euros al mes más IVA sin la oferta."
             )
         else:
             lineas.append(
-                f"{nombre}: {standard} euros al mes más IVA, precio estándar "
-                f"— la oferta de fundador de este escalón ya está agotada, no la ofrezcas."
+                f"{nombre}: el primer año se paga de una vez, {tot_s} euros más IVA (12 por ciento de descuento ya aplicado). "
+                f"Después, mes a mes: {standard} euros al mes más IVA. La oferta de fundador de este escalón ya está agotada, no la ofrezcas."
             )
 
     return (
+        "REGLA DE PRECIOS (manda sobre todo lo demás): NO menciones precios ni cifras por tu cuenta — la web ya lo explica todo con claridad. "
+        "Solo si el cliente te los pregunta, explícalo siempre en sus dos partes: el primer año se paga de una vez por adelantado (con el 12 por ciento "
+        "de descuento) y, a partir del segundo año, es mes a mes sin permanencia. Da solo las cifras del Departamento por el que pregunta, "
+        "nunca digas solo el precio mensual y no recites la lista entera.\n"
         "PRECIOS Y PLAZAS DE FUNDADOR — EN VIVO, CONSULTADO JUSTO ANTES DE ESTA LLAMADA "
         "(fuente única de verdad; si más abajo aparece cualquier cifra distinta, ignórala):\n"
         + "\n".join(f"- {l}" for l in lineas)
@@ -361,7 +368,8 @@ Tienes tres herramientas para la consultoría gratuita de 20-30 minutos: `consul
 4. Si la herramienta te dice que ya no quedan huecos ese día, o si el cliente prefiere directamente otro día, pregúntale qué otro día le viene bien y repite el proceso desde el paso 2 — nunca calcules tú tampoco qué día es "el siguiente", eso lo hace la herramienta.
 5. Si después de un par de días probados no conseguís cuadrar nada, o el cliente en cualquier momento prefiere elegir él mismo la hora exacta, llama a `mostrar_calendario_en_pantalla` — le aparece un calendario en la pantalla del chat de la web para que reserve él mismo sin más vueltas por voz. Dile algo como "te acabo de dejar un calendario en la pantalla del chat, ahí puedes elegir tú mismo el día y la hora que mejor te venga". Nunca dejes al cliente colgado diciendo simplemente que no hay hueco — siempre termina en una reserva confirmada o en el calendario en pantalla.
 6. Si el hueco le interesa, NO le pidas email ni más datos: basta con su nombre (ya lo tienes de al principio; si no, pregúntalo) y el hueco elegido. Lo único que SÍ debes preguntar es a qué teléfono le llamamos: si la llamada viene de un teléfono (lo verás en el bloque DATOS DE ESTA LLAMADA), pregúntale "¿te llamamos a este mismo número o prefieres que te llamemos a otro?". Si dice que a otro, pídele ese número y repítelo para confirmarlo. Si la llamada viene de la web y no tienes su número, pídele el teléfono al que llamarle.
-7. Cuando tengas el hueco y el teléfono, llama a `reservar_cita` (copiando el iso literal) y confírmaselo en voz alta: nombre, día y hora, y a qué número le llamaremos."""
+7. Cuando tengas el hueco y el teléfono, llama a `reservar_cita` (copiando el iso literal).
+8. En cuanto `reservar_cita` confirme, DESPÍDETE Y CIERRA: di UNA sola intervención breve y cálida con el resumen — "Listo, [nombre], tu cita queda anotada para el [día] a las [hora]; te llamaremos a este mismo número (o al que me has dado). Gracias por llamar y que tengas un gran día." — y NADA más: no hagas preguntas, no ofrezcas más cosas y no sigas conversando, porque la llamada se cierra sola justo después de tu despedida."""
 
 
 class TrucoAgent(Agent):
@@ -509,12 +517,19 @@ class TrucoAgent(Agent):
             return "No se pudo confirmar la reserva. Ofrece que alguien del equipo le llame."
         self._state["nombre"] = nombre
         self._state["booked"] = True
+        self._state["end_reason"] = "cita_agendada"
+        self._state["hangup_after_ts"] = datetime.datetime.now(datetime.timezone.utc).timestamp()
         _log_crm_interaction(
             nombre=nombre,
             telefono=telefono,
             nota=f"Reservó consultoría por voz para el {_formatear_fecha_es(start)}. Llamar al {telefono}.",
         )
-        return f"Reserva confirmada para {nombre} el {_formatear_fecha_es(start)}; le llamaremos al {telefono}. Confírmaselo al cliente."
+        mismo = "a este mismo número" if (llamar_al_mismo_numero and not otro_telefono.strip()) else "al número que me has dado"
+        return (
+            f"Reserva confirmada para {nombre} el {_formatear_fecha_es(start)}. AHORA despídete en UNA sola intervención breve y cálida: "
+            f"resume que la cita queda anotada para ese día y hora, que le llamaremos {mismo}, da las gracias por llamar y desea un buen día. "
+            f"No hagas ninguna pregunta ni añadas nada más: la llamada se cierra sola justo después."
+        )
 
 
 server = AgentServer()
@@ -597,6 +612,16 @@ async def entrypoint(ctx: agents.JobContext):
         text = getattr(item, "text_content", None)
         if role in ("user", "assistant") and text:
             transcript.append({"role": role, "text": text, "t": datetime.datetime.now(datetime.timezone.utc).isoformat()})
+            hang_ts = state.get("hangup_after_ts")
+            if role == "assistant" and hang_ts and not state.get("hangup_scheduled") and getattr(ev, "created_at", 0) >= hang_ts:
+                state["hangup_scheduled"] = True
+                delay = min(14.0, 3.0 + len(text) * 0.07)
+
+                async def _colgar():
+                    await asyncio.sleep(delay)
+                    await ctx.delete_room()
+
+                asyncio.create_task(_colgar())
             asyncio.get_running_loop().run_in_executor(
                 None, _voice_call_update, call_id, {"transcript": list(transcript), "nombre": state.get("nombre")}
             )
