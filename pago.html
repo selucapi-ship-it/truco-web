@@ -415,6 +415,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
           </div>
           <div class="pc-breakdown">
             <div class="pb-row"><span class="pb-label">Web gratis (reacondicionada o nueva)</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Chat + agenda en la web, de fábrica</span><span class="pb-val">✓</span></div>
             <div class="pb-row"><span class="pb-label">2 automatizaciones a elegir, gratis</span><span class="pb-val">✓</span></div>
             <div class="pb-row"><span class="pb-label">Mantenimiento hasta 3 en total</span><span class="pb-val">✓</span></div>
             <div class="pb-divider"></div>
@@ -1053,11 +1054,9 @@ const TIER_POOLS={
   lite:{max:2,label:'Elige 2 automatizaciones gratis',sols:[
     {value:'whatsapp',name:'IA para WhatsApp'},
     {value:'email-ia',name:'IA para Correo'},
-    {value:'reservas',name:'Reservas y Agenda'},
     {value:'truki',name:'Facturación automática (TruKi)'},
     {value:'llamadas',name:'IA para Llamadas'},
-    {value:'firma',name:'Firma Digital'},
-    {value:'web-ia',name:'IA para tu Web'}
+    {value:'firma',name:'Firma Digital'}
   ]},
   pro:{max:3,label:'Elige 3 automatizaciones gratis',sols:[
     {value:'whatsapp',name:'IA para WhatsApp'},
@@ -1519,7 +1518,7 @@ function getActivePlan(){
     const esFundador=foundingActive(d.arranque);
     const pool=TIER_POOLS[d.arranque];
     const solNames=pool?selectedTierSolutions.map(v=>{const s=pool.sols.find(x=>x.value===v);return s?s.name:v;}):[];
-    const webLine=d.arranque==='lite'?[{l:'Web (reacondicionada, o Web Profesional nueva si no tienes)',v:'GRATIS',cls:'free'}]:d.arranque==='pro'?[{l:'Web Profesional',v:'GRATIS',cls:'free'},{l:'IA para tu Web',v:'GRATIS',cls:'free'},{l:'Reservas y Agenda',v:'GRATIS',cls:'free'}]:d.arranque==='basic'?[{l:'Web Profesional',v:'GRATIS',cls:'free'},{l:'Chat + agenda en tu web, de fábrica',v:'GRATIS',cls:'free'},{l:'Salud técnica de posicionamiento',v:'INCLUIDA',cls:'free'}]:[];
+    const webLine=d.arranque==='lite'?[{l:'Web (reacondicionada, o Web Profesional nueva si no tienes)',v:'GRATIS',cls:'free'},{l:'Chat + agenda en tu web, de fábrica',v:'GRATIS',cls:'free'}]:d.arranque==='pro'?[{l:'Web Profesional',v:'GRATIS',cls:'free'},{l:'IA para tu Web',v:'GRATIS',cls:'free'},{l:'Reservas y Agenda',v:'GRATIS',cls:'free'}]:d.arranque==='basic'?[{l:'Web Profesional',v:'GRATIS',cls:'free'},{l:'Chat + agenda en tu web, de fábrica',v:'GRATIS',cls:'free'},{l:'Salud técnica de posicionamiento',v:'INCLUIDA',cls:'free'}]:[];
     const solWord=arr.freeSols>1?arr.freeSols+' automatizaciones':arr.freeSols===1?'1 automatización':'';
     const solLines=arr.freeSols===0?[]:solNames.length?solNames.map(n=>({l:n,v:'GRATIS',cls:'free'})):[{l:solWord+' a elegir',v:'Pendiente de elegir'}];
     const extraSols=selectedExtraSolutions.map(v=>CLOSED_PRICE_SOLUTIONS.find(x=>x.value===v)).filter(Boolean);
