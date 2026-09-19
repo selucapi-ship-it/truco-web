@@ -197,20 +197,28 @@ exports.handler = async function (event) {
       { role: 'user', parts: [{ text: message.slice(0, 1000) }] },
     ];
 
-    const resp = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: systemInstruction }] },
-          contents,
-          generationConfig: { temperature: 0.6, maxOutputTokens: 1500, thinkingConfig: { thinkingBudget: 0 } },
-        }),
-      }
-    );
+    // Alias "-latest" (el que ya usan con éxito WhatsApp/Web-IA/Correo) primero;
+    // el modelo fijo antiguo, de segunda opción.
+    let resp = null;
+    for (const model of ['gemini-flash-lite-latest', 'gemini-2.5-flash']) {
+      const genConfig = { temperature: 0.6, maxOutputTokens: 1500 };
+      if (model === 'gemini-2.5-flash') genConfig.thinkingConfig = { thinkingBudget: 0 };
+      const r = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: systemInstruction }] },
+            contents,
+            generationConfig: genConfig,
+          }),
+        }
+      );
+      if (r.ok) { resp = r; break; }
+    }
 
-    if (!resp.ok) {
+    if (!resp) {
       return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'api_error' }) };
     }
     const data = await resp.json();

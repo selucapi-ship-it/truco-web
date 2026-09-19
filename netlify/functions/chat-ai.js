@@ -214,28 +214,36 @@ exports.handler = async function (event) {
 
   try {
     const livePricingBlock = await fetchLivePricingBlock();
-    const resp = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: livePricingBlock + '\n' + SYSTEM_INSTRUCTION }] },
-          contents,
-          generationConfig: {
-            temperature: 0.6,
-            maxOutputTokens: 1500,
-            thinkingConfig: { thinkingBudget: 0 }
-          }
-        })
-      }
-    );
+    // El alias "-latest" es el modelo que ya usan con éxito WhatsApp, Web-IA y
+    // Correo; el modelo fijo antiguo queda de segunda opción por si el alias
+    // fallara. Si todos fallan se devuelve el código de Gemini para diagnosticar.
+    const MODELS = ['gemini-flash-lite-latest', 'gemini-2.5-flash'];
+    let resp = null, lastStatus = 0, lastErr = '';
+    for (const model of MODELS) {
+      const genConfig = { temperature: 0.6, maxOutputTokens: 1500 };
+      if (model === 'gemini-2.5-flash') genConfig.thinkingConfig = { thinkingBudget: 0 };
+      const r = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: livePricingBlock + '\n' + SYSTEM_INSTRUCTION }] },
+            contents,
+            generationConfig: genConfig
+          })
+        }
+      );
+      if (r.ok) { resp = r; break; }
+      lastStatus = r.status;
+      try { lastErr = (await r.text()).slice(0, 1500); } catch (e) { lastErr = ''; }
+      console.error('[chat-ai] Gemini API error', model, r.status, lastErr);
+    }
 
-    if (!resp.ok) {
-      let errText = '';
-      try { errText = await resp.text(); } catch (e) { /* ignorar */ }
-      console.error('[chat-ai] Gemini API error', resp.status, errText.slice(0, 1500));
-      return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'api_error' }) };
+    if (!resp) {
+      let detail = '';
+      try { detail = String((JSON.parse(lastErr).error || {}).message || '').slice(0, 160); } catch (e) { /* sin detalle */ }
+      return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'api_error', gemini_status: lastStatus, detail }) };
     }
 
     const data = await resp.json();
