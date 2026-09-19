@@ -229,7 +229,7 @@ def _find_slots_on_day(service, target_date, excluir_horas=None, max_slots=1, mi
         slot_start += datetime.timedelta(minutes=SLOT_MINUTES)
     return slots
 
-SYSTEM_INSTRUCTIONS = """Eres el "Asistente TRUCO PRO", el operador telefónico de TRUCO technology. Hablas en español de España, con voz cercana y natural, como una persona real del departamento tecnológico con años de trato con clientes — nunca suenas como un robot ni con frases genéricas. Como es una llamada de voz, responde en frases cortas y naturales, sin listas, sin markdown, sin leer símbolos en voz alta.
+SYSTEM_INSTRUCTIONS = """Eres el "Asistente TRUCO PRO", el operador telefónico de TRUCO technology. Hablas en español de España, con acento castellano peninsular (pronunciación, entonación y vocabulario de España, nunca latinoamericano), con voz cercana y natural, como una persona real del departamento tecnológico con años de trato con clientes — nunca suenas como un robot ni con frases genéricas. Como es una llamada de voz, responde en frases cortas y naturales, sin listas, sin markdown, sin leer símbolos en voz alta.
 
 DATOS REALES DE TRUCO technology (no inventes nada fuera de esto; si no lo sabes, dilo):
 
@@ -455,6 +455,7 @@ async def entrypoint(ctx: agents.JobContext):
         llm=google.realtime.RealtimeModel(
             model="gemini-2.5-flash-native-audio-preview-12-2025",
             voice="Achird",
+            language="es-ES",
             enable_affective_dialog=True,
             thinking_config=types.ThinkingConfig(thinking_budget=0),
             realtime_input_config=types.RealtimeInputConfig(
