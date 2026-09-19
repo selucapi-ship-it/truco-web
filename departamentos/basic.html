@@ -300,6 +300,11 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   .container{padding:0 18px;}
   .page-hero p{font-size:.98rem;line-height:1.55;}
 }
+.kit-choose{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));}
+.kit-flow{display:flex;flex-direction:column;gap:5px;align-items:stretch;}
+.kit-step{background:var(--bg-panel);border-radius:6px;padding:5px 8px;display:flex;justify-content:space-between;gap:8px;}
+.kit-step i{font-style:normal;color:var(--green);}
+@media(max-width:700px){.kit-choose{display:flex;}}
 </style>
 </head>
 <body>
@@ -361,7 +366,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     </div>
 
     <div class="kit-plus"><span>+</span><h3>Una automatización a tu elección</h3></div>
-    <div class="kit-grid">
+    <div class="kit-grid kit-choose">
       <div class="kit-card">
         <div class="kit-tag">Opción A</div>
         <h3>IA para WhatsApp</h3>
