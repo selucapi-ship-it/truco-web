@@ -4095,7 +4095,10 @@ function isIpBlocked(ip) { return !!ip && blockedIpsData.some(b => b.ip === ip);
 
 // ── LLAMADAS DE VOZ ──
 let voiceCallsData = [];
-const VOICE_END = { cliente_colgo: 'Colgó el cliente', limite_5min: 'Cortada por límite de 5 min', tope_mensual: 'Rechazada: tope mensual' };
+const VOICE_END = { cliente_colgo: 'Colgó el cliente', limite_5min: 'Cortada por límite de 5 min', tope_mensual: 'Rechazada: tope mensual', bloqueado: 'Rechazada: número bloqueado' };
+let blockedNumbersData = [];
+let voiceCallOpenId = null;
+function isNumberBlocked(n) { return !!n && blockedNumbersData.some(b => b.number === n); }
 
 function fmtDur(sec) {
   if (sec == null) return 'en curso / sin cerrar';
@@ -4103,8 +4106,12 @@ function fmtDur(sec) {
 }
 
 async function loadVoiceCalls() {
-  const { data } = await sb.from('voice_calls').select('*').order('started_at', { ascending: false }).limit(100);
-  voiceCallsData = data || [];
+  const [callsRes, blockedRes] = await Promise.all([
+    sb.from('voice_calls').select('*').order('started_at', { ascending: false }).limit(100),
+    sb.from('blocked_numbers').select('*').order('blocked_at', { ascending: false })
+  ]);
+  voiceCallsData = callsRes.data || [];
+  blockedNumbersData = blockedRes.data || [];
   renderVoiceCalls();
 }
 
@@ -4118,6 +4125,7 @@ function renderVoiceCalls() {
         <div class="q"><b>${c.nombre ? escapeHtml(c.nombre) : 'Sin nombre'}</b>
           <span class="chat-badge grey">${c.channel === 'phone' ? '📞 Teléfono' : '🌐 Web'}</span>
           ${c.booked ? '<span class="chat-badge green">Cita reservada</span>' : ''}
+          ${isNumberBlocked(c.caller_number) ? '<span class="chat-badge red">Número bloqueado</span>' : ''}
           ${c.end_reason && c.end_reason !== 'cliente_colgo' ? `<span class="chat-badge amber">${escapeHtml(VOICE_END[c.end_reason] || c.end_reason)}</span>` : ''}</div>
         <div class="meta">${new Date(c.started_at).toLocaleString('es-ES')} · ${c.caller_number ? escapeHtml(c.caller_number) : (c.channel === 'phone' ? 'número oculto' : 'desde la web')} · ${fmtDur(c.duration_s)}</div>
       </div>
@@ -4128,16 +4136,42 @@ function renderVoiceCalls() {
 function openVoiceCall(id) {
   const c = voiceCallsData.find(x => x.id === id);
   if (!c) return;
+  voiceCallOpenId = id;
   document.getElementById('chat-conv-overlay').style.display = 'block';
   document.getElementById('chat-conv-title').textContent = (c.nombre || 'Sin nombre') + ' — llamada';
   document.getElementById('chat-conv-meta').innerHTML = `<div class="chat-conv-meta-row">
     <span>${c.channel === 'phone' ? 'Teléfono' : 'Web'}: <b>${c.caller_number ? escapeHtml(c.caller_number) : '(oculto / web)'}</b></span>
-    <span>${new Date(c.started_at).toLocaleString('es-ES')}</span><span>Duración: ${fmtDur(c.duration_s)}</span></div>`;
+    <span>${new Date(c.started_at).toLocaleString('es-ES')}</span><span>Duración: ${fmtDur(c.duration_s)}</span></div>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">${c.caller_number ? (isNumberBlocked(c.caller_number)
+      ? '<button class="btn sm ghost" onclick="unblockNumber()">Desbloquear número</button>'
+      : '<button class="btn sm" style="background:var(--red);border-color:var(--red);color:#fff;" onclick="blockNumber()">🚫 Bloquear número</button>')
+      : '<span style="color:var(--grey);font-size:.76rem;">Sin número (oculto o web): no se puede bloquear.</span>'}</div>`;
   const t = Array.isArray(c.transcript) ? c.transcript : [];
   document.getElementById('chat-conv-body').innerHTML = t.map(m => `
     <div class="chat-bubble ${m.role === 'user' ? 'user' : 'bot'}">
       <div class="who">${m.role === 'user' ? escapeHtml(c.nombre || 'Llamante') : 'Asistente TRUCO PRO (voz)'} · ${new Date(m.t).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</div>
       <div class="txt">${escapeHtml(m.text)}</div></div>`).join('') || '<div class="empty-mini">Sin transcripción guardada.</div>';
+}
+
+async function blockNumber() {
+  const c = voiceCallsData.find(x => x.id === voiceCallOpenId);
+  if (!c || !c.caller_number) return;
+  if (!confirm(`¿Bloquear el número ${c.caller_number}? Si vuelve a llamar, el asistente lo rechazará con una frase de despedida.`)) return;
+  const { error } = await sb.from('blocked_numbers').insert({ number: c.caller_number, reason: `Llamada de ${c.nombre || 'anónimo'}` });
+  if (error && !/duplicate/i.test(error.message)) { alert('No se pudo bloquear: ' + error.message); return; }
+  toast('Número bloqueado');
+  await loadVoiceCalls();
+  openVoiceCall(voiceCallOpenId);
+}
+
+async function unblockNumber() {
+  const c = voiceCallsData.find(x => x.id === voiceCallOpenId);
+  if (!c || !c.caller_number) return;
+  const { error } = await sb.from('blocked_numbers').delete().eq('number', c.caller_number);
+  if (error) { alert('No se pudo desbloquear.'); return; }
+  toast('Número desbloqueado');
+  await loadVoiceCalls();
+  openVoiceCall(voiceCallOpenId);
 }
 
 async function deleteVoiceCall(id) {

@@ -110,15 +110,16 @@ def _sb_url(path):
 
 
 def _voice_gate(number, limit):
-    """True si esta llamada está permitida (y la cuenta). Ante un fallo de la BD deja pasar."""
+    """Devuelve (permitida, bloqueado). Cuenta la llamada si se permite. Ante un fallo de la BD deja pasar."""
     try:
         r = requests.post(_sb_url("rpc/voice_call_gate"), headers=_sb_headers(),
                           json={"p_number": number, "p_limit": limit}, timeout=5)
         if r.ok:
-            return bool(r.json().get("allowed", True))
+            d = r.json()
+            return bool(d.get("allowed", True)), bool(d.get("blocked", False))
     except Exception:
         logger.exception("Error en el tope de llamadas")
-    return True
+    return True, False
 
 
 def _voice_call_create(room, channel, number):
@@ -553,11 +554,11 @@ async def entrypoint(ctx: agents.JobContext):
     caller_number = raw_number if (is_phone and not hidden) else None
     channel = "phone" if is_phone else "web"
 
-    allowed = True
+    allowed, blocked = True, False
     if is_phone:
         key = caller_number or "oculto"
         limit = MAX_CALLS_PER_NUMBER_MONTH if caller_number else MAX_CALLS_HIDDEN_NUMBER_MONTH
-        allowed = await asyncio.to_thread(_voice_gate, key, limit)
+        allowed, blocked = await asyncio.to_thread(_voice_gate, key, limit)
 
     call_id = await asyncio.to_thread(_voice_call_create, ctx.room.name, channel, caller_number)
     started = datetime.datetime.now(datetime.timezone.utc)
@@ -615,11 +616,15 @@ async def entrypoint(ctx: agents.JobContext):
     await session.start(room=ctx.room, agent=agent)
 
     if not allowed:
-        state["end_reason"] = "tope_mensual"
-        h = session.generate_reply(
-            instructions="Dile amablemente, en una o dos frases, que desde este número ya se han hecho las llamadas gratuitas de este mes al asistente, "
-            "que puede escribir por el chat de la web trucotechnology.com o volver a llamar el mes que viene, y despídete."
-        )
+        state["end_reason"] = "bloqueado" if blocked else "tope_mensual"
+        if blocked:
+            msg = "Dile en una frase, con educación, que este servicio no está disponible para este número, y despídete."
+        else:
+            msg = (
+                "Dile amablemente, en una o dos frases, que desde este número ya se han hecho las llamadas gratuitas de este mes al asistente, "
+                "que puede escribir por el chat de la web trucotechnology.com o volver a llamar el mes que viene, y despídete."
+            )
+        h = session.generate_reply(instructions=msg)
         try:
             await h.wait_for_playout()
         except Exception:

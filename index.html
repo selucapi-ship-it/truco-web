@@ -1867,7 +1867,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <a href="privacidad.html">Privacidad</a>
         <a href="cookies.html">Cookies</a>
         <a href="terminos.html">Términos</a>
-        <a href="index.html" onclick="try{localStorage.removeItem('cookie_consent');}catch(e){}">Gestionar cookies</a>
+        <a href="index.html" onclick="try{localStorage.removeItem('cookie_consent');document.cookie='cookie_consent=; max-age=0; path=/';}catch(e){}">Gestionar cookies</a>
       </span>
       <span>www.trucotechnology.com</span>
     </div>
@@ -3318,9 +3318,17 @@ document.querySelectorAll('.mobile-nav a').forEach(a=>{
   </div>
 </div>
 <script>
+// El consentimiento se guarda en localStorage Y en una cookie propia de 12 meses: si el
+// navegador (p. ej. el de Instagram/Facebook o el modo privado) borra o bloquea uno, sirve el otro.
+function readConsent(){
+  let v=null;
+  try{ v=localStorage.getItem('cookie_consent'); }catch(e){}
+  if(!v){ const m=document.cookie.match(/(?:^|; )cookie_consent=(accepted|rejected)/); if(m) v=m[1]; }
+  return v;
+}
 (function(){
   try {
-    const consent = localStorage.getItem('cookie_consent');
+    const consent = readConsent();
     if(!consent) {
       document.getElementById('cookie-banner').style.display='flex';
     } else if(consent === 'accepted') {
@@ -3332,7 +3340,9 @@ document.querySelectorAll('.mobile-nav a').forEach(a=>{
   }
 })();
 function cookieChoice(accepted){
-  try { localStorage.setItem('cookie_consent', accepted ? 'accepted' : 'rejected'); } catch(e){}
+  const val = accepted ? 'accepted' : 'rejected';
+  try { localStorage.setItem('cookie_consent', val); } catch(e){}
+  try { document.cookie = 'cookie_consent=' + val + '; max-age=31536000; path=/; SameSite=Lax'; } catch(e){}
   document.getElementById('cookie-banner').style.display='none';
   if(accepted) loadGA();
 }

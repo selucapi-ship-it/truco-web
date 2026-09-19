@@ -614,7 +614,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <a href="privacidad.html">Privacidad</a>
         <a href="cookies.html">Cookies</a>
         <a href="terminos.html">Términos</a>
-        <a href="index.html" onclick="try{localStorage.removeItem('cookie_consent');}catch(e){}">Gestionar cookies</a>
+        <a href="index.html" onclick="try{localStorage.removeItem('cookie_consent');document.cookie='cookie_consent=; max-age=0; path=/';}catch(e){}">Gestionar cookies</a>
       </span>
       <span>www.trucotechnology.com</span>
     </div>

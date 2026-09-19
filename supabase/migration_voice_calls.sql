@@ -57,3 +57,18 @@ language sql security definer set search_path = public as $$
 $$;
 revoke all on function voice_purge_old() from public, anon, authenticated;
 grant execute on function voice_purge_old() to service_role;
+
+-- Números bloqueados por el founder (botón "Bloquear número" del panel)
+create table if not exists blocked_numbers (
+  number text primary key,
+  reason text,
+  blocked_at timestamptz not null default now()
+);
+alter table blocked_numbers enable row level security;
+drop policy if exists "founder read blocked_numbers" on blocked_numbers;
+create policy "founder read blocked_numbers" on blocked_numbers for select using (is_founder());
+drop policy if exists "founder insert blocked_numbers" on blocked_numbers;
+create policy "founder insert blocked_numbers" on blocked_numbers for insert with check (is_founder());
+drop policy if exists "founder delete blocked_numbers" on blocked_numbers;
+create policy "founder delete blocked_numbers" on blocked_numbers for delete using (is_founder());
+-- voice_call_gate se redefinió para rechazar números de blocked_numbers (devuelve blocked=true).
