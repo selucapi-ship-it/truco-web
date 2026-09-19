@@ -253,6 +253,53 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   .float-btn{width:52px;height:52px;font-size:1.3rem;}
   .float-label{display:none;}
 }
+
+/* ── KIT VISUAL: qué incluye Basic ── */
+.kit-lead{color:var(--grey);font-size:.95rem;line-height:1.6;max-width:640px;margin:0 0 22px;}
+.kit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.kit-card{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0;}
+.kit-tag{font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);}
+.kit-card h3{font-family:var(--font-d);font-size:1.15rem;line-height:1.25;margin:0;color:var(--white);}
+.kit-card p{font-size:.86rem;line-height:1.55;color:var(--grey);margin:0;}
+.kit-vis{background:var(--bg);border:1px solid var(--grey-line);border-radius:10px;padding:10px;font-size:.72rem;color:var(--grey);min-height:150px;display:flex;flex-direction:column;gap:6px;}
+.kv-bar{display:flex;gap:4px;align-items:center;}
+.kv-dot{width:7px;height:7px;border-radius:50%;background:var(--grey-line);}
+.kv-url{margin-left:6px;flex:1;background:var(--bg-panel);border-radius:5px;padding:2px 8px;font-family:var(--font-m);font-size:.62rem;color:var(--grey);}
+.kv-line{height:7px;border-radius:4px;background:var(--grey-line);}
+.kv-line.gold{background:var(--gold);width:55%;}
+.kv-serp{background:var(--bg-panel);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:4px;}
+.kv-serp b{color:var(--blue);font-weight:600;font-size:.74rem;}
+.kv-pill{display:inline-block;border-radius:99px;padding:2px 8px;font-size:.62rem;font-weight:600;background:var(--green-dim);color:var(--green);margin-right:4px;}
+.kv-pill.gold{background:var(--gold-dim);color:var(--gold);}
+.kv-pill.blue{background:var(--blue-dim);color:var(--blue);}
+.kv-msg{max-width:88%;padding:6px 9px;border-radius:10px;line-height:1.4;}
+.kv-msg.u{align-self:flex-end;background:var(--blue-soft);color:var(--white);border-bottom-right-radius:3px;}
+.kv-msg.b{align-self:flex-start;background:var(--bg-card);color:var(--white);border-left:2px solid var(--gold);border-bottom-left-radius:3px;}
+.kv-week{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;text-align:center;}
+.kv-day{font-family:var(--font-m);font-size:.6rem;color:var(--grey);}
+.kv-slot{border-radius:5px;padding:5px 0;background:var(--green-dim);color:var(--green);font-size:.62rem;font-weight:600;}
+.kv-slot.x{background:var(--grey-line);color:var(--grey);text-decoration:line-through;font-weight:400;}
+.kv-slot.on{background:var(--gold);color:#16151a;}
+.kv-ok{background:var(--green-dim);border:1px solid var(--green);color:var(--green);border-radius:8px;padding:6px 9px;font-weight:600;}
+.kit-plus{display:flex;align-items:center;gap:12px;margin:26px 0 14px;}
+.kit-plus span{font-family:var(--font-d);font-size:1.5rem;color:var(--gold);line-height:1;}
+.kit-plus h3{font-family:var(--font-d);font-size:1.2rem;margin:0;color:var(--white);}
+.kit-mail{display:flex;justify-content:space-between;gap:8px;background:var(--bg-panel);border-radius:6px;padding:5px 8px;}
+.kit-mail i{font-style:normal;color:var(--green);white-space:nowrap;}
+.kit-inv{background:var(--white);color:#16151a;border-radius:6px;padding:8px;display:flex;flex-direction:column;gap:3px;}
+.kit-inv b{font-size:.74rem;}
+@media(max-width:900px){.kit-grid{grid-template-columns:1fr;}}
+@media(max-width:700px){
+  .m-hide{display:none;}
+  .kit-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 18px;scrollbar-width:none;gap:12px;margin:0 -18px;padding:0 18px 8px;-webkit-overflow-scrolling:touch;}
+  .kit-card{flex:0 0 82%;scroll-snap-align:start;}
+  .who-card p{display:none;}
+  .who-card{padding:14px 16px;}
+  .who-grid{gap:8px;}
+  .section-block{padding:36px 0;}
+  .container{padding:0 18px;}
+  .page-hero p{font-size:.98rem;line-height:1.55;}
+}
 </style>
 </head>
 <body>
@@ -274,7 +321,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="container">
     <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> ★ El punto de entrada recomendado · Web Profesional + 1 automatización más, gratis</div>
     <h1>Departamento Tecnológico Basic™</h1>
-    <p>No montamos webs bonitas que no venden. Montamos webs que trabajan por ti 24/7 — <strong>responden dudas y agendan citas en tu calendario, siempre</strong>, sin que gastes ningún pick en ello. Y si eliges WhatsApp como tu automatización, podrás hacer que tu agente derive la conversación y hasta cierre la venta ahí mismo. Basic™ te da la Web Profesional completa más 1 automatización más a elegir, todo instalado completamente gratis.</p>
+    <p>No montamos webs bonitas que no venden. Montamos webs que trabajan por ti 24/7 — <strong>responden dudas y agendan citas en tu calendario, siempre</strong>, sin que gastes ningún pick en ello.<span class="m-hide"> Y si eliges WhatsApp como tu automatización, podrás hacer que tu agente derive la conversación y hasta cierre la venta ahí mismo. Basic™ te da la Web Profesional completa más 1 automatización más a elegir, todo instalado completamente gratis.</span></p>
     <div class="hero-price-box">
       <div>
         <div class="hp-founding-badge" id="hp-founding-badge-elemental"></div>
@@ -300,6 +347,82 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <li>1 automatización más a elegir <span class="vh-tag">valor 350-590 €</span></li>
         <li>Gestión de tu Departamento <span class="vh-tag">cada mes, sin parar</span></li>
       </ul>
+    </div>
+  </div>
+</div>
+
+
+<div class="section-block reveal" id="que-incluye" style="padding-bottom:0;">
+  <div class="container">
+    <div class="section-divider"><h2 class="sd-tag gold">Lo que trabaja por ti desde el día 1</h2><div class="sd-line"></div></div>
+    <p class="kit-lead">No es «una web y una automatización». Basic™ son <b style="color:var(--white)">tres herramientas ya montadas</b> y, encima, una a tu elección. <span style="font-size:.78rem;">(Las pantallas son ejemplos ilustrativos.)</span></p>
+    <div class="kit-grid">
+      <div class="kit-card">
+        <div class="kit-tag">Incluido · web</div>
+        <h3>Web interactiva que sube en Google</h3>
+        <div class="kit-vis" aria-hidden="true">
+          <div class="kv-bar"><span class="kv-dot"></span><span class="kv-dot"></span><span class="kv-dot"></span><span class="kv-url">tunegocio.es</span></div>
+          <div class="kv-line gold"></div><div class="kv-line" style="width:85%"></div><div class="kv-line" style="width:70%"></div>
+          <div class="kv-serp"><b>Tu negocio · Tu ciudad</b><span><span class="kv-pill">Posición ↑ 3</span><span class="kv-pill gold">Velocidad 96</span></span></div>
+        </div>
+        <p>La escribimos y la montamos nosotros. Cada mes la revisamos y la mejoramos para que te encuentren más.</p>
+      </div>
+      <div class="kit-card">
+        <div class="kit-tag">Incluido · asistente IA</div>
+        <h3>Un asistente que responde a tus clientes</h3>
+        <div class="kit-vis" aria-hidden="true">
+          <div class="kv-msg u">¿Hacéis presupuesto sin compromiso?</div>
+          <div class="kv-msg b">Claro. ¿Me dices qué necesitas y te preparamos una propuesta?</div>
+          <div class="kv-msg u">Vale, ¿y cómo lo hacéis?</div>
+          <div class="kv-msg b">Empezamos con una auditoría de tu negocio…</div>
+        </div>
+        <p>Contesta dudas a cualquier hora, con lo que de verdad ofreces. Tú no tienes que estar.</p>
+      </div>
+      <div class="kit-card">
+        <div class="kit-tag">Incluido · agenda</div>
+        <h3>Citas que se agendan solas</h3>
+        <div class="kit-vis" aria-hidden="true">
+          <div class="kv-week"><span class="kv-day">LUN</span><span class="kv-day">MAR</span><span class="kv-day">MIÉ</span><span class="kv-day">JUE</span><span class="kv-day">VIE</span>
+            <span class="kv-slot x">10:00</span><span class="kv-slot">10:00</span><span class="kv-slot">10:00</span><span class="kv-slot on">11:00</span><span class="kv-slot">10:00</span>
+            <span class="kv-slot">12:00</span><span class="kv-slot x">12:00</span><span class="kv-slot">12:00</span><span class="kv-slot">12:00</span><span class="kv-slot x">12:00</span></div>
+          <div class="kv-ok">✓ Cita confirmada · jueves 11:00</div>
+        </div>
+        <p>Tus clientes reservan en tus huecos libres, sin llamarte. Tu agenda se completa sola.</p>
+      </div>
+    </div>
+
+    <div class="kit-plus"><span>+</span><h3>Una automatización a tu elección</h3></div>
+    <div class="kit-grid">
+      <div class="kit-card">
+        <div class="kit-tag">Opción A</div>
+        <h3>IA para WhatsApp</h3>
+        <div class="kit-vis" aria-hidden="true">
+          <div class="kv-msg u">Hola, ¿tenéis hueco esta semana?</div>
+          <div class="kv-msg b">Sí, el jueves a las 11:00. ¿Te lo reservo?</div>
+          <div class="kv-ok">✓ Reserva cerrada por WhatsApp</div>
+        </div>
+        <p>Atiende, agenda y puede cerrar la venta sin que intervengas.</p>
+      </div>
+      <div class="kit-card">
+        <div class="kit-tag">Opción B</div>
+        <h3>IA para Correo</h3>
+        <div class="kit-vis" aria-hidden="true">
+          <div class="kit-mail"><span>Ana · Presupuesto</span><i>respondido ✓</i></div>
+          <div class="kit-mail"><span>Luis · Horarios</span><i>respondido ✓</i></div>
+          <div class="kit-mail"><span>Marta · Factura</span><i>respondido ✓</i></div>
+          <div class="kit-mail"><span>Pedro · Urgente</span><span class="kv-pill gold">te avisa</span></div>
+        </div>
+        <p>Responde tus emails habituales y solo te avisa de lo importante.</p>
+      </div>
+      <div class="kit-card">
+        <div class="kit-tag">Opción C</div>
+        <h3>Facturas con tu voz (TruKi)</h3>
+        <div class="kit-vis" aria-hidden="true">
+          <div class="kv-msg u">«Factura a Ana, 300 euros, reforma»</div>
+          <div class="kit-inv"><b>Factura F-0012 · Ana</b><span>Reforma ............ 300,00 €</span><span class="kv-pill">Lista para enviar</span></div>
+        </div>
+        <p>Dictas y sale la factura hecha, sin abrir ningún programa.</p>
+      </div>
     </div>
   </div>
 </div>
