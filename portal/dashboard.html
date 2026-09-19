@@ -165,6 +165,25 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .task-status.blocked{background:rgba(239,68,68,.1);color:#ff8a80;border:1px solid rgba(239,68,68,.3);}
 .task-status.done{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.3);}
 .task-status.cancelled{background:var(--bg-card);color:var(--grey);border:1px solid var(--grey-line);}
+
+/* ── CRM del cliente ── */
+.crm-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px;}
+.crm-toolbar select,.crm-toolbar input{background:var(--bg);border:1px solid var(--grey-line);color:var(--white);border-radius:8px;padding:8px 10px;font:inherit;font-size:.86rem;min-width:0;}
+.crm-toolbar button,.crm-add button,.crm-note button{background:var(--gold);color:#16151a;border:none;border-radius:8px;padding:8px 14px;font-weight:700;font-size:.84rem;cursor:pointer;}
+.crm-list{display:flex;flex-direction:column;gap:8px;}
+.crm-row{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;background:var(--bg);border:1px solid var(--grey-line);border-radius:10px;padding:10px 12px;cursor:pointer;}
+.crm-row:hover{border-color:var(--gold);}
+.crm-name{font-weight:700;color:var(--white);overflow-wrap:anywhere;}
+.crm-meta{font-size:.76rem;color:var(--grey);grid-column:1;overflow-wrap:anywhere;}
+.crm-state{grid-column:2;grid-row:1 / span 2;align-self:center;background:var(--bg-panel);border:1px solid var(--grey-line);color:var(--white);border-radius:8px;padding:6px 8px;font:inherit;font-size:.8rem;}
+.crm-detail{margin-top:14px;background:var(--bg);border:1px solid var(--gold);border-radius:12px;padding:14px;}
+.crm-detail h3{font-family:var(--font-d);font-size:1.05rem;margin:0 0 4px;}
+.crm-act{border-left:2px solid var(--grey-line);padding:2px 0 2px 10px;margin:8px 0;font-size:.84rem;color:var(--grey);overflow-wrap:anywhere;}
+.crm-act b{color:var(--gold);font-weight:600;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;display:block;}
+.crm-note{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.crm-note input{flex:1;min-width:160px;background:var(--bg-panel);border:1px solid var(--grey-line);color:var(--white);border-radius:8px;padding:8px 10px;font:inherit;font-size:.86rem;}
+.crm-add{display:none;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.crm-add input{background:var(--bg);border:1px solid var(--grey-line);color:var(--white);border-radius:8px;padding:8px 10px;font:inherit;font-size:.86rem;flex:1;min-width:140px;}
 </style>
 </head>
 <body>
@@ -232,6 +251,34 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       <h2>Ofertas exclusivas</h2>
       <div id="offers-list"><div class="empty-note">Cargando…</div></div>
       <div class="offers-footer">La compra se hace en la web normal — <a href="../servicios.html#automatizaciones">Digitaliza tu Empresa</a> o directamente en <a href="../pago.html">pago.html</a>. Al estar identificado, se te reconoce automáticamente y se te aplica tu descuento de cliente.</div>
+    </div>
+  </div>
+
+  <div class="grid" id="crm-grid" style="display:none;">
+    <div class="card" id="crm-card" style="grid-column:1/-1;">
+      <div class="card-tag">Tus contactos</div>
+      <h2>Tu CRM</h2>
+      <p class="tasks-intro">Cada persona que escribe a tu asistente, te manda un correo o reserva una cita entra aquí sola, con su historial. Tú solo cambias su estado y añades notas.</p>
+      <div class="crm-toolbar">
+        <select id="crm-filter" onchange="renderCrm()">
+          <option value="">Todos los estados</option>
+          <option value="nuevo">Nuevos</option>
+          <option value="contactado">Contactados</option>
+          <option value="cita">Con cita</option>
+          <option value="cliente">Clientes</option>
+          <option value="perdido">Perdidos</option>
+        </select>
+        <input type="search" id="crm-search" placeholder="Buscar nombre, teléfono o email" oninput="renderCrm()">
+        <button onclick="toggleCrmAdd()">+ Añadir contacto</button>
+      </div>
+      <div class="crm-add" id="crm-add">
+        <input id="crm-new-name" placeholder="Nombre" maxlength="200">
+        <input id="crm-new-phone" placeholder="Teléfono" maxlength="50">
+        <input id="crm-new-email" placeholder="Email" maxlength="200">
+        <button onclick="addCrmContact()">Guardar</button>
+      </div>
+      <div id="crm-list" class="crm-list"><div class="empty-note">Aún no hay contactos.</div></div>
+      <div id="crm-detail"></div>
     </div>
   </div>
 
@@ -417,6 +464,103 @@ async function loadClient() {
   loadReferral(client);
   loadFounderBadge(client);
   loadTasks();
+  loadCrm(client);
+}
+
+
+// ── CRM del cliente ──
+const CRM_STATES = { nuevo: 'Nuevo', contactado: 'Contactado', cita: 'Con cita', cliente: 'Cliente', perdido: 'Perdido' };
+const CRM_SOURCES = { whatsapp: 'WhatsApp', email: 'Correo', reservas: 'Reserva', portal: 'Añadido por ti' };
+let crmClientId = null;
+let crmContacts = [];
+
+async function loadCrm(client) {
+  const grid = document.getElementById('crm-grid');
+  if (!grid) return;
+  if (!['basic', 'lite', 'pro'].includes(client.arranque_tier)) { grid.style.display = 'none'; return; }
+  crmClientId = client.id;
+  grid.style.display = '';
+  const { data, error } = await sb.from('crm_contacts').select('*').order('last_seen', { ascending: false }).limit(500);
+  crmContacts = error ? [] : (data || []);
+  renderCrm();
+}
+
+function renderCrm() {
+  const list = document.getElementById('crm-list');
+  const f = document.getElementById('crm-filter').value;
+  const q = document.getElementById('crm-search').value.trim().toLowerCase();
+  let rows = crmContacts;
+  if (f) rows = rows.filter(c => c.estado === f);
+  if (q) rows = rows.filter(c => [c.nombre, c.telefono, c.email].some(v => v && String(v).toLowerCase().includes(q)));
+  if (!rows.length) { list.innerHTML = '<div class="empty-note">' + (crmContacts.length ? 'Nada con ese filtro.' : 'Aún no hay contactos: aparecerán solos en cuanto tu asistente atienda a alguien.') + '</div>'; return; }
+  list.innerHTML = rows.map(c => `
+    <div class="crm-row" data-id="${escapeHtml(c.id)}" onclick="openCrmContact(this.dataset.id)">
+      <div class="crm-name">${escapeHtml(c.nombre || c.telefono || c.email || 'Sin nombre')}</div>
+      <select class="crm-state" data-id="${escapeHtml(c.id)}" onclick="event.stopPropagation()" onchange="setCrmState(this.dataset.id, this.value)">
+        ${Object.entries(CRM_STATES).map(([k, v]) => `<option value="${k}"${c.estado === k ? ' selected' : ''}>${v}</option>`).join('')}
+      </select>
+      <div class="crm-meta">${[c.telefono, c.email, CRM_SOURCES[c.origen] || c.origen, new Date(c.last_seen).toLocaleDateString('es-ES')].filter(Boolean).map(escapeHtml).join(' · ')}</div>
+    </div>`).join('');
+}
+
+async function setCrmState(id, estado) {
+  const { error } = await sb.from('crm_contacts').update({ estado }).eq('id', id);
+  if (error) { alert('No se pudo cambiar el estado.'); return; }
+  const c = crmContacts.find(x => x.id === id); if (c) c.estado = estado;
+  renderCrm();
+}
+
+async function openCrmContact(id) {
+  const c = crmContacts.find(x => x.id === id);
+  if (!c) return;
+  const box = document.getElementById('crm-detail');
+  box.innerHTML = '<div class="crm-detail"><div class="empty-note">Cargando…</div></div>';
+  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  const { data } = await sb.from('crm_activities').select('kind, source, texto, created_at').eq('contact_id', id).order('id', { ascending: false }).limit(100);
+  const KIND = { mensaje: 'Mensaje', cita: 'Cita', llamada: 'Llamada', correo: 'Correo', nota: 'Nota tuya' };
+  box.innerHTML = `<div class="crm-detail">
+    <h3>${escapeHtml(c.nombre || 'Sin nombre')}</h3>
+    <div class="crm-meta">${[c.telefono, c.email].filter(Boolean).map(escapeHtml).join(' · ') || 'Sin datos de contacto'} · Primer contacto: ${new Date(c.first_seen).toLocaleDateString('es-ES')}</div>
+    ${(data || []).map(a => `<div class="crm-act"><b>${escapeHtml(KIND[a.kind] || a.kind)} · ${new Date(a.created_at).toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' })}</b>${escapeHtml(a.texto || '')}</div>`).join('') || '<div class="empty-note">Sin actividad todavía.</div>'}
+    <div class="crm-note"><input id="crm-note-text" placeholder="Añadir una nota…" maxlength="600"><button data-id="${escapeHtml(id)}" onclick="addCrmNote(this.dataset.id)">Guardar nota</button></div>
+    <div style="margin-top:10px;"><button class="crm-del" style="background:none;border:1px solid var(--grey-line);color:var(--grey);border-radius:8px;padding:6px 12px;cursor:pointer;" data-id="${escapeHtml(id)}" onclick="deleteCrmContact(this.dataset.id)">Borrar contacto</button></div>
+  </div>`;
+}
+
+async function addCrmNote(id) {
+  const inp = document.getElementById('crm-note-text');
+  const texto = inp.value.trim();
+  if (!texto) return;
+  const { error } = await sb.from('crm_activities').insert({ contact_id: id, client_id: crmClientId, kind: 'nota', source: 'portal', texto });
+  if (error) { alert('No se pudo guardar la nota.'); return; }
+  openCrmContact(id);
+}
+
+async function deleteCrmContact(id) {
+  if (!confirm('¿Borrar este contacto y su historial? No se puede deshacer.')) return;
+  const { error } = await sb.from('crm_contacts').delete().eq('id', id);
+  if (error) { alert('No se pudo borrar.'); return; }
+  crmContacts = crmContacts.filter(x => x.id !== id);
+  document.getElementById('crm-detail').innerHTML = '';
+  renderCrm();
+}
+
+function toggleCrmAdd() {
+  const a = document.getElementById('crm-add');
+  a.style.display = a.style.display === 'flex' ? 'none' : 'flex';
+}
+
+async function addCrmContact() {
+  const nombre = document.getElementById('crm-new-name').value.trim();
+  const telefono = document.getElementById('crm-new-phone').value.trim();
+  const email = document.getElementById('crm-new-email').value.trim();
+  if (!nombre && !telefono && !email) return;
+  const { data, error } = await sb.from('crm_contacts').insert({ client_id: crmClientId, nombre: nombre || null, telefono: telefono || null, email: email || null, origen: 'portal' }).select().single();
+  if (error) { alert(/duplicate|unique/i.test(error.message) ? 'Ya tienes un contacto con ese teléfono o email.' : 'No se pudo guardar.'); return; }
+  ['crm-new-name', 'crm-new-phone', 'crm-new-email'].forEach(i => { document.getElementById(i).value = ''; });
+  crmContacts.unshift(data);
+  toggleCrmAdd();
+  renderCrm();
 }
 
 const TASK_STATUS_LABELS = { open: 'Recibida', in_progress: 'En marcha', blocked: 'Bloqueada', done: 'Hecha', cancelled: 'Cancelada' };

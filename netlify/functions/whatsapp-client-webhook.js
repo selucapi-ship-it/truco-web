@@ -141,6 +141,8 @@ async function registrarInteraccion(supabaseUrl, serviceKey, clientId, nota) {
   }
 }
 
+const { crmCapture } = require('./lib/crm');
+
 exports.handler = async function (event) {
   // Verificación del webhook — Meta la llama una vez al registrar la URL.
   if (event.httpMethod === 'GET') {
@@ -195,6 +197,11 @@ exports.handler = async function (event) {
 
     await enviarRespuestaWhatsapp(phoneNumberId, mensaje.from, respuesta, cfg.meta_access_token);
     await registrarInteraccion(supabaseUrl, serviceKey, cfg.client_id, `WhatsApp — cliente escribió: "${textoUsuario}" — bot respondió: "${respuesta}"`);
+    await crmCapture({
+      clientId: cfg.client_id, source: 'whatsapp', kind: 'mensaje',
+      nombre: value?.contacts?.[0]?.profile?.name, telefono: mensaje.from,
+      texto: `Escribió: "${textoUsuario.slice(0, 250)}" · El asistente respondió: "${respuesta.slice(0, 250)}"`,
+    });
 
     return { statusCode: 200, body: 'ok' };
   } catch (e) {

@@ -207,6 +207,8 @@ async function registrarInteraccion(supabaseUrl, serviceKey, clientId, nota) {
   }
 }
 
+const { crmCapture, parseFrom } = require('./lib/crm');
+
 async function procesarCliente(cfg, env) {
   const accessToken = await refrescarAccessToken(cfg.oauth_refresh_token, env.googleClientId, env.googleClientSecret);
   if (!accessToken) return;
@@ -248,6 +250,11 @@ async function procesarCliente(cfg, env) {
     if (hecho) {
       const detalle = cfg.auto_enviar ? 'respuesta enviada automáticamente con IA' : 'borrador de respuesta preparado con IA';
       await registrarInteraccion(env.supabaseUrl, env.serviceKey, cfg.client_id, `Email de "${de}" (asunto: "${asunto}") — ${detalle}.`);
+      const rem = parseFrom(de);
+      await crmCapture({
+        clientId: cfg.client_id, source: 'email', kind: 'correo', nombre: rem.nombre, email: rem.email,
+        texto: `Escribió por correo: "${String(asunto).slice(0, 200)}" — ${detalle}.`,
+      });
     }
   }
 

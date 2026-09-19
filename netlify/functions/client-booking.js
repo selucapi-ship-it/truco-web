@@ -15,6 +15,7 @@
 // "HH:MM", p.ej. {"lun":[["09:00","14:00"],["16:00","20:00"]],"dom":[]}.
 
 const crypto = require('crypto');
+const { crmCapture } = require('./lib/crm');
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -245,6 +246,12 @@ exports.handler = async function (event) {
       fin: fin.toISOString(),
     }),
   }).catch((e) => console.error('[RESERVAS] No se pudo registrar la reserva', e.message));
+
+  await crmCapture({
+    clientId: cfg.client_id, source: 'reservas', kind: 'cita', estado: 'cita',
+    nombre: nombreCliente, telefono: telefonoCliente,
+    texto: `Reservó "${servicio.nombre}" para el ${inicio.toLocaleString('es-ES', { timeZone: cfg.zona_horaria || 'Europe/Madrid', dateStyle: 'full', timeStyle: 'short' })}.`,
+  });
 
   return responder(200, { ok: true, inicio: inicio.toISOString(), fin: fin.toISOString() });
 };
