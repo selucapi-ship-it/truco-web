@@ -223,10 +223,10 @@ exports.handler = async function (event) {
       const genConfig = { temperature: 0.6, maxOutputTokens: 1500 };
       if (model === 'gemini-2.5-flash') genConfig.thinkingConfig = { thinkingBudget: 0 };
       const r = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
         {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
           body: JSON.stringify({
             system_instruction: { parts: [{ text: livePricingBlock + '\n' + SYSTEM_INSTRUCTION }] },
             contents,

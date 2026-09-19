@@ -125,9 +125,9 @@ Reglas: responde SOLO con la información de arriba. Si el email pregunta algo q
 }
 
 async function llamarGemini(geminiKey, systemPrompt, mensajeUsuario) {
-  const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent?key=${geminiKey}`, {
+  const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'x-goog-api-key': geminiKey },
     body: JSON.stringify({
       system_instruction: { parts: [{ text: systemPrompt }] },
       contents: [{ role: 'user', parts: [{ text: mensajeUsuario.slice(0, 4000) }] }],
