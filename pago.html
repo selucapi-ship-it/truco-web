@@ -772,16 +772,8 @@ async function checkClienteSession() {
 }
 checkClienteSession();
 
-// ── PROGRAMA DE REFERIDOS ──
-// Si llega con ?ref=CODIGO en la URL, comprobamos que el código existe de
-// verdad (sin exponer de quién es) y, si es así, aplicamos el descuento de
-// referido en su primera compra. El propio código se manda a Stripe para que
-// stripe-webhook.js recompense a quien le refirió una vez se confirme el pago.
-(function captureReferralCode(){
-  const params=new URLSearchParams(location.search);
-  const ref=params.get('ref');
-  if(ref){referralCodeUsed=ref.trim().toUpperCase();validateReferralCode();}
-})();
+// ── PROGRAMA DE REFERIDOS: DESACTIVADO por ahora (los clientes ya tienen ofertas exclusivas en su portal).
+// Se ignora ?ref= y no se aplica ningún descuento por referido. El resto del código queda inerte.
 async function validateReferralCode(){
   try{
     const sb=initPortalSb();
@@ -951,13 +943,11 @@ const OPEN_PRICE_SOLUTIONS=[
   {value:'docs',name:'Gestión Documental',from:400}
 ];
 
-// Combina descuentos disponibles (cliente existente, referidos) SIN apilarlos
+// Combina descuentos disponibles (cliente existente) SIN apilarlos
 // — si aplican varios, se usa el mayor de todos, nunca la suma.
 function getBestDiscountInfo(count){
   const candidates=[
     {rate:clienteExistente?CLIENT_DISCOUNT:0,label:'Cliente TRUCO'},
-    {rate:(referralCodeValid&&clientMode==='new')?REFERRAL_NEW_DISCOUNT:0,label:'Código de referido'},
-    {rate:(loggedInClientData&&loggedInClientData.referral_credits>0)?REFERRAL_CREDIT_DISCOUNT:0,label:'Crédito por referido'},
   ];
   const best=candidates.reduce((a,b)=>b.rate>a.rate?b:a,{rate:0,label:''});
   return best.rate>0?{applies:true,rate:best.rate,label:best.label}:{applies:false,rate:0};
@@ -1784,8 +1774,8 @@ async function handlePay(){
         arranqueTier:plan.arranqueType||'',
         founding:!!plan.founding,
         solutions:buildSolutionsPayload(),
-        refCode:(referralCodeValid&&clientMode==='new')?referralCodeUsed:'',
-        consumeReferralCredit:(loggedInClientData&&loggedInClientData.referral_credits>0)?loggedInClientData.id:'',
+        refCode:'',
+        consumeReferralCredit:'',
         anexoAceptado:true,anexoVersion:ANEXO_VERSION
       })
     });

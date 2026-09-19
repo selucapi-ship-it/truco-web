@@ -102,15 +102,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .stage-label{font-size:.7rem;color:var(--grey);text-align:center;line-height:1.3;}
 .stage-step.done .stage-label,.stage-step.current .stage-label{color:var(--white);font-weight:600;}
 
-.referral-card{grid-column:1/-1;background:linear-gradient(165deg,var(--bg-panel),rgba(217,168,63,.05));}
-.referral-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px;}
-.referral-code-wrap{display:flex;flex-direction:column;gap:5px;}
-.referral-code-label{font-family:var(--font-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);}
-.referral-code-box{background:var(--bg-card);border:1px dashed var(--gold);border-radius:9px;padding:11px 18px;font-family:var(--font-m);font-size:1.05rem;font-weight:600;color:var(--gold-light);letter-spacing:.06em;}
-.referral-copy-btn{background:var(--blue);border:none;border-radius:9px;color:#fff;padding:11px 18px;font-size:.82rem;font-weight:600;cursor:pointer;transition:background .15s,transform .15s;}
-.referral-copy-btn:hover{background:var(--blue-light);}
-.referral-credits-badge{background:var(--green-dim);border:1px solid rgba(34,197,94,.3);color:var(--green);border-radius:20px;padding:6px 15px;font-size:.78rem;font-weight:600;}
-.referral-hint{color:var(--grey);font-size:.82rem;line-height:1.6;}
 .usage-hero{border-color:rgba(217,168,63,.32);background:linear-gradient(155deg,var(--bg-panel),var(--bg-panel) 45%,rgba(217,168,63,.09));box-shadow:var(--shadow-card),inset 0 1px 0 rgba(255,255,255,.03);}
 .usage-hero h2{font-size:1.22rem;}
 .usage-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:2px;}
@@ -283,16 +274,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
   </div>
 
   <div class="grid">
-    <div class="card referral-card">
-      <div class="card-tag">Invita y gana</div>
-      <h2>Tu enlace de referido</h2>
-      <div class="referral-row">
-        <div class="referral-code-box" id="referral-code-display">—</div>
-        <button class="referral-copy-btn" onclick="copyReferralLink()">Copiar enlace</button>
-        <span class="referral-credits-badge" id="referral-credits-badge" style="display:none;"></span>
-      </div>
-      <p class="referral-hint">Comparte tu enlace — quien lo use consigue un 10% en su primera compra, y tú ganas un 15% de descuento en la tuya cuando se haga cliente. Se aplica solo, sin códigos que canjear a mano.</p>
-    </div>
   </div>
 
   <div class="grid">
@@ -447,7 +428,6 @@ async function loadClient() {
   loadAuditButton();
   fetchLiveUsageLimits().then(() => loadUsage(owned));
   loadStage(client.implementation_stage);
-  loadReferral(client);
   loadFounderBadge(client);
   loadTasks();
   loadCrm(client);
@@ -531,29 +511,6 @@ function loadStage(stage) {
   }).join('');
 }
 
-function loadReferral(client) {
-  const code = client.referral_code;
-  if (!code) return;
-  document.getElementById('referral-code-display').textContent = code;
-  const credits = client.referral_credits || 0;
-  const badge = document.getElementById('referral-credits-badge');
-  if (credits > 0) {
-    badge.style.display = 'inline-block';
-    badge.textContent = credits + ' crédito' + (credits > 1 ? 's' : '') + ' disponible' + (credits > 1 ? 's' : '');
-  }
-}
-
-function copyReferralLink() {
-  const code = document.getElementById('referral-code-display').textContent;
-  if (!code || code === '—') return;
-  const link = location.origin + '/pago.html?ref=' + encodeURIComponent(code);
-  navigator.clipboard.writeText(link).then(() => {
-    const btn = document.querySelector('.referral-copy-btn');
-    const original = btn.textContent;
-    btn.textContent = '¡Copiado!';
-    setTimeout(() => { btn.textContent = original; }, 1800);
-  }).catch(() => { alert('Tu enlace: ' + link); });
-}
 
 async function loadUsage(owned) {
   const limitedOwned = owned.filter(s => USAGE_LIMITS[s.solution_key]);
