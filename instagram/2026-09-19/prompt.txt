@@ -1,0 +1,23 @@
+Ultra-realistic vertical photograph, 9:16 aspect ratio, professional advertising photography (not illustration, not 3D render, not CGI, no cartoon style). Dark, moody background in near-black charcoal tone (#16151a) filling most of the frame, with warm golden accent lighting (#d9a83f) and cream-white highlights. Cinematic, high-end tech-meets-small-business advertising aesthetic, shallow depth of field, soft directional light, subtle film grain, sharp focus on the main subject.
+
+SCENE: A single reception-desk moment, not a split composition, not a floating giant-number graphic, and no dominoes or hourglass props. Inside the small reception of a family-run guesthouse (hostal) near the fishing port of Águilas, Region of Murcia, on an overcast Saturday in mid-September — through a window behind the desk, the silhouette of Águilas' hilltop castle and a row of moored fishing boats are barely visible under a heavy, low grey-gold cloud cover, the sea flat and pewter-toned, everything toned down into deep charcoal shadow so the scene stays true to the dark brand palette rather than a bright postcard photo. Behind the desk, a real cork noticeboard is pinned with several small printed guest notes, photos and thank-you cards, all softly out of focus except one: a single small handwritten guest note, sharply in focus and lit with warm golden rim light, clearly the hero object of the composition, standing out from the rest of the board like a spotlighted review card. In the foreground, slightly blurred, the owner's hand rests on an open reservations ledger on the desk, calm rather than rushed. Beside the ledger, a smartphone lies face-up on the desk, its screen glowing a soft warm gold, showing a minimal WhatsApp-style chat with one auto-reply bubble already sent and a small calendar icon with a checkmark next to it, both glowing gently to show they are being handled automatically. The upper portion of the frame is dark negative space reserved for text overlays.
+
+TEXT ELEMENTS (render these exactly, as clean, modern, minimal sans-serif typography, in Spanish, well-composed and legible, not distorted or garbled):
+
+1. Top of the image, small logo lockup: "TRUCO technology" in bold cream-white letters, with the smaller subtitle directly beneath it in gold: "Departamento Tecnológico".
+
+2. Just below the logo, a small pill-shaped label in gold outline with cream text reading: "SÁBADO · 27°C Y NUBLADO EN ÁGUILAS".
+
+3. Beneath that, a bold uppercase context label in gold, letter-spaced: "SI EL CIELO DUDA, EL CLIENTE PREGUNTA PRIMERO".
+
+4. The main two-line headline in large bold cream-white letters, centered in the dark upper space, above the reception desk scene:
+"Si tardas en contestar,"
+"reserva en el alojamiento de al lado."
+
+5. On the glowing guest note pinned to the corkboard, rendered as if handwritten in dark ink on cream paper, the short testimonial text: "Contestasteis en un minuto, hasta en sábado nublado." — with a small row of five gold stars beneath it.
+
+6. Lower in the composition, a golden badge containing: "PRECIO FUNDADOR" and beneath it, smaller: "Plazas limitadas".
+
+7. A closing line near the bottom: "Paga una vez. Olvídate 365 días." followed by "trucotechnology.com".
+
+All text must be sharp, correctly spelled exactly as written above (including accents), high contrast against the dark background, and laid out with generous spacing so it reads clearly at Instagram Story size. Overall composition: reception desk and glowing testimonial note in the lower two-thirds, logo lockup and weather/context labels at the very top, main headline in the dark upper-middle space, badge and closing line stacked near the bottom.
