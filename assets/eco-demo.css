@@ -79,3 +79,14 @@
 @media(prefers-reduced-motion:reduce){.eco2-ev.new,.eco2-c.new,.eco2-ap.new{animation:none;}}
 @media(max-width:900px){.eco2{padding:26px 18px;}.eco2-grid{grid-template-columns:1fr;gap:26px;}}
 @media(max-width:600px){.eco2-board{display:flex;overflow-x:auto;gap:8px;padding-bottom:6px;scroll-snap-type:x mandatory;}.eco2-col{flex:0 0 62%;scroll-snap-align:start;}.eco2-kpis b{font-size:1.15rem;}.eco2-tiles{grid-template-columns:1fr;}}
+
+/* Nuestro compromiso (garantías) */
+.garantia{max-width:1120px;margin:0 auto;border:1px solid rgba(217,168,63,.4);border-radius:20px;padding:26px 26px 22px;background:linear-gradient(160deg,rgba(217,168,63,.07),#1b1a20 60%);color:#f2f0ea;font-family:'DM Sans',sans-serif;text-align:left;}
+.garantia .g-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:#d9a83f;margin-bottom:8px;}
+.garantia h3{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.3rem,2.6vw,1.8rem);line-height:1.15;margin:0 0 16px;color:#f2f0ea;}
+.garantia .g-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.garantia .g-item{display:flex;gap:12px;align-items:flex-start;background:#201f24;border:1px solid #3d3b42;border-radius:14px;padding:14px;}
+.garantia .g-ic{width:38px;height:38px;border-radius:11px;background:rgba(217,168,63,.15);border:1px solid rgba(217,168,63,.4);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.garantia .g-item b{display:block;font-size:.95rem;color:#f2f0ea;margin-bottom:3px;line-height:1.25;}
+.garantia .g-item span{font-size:.84rem;color:#b5b2bc;line-height:1.5;}
+@media(max-width:700px){.garantia{padding:20px 16px;}.garantia .g-grid{grid-template-columns:1fr;}}
