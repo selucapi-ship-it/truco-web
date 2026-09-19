@@ -323,53 +323,9 @@ details.fold-inline>summary::-webkit-details-marker{display:none;}
 details.fold-inline[open]>summary{margin-bottom:10px;}
 @media(min-width:701px){details.fold-inline>summary{display:none;}}
 
-/* ── ECOSISTEMA TRUCO: CRM + calendario incluidos ── */
-.eco2{--e-bg:#16151a;--e-panel:#201f24;--e-card:#2b2a30;--e-line:#3d3b42;--e-white:#f2f0ea;--e-grey:#b5b2bc;--e-gold:#d9a83f;--e-gold-l:#ecc878;--e-green:#22c55e;--e-blue:#2f7bff;--e-violet:#a78bfa;
-  position:relative;overflow:hidden;max-width:1120px;margin:0 auto;border:1px solid rgba(217,168,63,.55);border-radius:22px;padding:34px 32px;
-  background:radial-gradient(900px 400px at 85% -10%,rgba(217,168,63,.16),transparent 60%),linear-gradient(160deg,#211d10,#1a1a1f 55%);color:var(--e-white);font-family:'DM Sans',sans-serif;}
-.eco2 *{box-sizing:border-box;}
-.eco2-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:34px;align-items:center;}
-.eco2-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--e-gold);margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.eco2-eyebrow::before{content:'';width:18px;height:1px;background:var(--e-gold);}
-.eco2 h2{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.15;margin:0 0 12px;text-wrap:balance;color:var(--e-white);}
-.eco2 h2 em{font-style:normal;color:var(--e-gold-l);}
-.eco2-lead{color:var(--e-grey);font-size:1rem;line-height:1.6;margin:0 0 18px;}
-.eco2-feats{list-style:none;padding:0;margin:0 0 6px;display:flex;flex-direction:column;gap:12px;}
-.eco2-feats li{display:flex;gap:12px;align-items:flex-start;font-size:.92rem;color:var(--e-grey);line-height:1.45;}
-.eco2-feats .ic{width:34px;height:34px;border-radius:10px;background:rgba(217,168,63,.15);border:1px solid rgba(217,168,63,.4);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
-.eco2-feats b{color:var(--e-white);display:block;font-size:.95rem;}
-.eco2-note{font-size:.74rem;color:var(--e-grey);margin-top:14px;opacity:.85;}
-.eco2-badge{display:inline-flex;align-items:center;gap:8px;background:var(--e-gold);color:#16151a;font-weight:800;font-size:.78rem;border-radius:99px;padding:6px 14px;margin-bottom:14px;}
-/* mock */
-.eco2-mock{position:relative;background:var(--e-bg);border:1px solid var(--e-line);border-radius:16px;padding:14px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7);}
-.eco2-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:.78rem;flex-wrap:wrap;}
-.eco2-logo{width:26px;height:26px;border:1.5px solid var(--e-gold);border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font:700 .85rem 'Playfair Display',serif;color:var(--e-gold);}
-.eco2-bar b{font-family:'Playfair Display',serif;font-size:.95rem;}
-.eco2-pill{border:1px solid var(--e-line);border-radius:99px;padding:3px 10px;font-size:.68rem;color:var(--e-grey);}
-.eco2-pill.on{background:var(--e-gold);color:#16151a;border-color:var(--e-gold);font-weight:700;}
-.eco2-bar .sp{flex:1;}
-.eco2-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;}
-.eco2-kpis div{background:linear-gradient(165deg,var(--e-panel),var(--e-card));border:1px solid var(--e-line);border-radius:10px;padding:8px 10px;font-size:.66rem;color:var(--e-grey);}
-.eco2-kpis b{display:block;font:700 1.35rem 'Playfair Display',serif;color:var(--e-white);line-height:1.1;}
-.eco2-kpis .hot{border-color:rgba(217,168,63,.5);}
-.eco2-kpis .hot b{color:var(--e-gold-l);}
-.eco2-board{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-.eco2-col{background:var(--e-panel);border:1px solid var(--e-line);border-radius:10px;padding:7px;min-width:0;}
-.eco2-col h4{font:700 .66rem 'DM Sans',sans-serif;margin:0 0 6px;display:flex;align-items:center;gap:5px;color:var(--e-white);letter-spacing:0;}
-.eco2-col h4 i{width:7px;height:7px;border-radius:50%;display:inline-block;}
-.eco2-c{background:linear-gradient(165deg,var(--e-card),#26252b);border:1px solid var(--e-line);border-radius:8px;padding:7px;margin-bottom:6px;font-size:.62rem;color:var(--e-grey);}
-.eco2-c .t{display:flex;gap:6px;align-items:center;}
-.eco2-c .av{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 .55rem 'DM Sans',sans-serif;color:#16151a;flex-shrink:0;}
-.eco2-c b{color:var(--e-white);font-size:.68rem;display:block;line-height:1.15;}
-.eco2-c .s{opacity:.85;}
-.eco2-float{position:absolute;background:#1d2a1f;border:1px solid rgba(34,197,94,.6);color:#b5f0c8;border-radius:12px;padding:8px 12px;font-size:.72rem;font-weight:700;box-shadow:0 14px 30px -10px rgba(0,0,0,.7);white-space:nowrap;}
-.eco2-float.f1{right:-8px;bottom:-14px;}
-.eco2-float.f2{left:-10px;top:56px;background:#232032;border-color:rgba(167,139,250,.6);color:#d9ccff;}
-@media(prefers-reduced-motion:no-preference){.eco2-float{animation:eco2bob 4s ease-in-out infinite;}.eco2-float.f2{animation-delay:1.4s;}}
-@keyframes eco2bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
-@media(max-width:900px){.eco2{padding:26px 18px;}.eco2-grid{grid-template-columns:1fr;gap:26px;}.eco2-float{position:static;display:inline-block;margin:12px 8px 0 0;animation:none!important;white-space:normal;}.eco2-mock{margin-bottom:0;}}
-@media(max-width:560px){.eco2-board{grid-template-columns:repeat(2,1fr);}.eco2-col:nth-child(n+3){display:none;}.eco2-kpis b{font-size:1.15rem;}}
+
 </style>
+<link rel="stylesheet" href="../assets/eco-demo.css">
 </head>
 <body>
 
@@ -390,7 +346,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
   <div class="container">
     <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> ★ El punto de entrada recomendado · Web Profesional + 1 automatización más, gratis</div>
     <h1>Departamento Tecnológico Basic™</h1>
-    <p>No montamos webs bonitas que no venden. Montamos webs que trabajan por ti 24/7 — <strong>responden dudas y agendan citas en tu calendario, siempre</strong>, sin que gastes ningún pick en ello.<span class="m-hide"> Y si eliges WhatsApp como tu automatización, podrás hacer que tu agente derive la conversación y hasta cierre la venta ahí mismo. Basic™ te da la Web Profesional completa más 1 automatización más a elegir, todo instalado completamente gratis.</span></p>
+    <p>No montamos webs bonitas que no venden. Montamos webs que trabajan por ti 24/7 — <strong>responden dudas y agendan citas en tu calendario, siempre</strong>.<span class="m-hide"> Y si eliges WhatsApp como tu automatización, podrás hacer que tu agente derive la conversación y hasta cierre la venta ahí mismo. Basic™ te da la Web Profesional completa más 1 automatización más a elegir, todo instalado completamente gratis.</span></p>
     <div id="que-incluye" style="margin:8px 0 34px;">
     <div class="section-divider"><h2 class="sd-tag gold">Lo que trabaja por ti desde el día 1</h2><div class="sd-line"></div></div>
     <p class="kit-lead">No es «una web y una automatización». Basic™ son <b style="color:var(--white)">tres herramientas ya montadas</b> y, encima, una a tu elección. <span style="font-size:.78rem;">(Las pantallas son ejemplos ilustrativos.)</span></p>
@@ -469,22 +425,36 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
     <div>
       <span class="eco2-badge">✦ Incluido en todos los Departamentos</span>
       <div class="eco2-eyebrow">Ecosistema TRUCO technology</div>
-      <h2>Además, por ser cliente TRUCO: <em>tu propio CRM y tu calendario, incluidos</em></h2>
-      <p class="eco2-lead">Cada cita, mensaje de WhatsApp o correo que atienden tus asistentes se guarda y se agenda solo. Tú no tecleas nada, no hay hojas de cálculo y todo vive en un único sitio: el portal de tu Departamento.</p>
-      <ul class="eco2-feats">
-        <li><span class="ic">👥</span><span><b>Tu CRM se llena solo</b>Cada persona que contacta con tu negocio pasa a tu libreta, con todo su historial y en qué punto está.</span></li>
-        <li><span class="ic">📅</span><span><b>Tu calendario, dentro</b>Las citas que agendan tus asistentes aparecen junto a las de tu Google Calendar, o el calendario que uses.</span></li>
-        <li><span class="ic">📥</span><span><b>Tuyo de verdad</b>Descarga solo los contactos nuevos, o importa la base de datos que ya tienes. Con tu nombre y tu logo.</span></li>
-        <li><span class="ic">📱</span><span><b>Como una app</b>Instálalo en el móvil o en el ordenador. Se abre en un toque y se actualiza solo.</span></li>
-      </ul>
-      <p class="eco2-note">Pantalla de ejemplo con datos ficticios.</p>
+      <h2>Tu negocio funciona solo. <em>Tú, a lo tuyo.</em></h2>
+      <p class="eco2-lead">TRUCO atiende tus canales, agenda tus citas, guarda a cada cliente y hasta cierra ventas <b>mientras tú trabajas o descansas</b>. Por la noche abres tu portal y lo tienes todo.</p>
+      <p class="eco2-note">Demo interactiva con datos de ejemplo.</p>
     </div>
-    <div class="eco2-mock" aria-hidden="true">
-      <div class="eco2-bar"><span class="eco2-logo">T</span><b>Tu negocio</b><span class="sp"></span><span class="eco2-pill on">Mi CRM</span><span class="eco2-pill">Mi calendario</span></div>
-      <div class="eco2-kpis"><div><b>24</b>contactos</div><div><b>3</b>citas hoy</div><div class="hot"><b>2</b>esperan respuesta</div></div>
-      <div class="eco2-board"><div class="eco2-col"><h4><i style="background:#2f7bff"></i>Nuevos</h4><div class="eco2-c"><div class="t"><span class="av" style="background:#9cc2ff">JR</span><div><b>Javier Ruiz</b><span class="s">💬 WhatsApp</span></div></div></div><div class="eco2-c"><div class="t"><span class="av" style="background:#ecc878">LP</span><div><b>Lucía Prieto</b><span class="s">💬 WhatsApp</span></div></div></div></div><div class="eco2-col"><h4><i style="background:#a78bfa"></i>Contactados</h4><div class="eco2-c"><div class="t"><span class="av" style="background:#e9b3ff">CS</span><div><b>Clínica Sol</b><span class="s">✉️ Correo</span></div></div></div><div class="eco2-c"><div class="t"><span class="av" style="background:#a8e6e0">AL</span><div><b>Ana López</b><span class="s">🌐 Web</span></div></div></div></div><div class="eco2-col"><h4><i style="background:#d9a83f"></i>Con cita</h4><div class="eco2-c"><div class="t"><span class="av" style="background:#ffc9a1">MS</span><div><b>Marta Soto</b><span class="s">📅 Reserva</span></div></div></div><div class="eco2-c"><div class="t"><span class="av" style="background:#9cc2ff">PV</span><div><b>Pedro Vidal</b><span class="s">📅 Reserva</span></div></div></div></div><div class="eco2-col"><h4><i style="background:#22c55e"></i>Clientes</h4><div class="eco2-c"><div class="t"><span class="av" style="background:#ecc878">DF</span><div><b>Diego Ferrer</b><span class="s">📞 Llamada</span></div></div></div><div class="eco2-c"><div class="t"><span class="av" style="background:#b5f0c8">LP</span><div><b>La Plaza</b><span class="s">✉️ Correo</span></div></div></div></div></div>
-      <div class="eco2-float f2">💬 Nuevo contacto por WhatsApp</div>
-      <div class="eco2-float f1">✓ Cita confirmada · jueves 11:00</div>
+    <div class="eco2-mock" id="ecoApp">
+      <div class="eco2-bar"><span class="eco2-logo">T</span><b>Tu negocio</b><span class="sp"></span>
+        <div class="eco2-tabs" role="tablist" aria-label="Demo del portal">
+          <button type="button" class="eco2-tab on" role="tab" data-go="portal">🏠 Portal</button>
+          <button type="button" class="eco2-tab" role="tab" data-go="crm">👥 Mi CRM</button>
+          <button type="button" class="eco2-tab" role="tab" data-go="cal">📅 Mi calendario</button>
+        </div></div>
+      <div class="eco2-view" data-v="portal">
+        <p class="eco2-hi">Buenas noches, Ana 👋<small>Esto es lo que ha pasado hoy mientras tú trabajabas.</small></p>
+        <div class="eco2-tiles">
+          <button type="button" class="eco2-tile" id="eco-tile-crm" data-go="crm"><i>→</i><b>👥 Mi CRM</b><span></span></button>
+          <button type="button" class="eco2-tile" id="eco-tile-cal" data-go="cal"><i>→</i><b>📅 Mi calendario</b><span></span></button>
+        </div>
+        <div class="eco2-feed-h">Hoy, sin que hicieras nada</div>
+        <div class="eco2-feed" id="eco-feed"></div>
+      </div>
+      <div class="eco2-view" data-v="crm" hidden>
+        <div class="eco2-kpis" id="eco-kpis"></div>
+        <div class="eco2-board" id="eco-board"></div>
+        <div class="eco2-det" id="eco-det"></div>
+      </div>
+      <div class="eco2-view" data-v="cal" hidden>
+        <div id="eco-cal"></div>
+        <div class="eco2-pills"><span class="eco2-pill">✓ Google Calendar vinculado</span><span class="eco2-pill">✓ Enlace para Outlook y Apple</span><span class="eco2-pill">✓ Como app en tu móvil</span></div>
+      </div>
+      <div class="eco2-hint">👆 Pruébalo: pulsa las pestañas y mueve los contactos. Datos de ejemplo.</div>
     </div>
   </div>
 </div>
@@ -566,9 +536,6 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
   <div class="container">
     <details class="fold" open><summary><h2 class="sd-tag gold">Incluye</h2><div class="sd-line"></div></summary>
     <div class="feat-grid">
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg><p><b>Web Profesional gratis</b> — diseño a medida, valor 1.390 €, incluida en la cuota</p></div>
-      <div class="feat-card blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><p><b>Chat que responde dudas y agenda citas en tu calendario, siempre</b> — de fábrica, sin gastar ningún pick</p></div>
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><p><b>1 automatización más a elegir</b> entre WhatsApp, Correo o TruKi, instalada completamente gratis</p></div>
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p><b>Salud técnica de posicionamiento</b> — velocidad, indexación, enlaces rotos y ficha de Google, vigilados sin parar</p></div>
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><p><b>Mantenimiento y copias de seguridad</b> periódicas y verificadas, siempre incluidas</p></div>
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p><b>Resolución de incidencias</b> técnicas sin coste adicional, por orden de llegada</p></div>
@@ -577,17 +544,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
   </details></div>
 </div>
 
-<div class="section-block reveal" style="padding-top:0;">
-  <div class="container">
-    <details class="fold" open><summary><h2 class="sd-tag blue">La automatización más a elegir en Basic™</h2><div class="sd-line"></div></summary>
-    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:760px;margin-bottom:24px;">Tu web ya incluye chat y agenda de fábrica, así que no hace falta elegirlo aquí. Esta 1 es aparte, para cubrir el otro canal por el que te llegan clientes.</p>
-    <div class="wib-grid">
-      <div class="wib-item"><b>IA para WhatsApp</b>Atiende, agenda y puede cerrar la venta ahí mismo</div>
-      <div class="wib-item"><b>IA para Correo</b>Gestión automática de emails</div>
-      <div class="wib-item"><b>Facturación automática (TruKi)</b>Factura y presupuesta dictando por voz</div>
-    </div>
-  </details></div>
-</div>
+
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
@@ -734,5 +691,6 @@ function toggleFaq(btn){
 // Plegables: cerrados en móvil (pura lectura), abiertos en pantallas grandes.
 (function(){var m=window.innerWidth<=700;document.querySelectorAll('details.fold,details.fold-inline').forEach(function(d){d.open=!m;});})();
 </script>
+<script src="../assets/eco-demo.js" defer></script>
 </body>
 </html>

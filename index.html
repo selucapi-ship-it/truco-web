@@ -900,62 +900,17 @@ details.fold-inline>summary::-webkit-details-marker{display:none;}
 details.fold-inline[open]>summary{margin-bottom:10px;}
 @media(min-width:701px){details.fold-inline>summary{display:none;}}
 
-/* ── ECOSISTEMA TRUCO: CRM + calendario incluidos ── */
-.eco2{--e-bg:#16151a;--e-panel:#201f24;--e-card:#2b2a30;--e-line:#3d3b42;--e-white:#f2f0ea;--e-grey:#b5b2bc;--e-gold:#d9a83f;--e-gold-l:#ecc878;--e-green:#22c55e;--e-blue:#2f7bff;--e-violet:#a78bfa;
-  position:relative;overflow:hidden;max-width:1120px;margin:0 auto;border:1px solid rgba(217,168,63,.55);border-radius:22px;padding:34px 32px;
-  background:radial-gradient(900px 400px at 85% -10%,rgba(217,168,63,.16),transparent 60%),linear-gradient(160deg,#211d10,#1a1a1f 55%);color:var(--e-white);font-family:'DM Sans',sans-serif;}
-.eco2 *{box-sizing:border-box;}
-.eco2-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:34px;align-items:center;}
-.eco2-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--e-gold);margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.eco2-eyebrow::before{content:'';width:18px;height:1px;background:var(--e-gold);}
-.eco2 h2{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.15;margin:0 0 12px;text-wrap:balance;color:var(--e-white);}
-.eco2 h2 em{font-style:normal;color:var(--e-gold-l);}
-.eco2-lead{color:var(--e-grey);font-size:1rem;line-height:1.6;margin:0 0 18px;}
-.eco2-feats{list-style:none;padding:0;margin:0 0 6px;display:flex;flex-direction:column;gap:12px;}
-.eco2-feats li{display:flex;gap:12px;align-items:flex-start;font-size:.92rem;color:var(--e-grey);line-height:1.45;}
-.eco2-feats .ic{width:34px;height:34px;border-radius:10px;background:rgba(217,168,63,.15);border:1px solid rgba(217,168,63,.4);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
-.eco2-feats b{color:var(--e-white);display:block;font-size:.95rem;}
-.eco2-note{font-size:.74rem;color:var(--e-grey);margin-top:14px;opacity:.85;}
-.eco2-badge{display:inline-flex;align-items:center;gap:8px;background:var(--e-gold);color:#16151a;font-weight:800;font-size:.78rem;border-radius:99px;padding:6px 14px;margin-bottom:14px;}
-/* mock */
-.eco2-mock{position:relative;background:var(--e-bg);border:1px solid var(--e-line);border-radius:16px;padding:14px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7);}
-.eco2-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:.78rem;flex-wrap:wrap;}
-.eco2-logo{width:26px;height:26px;border:1.5px solid var(--e-gold);border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font:700 .85rem 'Playfair Display',serif;color:var(--e-gold);}
-.eco2-bar b{font-family:'Playfair Display',serif;font-size:.95rem;}
-.eco2-pill{border:1px solid var(--e-line);border-radius:99px;padding:3px 10px;font-size:.68rem;color:var(--e-grey);}
-.eco2-pill.on{background:var(--e-gold);color:#16151a;border-color:var(--e-gold);font-weight:700;}
-.eco2-bar .sp{flex:1;}
-.eco2-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;}
-.eco2-kpis div{background:linear-gradient(165deg,var(--e-panel),var(--e-card));border:1px solid var(--e-line);border-radius:10px;padding:8px 10px;font-size:.66rem;color:var(--e-grey);}
-.eco2-kpis b{display:block;font:700 1.35rem 'Playfair Display',serif;color:var(--e-white);line-height:1.1;}
-.eco2-kpis .hot{border-color:rgba(217,168,63,.5);}
-.eco2-kpis .hot b{color:var(--e-gold-l);}
-.eco2-board{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
-.eco2-col{background:var(--e-panel);border:1px solid var(--e-line);border-radius:10px;padding:7px;min-width:0;}
-.eco2-col h4{font:700 .66rem 'DM Sans',sans-serif;margin:0 0 6px;display:flex;align-items:center;gap:5px;color:var(--e-white);letter-spacing:0;}
-.eco2-col h4 i{width:7px;height:7px;border-radius:50%;display:inline-block;}
-.eco2-c{background:linear-gradient(165deg,var(--e-card),#26252b);border:1px solid var(--e-line);border-radius:8px;padding:7px;margin-bottom:6px;font-size:.62rem;color:var(--e-grey);}
-.eco2-c .t{display:flex;gap:6px;align-items:center;}
-.eco2-c .av{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 .55rem 'DM Sans',sans-serif;color:#16151a;flex-shrink:0;}
-.eco2-c b{color:var(--e-white);font-size:.68rem;display:block;line-height:1.15;}
-.eco2-c .s{opacity:.85;}
-.eco2-float{position:absolute;background:#1d2a1f;border:1px solid rgba(34,197,94,.6);color:#b5f0c8;border-radius:12px;padding:8px 12px;font-size:.72rem;font-weight:700;box-shadow:0 14px 30px -10px rgba(0,0,0,.7);white-space:nowrap;}
-.eco2-float.f1{right:-8px;bottom:-14px;}
-.eco2-float.f2{left:-10px;top:56px;background:#232032;border-color:rgba(167,139,250,.6);color:#d9ccff;}
-@media(prefers-reduced-motion:no-preference){.eco2-float{animation:eco2bob 4s ease-in-out infinite;}.eco2-float.f2{animation-delay:1.4s;}}
-@keyframes eco2bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
-@media(max-width:900px){.eco2{padding:26px 18px;}.eco2-grid{grid-template-columns:1fr;gap:26px;}.eco2-float{position:static;display:inline-block;margin:12px 8px 0 0;animation:none!important;white-space:normal;}.eco2-mock{margin-bottom:0;}}
-@media(max-width:560px){.eco2-board{grid-template-columns:repeat(2,1fr);}.eco2-col:nth-child(n+3){display:none;}.eco2-kpis b{font-size:1.15rem;}}
+
 </style>
 <!-- Open Graph -->
 <meta property="og:title" content="TRUCO technology — Tu Departamento Tecnológico">
-<meta property="og:description" content="Deja de cargar con todo tú solo. Tu Departamento Tecnológico: WhatsApp 24/7, citas automáticas, IA y web para pymes y autónomos en España, desde 69€/mes.">
+<meta property="og:description" content="Deja de cargar con todo tú solo. Tu Departamento Tecnológico: WhatsApp 24/7, citas automáticas, IA y web para pymes y autónomos en España, primer año desde 729 € en un solo pago, con CRM y calendario incluidos.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.trucotechnology.com">
 <meta property="og:image" content="https://www.trucotechnology.com/assets/founder.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="TRUCO technology — Tu Departamento Tecnológico">
-<meta name="twitter:description" content="Deja de cargar con todo tú solo. Tu Departamento Tecnológico: WhatsApp 24/7, citas automáticas, IA y web para pymes y autónomos en España, desde 69€/mes.">
+<meta name="twitter:description" content="Deja de cargar con todo tú solo. Tu Departamento Tecnológico: WhatsApp 24/7, citas automáticas, IA y web para pymes y autónomos en España, primer año desde 729 € en un solo pago, con CRM y calendario incluidos.">
 <meta name="twitter:image" content="https://www.trucotechnology.com/assets/founder.jpg">
 <meta name="theme-color" content="#141a24">
 <style>
@@ -1020,6 +975,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
   ]
 }
 </script>
+<link rel="stylesheet" href="assets/eco-demo.css">
 </head>
 <body>
 <script>
@@ -1082,8 +1038,8 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
         Deja de cargar<br>con todo tú solo.<br>
         Ahora tienes<br><em>quien trabaje para ti.</em>
       </h1>
-      <p class="hero-sub">Tu Departamento Tecnológico: nosotros implantamos y mantenemos la tecnología que tu negocio necesita, para que no se te escape ni un cliente.</p>
-      <p class="hero-sub">Web con la visibilidad que nunca has tenido, y asistentes de IA <strong>entrenados para tu negocio</strong> — no un robot en blanco que tengas que enseñar tú. Trabajarán para ti desde el primer día en tu WhatsApp o en tu web, agendando citas solas. Cualquier duda, resuelta las 24 horas.</p>
+      <p class="hero-sub"><strong>Contestamos tu WhatsApp, agendamos tus citas, guardamos a cada cliente y hasta cerramos ventas</strong> — mientras tú trabajas o descansas.</p>
+      <p class="hero-sub">Tus asistentes de IA, <strong>entrenados para tu negocio</strong> y una web que vende, trabajando desde el primer día. Por la noche abres tu portal y lo tienes todo: tu CRM, tu calendario y lo que ha pasado hoy. <strong>El tiempo libre vuelve a ser tuyo.</strong></p>
       <p class="hero-question">Para eso ya estamos nosotros.</p>
       <div class="hero-btns">
 <a class="btn-primary" href="#chat-section" onclick="trucoTrackClick('hero_hablar_asistente')">Hablar con el asistente</a>
@@ -1096,8 +1052,8 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
         </div>
         <div class="hero-trust-sep"></div>
         <div class="hero-trust-item">
-          <span class="hero-trust-num">69€</span>
-          <span class="hero-trust-label">desde / mes (Start™)</span>
+          <span class="hero-trust-num" id="hero-from-1">729 €</span>
+          <span class="hero-trust-label">primer año, todo incluido (desde Start™)</span>
         </div>
         <div class="hero-trust-sep"></div>
         <div class="hero-trust-item">
@@ -1189,8 +1145,8 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
           <div class="hsc-label">Seguidores que confían</div>
         </div>
         <div class="hero-stat-card">
-          <div class="hsc-val" style="color:var(--green);">69€</div>
-          <div class="hsc-label">Desde /mes, tu Departamento</div>
+          <div class="hsc-val" style="color:var(--green);" id="hero-from-2">729 €</div>
+          <div class="hsc-label">Primer año, tu Departamento completo</div>
         </div>
       </div>
     </div>
@@ -1206,22 +1162,42 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
     <div>
       <span class="eco2-badge">✦ Incluido en todos los Departamentos</span>
       <div class="eco2-eyebrow">Ecosistema TRUCO technology</div>
-      <h2>Con TRUCO no solo tienes asistentes: tienes <em>tu propio CRM y tu calendario, incluidos</em></h2>
-      <p class="eco2-lead">Cada cita, mensaje de WhatsApp o correo que atienden tus asistentes se guarda y se agenda solo. Tú no tecleas nada, no hay hojas de cálculo y todo vive en un único sitio: el portal de tu Departamento.</p>
+      <h2>Tu negocio funciona solo. <em>Tú, a lo tuyo.</em></h2>
+      <p class="eco2-lead">TRUCO atiende tus canales, agenda tus citas, guarda a cada cliente y hasta cierra ventas <b>mientras tú trabajas o descansas</b>. Por la noche abres tu portal y lo tienes todo.</p>
       <ul class="eco2-feats">
-        <li><span class="ic">👥</span><span><b>Tu CRM se llena solo</b>Cada persona que contacta con tu negocio pasa a tu libreta, con todo su historial y en qué punto está.</span></li>
-        <li><span class="ic">📅</span><span><b>Tu calendario, dentro</b>Las citas que agendan tus asistentes aparecen junto a las de tu Google Calendar, o el calendario que uses.</span></li>
-        <li><span class="ic">📥</span><span><b>Tuyo de verdad</b>Descarga solo los contactos nuevos, o importa la base de datos que ya tienes. Con tu nombre y tu logo.</span></li>
-        <li><span class="ic">📱</span><span><b>Como una app</b>Instálalo en el móvil o en el ordenador. Se abre en un toque y se actualiza solo.</span></li>
+        <li><span class="ic">☀️</span><span><b>Mientras trabajas</b>Tus asistentes contestan WhatsApp, web y correo (y llamadas, según tu Departamento). Tú no paras a mirar el móvil.</span></li>
+        <li><span class="ic">📅</span><span><b>Se agenda solo</b>Las citas caen en tus huecos libres, en tu calendario y sin llamadas de ida y vuelta.</span></li>
+        <li><span class="ic">👥</span><span><b>Se guarda solo</b>Cada persona entra en tu CRM con su historial. Sin hojas de cálculo ni post-its.</span></li>
+        <li><span class="ic">🌙</span><span><b>Por la noche, 5 minutos</b>Abres tu portal —como app en el móvil— y lo tienes todo: citas de mañana, quién espera respuesta y qué ha entrado hoy.</span></li>
       </ul>
-      <p class="eco2-note">Pantalla de ejemplo con datos ficticios.</p>
+      <p class="eco2-note">Demo interactiva con datos de ejemplo.</p>
     </div>
-    <div class="eco2-mock" aria-hidden="true">
-      <div class="eco2-bar"><span class="eco2-logo">T</span><b>Tu negocio</b><span class="sp"></span><span class="eco2-pill on">Mi CRM</span><span class="eco2-pill">Mi calendario</span></div>
-      <div class="eco2-kpis"><div><b>24</b>contactos</div><div><b>3</b>citas hoy</div><div class="hot"><b>2</b>esperan respuesta</div></div>
-      <div class="eco2-board"><div class="eco2-col"><h4><i style="background:#2f7bff"></i>Nuevos</h4><div class="eco2-c"><div class="t"><span class="av" style="background:#9cc2ff">JR</span><div><b>Javier Ruiz</b><span class="s">💬 WhatsApp</span></div></div></div><div class="eco2-c"><div class="t"><span class="av" style="background:#ecc878">LP</span><div><b>Lucía Prieto</b><span class="s">💬 WhatsApp</span></div></div></div></div><div class="eco2-col"><h4><i style="background:#a78bfa"></i>Contactados</h4><div class="eco2-c"><div class="t"><span class="av" style="background:#e9b3ff">CS</span><div><b>Clínica Sol</b><span class="s">✉️ Correo</span></div></div></div><div class="eco2-c"><div class="t"><span class="av" style="background:#a8e6e0">AL</span><div><b>Ana López</b><span class="s">🌐 Web</span></div></div></div></div><div class="eco2-col"><h4><i style="background:#d9a83f"></i>Con cita</h4><div class="eco2-c"><div class="t"><span class="av" style="background:#ffc9a1">MS</span><div><b>Marta Soto</b><span class="s">📅 Reserva</span></div></div></div><div class="eco2-c"><div class="t"><span class="av" style="background:#9cc2ff">PV</span><div><b>Pedro Vidal</b><span class="s">📅 Reserva</span></div></div></div></div><div class="eco2-col"><h4><i style="background:#22c55e"></i>Clientes</h4><div class="eco2-c"><div class="t"><span class="av" style="background:#ecc878">DF</span><div><b>Diego Ferrer</b><span class="s">📞 Llamada</span></div></div></div><div class="eco2-c"><div class="t"><span class="av" style="background:#b5f0c8">LP</span><div><b>La Plaza</b><span class="s">✉️ Correo</span></div></div></div></div></div>
-      <div class="eco2-float f2">💬 Nuevo contacto por WhatsApp</div>
-      <div class="eco2-float f1">✓ Cita confirmada · jueves 11:00</div>
+    <div class="eco2-mock" id="ecoApp">
+      <div class="eco2-bar"><span class="eco2-logo">T</span><b>Tu negocio</b><span class="sp"></span>
+        <div class="eco2-tabs" role="tablist" aria-label="Demo del portal">
+          <button type="button" class="eco2-tab on" role="tab" data-go="portal">🏠 Portal</button>
+          <button type="button" class="eco2-tab" role="tab" data-go="crm">👥 Mi CRM</button>
+          <button type="button" class="eco2-tab" role="tab" data-go="cal">📅 Mi calendario</button>
+        </div></div>
+      <div class="eco2-view" data-v="portal">
+        <p class="eco2-hi">Buenas noches, Ana 👋<small>Esto es lo que ha pasado hoy mientras tú trabajabas.</small></p>
+        <div class="eco2-tiles">
+          <button type="button" class="eco2-tile" id="eco-tile-crm" data-go="crm"><i>→</i><b>👥 Mi CRM</b><span></span></button>
+          <button type="button" class="eco2-tile" id="eco-tile-cal" data-go="cal"><i>→</i><b>📅 Mi calendario</b><span></span></button>
+        </div>
+        <div class="eco2-feed-h">Hoy, sin que hicieras nada</div>
+        <div class="eco2-feed" id="eco-feed"></div>
+      </div>
+      <div class="eco2-view" data-v="crm" hidden>
+        <div class="eco2-kpis" id="eco-kpis"></div>
+        <div class="eco2-board" id="eco-board"></div>
+        <div class="eco2-det" id="eco-det"></div>
+      </div>
+      <div class="eco2-view" data-v="cal" hidden>
+        <div id="eco-cal"></div>
+        <div class="eco2-pills"><span class="eco2-pill">✓ Google Calendar vinculado</span><span class="eco2-pill">✓ Enlace para Outlook y Apple</span><span class="eco2-pill">✓ Como app en tu móvil</span></div>
+      </div>
+      <div class="eco2-hint">👆 Pruébalo: pulsa las pestañas y mueve los contactos. Datos de ejemplo.</div>
     </div>
   </div>
 </div>
@@ -1633,7 +1609,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
               </div>
               <div style="font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:#eef1f5;line-height:1.25;margin-bottom:4px;">Instalaciones eléctricas <span style="color:#5b9fff;font-style:italic;">sin sorpresas</span></div>
               <div style="display:flex;gap:12px;margin-bottom:14px;font-family:var(--font-body);font-size:.58rem;color:#7d8fa3;">
-                <span>★★★★★ 4.9 (127)</span><span>+300 clientes</span>
+                <span>★★★★★ 4.9 · reseñas de ejemplo</span><span>ejemplo ilustrativo</span>
               </div>
 
               <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;">
@@ -1858,8 +1834,12 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
         <div class="faq-a"><p><b>Start</b> (<span id="faq-price-start">69</span>€/mes): 1 automatización gratis, sin web. <b>Basic</b> (<span id="faq-price-basic">149</span>€/mes): Web Profesional con chat y agenda de fábrica + 1 automatización más. <b>Lite</b> (<span id="faq-price-lite">229</span>€/mes): web + 2 automatizaciones gratis. <b>Pro</b> (<span id="faq-price-pro">449</span>€/mes): Web Profesional + 3 automatizaciones gratis. Si superas el rango de tu escalón, subes al siguiente. <a href="#servicios" style="color:var(--blue);">Ver detalle de los cuatro →</a></p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">¿Por qué hay que comprometerse con una permanencia? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>No es una permanencia clásica en la que te cobramos mes a mes durante un año: tu primer año de Departamento va pagado por adelantado desde el principio, y es justo ese pago el que nos permite regalarte la web y las automatizaciones en vez de cobrarlas aparte, en los 4 Departamentos (Start, Basic, Lite y Pro). Al terminar el año, sigues mes a mes si quieres, sin más compromiso, o te lo llevas todo — código fuente incluido, en un pen drive personalizado.</p></div>
+        <button class="faq-q" onclick="toggleFaq(this)">¿Es una permanencia? ¿Qué pasa después del primer año? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Es un compromiso de un año que pagas por adelantado. Ese pago (con un 12% de descuento, con tarjeta o PayPal) es justo lo que nos permite regalarte la web y las automatizaciones en vez de cobrarlas aparte, en los 4 Departamentos. Durante ese año lo tienes todo funcionando y gestionado. Al terminar, sigues <b>mes a mes cuando quieras y sin permanencia</b> —al precio de tu Departamento—, o te lo llevas todo, código fuente incluido, en un pen drive personalizado.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Qué es mi portal, mi CRM y mi calendario? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Es tu centro de mando, incluido en los 4 Departamentos. Cada cita, WhatsApp o correo que atienden tus asistentes se guarda solo en tu <b>CRM</b> con su historial, y las citas aparecen en tu <b>calendario</b> (que puedes vincular a Google Calendar). Por la noche lo revisas en 5 minutos, desde el móvil o el ordenador, como una app que se actualiza sola. Puedes descargar tus contactos o importar los que ya tengas.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Cómo se paga? <span class="faq-icon">+</span></button>
@@ -2012,6 +1992,8 @@ function renderFoundingPricesHome(){
   const faqPro=document.getElementById('faq-price-pro');if(faqPro)faqPro.textContent=prices.pro;
   const faqStart=document.getElementById('faq-price-start');if(faqStart)faqStart.textContent=prices.start;
   const faqBasic=document.getElementById('faq-price-basic');if(faqBasic)faqBasic.textContent=prices.basic;
+  const heroFrom=Math.round(annualPricing('start').total)+' €';
+  ['hero-from-1','hero-from-2'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=heroFrom;});
   ['lite','pro','start','basic'].forEach(tier=>{
     const p=annualPricing(tier);
     const priceEl=document.getElementById('tier-price-'+tier);
@@ -3634,5 +3616,6 @@ function loadGA(){
 // Plegables: cerrados en móvil (pura lectura), abiertos en pantallas grandes.
 (function(){var m=window.innerWidth<=700;document.querySelectorAll('details.fold,details.fold-inline').forEach(function(d){d.open=!m;});})();
 </script>
+<script src="assets/eco-demo.js" defer></script>
 </body>
 </html>

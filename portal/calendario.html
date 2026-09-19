@@ -352,10 +352,10 @@ let deferredInstall = null;
 const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
 const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; document.getElementById('installBtn').style.display = ''; });
-if (isIos && !isStandalone()) document.getElementById('installBtn').style.display = '';
+if (!isStandalone()) document.getElementById('installBtn').style.display = '';
 async function installApp() {
   if (deferredInstall) { deferredInstall.prompt(); await deferredInstall.userChoice; deferredInstall = null; document.getElementById('installBtn').style.display = 'none'; return; }
-  alert('En Safari: pulsa Compartir y elige «Añadir a pantalla de inicio».');
+  alert('Instalar como app:\n• iPhone/iPad (Safari): Compartir → Añadir a pantalla de inicio.\n• Android (Chrome): menú ⋮ → Instalar aplicación.\n• Ordenador (Chrome/Edge): icono de instalar en la barra de direcciones.\nSe actualiza sola cada vez que entras.');
 }
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('crm-sw.js').catch(() => {});
 boot();

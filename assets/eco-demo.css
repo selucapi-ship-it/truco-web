@@ -1,0 +1,81 @@
+/* Ecosistema TRUCO technology: bloque comercial + demo interactiva del portal (CRM, calendario) */
+.eco2{--e-bg:#16151a;--e-panel:#201f24;--e-card:#2b2a30;--e-line:#3d3b42;--e-white:#f2f0ea;--e-grey:#b5b2bc;--e-gold:#d9a83f;--e-gold-l:#ecc878;--e-green:#22c55e;--e-blue:#2f7bff;--e-violet:#a78bfa;
+  position:relative;overflow:hidden;max-width:1120px;margin:0 auto;border:1px solid rgba(217,168,63,.55);border-radius:22px;padding:34px 32px;
+  background:radial-gradient(900px 400px at 85% -10%,rgba(217,168,63,.16),transparent 60%),linear-gradient(160deg,#211d10,#1a1a1f 55%);color:var(--e-white);font-family:'DM Sans',sans-serif;text-align:left;}
+.eco2 *{box-sizing:border-box;}
+.eco2-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:34px;align-items:center;}
+.eco2-badge{display:inline-flex;align-items:center;gap:8px;background:var(--e-gold);color:#16151a;font-weight:800;font-size:.78rem;border-radius:99px;padding:6px 14px;margin-bottom:14px;}
+.eco2-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--e-gold);margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.eco2-eyebrow::before{content:'';width:18px;height:1px;background:var(--e-gold);}
+.eco2 h2{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.7rem,3.4vw,2.6rem);line-height:1.1;margin:0 0 12px;text-wrap:balance;color:var(--e-white);}
+.eco2 h2 em{font-style:normal;color:var(--e-gold-l);}
+.eco2-lead{color:var(--e-grey);font-size:1.02rem;line-height:1.6;margin:0 0 18px;}
+.eco2-lead b{color:var(--e-white);}
+.eco2-feats{list-style:none;padding:0;margin:0 0 6px;display:flex;flex-direction:column;gap:12px;}
+.eco2-feats li{display:flex;gap:12px;align-items:flex-start;font-size:.92rem;color:var(--e-grey);line-height:1.45;}
+.eco2-feats .ic{width:34px;height:34px;border-radius:10px;background:rgba(217,168,63,.15);border:1px solid rgba(217,168,63,.4);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.eco2-feats b{color:var(--e-white);display:block;font-size:.95rem;}
+.eco2-note{font-size:.74rem;color:var(--e-grey);margin-top:14px;opacity:.85;}
+
+/* Demo interactiva */
+.eco2-mock{position:relative;background:var(--e-bg);border:1px solid var(--e-line);border-radius:16px;padding:14px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7);min-width:0;}
+.eco2-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:.78rem;flex-wrap:wrap;}
+.eco2-logo{width:26px;height:26px;border:1.5px solid var(--e-gold);border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font:700 .85rem 'Playfair Display',serif;color:var(--e-gold);}
+.eco2-bar b{font-family:'Playfair Display',serif;font-size:.95rem;}
+.eco2-bar .sp{flex:1;}
+.eco2-tabs{display:flex;gap:6px;flex-wrap:wrap;}
+.eco2-tab{border:1px solid var(--e-line);background:transparent;color:var(--e-grey);border-radius:99px;padding:5px 11px;font:600 .7rem 'DM Sans',sans-serif;cursor:pointer;}
+.eco2-tab:hover{border-color:var(--e-gold);color:var(--e-gold-l);}
+.eco2-tab.on{background:var(--e-gold);color:#16151a;border-color:var(--e-gold);font-weight:800;}
+.eco2-view{min-height:300px;}
+.eco2-view[hidden]{display:none;}
+.eco2-hi{font:700 1.05rem 'Playfair Display',serif;margin:0 0 2px;}
+.eco2-hi small{display:block;font:400 .72rem 'DM Sans',sans-serif;color:var(--e-grey);margin-top:2px;}
+.eco2-tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.eco2-tile{text-align:left;background:linear-gradient(135deg,rgba(217,168,63,.18),var(--e-panel) 75%);border:1px solid rgba(217,168,63,.55);border-radius:12px;padding:12px;color:var(--e-white);cursor:pointer;font-family:'DM Sans',sans-serif;}
+.eco2-tile:hover{border-color:var(--e-gold-l);transform:translateY(-1px);}
+.eco2-tile b{display:block;font:700 .92rem 'Playfair Display',serif;}
+.eco2-tile span{font-size:.68rem;color:var(--e-grey);display:block;margin-top:3px;line-height:1.35;}
+.eco2-tile i{font-style:normal;float:right;color:var(--e-gold-l);}
+.eco2-feed-h{font:700 .62rem 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--e-gold);margin:12px 0 6px;}
+.eco2-feed{display:flex;flex-direction:column;gap:6px;}
+.eco2-ev{display:flex;gap:10px;align-items:flex-start;background:var(--e-panel);border:1px solid var(--e-line);border-radius:10px;padding:8px 10px;font-size:.72rem;color:var(--e-grey);line-height:1.35;}
+.eco2-ev time{font:700 .62rem 'JetBrains Mono',monospace;color:var(--e-gold-l);white-space:nowrap;margin-top:2px;}
+.eco2-ev b{color:var(--e-white);}
+.eco2-ev.new{animation:eco2in .5s ease-out;border-color:rgba(34,197,94,.6);}
+.eco2-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;}
+.eco2-kpis div{background:linear-gradient(165deg,var(--e-panel),var(--e-card));border:1px solid var(--e-line);border-radius:10px;padding:8px 10px;font-size:.66rem;color:var(--e-grey);}
+.eco2-kpis b{display:block;font:700 1.35rem 'Playfair Display',serif;color:var(--e-white);line-height:1.1;}
+.eco2-kpis .hot{border-color:rgba(217,168,63,.5);}
+.eco2-kpis .hot b{color:var(--e-gold-l);}
+.eco2-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;}
+.eco2-col{background:var(--e-panel);border:1px solid var(--e-line);border-radius:10px;padding:7px;min-width:0;min-height:120px;}
+.eco2-col.over{border-color:var(--e-gold);background:#25221a;}
+.eco2-col h4{font:700 .66rem 'DM Sans',sans-serif;margin:0 0 6px;display:flex;align-items:center;gap:5px;color:var(--e-white);letter-spacing:0;}
+.eco2-col h4 i{width:7px;height:7px;border-radius:50%;display:inline-block;}
+.eco2-col h4 em{font-style:normal;margin-left:auto;font:700 .6rem 'JetBrains Mono',monospace;color:var(--e-grey);}
+.eco2-c{background:linear-gradient(165deg,var(--e-card),#26252b);border:1px solid var(--e-line);border-radius:8px;padding:7px;margin-bottom:6px;font-size:.62rem;color:var(--e-grey);cursor:grab;width:100%;text-align:left;font-family:'DM Sans',sans-serif;display:block;}
+.eco2-c:hover,.eco2-c.sel{border-color:var(--e-gold);}
+.eco2-c.drag{opacity:.4;}
+.eco2-c .t{display:flex;gap:6px;align-items:center;}
+.eco2-c .av{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 .55rem 'DM Sans',sans-serif;color:#16151a;flex-shrink:0;}
+.eco2-c b{color:var(--e-white);font-size:.68rem;display:block;line-height:1.15;}
+.eco2-c.new{animation:eco2in .5s ease-out;}
+.eco2-det{margin-top:10px;background:var(--e-panel);border:1px solid var(--e-gold);border-radius:12px;padding:10px 12px;font-size:.72rem;color:var(--e-grey);line-height:1.4;}
+.eco2-det b{color:var(--e-white);font-size:.82rem;}
+.eco2-det .mv{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.eco2-det button{border:1px solid var(--e-line);background:var(--e-bg);color:var(--e-white);border-radius:8px;padding:4px 9px;font:600 .66rem 'DM Sans',sans-serif;cursor:pointer;}
+.eco2-det button.on{background:var(--e-gold);color:#16151a;border-color:var(--e-gold);}
+.eco2-day{font:700 .62rem 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--e-gold);margin:0 0 6px;}
+.eco2-ap{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:var(--e-panel);border:1px solid var(--e-line);border-radius:10px;padding:8px 10px;margin-bottom:6px;cursor:pointer;color:var(--e-grey);font:400 .7rem 'DM Sans',sans-serif;}
+.eco2-ap:hover,.eco2-ap.sel{border-color:var(--e-gold);}
+.eco2-ap .h{font:700 1rem 'Playfair Display',serif;color:var(--e-gold-l);min-width:46px;}
+.eco2-ap b{color:var(--e-white);display:block;font-size:.76rem;}
+.eco2-ap.new{animation:eco2in .5s ease-out;}
+.eco2-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+.eco2-pill{border:1px solid rgba(34,197,94,.5);color:#b5f0c8;background:rgba(34,197,94,.08);border-radius:99px;padding:3px 10px;font-size:.64rem;font-weight:700;}
+.eco2-hint{margin-top:12px;font-size:.7rem;color:var(--e-gold-l);text-align:center;}
+@keyframes eco2in{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:none;}}
+@media(prefers-reduced-motion:reduce){.eco2-ev.new,.eco2-c.new,.eco2-ap.new{animation:none;}}
+@media(max-width:900px){.eco2{padding:26px 18px;}.eco2-grid{grid-template-columns:1fr;gap:26px;}}
+@media(max-width:600px){.eco2-board{display:flex;overflow-x:auto;gap:8px;padding-bottom:6px;scroll-snap-type:x mandatory;}.eco2-col{flex:0 0 62%;scroll-snap-align:start;}.eco2-kpis b{font-size:1.15rem;}.eco2-tiles{grid-template-columns:1fr;}}

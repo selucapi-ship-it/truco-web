@@ -11,6 +11,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
 <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+<link rel="manifest" href="crm.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#16151a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <style>
 :root{
@@ -174,6 +179,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .quick p{font-size:.84rem;color:var(--grey);margin:0;}
 .quick .go{margin-left:auto;color:var(--gold-light);font-size:1.4rem;}
 @media(max-width:700px){.quick-grid{grid-template-columns:1fr;}.apptabs{display:none;}}
+.install-strip{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:14px 18px;margin:-4px 0 22px;}
+.install-strip b{display:block;font-size:.95rem;}
+.install-strip span{color:var(--grey);font-size:.82rem;}
 </style>
 </head>
 <body>
@@ -199,6 +207,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
   <div class="quick-grid" id="quick-grid">
     <a class="quick" href="crm.html"><div class="qi">👥</div><div><h3>Mi CRM</h3><p id="q-crm">Tus contactos, ordenados solos</p></div><span class="go">→</span></a>
     <a class="quick" href="calendario.html"><div class="qi">📅</div><div><h3>Mi calendario</h3><p id="q-cal">Tus citas y tu agenda, en un solo sitio</p></div><span class="go">→</span></a>
+  </div>
+
+  <div class="install-strip" id="install-strip" style="display:none;">
+    <div><b>📱 Llévate tu portal en el móvil o el ordenador</b><span>Instálalo como una app: se abre en un toque y se actualiza sola.</span></div>
+    <button class="crm-open" style="margin:0" onclick="installApp()">⬇ Instalar app</button>
   </div>
 
   <div class="founder-strip" id="founder-strip" style="display:none;">
@@ -448,6 +461,19 @@ async function loadCrm(client) {
   if (hoy) document.getElementById('q-cal').textContent = hoy + ' cita' + (hoy === 1 ? '' : 's') + ' hoy';
   if (count) document.getElementById('crm-intro').textContent = 'Tienes ' + count + ' contacto' + (count === 1 ? '' : 's') + ' en tu libreta. Se llena sola con lo que atienden tus asistentes: ábrelo como una app, descarga tus contactos o importa los que ya tengas.';
 }
+
+
+// ── App instalable (se actualiza sola: el service worker prioriza la red) ──
+let deferredInstall = null;
+const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; });
+window.addEventListener('appinstalled', () => { deferredInstall = null; document.getElementById('install-strip').style.display = 'none'; });
+async function installApp() {
+  if (deferredInstall) { deferredInstall.prompt(); await deferredInstall.userChoice; deferredInstall = null; return; }
+  alert('Instalar como app:\n• iPhone/iPad (Safari): Compartir → Añadir a pantalla de inicio.\n• Android (Chrome): menú ⋮ → Instalar aplicación.\n• Ordenador (Chrome/Edge): icono de instalar en la barra de direcciones.\nSe actualiza sola cada vez que entras.');
+}
+if (!isStandalone()) document.addEventListener('DOMContentLoaded', () => { const el = document.getElementById('install-strip'); if (el) el.style.display = ''; });
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('crm-sw.js').catch(() => {});
 
 const TASK_STATUS_LABELS = { open: 'Recibida', in_progress: 'En marcha', blocked: 'Bloqueada', done: 'Hecha', cancelled: 'Cancelada' };
 

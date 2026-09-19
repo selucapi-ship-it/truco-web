@@ -32,6 +32,23 @@ button:disabled{opacity:.5;cursor:not-allowed;}
 .error{color:var(--red);font-size:.82rem;margin-top:12px;display:none;}
 .ok{color:var(--green);font-size:.85rem;margin-top:14px;display:none;line-height:1.5;}
 .warn{background:rgba(239,68,68,.1);border:1px solid var(--red);border-radius:9px;padding:11px 13px;font-size:.78rem;margin-bottom:18px;display:none;line-height:1.5;}
+
+.pw{position:relative;}
+.pw input{padding-right:46px;margin-bottom:12px;}
+.pw .eye{position:absolute;right:6px;top:5px;width:36px;height:36px;margin:0;padding:0;background:transparent;border:none;color:var(--grey);cursor:pointer;font-size:1.05rem;display:flex;align-items:center;justify-content:center;border-radius:8px;}
+.pw .eye:hover{color:var(--white);opacity:1;background:rgba(255,255,255,.06);}
+
+.rules{list-style:none;margin:2px 0 12px;padding:0;font-size:.8rem;color:var(--grey);}
+.rules li{display:flex;gap:8px;align-items:center;margin:3px 0;}
+.rules li .d{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--grey-line);display:inline-flex;align-items:center;justify-content:center;font-size:.62rem;color:transparent;flex-shrink:0;}
+.rules li.ok{color:var(--green);}
+.rules li.ok .d{background:var(--green);border-color:var(--green);color:#0b1a10;}
+.rules li.bad{color:#ff8a8a;}
+.rules li.bad .d{border-color:#ff8a8a;}
+.meter{height:5px;border-radius:99px;background:var(--grey-line);overflow:hidden;margin:0 0 10px;}
+.meter i{display:block;height:100%;width:0;background:var(--red);transition:width .2s,background .2s;}
+.hint2{font-size:.78rem;color:var(--grey);margin:-4px 0 12px;min-height:1.1em;}
+.hint2.bad{color:#ff8a8a;}.hint2.ok{color:var(--green);}
 </style>
 </head>
 <body>
@@ -42,8 +59,10 @@ button:disabled{opacity:.5;cursor:not-allowed;}
   <p class="sub">Elige la contraseña con la que entrarás a partir de ahora en tu portal de cliente.</p>
   <div class="warn" id="config-warn">Este enlace no es válido o ha caducado. Escríbenos y te mandamos uno nuevo.</div>
   <div id="form-wrap">
-    <input type="password" id="pass1" placeholder="Nueva contraseña" autocomplete="new-password">
-    <input type="password" id="pass2" placeholder="Repite la contraseña" autocomplete="new-password">
+    <div class="pw"><input type="password" id="pass1" placeholder="Nueva contraseña" oninput="checkPw()" autocomplete="new-password"><button type="button" class="eye" onclick="togglePw(this)" aria-label="Mostrar contraseña">👁</button></div>
+    <div class="meter"><i id="meter-bar"></i></div>
+    <ul class="rules" id="rules"><li id="r-len"><span class="d">✓</span> Al menos 8 caracteres</li><li id="r-mix"><span class="d">✓</span> Mejor si mezclas letras y números</li></ul>
+    <div class="pw"><input type="password" id="pass2" placeholder="Repite la contraseña" oninput="checkPw()" autocomplete="new-password"><button type="button" class="eye" onclick="togglePw(this)" aria-label="Mostrar contraseña">👁</button></div><div class="hint2" id="match-msg"></div>
     <button id="set-btn" onclick="setPassword()">Activar y entrar</button>
     <div class="error" id="err"></div>
     <div class="ok" id="ok-msg">Contraseña guardada. Entrando a tu portal…</div>
@@ -87,6 +106,36 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 1200);
 });
 
+
+function togglePw(btn) {
+  const inp = btn.parentElement.querySelector('input');
+  const show = inp.type === 'password';
+  inp.type = show ? 'text' : 'password';
+  btn.textContent = show ? '🙈' : '👁';
+  btn.setAttribute('aria-label', show ? 'Ocultar contraseña' : 'Mostrar contraseña');
+}
+
+function pwStrength(p) {
+  let sc = 0;
+  if (p.length >= 8) sc++; if (p.length >= 12) sc++;
+  if (/[a-z]/.test(p) && /[A-Z]/.test(p)) sc++;
+  if (/\d/.test(p)) sc++; if (/[^A-Za-z0-9]/.test(p)) sc++;
+  return sc;
+}
+function checkPw() {
+  const p1 = document.getElementById('pass1').value, p2 = document.getElementById('pass2').value;
+  const len = p1.length >= 8;
+  const rl = document.getElementById('r-len'); rl.className = p1 ? (len ? 'ok' : 'bad') : '';
+  const rm = document.getElementById('r-mix'); rm.className = p1 && /[A-Za-z]/.test(p1) && /\d/.test(p1) ? 'ok' : '';
+  const sc = pwStrength(p1), bar = document.getElementById('meter-bar');
+  bar.style.width = (p1 ? Math.max(12, sc * 20) : 0) + '%';
+  bar.style.background = sc <= 1 ? 'var(--red)' : sc <= 3 ? 'var(--gold)' : 'var(--green)';
+  const mm = document.getElementById('match-msg');
+  if (!p2) { mm.textContent = ''; mm.className = 'hint2'; }
+  else if (p1 === p2) { mm.textContent = '✓ Las contraseñas coinciden'; mm.className = 'hint2 ok'; }
+  else { mm.textContent = 'Las contraseñas no coinciden'; mm.className = 'hint2 bad'; }
+}
+
 async function setPassword() {
   const p1 = document.getElementById('pass1').value;
   const p2 = document.getElementById('pass2').value;
@@ -112,7 +161,10 @@ async function setPassword() {
   const { error } = await sb.auth.updateUser({ password: p1 });
   if (error) {
     btn.disabled = false;
-    errEl.textContent = 'No se pudo guardar la contraseña. Inténtalo de nuevo.';
+    const reasons = (error.reasons || []).join(',');
+    errEl.textContent = /weak_password|reasons/.test(String(error.code || '') + reasons) || /password/i.test(error.message || '')
+      ? 'Esa contraseña no es lo bastante segura' + (/pwned/.test(reasons) ? ' (aparece en filtraciones conocidas)' : '') + '. Usa al menos 8 caracteres y mezcla letras, números o símbolos.'
+      : 'No se pudo guardar la contraseña. Inténtalo de nuevo.';
     errEl.style.display = 'block';
     return;
   }

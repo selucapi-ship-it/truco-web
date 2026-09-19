@@ -34,6 +34,11 @@ button:hover{opacity:.88;}
 .warn{background:rgba(239,68,68,.1);border:1px solid var(--red);border-radius:9px;padding:11px 13px;font-size:.78rem;margin-bottom:18px;display:none;line-height:1.5;}
 .back{display:block;text-align:center;margin-top:22px;font-size:.82rem;color:var(--grey);}
 .back:hover{color:var(--white);}
+
+.pw{position:relative;}
+.pw input{padding-right:46px;margin-bottom:12px;}
+.pw .eye{position:absolute;right:6px;top:5px;width:36px;height:36px;margin:0;padding:0;background:transparent;border:none;color:var(--grey);cursor:pointer;font-size:1.05rem;display:flex;align-items:center;justify-content:center;border-radius:8px;}
+.pw .eye:hover{color:var(--white);opacity:1;background:rgba(255,255,255,.06);}
 </style>
 </head>
 <body>
@@ -44,7 +49,7 @@ button:hover{opacity:.88;}
   <p class="sub">Entra con las credenciales que te enviamos por email para ver lo que tienes contratado, agendar una auditoría y hablar con tu asistente.</p>
   <div class="warn" id="config-warn">Falta configurar el acceso al portal — vuelve más tarde o escríbenos.</div>
   <input type="email" id="login-email" placeholder="tu@email.com" autocomplete="username">
-  <input type="password" id="login-pass" placeholder="Contraseña" autocomplete="current-password">
+  <div class="pw"><input type="password" id="login-pass" placeholder="Contraseña" autocomplete="current-password"><button type="button" class="eye" onclick="togglePw(this)" aria-label="Mostrar contraseña">👁</button></div>
   <button onclick="doLogin()">Entrar</button>
   <div class="error" id="login-error"></div>
   <a class="back" href="#" id="forgot-link" onclick="forgotPassword();return false;">¿Has olvidado tu contraseña?</a>
@@ -70,6 +75,15 @@ document.addEventListener('DOMContentLoaded', async () => {
   const { data: { session } } = await sb.auth.getSession();
   if (session) window.location.href = 'dashboard.html';
 });
+
+
+function togglePw(btn) {
+  const inp = btn.parentElement.querySelector('input');
+  const show = inp.type === 'password';
+  inp.type = show ? 'text' : 'password';
+  btn.textContent = show ? '🙈' : '👁';
+  btn.setAttribute('aria-label', show ? 'Ocultar contraseña' : 'Mostrar contraseña');
+}
 
 async function doLogin() {
   const email = document.getElementById('login-email').value.trim();
