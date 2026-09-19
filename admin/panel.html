@@ -144,6 +144,7 @@
   .chat-badge{display:inline-block;font-family:var(--font-m);font-size:.6rem;letter-spacing:.03em;padding:2px 7px;border-radius:99px;margin-left:4px;vertical-align:1px;border:1px solid var(--grey-line);color:var(--grey);}
   .chat-badge.red{border-color:var(--red);color:var(--red);background:rgba(239,68,68,.1);}
   .chat-badge.amber{border-color:var(--gold);color:var(--gold-light);background:var(--gold-dim);}
+  .chat-badge.green{border-color:var(--green);color:var(--green);background:var(--green-dim);}
   .chat-conv-meta-row{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.78rem;color:var(--grey);}
   .chat-conv-meta-row b{color:var(--white);font-family:var(--font-m);}
   .chat-conv-note{font-size:.76rem;color:var(--gold-light);background:var(--gold-dim);border-radius:8px;padding:8px 12px;margin-bottom:12px;}
@@ -1210,6 +1211,15 @@
         <div id="blocked-ips-box" style="display:none;margin-bottom:12px;"></div>
         <div id="anon-list"></div>
       </div>
+
+      <div class="anon-section" id="voice-calls-section">
+        <div class="timeline-title">Llamadas del asistente de voz</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:.78rem;flex-wrap:wrap;">
+          <button class="del-btn" onclick="loadVoiceCalls()">Actualizar</button>
+          <span style="color:var(--grey);">Tope: 3 llamadas al mes por número · máx. ~5 min por llamada</span>
+        </div>
+        <div id="voice-calls-list"></div>
+      </div>
     </div>
 
     <div class="ficha-panel">
@@ -1538,7 +1548,7 @@ async function showApp() {
   // ni se lanza la consulta si no es founder (para un colaborador siempre
   // volvería vacía por RLS, así que preguntarlo sería trabajo de más).
   document.getElementById('anon-section').style.display = isFounder ? 'block' : 'none';
-  if (isFounder) loadChatSessions();
+  if (isFounder) { loadChatSessions(); loadVoiceCalls(); }
   loadClients();
   if (isFounder) {
     document.getElementById('bell-wrap').style.display = 'inline-block';
@@ -4081,6 +4091,61 @@ let blockedIpsData = [];
 let chatConvOpenId = null;
 
 function isIpBlocked(ip) { return !!ip && blockedIpsData.some(b => b.ip === ip); }
+
+
+// ── LLAMADAS DE VOZ ──
+let voiceCallsData = [];
+const VOICE_END = { cliente_colgo: 'Colgó el cliente', limite_5min: 'Cortada por límite de 5 min', tope_mensual: 'Rechazada: tope mensual' };
+
+function fmtDur(sec) {
+  if (sec == null) return 'en curso / sin cerrar';
+  return Math.floor(sec / 60) + ' min ' + String(sec % 60).padStart(2, '0') + ' s';
+}
+
+async function loadVoiceCalls() {
+  const { data } = await sb.from('voice_calls').select('*').order('started_at', { ascending: false }).limit(100);
+  voiceCallsData = data || [];
+  renderVoiceCalls();
+}
+
+function renderVoiceCalls() {
+  const list = document.getElementById('voice-calls-list');
+  if (!list) return;
+  if (!voiceCallsData.length) { list.innerHTML = '<div style="color:var(--grey);font-size:.78rem;">Ninguna todavía.</div>'; return; }
+  list.innerHTML = voiceCallsData.map(c => `
+    <div class="anon-item" style="cursor:pointer;" data-id="${escapeHtml(c.id)}" onclick="openVoiceCall(this.dataset.id)">
+      <div>
+        <div class="q"><b>${c.nombre ? escapeHtml(c.nombre) : 'Sin nombre'}</b>
+          <span class="chat-badge grey">${c.channel === 'phone' ? '📞 Teléfono' : '🌐 Web'}</span>
+          ${c.booked ? '<span class="chat-badge green">Cita reservada</span>' : ''}
+          ${c.end_reason && c.end_reason !== 'cliente_colgo' ? `<span class="chat-badge amber">${escapeHtml(VOICE_END[c.end_reason] || c.end_reason)}</span>` : ''}</div>
+        <div class="meta">${new Date(c.started_at).toLocaleString('es-ES')} · ${c.caller_number ? escapeHtml(c.caller_number) : (c.channel === 'phone' ? 'número oculto' : 'desde la web')} · ${fmtDur(c.duration_s)}</div>
+      </div>
+      <button class="del-btn" data-id="${escapeHtml(c.id)}" onclick="event.stopPropagation();deleteVoiceCall(this.dataset.id)">Borrar</button>
+    </div>`).join('');
+}
+
+function openVoiceCall(id) {
+  const c = voiceCallsData.find(x => x.id === id);
+  if (!c) return;
+  document.getElementById('chat-conv-overlay').style.display = 'block';
+  document.getElementById('chat-conv-title').textContent = (c.nombre || 'Sin nombre') + ' — llamada';
+  document.getElementById('chat-conv-meta').innerHTML = `<div class="chat-conv-meta-row">
+    <span>${c.channel === 'phone' ? 'Teléfono' : 'Web'}: <b>${c.caller_number ? escapeHtml(c.caller_number) : '(oculto / web)'}</b></span>
+    <span>${new Date(c.started_at).toLocaleString('es-ES')}</span><span>Duración: ${fmtDur(c.duration_s)}</span></div>`;
+  const t = Array.isArray(c.transcript) ? c.transcript : [];
+  document.getElementById('chat-conv-body').innerHTML = t.map(m => `
+    <div class="chat-bubble ${m.role === 'user' ? 'user' : 'bot'}">
+      <div class="who">${m.role === 'user' ? escapeHtml(c.nombre || 'Llamante') : 'Asistente TRUCO PRO (voz)'} · ${new Date(m.t).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</div>
+      <div class="txt">${escapeHtml(m.text)}</div></div>`).join('') || '<div class="empty-mini">Sin transcripción guardada.</div>';
+}
+
+async function deleteVoiceCall(id) {
+  if (!confirm('¿Borrar esta llamada y su transcripción? No se puede deshacer.')) return;
+  const { error } = await sb.from('voice_calls').delete().eq('id', id);
+  if (error) { alert('No se pudo borrar.'); return; }
+  await loadVoiceCalls();
+}
 
 async function loadChatSessions() {
   const [sessRes, blockedRes] = await Promise.all([

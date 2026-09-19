@@ -1,3 +1,4 @@
+import asyncio
 import base64
 import datetime
 import json
@@ -9,7 +10,7 @@ from typing import Annotated, Literal
 import requests
 from dotenv import load_dotenv
 from google.genai import types
-from livekit import agents
+from livekit import agents, rtc
 from livekit.agents import AgentServer, AgentSession, Agent, RunContext, function_tool
 from livekit.plugins import google
 from pydantic import Field
@@ -85,6 +86,60 @@ def _log_crm_interaction(nombre=None, email=None, telefono=None, nota=None):
         )
     except Exception:
         logger.exception("Error registrando en el CRM")
+
+
+# ── REGISTRO DE LLAMADAS ──
+MAX_CALLS_PER_NUMBER_MONTH = 3
+MAX_CALLS_HIDDEN_NUMBER_MONTH = 30
+CALL_WARN_SECONDS = 270
+CALL_MAX_SECONDS = 330
+
+
+def _sb_headers(extra=None):
+    key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+    h = {"apikey": key, "Content-Type": "application/json"}
+    if not key.startswith("sb_secret_") and not key.startswith("sb_publishable_"):
+        h["Authorization"] = f"Bearer {key}"
+    if extra:
+        h.update(extra)
+    return h
+
+
+def _sb_url(path):
+    return f"{os.environ.get('SUPABASE_URL')}/rest/v1/{path}"
+
+
+def _voice_gate(number, limit):
+    """True si esta llamada está permitida (y la cuenta). Ante un fallo de la BD deja pasar."""
+    try:
+        r = requests.post(_sb_url("rpc/voice_call_gate"), headers=_sb_headers(),
+                          json={"p_number": number, "p_limit": limit}, timeout=5)
+        if r.ok:
+            return bool(r.json().get("allowed", True))
+    except Exception:
+        logger.exception("Error en el tope de llamadas")
+    return True
+
+
+def _voice_call_create(room, channel, number):
+    try:
+        r = requests.post(_sb_url("voice_calls"), headers=_sb_headers({"Prefer": "return=representation"}),
+                          json={"room": room, "channel": channel, "caller_number": number}, timeout=5)
+        if r.ok:
+            return r.json()[0]["id"]
+    except Exception:
+        logger.exception("Error creando el registro de llamada")
+    return None
+
+
+def _voice_call_update(call_id, fields):
+    if not call_id:
+        return
+    try:
+        requests.patch(_sb_url(f"voice_calls?id=eq.{call_id}"), headers=_sb_headers(),
+                       json=fields, timeout=5)
+    except Exception:
+        logger.exception("Error actualizando el registro de llamada")
 
 
 # ── PRECIOS Y OFERTAS EN VIVO ──
@@ -302,14 +357,16 @@ Tienes tres herramientas para la consultoría gratuita de 20-30 minutos: `consul
 3. Si ese hueco no le viene bien pero quiere seguir ese mismo día, vuelve a llamar a `consultar_disponibilidad` con el mismo día y añadiendo el [iso: ...] que acabas de ofrecer a `excluir_horas`, para que te dé otro distinto ese mismo día. Repite esto tantas veces como haga falta dentro del mismo día.
 4. Si la herramienta te dice que ya no quedan huecos ese día, o si el cliente prefiere directamente otro día, pregúntale qué otro día le viene bien y repite el proceso desde el paso 2 — nunca calcules tú tampoco qué día es "el siguiente", eso lo hace la herramienta.
 5. Si después de un par de días probados no conseguís cuadrar nada, o el cliente en cualquier momento prefiere elegir él mismo la hora exacta, llama a `mostrar_calendario_en_pantalla` — le aparece un calendario en la pantalla del chat de la web para que reserve él mismo sin más vueltas por voz. Dile algo como "te acabo de dejar un calendario en la pantalla del chat, ahí puedes elegir tú mismo el día y la hora que mejor te venga". Nunca dejes al cliente colgado diciendo simplemente que no hay hueco — siempre termina en una reserva confirmada o en el calendario en pantalla.
-6. Si el hueco le interesa, pídele en la conversación los datos que falten: nombre completo, email y teléfono.
-7. Cuando tengas el hueco elegido y los datos, llama a `reservar_cita` con esa información, y confírmaselo en voz alta."""
+6. Si el hueco le interesa, NO le pidas email ni más datos: basta con su nombre (ya lo tienes de al principio; si no, pregúntalo) y el hueco elegido. Lo único que SÍ debes preguntar es a qué teléfono le llamamos: si la llamada viene de un teléfono (lo verás en el bloque DATOS DE ESTA LLAMADA), pregúntale "¿te llamamos a este mismo número o prefieres que te llamemos a otro?". Si dice que a otro, pídele ese número y repítelo para confirmarlo. Si la llamada viene de la web y no tienes su número, pídele el teléfono al que llamarle.
+7. Cuando tengas el hueco y el teléfono, llama a `reservar_cita` (copiando el iso literal) y confírmaselo en voz alta: nombre, día y hora, y a qué número le llamaremos."""
 
 
 class TrucoAgent(Agent):
-    def __init__(self, room=None, instructions=SYSTEM_INSTRUCTIONS):
+    def __init__(self, room=None, instructions=SYSTEM_INSTRUCTIONS, caller_number=None, call_state=None):
         super().__init__(instructions=instructions)
         self._room = room
+        self._caller_number = caller_number
+        self._state = call_state if call_state is not None else {}
 
     @function_tool
     async def registrar_contacto(
@@ -327,8 +384,10 @@ class TrucoAgent(Agent):
         teléfono. Llámala de nuevo (con los mismos datos actualizados) si más tarde
         se entera del sector o de que solo quiere información general. Nunca lo
         menciones en voz alta, hazlo mientras sigues charlando con normalidad."""
+        self._state["nombre"] = nombre
         _log_crm_interaction(
             nombre=nombre,
+            telefono=self._caller_number,
             nota=f"Motivo: {motivo}." + (f" Sector/negocio: {sector}." if sector else ""),
         )
         return "Registrado. Sigue la conversación con normalidad."
@@ -412,12 +471,21 @@ class TrucoAgent(Agent):
             str,
             Field(description="El valor [iso: ...] EXACTO de ese hueco tal como lo devolvió consultar_disponibilidad — cópialo literal, no lo calcules ni lo reescribas a partir de la fecha en español que le dijiste al cliente."),
         ],
-        nombre: Annotated[str, Field(description="Nombre completo del cliente")],
-        email: Annotated[str, Field(description="Email del cliente")],
-        telefono: Annotated[str, Field(description="Teléfono del cliente")],
+        nombre: Annotated[str, Field(description="Nombre del cliente")],
+        llamar_al_mismo_numero: Annotated[
+            bool,
+            Field(description="True si el cliente ha dicho que le llamemos al mismo número desde el que está llamando. False si ha dado otro número (o si llama desde la web)."),
+        ] = True,
+        otro_telefono: Annotated[
+            str,
+            Field(description="El teléfono al que quiere que le llamemos, solo si es distinto del de la llamada o si llama desde la web. Vacío si es el mismo."),
+        ] = "",
     ) -> str:
-        """Confirma y crea la reserva de la consultoría gratuita en el hueco elegido,
-        una vez tengas la fecha/hora exacta y los datos de contacto del cliente."""
+        """Confirma y crea la reserva de la consultoría gratuita en el hueco elegido.
+        Solo hacen falta el hueco, el nombre y a qué teléfono llamarle; nunca pidas email."""
+        telefono = otro_telefono.strip() if (otro_telefono.strip() or not llamar_al_mismo_numero) else (self._caller_number or "")
+        if not telefono:
+            return "Falta el teléfono al que llamarle. Pídeselo al cliente y vuelve a llamar a esta herramienta."
         service = _get_calendar_service()
         if service is None:
             return "No se pudo confirmar la reserva. Ofrece que alguien del equipo le llame."
@@ -428,22 +496,22 @@ class TrucoAgent(Agent):
                 calendarId=CALENDAR_ID,
                 body={
                     "summary": f"Consultoría gratuita TRUCO — {nombre}",
-                    "description": f"Reservada por voz.\nTeléfono: {telefono}\nEmail: {email}",
+                    "description": f"Reservada por llamada de voz.\nLlamar al: {telefono}",
                     "start": {"dateTime": start.isoformat(), "timeZone": "Europe/Madrid"},
                     "end": {"dateTime": end.isoformat(), "timeZone": "Europe/Madrid"},
-                    "attendees": [{"email": email}] if email else [],
                 },
             ).execute()
         except Exception:
             logger.exception("Error creando la reserva")
             return "No se pudo confirmar la reserva. Ofrece que alguien del equipo le llame."
+        self._state["nombre"] = nombre
+        self._state["booked"] = True
         _log_crm_interaction(
             nombre=nombre,
-            email=email,
             telefono=telefono,
-            nota=f"Reservó consultoría por voz para el {_formatear_fecha_es(start)}.",
+            nota=f"Reservó consultoría por voz para el {_formatear_fecha_es(start)}. Llamar al {telefono}.",
         )
-        return f"Reserva confirmada para {nombre} el {_formatear_fecha_es(start)}. Confírmaselo al cliente."
+        return f"Reserva confirmada para {nombre} el {_formatear_fecha_es(start)}; le llamaremos al {telefono}. Confírmaselo al cliente."
 
 
 server = AgentServer()
@@ -476,9 +544,111 @@ async def entrypoint(ctx: agents.JobContext):
     )
 
     live_pricing_block = _fetch_live_pricing_block()
-    agent = TrucoAgent(room=ctx.room, instructions=live_pricing_block + "\n\n" + SYSTEM_INSTRUCTIONS)
+
+    await ctx.connect()
+    participant = await ctx.wait_for_participant()
+    is_phone = participant.kind == rtc.ParticipantKind.PARTICIPANT_KIND_SIP
+    raw_number = (participant.attributes.get("sip.phoneNumber") or "").strip() if is_phone else ""
+    hidden = is_phone and (not raw_number or raw_number.lower() in ("anonymous", "unknown"))
+    caller_number = raw_number if (is_phone and not hidden) else None
+    channel = "phone" if is_phone else "web"
+
+    allowed = True
+    if is_phone:
+        key = caller_number or "oculto"
+        limit = MAX_CALLS_PER_NUMBER_MONTH if caller_number else MAX_CALLS_HIDDEN_NUMBER_MONTH
+        allowed = await asyncio.to_thread(_voice_gate, key, limit)
+
+    call_id = await asyncio.to_thread(_voice_call_create, ctx.room.name, channel, caller_number)
+    started = datetime.datetime.now(datetime.timezone.utc)
+    state = {"nombre": None, "booked": False, "end_reason": "cliente_colgo"}
+    transcript = []
+
+    if channel == "phone":
+        if caller_number:
+            call_block = (
+                f"DATOS DE ESTA LLAMADA: llama desde un teléfono, número {caller_number} (ya lo tienes, no se lo pidas "
+                "ni lo leas entero en voz alta). La llamada dura como máximo unos 5 minutos."
+            )
+        else:
+            call_block = (
+                "DATOS DE ESTA LLAMADA: llama desde un teléfono con el número oculto, así que NO tienes su número. "
+                "Si quiere reservar cita, pídele el teléfono al que llamarle. La llamada dura como máximo unos 5 minutos."
+            )
+    else:
+        call_block = (
+            "DATOS DE ESTA LLAMADA: llama desde la web, no tienes su número de teléfono. Si quiere reservar cita, "
+            "pídele el teléfono al que llamarle. La conversación dura como máximo unos 5 minutos."
+        )
+
+    agent = TrucoAgent(
+        room=ctx.room,
+        instructions=call_block + "\n\n" + live_pricing_block + "\n\n" + SYSTEM_INSTRUCTIONS,
+        caller_number=caller_number,
+        call_state=state,
+    )
+
+    @session.on("conversation_item_added")
+    def _on_item(ev):
+        item = ev.item
+        role = getattr(item, "role", None)
+        text = getattr(item, "text_content", None)
+        if role in ("user", "assistant") and text:
+            transcript.append({"role": role, "text": text, "t": datetime.datetime.now(datetime.timezone.utc).isoformat()})
+            asyncio.get_running_loop().run_in_executor(
+                None, _voice_call_update, call_id, {"transcript": list(transcript), "nombre": state.get("nombre")}
+            )
+
+    async def _on_shutdown():
+        ended = datetime.datetime.now(datetime.timezone.utc)
+        await asyncio.to_thread(_voice_call_update, call_id, {
+            "ended_at": ended.isoformat(),
+            "duration_s": int((ended - started).total_seconds()),
+            "nombre": state.get("nombre"),
+            "booked": bool(state.get("booked")),
+            "end_reason": state.get("end_reason"),
+            "transcript": transcript,
+        })
+
+    ctx.add_shutdown_callback(_on_shutdown)
 
     await session.start(room=ctx.room, agent=agent)
+
+    if not allowed:
+        state["end_reason"] = "tope_mensual"
+        h = session.generate_reply(
+            instructions="Dile amablemente, en una o dos frases, que desde este número ya se han hecho las llamadas gratuitas de este mes al asistente, "
+            "que puede escribir por el chat de la web trucotechnology.com o volver a llamar el mes que viene, y despídete."
+        )
+        try:
+            await h.wait_for_playout()
+        except Exception:
+            pass
+        await asyncio.sleep(1)
+        await ctx.delete_room()
+        return
+
+    async def _limit_watch():
+        await asyncio.sleep(CALL_WARN_SECONDS)
+        session.generate_reply(
+            instructions="Avisa con naturalidad de que queda poco más de medio minuto de llamada y, si no ha reservado, ofrécele cerrar ya la cita o que escriba por el chat de la web."
+        )
+        await asyncio.sleep(CALL_MAX_SECONDS - CALL_WARN_SECONDS)
+        state["end_reason"] = "limite_5min"
+        h = session.generate_reply(instructions="Despídete amablemente en una frase: se acaba el tiempo de la llamada, puede escribir por el chat de la web o volver a llamar.")
+        try:
+            await h.wait_for_playout()
+        except Exception:
+            pass
+        await asyncio.sleep(1)
+        await ctx.delete_room()
+
+    limit_task = asyncio.create_task(_limit_watch())
+
+    async def _cancel_limit():
+        limit_task.cancel()
+
+    ctx.add_shutdown_callback(_cancel_limit)
 
     await session.generate_reply(
         instructions="Saluda brevemente en español como el Asistente TRUCO PRO y pregunta el nombre de quien llama, antes de nada más."
