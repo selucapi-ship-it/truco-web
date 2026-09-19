@@ -882,6 +882,23 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   .gr-typing-wrap{display:none;}
 }
 @media(max-width:560px){.gr-demo{flex-direction:column;}}
+
+/* ── PLEGABLES: en móvil se ven cerrados; en ordenador, abiertos ── */
+details.fold>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;}
+details.fold>summary::-webkit-details-marker{display:none;}
+details.fold>summary .sd-line{flex:1;}
+details.fold>summary .sd-tag{white-space:normal;flex-shrink:1;min-width:0;}
+
+details.fold>summary::after{content:"+";font-family:var(--font-m,monospace);font-size:1.3rem;line-height:1;color:var(--gold);flex-shrink:0;margin-left:auto;}
+details.fold[open]>summary::after{content:"–";}
+details.fold[open]>summary{margin-bottom:22px;}
+details.fold>summary:focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-radius:8px;}
+details.fold.what-is-block>summary{margin-bottom:0;}
+details.fold.what-is-block[open]>summary{margin-bottom:14px;}
+details.fold-inline>summary{cursor:pointer;color:var(--gold);font-weight:700;font-size:.9rem;list-style:none;padding:6px 0;}
+details.fold-inline>summary::-webkit-details-marker{display:none;}
+details.fold-inline[open]>summary{margin-bottom:10px;}
+@media(min-width:701px){details.fold-inline>summary{display:none;}}
 </style>
 <!-- Open Graph -->
 <meta property="og:title" content="TRUCO technology — Tu Departamento Tecnológico">
@@ -1722,9 +1739,9 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <div class="founder-text">
           <div class="section-tag gold">La persona detrás de tu departamento</div>
           <h2 class="section-h2">El fundador detrás de tu departamento</h2>
-          <blockquote>"La tecnología debería ser una aliada, no una fuente de estrés. Por eso creé TRUCO technology: un departamento que se encarga de todo lo técnico para que tú puedas dedicarte a hacer crecer tu negocio."</blockquote>
+          <details class="fold-inline" open><summary>Leer más sobre el fundador</summary><blockquote>"La tecnología debería ser una aliada, no una fuente de estrés. Por eso creé TRUCO technology: un departamento que se encarga de todo lo técnico para que tú puedas dedicarte a hacer crecer tu negocio."</blockquote>
           <p>Con más de 20.000 personas siguiendo el trabajo que hacemos en redes, sé lo que necesita una pyme o un autónomo cuando habla de tecnología: no más herramientas, no más cursos. Un equipo de confianza que esté ahí, que entienda su negocio y que lo haga funcionar mejor cada mes.</p>
-          <div class="founder-sig"><b>Fundador · TRUCO technology</b> — www.trucotechnology.com</div>
+          </details><div class="founder-sig"><b>Fundador · TRUCO technology</b> — www.trucotechnology.com</div>
         </div>
       </div>
     </div>
@@ -1735,7 +1752,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   <div class="container">
     <div class="section-tag gold">¿Ya tienes algo automatizado?</div>
     <h2 class="section-h2">Si montaste un bot y ahora lo peleas tú solo, el problema no es tuyo — es de quién te lo vendió.</h2>
-    <p class="section-sub">Muchos negocios ya tienen un WhatsApp automatizado, un chatbot o un CRM a medias — configurado una vez y abandonado después. Cada vez que cambia un precio, un horario o un servicio, entras tú a arreglarlo. Eso no es tener un departamento tecnológico: es tener un problema técnico más.</p>
+    <details class="fold-inline" open><summary>Leer más</summary><p class="section-sub">Muchos negocios ya tienen un WhatsApp automatizado, un chatbot o un CRM a medias — configurado una vez y abandonado después. Cada vez que cambia un precio, un horario o un servicio, entras tú a arreglarlo. Eso no es tener un departamento tecnológico: es tener un problema técnico más.</p></details>
     <div class="fix-callout">
       <b>Nosotros nos hacemos cargo de lo que ya tienes.</b> Lo auditamos, lo reconfiguramos, lo entrenamos bien — y a partir de ahí, cualquier cambio nos lo pides a nosotros. Tú no vuelves a tocarlo.
     </div>
@@ -3528,5 +3545,9 @@ function loadGA(){
 })();
 </script>
 <script src="analytics-tracking.js"></script>
+<script>
+// Plegables: cerrados en móvil (pura lectura), abiertos en pantallas grandes.
+(function(){var m=window.innerWidth<=700;document.querySelectorAll('details.fold,details.fold-inline').forEach(function(d){d.open=!m;});})();
+</script>
 </body>
 </html>

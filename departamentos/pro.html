@@ -300,6 +300,23 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 .kit-step{background:var(--bg-panel);border-radius:6px;padding:5px 8px;display:flex;justify-content:space-between;gap:8px;}
 .kit-step i{font-style:normal;color:var(--green);}
 @media(max-width:700px){.kit-choose{display:flex;}}
+
+/* ── PLEGABLES: en móvil se ven cerrados; en ordenador, abiertos ── */
+details.fold>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;}
+details.fold>summary::-webkit-details-marker{display:none;}
+details.fold>summary .sd-line{flex:1;}
+details.fold>summary .sd-tag{white-space:normal;flex-shrink:1;min-width:0;}
+
+details.fold>summary::after{content:"+";font-family:var(--font-m,monospace);font-size:1.3rem;line-height:1;color:var(--gold);flex-shrink:0;margin-left:auto;}
+details.fold[open]>summary::after{content:"–";}
+details.fold[open]>summary{margin-bottom:22px;}
+details.fold>summary:focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-radius:8px;}
+details.fold.what-is-block>summary{margin-bottom:0;}
+details.fold.what-is-block[open]>summary{margin-bottom:14px;}
+details.fold-inline>summary{cursor:pointer;color:var(--gold);font-weight:700;font-size:.9rem;list-style:none;padding:6px 0;}
+details.fold-inline>summary::-webkit-details-marker{display:none;}
+details.fold-inline[open]>summary{margin-bottom:10px;}
+@media(min-width:701px){details.fold-inline>summary{display:none;}}
 </style>
 </head>
 <body>
@@ -455,7 +472,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="section-block reveal">
   <div class="container">
-    <div class="section-divider"><h2 class="sd-tag blue">¿Para quién es Pro™?</h2><div class="sd-line"></div></div>
+    <details class="fold" open><summary><h2 class="sd-tag blue">¿Para quién es Pro™?</h2><div class="sd-line"></div></summary>
     <p style="color:var(--grey);font-size:.92rem;line-height:1.7;max-width:760px;margin-bottom:4px;">Cuando ya no es una sola persona atendiendo, sino varios canales y varias manos a la vez, un fallo de coordinación cuesta un cliente. Pro™ está pensado para negocios que ya dependen de 3 o más herramientas en marcha.</p>
     <div class="who-grid">
       <div class="who-card">
@@ -480,12 +497,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
     </div>
     <div class="necessity-note" style="margin-top:22px;"><b>Si solo necesitas una web y 1-2 herramientas</b>, el <a href="lite.html" style="color:var(--blue);font-weight:600;">Departamento Lite™</a> es probablemente suficiente y más barato.</div>
-  </div>
+  </details></div>
 </div>
 
 <div class="section-block reveal" style="padding-bottom:20px;padding-top:0;">
   <div class="container">
-    <div class="section-divider"><h2 class="sd-tag blue">Así trabajamos contigo</h2><div class="sd-line"></div></div>
+    <details class="fold" open><summary><h2 class="sd-tag blue">Así trabajamos contigo</h2><div class="sd-line"></div></summary>
     <div class="hww-steps">
       <div class="hww-step"><div class="hww-step-num">1</div><p><b>Auditoría de tu negocio.</b> Antes de montar nada, te preguntamos cómo trabajas, qué preguntan tus clientes y qué información hace falta para representarte bien.</p></div>
       <div class="hww-step"><div class="hww-step-num">2</div><p><b>Configuración y entrenamiento a medida.</b> No te entregamos un asistente en blanco para que lo enseñes tú — lo configuramos y entrenamos nosotros con los datos de tu negocio.</p></div>
@@ -493,12 +510,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="hww-step"><div class="hww-step-num">4</div><p><b>Revisiones que agendamos nosotros.</b> No tienes que acordarte de pedir cita — te la agendamos y tú solo confirmas un hueco en tu calendario.</p></div>
       <div class="hww-step"><div class="hww-step-num">5</div><p><b>Tu asistente incluso puede cerrar ventas por ti.</b> Cuando uno de tus clientes está listo para contratar, tu asistente cierra el trato con él sin que tú tengas que intervenir.</p></div>
     </div>
-  </div>
+  </details></div>
 </div>
 
 <div class="section-block reveal">
   <div class="container">
-    <div class="section-divider"><h2 class="sd-tag blue">Incluye</h2><div class="sd-line"></div></div>
+    <details class="fold" open><summary><h2 class="sd-tag blue">Incluye</h2><div class="sd-line"></div></summary>
     <div class="feat-grid">
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg><p><b>Web Profesional regalada</b> — diseño a medida, páginas ilimitadas, con un chat que responde dudas y agenda citas solo, de fábrica — no cuenta como una de tus 3 automatizaciones a elegir</p></div>
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><p><b>3 automatizaciones a elegir</b> del catálogo, instaladas completamente gratis</p></div>
@@ -507,12 +524,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><p><b>Incidencias con prioridad alta</b> — respuesta en menos de 24h laborables, no por orden de llegada</p></div>
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p><b>Reunión mensual de 45 min</b> con análisis de datos y recomendaciones estratégicas, no solo dudas puntuales</p></div>
     </div>
-  </div>
+  </details></div>
 </div>
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
-    <div class="section-divider"><h2 class="sd-tag gold">Start™ vs Basic™ vs Lite™ vs Pro™ de un vistazo</h2><div class="sd-line"></div></div>
+    <details class="fold" open><summary><h2 class="sd-tag gold">Start™ vs Basic™ vs Lite™ vs Pro™ de un vistazo</h2><div class="sd-line"></div></summary>
     <div class="compare-wrap">
       <table class="compare-table">
         <thead>
@@ -530,7 +547,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         </tbody>
       </table>
     </div>
-  </div>
+  </details></div>
 </div>
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -684,5 +701,9 @@ function toggleFaq(btn){
 })();
 </script>
 <script src="../analytics-tracking.js"></script>
+<script>
+// Plegables: cerrados en móvil (pura lectura), abiertos en pantallas grandes.
+(function(){var m=window.innerWidth<=700;document.querySelectorAll('details.fold,details.fold-inline').forEach(function(d){d.open=!m;});})();
+</script>
 </body>
 </html>

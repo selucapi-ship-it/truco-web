@@ -290,6 +290,23 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 .what-is-block#automatizaciones .wib-title{font-size:1.6rem;}
 @media(max-width:900px){.def-grid{grid-template-columns:1fr 1fr!important;}}
 @media(max-width:600px){.def-grid{grid-template-columns:1fr!important;}.what-is-block{padding:22px 16px;}}
+
+/* ── PLEGABLES: en móvil se ven cerrados; en ordenador, abiertos ── */
+details.fold>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;}
+details.fold>summary::-webkit-details-marker{display:none;}
+details.fold>summary .sd-line{flex:1;}
+details.fold>summary .sd-tag{white-space:normal;flex-shrink:1;min-width:0;}
+
+details.fold>summary::after{content:"+";font-family:var(--font-m,monospace);font-size:1.3rem;line-height:1;color:var(--gold);flex-shrink:0;margin-left:auto;}
+details.fold[open]>summary::after{content:"–";}
+details.fold[open]>summary{margin-bottom:22px;}
+details.fold>summary:focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-radius:8px;}
+details.fold.what-is-block>summary{margin-bottom:0;}
+details.fold.what-is-block[open]>summary{margin-bottom:14px;}
+details.fold-inline>summary{cursor:pointer;color:var(--gold);font-weight:700;font-size:.9rem;list-style:none;padding:6px 0;}
+details.fold-inline>summary::-webkit-details-marker{display:none;}
+details.fold-inline[open]>summary{margin-bottom:10px;}
+@media(min-width:701px){details.fold-inline>summary{display:none;}}
 </style>
 </head>
 <body>
@@ -512,7 +529,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
     <!-- BLOQUE ONBOARDING DIRECTO -->
     <div style="background:linear-gradient(135deg,rgba(47,123,255,.06),var(--bg-panel));border:1px solid rgba(47,123,255,.2);border-radius:14px;padding:28px 32px;margin-bottom:32px;">
-      <div style="font-family:var(--font-m);font-size:.70rem;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:flex;align-items:center;gap:8px;"><span>→</span> Si ya tienes tecnología, esto es para ti</div>
+      <details class="fold" open><summary><div style="font-family:var(--font-m);font-size:.70rem;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;display:flex;align-items:center;gap:8px;"><span>→</span> Si ya tienes tecnología, esto es para ti</div></summary>
       <div class="onboard-grid">
         <div>
           <h3 style="font-family:var(--font-d);font-size:1.1rem;font-weight:700;margin-bottom:10px;">¿Tienes web, CRM, WhatsApp de empresa o cualquier herramienta digital activa?</h3>
@@ -536,7 +553,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
             <div style="font-size:.84rem;color:var(--white);font-weight:600;">Tú te olvidas de la tecnología. Nosotros no.</div>
           </div>
         </div>
-      </div>
+      </div></details>
     </div>
 
     <p style="text-align:center;font-size:.88rem;color:var(--grey);margin-top:8px;">¿Dudas sobre qué automatización elegir, sus límites o qué entra gratis en cada Departamento? Pregúntaselo al asistente del chat, que te lo explica al momento.</p>
@@ -547,8 +564,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 <!-- LO QUE HACEMOS EN CADA IMPLANTACIÓN -->
 <div class="section-block reveal" style="padding-top:56px;padding-bottom:0;">
   <div class="container">
-    <div class="what-is-block">
-      <h3 class="wib-title">Lo que hacemos en cada implantación</h3>
+    <details class="fold what-is-block" open><summary><h3 class="wib-title">Lo que hacemos en cada implantación</h3></summary>
       <p class="wib-sub">Cada automatización que eliges dentro de tu Departamento pasa por el mismo proceso, la elijas cuando la elijas.</p>
       <div class="digitaliza-includes">
         <div class="di-item">Estudio previo de tu empresa y necesidades</div>
@@ -560,7 +576,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         <div class="di-item">Soporte técnico durante la implantación</div>
         <div class="di-item">Documentación completa entregada</div>
       </div>
-    </div>
+    </details>
   </div>
 </div>
 
@@ -709,5 +725,9 @@ function toggleFaq(btn){
 })();
 </script>
 <script src="analytics-tracking.js"></script>
+<script>
+// Plegables: cerrados en móvil (pura lectura), abiertos en pantallas grandes.
+(function(){var m=window.innerWidth<=700;document.querySelectorAll('details.fold,details.fold-inline').forEach(function(d){d.open=!m;});})();
+</script>
 </body>
 </html>

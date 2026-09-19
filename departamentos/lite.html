@@ -302,6 +302,23 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 .kit-step{background:var(--bg-panel);border-radius:6px;padding:5px 8px;display:flex;justify-content:space-between;gap:8px;}
 .kit-step i{font-style:normal;color:var(--green);}
 @media(max-width:700px){.kit-choose{display:flex;}}
+
+/* ── PLEGABLES: en móvil se ven cerrados; en ordenador, abiertos ── */
+details.fold>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;}
+details.fold>summary::-webkit-details-marker{display:none;}
+details.fold>summary .sd-line{flex:1;}
+details.fold>summary .sd-tag{white-space:normal;flex-shrink:1;min-width:0;}
+
+details.fold>summary::after{content:"+";font-family:var(--font-m,monospace);font-size:1.3rem;line-height:1;color:var(--gold);flex-shrink:0;margin-left:auto;}
+details.fold[open]>summary::after{content:"–";}
+details.fold[open]>summary{margin-bottom:22px;}
+details.fold>summary:focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-radius:8px;}
+details.fold.what-is-block>summary{margin-bottom:0;}
+details.fold.what-is-block[open]>summary{margin-bottom:14px;}
+details.fold-inline>summary{cursor:pointer;color:var(--gold);font-weight:700;font-size:.9rem;list-style:none;padding:6px 0;}
+details.fold-inline>summary::-webkit-details-marker{display:none;}
+details.fold-inline[open]>summary{margin-bottom:10px;}
+@media(min-width:701px){details.fold-inline>summary{display:none;}}
 </style>
 </head>
 <body>
@@ -447,7 +464,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="section-block reveal">
   <div class="container">
-    <div class="section-divider"><h2 class="sd-tag green">¿Para quién es Lite™?</h2><div class="sd-line"></div></div>
+    <details class="fold" open><summary><h2 class="sd-tag green">¿Para quién es Lite™?</h2><div class="sd-line"></div></summary>
     <p style="color:var(--grey);font-size:.92rem;line-height:1.7;max-width:760px;margin-bottom:4px;">Si tu negocio ya tiene un local, un horario y clientes que buscan información antes de venir, necesitas algo más que un WhatsApp — necesitas una web que trabaje por ti mientras estás ocupado con el cliente que tienes delante.</p>
     <div class="who-grid">
       <div class="who-card">
@@ -472,12 +489,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       </div>
     </div>
     <div class="limit-note" style="margin-top:22px;"><b>Si tu negocio ya combina 4 o más herramientas a la vez</b> — varios canales, varias personas atendiendo — mira el <a href="pro.html">Departamento Pro™</a>, que mantiene hasta 6.</div>
-  </div>
+  </details></div>
 </div>
 
 <div class="section-block reveal" style="padding-bottom:20px;padding-top:0;">
   <div class="container">
-    <div class="section-divider"><h2 class="sd-tag green">Así trabajamos contigo</h2><div class="sd-line"></div></div>
+    <details class="fold" open><summary><h2 class="sd-tag green">Así trabajamos contigo</h2><div class="sd-line"></div></summary>
     <div class="hww-steps">
       <div class="hww-step"><div class="hww-step-num">1</div><p><b>Auditoría de tu negocio.</b> Antes de montar nada, te preguntamos cómo trabajas, qué preguntan tus clientes y qué información hace falta para representarte bien.</p></div>
       <div class="hww-step"><div class="hww-step-num">2</div><p><b>Configuración y entrenamiento a medida.</b> No te entregamos un asistente en blanco para que lo enseñes tú — lo configuramos y entrenamos nosotros con los datos de tu negocio.</p></div>
@@ -485,12 +502,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="hww-step"><div class="hww-step-num">4</div><p><b>Revisiones que agendamos nosotros.</b> No tienes que acordarte de pedir cita — te la agendamos y tú solo confirmas un hueco en tu calendario.</p></div>
       <div class="hww-step"><div class="hww-step-num">5</div><p><b>Tu asistente incluso puede cerrar ventas por ti.</b> Cuando uno de tus clientes está listo para contratar, tu asistente cierra el trato con él sin que tú tengas que intervenir.</p></div>
     </div>
-  </div>
+  </details></div>
 </div>
 
 <div class="section-block reveal">
   <div class="container">
-    <div class="section-divider"><h2 class="sd-tag green">Incluye</h2><div class="sd-line"></div></div>
+    <details class="fold" open><summary><h2 class="sd-tag green">Incluye</h2><div class="sd-line"></div></summary>
     <div class="feat-grid">
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg><p><b>Web gratis</b> — reacondicionamos la que ya tienes o creamos una Web Profesional nueva, incluida en la cuota</p></div>
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><p><b>2 automatizaciones a elegir</b> del catálogo, instaladas completamente gratis</p></div>
@@ -501,12 +518,12 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg><p><b>¿Quieres una 3ª automatización?</b> Se instala al precio de catálogo, sin recargo de alta — tu cuota no sube</p></div>
       <div class="feat-card gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><p><b>Límite de 3 automatizaciones tecnológicas</b> mantenidas en total — si necesitas más, mira Pro™</p></div>
     </div>
-  </div>
+  </details></div>
 </div>
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
-    <div class="section-divider"><h2 class="sd-tag gold">Start™ vs Basic™ vs Lite™ vs Pro™ de un vistazo</h2><div class="sd-line"></div></div>
+    <details class="fold" open><summary><h2 class="sd-tag gold">Start™ vs Basic™ vs Lite™ vs Pro™ de un vistazo</h2><div class="sd-line"></div></summary>
     <div class="compare-wrap">
       <table class="compare-table">
         <thead>
@@ -524,7 +541,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
         </tbody>
       </table>
     </div>
-  </div>
+  </details></div>
 </div>
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -684,5 +701,9 @@ function toggleFaq(btn){
 })();
 </script>
 <script src="../analytics-tracking.js"></script>
+<script>
+// Plegables: cerrados en móvil (pura lectura), abiertos en pantallas grandes.
+(function(){var m=window.innerWidth<=700;document.querySelectorAll('details.fold,details.fold-inline').forEach(function(d){d.open=!m;});})();
+</script>
 </body>
 </html>
