@@ -258,7 +258,7 @@
   /* ── ESTADÍSTICAS (overlay, founder-only) ── */
   #stats-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
   #stats-btn:hover{border-color:var(--gold);color:var(--gold);}
-  #stats-overlay,#activity-overlay,#chat-conv-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+  #stats-overlay,#activity-overlay,#chat-conv-overlay,#cal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
   .stats-box{width:100%;max-width:920px;margin:0 auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:18px;padding:30px 32px;box-shadow:var(--shadow-card);}
   .stats-box h2{font-family:var(--font-d);font-size:1.5rem;margin:0 0 18px;letter-spacing:-.01em;}
   .stats-close{float:right;background:none;border:1px solid var(--grey-line);border-radius:8px;width:32px;height:32px;color:var(--grey);font-size:1rem;cursor:pointer;transition:border-color .15s,color .15s;}
@@ -471,22 +471,32 @@
   .stats-box{padding:22px 14px;border-radius:14px;}
   #stats-overlay,#activity-overlay,#chat-conv-overlay{padding:14px 8px;}
   .table-wrap{border:none;box-shadow:none;overflow:visible;}
-  #clients-table,#clients-table tbody{display:block;width:100%;}
-  #clients-table thead{display:none;}
-  #clients-table tr{display:grid;grid-template-columns:1fr auto;gap:2px 10px;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:12px;padding:11px 13px;margin-bottom:8px;}
+  #clients-table,#clients-table tbody{display:block!important;width:100%!important;min-width:0!important;max-width:100%;}
+  #clients-table thead{display:none!important;}
+  #clients-table tr{display:grid!important;width:100%;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:12px;padding:11px 13px;margin-bottom:8px;}
   #clients-table tr.active{border-color:var(--gold);}
-  #clients-table td{display:block;border:none;padding:0;font-size:.8rem;color:var(--grey);overflow-wrap:anywhere;}
+  #clients-table td{display:block!important;width:auto!important;min-width:0;border:none;padding:0;font-size:.8rem;color:var(--grey);overflow-wrap:anywhere;}
   #clients-table td:nth-child(1){grid-column:1;color:var(--white);font-size:.92rem;font-weight:700;}
   #clients-table td:nth-child(2){grid-column:1;}
   #clients-table td:nth-child(3){grid-column:1;}
-  #clients-table td:nth-child(4){display:none;}
+  #clients-table td:nth-child(4){display:none!important;}
   #clients-table td:nth-child(5){grid-column:2;grid-row:1;justify-self:end;}
-  #clients-table td:nth-child(6){display:none;}
+  #clients-table td:nth-child(6){display:none!important;}
   #clients-table td:nth-child(7){grid-column:2;grid-row:2 / span 2;justify-self:end;align-self:end;font-size:.72rem;}
   #clients-table td:nth-child(7)::after{content:' int.';}
   table:not(#clients-table){display:block;overflow-x:auto;max-width:100%;}
   .btn{padding:9px 12px;}
   .chat-conv-meta-row{gap:6px;}
+  .list-panel{min-width:0;max-width:100%;overflow-x:hidden;box-sizing:border-box;}
+  .list-panel *{box-sizing:border-box;max-width:100%;}
+  .list-head{flex-direction:column;align-items:stretch;gap:10px;}
+  .list-head>div{display:flex!important;flex-wrap:wrap;gap:8px;width:100%;}
+  #search{width:100%!important;flex:1 1 100%;}
+  #new-client-btn,#export-csv-btn{flex:1 1 calc(50% - 4px);justify-content:center;}
+  .filters-bar select{flex:1 1 calc(50% - 4px);min-width:0;}
+  #filters-clear{flex:1 1 100%;}
+  .stats-bar{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .stats-bar>*{min-width:0;}
 }
 </style>
 <link rel="manifest" href="admin.webmanifest">
@@ -542,6 +552,7 @@
         </div>
       </div>
       <button id="settings-btn" onclick="openSettingsOverlay()">Ajustes</button>
+      <button id="cal-btn" onclick="openCalOverlay()" style="display:none;">📅 Calendario</button>
       <button id="stats-btn" onclick="openStatsOverlay()" style="display:none;">Estadísticas</button>
       <button id="activity-btn" onclick="openActivityOverlay()" style="display:none;">Interacciones</button>
       <button id="truki-btn" onclick="openTrukiOverlay()" style="display:none;">TruKi</button>
@@ -606,6 +617,21 @@
           <div id="activity-diagnostico"></div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div id="cal-overlay" onclick="if(event.target===this)closeCalOverlay()">
+    <div class="stats-box">
+      <button class="stats-close" onclick="closeCalOverlay()">✕</button>
+      <h2>Mi calendario</h2>
+      <p style="color:var(--grey);font-size:.86rem;margin:4px 0 12px;">Vincula tu Google Calendar para ver aquí tus consultorías y citas. Solo se ve si has iniciado sesión en Google en este navegador con esa cuenta.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+        <input type="text" id="cal-id" placeholder="Correo de Google o ID del calendario" style="flex:1;min-width:200px;">
+        <button class="btn sm" onclick="saveCalId()">Vincular</button>
+        <button class="btn sm ghost" onclick="clearCalId()">Quitar</button>
+      </div>
+      <p style="color:var(--grey);font-size:.78rem;margin:0 0 12px;">Dónde está el ID: Google Calendar → ajustes (⚙) → tu calendario → «Integrar el calendario» → ID del calendario (suele ser tu correo de Gmail).</p>
+      <div id="cal-frame-wrap"></div>
     </div>
   </div>
 
@@ -1724,6 +1750,7 @@ async function checkFounderStatus() {
   isFounder = !!(data && data.role === 'founder');
   document.getElementById('team-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('stats-btn').style.display = isFounder ? 'inline-block' : 'none';
+  document.getElementById('cal-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('activity-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('truki-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('new-client-btn').style.display = isFounder ? 'inline-block' : 'none';
@@ -1743,6 +1770,34 @@ function openTeamOverlay() {
 }
 function closeTeamOverlay() {
   document.getElementById('team-overlay').style.display = 'none';
+}
+
+
+// ── CALENDARIO del founder: Google Calendar embebido por ID (se guarda en este navegador) ──
+function openCalOverlay() {
+  document.getElementById('cal-overlay').style.display = 'block';
+  let id = '';
+  try { id = localStorage.getItem('panel_cal_id') || ''; } catch (e) {}
+  document.getElementById('cal-id').value = id;
+  renderCalFrame(id);
+}
+function closeCalOverlay() { document.getElementById('cal-overlay').style.display = 'none'; }
+function renderCalFrame(id) {
+  const box = document.getElementById('cal-frame-wrap');
+  if (!id) { box.innerHTML = '<div class="empty-mini">Aún no has vinculado ningún calendario.</div>'; return; }
+  const src = encodeURIComponent(id);
+  box.innerHTML = '<iframe title="Calendario" src="https://calendar.google.com/calendar/embed?src=' + src + '&ctz=Europe%2FMadrid&mode=WEEK&showTitle=0&showPrint=0&showTz=0&hl=es" style="width:100%;height:min(640px,70vh);border:0;border-radius:12px;background:#fff;"></iframe>';
+}
+function saveCalId() {
+  const v = document.getElementById('cal-id').value.trim();
+  if (!v || /\s/.test(v)) { alert('Pega tu correo de Google o el ID del calendario, sin espacios.'); return; }
+  try { localStorage.setItem('panel_cal_id', v); } catch (e) {}
+  renderCalFrame(v);
+}
+function clearCalId() {
+  try { localStorage.removeItem('panel_cal_id'); } catch (e) {}
+  document.getElementById('cal-id').value = '';
+  renderCalFrame('');
 }
 
 function openStatsOverlay() {
