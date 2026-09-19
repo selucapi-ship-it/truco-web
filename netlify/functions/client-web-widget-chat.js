@@ -20,6 +20,7 @@
 // founding-offer.js/chat-ai.js en el propio sitio). Solo sirve para llamar a
 // check_chat_quota(), que internamente se limita sola por session_id.
 const SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
+const { getClientIp, rpc } = require('./lib/chat-guard');
 
 function authHeaders(key) {
   const h = { 'Content-Type': 'application/json', apikey: key };
@@ -163,6 +164,13 @@ exports.handler = async function (event) {
   if (!cfg) {
     // widget_key no reconocido, o cliente sin la automatización activa/en pausa.
     return responder(200, { text: '', unresolved: true, reason: 'widget_not_found' });
+  }
+
+  // IPs bloqueadas desde el panel + tope diario por IP (mismo control de abuso
+  // que el chat propio de TRUCO; comparten la clave de Gemini y su gasto).
+  const puertaIp = await rpc('chat_ip_gate', { p_ip: getClientIp(event), p_limit: 150 });
+  if (puertaIp && puertaIp.allowed === false) {
+    return responder(200, { text: '', unresolved: true, reason: puertaIp.reason === 'blocked' ? 'blocked' : 'rate_limited' });
   }
 
   const cuota = await comprobarLimiteAntiAbuso(supabaseUrl, anonKey, widgetKey, sessionId);

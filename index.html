@@ -1975,6 +1975,7 @@ let chatOpened = false;
 function openChat(){
   const box = document.getElementById('chatBox');
   if(!box) return;
+  if(chatClosedRecently()) applyChatClosedUI();
   if(!chatRestoreAttempted){
     chatRestoreAttempted = true;
     if(restoreChatState()){
@@ -2781,6 +2782,52 @@ let chatLeadLoggedOnce = false;
 // sessionStorage sobrevive a esa recarga (misma pestaña/sesión) sin arrastrar
 // conversaciones de otro día u otro visitante.
 const CHAT_STATE_KEY = 'truco_chat_state_v1';
+
+// ── Registro de la conversación completa — lo que pregunta el visitante y lo
+// que se le contesta (bot local o IA) se guarda en el servidor para poder
+// revisarlo en el panel. Empieza en el primer mensaje del visitante (los
+// saludos previos se guardan con él): quien solo abre el chat y se va no deja
+// ningún rastro. La IP la pone el servidor, nunca este código.
+let chatLogStarted = false;
+let chatLogPending = [];
+let chatLogChain = Promise.resolve();
+function chatLogSend(items) {
+  const body = JSON.stringify({ session_id: trucoSessionId(), nombre: chatUserName, messages: items });
+  chatLogChain = chatLogChain.then(() => fetch('/.netlify/functions/chat-log', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true
+  }).catch(() => {}));
+}
+function chatLogMsg(role, text, label) {
+  if (isRestoringChat || (role !== 'user' && role !== 'bot')) return;
+  const item = { role, text: String(text || '').slice(0, 2000), via: role === 'bot' ? (label ? 'ai' : 'local') : 'local' };
+  if (!chatLogStarted) {
+    if (role !== 'user') { chatLogPending.push(item); return; }
+    chatLogStarted = true;
+    chatLogSend(chatLogPending.concat(item));
+    chatLogPending = [];
+    return;
+  }
+  chatLogSend([item]);
+}
+
+// ── Conversación cerrada por el servidor (abuso / IP bloqueada) — la decisión
+// es del servidor; esto solo refleja el cierre en pantalla y lo recuerda 24 h
+// para que recargar la página no parezca "reabrirlo".
+const CHAT_CLOSED_KEY = 'truco_chat_closed_v1';
+function chatClosedRecently() {
+  try { const t = Number(localStorage.getItem(CHAT_CLOSED_KEY)); return !!t && (Date.now() - t) < 24 * 3600 * 1000; } catch (e) { return false; }
+}
+function applyChatClosedUI() {
+  const inp = document.getElementById('chatIn');
+  if (inp) { inp.disabled = true; inp.value = ''; inp.placeholder = 'Conversación cerrada'; }
+  const btn = document.querySelector('.chat-send');
+  if (btn) btn.disabled = true;
+}
+function setChatClosed() {
+  try { localStorage.setItem(CHAT_CLOSED_KEY, String(Date.now())); } catch (e) { /* sin almacenamiento: se cierra igual en esta visita */ }
+  applyChatClosedUI();
+}
+
 let chatRenderLog = [];
 let chatHadBookingCard = false;
 // Temas ya tocados por el bot de reglas local (TRUCO_CHAT) durante esta
@@ -2870,6 +2917,7 @@ function addMsg(role, text, label, untrusted) {
   document.getElementById('chatMsgs').appendChild(div);
   document.getElementById('chatMsgs').scrollTop = 99999;
   chatRenderLog.push({ role, text, label: label || null });
+  chatLogMsg(role, text, label);
   saveChatState();
 }
 
@@ -2913,6 +2961,7 @@ function restoreChatState() {
   if (floatChat) floatChat.style.display = 'none';
   (Array.isArray(data.log) ? data.log : []).forEach(m => addMsg(m.role, m.text, m.label));
   isRestoringChat = false;
+  chatLogStarted = (Array.isArray(data.log) ? data.log : []).some(m => m.role === 'user');
   if (data.hadBookingCard) { chatHadBookingCard = false; showBookingCard(); }
   saveChatState();
   return true;
@@ -3026,6 +3075,7 @@ function sendMsg() {
   const inp = document.getElementById('chatIn');
   const text = inp.value.trim();
   if (!text) return;
+  if (chatClosedRecently()) { applyChatClosedUI(); return; }
   inp.value = '';
   addMsg('user', text, null, true);
   chatHistory.push({ role: 'user', text });
@@ -3085,6 +3135,14 @@ function sendMsg() {
   showTyping();
   askTrucoPro(text, chatHistory).then((aiResp) => {
     hideTyping();
+    if (aiResp.closed) {
+      // El servidor ha cerrado la conversación (abuso) o esta conexión está
+      // bloqueada: se muestra su mensaje de cierre y se desactiva el chat.
+      addMsg('bot', aiResp.text, null, true);
+      chatHistory.push({ role: 'bot', text: aiResp.text });
+      setChatClosed();
+      return;
+    }
     if (!aiResp.unresolved) {
       // TRUCO PRO lo resuelve directamente.
       addMsg('bot', aiResp.text, 'Asistente TRUCO PRO', true);

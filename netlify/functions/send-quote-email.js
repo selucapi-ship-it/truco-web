@@ -82,6 +82,11 @@ exports.handler = async function (event) {
   const asunto = (payload.asunto || 'Presupuesto — TRUCO technology').slice(0, 200);
   const mensaje = (payload.mensaje || 'Adjunto el presupuesto solicitado. Cualquier duda, respondemos encantados.').slice(0, 2000);
   const enlacePago = payload.enlace_pago ? String(payload.enlace_pago).slice(0, 500) : '';
+  // Reutilizado tal cual por enviarFacturaEmail() en admin/panel.html (mismo
+  // envío genérico de "PDF adjunto + mensaje", solo cambia qué PDF y qué
+  // nombre de archivo lleva) — nunca cambia el nombre por defecto para no
+  // romper la llamada ya existente de presupuestos.
+  const filename = payload.filename ? String(payload.filename).replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 150) : 'presupuesto-truco.pdf';
   if (!destinatario || !adjuntoBase64) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Falta destinatario o el PDF' }) };
   }
@@ -123,7 +128,7 @@ exports.handler = async function (event) {
       text: textoFinal,
       html: htmlFinal,
       attachments: [{
-        filename: 'presupuesto-truco.pdf',
+        filename,
         content: Buffer.from(adjuntoBase64, 'base64'),
         contentType: 'application/pdf'
       }]

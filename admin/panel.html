@@ -140,6 +140,21 @@
   .anon-item .meta{color:var(--grey);font-size:.68rem;font-family:var(--font-m);}
   .anon-item .del-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);border-radius:6px;padding:3px 9px;font-size:.7rem;cursor:pointer;flex-shrink:0;}
   .anon-item .del-btn:hover{border-color:var(--red);color:var(--red);}
+  .anon-item:hover{border-color:var(--gold);}
+  .chat-badge{display:inline-block;font-family:var(--font-m);font-size:.6rem;letter-spacing:.03em;padding:2px 7px;border-radius:99px;margin-left:4px;vertical-align:1px;border:1px solid var(--grey-line);color:var(--grey);}
+  .chat-badge.red{border-color:var(--red);color:var(--red);background:rgba(239,68,68,.1);}
+  .chat-badge.amber{border-color:var(--gold);color:var(--gold-light);background:var(--gold-dim);}
+  .chat-conv-meta-row{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.78rem;color:var(--grey);}
+  .chat-conv-meta-row b{color:var(--white);font-family:var(--font-m);}
+  .chat-conv-note{font-size:.76rem;color:var(--gold-light);background:var(--gold-dim);border-radius:8px;padding:8px 12px;margin-bottom:12px;}
+  #chat-conv-body{margin-top:18px;display:flex;flex-direction:column;gap:10px;}
+  .chat-bubble{max-width:82%;border:1px solid var(--grey-line);border-radius:12px;padding:9px 13px;font-size:.84rem;line-height:1.5;}
+  .chat-bubble .who{font-family:var(--font-m);font-size:.62rem;letter-spacing:.03em;color:var(--grey);margin-bottom:4px;}
+  .chat-bubble .txt{color:var(--white);white-space:pre-wrap;word-break:break-word;}
+  .chat-bubble.user{align-self:flex-end;background:var(--blue-dim);border-color:rgba(47,123,255,.35);}
+  .chat-bubble.bot{align-self:flex-start;background:var(--bg-card);}
+  .chat-bubble.sys{align-self:center;max-width:100%;border-style:dashed;border-color:var(--red);}
+  .chat-bubble.sys .txt{color:var(--red);}
 
   /* ── STATS BAR ── */
   .stats-bar{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
@@ -242,7 +257,7 @@
   /* ── ESTADÍSTICAS (overlay, founder-only) ── */
   #stats-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
   #stats-btn:hover{border-color:var(--gold);color:var(--gold);}
-  #stats-overlay,#activity-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+  #stats-overlay,#activity-overlay,#chat-conv-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
   .stats-box{width:100%;max-width:920px;margin:0 auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:18px;padding:30px 32px;box-shadow:var(--shadow-card);}
   .stats-box h2{font-family:var(--font-d);font-size:1.5rem;margin:0 0 18px;letter-spacing:-.01em;}
   .stats-close{float:right;background:none;border:1px solid var(--grey-line);border-radius:8px;width:32px;height:32px;color:var(--grey);font-size:1rem;cursor:pointer;transition:border-color .15s,color .15s;}
@@ -325,6 +340,15 @@
   .quote-add-row select,.quote-add-row input{flex:1;min-width:120px;}
   .quote-total{text-align:right;font-size:1rem;font-weight:700;color:var(--white);margin:14px 0;}
   .quotes-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px;}
+  /* ── FACTURAS (overlay, founder-only) — reutiliza las clases .quotes-* de
+     arriba a propósito, mismo lenguaje visual, solo cambia el contenido ── */
+  #facturas-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
+  #facturas-btn:hover{border-color:var(--gold);color:var(--gold);}
+  #facturas-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+  .factura-badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.68rem;font-family:var(--font-m);text-transform:uppercase;}
+  .factura-badge.emitida{background:rgba(47,123,255,.15);color:var(--blue);}
+  .factura-badge.rectificada{background:rgba(217,168,63,.15);color:var(--gold);}
+  .factura-badge.anulada{background:rgba(255,255,255,.08);color:var(--grey);}
   #prices-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
   #prices-btn:hover{border-color:var(--gold);color:var(--gold);}
   #fiscal-btn,#contrataciones-btn,#cobros-btn,#transferencias-btn,#audit-btn,#activity-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
@@ -474,6 +498,7 @@
       <button id="activity-btn" onclick="openActivityOverlay()" style="display:none;">Interacciones</button>
       <button id="truki-btn" onclick="openTrukiOverlay()" style="display:none;">TruKi</button>
       <button id="quotes-btn" onclick="openQuotesOverlay()" style="display:none;">Presupuestos</button>
+      <button id="facturas-btn" onclick="openFacturasOverlay()" style="display:none;">Facturas</button>
       <button id="prices-btn" onclick="openPricesOverlay()" style="display:none;">Precios</button>
       <button id="team-btn" onclick="openTeamOverlay()" style="display:none;">Equipo</button>
       <button id="fiscal-btn" onclick="openFiscalOverlay()" style="display:none;">Fiscalidad</button>
@@ -482,6 +507,15 @@
       <button id="transferencias-btn" onclick="openTransferenciasOverlay()" style="display:none;">Transferencias</button>
       <button id="audit-btn" onclick="openAuditOverlay()" style="display:none;">Auditoría</button>
       <button id="logout-btn" onclick="doLogout()">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <div id="chat-conv-overlay" onclick="if(event.target===this)closeChatConversation()">
+    <div class="stats-box">
+      <button class="stats-close" onclick="closeChatConversation()">✕</button>
+      <h2 id="chat-conv-title">Conversación</h2>
+      <div id="chat-conv-meta"></div>
+      <div id="chat-conv-body"></div>
     </div>
   </div>
 
@@ -630,6 +664,8 @@
           <input type="email" id="q-email" placeholder="Email">
           <input type="text" id="q-telefono" placeholder="Teléfono">
           <input type="text" id="q-negocio" placeholder="Negocio / empresa">
+          <input type="text" id="q-nif" placeholder="NIF/CIF del cliente (opcional)">
+          <input type="text" id="q-domicilio" placeholder="Domicilio fiscal del cliente (opcional)">
         </div>
         <textarea id="q-notas" placeholder="Notas internas u observaciones para el presupuesto (opcional)"></textarea>
 
@@ -637,6 +673,11 @@
           <div class="empty-mini">Líneas del presupuesto</div>
           <div id="quote-lineas"></div>
           <div class="quote-total" id="quote-total">Total: 0,00 €</div>
+
+          <div class="quote-add-row" style="background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.35);border-radius:8px;padding:8px 10px;">
+            <input type="number" id="q-descuento-pct" placeholder="Descuento %" min="0" max="100" step="1" style="max-width:110px;" oninput="renderQuoteLineas()">
+            <input type="text" id="q-descuento-motivo" placeholder="Motivo del descuento (ej. cliente piloto, amigo, cierre rápido...)" oninput="renderQuoteLineas()">
+          </div>
 
           <div class="quote-add-row">
             <select id="q-tier-select"></select>
@@ -678,9 +719,74 @@
             <option value="pagado">Pagado</option>
           </select>
           <button class="btn sm ghost" onclick="generarEnlacePago()">Generar enlace de pago</button>
+          <button class="btn sm ghost" onclick="emitirFacturaDesdePresupuesto()">Emitir factura</button>
           <button id="quote-delete-btn" class="btn sm ghost danger" onclick="eliminarPresupuesto()" style="display:none;">Eliminar</button>
         </div>
         <div id="quote-pago-url" class="empty-mini" style="margin-top:8px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="facturas-overlay">
+    <div class="quotes-layout">
+      <div class="quotes-sidebar">
+        <h2>Facturas</h2>
+        <button class="btn block" style="margin-bottom:14px;" onclick="nuevaFacturaEnBlanco()">+ Nueva factura</button>
+        <input type="text" id="facturas-search" placeholder="Buscar por número o cliente..." oninput="renderFacturasList()" style="width:100%;margin-bottom:10px;">
+        <div id="facturas-list"></div>
+      </div>
+      <div class="quotes-main">
+        <button class="stats-close" onclick="closeFacturasOverlay()">✕</button>
+        <h2 id="factura-view-title">Nueva factura</h2>
+
+        <!-- Vista de una factura YA EMITIDA — solo lectura, nunca editable
+             (una factura real no se corrige, se rectifica con una nueva). -->
+        <div id="factura-readonly-view" style="display:none;">
+          <div class="empty-mini">Número</div>
+          <p id="fv-numero" style="color:var(--white);font-family:var(--font-m);font-size:1rem;margin:2px 0 14px;"></p>
+          <div class="empty-mini">Cliente</div>
+          <p id="fv-cliente" style="color:var(--white);margin:2px 0 14px;"></p>
+          <div class="empty-mini">Líneas</div>
+          <div id="fv-lineas" style="margin:6px 0 14px;"></div>
+          <div class="quote-total" id="fv-total"></div>
+          <div id="fv-rectificativa-aviso" style="display:none;background:rgba(217,168,63,.1);border:1px solid rgba(217,168,63,.3);border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:.8rem;color:var(--gold);"></div>
+          <div class="quotes-actions">
+            <button class="btn sm" onclick="verPdfFactura()">Ver PDF</button>
+            <button class="btn sm ghost" onclick="descargarPdfFactura()">Descargar PDF</button>
+            <button class="btn sm ghost" onclick="enviarFacturaEmail()">Enviar por email</button>
+            <button id="factura-rectificar-btn" class="btn sm ghost danger" onclick="emitirRectificativa()">Anular con rectificativa</button>
+          </div>
+        </div>
+
+        <!-- Formulario de emisión — SOLO existe antes de pulsar "Emitir".
+             Una vez emitida, la factura pasa a la vista de solo lectura de
+             arriba y este formulario se descarta entero. -->
+        <div id="factura-form-view">
+          <div class="form-grid">
+            <input type="text" id="f-cliente-nombre" placeholder="Nombre / razón social *">
+            <input type="text" id="f-cliente-nif" placeholder="NIF/CIF *">
+            <input type="text" id="f-cliente-domicilio" placeholder="Domicilio fiscal">
+            <input type="email" id="f-cliente-email" placeholder="Email (para enviarla)">
+          </div>
+          <input type="text" id="f-concepto" placeholder="Concepto general (ej. Servicios de departamento tecnológico externalizado)" style="margin-bottom:8px;">
+          <textarea id="f-notas" placeholder="Notas que aparecen en la factura (opcional)"></textarea>
+
+          <div style="margin-top:16px;">
+            <div class="empty-mini">Líneas de la factura</div>
+            <div id="factura-lineas"></div>
+            <div class="quote-total" id="factura-total">Total: 0,00 €</div>
+            <div class="quote-add-row">
+              <input type="text" id="f-linea-desc" placeholder="Descripción">
+              <input type="number" id="f-linea-precio" placeholder="Precio € (sin IVA)" style="max-width:160px;">
+              <button class="btn sm ghost" onclick="anadirLineaFactura()">Añadir línea</button>
+            </div>
+          </div>
+
+          <div class="quotes-actions">
+            <button class="btn sm" onclick="confirmarEmitirFactura()">Emitir factura definitiva</button>
+          </div>
+          <p style="color:var(--grey);font-size:.72rem;margin-top:8px;">Una vez emitida, la factura no se puede editar ni borrar — solo corregirse con una rectificativa. Revisa los datos antes de confirmar.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -1091,12 +1197,17 @@
       </div>
 
       <div class="anon-section" id="anon-section">
-        <div class="timeline-title">Sesiones de chat sin identificar</div>
-        <div id="anon-toolbar" style="display:none;align-items:center;gap:10px;margin-bottom:8px;font-size:.78rem;">
-          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;"><input type="checkbox" id="anon-select-all" onchange="toggleSelectAllAnon(this.checked)"> Seleccionar todo</label>
-          <button class="del-btn" id="anon-delete-selected-btn" onclick="deleteSelectedAnonInteractions()" disabled>Borrar seleccionadas (0)</button>
-          <button class="del-btn" onclick="deleteAllAnonInteractions()">Borrar todas</button>
+        <div class="timeline-title">Conversaciones del chat</div>
+        <div id="anon-toolbar" style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:.78rem;flex-wrap:wrap;">
+          <select id="chat-filter" onchange="renderChatSessions()">
+            <option value="">Todas</option>
+            <option value="sospechosas">Sospechosas (cerradas o IP parecida)</option>
+            <option value="bloqueadas">IP bloqueada</option>
+          </select>
+          <button class="del-btn" onclick="loadChatSessions()">Actualizar</button>
+          <button class="del-btn" onclick="toggleBlockedIps()">IPs bloqueadas (<span id="blocked-count">0</span>)</button>
         </div>
+        <div id="blocked-ips-box" style="display:none;margin-bottom:12px;"></div>
         <div id="anon-list"></div>
       </div>
     </div>
@@ -1427,7 +1538,7 @@ async function showApp() {
   // ni se lanza la consulta si no es founder (para un colaborador siempre
   // volvería vacía por RLS, así que preguntarlo sería trabajo de más).
   document.getElementById('anon-section').style.display = isFounder ? 'block' : 'none';
-  if (isFounder) loadAnonymousSessions();
+  if (isFounder) loadChatSessions();
   loadClients();
   if (isFounder) {
     document.getElementById('bell-wrap').style.display = 'inline-block';
@@ -1559,6 +1670,7 @@ async function checkFounderStatus() {
   document.getElementById('truki-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('new-client-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('quotes-btn').style.display = isFounder ? 'inline-block' : 'none';
+  document.getElementById('facturas-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('prices-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('fiscal-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('contrataciones-btn').style.display = isFounder ? 'inline-block' : 'none';
@@ -1696,6 +1808,16 @@ const TIER_INFO = {
   lite: { nombre: 'Lite™', gratis: 2, max: 3 },
   pro: { nombre: 'Pro™', gratis: 3, max: 6 }
 };
+// Lo que trae cada Departamento por defecto, además de las automatizaciones a
+// elegir (esas ya las cubre el picker de "incluidas gratis" de abajo) — mismo
+// texto que ya usa pago.html en el desglose de cada tarjeta, para que el
+// presupuesto describa exactamente lo mismo que ve el cliente en la web.
+const TIER_BASE_FEATURES = {
+  start: ['Acompañamiento completo durante la implantación'],
+  basic: ['Web profesional a medida', 'Chat con asistente IA integrado en tu web', 'Calendario integrado con tu Gmail, en tu web', 'Salud técnica de posicionamiento (SEO técnico inicial)'],
+  lite: ['Web profesional (reacondicionada o nueva), incluida', 'Mantenimiento de hasta 3 automatizaciones en total', 'Reunión mensual de seguimiento (30 min)'],
+  pro: ['Web Profesional a medida, incluida', 'Chat + agenda que responde siempre en tu web, de fábrica', 'Mantenimiento de hasta 6 automatizaciones en total']
+};
 
 async function openNewClientOverlay() {
   document.getElementById('new-client-overlay').style.display = 'flex';
@@ -1765,7 +1887,7 @@ async function openQuotesOverlay() {
   document.getElementById('quotes-overlay').style.display = 'block';
   // tier_config_effective ya devuelve el precio de oferta si hay una activa hoy —
   // así un presupuesto nuevo parte del precio real que se va a cobrar ahora mismo.
-  const { data: tiers } = await sb.from('tier_config_effective').select('tier,name,founder_price_eur').order('founder_price_eur');
+  const { data: tiers } = await sb.from('tier_config_effective').select('tier,name,founder_price_eur,standard_price_eur').order('founder_price_eur');
   quoteTiersCache = tiers || [];
   document.getElementById('q-tier-select').innerHTML = quoteTiersCache.map(t =>
     `<option value="${escapeHtml(t.tier)}">${escapeHtml(t.name)} (${fmtEurPanel(t.founder_price_eur)}/mes)</option>`
@@ -1774,27 +1896,63 @@ async function openQuotesOverlay() {
   nuevoPresupuesto();
 }
 
+// Tipos de línea que representan un descuento derivado del Departamento
+// elegido (no el descuento manual de "amigo/cliente piloto", ese vive aparte
+// en q-descuento-pct) — se recalculan enteros cada vez que se cambia de tier
+// o de modo de pago, igual que las features y las automatizaciones incluidas.
+const TIPOS_DESCUENTO_DEPTO = ['descuento_pago_unico', 'descuento_fundador'];
+
 function anadirLineaTier() {
   const tierKey = document.getElementById('q-tier-select').value;
   const tier = quoteTiersCache.find(t => t.tier === tierKey);
   if (!tier) return;
   const modo = document.getElementById('q-tier-modo').value;
   // Un presupuesto tiene un solo Departamento — si ya había uno, lo sustituimos
-  // junto con las automatizaciones que llevaba incluidas gratis (ya no aplican).
-  quoteLineas = quoteLineas.filter(l => l.tipo !== 'departamento' && !l.es_incluida);
+  // junto con las automatizaciones, features y descuentos derivados que llevaba
+  // (ya no aplican).
+  quoteLineas = quoteLineas.filter(l => l.tipo !== 'departamento' && !l.es_incluida && !l.es_feature && !TIPOS_DESCUENTO_DEPTO.includes(l.tipo));
   quoteActiveTier = tierKey;
-  let descripcion, precio;
+
+  const standardMonthly = Number(tier.standard_price_eur);
+  const founderMonthly = Number(tier.founder_price_eur);
+  // "Fundador" solo existe como concepto si de verdad es más barato que el
+  // estándar — si algún día se igualan (plazas agotadas y sin precio especial
+  // ya configurado), esta línea deja de generarse sola.
+  const hayFundador = Number.isFinite(founderMonthly) && founderMonthly < standardMonthly;
+
+  // El orden pedido para que el presupuesto cuente la historia completa del
+  // precio en vez de aterrizar directo en el número ya rebajado: 1) precio
+  // real (estándar), 2) todo lo que se ofrece (features, más abajo las
+  // automatizaciones incluidas), 3) descuento por pago único, 4) descuento de
+  // fundador, y solo al final el descuento manual del cliente (q-descuento-pct,
+  // ya se renderiza aparte). Los tres primeros números SIEMPRE cuadran con el
+  // precio real que se cobraría en el checkout (misma fórmula que
+  // precioMinimoLegitimo en los Netlify Functions) — cambia cómo se cuenta,
+  // no cuánto se cobra.
   if (modo === 'anual') {
-    // Mismo 12 meses × 12% de descuento que pago.html/create-bank-transfer-order.js
-    // (precioMinimoLegitimo) — el presupuesto tiene que reflejar el mismo precio
-    // que se cobraría de verdad en el checkout, no un cálculo aparte.
-    precio = Math.round(tier.founder_price_eur * 12 * 0.88 * 100) / 100;
-    descripcion = 'Departamento ' + tier.name + ' (pago único, 12 meses incluidos, ahorra 12%)';
+    const standardTotal = Math.round(standardMonthly * 12 * 100) / 100;
+    quoteLineas.push({ tipo: 'departamento', tier_key: tierKey, descripcion: `Departamento ${tier.name} — precio real (12 meses)`, precio: standardTotal, es_desde: false });
+    (TIER_BASE_FEATURES[tierKey] || []).forEach(texto => {
+      quoteLineas.push({ tipo: 'feature', descripcion: texto, precio: 0, es_desde: false, es_feature: true });
+    });
+    const descuentoAnualImporte = Math.round(standardTotal * 0.12 * 100) / 100;
+    quoteLineas.push({ tipo: 'descuento_pago_unico', descripcion: 'Descuento por pagar el año completo (ahorra 12%)', precio: -descuentoAnualImporte, es_desde: false });
+    if (hayFundador) {
+      const trasPagoUnico = standardTotal - descuentoAnualImporte;
+      const founderTotal = Math.round(founderMonthly * 12 * 0.88 * 100) / 100;
+      const descuentoFundadorImporte = Math.round((trasPagoUnico - founderTotal) * 100) / 100;
+      quoteLineas.push({ tipo: 'descuento_fundador', descripcion: 'Descuento de precio de fundador (plazas limitadas)', precio: -descuentoFundadorImporte, es_desde: false });
+    }
   } else {
-    precio = tier.founder_price_eur;
-    descripcion = 'Departamento ' + tier.name + ' (mensual, alta y gestión)';
+    quoteLineas.push({ tipo: 'departamento', tier_key: tierKey, descripcion: `Departamento ${tier.name} — precio real (mensual)`, precio: standardMonthly, es_desde: false });
+    (TIER_BASE_FEATURES[tierKey] || []).forEach(texto => {
+      quoteLineas.push({ tipo: 'feature', descripcion: texto, precio: 0, es_desde: false, es_feature: true });
+    });
+    if (hayFundador) {
+      const descuentoFundadorImporte = Math.round((standardMonthly - founderMonthly) * 100) / 100;
+      quoteLineas.push({ tipo: 'descuento_fundador', descripcion: 'Descuento de precio de fundador (plazas limitadas)', precio: -descuentoFundadorImporte, es_desde: false });
+    }
   }
-  quoteLineas.push({ tipo: 'departamento', tier_key: tierKey, descripcion, precio, es_desde: false });
   renderQuoteLineas();
   renderIncludedSolutionsPicker();
   renderCatalogSelectForActiveTier();
@@ -1834,11 +1992,17 @@ async function toggleLineaIncluida(key, checked) {
     }
     const catalog = await getSolutionsCatalog();
     const sol = catalog.find(s => s.solution_key === key);
-    quoteLineas.push({
+    const nuevaLinea = {
       tipo: 'catalogo', solution_key: key,
       descripcion: (sol ? sol.name : key) + ' (incluida en el Departamento)',
       precio: 0, es_desde: false, es_incluida: true
-    });
+    };
+    // Va con "todo lo que se ofrece" — antes de los descuentos derivados del
+    // Departamento (pago único / fundador), nunca después, aunque se marque
+    // la casilla más tarde.
+    const idxDescuento = quoteLineas.findIndex(l => TIPOS_DESCUENTO_DEPTO.includes(l.tipo));
+    if (idxDescuento === -1) quoteLineas.push(nuevaLinea);
+    else quoteLineas.splice(idxDescuento, 0, nuevaLinea);
   } else {
     quoteLineas = quoteLineas.filter(l => !(l.solution_key === key && l.es_incluida));
   }
@@ -2754,7 +2918,7 @@ function nuevoPresupuesto() {
   quoteLineas = [];
   quoteActiveTier = null;
   document.getElementById('quote-form-title').textContent = 'Nuevo presupuesto';
-  ['q-nombre', 'q-email', 'q-telefono', 'q-negocio', 'q-notas'].forEach(id => document.getElementById(id).value = '');
+  ['q-nombre', 'q-email', 'q-telefono', 'q-negocio', 'q-nif', 'q-domicilio', 'q-notas', 'q-descuento-pct', 'q-descuento-motivo'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('q-estado').value = 'borrador';
   document.getElementById('quote-pago-url').textContent = '';
   document.getElementById('quote-delete-btn').style.display = 'none';
@@ -2773,7 +2937,11 @@ function cargarPresupuestoEnFormulario(id) {
   document.getElementById('q-email').value = q.email_contacto || '';
   document.getElementById('q-telefono').value = q.telefono || '';
   document.getElementById('q-negocio').value = q.negocio || '';
+  document.getElementById('q-nif').value = q.cliente_nif || '';
+  document.getElementById('q-domicilio').value = q.cliente_domicilio || '';
   document.getElementById('q-notas').value = q.notas || '';
+  document.getElementById('q-descuento-pct').value = q.descuento_pct || '';
+  document.getElementById('q-descuento-motivo').value = q.descuento_motivo || '';
   document.getElementById('q-estado').value = q.estado || 'borrador';
   document.getElementById('quote-pago-url').textContent = q.stripe_checkout_url ? 'Enlace de pago: ' + q.stripe_checkout_url : '';
   document.getElementById('quote-delete-btn').style.display = 'inline-block';
@@ -2802,20 +2970,29 @@ function renderQuoteLineas() {
     wrap.innerHTML = '<div class="empty-mini">Sin líneas todavía.</div>';
   } else {
     wrap.innerHTML = quoteLineas.map((l, i) => `
-      <div class="quote-line">
-        <span class="ql-desc">${escapeHtml(l.descripcion)}${l.es_desde ? ' <span style="color:var(--grey);font-size:.7rem;">(desde)</span>' : ''}${l.es_incluida ? ' <span style="color:var(--green);font-size:.7rem;">(incluida gratis)</span>' : ''}</span>
+      <div class="quote-line"${l.es_feature ? ' style="padding-left:14px;opacity:.85;"' : ''}>
+        <span class="ql-desc">${l.es_feature ? '✓ ' : ''}${escapeHtml(l.descripcion)}${l.es_desde ? ' <span style="color:var(--grey);font-size:.7rem;">(desde)</span>' : ''}${l.es_incluida ? ' <span style="color:var(--green);font-size:.7rem;">(incluida gratis)</span>' : ''}${l.es_feature ? ' <span style="color:var(--green);font-size:.7rem;">(incluido)</span>' : ''}</span>
         <span class="ql-price" style="display:flex;align-items:center;gap:6px;">
-          <input type="number" value="${l.precio ?? ''}" placeholder="a consultar" ${l.es_incluida ? 'disabled' : ''} style="width:80px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:6px;padding:4px 6px;color:var(--white);font-size:.78rem;${l.es_incluida ? 'opacity:.6;' : ''}" onchange="actualizarPrecioLinea(${i}, this.value)">€
+          <input type="number" value="${l.precio ?? ''}" placeholder="a consultar" ${l.es_incluida || l.es_feature ? 'disabled' : ''} style="width:80px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:6px;padding:4px 6px;color:var(--white);font-size:.78rem;${l.es_incluida || l.es_feature ? 'opacity:.6;' : ''}" onchange="actualizarPrecioLinea(${i}, this.value)">€
           <button class="del-btn" onclick="quitarLineaPresupuesto(${i})">✕</button>
         </span>
       </div>
     `).join('');
   }
-  const base = quoteLineas.reduce((s, l) => s + (Number(l.precio) || 0), 0);
+  const subtotal = quoteLineas.reduce((s, l) => s + (Number(l.precio) || 0), 0);
+  const descuentoPct = Math.min(100, Math.max(0, Number(document.getElementById('q-descuento-pct').value) || 0));
+  const descuentoImporte = subtotal * (descuentoPct / 100);
+  const base = subtotal - descuentoImporte;
   const iva = base * 0.21;
-  document.getElementById('quote-total').innerHTML =
-    `<div style="font-size:.78rem;font-weight:400;color:var(--grey);">Base: ${fmtEurPanel(base)} &nbsp;·&nbsp; IVA (21%): ${fmtEurPanel(iva)}</div>` +
-    `Total con IVA: ${fmtEurPanel(base + iva)}`;
+  let html = '';
+  if (descuentoPct > 0) {
+    const motivo = document.getElementById('q-descuento-motivo').value.trim();
+    html += `<div style="font-size:.78rem;font-weight:400;color:var(--grey);">Subtotal: ${fmtEurPanel(subtotal)}</div>`;
+    html += `<div style="font-size:.82rem;font-weight:700;color:var(--gold);margin:2px 0;">Descuento ${descuentoPct}%${motivo ? ' — ' + escapeHtml(motivo) : ''}: -${fmtEurPanel(descuentoImporte)}</div>`;
+  }
+  html += `<div style="font-size:.78rem;font-weight:400;color:var(--grey);">Base: ${fmtEurPanel(base)} &nbsp;·&nbsp; IVA (21%): ${fmtEurPanel(iva)}</div>`;
+  html += `Total con IVA: ${fmtEurPanel(base + iva)}`;
+  document.getElementById('quote-total').innerHTML = html;
 }
 
 function actualizarPrecioLinea(i, value) {
@@ -2827,9 +3004,10 @@ function quitarLineaPresupuesto(i) {
   const linea = quoteLineas[i];
   quoteLineas.splice(i, 1);
   if (linea.tipo === 'departamento') {
-    // Sin Departamento no hay "incluidas gratis" ni pool restringido — se quitan también.
+    // Sin Departamento no hay "incluidas gratis" ni features ni descuentos
+    // derivados (pago único / fundador) ni pool restringido — se quitan también.
     quoteActiveTier = null;
-    quoteLineas = quoteLineas.filter(l => !l.es_incluida);
+    quoteLineas = quoteLineas.filter(l => !l.es_incluida && !l.es_feature && !TIPOS_DESCUENTO_DEPTO.includes(l.tipo));
     renderIncludedSolutionsPicker();
     renderCatalogSelectForActiveTier();
   } else if (linea.es_incluida) {
@@ -2875,15 +3053,25 @@ function anadirLineaCustom() {
 }
 
 function datosFormularioPresupuesto() {
-  const total = quoteLineas.reduce((s, l) => s + (Number(l.precio) || 0), 0);
+  const subtotal = quoteLineas.reduce((s, l) => s + (Number(l.precio) || 0), 0);
+  const descuentoPct = Math.min(100, Math.max(0, Number(document.getElementById('q-descuento-pct').value) || 0));
+  // total_estimado es, desde siempre, la BASE SIN IVA que create-quote-checkout.js
+  // cobra de verdad (total_estimado * 1.21) — así que ya se guarda con el
+  // descuento aplicado, y el enlace de pago del presupuesto refleja el
+  // descuento sin tener que tocar ese endpoint.
+  const total = Math.round(subtotal * (1 - descuentoPct / 100) * 100) / 100;
   return {
     nombre_contacto: document.getElementById('q-nombre').value.trim() || null,
     email_contacto: document.getElementById('q-email').value.trim() || null,
     telefono: document.getElementById('q-telefono').value.trim() || null,
     negocio: document.getElementById('q-negocio').value.trim() || null,
+    cliente_nif: document.getElementById('q-nif').value.trim() || null,
+    cliente_domicilio: document.getElementById('q-domicilio').value.trim() || null,
     notas: document.getElementById('q-notas').value.trim() || null,
     lineas: quoteLineas,
     total_estimado: total,
+    descuento_pct: descuentoPct,
+    descuento_motivo: document.getElementById('q-descuento-motivo').value.trim() || null,
   };
 }
 
@@ -3007,6 +3195,275 @@ async function generarEnlacePago() {
   } catch (e) {
     alert('Error de conexión al generar el enlace de pago.');
   }
+}
+
+// ── FACTURAS (founder-only) ─────────────────────────────────────────────────
+// A diferencia de los presupuestos, una factura NUNCA se edita ni se borra
+// una vez emitida — emitir_factura() en Supabase es el único camino posible
+// (numeración correlativa sin huecos + encadenado por hash, ver
+// supabase/migration_facturas.sql). Este bloque de JS solo tiene dos modos:
+// "formulario" (antes de emitir, todo editable) y "vista de solo lectura"
+// (después de emitir, ni un botón de guardar a la vista).
+let allFacturas = [];
+let facturaLineas = [];
+let viewingFacturaId = null; // factura YA EMITIDA que se está viendo, o null si estamos en el formulario
+
+function fmtEurFacturas(n) {
+  return Number(n || 0).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+}
+
+async function openFacturasOverlay() {
+  document.getElementById('facturas-overlay').style.display = 'block';
+  await loadFacturasList();
+  nuevaFacturaEnBlanco();
+}
+function closeFacturasOverlay() {
+  document.getElementById('facturas-overlay').style.display = 'none';
+}
+
+async function loadFacturasList() {
+  const { data, error } = await sb.from('facturas').select('*').order('fecha_hora_generacion', { ascending: false });
+  if (error) { console.error(error); return; }
+  allFacturas = data || [];
+  renderFacturasList();
+}
+
+function renderFacturasList() {
+  const wrap = document.getElementById('facturas-list');
+  const q = (document.getElementById('facturas-search').value || '').trim().toLowerCase();
+  const filtradas = allFacturas.filter(f =>
+    !q || f.numero_completo.toLowerCase().includes(q) || (f.cliente_nombre || '').toLowerCase().includes(q)
+  );
+  if (!filtradas.length) { wrap.innerHTML = '<div class="empty-mini">Sin facturas todavía.</div>'; return; }
+  wrap.innerHTML = filtradas.map(f => `
+    <div class="quote-row ${viewingFacturaId === f.id ? 'active' : ''}" onclick="verFactura('${f.id}')">
+      <div class="q-name">${escapeHtml(f.numero_completo)} — ${escapeHtml(f.cliente_nombre)}</div>
+      <div class="q-meta">${fmtEurFacturas(f.total)} · <span class="factura-badge ${f.estado}">${escapeHtml(f.estado)}</span></div>
+    </div>
+  `).join('');
+}
+
+function nuevaFacturaEnBlanco() {
+  viewingFacturaId = null;
+  facturaLineas = [];
+  facturaOrigenQuoteId = null;
+  document.getElementById('factura-view-title').textContent = 'Nueva factura';
+  document.getElementById('factura-readonly-view').style.display = 'none';
+  document.getElementById('factura-form-view').style.display = 'block';
+  ['f-cliente-nombre', 'f-cliente-nif', 'f-cliente-domicilio', 'f-cliente-email', 'f-notas'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('f-concepto').value = 'Servicios de departamento tecnológico externalizado';
+  renderFacturaLineas();
+  renderFacturasList();
+}
+
+// Precarga el formulario con los datos de un presupuesto (normalmente ya
+// aceptado/pagado) — nombre, NIF, domicilio, email y TODAS las líneas tal
+// cual, para que la factura cuente exactamente la misma historia de precio
+// que el presupuesto que el cliente ya vio y aceptó. Sigue siendo editable
+// antes de emitir, por si hace falta un último ajuste.
+let facturaOrigenQuoteId = null;
+function emitirFacturaDesdePresupuesto() {
+  if (!editingQuoteId) { alert('Guarda el presupuesto primero.'); return; }
+  const q = allQuotes.find(x => x.id === editingQuoteId);
+  if (!q) { alert('No se encuentra el presupuesto guardado.'); return; }
+  openFacturasOverlay().then(() => {
+    nuevaFacturaEnBlanco();
+    facturaOrigenQuoteId = editingQuoteId;
+    document.getElementById('f-cliente-nombre').value = q.negocio || q.nombre_contacto || '';
+    document.getElementById('f-cliente-nif').value = q.cliente_nif || '';
+    document.getElementById('f-cliente-domicilio').value = q.cliente_domicilio || '';
+    document.getElementById('f-cliente-email').value = q.email_contacto || '';
+    facturaLineas = Array.isArray(q.lineas) ? JSON.parse(JSON.stringify(q.lineas)) : [];
+    renderFacturaLineas();
+  });
+}
+
+function renderFacturaLineas() {
+  const wrap = document.getElementById('factura-lineas');
+  if (!facturaLineas.length) {
+    wrap.innerHTML = '<div class="empty-mini">Sin líneas todavía.</div>';
+  } else {
+    wrap.innerHTML = facturaLineas.map((l, i) => `
+      <div class="quote-line">
+        <span class="ql-desc">${escapeHtml(l.descripcion)}</span>
+        <span class="ql-price" style="display:flex;align-items:center;gap:6px;">
+          <input type="number" value="${l.precio ?? 0}" style="width:90px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:6px;padding:4px 6px;color:var(--white);font-size:.78rem;" onchange="actualizarPrecioLineaFactura(${i}, this.value)">€
+          <button class="del-btn" onclick="quitarLineaFactura(${i})">✕</button>
+        </span>
+      </div>
+    `).join('');
+  }
+  const base = facturaLineas.reduce((s, l) => s + (Number(l.precio) || 0), 0);
+  const iva = base * 0.21;
+  document.getElementById('factura-total').innerHTML =
+    `<div style="font-size:.78rem;font-weight:400;color:var(--grey);">Base: ${fmtEurFacturas(base)} &nbsp;·&nbsp; IVA (21%): ${fmtEurFacturas(iva)}</div>` +
+    `Total con IVA: ${fmtEurFacturas(base + iva)}`;
+}
+function actualizarPrecioLineaFactura(i, value) {
+  facturaLineas[i].precio = value === '' ? 0 : Number(value);
+  renderFacturaLineas();
+}
+function quitarLineaFactura(i) {
+  facturaLineas.splice(i, 1);
+  renderFacturaLineas();
+}
+function anadirLineaFactura() {
+  const desc = document.getElementById('f-linea-desc').value.trim();
+  const precio = document.getElementById('f-linea-precio').value;
+  if (!desc) { alert('Falta la descripción de la línea.'); return; }
+  facturaLineas.push({ descripcion: desc, precio: precio ? Number(precio) : 0 });
+  document.getElementById('f-linea-desc').value = '';
+  document.getElementById('f-linea-precio').value = '';
+  renderFacturaLineas();
+}
+
+async function confirmarEmitirFactura() {
+  const nombre = document.getElementById('f-cliente-nombre').value.trim();
+  const nif = document.getElementById('f-cliente-nif').value.trim();
+  if (!nombre) { alert('Falta el nombre / razón social del cliente.'); return; }
+  if (!nif) { alert('Falta el NIF/CIF del cliente — una factura real lo exige siempre.'); return; }
+  if (!facturaLineas.length) { alert('Añade al menos una línea.'); return; }
+  const base = facturaLineas.reduce((s, l) => s + (Number(l.precio) || 0), 0);
+  if (!confirm(`Vas a emitir una factura definitiva a ${nombre} por ${fmtEurFacturas(base * 1.21)} (IVA incluido).\n\nUna vez emitida NO se puede editar ni borrar — solo corregir con una rectificativa. ¿Confirmas?`)) return;
+
+  const { data, error } = await sb.rpc('emitir_factura', {
+    p_serie: 'A',
+    p_cliente_nombre: nombre,
+    p_cliente_nif: nif,
+    p_cliente_domicilio: document.getElementById('f-cliente-domicilio').value.trim() || null,
+    p_cliente_email: document.getElementById('f-cliente-email').value.trim() || null,
+    p_lineas: facturaLineas,
+    p_concepto: document.getElementById('f-concepto').value.trim() || 'Servicios de departamento tecnológico externalizado',
+    p_quote_id: facturaOrigenQuoteId,
+    p_notas: document.getElementById('f-notas').value.trim() || null
+  });
+  if (error) { alert('No se pudo emitir la factura: ' + error.message); return; }
+  await loadFacturasList();
+  await verFactura(data.id);
+  toast('Factura ' + data.numero_completo + ' emitida.');
+}
+
+async function verFactura(id) {
+  viewingFacturaId = id;
+  const f = allFacturas.find(x => x.id === id);
+  if (!f) return;
+  document.getElementById('factura-view-title').textContent = f.numero_completo;
+  document.getElementById('factura-form-view').style.display = 'none';
+  document.getElementById('factura-readonly-view').style.display = 'block';
+  document.getElementById('fv-numero').textContent = f.numero_completo + ' — ' + new Date(f.fecha_expedicion).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+  document.getElementById('fv-cliente').textContent = [f.cliente_nombre, f.cliente_nif, f.cliente_domicilio].filter(Boolean).join(' · ');
+  document.getElementById('fv-lineas').innerHTML = (f.lineas || []).map(l => `
+    <div class="quote-line"><span class="ql-desc">${escapeHtml(l.descripcion)}</span><span class="ql-price">${l.precio === 0 ? 'Incluida' : fmtEurFacturas(l.precio)}</span></div>
+  `).join('');
+  document.getElementById('fv-total').innerHTML =
+    `<div style="font-size:.78rem;font-weight:400;color:var(--grey);">Base: ${fmtEurFacturas(f.base_imponible)} &nbsp;·&nbsp; IVA (${f.tipo_iva}%): ${fmtEurFacturas(f.cuota_iva)}</div>` +
+    `Total: ${fmtEurFacturas(f.total)}`;
+  const avisoEl = document.getElementById('fv-rectificativa-aviso');
+  const rectBtn = document.getElementById('factura-rectificar-btn');
+  if (f.factura_rectificada_id) {
+    const original = allFacturas.find(x => x.id === f.factura_rectificada_id);
+    avisoEl.style.display = 'block';
+    avisoEl.textContent = 'Esta factura RECTIFICA a ' + (original ? original.numero_completo : 'otra factura') + (f.motivo_rectificacion ? ' — ' + f.motivo_rectificacion : '');
+    rectBtn.style.display = 'none';
+  } else {
+    avisoEl.style.display = 'none';
+    rectBtn.style.display = f.estado === 'rectificada' ? 'none' : 'inline-block';
+  }
+  renderFacturasList();
+}
+
+async function fetchFacturaPdfBlob() {
+  const { data: { session } } = await sb.auth.getSession();
+  const resp = await fetch('/.netlify/functions/generate-invoice-pdf', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+    body: JSON.stringify({ factura_id: viewingFacturaId })
+  });
+  const data = await resp.json();
+  if (!data.ok) { alert('No se pudo generar el PDF (' + (data.reason || 'error') + ').'); return null; }
+  const bytes = Uint8Array.from(atob(data.pdf_base64), c => c.charCodeAt(0));
+  return { blob: new Blob([bytes], { type: 'application/pdf' }), pdf_base64: data.pdf_base64 };
+}
+
+async function verPdfFactura() {
+  if (!viewingFacturaId) return;
+  const result = await fetchFacturaPdfBlob();
+  if (!result) return;
+  window.open(URL.createObjectURL(result.blob), '_blank');
+}
+async function descargarPdfFactura() {
+  if (!viewingFacturaId) return;
+  const result = await fetchFacturaPdfBlob();
+  if (!result) return;
+  const f = allFacturas.find(x => x.id === viewingFacturaId);
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(result.blob);
+  a.download = 'factura-' + (f ? f.numero_completo : viewingFacturaId.slice(0, 8)) + '.pdf';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+async function enviarFacturaEmail() {
+  if (!viewingFacturaId) return;
+  const f = allFacturas.find(x => x.id === viewingFacturaId);
+  const destinatario = prompt('¿A qué email se la mando?', (f && f.cliente_email) || '');
+  if (!destinatario) return;
+  try {
+    const result = await fetchFacturaPdfBlob();
+    if (!result) return;
+    const { data: { session } } = await sb.auth.getSession();
+    const sendResp = await fetch('/.netlify/functions/send-quote-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({
+        destinatario, pdf_base64: result.pdf_base64,
+        asunto: 'Factura ' + f.numero_completo + ' — TRUCO technology',
+        mensaje: 'Adjuntamos tu factura ' + f.numero_completo + '. Cualquier duda, respondemos encantados.',
+        filename: 'factura-' + f.numero_completo + '.pdf'
+      })
+    });
+    const sendData = await sendResp.json();
+    if (!sendData.ok) {
+      alert(sendData.reason === 'not_configured'
+        ? 'El envío por email no está configurado todavía (falta el SMTP) — descarga el PDF y mándala tú por ahora.'
+        : 'No se pudo enviar el correo.');
+      return;
+    }
+    alert('Factura enviada a ' + destinatario + '.');
+  } catch (e) {
+    alert('Error de conexión al enviar el correo.');
+  }
+}
+
+// Anula la factura actual emitiendo una rectificativa espejo (mismas líneas,
+// en negativo) — es la corrección más común y segura: deja rastro completo
+// de que la original quedó sin efecto, sin tocarla ni borrarla nunca.
+async function emitirRectificativa() {
+  if (!viewingFacturaId) return;
+  const f = allFacturas.find(x => x.id === viewingFacturaId);
+  if (!f) return;
+  const motivo = prompt('¿Por qué se rectifica ' + f.numero_completo + '? (aparecerá en la factura rectificativa)');
+  if (motivo === null) return;
+  if (!confirm(`Se emitirá una factura rectificativa que anula ${f.numero_completo} por completo (mismas líneas, en negativo). ¿Confirmas?`)) return;
+
+  const lineasNegadas = (f.lineas || []).map(l => ({ ...l, precio: -(Number(l.precio) || 0) }));
+  const { data, error } = await sb.rpc('emitir_factura', {
+    p_serie: f.serie,
+    p_cliente_nombre: f.cliente_nombre,
+    p_cliente_nif: f.cliente_nif,
+    p_cliente_domicilio: f.cliente_domicilio,
+    p_cliente_email: f.cliente_email,
+    p_lineas: lineasNegadas,
+    p_concepto: 'Rectificación de ' + f.numero_completo,
+    p_client_id: f.client_id,
+    p_quote_id: f.quote_id,
+    p_factura_rectificada_id: f.id,
+    p_tipo_rectificativa: 'R1',
+    p_motivo_rectificacion: motivo || null
+  });
+  if (error) { alert('No se pudo emitir la rectificativa: ' + error.message); return; }
+  await loadFacturasList();
+  await verFactura(data.id);
+  toast('Rectificativa ' + data.numero_completo + ' emitida.');
 }
 
 function openTrukiOverlay() {
@@ -3615,70 +4072,152 @@ async function updateStage() {
   if (client) client.implementation_stage = implementation_stage;
 }
 
-async function loadAnonymousSessions() {
-  const { data } = await sb
-    .from('interactions')
-    .select('*')
-    .is('client_id', null)
-    .order('created_at', { ascending: false })
-    .limit(60);
+// ── CONVERSACIONES DEL CHAT — cada conversación con su nombre, su IP y todo lo
+// preguntado/contestado (chat_sessions / chat_messages, ver
+// supabase/migration_chat_conversations.sql). Bloquear una IP se aplica en el
+// servidor: el chat deja de llamar a la IA para esa conexión. ──
+let chatSessionsData = [];
+let blockedIpsData = [];
+let chatConvOpenId = null;
+
+function isIpBlocked(ip) { return !!ip && blockedIpsData.some(b => b.ip === ip); }
+
+async function loadChatSessions() {
+  const [sessRes, blockedRes] = await Promise.all([
+    sb.from('chat_sessions').select('*').order('last_seen', { ascending: false }).limit(200),
+    sb.from('blocked_ips').select('*').order('blocked_at', { ascending: false })
+  ]);
+  chatSessionsData = sessRes.data || [];
+  blockedIpsData = blockedRes.data || [];
+  document.getElementById('blocked-count').textContent = String(blockedIpsData.length);
+  renderChatSessions();
+  renderBlockedIps();
+}
+
+function chatSessionBadges(s) {
+  const b = [];
+  if (isIpBlocked(s.ip)) b.push('<span class="chat-badge red">IP bloqueada</span>');
+  else if (s.similar_to_blocked) b.push('<span class="chat-badge amber">IP parecida a una bloqueada</span>');
+  if (s.status === 'closed') b.push('<span class="chat-badge red">Cerrada por abuso</span>');
+  else if (s.strikes >= 3) b.push('<span class="chat-badge amber">Fuera de tema</span>');
+  if (s.legacy) b.push('<span class="chat-badge grey">Antigua: solo preguntas</span>');
+  return b.join(' ');
+}
+
+function renderChatSessions() {
   const list = document.getElementById('anon-list');
-  const toolbar = document.getElementById('anon-toolbar');
-  if (!data || !data.length) {
+  const filter = document.getElementById('chat-filter').value;
+  let rows = chatSessionsData;
+  if (filter === 'sospechosas') rows = rows.filter(s => s.status === 'closed' || s.similar_to_blocked || s.strikes >= 3);
+  if (filter === 'bloqueadas') rows = rows.filter(s => isIpBlocked(s.ip));
+  if (!rows.length) {
     list.innerHTML = '<div style="color:var(--grey);font-size:.78rem;">Ninguna todavía.</div>';
-    toolbar.style.display = 'none';
     return;
   }
-  toolbar.style.display = 'flex';
-  document.getElementById('anon-select-all').checked = false;
-  list.innerHTML = data.map(i => `
-    <div class="anon-item">
-      <label style="display:flex;align-items:center;gap:8px;flex:1;cursor:pointer;">
-        <input type="checkbox" class="anon-check" data-id="${i.id}" onchange="updateAnonSelectionCount()">
-        <div>
-          <div class="q">${escapeHtml(i.nota || '(sin texto)')}</div>
-          <div class="meta">${new Date(i.created_at).toLocaleString('es-ES')} · sesión ${escapeHtml((i.session_id || '').slice(0, 8))}</div>
-        </div>
-      </label>
-      <button class="del-btn" onclick="deleteAnonInteraction('${i.id}')">Borrar</button>
+  list.innerHTML = rows.map(s => `
+    <div class="anon-item" style="cursor:pointer;" data-sid="${escapeHtml(s.session_id)}" onclick="openChatConversation(this.dataset.sid)">
+      <div>
+        <div class="q"><b>${s.nombre ? escapeHtml(s.nombre) : 'Anónimo'}</b> ${chatSessionBadges(s)}</div>
+        <div class="meta">${new Date(s.last_seen).toLocaleString('es-ES')} · IP ${s.ip ? escapeHtml(s.ip) : '(borrada)'} · ${s.msg_count} mensaje${s.msg_count === 1 ? '' : 's'}</div>
+      </div>
+      <button class="del-btn" data-sid="${escapeHtml(s.session_id)}" onclick="event.stopPropagation();deleteChatSession(this.dataset.sid)">Borrar</button>
     </div>
   `).join('');
-  updateAnonSelectionCount();
 }
 
-function toggleSelectAllAnon(checked) {
-  document.querySelectorAll('.anon-check').forEach(cb => { cb.checked = checked; });
-  updateAnonSelectionCount();
+async function openChatConversation(sessionId) {
+  const s = chatSessionsData.find(x => x.session_id === sessionId);
+  if (!s) return;
+  chatConvOpenId = sessionId;
+  document.getElementById('chat-conv-overlay').style.display = 'block';
+  document.getElementById('chat-conv-title').textContent = s.nombre || 'Anónimo';
+  const body = document.getElementById('chat-conv-body');
+  body.innerHTML = '<div class="empty-mini">Cargando…</div>';
+  renderChatConvHeader(s);
+
+  const { data, error } = await sb.from('chat_messages').select('role, text, via, created_at').eq('session_id', sessionId).order('id', { ascending: true }).limit(500);
+  if (error) { body.innerHTML = '<div class="empty-mini">No se pudo cargar la conversación.</div>'; return; }
+  const legacyNote = s.legacy ? '<div class="chat-conv-note">Conversación anterior al nuevo registro: solo se guardó lo que preguntó el visitante, no lo que se le contestó.</div>' : '';
+  body.innerHTML = legacyNote + ((data || []).map(m => `
+    <div class="chat-bubble ${m.role === 'user' ? 'user' : 'bot'}${m.via === 'sistema' ? ' sys' : ''}">
+      <div class="who">${m.role === 'user' ? (s.nombre ? escapeHtml(s.nombre) : 'Visitante') : (m.via === 'sistema' ? 'Sistema' : (m.via === 'ai' ? 'Asistente TRUCO PRO (IA)' : 'Asistente TRUCO (bot básico)'))} · ${new Date(m.created_at).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}</div>
+      <div class="txt">${escapeHtml(m.text)}</div>
+    </div>`).join('') || '<div class="empty-mini">Sin mensajes guardados.</div>');
 }
 
-function updateAnonSelectionCount() {
-  const checked = document.querySelectorAll('.anon-check:checked');
-  const btn = document.getElementById('anon-delete-selected-btn');
-  btn.textContent = `Borrar seleccionadas (${checked.length})`;
-  btn.disabled = checked.length === 0;
+function renderChatConvHeader(s) {
+  const blocked = isIpBlocked(s.ip);
+  document.getElementById('chat-conv-meta').innerHTML = `
+    <div class="chat-conv-meta-row">
+      <span>IP: <b>${s.ip ? escapeHtml(s.ip) : '(borrada)'}</b></span>
+      <span>Primera vez: ${new Date(s.first_seen).toLocaleString('es-ES')}</span>
+      <span>${s.msg_count} mensajes · ${s.ai_calls} respuestas de IA</span>
+      ${s.closed_reason ? `<span>Cierre: ${escapeHtml(s.closed_reason)}</span>` : ''}
+    </div>
+    <div style="margin-top:8px;">${chatSessionBadges(s)}</div>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+      ${s.ip ? (blocked
+        ? '<button class="btn sm ghost" onclick="unblockIp(chatIpOfOpenConv())">Desbloquear IP</button>'
+        : '<button class="btn sm" style="background:var(--red);border-color:var(--red);color:#fff;" onclick="blockIpFromConv()">🚫 Bloquear IP</button>') : ''}
+      <button class="btn sm ghost" onclick="deleteChatSession(chatConvOpenId, true)">Borrar conversación</button>
+    </div>`;
 }
 
-async function deleteAnonInteraction(id) {
-  if (!confirm('¿Borrar esta entrada? Esta acción no se puede deshacer.')) return;
-  const { error } = await sb.from('interactions').delete().eq('id', id);
+function chatIpOfOpenConv() {
+  const s = chatSessionsData.find(x => x.session_id === chatConvOpenId);
+  return s ? s.ip : null;
+}
+
+function closeChatConversation() {
+  document.getElementById('chat-conv-overlay').style.display = 'none';
+  chatConvOpenId = null;
+}
+
+async function blockIpFromConv() {
+  const s = chatSessionsData.find(x => x.session_id === chatConvOpenId);
+  if (!s || !s.ip) return;
+  if (!confirm(`¿Bloquear la IP ${s.ip}? Dejará de poder usar el chat (no gasta créditos de IA). Te avisaré si aparece alguien con una IP de la misma red.`)) return;
+  const { error } = await sb.from('blocked_ips').insert({ ip: s.ip, reason: `Conversación de ${s.nombre || 'anónimo'}` });
+  if (error && !/duplicate/i.test(error.message)) { alert('No se pudo bloquear: ' + error.message); return; }
+  toast('IP bloqueada');
+  await loadChatSessions();
+  const fresh = chatSessionsData.find(x => x.session_id === chatConvOpenId);
+  if (fresh) renderChatConvHeader(fresh);
+}
+
+async function unblockIp(ip) {
+  if (!ip) return;
+  const { error } = await sb.from('blocked_ips').delete().eq('ip', ip);
+  if (error) { alert('No se pudo desbloquear.'); return; }
+  toast('IP desbloqueada');
+  await loadChatSessions();
+  const fresh = chatSessionsData.find(x => x.session_id === chatConvOpenId);
+  if (fresh) renderChatConvHeader(fresh);
+}
+
+async function deleteChatSession(sessionId, fromOverlay) {
+  if (!sessionId) return;
+  if (!confirm('¿Borrar esta conversación entera? Esta acción no se puede deshacer.')) return;
+  const { error } = await sb.from('chat_sessions').delete().eq('session_id', sessionId);
   if (error) { alert('No se pudo borrar.'); return; }
-  await loadAnonymousSessions();
+  if (fromOverlay) closeChatConversation();
+  await loadChatSessions();
 }
 
-async function deleteSelectedAnonInteractions() {
-  const ids = [...document.querySelectorAll('.anon-check:checked')].map(cb => cb.dataset.id);
-  if (!ids.length) return;
-  if (!confirm(`¿Borrar ${ids.length} entrada(s) seleccionada(s)? Esta acción no se puede deshacer.`)) return;
-  const { error } = await sb.from('interactions').delete().in('id', ids);
-  if (error) { alert('No se pudo borrar.'); return; }
-  await loadAnonymousSessions();
+function toggleBlockedIps() {
+  const box = document.getElementById('blocked-ips-box');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
 }
 
-async function deleteAllAnonInteractions() {
-  if (!confirm('¿Borrar TODAS las sesiones de chat sin identificar? Esta acción no se puede deshacer.')) return;
-  const { error } = await sb.from('interactions').delete().is('client_id', null);
-  if (error) { alert('No se pudo borrar.'); return; }
-  await loadAnonymousSessions();
+function renderBlockedIps() {
+  const box = document.getElementById('blocked-ips-box');
+  if (!blockedIpsData.length) { box.innerHTML = '<div class="empty-mini">No hay ninguna IP bloqueada.</div>'; return; }
+  box.innerHTML = blockedIpsData.map(b => `
+    <div class="anon-item">
+      <div><div class="q">${escapeHtml(b.ip)}</div>
+      <div class="meta">${new Date(b.blocked_at).toLocaleString('es-ES')}${b.reason ? ' · ' + escapeHtml(b.reason) : ''}</div></div>
+      <button class="del-btn" data-ip="${escapeHtml(b.ip)}" onclick="unblockIp(this.dataset.ip)">Desbloquear</button>
+    </div>`).join('');
 }
 
 // founder_dashboard_stats() agrega todo en el servidor (security definer,

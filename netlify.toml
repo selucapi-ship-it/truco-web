@@ -32,6 +32,17 @@
 # TRUKI_SUPABASE_URL, GOOGLE_OAUTH_CLIENT_ID, VAPID_PUBLIC_KEY,
 # VAPID_SUBJECT, EMAIL_IA_OAUTH_REDIRECT_URI, LIVEKIT_URL, LIVEKIT_API_KEY.
 
+[functions."generate-quote-pdf"]
+  # Las 3 tipografías de marca (Playfair Display, DM Sans, JetBrains Mono)
+  # que el PDF embebe vía @pdf-lib/fontkit — sin esto, el bundler de Netlify
+  # no las incluiría en el paquete de la función y fallaría en producción
+  included_files = ["netlify/functions/assets/fonts/*.ttf"]
+
+[functions."generate-invoice-pdf"]
+  # Misma identidad visual y mismas tipografías que generate-quote-pdf.js —
+  # comparten el mismo directorio de fuentes, necesita el mismo included_files.
+  included_files = ["netlify/functions/assets/fonts/*.ttf"]
+
 [functions."email-ia-worker"]
   # Cada 15 minutos revisa la bandeja de cada cliente con "IA para Correo"
   # activa y deja preparada una respuesta en BORRADOR (nunca se envía sola)
