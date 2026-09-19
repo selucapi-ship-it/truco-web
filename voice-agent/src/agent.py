@@ -524,7 +524,6 @@ async def entrypoint(ctx: agents.JobContext):
         llm=google.realtime.RealtimeModel(
             model="gemini-2.5-flash-native-audio-preview-12-2025",
             voice="Achird",
-            language="es-ES",
             enable_affective_dialog=True,
             thinking_config=types.ThinkingConfig(thinking_budget=0),
             realtime_input_config=types.RealtimeInputConfig(
