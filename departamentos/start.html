@@ -314,6 +314,53 @@ details.fold-inline>summary{cursor:pointer;color:var(--gold);font-weight:700;fon
 details.fold-inline>summary::-webkit-details-marker{display:none;}
 details.fold-inline[open]>summary{margin-bottom:10px;}
 @media(min-width:701px){details.fold-inline>summary{display:none;}}
+
+/* ── ECOSISTEMA TRUCO: CRM + calendario incluidos ── */
+.eco2{--e-bg:#16151a;--e-panel:#201f24;--e-card:#2b2a30;--e-line:#3d3b42;--e-white:#f2f0ea;--e-grey:#b5b2bc;--e-gold:#d9a83f;--e-gold-l:#ecc878;--e-green:#22c55e;--e-blue:#2f7bff;--e-violet:#a78bfa;
+  position:relative;overflow:hidden;max-width:1120px;margin:0 auto;border:1px solid rgba(217,168,63,.55);border-radius:22px;padding:34px 32px;
+  background:radial-gradient(900px 400px at 85% -10%,rgba(217,168,63,.16),transparent 60%),linear-gradient(160deg,#211d10,#1a1a1f 55%);color:var(--e-white);font-family:'DM Sans',sans-serif;}
+.eco2 *{box-sizing:border-box;}
+.eco2-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:34px;align-items:center;}
+.eco2-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--e-gold);margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.eco2-eyebrow::before{content:'';width:18px;height:1px;background:var(--e-gold);}
+.eco2 h2{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.15;margin:0 0 12px;text-wrap:balance;color:var(--e-white);}
+.eco2 h2 em{font-style:normal;color:var(--e-gold-l);}
+.eco2-lead{color:var(--e-grey);font-size:1rem;line-height:1.6;margin:0 0 18px;}
+.eco2-feats{list-style:none;padding:0;margin:0 0 6px;display:flex;flex-direction:column;gap:12px;}
+.eco2-feats li{display:flex;gap:12px;align-items:flex-start;font-size:.92rem;color:var(--e-grey);line-height:1.45;}
+.eco2-feats .ic{width:34px;height:34px;border-radius:10px;background:rgba(217,168,63,.15);border:1px solid rgba(217,168,63,.4);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.eco2-feats b{color:var(--e-white);display:block;font-size:.95rem;}
+.eco2-note{font-size:.74rem;color:var(--e-grey);margin-top:14px;opacity:.85;}
+.eco2-badge{display:inline-flex;align-items:center;gap:8px;background:var(--e-gold);color:#16151a;font-weight:800;font-size:.78rem;border-radius:99px;padding:6px 14px;margin-bottom:14px;}
+/* mock */
+.eco2-mock{position:relative;background:var(--e-bg);border:1px solid var(--e-line);border-radius:16px;padding:14px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7);}
+.eco2-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:.78rem;flex-wrap:wrap;}
+.eco2-logo{width:26px;height:26px;border:1.5px solid var(--e-gold);border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font:700 .85rem 'Playfair Display',serif;color:var(--e-gold);}
+.eco2-bar b{font-family:'Playfair Display',serif;font-size:.95rem;}
+.eco2-pill{border:1px solid var(--e-line);border-radius:99px;padding:3px 10px;font-size:.68rem;color:var(--e-grey);}
+.eco2-pill.on{background:var(--e-gold);color:#16151a;border-color:var(--e-gold);font-weight:700;}
+.eco2-bar .sp{flex:1;}
+.eco2-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;}
+.eco2-kpis div{background:linear-gradient(165deg,var(--e-panel),var(--e-card));border:1px solid var(--e-line);border-radius:10px;padding:8px 10px;font-size:.66rem;color:var(--e-grey);}
+.eco2-kpis b{display:block;font:700 1.35rem 'Playfair Display',serif;color:var(--e-white);line-height:1.1;}
+.eco2-kpis .hot{border-color:rgba(217,168,63,.5);}
+.eco2-kpis .hot b{color:var(--e-gold-l);}
+.eco2-board{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.eco2-col{background:var(--e-panel);border:1px solid var(--e-line);border-radius:10px;padding:7px;min-width:0;}
+.eco2-col h4{font:700 .66rem 'DM Sans',sans-serif;margin:0 0 6px;display:flex;align-items:center;gap:5px;color:var(--e-white);letter-spacing:0;}
+.eco2-col h4 i{width:7px;height:7px;border-radius:50%;display:inline-block;}
+.eco2-c{background:linear-gradient(165deg,var(--e-card),#26252b);border:1px solid var(--e-line);border-radius:8px;padding:7px;margin-bottom:6px;font-size:.62rem;color:var(--e-grey);}
+.eco2-c .t{display:flex;gap:6px;align-items:center;}
+.eco2-c .av{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 .55rem 'DM Sans',sans-serif;color:#16151a;flex-shrink:0;}
+.eco2-c b{color:var(--e-white);font-size:.68rem;display:block;line-height:1.15;}
+.eco2-c .s{opacity:.85;}
+.eco2-float{position:absolute;background:#1d2a1f;border:1px solid rgba(34,197,94,.6);color:#b5f0c8;border-radius:12px;padding:8px 12px;font-size:.72rem;font-weight:700;box-shadow:0 14px 30px -10px rgba(0,0,0,.7);white-space:nowrap;}
+.eco2-float.f1{right:-8px;bottom:-14px;}
+.eco2-float.f2{left:-10px;top:56px;background:#232032;border-color:rgba(167,139,250,.6);color:#d9ccff;}
+@media(prefers-reduced-motion:no-preference){.eco2-float{animation:eco2bob 4s ease-in-out infinite;}.eco2-float.f2{animation-delay:1.4s;}}
+@keyframes eco2bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+@media(max-width:900px){.eco2{padding:26px 18px;}.eco2-grid{grid-template-columns:1fr;gap:26px;}.eco2-float{position:static;display:inline-block;margin:12px 8px 0 0;animation:none!important;white-space:normal;}.eco2-mock{margin-bottom:0;}}
+@media(max-width:560px){.eco2-board{grid-template-columns:repeat(2,1fr);}.eco2-col:nth-child(n+3){display:none;}.eco2-kpis b{font-size:1.15rem;}}
 </style>
 </head>
 <body>
@@ -395,6 +442,32 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
       </div>
     </div>
   </div>
+    <div style="margin:0 0 34px;">
+    <div class="eco2" id="ecosistema-truco">
+  <div class="eco2-grid">
+    <div>
+      <span class="eco2-badge">✦ Incluido en todos los Departamentos</span>
+      <div class="eco2-eyebrow">Ecosistema TRUCO technology</div>
+      <h2>Además, por ser cliente TRUCO: <em>tu propio CRM y tu calendario, incluidos</em></h2>
+      <p class="eco2-lead">Cada cita, mensaje de WhatsApp o correo que atienden tus asistentes se guarda y se agenda solo. Tú no tecleas nada, no hay hojas de cálculo y todo vive en un único sitio: el portal de tu Departamento.</p>
+      <ul class="eco2-feats">
+        <li><span class="ic">👥</span><span><b>Tu CRM se llena solo</b>Cada persona que contacta con tu negocio pasa a tu libreta, con todo su historial y en qué punto está.</span></li>
+        <li><span class="ic">📅</span><span><b>Tu calendario, dentro</b>Las citas que agendan tus asistentes aparecen junto a las de tu Google Calendar, o el calendario que uses.</span></li>
+        <li><span class="ic">📥</span><span><b>Tuyo de verdad</b>Descarga solo los contactos nuevos, o importa la base de datos que ya tienes. Con tu nombre y tu logo.</span></li>
+        <li><span class="ic">📱</span><span><b>Como una app</b>Instálalo en el móvil o en el ordenador. Se abre en un toque y se actualiza solo.</span></li>
+      </ul>
+      <p class="eco2-note">Pantalla de ejemplo con datos ficticios.</p>
+    </div>
+    <div class="eco2-mock" aria-hidden="true">
+      <div class="eco2-bar"><span class="eco2-logo">T</span><b>Tu negocio</b><span class="sp"></span><span class="eco2-pill on">Mi CRM</span><span class="eco2-pill">Mi calendario</span></div>
+      <div class="eco2-kpis"><div><b>24</b>contactos</div><div><b>3</b>citas hoy</div><div class="hot"><b>2</b>esperan respuesta</div></div>
+      <div class="eco2-board"><div class="eco2-col"><h4><i style="background:#2f7bff"></i>Nuevos</h4><div class="eco2-c"><div class="t"><span class="av" style="background:#9cc2ff">JR</span><div><b>Javier Ruiz</b><span class="s">💬 WhatsApp</span></div></div></div><div class="eco2-c"><div class="t"><span class="av" style="background:#ecc878">LP</span><div><b>Lucía Prieto</b><span class="s">💬 WhatsApp</span></div></div></div></div><div class="eco2-col"><h4><i style="background:#a78bfa"></i>Contactados</h4><div class="eco2-c"><div class="t"><span class="av" style="background:#e9b3ff">CS</span><div><b>Clínica Sol</b><span class="s">✉️ Correo</span></div></div></div><div class="eco2-c"><div class="t"><span class="av" style="background:#a8e6e0">AL</span><div><b>Ana López</b><span class="s">🌐 Web</span></div></div></div></div><div class="eco2-col"><h4><i style="background:#d9a83f"></i>Con cita</h4><div class="eco2-c"><div class="t"><span class="av" style="background:#ffc9a1">MS</span><div><b>Marta Soto</b><span class="s">📅 Reserva</span></div></div></div><div class="eco2-c"><div class="t"><span class="av" style="background:#9cc2ff">PV</span><div><b>Pedro Vidal</b><span class="s">📅 Reserva</span></div></div></div></div><div class="eco2-col"><h4><i style="background:#22c55e"></i>Clientes</h4><div class="eco2-c"><div class="t"><span class="av" style="background:#ecc878">DF</span><div><b>Diego Ferrer</b><span class="s">📞 Llamada</span></div></div></div><div class="eco2-c"><div class="t"><span class="av" style="background:#b5f0c8">LP</span><div><b>La Plaza</b><span class="s">✉️ Correo</span></div></div></div></div></div>
+      <div class="eco2-float f2">💬 Nuevo contacto por WhatsApp</div>
+      <div class="eco2-float f1">✓ Cita confirmada · jueves 11:00</div>
+    </div>
+  </div>
+</div>
+    </div>
     <div class="hero-price-box">
       <div>
         <div class="hp-founding-badge" id="hp-founding-badge-basic"></div>

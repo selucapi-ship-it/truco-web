@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Mi calendario — TRUCO technology</title>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<link rel="manifest" href="crm.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#16151a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mi CRM">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#16151a;--panel:#201f24;--card:#2b2a30;--line:#3d3b42;--white:#f2f0ea;--grey:#b5b2bc;
+  --gold:#d9a83f;--gold-l:#ecc878;--gold-dim:rgba(217,168,63,.12);
+  --blue:#2f7bff;--green:#22c55e;--red:#ef4444;--violet:#a78bfa;
+  --font-d:'Playfair Display',Georgia,serif;--font-b:'DM Sans',sans-serif;--font-m:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:radial-gradient(1100px 560px at 50% -12%,rgba(217,168,63,.08),transparent 60%),var(--bg);color:var(--white);font-family:var(--font-b);line-height:1.5;min-height:100vh;padding:0 16px 60px;}
+.wrap{max-width:1180px;margin:0 auto;}
+.demo-bar{background:var(--gold-dim);border:1px solid rgba(217,168,63,.4);color:var(--gold-l);font-size:.78rem;text-align:center;padding:8px 12px;border-radius:0 0 10px 10px;margin-bottom:26px;}
+.eyebrow{font-family:var(--font-m);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.eyebrow::before{content:'';width:16px;height:1px;background:var(--gold);}
+h1{font-family:var(--font-d);font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.15;text-wrap:balance;}
+.sub{color:var(--grey);max-width:640px;margin-top:8px;font-size:.95rem;}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px;}
+.btn{background:var(--gold);color:#16151a;border:none;border-radius:10px;padding:10px 16px;font:700 .86rem var(--font-b);cursor:pointer;}
+.btn.ghost{background:transparent;color:var(--white);border:1px solid var(--line);}
+.btn.ghost:hover{border-color:var(--gold);}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;}
+.kpi{background:linear-gradient(165deg,var(--panel),var(--card));border:1px solid var(--line);border-radius:14px;padding:16px 18px;}
+.kpi .n{font-family:var(--font-d);font-size:2rem;line-height:1;font-variant-numeric:tabular-nums;}
+.kpi .l{font-size:.78rem;color:var(--grey);margin-top:6px;}
+.kpi .d{font-size:.72rem;color:var(--green);margin-top:4px;font-family:var(--font-m);}
+.kpi.hot{border-color:rgba(217,168,63,.5);background:linear-gradient(165deg,#2a2210,var(--panel));}
+.kpi.hot .n{color:var(--gold-l);}
+
+/* Hoy toca */
+.today{background:linear-gradient(135deg,rgba(217,168,63,.1),var(--panel));border:1px solid rgba(217,168,63,.4);border-radius:14px;padding:16px 18px;margin-bottom:18px;}
+.today h2{font-size:.95rem;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.today h2 span{font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);}
+.today-list{display:flex;flex-direction:column;gap:8px;}
+.t-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:.88rem;}
+.t-row b{font-weight:700;}
+.t-row .why{color:var(--grey);flex:1;min-width:180px;}
+.mini{background:var(--bg);border:1px solid var(--line);color:var(--white);border-radius:8px;padding:5px 10px;font:600 .76rem var(--font-b);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;}
+.mini:hover{border-color:var(--gold);color:var(--gold-l);}
+
+/* Toolbar */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px;}
+.seg{display:inline-flex;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:3px;}
+.seg button{background:none;border:none;color:var(--grey);padding:7px 14px;border-radius:8px;font:600 .82rem var(--font-b);cursor:pointer;}
+.seg button.on{background:var(--gold);color:#16151a;}
+.toolbar input{flex:1;min-width:200px;background:var(--panel);border:1px solid var(--line);color:var(--white);border-radius:10px;padding:9px 12px;font:inherit;font-size:.88rem;}
+.chips{display:flex;gap:6px;flex-wrap:wrap;}
+.chip{background:var(--panel);border:1px solid var(--line);color:var(--grey);border-radius:99px;padding:5px 12px;font-size:.76rem;cursor:pointer;}
+.chip.on{border-color:var(--gold);color:var(--gold-l);background:var(--gold-dim);}
+
+/* Kanban */
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start;}
+.col{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;min-height:120px;}
+.col.over{border-color:var(--gold);background:#25221a;}
+.col h3{font-size:.8rem;display:flex;justify-content:space-between;align-items:center;padding:4px 6px 10px;letter-spacing:.02em;}
+.col h3 i{font-style:normal;font-family:var(--font-m);font-size:.7rem;color:var(--grey);background:var(--bg);border-radius:99px;padding:1px 8px;}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:7px;}
+.card{background:linear-gradient(165deg,var(--card),#26252b);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px;cursor:grab;transition:transform .15s,border-color .15s;}
+.card:hover{border-color:var(--gold);transform:translateY(-2px);}
+.card.drag{opacity:.4;}
+.c-top{display:flex;gap:10px;align-items:center;}
+.av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 .78rem var(--font-b);color:#16151a;flex-shrink:0;}
+.c-name{font-weight:700;font-size:.9rem;overflow-wrap:anywhere;}
+.c-src{font-size:.7rem;color:var(--grey);}
+.c-msg{font-size:.78rem;color:var(--grey);margin:8px 0 6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.c-foot{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:.7rem;color:var(--grey);}
+.tag{border-radius:99px;padding:2px 8px;font-size:.66rem;font-weight:700;}
+.tag.warn{background:rgba(239,68,68,.14);color:#ff8a8a;}
+.tag.ok{background:rgba(34,197,94,.14);color:var(--green);}
+.tag.cita{background:var(--gold-dim);color:var(--gold-l);}
+.src-chip{display:inline-flex;align-items:center;gap:4px;}
+
+/* Lista */
+.list{display:none;flex-direction:column;gap:8px;}
+.list .row{display:grid;grid-template-columns:auto 1fr auto auto;gap:14px;align-items:center;background:linear-gradient(165deg,var(--card),#26252b);border:1px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;}
+.list .row:hover{border-color:var(--gold);}
+.pill{border-radius:99px;padding:3px 10px;font-size:.72rem;font-weight:700;border:1px solid var(--line);}
+
+/* Drawer */
+.veil{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(3px);display:none;z-index:50;}
+.veil.on{display:block;}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(460px,100%);background:var(--panel);border-left:1px solid var(--gold);z-index:60;transform:translateX(100%);transition:transform .25s;overflow-y:auto;padding:22px 20px 40px;}
+.drawer.on{transform:none;}
+.d-close{position:absolute;top:14px;right:14px;background:none;border:1px solid var(--line);color:var(--grey);width:32px;height:32px;border-radius:50%;cursor:pointer;}
+.d-head{display:flex;gap:14px;align-items:center;margin:8px 0 14px;}
+.d-head .av{width:54px;height:54px;font-size:1.1rem;}
+.d-head h2{font-family:var(--font-d);font-size:1.4rem;line-height:1.15;}
+.d-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.stepper{display:flex;gap:4px;margin-bottom:18px;}
+.stepper button{flex:1;background:var(--bg);border:1px solid var(--line);color:var(--grey);border-radius:8px;padding:8px 2px;font:600 .72rem var(--font-b);cursor:pointer;}
+.stepper button.on{background:var(--gold);color:#16151a;border-color:var(--gold);}
+.stepper button.past{border-color:var(--gold);color:var(--gold-l);}
+.d-sec{font-family:var(--font-m);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:16px 0 8px;}
+.tl{position:relative;padding-left:20px;}
+.tl::before{content:'';position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--line);}
+.ev{position:relative;margin-bottom:12px;font-size:.84rem;}
+.ev::before{content:'';position:absolute;left:-20px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--gold);border:2px solid var(--panel);}
+.ev.nota::before{background:var(--violet);}
+.ev.cita::before{background:var(--green);}
+.ev small{display:block;color:var(--grey);font-size:.7rem;font-family:var(--font-m);margin-bottom:1px;}
+.note-in{display:flex;gap:8px;margin-top:10px;}
+.note-in input{flex:1;background:var(--bg);border:1px solid var(--line);color:var(--white);border-radius:8px;padding:9px 10px;font:inherit;font-size:.86rem;}
+.info{font-size:.8rem;color:var(--grey);border:1px dashed var(--line);border-radius:10px;padding:10px 12px;margin-top:22px;}
+@media(max-width:1000px){.board{grid-template-columns:repeat(2,minmax(0,1fr));}.kpis{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:640px){.board{grid-template-columns:1fr;}.list .row{grid-template-columns:auto 1fr;}.list .row .pill,.list .row .when{grid-column:2;}}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+
+/* marca del cliente */
+.brandbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px;}
+.brand{display:flex;align-items:center;gap:12px;}
+.logo{width:46px;height:46px;border-radius:12px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font:700 1.1rem var(--font-d);color:var(--gold-l);overflow:hidden;flex-shrink:0;}
+.logo img{width:100%;height:100%;object-fit:cover;}
+.bn{font-family:var(--font-d);font-size:1.15rem;line-height:1.1;}
+.bs{font-size:.72rem;color:var(--grey);}
+.by{display:flex;align-items:center;gap:8px;font-size:.76rem;color:var(--grey);flex-wrap:wrap;}
+.by b{color:var(--gold-l);}
+.tmark{width:22px;height:22px;border:1.5px solid var(--gold);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font:700 .8rem var(--font-d);color:var(--gold);}
+/* desplegable de descarga */
+.pop-wrap{position:relative;}
+.pop{display:none;position:absolute;right:0;top:calc(100% + 8px);width:min(380px,92vw);background:var(--panel);border:1px solid var(--gold);border-radius:14px;padding:16px;z-index:40;box-shadow:0 20px 50px -10px rgba(0,0,0,.7);}
+.pop.on{display:block;}
+.pop h4{font-family:var(--font-d);font-size:1.05rem;margin-bottom:10px;}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border:1px solid var(--line);border-radius:10px;margin-bottom:6px;cursor:pointer;font-size:.86rem;}
+.opt:hover{border-color:var(--gold);}
+.opt input[type=radio]{margin-top:3px;accent-color:var(--gold);}
+.opt.dis{opacity:.5;cursor:not-allowed;}
+.opt .t{flex:1;}
+.opt small{display:block;color:var(--grey);font-size:.72rem;margin-top:1px;}
+.opt .n{font-family:var(--font-m);font-size:.72rem;color:var(--gold-l);white-space:nowrap;}
+.dates{display:none;gap:8px;align-items:center;margin:2px 0 8px 30px;font-size:.8rem;color:var(--grey);flex-wrap:wrap;}
+.dates.on{display:flex;}
+.dates input,.f input,.f select{background:var(--bg);border:1px solid var(--line);color:var(--white);border-radius:8px;padding:7px 9px;font:inherit;font-size:.84rem;color-scheme:dark;}
+.pop .sum{font-size:.82rem;color:var(--gold-l);margin:10px 0;font-family:var(--font-m);}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;padding:5vh 14px;z-index:80;overflow-y:auto;}
+.modal.on{display:flex;}
+.box{width:min(640px,100%);background:var(--panel);border:1px solid var(--gold);border-radius:16px;padding:22px 22px 24px;position:relative;}
+.box h3{font-family:var(--font-d);font-size:1.3rem;margin-bottom:4px;}
+.box .x{position:absolute;top:12px;right:12px;background:none;border:1px solid var(--line);color:var(--grey);width:30px;height:30px;border-radius:50%;cursor:pointer;}
+.tabs{display:flex;gap:6px;margin:14px 0;}
+.tabs button{flex:1;background:var(--bg);border:1px solid var(--line);color:var(--grey);border-radius:10px;padding:9px;font:600 .84rem var(--font-b);cursor:pointer;}
+.tabs button.on{background:var(--gold);color:#16151a;border-color:var(--gold);}
+.f{display:flex;flex-direction:column;gap:8px;}
+.f label{font-size:.78rem;color:var(--grey);display:flex;flex-direction:column;gap:4px;}
+.f input,.f select{width:100%;}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:26px 16px;text-align:center;cursor:pointer;color:var(--grey);font-size:.88rem;}
+.drop:hover,.drop.over{border-color:var(--gold);color:var(--white);background:var(--gold-dim);}
+.drop b{color:var(--gold-l);}
+.map{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0;}
+.prev{width:100%;border-collapse:collapse;font-size:.76rem;margin:8px 0;}
+.prev th,.prev td{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.prev th{color:var(--gold);font-family:var(--font-m);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;}
+.res{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;}
+.res span{border-radius:99px;padding:4px 12px;font-size:.78rem;font-weight:700;border:1px solid var(--line);}
+.res .g{color:var(--green);border-color:rgba(34,197,94,.5);}
+.res .y{color:var(--gold-l);border-color:rgba(217,168,63,.5);}
+.res .r{color:#ff8a8a;border-color:rgba(239,68,68,.5);}
+.hint{font-size:.76rem;color:var(--grey);margin-top:8px;}
+.hint a{color:var(--gold-l);cursor:pointer;text-decoration:underline;}
+.steps{font-size:.9rem;padding-left:20px;margin:10px 0;color:var(--grey);}
+.steps li{margin:6px 0;}
+.gate{max-width:520px;margin:18vh auto 0;text-align:center;color:var(--grey);}
+.gate h2{font-family:var(--font-d);color:var(--white);margin-bottom:8px;}
+.gate .btn{display:inline-block;margin-top:16px;text-decoration:none;}
+
+.apptabs{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.apptab{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:99px;border:1px solid var(--grey-line,#3d3b42);color:var(--white,#f2f0ea);text-decoration:none;font:700 .84rem var(--font-b,'DM Sans',sans-serif);background:transparent;}
+.apptab:hover{border-color:var(--gold,#d9a83f);color:var(--gold-light,#ecc878);}
+.apptab.on{background:var(--gold,#d9a83f);color:#16151a;border-color:var(--gold,#d9a83f);}
+.apptab.hl{border-color:var(--gold,#d9a83f);color:var(--gold-light,#ecc878);}
+.topnav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 0 6px;}
+@media(max-width:700px){.topnav{position:sticky;top:0;background:var(--bg);z-index:30;padding:10px 0;}}
+.cal-wrap{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:18px;}
+.cal-wrap iframe{display:block;width:100%;height:640px;border:0;background:#fff;}
+.sec{background:linear-gradient(165deg,var(--panel),var(--card));border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:18px;}
+.sec h2{font-family:var(--font-d);font-size:1.25rem;margin-bottom:6px;}
+.sec p{color:var(--grey);font-size:.9rem;}
+.steps2{margin:12px 0 14px 20px;color:var(--grey);font-size:.88rem;}
+.steps2 li{margin:5px 0;}
+.steps2 b,.steps2 code{color:var(--gold-l);font-weight:600;}
+.row2{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.row2 input{flex:1;min-width:220px;background:var(--bg);border:1px solid var(--line);color:var(--white);border-radius:10px;padding:10px 12px;font:inherit;font-size:.88rem;}
+.day{font-family:var(--font-m);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:14px 0 6px;}
+.ap{display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin-bottom:6px;}
+.ap .h{font-family:var(--font-d);font-size:1.25rem;min-width:64px;color:var(--gold-l);}
+.ap .w{flex:1;min-width:160px;}
+.ap .w b{display:block;}
+.ap .w small{color:var(--grey);}
+.tip{font-size:.8rem;color:var(--grey);border:1px dashed var(--line);border-radius:10px;padding:10px 12px;margin-top:12px;}
+.tip code{color:var(--gold-l);word-break:break-all;}
+</style>
+</head>
+<body>
+<div id="gate" class="gate"><p>Cargando tu calendario…</p></div>
+<div class="wrap" id="app" style="display:none">
+  <div class="topnav"><div class="apptabs"><a class="apptab" href="dashboard.html">🏠 Portal</a><a class="apptab" href="crm.html">👥 Mi CRM</a><a class="apptab on" href="calendario.html">📅 Mi calendario</a></div></div>
+
+  <div class="brandbar">
+    <div class="brand"><div class="logo" id="brandLogo"></div><div><div class="bn" id="brandName"></div><div class="bs">Tu agenda</div></div></div>
+    <div class="by"><span class="tmark">T</span> Tu Departamento Tecnológico · <b>TRUCO technology</b>
+      <button id="installBtn" class="mini" style="display:none" onclick="installApp()">⬇ Instalar app</button></div>
+  </div>
+
+  <div class="head"><div>
+    <div class="eyebrow">Tu agenda</div>
+    <h1>Tu día, de un vistazo</h1>
+    <p class="sub">Las citas que tus asistentes agendan por ti aparecen aquí solas. Vincula tu calendario para verlo todo junto y no perder ni un hueco.</p>
+  </div></div>
+
+  <div class="kpis" id="kpis" style="grid-template-columns:repeat(3,1fr)"></div>
+  <div class="today" id="agenda"></div>
+
+  <div class="sec" id="calSec"></div>
+  <div class="sec" id="icsSec"></div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const SERVICE_ACCOUNT = 'truco-voice-agent@truco-voice-agent.iam.gserviceaccount.com';
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let client = null, settings = {}, citas = [];
+
+async function boot() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { location.href = 'login.html'; return; }
+  const { data: cl } = await sb.from('clients').select('*').single();
+  const gate = document.getElementById('gate');
+  if (!cl) { gate.innerHTML = '<h2>No encontramos tu ficha</h2><p>Escríbenos y lo revisamos.</p><a class="btn" href="dashboard.html">← Mi portal</a>'; return; }
+  client = cl;
+  if (!['start', 'basic', 'lite', 'pro'].includes(cl.arranque_tier)) {
+    gate.innerHTML = '<h2>Tu calendario está incluido con tu Departamento</h2><p>Todavía no tienes un Departamento activo.</p><a class="btn" href="dashboard.html">← Mi portal</a>'; return;
+  }
+  const { data: st } = await sb.from('crm_settings').select('*').eq('client_id', cl.id).maybeSingle();
+  settings = st || {};
+  const from = new Date(); from.setHours(0, 0, 0, 0);
+  const to = new Date(from.getTime() + 60 * 864e5);
+  const { data: rs } = await sb.from('reservas_creadas').select('*').gte('inicio', from.toISOString()).lt('inicio', to.toISOString()).order('inicio', { ascending: true });
+  citas = rs || [];
+  gate.style.display = 'none'; document.getElementById('app').style.display = '';
+  renderBrand(); renderAgenda(); renderCal(); renderIcs();
+}
+const brandName = () => settings.brand_name || client.negocio || client.nombre || 'Mi negocio';
+function renderBrand() {
+  const n = brandName();
+  document.getElementById('brandName').textContent = n;
+  document.getElementById('brandLogo').innerHTML = settings.brand_logo ? `<img src="${esc(settings.brand_logo)}" alt="Logo">` : esc(n[0].toUpperCase());
+  document.title = n + ' · Mi calendario';
+}
+const dayKey = d => new Date(d).toDateString();
+function dayLabel(d) {
+  const t = new Date(); t.setHours(0, 0, 0, 0); const x = new Date(d); x.setHours(0, 0, 0, 0);
+  const diff = Math.round((x - t) / 864e5);
+  if (diff === 0) return 'Hoy'; if (diff === 1) return 'Mañana';
+  return x.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+}
+function renderAgenda() {
+  const now = Date.now(), t0 = new Date(); t0.setHours(0, 0, 0, 0);
+  const hoy = citas.filter(c => dayKey(c.inicio) === dayKey(now)).length;
+  const sem = citas.filter(c => new Date(c.inicio) - now < 7 * 864e5 && new Date(c.inicio) >= t0).length;
+  const prox = citas.find(c => new Date(c.inicio) > now);
+  document.getElementById('kpis').innerHTML = `
+    <div class="kpi hot"><div class="n">${hoy}</div><div class="l">Citas hoy</div></div>
+    <div class="kpi"><div class="n">${sem}</div><div class="l">Citas en 7 días</div></div>
+    <div class="kpi"><div class="n" style="font-size:1.4rem">${prox ? new Date(prox.inicio).toLocaleString('es-ES', { weekday: 'short', hour: '2-digit', minute: '2-digit' }) : '—'}</div><div class="l">Próxima cita</div></div>`;
+  const list = citas.filter(c => new Date(c.fin || c.inicio) >= now - 36e5).slice(0, 40);
+  if (!list.length) { document.getElementById('agenda').innerHTML = '<h2>Próximas citas <span>agenda</span></h2><div class="t-row"><span class="why">Aún no tienes citas agendadas. Cuando tus asistentes reserven una, aparecerá aquí.</span></div>'; return; }
+  let out = '<h2>Próximas citas <span>agendadas por tus asistentes</span></h2>', last = '';
+  list.forEach(c => {
+    const k = dayKey(c.inicio);
+    if (k !== last) { out += `<div class="day">${esc(dayLabel(c.inicio))}</div>`; last = k; }
+    const tel = c.cliente_final_telefono || '';
+    out += `<div class="ap"><div class="h">${new Date(c.inicio).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}</div>
+      <div class="w"><b>${esc(c.cliente_final_nombre || 'Cliente')}</b><small>${esc(c.servicio_nombre || 'Cita')}${tel ? ' · ' + esc(tel) : ''}</small></div>
+      ${tel ? `<a class="mini" href="tel:${esc(tel.replace(/\s/g, ''))}">📞 Llamar</a><a class="mini" href="https://wa.me/${esc(tel.replace(/\D/g, ''))}" target="_blank" rel="noopener">💬 WhatsApp</a>` : ''}</div>`;
+  });
+  document.getElementById('agenda').innerHTML = out;
+}
+
+async function saveSettings(fields) {
+  const { error } = await sb.from('crm_settings').upsert({ client_id: client.id, ...fields, updated_at: new Date().toISOString() }, { onConflict: 'client_id' });
+  if (!error) settings = { ...settings, ...fields };
+  return !error;
+}
+function renderCal() {
+  const el = document.getElementById('calSec');
+  if (settings.calendar_id) {
+    const src = encodeURIComponent(settings.calendar_id);
+    el.innerHTML = `<h2>Tu calendario</h2><p>Vinculado a <b style="color:var(--white)">${esc(settings.calendar_id)}</b>. Para verlo tienes que haber iniciado sesión en Google con esa cuenta en este navegador.</p>
+      <div class="cal-wrap" style="margin-top:14px"><iframe title="Calendario" src="https://calendar.google.com/calendar/embed?src=${src}&ctz=Europe%2FMadrid&mode=WEEK&showTitle=0&showPrint=0&showTz=0&hl=es"></iframe></div>
+      <div class="row2"><button class="btn ghost" onclick="editCal()">Cambiar calendario</button><button class="btn ghost" onclick="unlinkCal()">Desvincular</button></div>
+      ${autoTip()}`;
+  } else {
+    el.innerHTML = `<h2>Vincula tu Google Calendar</h2><p>Verás toda tu agenda aquí dentro, junto a las citas que agendan tus asistentes.</p>
+      <ol class="steps2"><li>Abre <b>Google Calendar</b> → ajustes (⚙) → elige tu calendario a la izquierda.</li><li>Baja hasta <b>«Integrar el calendario»</b> y copia el <b>ID del calendario</b> (suele ser tu correo de Gmail).</li><li>Pégalo aquí abajo y pulsa <b>Vincular</b>.</li></ol>
+      <div class="row2"><input id="calId" placeholder="tu-correo@gmail.com o ID del calendario" maxlength="200"><button class="btn" onclick="saveCal()">Vincular</button></div>
+      ${autoTip()}<p class="tip">¿Usas Outlook o Apple Calendar? Usa el enlace de suscripción de abajo: sirve para cualquier calendario.</p>`;
+  }
+}
+function autoTip() {
+  return `<p class="tip"><b>Para que tus asistentes agenden solos en ese calendario</b>, compártelo con <code>${SERVICE_ACCOUNT}</code> con permiso <b>«Realizar cambios en los eventos»</b> (Google Calendar → tu calendario → «Compartir con determinadas personas»). Es lo que permite que las citas caigan directamente en tus huecos libres.</p>`;
+}
+async function saveCal() {
+  const v = document.getElementById('calId').value.trim();
+  if (!v || !/^[^\s]+$/.test(v)) { alert('Pega el ID del calendario o tu correo de Google (sin espacios).'); return; }
+  if (!(await saveSettings({ calendar_id: v }))) { alert('No se pudo guardar.'); return; }
+  renderCal();
+}
+function editCal() { settings.calendar_id = null; renderCal(); }
+async function unlinkCal() { if (!confirm('¿Desvincular tu calendario? Seguirás viendo las citas de tus asistentes.')) return; await saveSettings({ calendar_id: null }); renderCal(); }
+
+function icsUrl() { return location.origin + '/.netlify/functions/crm-calendar-ics?t=' + settings.ical_token; }
+function renderIcs() {
+  const el = document.getElementById('icsSec');
+  if (!settings.ical_token) {
+    el.innerHTML = `<h2>Llévate tus citas a cualquier calendario</h2><p>Crea un enlace privado y suscríbete desde Google Calendar, Outlook o el calendario del móvil: las citas que agenden tus asistentes aparecerán allí solas y se actualizan automáticamente.</p>
+      <div class="row2"><button class="btn" onclick="makeToken()">Crear mi enlace privado</button></div>`;
+    return;
+  }
+  el.innerHTML = `<h2>Tu enlace de suscripción</h2><p>Cópialo y añádelo a tu calendario como «suscripción por URL». Es privado: no lo compartas.</p>
+    <div class="row2"><input id="icsBox" readonly value="${esc(icsUrl())}" onclick="this.select()"><button class="btn" onclick="copyIcs()">Copiar</button></div>
+    <ol class="steps2"><li><b>Google Calendar:</b> Otros calendarios (+) → <b>Desde URL</b> → pega el enlace.</li><li><b>Outlook:</b> Agregar calendario → <b>Suscribirse desde la web</b>.</li><li><b>iPhone / Mac:</b> Ajustes → Calendario → Cuentas → <b>Añadir calendario suscrito</b>.</li></ol>
+    <div class="row2"><button class="btn ghost" onclick="makeToken(true)">Generar un enlace nuevo (anula el anterior)</button></div>`;
+}
+async function makeToken(regen) {
+  if (regen && !confirm('El enlace anterior dejará de funcionar. ¿Continuar?')) return;
+  const tok = (crypto.randomUUID().replace(/-/g, '') + crypto.randomUUID().replace(/-/g, '')).slice(0, 40);
+  if (!(await saveSettings({ ical_token: tok }))) { alert('No se pudo crear el enlace.'); return; }
+  renderIcs();
+}
+async function copyIcs() { try { await navigator.clipboard.writeText(icsUrl()); } catch (e) { document.getElementById('icsBox').select(); document.execCommand('copy'); } alert('Enlace copiado.'); }
+
+function showModal(html) { alert(html.replace(/<[^>]+>/g, ' ')); }
+let deferredInstall = null;
+const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; document.getElementById('installBtn').style.display = ''; });
+if (isIos && !isStandalone()) document.getElementById('installBtn').style.display = '';
+async function installApp() {
+  if (deferredInstall) { deferredInstall.prompt(); await deferredInstall.userChoice; deferredInstall = null; document.getElementById('installBtn').style.display = 'none'; return; }
+  alert('En Safari: pulsa Compartir y elige «Añadir a pantalla de inicio».');
+}
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('crm-sw.js').catch(() => {});
+boot();
+</script>
+</body>
+</html>

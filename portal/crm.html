@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Mi CRM — TRUCO technology</title>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<link rel="manifest" href="crm.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#16151a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mi CRM">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#16151a;--panel:#201f24;--card:#2b2a30;--line:#3d3b42;--white:#f2f0ea;--grey:#b5b2bc;
+  --gold:#d9a83f;--gold-l:#ecc878;--gold-dim:rgba(217,168,63,.12);
+  --blue:#2f7bff;--green:#22c55e;--red:#ef4444;--violet:#a78bfa;
+  --font-d:'Playfair Display',Georgia,serif;--font-b:'DM Sans',sans-serif;--font-m:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:radial-gradient(1100px 560px at 50% -12%,rgba(217,168,63,.08),transparent 60%),var(--bg);color:var(--white);font-family:var(--font-b);line-height:1.5;min-height:100vh;padding:0 16px 60px;}
+.wrap{max-width:1180px;margin:0 auto;}
+.demo-bar{background:var(--gold-dim);border:1px solid rgba(217,168,63,.4);color:var(--gold-l);font-size:.78rem;text-align:center;padding:8px 12px;border-radius:0 0 10px 10px;margin-bottom:26px;}
+.eyebrow{font-family:var(--font-m);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.eyebrow::before{content:'';width:16px;height:1px;background:var(--gold);}
+h1{font-family:var(--font-d);font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.15;text-wrap:balance;}
+.sub{color:var(--grey);max-width:640px;margin-top:8px;font-size:.95rem;}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px;}
+.btn{background:var(--gold);color:#16151a;border:none;border-radius:10px;padding:10px 16px;font:700 .86rem var(--font-b);cursor:pointer;}
+.btn.ghost{background:transparent;color:var(--white);border:1px solid var(--line);}
+.btn.ghost:hover{border-color:var(--gold);}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;}
+.kpi{background:linear-gradient(165deg,var(--panel),var(--card));border:1px solid var(--line);border-radius:14px;padding:16px 18px;}
+.kpi .n{font-family:var(--font-d);font-size:2rem;line-height:1;font-variant-numeric:tabular-nums;}
+.kpi .l{font-size:.78rem;color:var(--grey);margin-top:6px;}
+.kpi .d{font-size:.72rem;color:var(--green);margin-top:4px;font-family:var(--font-m);}
+.kpi.hot{border-color:rgba(217,168,63,.5);background:linear-gradient(165deg,#2a2210,var(--panel));}
+.kpi.hot .n{color:var(--gold-l);}
+
+/* Hoy toca */
+.today{background:linear-gradient(135deg,rgba(217,168,63,.1),var(--panel));border:1px solid rgba(217,168,63,.4);border-radius:14px;padding:16px 18px;margin-bottom:18px;}
+.today h2{font-size:.95rem;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.today h2 span{font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);}
+.today-list{display:flex;flex-direction:column;gap:8px;}
+.t-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:.88rem;}
+.t-row b{font-weight:700;}
+.t-row .why{color:var(--grey);flex:1;min-width:180px;}
+.mini{background:var(--bg);border:1px solid var(--line);color:var(--white);border-radius:8px;padding:5px 10px;font:600 .76rem var(--font-b);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;}
+.mini:hover{border-color:var(--gold);color:var(--gold-l);}
+
+/* Toolbar */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px;}
+.seg{display:inline-flex;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:3px;}
+.seg button{background:none;border:none;color:var(--grey);padding:7px 14px;border-radius:8px;font:600 .82rem var(--font-b);cursor:pointer;}
+.seg button.on{background:var(--gold);color:#16151a;}
+.toolbar input{flex:1;min-width:200px;background:var(--panel);border:1px solid var(--line);color:var(--white);border-radius:10px;padding:9px 12px;font:inherit;font-size:.88rem;}
+.chips{display:flex;gap:6px;flex-wrap:wrap;}
+.chip{background:var(--panel);border:1px solid var(--line);color:var(--grey);border-radius:99px;padding:5px 12px;font-size:.76rem;cursor:pointer;}
+.chip.on{border-color:var(--gold);color:var(--gold-l);background:var(--gold-dim);}
+
+/* Kanban */
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start;}
+.col{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;min-height:120px;}
+.col.over{border-color:var(--gold);background:#25221a;}
+.col h3{font-size:.8rem;display:flex;justify-content:space-between;align-items:center;padding:4px 6px 10px;letter-spacing:.02em;}
+.col h3 i{font-style:normal;font-family:var(--font-m);font-size:.7rem;color:var(--grey);background:var(--bg);border-radius:99px;padding:1px 8px;}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:7px;}
+.card{background:linear-gradient(165deg,var(--card),#26252b);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px;cursor:grab;transition:transform .15s,border-color .15s;}
+.card:hover{border-color:var(--gold);transform:translateY(-2px);}
+.card.drag{opacity:.4;}
+.c-top{display:flex;gap:10px;align-items:center;}
+.av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 .78rem var(--font-b);color:#16151a;flex-shrink:0;}
+.c-name{font-weight:700;font-size:.9rem;overflow-wrap:anywhere;}
+.c-src{font-size:.7rem;color:var(--grey);}
+.c-msg{font-size:.78rem;color:var(--grey);margin:8px 0 6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.c-foot{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:.7rem;color:var(--grey);}
+.tag{border-radius:99px;padding:2px 8px;font-size:.66rem;font-weight:700;}
+.tag.warn{background:rgba(239,68,68,.14);color:#ff8a8a;}
+.tag.ok{background:rgba(34,197,94,.14);color:var(--green);}
+.tag.cita{background:var(--gold-dim);color:var(--gold-l);}
+.src-chip{display:inline-flex;align-items:center;gap:4px;}
+
+/* Lista */
+.list{display:none;flex-direction:column;gap:8px;}
+.list .row{display:grid;grid-template-columns:auto 1fr auto auto;gap:14px;align-items:center;background:linear-gradient(165deg,var(--card),#26252b);border:1px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;}
+.list .row:hover{border-color:var(--gold);}
+.pill{border-radius:99px;padding:3px 10px;font-size:.72rem;font-weight:700;border:1px solid var(--line);}
+
+/* Drawer */
+.veil{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(3px);display:none;z-index:50;}
+.veil.on{display:block;}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(460px,100%);background:var(--panel);border-left:1px solid var(--gold);z-index:60;transform:translateX(100%);transition:transform .25s;overflow-y:auto;padding:22px 20px 40px;}
+.drawer.on{transform:none;}
+.d-close{position:absolute;top:14px;right:14px;background:none;border:1px solid var(--line);color:var(--grey);width:32px;height:32px;border-radius:50%;cursor:pointer;}
+.d-head{display:flex;gap:14px;align-items:center;margin:8px 0 14px;}
+.d-head .av{width:54px;height:54px;font-size:1.1rem;}
+.d-head h2{font-family:var(--font-d);font-size:1.4rem;line-height:1.15;}
+.d-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.stepper{display:flex;gap:4px;margin-bottom:18px;}
+.stepper button{flex:1;background:var(--bg);border:1px solid var(--line);color:var(--grey);border-radius:8px;padding:8px 2px;font:600 .72rem var(--font-b);cursor:pointer;}
+.stepper button.on{background:var(--gold);color:#16151a;border-color:var(--gold);}
+.stepper button.past{border-color:var(--gold);color:var(--gold-l);}
+.d-sec{font-family:var(--font-m);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:16px 0 8px;}
+.tl{position:relative;padding-left:20px;}
+.tl::before{content:'';position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--line);}
+.ev{position:relative;margin-bottom:12px;font-size:.84rem;}
+.ev::before{content:'';position:absolute;left:-20px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--gold);border:2px solid var(--panel);}
+.ev.nota::before{background:var(--violet);}
+.ev.cita::before{background:var(--green);}
+.ev small{display:block;color:var(--grey);font-size:.7rem;font-family:var(--font-m);margin-bottom:1px;}
+.note-in{display:flex;gap:8px;margin-top:10px;}
+.note-in input{flex:1;background:var(--bg);border:1px solid var(--line);color:var(--white);border-radius:8px;padding:9px 10px;font:inherit;font-size:.86rem;}
+.info{font-size:.8rem;color:var(--grey);border:1px dashed var(--line);border-radius:10px;padding:10px 12px;margin-top:22px;}
+@media(max-width:1000px){.board{grid-template-columns:repeat(2,minmax(0,1fr));}.kpis{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:640px){.board{grid-template-columns:1fr;}.list .row{grid-template-columns:auto 1fr;}.list .row .pill,.list .row .when{grid-column:2;}}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+
+/* marca del cliente */
+.brandbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px;}
+.brand{display:flex;align-items:center;gap:12px;}
+.logo{width:46px;height:46px;border-radius:12px;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font:700 1.1rem var(--font-d);color:var(--gold-l);overflow:hidden;flex-shrink:0;}
+.logo img{width:100%;height:100%;object-fit:cover;}
+.bn{font-family:var(--font-d);font-size:1.15rem;line-height:1.1;}
+.bs{font-size:.72rem;color:var(--grey);}
+.by{display:flex;align-items:center;gap:8px;font-size:.76rem;color:var(--grey);flex-wrap:wrap;}
+.by b{color:var(--gold-l);}
+.tmark{width:22px;height:22px;border:1.5px solid var(--gold);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font:700 .8rem var(--font-d);color:var(--gold);}
+/* desplegable de descarga */
+.pop-wrap{position:relative;}
+.pop{display:none;position:absolute;right:0;top:calc(100% + 8px);width:min(380px,92vw);background:var(--panel);border:1px solid var(--gold);border-radius:14px;padding:16px;z-index:40;box-shadow:0 20px 50px -10px rgba(0,0,0,.7);}
+.pop.on{display:block;}
+.pop h4{font-family:var(--font-d);font-size:1.05rem;margin-bottom:10px;}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border:1px solid var(--line);border-radius:10px;margin-bottom:6px;cursor:pointer;font-size:.86rem;}
+.opt:hover{border-color:var(--gold);}
+.opt input[type=radio]{margin-top:3px;accent-color:var(--gold);}
+.opt.dis{opacity:.5;cursor:not-allowed;}
+.opt .t{flex:1;}
+.opt small{display:block;color:var(--grey);font-size:.72rem;margin-top:1px;}
+.opt .n{font-family:var(--font-m);font-size:.72rem;color:var(--gold-l);white-space:nowrap;}
+.dates{display:none;gap:8px;align-items:center;margin:2px 0 8px 30px;font-size:.8rem;color:var(--grey);flex-wrap:wrap;}
+.dates.on{display:flex;}
+.dates input,.f input,.f select{background:var(--bg);border:1px solid var(--line);color:var(--white);border-radius:8px;padding:7px 9px;font:inherit;font-size:.84rem;color-scheme:dark;}
+.pop .sum{font-size:.82rem;color:var(--gold-l);margin:10px 0;font-family:var(--font-m);}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;padding:5vh 14px;z-index:80;overflow-y:auto;}
+.modal.on{display:flex;}
+.box{width:min(640px,100%);background:var(--panel);border:1px solid var(--gold);border-radius:16px;padding:22px 22px 24px;position:relative;}
+.box h3{font-family:var(--font-d);font-size:1.3rem;margin-bottom:4px;}
+.box .x{position:absolute;top:12px;right:12px;background:none;border:1px solid var(--line);color:var(--grey);width:30px;height:30px;border-radius:50%;cursor:pointer;}
+.tabs{display:flex;gap:6px;margin:14px 0;}
+.tabs button{flex:1;background:var(--bg);border:1px solid var(--line);color:var(--grey);border-radius:10px;padding:9px;font:600 .84rem var(--font-b);cursor:pointer;}
+.tabs button.on{background:var(--gold);color:#16151a;border-color:var(--gold);}
+.f{display:flex;flex-direction:column;gap:8px;}
+.f label{font-size:.78rem;color:var(--grey);display:flex;flex-direction:column;gap:4px;}
+.f input,.f select{width:100%;}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:26px 16px;text-align:center;cursor:pointer;color:var(--grey);font-size:.88rem;}
+.drop:hover,.drop.over{border-color:var(--gold);color:var(--white);background:var(--gold-dim);}
+.drop b{color:var(--gold-l);}
+.map{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0;}
+.prev{width:100%;border-collapse:collapse;font-size:.76rem;margin:8px 0;}
+.prev th,.prev td{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.prev th{color:var(--gold);font-family:var(--font-m);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;}
+.res{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;}
+.res span{border-radius:99px;padding:4px 12px;font-size:.78rem;font-weight:700;border:1px solid var(--line);}
+.res .g{color:var(--green);border-color:rgba(34,197,94,.5);}
+.res .y{color:var(--gold-l);border-color:rgba(217,168,63,.5);}
+.res .r{color:#ff8a8a;border-color:rgba(239,68,68,.5);}
+.hint{font-size:.76rem;color:var(--grey);margin-top:8px;}
+.hint a{color:var(--gold-l);cursor:pointer;text-decoration:underline;}
+.steps{font-size:.9rem;padding-left:20px;margin:10px 0;color:var(--grey);}
+.steps li{margin:6px 0;}
+.gate{max-width:520px;margin:18vh auto 0;text-align:center;color:var(--grey);}
+.gate h2{font-family:var(--font-d);color:var(--white);margin-bottom:8px;}
+.gate .btn{display:inline-block;margin-top:16px;text-decoration:none;}
+
+.apptabs{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.apptab{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:99px;border:1px solid var(--grey-line,#3d3b42);color:var(--white,#f2f0ea);text-decoration:none;font:700 .84rem var(--font-b,'DM Sans',sans-serif);background:transparent;}
+.apptab:hover{border-color:var(--gold,#d9a83f);color:var(--gold-light,#ecc878);}
+.apptab.on{background:var(--gold,#d9a83f);color:#16151a;border-color:var(--gold,#d9a83f);}
+.apptab.hl{border-color:var(--gold,#d9a83f);color:var(--gold-light,#ecc878);}
+.topnav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 0 6px;}
+@media(max-width:700px){.topnav{position:sticky;top:0;background:var(--bg);z-index:30;padding:10px 0;}}
+</style>
+</head>
+<body>
+<div id="gate" class="gate"><p>Cargando tu CRM…</p></div>
+<div class="wrap" id="app" style="display:none">
+  <div class="topnav"><div class="apptabs"><a class="apptab" href="dashboard.html">🏠 Portal</a><a class="apptab on" href="crm.html">👥 Mi CRM</a><a class="apptab" href="calendario.html">📅 Mi calendario</a></div></div>
+
+  <div class="brandbar">
+    <div class="brand">
+      <div class="logo" id="brandLogo"></div>
+      <div><div class="bn" id="brandName"></div><div class="bs">Panel de clientes</div></div>
+      <button class="mini" onclick="openBrand()">✎ Personalizar</button>
+      <a class="mini" href="dashboard.html">← Mi portal</a><button class="mini" onclick="logout()">Salir</button>
+    </div>
+    <div class="by"><span class="tmark">T</span> Tu Departamento Tecnológico · <b>TRUCO technology</b>
+      <button id="installBtn" class="mini" style="display:none" onclick="installApp()">⬇ Instalar app</button></div>
+  </div>
+
+  <div class="head">
+    <div>
+      <div class="eyebrow">Tu Departamento Tecnológico</div>
+      <h1>Tus clientes, ordenados solos</h1>
+      <p class="sub">Cada persona que escribe a tu asistente, te llama, te manda un correo o reserva una cita aparece aquí con todo su historial. Tú no tecleas nada.</p>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <div class="pop-wrap">
+        <button class="btn ghost" id="expBtn" onclick="toggleExport(event)">↓ Descargar mis contactos ▾</button>
+        <div class="pop" id="expPop" onclick="event.stopPropagation()">
+          <h4>¿Qué contactos quieres descargar?</h4>
+          <label class="opt"><input type="radio" name="ex" value="all" checked onchange="expUpdate()"><span class="t">Todos<small>Tu libreta completa</small></span><span class="n" id="n-all"></span></label>
+          <label class="opt" id="opt-new"><input type="radio" name="ex" value="new" onchange="expUpdate()"><span class="t">Solo los nuevos desde mi última descarga<small id="lastTxt"></small></span><span class="n" id="n-new"></span></label>
+          <label class="opt"><input type="radio" name="ex" value="7" onchange="expUpdate()"><span class="t">Últimos 7 días</span><span class="n" id="n-7"></span></label>
+          <label class="opt"><input type="radio" name="ex" value="30" onchange="expUpdate()"><span class="t">Últimos 30 días</span><span class="n" id="n-30"></span></label>
+          <label class="opt"><input type="radio" name="ex" value="range" onchange="expUpdate()"><span class="t">Elegir fechas<small>Por fecha en que entraron</small></span></label>
+          <div class="dates" id="dates"><input type="date" id="d1" onchange="expUpdate()"> hasta <input type="date" id="d2" onchange="expUpdate()"></div>
+          <div class="d-sec" style="margin:10px 0 6px;">Solo con estado</div>
+          <div class="chips" id="expStates"></div>
+          <div class="sum" id="expSum"></div>
+          <button class="btn" style="width:100%" onclick="doExport()">Descargar (se abre en Excel)</button>
+        </div>
+      </div>
+      <button class="btn" onclick="openAdd()">+ Añadir contactos</button>
+    </div>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+  <div class="today" id="today"></div>
+
+  <div class="toolbar">
+    <div class="seg"><button id="v-board" class="on" onclick="setView('board')">Embudo</button><button id="v-list" onclick="setView('list')">Lista</button></div>
+    <input id="q" type="search" placeholder="Buscar por nombre, teléfono o correo…" oninput="render()">
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <div class="board" id="board"></div>
+  <div class="list" id="list"></div>
+</div>
+
+<div class="veil" id="veil" onclick="closeD()"></div>
+<aside class="drawer" id="drawer" aria-label="Ficha del contacto"></aside>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="box" id="box"></div></div>
+
+<script>
+const SUPABASE_URL = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+const H = 3600e3, D = 24 * H;
+const STATES = [
+  { k: 'nuevo', n: 'Nuevos', c: '#2f7bff' },
+  { k: 'contactado', n: 'Contactados', c: '#a78bfa' },
+  { k: 'cita', n: 'Con cita', c: '#d9a83f' },
+  { k: 'cliente', n: 'Clientes', c: '#22c55e' },
+  { k: 'perdido', n: 'Perdidos', c: '#8b8894' },
+];
+const BOARD_STATES = STATES.filter(s => s.k !== 'perdido');
+const SRC = { importado: ['Importado', '📥'], portal: ['Añadido por ti', '✍️'], whatsapp: ['WhatsApp', '💬'], email: ['Correo', '✉️'], reservas: ['Reserva web', '📅'], llamada: ['Llamada', '📞'], web: ['Chat de la web', '🌐'] };
+const COLORS = ['#ecc878', '#9cc2ff', '#b5f0c8', '#e9b3ff', '#ffc9a1', '#a8e6e0'];
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const hash = s => { let h = 0; for (const ch of String(s)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; };
+const colorFor = id => COLORS[hash(id) % COLORS.length];
+const initials = n => String(n || '?').split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+const srcOf = k => SRC[k] || SRC.importado;
+
+let client = null, settings = {}, contacts = [];
+let view = 'board', filter = '', openId = null, imp = null, dragId = null;
+let expStates = new Set(STATES.map(s => s.k));
+
+function rel(iso) {
+  const m = (Date.now() - new Date(iso)) / 6e4;
+  if (m < 60) return `hace ${Math.max(1, Math.round(m))} min`;
+  if (m < 1440) return `hace ${Math.round(m / 60)} h`;
+  return `hace ${Math.round(m / 1440)} d`;
+}
+const stale = c => (c.estado === 'nuevo' || c.estado === 'contactado') && (Date.now() - new Date(c.last)) > 3 * D;
+
+/* ───────── Carga ───────── */
+async function fetchAll(table, cols, order) {
+  const out = [];
+  for (let from = 0; from < 5000; from += 1000) {
+    const { data, error } = await sb.from(table).select(cols).order(order, { ascending: false }).range(from, from + 999);
+    if (error) throw error;
+    out.push(...(data || []));
+    if (!data || data.length < 1000) break;
+  }
+  return out;
+}
+async function loadContacts() {
+  const rows = await fetchAll('crm_contacts', '*', 'last_seen');
+  const { data: acts } = await sb.from('crm_activities').select('contact_id, texto').order('id', { ascending: false }).limit(3000);
+  const lastMsg = {};
+  (acts || []).forEach(a => { if (!(a.contact_id in lastMsg)) lastMsg[a.contact_id] = a.texto; });
+  contacts = rows.map(c => ({
+    id: c.id, nombre: c.nombre || c.telefono || c.email || 'Sin nombre', tel: c.telefono || '', email: c.email || '',
+    estado: c.estado, src: SRC[c.origen] ? c.origen : 'importado', last: c.last_seen, created: c.first_seen,
+    msg: lastMsg[c.id] || 'Sin actividad todavía.', acts: null,
+  }));
+}
+
+async function boot() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) { location.href = 'login.html'; return; }
+  const { data: cl, error } = await sb.from('clients').select('*').single();
+  const gate = document.getElementById('gate');
+  if (error || !cl) { gate.innerHTML = '<h2>No encontramos tu ficha</h2><p>Escríbenos y lo revisamos.</p><a class="btn" href="dashboard.html">← Mi portal</a>'; return; }
+  client = cl;
+  if (!['start', 'basic', 'lite', 'pro'].includes(cl.arranque_tier)) {
+    gate.innerHTML = '<h2>Tu CRM está incluido con tu Departamento</h2><p>Todavía no tienes un Departamento activo. En cuanto lo tengas, tus contactos aparecerán aquí solos.</p><a class="btn" href="dashboard.html">← Mi portal</a>';
+    return;
+  }
+  const { data: st } = await sb.from('crm_settings').select('*').eq('client_id', cl.id).maybeSingle();
+  settings = st || {};
+  try { await loadContacts(); } catch (e) { gate.innerHTML = '<h2>No se pudieron cargar tus contactos</h2><p>Recarga la página en un momento.</p>'; return; }
+  gate.style.display = 'none';
+  document.getElementById('app').style.display = '';
+  renderBrand();
+  render();
+}
+async function logout() { await sb.auth.signOut(); location.href = 'login.html'; }
+
+/* ───────── Pantalla ───────── */
+function kpis() {
+  const week = contacts.filter(c => (Date.now() - new Date(c.created)) < 7 * D).length;
+  const citas = contacts.filter(c => c.estado === 'cita').length;
+  const cli = contacts.filter(c => c.estado === 'cliente').length;
+  const seguir = contacts.filter(stale).length;
+  document.getElementById('kpis').innerHTML = `
+    <div class="kpi"><div class="n">${contacts.length}</div><div class="l">Contactos en tu libreta</div><div class="d">+${week} esta semana</div></div>
+    <div class="kpi"><div class="n">${citas}</div><div class="l">Citas por atender</div></div>
+    <div class="kpi"><div class="n">${cli}</div><div class="l">Ya son clientes</div></div>
+    <div class="kpi hot"><div class="n">${seguir}</div><div class="l">Esperan tu respuesta</div></div>`;
+  const tl = contacts.filter(stale).sort((a, b) => new Date(a.last) - new Date(b.last)).slice(0, 8);
+  document.getElementById('today').innerHTML = tl.length
+    ? `<h2>Hoy toca <span>seguimiento</span></h2><div class="today-list">${tl.map(c => `
+      <div class="t-row"><b>${esc(c.nombre)}</b><span class="why">Sin respuesta desde ${rel(c.last)} — ${esc(c.msg)}</span>
+      ${c.tel ? `<a class="mini" href="tel:${esc(c.tel.replace(/\s/g, ''))}">📞 Llamar</a><a class="mini" href="https://wa.me/${esc(c.tel.replace(/\D/g, ''))}" target="_blank" rel="noopener">💬 WhatsApp</a>` : ''}
+      ${c.email ? `<a class="mini" href="mailto:${esc(c.email)}">✉️ Escribir</a>` : ''}
+      <button class="mini" onclick="openD('${c.id}')">Ver ficha</button></div>`).join('')}</div>`
+    : '<h2>Hoy toca <span>seguimiento</span></h2><div class="t-row"><span class="why">Todo al día. Nadie espera tu respuesta. 🎉</span></div>';
+}
+
+function chips() {
+  const all = [['', 'Todos'], ...Object.entries(SRC).map(([k, v]) => [k, v[1] + ' ' + v[0]])];
+  document.getElementById('chips').innerHTML = all.map(([k, t]) => `<span class="chip${filter === k ? ' on' : ''}" onclick="filter='${k}';render()">${esc(t)}</span>`).join('');
+}
+function visible() {
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  return contacts.filter(c => (!filter || c.src === filter) && (!q || [c.nombre, c.tel, c.email].some(v => v && v.toLowerCase().includes(q))));
+}
+function cardHtml(c) {
+  const s = srcOf(c.src);
+  return `<div class="card" draggable="true" data-id="${esc(c.id)}" ondragstart="dragStart(event)" ondragend="this.classList.remove('drag')" onclick="openD('${c.id}')">
+    <div class="c-top"><div class="av" style="background:${colorFor(c.id)}">${esc(initials(c.nombre))}</div>
+      <div><div class="c-name">${esc(c.nombre)}</div><div class="c-src"><span class="src-chip">${s[1]} ${s[0]}</span></div></div></div>
+    <div class="c-msg">${esc(c.msg)}</div>
+    <div class="c-foot"><span>${rel(c.last)}</span>${stale(c) ? '<span class="tag warn">Sin respuesta</span>' : c.estado === 'cita' ? '<span class="tag cita">Cita</span>' : c.estado === 'cliente' ? '<span class="tag ok">Cliente</span>' : ''}</div></div>`;
+}
+function render() {
+  kpis(); chips();
+  const rows = visible();
+  document.getElementById('board').innerHTML = BOARD_STATES.map(s => {
+    const list = rows.filter(c => c.estado === s.k);
+    return `<div class="col" data-k="${s.k}" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="drop(event,'${s.k}')">
+      <h3><span><span class="dot" style="background:${s.c}"></span>${s.n}</span><i>${list.length}</i></h3>${list.map(cardHtml).join('') || '<div style="color:var(--grey);font-size:.76rem;padding:6px 8px;">Nadie aquí todavía</div>'}</div>`;
+  }).join('');
+  document.getElementById('list').innerHTML = rows.map(c => {
+    const st = STATES.find(s => s.k === c.estado);
+    return `<div class="row" onclick="openD('${c.id}')"><div class="av" style="background:${colorFor(c.id)}">${esc(initials(c.nombre))}</div>
+      <div><div class="c-name">${esc(c.nombre)}</div><div class="c-src">${srcOf(c.src)[1]} ${srcOf(c.src)[0]} · ${esc(c.tel || c.email)}</div></div>
+      <span class="pill" style="color:${st.c};border-color:${st.c}">${st.n.replace(/s$/, '')}</span><span class="when c-src">${rel(c.last)}</span></div>`;
+  }).join('') || '<div class="sub">' + (contacts.length ? 'Nada con ese filtro.' : 'Aún no hay contactos: aparecerán solos en cuanto tu asistente atienda a alguien, o puedes importar los que ya tengas.') + '</div>';
+  if (openId) drawer(openId);
+}
+function setView(v) {
+  view = v;
+  document.getElementById('board').style.display = v === 'board' ? '' : 'none';
+  document.getElementById('list').style.display = v === 'list' ? 'flex' : 'none';
+  document.getElementById('v-board').classList.toggle('on', v === 'board');
+  document.getElementById('v-list').classList.toggle('on', v === 'list');
+}
+
+function dragStart(e) { dragId = e.currentTarget.dataset.id; e.currentTarget.classList.add('drag'); e.dataTransfer.effectAllowed = 'move'; }
+function drop(e, k) { e.preventDefault(); if (dragId) setState(dragId, k); dragId = null; }
+async function setState(id, k) {
+  const c = contacts.find(x => x.id === id); if (!c || c.estado === k) { render(); return; }
+  const prev = c.estado; c.estado = k; render();
+  const { error } = await sb.from('crm_contacts').update({ estado: k }).eq('id', id);
+  if (error) { c.estado = prev; render(); alert('No se pudo cambiar el estado. Inténtalo de nuevo.'); }
+}
+
+/* ───────── Ficha ───────── */
+async function openD(id) {
+  openId = id;
+  document.getElementById('veil').classList.add('on'); document.getElementById('drawer').classList.add('on');
+  const c = contacts.find(x => x.id === id);
+  if (c && !c.acts) { drawer(id); await loadActs(c); }
+  drawer(id);
+}
+async function loadActs(c) {
+  const { data } = await sb.from('crm_activities').select('kind, source, texto, created_at').eq('contact_id', c.id).order('id', { ascending: false }).limit(100);
+  c.acts = (data || []).map(a => ({ k: a.kind, s: a.source, t: a.created_at, x: a.texto || '' }));
+}
+function closeD() { openId = null; document.getElementById('veil').classList.remove('on'); document.getElementById('drawer').classList.remove('on'); }
+async function addNote(id) {
+  const i = document.getElementById('note'); const t = i.value.trim(); if (!t) return;
+  const { error } = await sb.from('crm_activities').insert({ contact_id: id, client_id: client.id, kind: 'nota', source: 'portal', texto: t });
+  if (error) { alert('No se pudo guardar la nota.'); return; }
+  const c = contacts.find(x => x.id === id); await loadActs(c); c.msg = t; drawer(id);
+}
+async function deleteContact(id) {
+  if (!confirm('¿Borrar este contacto y todo su historial? No se puede deshacer.')) return;
+  const { error } = await sb.from('crm_contacts').delete().eq('id', id);
+  if (error) { alert('No se pudo borrar.'); return; }
+  contacts = contacts.filter(x => x.id !== id); closeD(); render();
+}
+function drawer(id) {
+  const c = contacts.find(x => x.id === id); if (!c) return;
+  const idx = BOARD_STATES.findIndex(s => s.k === c.estado);
+  const acts = c.acts ? [...c.acts].sort((a, b) => new Date(b.t) - new Date(a.t)) : null;
+  const s = srcOf(c.src);
+  document.getElementById('drawer').innerHTML = `
+    <button class="d-close" onclick="closeD()" aria-label="Cerrar">✕</button>
+    <div class="d-head"><div class="av" style="background:${colorFor(c.id)}">${esc(initials(c.nombre))}</div>
+      <div><h2>${esc(c.nombre)}</h2><div class="c-src">${s[1]} Llegó por ${s[0].toLowerCase()} · ${esc(c.tel || '')}${c.tel && c.email ? ' · ' : ''}${esc(c.email || '')}</div></div></div>
+    <div class="d-actions">
+      ${c.tel ? `<a class="mini" href="tel:${esc(c.tel.replace(/\s/g, ''))}">📞 Llamar</a><a class="mini" href="https://wa.me/${esc(c.tel.replace(/\D/g, ''))}" target="_blank" rel="noopener">💬 WhatsApp</a>` : ''}
+      ${c.email ? `<a class="mini" href="mailto:${esc(c.email)}">✉️ Escribir</a>` : ''}</div>
+    <div class="d-sec">En qué punto está</div>
+    <div class="stepper">${BOARD_STATES.map((st, i) => `<button class="${i === idx ? 'on' : i < idx ? 'past' : ''}" onclick="setState('${c.id}','${st.k}')">${st.n.replace(/s$/, '')}</button>`).join('')}</div>
+    <div class="d-sec">Historial</div>
+    <div class="tl">${acts === null ? '<div class="ev"><small>…</small>Cargando</div>' : acts.map(a => `<div class="ev ${esc(a.k)}"><small>${a.k === 'nota' ? 'NOTA TUYA' : (SRC[a.s] ? SRC[a.s][0].toUpperCase() : esc(String(a.k).toUpperCase()))} · ${rel(a.t)}</small>${esc(a.x)}</div>`).join('') || '<div class="ev"><small>—</small>Sin actividad todavía.</div>'}</div>
+    <div class="note-in"><input id="note" placeholder="Añadir una nota…" maxlength="600" onkeydown="if(event.key==='Enter')addNote('${c.id}')"><button class="btn" onclick="addNote('${c.id}')">Guardar</button></div>
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+      ${c.estado !== 'perdido' ? `<button class="mini" onclick="setState('${c.id}','perdido')">Marcar como perdido</button>` : `<button class="mini" onclick="setState('${c.id}','nuevo')">Recuperar</button>`}
+      <button class="mini" onclick="deleteContact('${c.id}')">Borrar contacto</button></div>
+    <div class="info">Estos datos son tuyos: puedes descargarlos o borrarlos cuando quieras.</div>`;
+}
+
+/* ───────── Descarga con opciones ───────── */
+function toggleExport(e) { e.stopPropagation(); const p = document.getElementById('expPop'); p.classList.toggle('on'); if (p.classList.contains('on')) expUpdate(); }
+document.addEventListener('click', () => document.getElementById('expPop').classList.remove('on'));
+function expSelection() {
+  const mode = document.querySelector('input[name=ex]:checked').value;
+  const last = settings.last_export, now = Date.now();
+  return contacts.filter(c => {
+    if (!expStates.has(c.estado)) return false;
+    const t = new Date(c.created).getTime();
+    if (mode === 'new') return last && t > new Date(last).getTime();
+    if (mode === '7') return now - t <= 7 * D;
+    if (mode === '30') return now - t <= 30 * D;
+    if (mode === 'range') {
+      const d1 = document.getElementById('d1').value, d2 = document.getElementById('d2').value;
+      if (d1 && t < new Date(d1 + 'T00:00:00').getTime()) return false;
+      if (d2 && t > new Date(d2 + 'T23:59:59').getTime()) return false;
+    }
+    return true;
+  });
+}
+function expUpdate() {
+  const mode = document.querySelector('input[name=ex]:checked').value;
+  document.getElementById('dates').classList.toggle('on', mode === 'range');
+  const last = settings.last_export, now = Date.now();
+  const cnt = f => contacts.filter(c => expStates.has(c.estado) && f(new Date(c.created).getTime())).length;
+  document.getElementById('n-all').textContent = cnt(() => true);
+  document.getElementById('n-7').textContent = cnt(t => now - t <= 7 * D);
+  document.getElementById('n-30').textContent = cnt(t => now - t <= 30 * D);
+  const optNew = document.getElementById('opt-new');
+  if (last) { document.getElementById('n-new').textContent = cnt(t => t > new Date(last).getTime()); document.getElementById('lastTxt').textContent = 'Última descarga: ' + new Date(last).toLocaleString('es-ES', { dateStyle: 'medium', timeStyle: 'short' }); optNew.classList.remove('dis'); }
+  else { document.getElementById('n-new').textContent = ''; document.getElementById('lastTxt').textContent = 'Todavía no has descargado nunca'; optNew.classList.add('dis'); }
+  document.getElementById('expStates').innerHTML = STATES.map(s => `<span class="chip${expStates.has(s.k) ? ' on' : ''}" onclick="event.stopPropagation();toggleExpState('${s.k}')">${s.n}</span>`).join('');
+  const n = expSelection().length;
+  document.getElementById('expSum').textContent = n === 1 ? 'Se descargará 1 contacto' : `Se descargarán ${n} contactos`;
+}
+function toggleExpState(k) { expStates.has(k) ? expStates.delete(k) : expStates.add(k); if (!expStates.size) expStates.add(k); expUpdate(); }
+async function saveSettings(fields) {
+  const { error } = await sb.from('crm_settings').upsert({ client_id: client.id, ...fields, updated_at: new Date().toISOString() }, { onConflict: 'client_id' });
+  if (!error) settings = { ...settings, ...fields };
+  return !error;
+}
+async function doExport() {
+  const rows = expSelection();
+  if (!rows.length) { alert('No hay contactos con esa selección.'); return; }
+  const head = ['Nombre', 'Teléfono', 'Correo', 'Estado', 'Origen', 'Fecha de alta', 'Última actividad'];
+  const fmt = iso => new Date(iso).toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' });
+  const csv = [head].concat(rows.map(c => [c.nombre, c.tel, c.email, (STATES.find(s => s.k === c.estado) || {}).n, srcOf(c.src)[0], fmt(c.created), fmt(c.last)]))
+    .map(r => r.map(v => '"' + String(v || '').replace(/"/g, '""') + '"').join(';')).join('\r\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
+  a.download = 'mis-contactos-' + new Date().toISOString().slice(0, 10) + '.csv'; a.click();
+  await saveSettings({ last_export: new Date().toISOString() });
+  expUpdate();
+}
+
+/* ───────── Modal ───────── */
+function showModal(html) { document.getElementById('box').innerHTML = '<button class="x" onclick="closeModal()" aria-label="Cerrar">✕</button>' + html; document.getElementById('modal').classList.add('on'); }
+function closeModal() { document.getElementById('modal').classList.remove('on'); imp = null; }
+
+/* ───────── Añadir contactos ───────── */
+function openAdd(tab) {
+  tab = tab || 'one';
+  showModal(`<h3>Añadir contactos</h3><p class="hint" style="margin:0">Uno a uno, o sube la base de datos que ya tengas.</p>
+    <div class="tabs"><button class="${tab === 'one' ? 'on' : ''}" onclick="openAdd('one')">Uno a uno</button><button class="${tab === 'import' ? 'on' : ''}" onclick="openAdd('import')">Importar mi base de datos</button></div>
+    <div id="tabBody"></div>`);
+  if (tab === 'one') {
+    document.getElementById('tabBody').innerHTML = `<div class="f">
+      <label>Nombre<input id="a-n" maxlength="200"></label><label>Teléfono<input id="a-t" maxlength="50" inputmode="tel"></label>
+      <label>Correo<input id="a-e" maxlength="200" inputmode="email"></label>
+      <button class="btn" onclick="addOne()">Guardar contacto</button></div>`;
+  } else {
+    document.getElementById('tabBody').innerHTML = `
+      <div class="drop" id="drop" onclick="document.getElementById('file').click()" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="event.preventDefault();this.classList.remove('over');readFile(event.dataTransfer.files[0])">
+        <div style="font-size:1.6rem">📥</div><b>Arrastra aquí tu archivo</b> o pulsa para elegirlo<br><small>Formato CSV · desde Excel: Archivo → Guardar como → CSV</small>
+      </div>
+      <input type="file" id="file" accept=".csv,.tsv,.txt,text/csv" style="display:none" onchange="readFile(this.files[0])">
+      <p class="hint">No hace falta que las columnas tengan un orden concreto: las reconocemos solas. Los repetidos se unen, no se duplican. <a onclick="downloadTemplate()">Descargar plantilla de ejemplo</a></p>
+      <div id="impBody"></div>`;
+  }
+}
+const normPhone = p => { let d = String(p || '').replace(/\D/g, ''); if (d.startsWith('00')) d = d.slice(2); if (d.length === 9 && /^[6-9]/.test(d)) d = '34' + d; return d.length >= 8 ? d : null; };
+const normMail = m => { const v = String(m || '').trim().toLowerCase(); return /^\S+@\S+\.\S+$/.test(v) ? v : null; };
+function findDup(t, e) { const pn = normPhone(t), em = normMail(e); return contacts.find(c => (pn && normPhone(c.tel) === pn) || (em && c.email && c.email.toLowerCase() === em)); }
+async function addOne() {
+  const n = document.getElementById('a-n').value.trim(), t = document.getElementById('a-t').value.trim(), e = document.getElementById('a-e').value.trim();
+  if (!normPhone(t) && !normMail(e)) { alert('Pon al menos un teléfono o un correo válido.'); return; }
+  const dup = findDup(t, e);
+  if (dup) { alert('Ya tienes a ' + (dup.nombre || 'este contacto') + ' con ese teléfono o correo.'); return; }
+  const { error } = await sb.from('crm_contacts').insert({ client_id: client.id, nombre: n || null, telefono: normPhone(t) ? t : null, email: normMail(e) || null, origen: 'portal' });
+  if (error) { alert(/duplicate|unique/i.test(error.message) ? 'Ya tienes un contacto con ese teléfono o correo.' : 'No se pudo guardar.'); return; }
+  closeModal(); await loadContacts(); render();
+}
+function parseCsv(text) {
+  text = text.replace(/^﻿/, '');
+  const first = text.split(/\r?\n/)[0] || '';
+  const delim = [';', '\t', ','].map(d => [d, first.split(d).length - 1]).sort((a, b) => b[1] - a[1])[0][0];
+  const rows = []; let row = [], cur = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (q) { if (ch === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += ch; }
+    else if (ch === '"') q = true;
+    else if (ch === delim) { row.push(cur); cur = ''; }
+    else if (ch === '\n' || ch === '\r') { if (ch === '\r' && text[i + 1] === '\n') i++; row.push(cur); cur = ''; if (row.some(v => v.trim())) rows.push(row); row = []; }
+    else cur += ch;
+  }
+  row.push(cur); if (row.some(v => v.trim())) rows.push(row);
+  return rows;
+}
+function readFile(f) {
+  if (!f) return;
+  const body = document.getElementById('impBody');
+  if (/\.xlsx?$/i.test(f.name)) { body.innerHTML = '<p class="hint" style="color:#ff8a8a">Ese archivo es de Excel. Ábrelo, pulsa Archivo → Guardar como → «CSV (delimitado por comas)» y sube ese.</p>'; return; }
+  if (f.size > 5e6) { body.innerHTML = '<p class="hint" style="color:#ff8a8a">El archivo pesa demasiado (máximo 5 MB).</p>'; return; }
+  const r = new FileReader();
+  r.onload = () => {
+    const rows = parseCsv(String(r.result));
+    if (rows.length < 2) { body.innerHTML = '<p class="hint" style="color:#ff8a8a">No he encontrado contactos en el archivo.</p>'; return; }
+    const head = rows[0].map(h => h.trim());
+    const guess = re => head.findIndex(h => re.test(h));
+    imp = { name: f.name, head, rows: rows.slice(1, 5001), map: { n: guess(/nombre|name|cliente|contacto|raz[oó]n|empresa/i), t: guess(/tel|m[oó]vil|movil|phone|whats|celular/i), e: guess(/mail|correo/i) } };
+    renderImp();
+  };
+  r.readAsText(f, 'utf-8');
+}
+function analyze() {
+  const seenP = new Set(), seenE = new Set(); const ok = []; let dups = 0, bad = 0;
+  for (const r of imp.rows) {
+    const n = imp.map.n >= 0 ? (r[imp.map.n] || '').trim() : '', t = imp.map.t >= 0 ? (r[imp.map.t] || '').trim() : '', e = imp.map.e >= 0 ? (r[imp.map.e] || '').trim() : '';
+    const pn = normPhone(t), em = normMail(e);
+    if (!pn && !em) { bad++; continue; }
+    if ((pn && seenP.has(pn)) || (em && seenE.has(em)) || findDup(t, e)) { dups++; continue; }
+    if (pn) seenP.add(pn); if (em) seenE.add(em);
+    ok.push({ n, t: pn ? t : '', e: em || '' });
+  }
+  return { ok, dups, bad };
+}
+function renderImp() {
+  const opts = sel => '<option value="-1">— no importar —</option>' + imp.head.map((h, i) => `<option value="${i}"${sel === i ? ' selected' : ''}>${esc(h || 'Columna ' + (i + 1))}</option>`).join('');
+  const a = analyze();
+  document.getElementById('impBody').innerHTML = `
+    <div class="d-sec">Archivo: ${esc(imp.name)}</div>
+    <div class="map f"><label>Nombre<select onchange="imp.map.n=+this.value;renderImp()">${opts(imp.map.n)}</select></label>
+      <label>Teléfono<select onchange="imp.map.t=+this.value;renderImp()">${opts(imp.map.t)}</select></label>
+      <label>Correo<select onchange="imp.map.e=+this.value;renderImp()">${opts(imp.map.e)}</select></label></div>
+    <table class="prev"><tr>${imp.head.slice(0, 5).map(h => `<th>${esc(h)}</th>`).join('')}</tr>${imp.rows.slice(0, 4).map(r => `<tr>${r.slice(0, 5).map(v => `<td>${esc(v)}</td>`).join('')}</tr>`).join('')}</table>
+    <div class="res"><span class="g">✓ ${a.ok.length} para importar</span>${a.dups ? `<span class="y">${a.dups} repetidos (se saltan)</span>` : ''}${a.bad ? `<span class="r">${a.bad} sin teléfono ni correo (se saltan)</span>` : ''}</div>
+    <div class="f"><label>Marcarlos como<select id="imp-state"><option value="cliente">Clientes actuales</option><option value="nuevo">Nuevos contactos</option><option value="contactado">Ya contactados</option></select></label>
+    <button class="btn" id="imp-go" ${a.ok.length ? '' : 'disabled style="opacity:.5"'} onclick="doImport()">Importar ${a.ok.length} contactos</button></div>`;
+}
+async function doImport() {
+  const a = analyze(); const estado = document.getElementById('imp-state').value, name = imp.name;
+  const btn = document.getElementById('imp-go'); btn.disabled = true; btn.textContent = 'Importando…';
+  const { data, error } = await sb.rpc('crm_import_contacts', { p_rows: a.ok, p_estado: estado, p_filename: name });
+  if (error) { btn.disabled = false; btn.textContent = 'Reintentar'; alert('No se pudo importar. Inténtalo de nuevo.'); return; }
+  closeModal(); await loadContacts(); render();
+  alert(`Listo: ${data.nuevos} contactos importados` + (data.repetidos ? `, ${data.repetidos} repetidos que ya tenías.` : '.'));
+}
+function downloadTemplate() {
+  const csv = '﻿Nombre;Teléfono;Correo\r\nAna López;600 11 22 33;ana@ejemplo.es\r\nJavier Ruiz;+34 622 33 44 55;\r\n';
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' })); a.download = 'plantilla-contactos.csv'; a.click();
+}
+
+/* ───────── Marca del cliente ───────── */
+const brandName = () => settings.brand_name || (client && (client.negocio || client.nombre)) || 'Mi negocio';
+function renderBrand() {
+  const n = brandName();
+  document.getElementById('brandName').textContent = n;
+  document.getElementById('brandLogo').innerHTML = settings.brand_logo ? `<img src="${esc(settings.brand_logo)}" alt="Logo">` : esc(n[0].toUpperCase());
+  document.title = n + ' · Mi CRM';
+}
+function openBrand() {
+  showModal(`<h3>Personaliza tu panel</h3><p class="hint" style="margin:0">Pon el nombre de tu negocio y tu logo. Los colores los mantiene TRUCO technology.</p>
+    <div class="f" style="margin-top:14px"><label>Nombre de tu negocio<input id="b-n" maxlength="60" value="${esc(brandName())}"></label>
+    <label>Logo (PNG o JPG)<input type="file" id="b-l" accept="image/*"></label>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" onclick="saveBrand()">Guardar</button><button class="btn ghost" onclick="saveBrand(true)">Quitar logo</button></div></div>`);
+}
+async function saveBrand(removeLogo) {
+  const name = document.getElementById('b-n').value.trim().slice(0, 60) || brandName();
+  const fields = { brand_name: name };
+  const f = removeLogo ? null : document.getElementById('b-l').files[0];
+  if (removeLogo) fields.brand_logo = null;
+  const finish = async () => { const ok = await saveSettings(fields); if (!ok) { alert('No se pudo guardar.'); return; } renderBrand(); closeModal(); };
+  if (!f) return finish();
+  const img = new Image(); const url = URL.createObjectURL(f);
+  img.onload = () => { const c = document.createElement('canvas'); c.width = c.height = 160; const x = c.getContext('2d'); const m = Math.min(img.width, img.height); x.drawImage(img, (img.width - m) / 2, (img.height - m) / 2, m, m, 0, 0, 160, 160); fields.brand_logo = c.toDataURL('image/png'); URL.revokeObjectURL(url); finish(); };
+  img.onerror = () => { alert('No he podido leer esa imagen.'); };
+  img.src = url;
+}
+
+/* ───────── App instalable ───────── */
+let deferredInstall = null;
+const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; document.getElementById('installBtn').style.display = ''; });
+window.addEventListener('appinstalled', () => { deferredInstall = null; document.getElementById('installBtn').style.display = 'none'; });
+if (isIos && !isStandalone()) document.getElementById('installBtn').style.display = '';
+async function installApp() {
+  if (deferredInstall) { deferredInstall.prompt(); await deferredInstall.userChoice; deferredInstall = null; document.getElementById('installBtn').style.display = 'none'; return; }
+  showModal(`<h3>Instala tu CRM como una app</h3><ol class="steps"><li>Pulsa el botón <b>Compartir</b> (el cuadrado con la flecha) de Safari.</li><li>Elige <b>«Añadir a pantalla de inicio»</b>.</li><li>Ábrela desde el icono: se abre como una app y <b>se actualiza sola</b> cada vez que entras.</li></ol>`);
+}
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('crm-sw.js').catch(() => {});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeD(); closeModal(); document.getElementById('expPop').classList.remove('on'); } });
+boot();
+</script>
+</body>
+</html>

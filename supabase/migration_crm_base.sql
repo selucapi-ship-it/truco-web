@@ -148,3 +148,89 @@ $$;
 drop trigger if exists crm_contacts_norm_trg on crm_contacts;
 create trigger crm_contacts_norm_trg before insert or update of telefono, email on crm_contacts
   for each row execute function crm_contacts_norm();
+
+-- ── Ajustes del CRM por cliente (marca, última descarga) ─────────────────────
+create table if not exists crm_settings (
+  client_id uuid primary key references clients(id) on delete cascade,
+  brand_name text,
+  brand_logo text,
+  last_export timestamptz,
+  updated_at timestamptz not null default now()
+);
+alter table crm_settings enable row level security;
+drop policy if exists "crm settings founder" on crm_settings;
+create policy "crm settings founder" on crm_settings for all using (is_founder()) with check (is_founder());
+drop policy if exists "crm settings owner select" on crm_settings;
+create policy "crm settings owner select" on crm_settings for select using (crm_owns_client(client_id));
+drop policy if exists "crm settings owner insert" on crm_settings;
+create policy "crm settings owner insert" on crm_settings for insert with check (crm_owns_client(client_id));
+drop policy if exists "crm settings owner update" on crm_settings;
+create policy "crm settings owner update" on crm_settings for update using (crm_owns_client(client_id)) with check (crm_owns_client(client_id));
+
+-- ── Importar la base de datos que el cliente ya tenga ───────────────────────
+-- p_rows: [{n:'nombre', t:'teléfono', e:'correo'}, ...]. Une repetidos, salta filas sin
+-- teléfono ni correo y devuelve los recuentos. Solo el dueño de su CRM puede llamarla.
+create or replace function crm_import_contacts(p_rows jsonb, p_estado text, p_filename text default null)
+returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare
+  v_client uuid;
+  r jsonb;
+  v_tel text; v_mail text; v_new int := 0; v_dup int := 0; v_bad int := 0;
+begin
+  select id into v_client from clients where auth_user_id = auth.uid() and arranque_tier in ('basic','lite','pro');
+  if v_client is null then raise exception 'Sin CRM en tu plan'; end if;
+  if jsonb_typeof(p_rows) <> 'array' or jsonb_array_length(p_rows) > 5000 then raise exception 'Archivo demasiado grande'; end if;
+  if p_estado not in ('nuevo','contactado','cita','cliente','perdido') then p_estado := 'nuevo'; end if;
+  for r in select * from jsonb_array_elements(p_rows) loop
+    v_tel := crm_norm_phone(r->>'t');
+    v_mail := nullif(lower(btrim(coalesce(r->>'e',''))), '');
+    if v_tel is null and v_mail is null then v_bad := v_bad + 1; continue; end if;
+    if (v_tel is not null and exists (select 1 from crm_contacts where client_id = v_client and telefono_norm = v_tel))
+       or (v_mail is not null and exists (select 1 from crm_contacts where client_id = v_client and email_norm = v_mail)) then
+      v_dup := v_dup + 1; continue;
+    end if;
+    perform crm_capture(v_client, 'importado', 'nota', r->>'n', r->>'t', r->>'e',
+      'Importado desde tu archivo' || coalesce(' «' || left(p_filename, 80) || '»', '') || '.', p_estado);
+    v_new := v_new + 1;
+  end loop;
+  return jsonb_build_object('nuevos', v_new, 'repetidos', v_dup, 'sin_datos', v_bad);
+end;
+$$;
+revoke all on function crm_import_contacts(jsonb, text, text) from public, anon;
+grant execute on function crm_import_contacts(jsonb, text, text) to authenticated;
+
+-- ── El CRM va incluido en TODOS los departamentos (Start incluido) + calendario ─
+alter table crm_settings add column if not exists calendar_id text;
+alter table crm_settings add column if not exists ical_token text;
+create unique index if not exists crm_settings_ical_token_uq on crm_settings (ical_token) where ical_token is not null;
+
+create or replace function crm_import_contacts(p_rows jsonb, p_estado text, p_filename text default null)
+returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare
+  v_client uuid;
+  r jsonb;
+  v_tel text; v_mail text; v_new int := 0; v_dup int := 0; v_bad int := 0;
+begin
+  select id into v_client from clients where auth_user_id = auth.uid() and arranque_tier in ('start','basic','lite','pro');
+  if v_client is null then raise exception 'Sin CRM en tu plan'; end if;
+  if jsonb_typeof(p_rows) <> 'array' or jsonb_array_length(p_rows) > 5000 then raise exception 'Archivo demasiado grande'; end if;
+  if p_estado not in ('nuevo','contactado','cita','cliente','perdido') then p_estado := 'nuevo'; end if;
+  for r in select * from jsonb_array_elements(p_rows) loop
+    v_tel := crm_norm_phone(r->>'t');
+    v_mail := nullif(lower(btrim(coalesce(r->>'e',''))), '');
+    if v_tel is null and v_mail is null then v_bad := v_bad + 1; continue; end if;
+    if (v_tel is not null and exists (select 1 from crm_contacts where client_id = v_client and telefono_norm = v_tel))
+       or (v_mail is not null and exists (select 1 from crm_contacts where client_id = v_client and email_norm = v_mail)) then
+      v_dup := v_dup + 1; continue;
+    end if;
+    perform crm_capture(v_client, 'importado', 'nota', r->>'n', r->>'t', r->>'e',
+      'Importado desde tu archivo' || coalesce(' «' || left(p_filename, 80) || '»', '') || '.', p_estado);
+    v_new := v_new + 1;
+  end loop;
+  return jsonb_build_object('nuevos', v_new, 'repetidos', v_dup, 'sin_datos', v_bad);
+end;
+$$;
+revoke all on function crm_import_contacts(jsonb, text, text) from public, anon;
+grant execute on function crm_import_contacts(jsonb, text, text) to authenticated;
