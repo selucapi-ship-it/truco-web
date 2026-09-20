@@ -188,7 +188,7 @@ exports.handler = async function (event) {
     dy -= 13;
     page.drawText('Jose Luis Robles Capitán · NIF 48523326L', { x: deX + 14, y: dy, size: 7.8, font: body, color: grey });
     dy -= 11;
-    page.drawText('trucotechnology@gmail.com · +34 681 899 793', { x: deX + 14, y: dy, size: 7.8, font: body, color: grey });
+    page.drawText('departamento@trucotechnology.com · +34 868 29 04 50', { x: deX + 14, y: dy, size: 7.8, font: body, color: grey });
 
     page.drawRectangle({ x: paraX, y: boxY, width: boxW, height: boxH, color: rgb(0.975, 0.972, 0.965) });
     page.drawRectangle({ x: paraX, y: boxY, width: 3, height: boxH, color: blue });

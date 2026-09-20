@@ -72,3 +72,6 @@ create policy "founder insert blocked_numbers" on blocked_numbers for insert wit
 drop policy if exists "founder delete blocked_numbers" on blocked_numbers;
 create policy "founder delete blocked_numbers" on blocked_numbers for delete using (is_founder());
 -- voice_call_gate se redefinió para rechazar números de blocked_numbers (devuelve blocked=true).
+
+-- Clientes registrados (status='cliente' con su teléfono en la ficha): sin tope mensual de llamadas.
+-- voice_call_gate se redefinió para saltarse el tope cuando el número coincide con el de un cliente.
