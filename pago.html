@@ -308,6 +308,12 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .pay-btn{width:100%;padding:14px;border-radius:10px;border:none;background:var(--blue);color:#fff;font-family:var(--font-b);font-size:.9rem;font-weight:600;cursor:pointer;transition:opacity var(--tr);}
 .pay-btn:hover:not(:disabled){opacity:.85;}
 .pay-btn:disabled{opacity:.38;cursor:not-allowed;}
+.pack-grid.has-selection:not(.show-all) .plan-card:not(.selected){display:none;}
+.pack-grid.has-selection:not(.show-all){grid-template-columns:1fr!important;max-width:560px;}
+#other-plans-bar{display:none;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:12px;padding:10px 14px;margin:-4px 0 14px;font-size:.86rem;color:var(--grey);}
+#other-plans-bar b{color:var(--white);}
+#other-plans-bar button{background:transparent;border:1px solid var(--gold);color:var(--gold);border-radius:99px;padding:7px 14px;font:700 .8rem var(--font-b);cursor:pointer;}
+#other-plans-bar button:hover{background:var(--gold);color:#16151a;}
 .sb-secure{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 22px 16px;font-size:.80rem;color:var(--grey);}
 .sb-email-btn{width:100%;background:none;border:1px solid var(--grey-line);color:var(--grey);border-radius:10px;padding:10px;font-size:.86rem;font-family:var(--font-b);cursor:pointer;margin-top:8px;transition:all var(--tr);}
 .sb-email-btn:hover{border-color:var(--blue);color:var(--white);}
@@ -358,7 +364,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       <!-- CATEGORÍA A: DEPARTAMENTO TECNOLÓGICO -->
       <div id="wrap-depto">
       <div class="cat-label">Departamento Tecnológico · Suscripción mensual</div>
-      <div class="pack-grid" style="margin-bottom:16px;">
+      <div id="other-plans-bar"><span>Has elegido <b id="chosen-plan-name">—</b>. Toca la tarjeta otra vez para quitarla.</span><button type="button" id="toggle-other-plans" onclick="toggleOtherPlans()">Ver otros departamentos ▾</button></div>
+      <div class="pack-grid" id="plan-pack-grid" style="margin-bottom:16px;">
 
         <label class="plan-card tier-start" id="card-arranque-start" onclick="selectDirect('arranque-start')">
           <div class="pc-check-box"></div>
@@ -1107,12 +1114,23 @@ function validateContactAndAccount(){
   return{ok,missing};
 }
 
+function solProgress(){
+  if(!selectedDirect||!DIRECT[selectedDirect])return{have:0,max:0,need:0};
+  const pool=TIER_POOLS[DIRECT[selectedDirect].arranque];
+  if(!pool)return{have:0,max:0,need:0};
+  const have=selectedTierSolutions.length;
+  return{have,max:pool.max,need:Math.max(0,pool.max-have)};
+}
+function incompleteLabel(){
+  const p=solProgress();
+  return p.need>0?'Elige '+p.need+(p.need>1?' automatizaciones':' automatización')+' más ('+p.have+' de '+p.max+') ↑':'Elige tu automatización gratis arriba';
+}
 function handleMainCtaClick(){
   trucoTrackClick('pago_confirmar_pagar');
   if(wizardStep===1){
     const plan=getActivePlan();
     if(!plan){alert('Elige un Departamento Tecnológico arriba antes de continuar.');return;}
-    if(plan.solutionsIncomplete){alert('Elige tu automatización gratis antes de continuar.');scrollToSolutionsPicker();return;}
+    if(plan.solutionsIncomplete){alert(incompleteLabel().replace(' ↑','')+' antes de continuar.');scrollToSolutionsPicker();return;}
     goToStep(2);
   }else if(wizardStep===2){
     const v=validateContactAndAccount();
@@ -1133,8 +1151,8 @@ function syncCtaForStep(){
   if(!btn||!txt)return;
   if(wizardStep===1){
     const plan=getActivePlan();
-    btn.disabled=!plan||plan.solutionsIncomplete;
-    txt.textContent=!plan?'Selecciona un plan':plan.solutionsIncomplete?'Elige tu automatización gratis arriba':'Siguiente: tus datos →';
+    btn.disabled=!plan;
+    txt.textContent=!plan?'Selecciona un plan':plan.solutionsIncomplete?incompleteLabel():'Siguiente: tus datos →';
   }else if(wizardStep===2){
     btn.disabled=false;
     txt.textContent='Siguiente: método de pago →';
@@ -1183,6 +1201,24 @@ function resetDigitalAddon(){
 function showPath(path){}
 function selectPath(path){}
 
+function syncPlanCollapse(){
+  const grid=document.getElementById('plan-pack-grid'),bar=document.getElementById('other-plans-bar');
+  if(!grid||!bar)return;
+  if(selectedDirect&&DIRECT[selectedDirect]){
+    grid.classList.add('has-selection');grid.classList.remove('show-all');
+    bar.style.display='flex';
+    document.getElementById('chosen-plan-name').textContent=DIRECT[selectedDirect].name;
+    document.getElementById('toggle-other-plans').textContent='Ver otros departamentos ▾';
+  }else{
+    grid.classList.remove('has-selection','show-all');
+    bar.style.display='none';
+  }
+}
+function toggleOtherPlans(){
+  const grid=document.getElementById('plan-pack-grid');if(!grid)return;
+  const show=grid.classList.toggle('show-all');
+  document.getElementById('toggle-other-plans').textContent=show?'Ocultar otros departamentos ▴':'Ver otros departamentos ▾';
+}
 function selectDirect(id){
   if(selectedDirect===id){
     selectedDirect=null;selectedTierSolutions=[];selectedExtraSolutions=[];selectedAuditSolutions=[];tierPaymentMode='unico';
@@ -1192,6 +1228,7 @@ function selectDirect(id){
     const tp0=document.getElementById('tier-solutions-picker');if(tp0)tp0.style.display='none';
     const pm0=document.getElementById('payment-mode-block');if(pm0)pm0.style.display='none';
     const eb0=document.getElementById('extra-solutions-block');if(eb0)eb0.style.display='none';
+    syncPlanCollapse();
     updateAll();
     return;
   }
@@ -1204,6 +1241,7 @@ function selectDirect(id){
   const pm=document.getElementById('payment-mode-block');if(pm){pm.style.display='block';document.getElementById('btn-unico').classList.add('active');document.getElementById('btn-financiado').classList.remove('active');document.getElementById('payment-mode-title').textContent='Pago único por adelantado — ahorras un 12%.';document.getElementById('payment-mode-desc').textContent='Se cobra tu primer año de Departamento de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.';}
   const ep=document.getElementById('extra-solutions-panel');if(ep)ep.style.display='none';
   const et=document.getElementById('extra-sol-toggle');if(et)et.classList.remove('open');
+  syncPlanCollapse();
   renderTierSolutionsPicker();
   renderExtraSolutionsPanel();
   scrollToSolutionsPicker();
@@ -1572,8 +1610,8 @@ function updateSummary(plan){
   const tl=TIMELINES[plan.timeline];
   if(tl&&tsteps&&tbox){const cols={gold:'var(--gold)',green:'var(--green)',blue:'var(--blue)',grey:'var(--grey)'};tsteps.innerHTML=tl.map(s=>`<div class="tl-step"><div class="tl-dot" style="background:${cols[s.c]||'var(--grey)'}"></div><div class="tl-info"><div class="tl-label">${s.l}</div><div class="tl-val" style="color:${cols[s.c]||'var(--grey)'}">${s.v}</div></div></div>`).join('');tbox.style.display='block';}
   if(plan.solutionsIncomplete){
-    btn.disabled=true;
-    txt.textContent='Elige tu automatización gratis arriba';
+    btn.disabled=(wizardStep===3);
+    txt.textContent=incompleteLabel();
   }else if(plan.needsAudit){
     btn.disabled=true;
     txt.textContent='Reserva la auditoría gratuita para cerrar el precio';
