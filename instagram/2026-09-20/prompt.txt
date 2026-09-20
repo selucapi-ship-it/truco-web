@@ -1,0 +1,23 @@
+Ultra-realistic vertical photograph, 9:16 aspect ratio, professional advertising photography (not illustration, not 3D render, not CGI, no cartoon style). Dark, moody background in near-black charcoal tone (#16151a) filling most of the frame, with warm golden accent lighting (#d9a83f) and cream-white highlights. Cinematic, high-end tech-meets-small-business advertising aesthetic, shallow depth of field, soft directional light, subtle film grain, sharp focus on the main subject.
+
+SCENE: A single continuous reservation desk, photographed as a true before/after split composition — the one visual device not used in recent posts — divided down the exact vertical center by a thin, sharp beam of light that changes character from cold to warm as it runs top to bottom. Both halves show the same host stand at the entrance of a beachfront chiringuito/restaurant terrace on the shore of the Mar Menor in San Javier, Region of Murcia, on a sunny Sunday afternoon in late September — wicker terrace chairs and the soft blurred turquoise of the Mar Menor visible behind both sides, toned down into deep charcoal shadow so the scene stays true to the dark brand palette rather than a bright postcard photo. LEFT HALF ("before"): flat, slightly desaturated, cold-toned light. A worn paper reservation ledger lies open, its page crowded with crossed-out names, overlapping ink circles around the same time slot, and coffee-ring stains; an old corded landline phone sits off the hook beside it, cord tangled; a hand hovers over the mess, tense, unsure where to write. RIGHT HALF ("after"): warm, golden-toned light. The same wooden desk now holds a slim tablet standing upright, its screen glowing soft gold with a clean, minimal calendar interface where new reservation blocks appear already filled in and checked, evenly spaced with no overlaps; beside it a smartphone shows one calm WhatsApp-style confirmation bubble; a relaxed hand rests loosely on the desk, not writing anything. The upper portion of the frame, spanning both halves, is dark negative space reserved for text overlays.
+
+TEXT ELEMENTS (render these exactly, as clean, modern, minimal sans-serif typography, in Spanish, well-composed and legible, not distorted or garbled):
+
+1. Top of the image, small logo lockup: "TRUCO technology" in bold cream-white letters, with the smaller subtitle directly beneath it in gold: "Departamento Tecnológico".
+
+2. Just below the logo, a small pill-shaped label in gold outline with cream text reading: "DOMINGO · 28°C DE SOL Y BRISA EN SAN JAVIER".
+
+3. Beneath that, a bold uppercase context label in gold, letter-spaced, centered across both halves: "EL DOMINGO QUE LLENA LA TERRAZA Y TAMBIÉN EL TELÉFONO".
+
+4. The main two-line headline in large bold cream-white letters, centered in the dark upper space, straddling the dividing light beam:
+"Antes de que llegue el cliente,"
+"ya sabes dónde sentarlo."
+
+5. On the glowing tablet screen in the right ("after") half, rendered as small clean UI text within the calendar interface, the short quote: "Ya no se me cruzan las reservas."
+
+6. Lower in the composition, centered beneath both halves, a golden badge containing: "PRECIO FUNDADOR" and beneath it, smaller: "Plazas limitadas".
+
+7. A closing line near the bottom: "Paga una vez. Olvídate 365 días." followed by "trucotechnology.com".
+
+All text must be sharp, correctly spelled exactly as written above (including accents), high contrast against the dark background, and laid out with generous spacing so it reads clearly at Instagram Story size. Overall composition: the split desk scene fills the lower two-thirds with the cold-to-warm light beam marking the center, logo lockup and weather/context labels at the very top spanning both halves, main headline in the dark upper-middle space straddling the divide, badge and closing line stacked near the bottom.
