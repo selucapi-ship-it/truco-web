@@ -624,7 +624,7 @@
     <div class="stats-box">
       <button class="stats-close" onclick="closeCalOverlay()">✕</button>
       <h2>Mi calendario</h2>
-      <p style="color:var(--grey);font-size:.86rem;margin:4px 0 12px;">Vincula tu Google Calendar para ver aquí tus consultorías y citas. Se lee desde el servidor: no hace falta iniciar sesión en Google. Solo tienes que compartir ese calendario con <code>truco-voice-agent@truco-voice-agent.iam.gserviceaccount.com</code>.</p>
+      <p style="color:var(--grey);font-size:.86rem;margin:4px 0 12px;">Vincula tu Google Calendar para ver aquí tus consultorías y citas. Solo se ve si has iniciado sesión en Google en este navegador con esa cuenta.</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
         <input type="text" id="cal-id" placeholder="Correo de Google o ID del calendario" style="flex:1;min-width:200px;">
         <button class="btn sm" onclick="saveCalId()">Vincular</button>
@@ -1230,11 +1230,6 @@
 
   <div class="layout">
     <div class="list-panel">
-      <details id="agenda-card" open style="display:none;margin-bottom:16px;border:1px solid var(--grey-line);border-radius:14px;background:var(--bg-panel);">
-        <summary style="cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">📅 Mi agenda · próximos 14 días
-          <span style="display:flex;gap:8px;"><button class="btn sm ghost" onclick="event.preventDefault();loadAgendaCard()">Actualizar</button><button class="btn sm ghost" onclick="event.preventDefault();openCalOverlay()">Vincular</button></span></summary>
-        <div id="agenda-card-body" style="padding:0 16px 14px;max-height:340px;overflow:auto;"></div>
-      </details>
       <div class="stats-bar" id="stats-bar"></div>
       <div class="list-head">
         <h2>Clientes</h2>
@@ -1772,7 +1767,6 @@ async function checkFounderStatus() {
   document.getElementById('team-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('stats-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('cal-btn').style.display = isFounder ? 'inline-block' : 'none';
-  { const ac = document.getElementById('agenda-card'); if (ac) { ac.style.display = isFounder ? 'block' : 'none'; if (isFounder) loadAgendaCard(); } }
   document.getElementById('activity-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('truki-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('new-client-btn').style.display = isFounder ? 'inline-block' : 'none';
@@ -1795,43 +1789,7 @@ function closeTeamOverlay() {
 }
 
 
-
-// ── AGENDA NATIVA (se lee en el servidor; sin iframe de Google ni sesión de Google) ──
-async function renderAgendaInto(box, calParam, days) {
-  box.innerHTML = '<div class="empty-mini">Cargando…</div>';
-  try {
-    const { data: { session } } = await sb.auth.getSession();
-    const url = '/.netlify/functions/calendar-events?days=' + (days || 14) + (calParam ? '&cal=' + encodeURIComponent(calParam) : '');
-    const r = await fetch(url, { headers: { Authorization: 'Bearer ' + session.access_token } });
-    const d = await r.json();
-    if (!d.ok) {
-      box.innerHTML = d.error === 'not_shared'
-        ? '<div class="empty-mini">No puedo leer ese calendario todavía. Compártelo con <code>' + escapeHtml(d.service_account || '') + '</code> (Google Calendar → tu calendario → «Compartir con determinadas personas») con permiso «Realizar cambios en los eventos».</div>'
-        : '<div class="empty-mini">No se ha podido cargar la agenda (' + escapeHtml(d.error || 'error') + '). Pulsa «Vincular» y pega tu correo de Google o el ID del calendario.</div>';
-      return;
-    }
-    if (!d.linked) { box.innerHTML = '<div class="empty-mini">Aún no has vinculado ningún calendario. Pulsa «Vincular».</div>'; return; }
-    if (!d.events.length) { box.innerHTML = '<div class="empty-mini">Nada en los próximos ' + (days || 14) + ' días.</div>'; return; }
-    const fd = t => new Date(t).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Europe/Madrid' });
-    const fh = t => new Date(t).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Madrid' });
-    let day = '', html = '';
-    d.events.forEach(e => {
-      const k = fd(e.start);
-      if (k !== day) { day = k; html += '<div style="font-family:var(--font-mono,monospace);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:12px 0 4px;">' + escapeHtml(k) + '</div>'; }
-      html += '<div style="display:flex;gap:12px;padding:6px 0;border-top:1px solid var(--grey-line);font-size:.86rem;"><span style="flex:0 0 92px;color:var(--grey);">' + (e.allDay ? 'Todo el día' : fh(e.start) + '–' + fh(e.end)) + '</span><span style="min-width:0;overflow-wrap:anywhere;">' + escapeHtml(e.title) + (e.location ? ' · ' + escapeHtml(e.location) : '') + '</span></div>';
-    });
-    box.innerHTML = html;
-  } catch (e) {
-    box.innerHTML = '<div class="empty-mini">No se ha podido cargar la agenda.</div>';
-  }
-}
-function loadAgendaCard() {
-  let id = '';
-  try { id = localStorage.getItem('panel_cal_id') || ''; } catch (e) {}
-  renderAgendaInto(document.getElementById('agenda-card-body'), id, 14);
-}
-
-// ── CALENDARIO del founder: se vincula por ID (se guarda en este navegador) ──
+// ── CALENDARIO del founder: Google Calendar embebido por ID (se guarda en este navegador) ──
 function openCalOverlay() {
   document.getElementById('cal-overlay').style.display = 'block';
   let id = '';
@@ -1843,14 +1801,14 @@ function closeCalOverlay() { document.getElementById('cal-overlay').style.displa
 function renderCalFrame(id) {
   const box = document.getElementById('cal-frame-wrap');
   if (!id) { box.innerHTML = '<div class="empty-mini">Aún no has vinculado ningún calendario.</div>'; return; }
-  renderAgendaInto(box, id, 30);
+  const src = encodeURIComponent(id);
+  box.innerHTML = '<iframe title="Calendario" src="https://calendar.google.com/calendar/embed?src=' + src + '&ctz=Europe%2FMadrid&mode=WEEK&showTitle=0&showPrint=0&showTz=0&hl=es" style="width:100%;height:min(640px,70vh);border:0;border-radius:12px;background:#fff;"></iframe>';
 }
 function saveCalId() {
   const v = document.getElementById('cal-id').value.trim();
   if (!v || /\s/.test(v)) { alert('Pega tu correo de Google o el ID del calendario, sin espacios.'); return; }
   try { localStorage.setItem('panel_cal_id', v); } catch (e) {}
   renderCalFrame(v);
-  loadAgendaCard();
 }
 function clearCalId() {
   try { localStorage.removeItem('panel_cal_id'); } catch (e) {}

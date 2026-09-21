@@ -111,6 +111,27 @@ REGLAS DE RESPUESTA:
 6. Si la pregunta SÍ es sobre su negocio o sus servicios pero es genuinamente imposible de responder con esta información (asesoría legal/fiscal muy personalizada, un caso demasiado específico), responde EXACTAMENTE empezando con "[NO_SE_RESPONDER]" seguido de una frase breve y amable, invitando siempre a agendar una revisión con el equipo para resolverlo ahí — nunca dejes la respuesta en un simple "no puedo ayudarte". No uses ninguno de estos dos textos en ningún otro caso.`;
 }
 
+
+// Aviso inmediato por correo al founder cuando el chat crea una petición.
+// Si no hay SMTP configurado, no pasa nada: la petición sigue saliendo en su campana del panel.
+async function avisarFounderPeticion(client, title, description) {
+  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM } = process.env;
+  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) return;
+  const nodemailer = require('nodemailer');
+  const transporter = nodemailer.createTransport({ host: SMTP_HOST, port: Number(SMTP_PORT) || 587, secure: Number(SMTP_PORT) === 465, auth: { user: SMTP_USER, pass: SMTP_PASS } });
+  const quien = [client.nombre, client.negocio].filter(Boolean).join(' · ') || 'Un cliente';
+  await transporter.sendMail({
+    from: SMTP_FROM || SMTP_USER,
+    to: process.env.FOUNDER_ALERT_EMAIL || 'departamento@trucotechnology.com',
+    subject: 'Nueva petición de ' + quien + ': ' + title.replace('[Chat] ', ''),
+    text: quien + ' ha pedido esto desde el chat de su portal:\n\n' + title + '\n\n' + description + '\n\nApruébala o recházala en tu panel: campana de avisos → Peticiones de clientes.',
+  });
+}
+
+const PETICIONES_RULE = `
+7. ERES UN ASISTENTE VIRTUAL DE INTELIGENCIA ARTIFICIAL: si el cliente te pregunta, dilo con naturalidad. No eres una persona.
+8. PETICIONES DE CAMBIO Y PROBLEMAS (lo más importante de este chat): si el cliente cuenta un problema o pide un cambio que hay que HACER (cambiar horarios o precios, aplazar o mover citas, ajustar cómo responde su asistente, corregir algo de su web o de sus automatizaciones…), NO digas que ya está hecho ni que lo haces tú. Confirma en una frase lo que has entendido y dile que se lo pasas a su Departamento: Jose lo revisa y da el visto bueno antes de tocar nada, y se le avisará en este panel cuando esté hecho. Al final de tu respuesta añade, en una línea aparte y exactamente con este formato, la marca: [[PETICION|título corto|detalles importantes]] (título de 80 caracteres como máximo). Solo cuando ya esté claro qué quiere; si falta un dato esencial (qué día, qué horario, qué precio), pregunta primero y NO añadas la marca. Nunca prometas plazos ni cifras que no estén arriba.`;
+
 exports.handler = async function (event) {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
@@ -184,7 +205,7 @@ exports.handler = async function (event) {
     const recentPortalHistory = historyResp.ok ? await historyResp.json() : [];
 
     const livePricingBlock = await fetchLivePricingBlock(supabaseUrl, serviceHeaders);
-    const systemInstruction = buildSystemInstruction(client, solutions, livePricingBlock);
+    const systemInstruction = buildSystemInstruction(client, solutions, livePricingBlock) + '\n' + PETICIONES_RULE;
 
     // El historial reciente del portal se manda como turnos de conversación
     // pasados para que la IA "recuerde" — mismo patrón que whatsapp_recent_history.
@@ -236,7 +257,24 @@ exports.handler = async function (event) {
 
     const isOffTopic = rawText.includes('[FUERA_DE_TEMA]');
     const isUnanswerable = rawText.includes('[NO_SE_RESPONDER]');
-    const finalText = rawText.replace('[FUERA_DE_TEMA]', '').replace('[NO_SE_RESPONDER]', '').trim();
+    // Petición de cambio: el chat NO ejecuta nada. Crea una tarea "abierta" que Jose ve
+    // en su panel (campana de avisos) y aprueba antes de que se toque nada.
+    let taskCreated = false;
+    const pet = rawText.match(/\[\[PETICION\|([^|\]]{3,200})\|([^\]]{0,1200})\]\]/);
+    if (pet) {
+      try {
+        const title = ('[Chat] ' + pet[1].trim()).slice(0, 200);
+        const description = (pet[2].trim() + '\n\nMensaje del cliente: ' + message.slice(0, 500)).slice(0, 2000);
+        const tr = await fetch(`${supabaseUrl}/rest/v1/tasks`, {
+          method: 'POST',
+          headers: { ...serviceHeaders, Prefer: 'return=minimal' },
+          body: JSON.stringify({ client_id: client.id, title, description, priority: 'normal' }),
+        });
+        taskCreated = tr.ok;
+        if (taskCreated) avisarFounderPeticion(client, title, description).catch(() => {});
+      } catch (e) { /* si falla, el cliente sigue teniendo el formulario de peticiones */ }
+    }
+    const finalText = rawText.replace(/\[\[PETICION\|[^\]]*\]\]/g, '').replace('[FUERA_DE_TEMA]', '').replace('[NO_SE_RESPONDER]', '').trim();
     const unresolved = isOffTopic || isUnanswerable;
     const reason = isOffTopic ? 'off_topic' : (isUnanswerable ? 'ai_could_not_answer' : undefined);
 
@@ -249,7 +287,7 @@ exports.handler = async function (event) {
       body: JSON.stringify({ client_id: client.id, source: 'portal', nota: `${message.slice(0, 800)}\n---\n${finalText.slice(0, 800)}` }),
     }).catch(() => {});
 
-    return { statusCode: 200, body: JSON.stringify({ text: finalText, unresolved, reason }) };
+    return { statusCode: 200, body: JSON.stringify({ text: finalText, unresolved, reason, task_created: taskCreated }) };
   } catch (e) {
     return { statusCode: 200, body: JSON.stringify({ text: '', unresolved: true, reason: 'exception' }) };
   }

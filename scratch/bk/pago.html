@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Contrata tu Departamento Tecnológico o proyecto con TRUCO technology. Pago seguro con Stripe.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Contratar — TRUCO technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#16151a;--bg-panel:#201f24;--bg-card:#403d47;
+  --blue:#2f7bff;--blue-soft:#1b3a66;--blue-dim:rgba(47,123,255,.1);
+  --gold:#d9a83f;--gold-dim:rgba(217,168,63,.1);
+  --white:#f2f0ea;--grey:#b5b2bc;--grey-line:#3d3b42;
+  --green:#22c55e;--green-dim:rgba(34,197,94,.12);
+  --teal:#2dd4bf;--teal-soft:#125e56;--teal-dim:rgba(45,212,191,.1);
+  --red:#ef4444;
+  --font-d:'Playfair Display',Georgia,serif;
+  --font-b:'DM Sans',sans-serif;
+  --font-m:'JetBrains Mono',monospace;
+  --tr:0.22s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:var(--font-b);line-height:1.6;}
+h1,h2,h3,h4{font-family:var(--font-d);letter-spacing:-.01em;}
+a{color:inherit;text-decoration:none;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--blue-soft);}
+
+.sol-chip{display:flex;align-items:center;gap:6px;font-size:.84rem;color:var(--grey);background:var(--bg-card);border:1px solid var(--grey-line);border-radius:7px;padding:7px 10px;cursor:pointer;transition:all var(--tr);}
+.price-old{color:var(--grey);text-decoration:line-through;font-weight:400;}
+.price-new{color:var(--gold);font-weight:800;}
+.launch-tag{display:inline-block;background:linear-gradient(90deg,var(--gold),#c98f1f);color:#1a1206;font-size:.6rem;font-weight:800;padding:2px 8px;border-radius:20px;letter-spacing:.02em;white-space:nowrap;vertical-align:middle;}
+.sol-chip:has(input:checked){background:var(--blue-dim);border-color:var(--blue);color:var(--white);}
+.sol-chip input{width:13px;height:13px;accent-color:var(--blue);flex-shrink:0;}
+.sol-chip-automatizaciones{display:flex;flex-direction:column;align-items:stretch;cursor:default;}
+.sol-chip-automatizaciones:has(input[type=checkbox]:checked){background:var(--bg-card);border-color:var(--grey-line);color:var(--grey);}
+.sol-chip-automatizaciones:has(.sca-main input:checked){background:var(--blue-dim);border-color:var(--blue);color:var(--white);}
+.sca-main{display:flex;align-items:center;gap:6px;cursor:pointer;}
+.band-picker{display:none;flex-direction:column;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid var(--grey-line);}
+.sol-chip-automatizaciones:has(.sca-main input:checked) .band-picker{display:flex;}
+.band-opt{display:flex;align-items:center;gap:8px;font-size:.86rem;color:var(--grey);cursor:pointer;}
+.band-opt input{width:13px;height:13px;accent-color:var(--blue);flex-shrink:0;}
+.band-opt:has(input:checked){color:var(--white);font-weight:700;}
+.sol-chip span{pointer-events:none;}
+@keyframes packPulse{0%,100%{box-shadow:0 0 0 0 rgba(217,168,63,.45);}50%{box-shadow:0 0 0 5px rgba(217,168,63,0);}}
+.sol-chip.sol-suggested{border-color:var(--gold)!important;animation:packPulse 1.8s ease-in-out infinite;}
+.quick-sector-box{padding:16px 20px;border-bottom:1px solid var(--grey-line);background:rgba(34,197,94,.05);}
+.quick-sector-box label{display:block;font-size:.82rem;color:var(--white);font-weight:700;margin-bottom:2px;}
+.quick-sector-box .qsb-sub{font-size:.80rem;color:var(--grey);margin-bottom:8px;}
+.quick-sector-box select{width:100%;background:var(--bg-panel);border:1.5px solid var(--green);border-radius:8px;padding:11px 14px;color:var(--white);font-family:var(--font-b);font-size:.88rem;outline:none;-webkit-appearance:none;cursor:pointer;}
+.quick-sector-box select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,.15);}
+.quick-sector-box select option{background:var(--bg-panel);}
+.pay-option-list{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+.pay-option{display:flex;align-items:center;gap:14px;background:var(--bg-panel);border:1.5px solid var(--grey-line);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all var(--tr);}
+.pay-option:hover{border-color:var(--grey);}
+.pay-option.active{border-color:var(--blue);background:var(--blue-dim);}
+.pay-option-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--grey-line);flex-shrink:0;position:relative;transition:all var(--tr);background:var(--bg-card);}
+.pay-option.active .pay-option-radio{border-color:var(--blue);}
+.pay-option.active .pay-option-radio::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--blue);}
+.pay-option-icon{flex-shrink:0;width:40px;height:26px;display:flex;align-items:center;justify-content:center;}
+.pay-option-icon svg{width:100%;height:100%;}
+.pay-option-body{flex:1;min-width:0;}
+.pay-option-title{font-size:.92rem;font-weight:700;color:var(--white);line-height:1.3;}
+.pay-option-sub{font-size:.76rem;color:var(--grey);margin-top:2px;line-height:1.3;}
+.pay-option-tag{font-family:var(--font-m);font-size:.72rem;color:var(--gold);font-weight:700;white-space:nowrap;flex-shrink:0;text-align:right;}
+@media(max-width:420px){
+  .pay-option{padding:12px;gap:10px;}
+  .pay-option-tag{font-size:.68rem;}
+}
+.annual-highlight{background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.2);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:.86rem;color:var(--gold);line-height:1.6;}
+.annual-highlight b{color:var(--white);}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pickerPulse{0%,100%{box-shadow:0 0 0 0 rgba(47,123,255,.5);}50%{box-shadow:0 0 0 8px rgba(47,123,255,0);}}
+.picker-pulse{animation:pickerPulse .8s ease-in-out 2;}
+.extra-sol-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(135deg,rgba(217,168,63,.14),rgba(217,168,63,.05));border:1.5px solid rgba(217,168,63,.45);border-radius:12px;padding:13px 18px;color:var(--white);font-family:var(--font-b);font-size:.88rem;font-weight:700;cursor:pointer;transition:all var(--tr);}
+.extra-sol-toggle:hover{border-color:var(--gold);background:linear-gradient(135deg,rgba(217,168,63,.2),rgba(217,168,63,.08));}
+.extra-sol-toggle-left{display:flex;align-items:center;gap:10px;}
+.extra-sol-toggle-left svg{width:19px;height:19px;color:var(--gold);flex-shrink:0;}
+.extra-sol-toggle-count{font-family:var(--font-m);font-size:.76rem;color:var(--gold);background:rgba(217,168,63,.15);padding:2px 8px;border-radius:20px;}
+.extra-sol-arrow{width:16px;height:16px;color:var(--gold);transition:transform var(--tr);flex-shrink:0;}
+.extra-sol-toggle.open .extra-sol-arrow{transform:rotate(180deg);}
+.extra-sol-panel{margin-top:10px;background:rgba(217,168,63,.05);border:1.5px solid rgba(217,168,63,.25);border-radius:14px;padding:16px 18px;animation:fadeIn .25s ease;}
+.sol-chip-disabled{opacity:.4;cursor:not-allowed;}
+.sol-chip-disabled input{cursor:not-allowed;}
+.sol-chip-audit{border-color:var(--gold);background:rgba(217,168,63,.1);color:var(--white);}
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,48px);height:64px;background:rgba(22,21,26,.97);border-bottom:1px solid var(--grey-line);position:sticky;top:0;z-index:100;backdrop-filter:blur(18px);}
+.t-mark{width:38px;height:38px;border:1.5px solid var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Georgia',serif;color:var(--gold);font-size:20px;font-weight:700;background:linear-gradient(160deg,var(--bg-panel),var(--bg));}
+.nav-logo{display:flex;align-items:center;gap:11px;}
+.nav-brand{font-family:var(--font-d);font-size:1rem;font-weight:700;}
+.nav-brand span{color:var(--blue);}
+.nav-sub{font-family:var(--font-m);font-size:.45rem;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin-top:1px;}
+.nav-mid{display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--grey);}
+.nav-mid .dot{width:8px;height:8px;border-radius:50%;background:var(--green);}
+.nav-back{font-size:.82rem;color:var(--grey);transition:color var(--tr);}
+@media(max-width:600px){
+  .nav-sub{display:none;}
+  .nav-mid{display:none;}
+  .nav-back{font-size:.86rem;white-space:nowrap;}
+  .t-mark{width:32px;height:32px;font-size:17px;}
+}
+.nav-back:hover{color:var(--white);}
+
+.page-header{text-align:center;padding:52px 24px 40px;border-bottom:1px solid var(--grey-line);background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(47,123,255,.05) 0%,transparent 70%);}
+.ph-tag{font-family:var(--font-m);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;}
+.ph-tag::before,.ph-tag::after{content:'';width:20px;height:1px;background:var(--gold);}
+.page-header h1{font-size:clamp(1.7rem,3.5vw,2.5rem);font-weight:700;margin-bottom:10px;}
+.page-header p{font-size:.95rem;color:var(--grey);max-width:480px;margin:0 auto;}
+
+.checkout{max-width:1060px;margin:0 auto;padding:40px 24px 80px;display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:start;}
+@media(max-width:800px){.checkout{grid-template-columns:1fr;}}
+
+.mobile-sticky-bar{display:none;}
+@media(max-width:800px){
+  .mobile-sticky-bar.active{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:200;background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:12px 16px;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 -8px 24px rgba(0,0,0,.4);}
+  .checkout.has-sticky-bar{padding-bottom:100px;}
+}
+.msb-info{display:flex;flex-direction:column;line-height:1.3;min-width:0;}
+.msb-label{font-size:.74rem;color:var(--grey);text-transform:uppercase;letter-spacing:.05em;font-family:var(--font-m);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.msb-price{font-size:1.1rem;font-weight:700;font-family:var(--font-d);color:var(--white);}
+.msb-btn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:12px 18px;font-size:.85rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+
+.step{margin-bottom:36px;}
+.step-hd{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;font-family:var(--font-m);font-size:.80rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-hd h2{font-size:1.05rem;font-weight:700;}
+
+/* ── WIZARD: 3 pasos, uno visible a la vez ── */
+.step-panel{display:none;}
+.step-panel.active{display:block;}
+.wizard-indicator{display:flex;align-items:center;gap:6px;margin-bottom:32px;}
+.wizard-dot{display:flex;align-items:center;gap:9px;}
+.wizard-dot .num{width:27px;height:27px;border-radius:50%;background:var(--bg-card);border:1.5px solid var(--grey-line);color:var(--grey);display:flex;align-items:center;justify-content:center;font-family:var(--font-m);font-size:.76rem;font-weight:700;flex-shrink:0;transition:all var(--tr);}
+.wizard-dot .lbl{font-size:.82rem;color:var(--grey);white-space:nowrap;transition:color var(--tr);}
+.wizard-dot.current .num{background:var(--blue);border-color:var(--blue);color:#fff;}
+.wizard-dot.current .lbl{color:var(--white);font-weight:700;}
+.wizard-dot.done .num{background:var(--green);border-color:var(--green);color:#0d1a12;}
+.wizard-dot.done .lbl{color:var(--grey);}
+.wizard-line{flex:1;height:1px;background:var(--grey-line);min-width:14px;margin:0 2px;}
+@media(max-width:600px){.wizard-dot .lbl{display:none;}.wizard-indicator{margin-bottom:24px;}}
+.wizard-back{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:var(--grey);cursor:pointer;margin-bottom:18px;background:none;border:none;font-family:var(--font-b);padding:0;}
+.wizard-back:hover{color:var(--white);}
+.wizard-back svg{width:15px;height:15px;}
+
+/* ── ICONOS DE MÉTODOS DE PAGO ── */
+.pay-methods-row{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap;align-items:center;}
+.pay-method-card{display:block;border-radius:5px;box-shadow:0 0 0 1px var(--grey-line);flex-shrink:0;}
+
+.cat-label{font-family:var(--font-m);font-size:.70rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.cat-label::before{content:'';width:20px;height:1px;background:currentColor;flex-shrink:0;}
+.cat-label::after{content:'';flex:1;height:1px;background:var(--grey-line);min-width:16px;}
+@media(max-width:480px){.cat-label::after{display:none;}}
+
+/* PATH SELECTOR — paso 0 */
+.path-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:10px;}
+@media(max-width:860px){.path-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.path-grid{grid-template-columns:1fr;}}
+.path-card{border:1.5px solid var(--grey-line);border-radius:16px;padding:26px 24px;cursor:pointer;transition:border-color var(--tr),transform var(--tr),background var(--tr),box-shadow var(--tr);background:linear-gradient(165deg,var(--bg-card),var(--bg-panel));position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 10px 24px -18px rgba(0,0,0,.6);}
+.path-card:hover{transform:translateY(-3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 14px 30px -14px rgba(0,0,0,.5);}
+.path-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.path-icon svg{width:22px;height:22px;}
+.path-card.c-blue .path-icon{background:var(--blue-dim);color:var(--blue);}
+.path-card.c-blue:hover{border-color:var(--blue-soft);}
+.path-card.c-gold .path-icon{background:var(--gold-dim);color:var(--gold);}
+.path-card.c-gold:hover{border-color:var(--gold);}
+.path-card.c-green .path-icon{background:var(--green-dim);color:var(--green);}
+.path-card.c-green:hover{border-color:var(--green);}
+.path-card h3{font-family:var(--font-d);font-size:1.15rem;font-weight:800;margin-bottom:8px;}
+.path-card p{font-size:.85rem;color:var(--grey);line-height:1.6;margin-bottom:16px;}
+.path-tag{display:inline-block;font-size:.86rem;font-weight:700;padding:5px 14px;border-radius:20px;font-family:var(--font-m);}
+.path-card.c-blue .path-tag{color:var(--blue);background:var(--blue-dim);}
+.path-card.c-gold .path-tag{color:var(--gold);background:var(--gold-dim);}
+.path-card.c-green .path-tag{color:var(--green);background:var(--green-dim);}
+.path-change{display:none;align-items:center;justify-content:space-between;gap:12px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:10px;padding:12px 18px;margin-bottom:20px;flex-wrap:wrap;}
+.path-change b{color:var(--white);}
+.path-change span{font-size:.85rem;color:var(--grey);}
+.path-change a{font-size:.82rem;color:var(--blue);font-weight:700;cursor:pointer;}
+.path-change a:hover{text-decoration:underline;}
+
+/* PROJECT CARDS — 2 col */
+.project-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+@media(max-width:440px){.project-grid{grid-template-columns:1fr;}}
+@media(max-width:480px){.solutions-grid-el{grid-template-columns:1fr!important;}}
+
+
+.plan-card{--tc:var(--grey-line);--tc-dim:var(--bg-card);border:1.5px solid var(--grey-line);border-top:4px solid var(--tc);border-radius:14px;padding:0;cursor:pointer;overflow:hidden;transition:border-color var(--tr),transform var(--tr),box-shadow var(--tr),background var(--tr);position:relative;background:linear-gradient(165deg,color-mix(in srgb,var(--tc) 7%,var(--bg-panel)),var(--bg-panel));box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 10px 22px -18px rgba(0,0,0,.6);}
+.plan-card:hover{border-color:var(--tc);transform:translateY(-3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 14px 30px -14px rgba(0,0,0,.5);}
+.plan-card.selected{border-color:var(--tc);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 0 0 1px var(--tc),0 16px 34px -14px color-mix(in srgb,var(--tc) 55%,transparent);background:linear-gradient(165deg,color-mix(in srgb,var(--tc) 15%,var(--bg-panel)),var(--bg-panel));}
+.plan-card.tier-pro{--tc:var(--blue);--tc-dim:var(--blue-dim);}
+.plan-card.tier-lite{--tc:var(--green);--tc-dim:var(--green-dim);}
+.plan-card.tier-start{--tc:var(--gold);--tc-dim:var(--gold-dim);}
+.plan-card.tier-basic{--tc:var(--teal);--tc-dim:var(--teal-dim);}
+.pc-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.pc-icon{width:34px;height:34px;border-radius:10px;background:var(--tc-dim);color:var(--tc);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 14px -6px currentColor;}
+.pc-icon svg{width:18px;height:18px;}
+.pc-top{padding:18px 18px 14px;}
+.pc-tag{font-family:var(--font-m);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--tc);margin-bottom:7px;display:flex;align-items:center;gap:6px;font-weight:700;}
+.pc-name{font-family:var(--font-d);font-size:1.05rem;font-weight:800;line-height:1.25;}
+.pc-founding-badge{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(90deg,#f2c14e,var(--gold) 55%,#c98f1f);color:#1a1206;font-weight:800;font-size:.74rem;padding:4px 10px;border-radius:20px;margin-bottom:8px;}
+.pc-founding-badge:empty{display:none;margin-bottom:0;}
+.pc-base-price{font-size:1.3rem;font-weight:700;font-family:var(--font-d);line-height:1;}
+.pc-base-price sub{display:block;font-size:.7rem;font-weight:500;color:var(--grey);vertical-align:bottom;margin-top:3px;}
+.pc-vat{font-size:.7rem;color:var(--grey);margin-top:3px;}
+.pc-after{font-size:.76rem;color:var(--tc);font-weight:600;margin-top:6px;}
+.pc-founding-old{font-size:.7rem;color:var(--grey);margin-top:4px;}
+.pc-includes{font-size:.84rem;color:var(--grey);margin-top:8px;padding-top:8px;border-top:1px solid var(--grey-line);}
+.pc-includes span{color:var(--tc);}
+.pc-save-tag{margin-top:10px;background:var(--tc-dim);border:1px solid var(--tc);border-radius:8px;padding:7px 10px;font-size:.82rem;font-weight:700;color:var(--tc);text-align:center;}
+.pc-check-box{position:absolute;top:14px;right:14px;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--grey-line);display:flex;align-items:center;justify-content:center;transition:all var(--tr);}
+.plan-card.selected .pc-check-box{background:var(--tc);border-color:var(--tc);}
+.pc-check-box::after{content:'✓';font-size:.76rem;color:#fff;opacity:0;transition:opacity var(--tr);}
+.plan-card.selected .pc-check-box::after{opacity:1;}
+.pc-ribbon{position:absolute;top:0;right:0;background:var(--tc);color:#0d0c10;font-family:var(--font-m);font-size:.62rem;font-weight:700;letter-spacing:.06em;padding:3px 10px;border-radius:0 12px 0 8px;}
+
+/* ARRANQUE SWITCHER — aparece cuando se selecciona un proyecto */
+/* arranque-switcher eliminado — asignación automática */
+
+/* DIRECT PACK CARDS */
+.pack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:28px;align-items:start;}
+@media(max-width:640px){.pack-grid{grid-template-columns:1fr;}}
+.pc-breakdown{background:var(--bg-card);border-top:1px solid var(--grey-line);padding:12px 16px;display:flex;flex-direction:column;gap:5px;}
+.pb-row{display:flex;justify-content:space-between;align-items:center;font-size:.84rem;}
+.pb-label{color:var(--grey);}
+.pb-val{color:var(--white);font-weight:500;}
+.pb-val.free{color:var(--green);font-weight:700;}
+.pb-val.save{color:var(--gold);}
+.pb-divider{height:1px;background:var(--grey-line);margin:3px 0;}
+
+/* TIMELINE */
+.timeline{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:12px;padding:16px 20px;margin-bottom:8px;}
+.tl-title{font-family:var(--font-m);font-size:.70rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:14px;}
+.tl-steps{display:flex;gap:0;position:relative;}
+.tl-steps::before{content:'';position:absolute;top:11px;left:11px;right:11px;height:1px;background:var(--grey-line);z-index:0;}
+.tl-step{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;z-index:1;padding:0 4px;}
+.tl-dot{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;font-family:var(--font-m);flex-shrink:0;}
+.tl-dot.project{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(217,168,63,.4);}
+.tl-dot.free{background:var(--green-dim);color:var(--green);border:1px solid var(--green);}
+.tl-dot.paid{background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue);}
+.tl-dot.cont{background:var(--bg-card);color:var(--grey);border:1px solid var(--grey-line);}
+.tl-info{display:flex;flex-direction:column;gap:2px;width:100%;min-width:0;}
+.tl-label{font-size:.76rem;color:var(--grey);text-align:center;line-height:1.3;word-break:break-word;}
+.tl-val{font-size:.76rem;font-weight:600;text-align:center;word-break:break-word;}
+
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:500px){.form-grid{grid-template-columns:1fr;}}
+.form-field{display:flex;flex-direction:column;gap:5px;}
+.form-field.full{grid-column:1/-1;}
+.form-field label{font-size:.8rem;font-weight:500;color:var(--grey);}
+.req{color:var(--blue);}
+.form-field input,.form-field select,.form-field textarea{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:8px;padding:11px 14px;color:var(--white);font-family:var(--font-b);font-size:.88rem;outline:none;transition:border-color var(--tr);-webkit-appearance:none;}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--blue);}
+.form-field input::placeholder,.form-field textarea::placeholder{color:var(--grey);}
+.form-field select option{background:var(--bg-panel);}
+.form-field textarea{resize:vertical;min-height:90px;}
+.form-field input.error,.form-field select.error{border-color:var(--red);}
+.error-msg{font-size:.80rem;color:var(--red);display:none;}
+.form-field input.error ~ .error-msg,.form-field select.error ~ .error-msg{display:block;}
+
+/* CLIENTE EXISTENTE / NUEVO */
+.client-toggle{display:flex;gap:8px;margin-bottom:18px;}
+.ct-btn{flex:1;padding:11px;border-radius:8px;border:1px solid var(--grey-line);background:var(--bg-panel);color:var(--grey);font-size:.85rem;font-weight:600;cursor:pointer;font-family:var(--font-b);transition:all var(--tr);}
+.ct-btn.active{border-color:var(--blue);color:var(--white);background:var(--blue-dim);}
+
+/* FUERZA DE CONTRASEÑA */
+.pw-strength-bar{height:5px;background:var(--bg-card);border-radius:4px;overflow:hidden;margin-top:9px;}
+.pw-strength-fill{height:100%;width:0;border-radius:4px;background:var(--red);transition:width .25s ease,background .25s ease;}
+.pw-strength-label{font-size:.80rem;margin-top:5px;font-weight:600;min-height:15px;}
+.pw-reqs{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;}
+.pw-reqs span{font-size:.76rem;color:var(--grey);background:var(--bg-card);border:1px solid var(--grey-line);border-radius:12px;padding:3px 9px;transition:all var(--tr);}
+.pw-reqs span.met{color:var(--green);border-color:var(--green);background:var(--green-dim);}
+
+/* LEGAL */
+.legal-box{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px;}
+.check-row{display:flex;align-items:flex-start;gap:12px;}
+.check-row input[type=checkbox]{width:18px;height:18px;flex-shrink:0;margin-top:2px;accent-color:var(--blue);cursor:pointer;}
+.check-text{font-size:.83rem;color:var(--grey);line-height:1.55;}
+.check-text b{color:var(--white);}
+.check-text a{color:var(--blue);text-decoration:underline;text-underline-offset:2px;}
+
+/* SUMMARY */
+.summary-box{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;overflow:hidden;position:sticky;top:76px;}
+.sb-header{padding:20px 22px 16px;border-bottom:1px solid var(--grey-line);}
+.sb-tag{font-family:var(--font-m);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:8px;}
+.sb-header h3{font-size:1rem;font-weight:700;}
+.sb-sub{font-size:.86rem;color:var(--grey);margin-top:4px;}
+.sb-empty{padding:20px 22px;font-size:.85rem;color:var(--grey);font-style:italic;}
+.sb-breakdown{padding:14px 22px;border-bottom:1px solid var(--grey-line);display:flex;flex-direction:column;gap:7px;}
+.sbr-row{display:flex;justify-content:space-between;align-items:baseline;}
+.sbr-label{font-size:.8rem;color:var(--grey);}
+.sbr-val{font-size:.85rem;color:var(--white);}
+.sbr-val.free{color:var(--green);font-weight:700;}
+.sbr-val.save{color:var(--gold);}
+.sbr-divider{height:1px;background:var(--grey-line);margin:3px 0;}
+.sbr-total .sbr-label{font-size:.88rem;font-weight:600;color:var(--white);}
+.sbr-total .sbr-val{font-size:1.05rem;font-weight:700;}
+.sb-renewal{padding:12px 22px 14px;border-bottom:1px solid var(--grey-line);font-size:.84rem;color:var(--grey);line-height:1.6;}
+.sb-renewal .renewal-date{color:var(--blue);font-weight:600;font-family:var(--font-m);}
+.sb-renewal .renewal-amount{color:var(--white);font-weight:600;}
+.trust-row{display:flex;gap:6px;padding:12px 22px;flex-wrap:wrap;}
+.trust-chip{display:flex;align-items:center;gap:4px;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:6px;padding:4px 9px;font-size:.7rem;color:var(--grey);}
+.sb-cta{padding:14px 22px 8px;}
+.pay-btn{width:100%;padding:14px;border-radius:10px;border:none;background:var(--blue);color:#fff;font-family:var(--font-b);font-size:.9rem;font-weight:600;cursor:pointer;transition:opacity var(--tr);}
+.pay-btn:hover:not(:disabled){opacity:.85;}
+.pay-btn:disabled{opacity:.38;cursor:not-allowed;}
+.pack-grid.has-selection:not(.show-all) .plan-card:not(.selected){display:none;}
+.pack-grid.has-selection:not(.show-all){grid-template-columns:1fr!important;max-width:560px;}
+#other-plans-bar{display:none;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--bg-card);border:1px solid var(--grey-line);border-radius:12px;padding:10px 14px;margin:-4px 0 14px;font-size:.86rem;color:var(--grey);}
+#other-plans-bar b{color:var(--white);}
+#other-plans-bar button{background:transparent;border:1px solid var(--gold);color:var(--gold);border-radius:99px;padding:7px 14px;font:700 .8rem var(--font-b);cursor:pointer;}
+#other-plans-bar button:hover{background:var(--gold);color:#16151a;}
+.sb-secure{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 22px 16px;font-size:.80rem;color:var(--grey);}
+.sb-email-btn{width:100%;background:none;border:1px solid var(--grey-line);color:var(--grey);border-radius:10px;padding:10px;font-size:.86rem;font-family:var(--font-b);cursor:pointer;margin-top:8px;transition:all var(--tr);}
+.sb-email-btn:hover{border-color:var(--blue);color:var(--white);}
+
+/* ── TRANSICIÓN ENTRE PÁGINAS (sobria, sin efectismos) ── */
+@view-transition{navigation:auto;}
+@media(prefers-reduced-motion:no-preference){
+  ::view-transition-old(root){animation:pageOut .25s ease both;}
+  ::view-transition-new(root){animation:pageIn .32s ease both;}
+}
+@keyframes pageOut{to{opacity:0;}}
+@keyframes pageIn{from{opacity:0;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="t-mark">T</div>
+    <div><div class="nav-brand">TRUCO<span>technology</span></div><div class="nav-sub">Tu Departamento Tecnológico</div></div>
+  </a>
+  <div class="nav-mid"><span class="dot"></span>Pago 100% seguro · SSL</div>
+  <a class="nav-back" href="servicios.html">← Ver servicios</a>
+</nav>
+
+<div class="page-header">
+  <div class="ph-tag">Contratación</div>
+  <h1>Elige cómo empezar</h1>
+  <p>Todo detallado antes de confirmar, sin sorpresas.</p>
+</div>
+
+<div class="checkout">
+<div class="form-col">
+
+  <div class="wizard-indicator" id="wizard-indicator">
+    <div class="wizard-dot current" id="wdot-1"><div class="num">1</div><span class="lbl">Elige tu Departamento</span></div>
+    <div class="wizard-line"></div>
+    <div class="wizard-dot" id="wdot-2"><div class="num">2</div><span class="lbl">Tus datos</span></div>
+    <div class="wizard-line"></div>
+    <div class="wizard-dot" id="wdot-3"><div class="num">3</div><span class="lbl">Pago</span></div>
+  </div>
+
+  <div class="step-panel active" id="step-panel-1">
+  <div class="step">
+      <div class="step-hd"><div class="step-num">1</div><h2>Elige tu Departamento Tecnológico</h2></div>
+      <p style="color:var(--grey);font-size:.88rem;margin:-8px 0 18px;max-width:640px;">Todo lo que ofrece TRUCO vive dentro de tu Departamento — nada se vende suelto. Elige el nivel que encaja con lo que necesitas ahora; siempre puedes subir de nivel más adelante.</p>
+
+      <!-- CATEGORÍA A: DEPARTAMENTO TECNOLÓGICO -->
+      <div id="wrap-depto">
+      <div class="cat-label">Departamento Tecnológico · Suscripción mensual</div>
+      <div id="other-plans-bar"><span>Has elegido <b id="chosen-plan-name">—</b>. Toca la tarjeta otra vez para quitarla.</span><button type="button" id="toggle-other-plans" onclick="toggleOtherPlans()">Ver otros departamentos ▾</button></div>
+      <div class="pack-grid" id="plan-pack-grid" style="margin-bottom:16px;">
+
+        <label class="plan-card tier-start" id="card-arranque-start" onclick="selectDirect('arranque-start')">
+          <div class="pc-check-box"></div>
+          <div class="pc-top">
+            <div class="pc-head"><div class="pc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="pc-name">Departamento Start™</div></div>
+            <div class="pc-tag">El punto de entrada · 1 automatización gratis, sin web</div>
+            <div class="pc-founding-badge" id="pc-founding-badge-start"></div>
+            <div class="pc-base-price" id="pc-price-start"></div>
+            <div class="pc-vat" id="pc-vat-start"></div>
+            <div class="pc-after" id="pc-after-start"></div>
+            <div class="pc-founding-old" id="pc-founding-old-start"></div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o paga con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
+          </div>
+          <div class="pc-breakdown">
+            <div class="pb-row"><span class="pb-label">1 automatización a elegir, gratis</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Acompañamiento completo</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Sin web incluida</span><span class="pb-val" style="color:var(--grey);font-weight:400;">—</span></div>
+          </div>
+        </label>
+
+        <label class="plan-card tier-basic" id="card-arranque-basic" onclick="selectDirect('arranque-basic')">
+          <div class="pc-ribbon">RECOMENDADO</div>
+          <div class="pc-check-box"></div>
+          <div class="pc-top">
+            <div class="pc-head"><div class="pc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div><div class="pc-name">Departamento Basic™</div></div>
+            <div class="pc-tag">Web Profesional + 1 automatización gratis</div>
+            <div class="pc-founding-badge" id="pc-founding-badge-basic"></div>
+            <div class="pc-base-price" id="pc-price-basic"></div>
+            <div class="pc-vat" id="pc-vat-basic"></div>
+            <div class="pc-after" id="pc-after-basic"></div>
+            <div class="pc-founding-old" id="pc-founding-old-basic"></div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o paga con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
+          </div>
+          <div class="pc-breakdown">
+            <div class="pb-row"><span class="pb-label">Web Profesional, gratis</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Chat + agenda que responde siempre, de fábrica</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">1 automatización más a elegir, gratis</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Salud técnica de posicionamiento</span><span class="pb-val">✓</span></div>
+          </div>
+        </label>
+
+        <label class="plan-card tier-lite" id="card-arranque-lite" onclick="selectDirect('arranque-lite')">
+          <div class="pc-check-box"></div>
+          <div class="pc-top">
+            <div class="pc-head"><div class="pc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/><line x1="3" y1="12" x2="21" y2="12"/></svg></div><div class="pc-name">Departamento Lite™</div></div>
+            <div class="pc-tag">Web + 2 automatizaciones gratis</div>
+            <div class="pc-founding-badge" id="pc-founding-badge-lite"></div>
+            <div class="pc-base-price" id="pc-price-lite"></div>
+            <div class="pc-vat" id="pc-vat-lite"></div>
+            <div class="pc-after" id="pc-after-lite"></div>
+            <div class="pc-founding-old" id="pc-founding-old-lite"></div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o paga con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
+            <div class="pc-save-tag">🎁 Ahorras 1.490-2.070 € en instalación</div>
+          </div>
+          <div class="pc-breakdown">
+            <div class="pb-row"><span class="pb-label">Web gratis (reacondicionada o nueva)</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Chat + agenda en la web, de fábrica</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">2 automatizaciones a elegir, gratis</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Mantenimiento hasta 3 en total</span><span class="pb-val">✓</span></div>
+            <div class="pb-divider"></div>
+            <div class="pb-row"><span class="pb-label">Reunión mensual</span><span class="pb-val">30 min</span></div>
+          </div>
+        </label>
+
+        <label class="plan-card tier-pro" id="card-arranque-pro" onclick="selectDirect('arranque-pro')">
+          <div class="pc-ribbon">PRO</div>
+          <div class="pc-check-box"></div>
+          <div class="pc-top">
+            <div class="pc-head"><div class="pc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div class="pc-name">Departamento Pro™</div></div>
+            <div class="pc-tag">Web Profesional + 3 automatizaciones gratis</div>
+            <div class="pc-founding-badge" id="pc-founding-badge-pro"></div>
+            <div class="pc-base-price" id="pc-price-pro"></div>
+            <div class="pc-vat" id="pc-vat-pro"></div>
+            <div class="pc-after" id="pc-after-pro"></div>
+            <div class="pc-founding-old" id="pc-founding-old-pro"></div>
+            <div class="pc-includes" style="margin-top:8px;font-size:.80rem;color:var(--gold);">Pago único (12% dto.) o paga con PayPal · Un año de Departamento ya incluido — luego sigues mes a mes, sin permanencia</div>
+            <div class="pc-save-tag">🎁 Ahorras 2.540-3.170 € en instalación</div>
+          </div>
+          <div class="pc-breakdown">
+            <div class="pb-row"><span class="pb-label">Web Profesional regalada</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Chat + agenda en la web, de fábrica</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">3 automatizaciones a elegir, gratis</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Mantenimiento hasta 6 en total</span><span class="pb-val">✓</span></div>
+            <div class="pb-row"><span class="pb-label">Mayor prioridad incidencias</span><span class="pb-val">✓</span></div>
+            <div class="pb-divider"></div>
+            <div class="pb-row"><span class="pb-label">Reunión mensual</span><span class="pb-val">45 min</span></div>
+          </div>
+        </label>
+
+      </div>
+
+      <!-- SELECTOR DE SOLUCIÓN POR ESCALÓN — aparece al elegir Basic/Lite/Pro -->
+      <div id="tier-solutions-picker" class="tier-picker-box" style="display:none;margin-bottom:16px;background:rgba(47,123,255,.06);border:1.5px solid var(--blue-soft);border-radius:14px;padding:18px 20px;">
+        <div class="cat-label" id="tier-solutions-label" style="margin-top:0;">Elige tu automatización gratis</div>
+        <div id="tier-solutions-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
+        <div id="tier-solutions-note" style="margin-top:10px;font-size:.84rem;color:var(--grey);"></div>
+      </div>
+
+      <!-- SOLUCIONES ADICIONALES DE PAGO — hasta el límite de mantenimiento del escalón -->
+      <div id="extra-solutions-block" style="display:none;margin-bottom:16px;">
+        <button type="button" class="extra-sol-toggle" id="extra-sol-toggle" onclick="toggleExtraSolutionsPanel()">
+          <span class="extra-sol-toggle-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            ¿Necesitas algo más?
+            <span class="extra-sol-toggle-count" id="extra-sol-toggle-count" style="display:none;"></span>
+          </span>
+          <svg class="extra-sol-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="extra-solutions-panel" class="extra-sol-panel" style="display:none;">
+          <div class="cat-label" style="margin-top:0;">Añade otra automatización a tu Departamento, al precio de catálogo</div>
+          <div id="extra-solutions-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
+          <div id="extra-solutions-note" style="margin-top:10px;font-size:.84rem;color:var(--grey);"></div>
+
+          <div class="cat-label" style="margin-top:18px;">¿Te interesa alguna de estas? — precio "desde", requieren auditoría</div>
+          <div id="extra-solutions-open-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
+          <div id="extra-solutions-open-note" style="margin-top:10px;font-size:.84rem;color:var(--grey);line-height:1.55;"></div>
+        </div>
+      </div>
+      </div><!-- /wrap-depto -->
+
+      <div id="dept-info-note" style="margin-top:16px;background:rgba(217,168,63,.06);border:1px solid rgba(217,168,63,.2);border-radius:10px;padding:14px 18px;font-size:.84rem;color:var(--grey);">
+        ¿Quieres ver el detalle de cada automatización antes de elegir? Repasa <a href="servicios.html#automatizaciones" style="color:var(--gold);font-weight:700;">qué instalamos dentro de cada Departamento</a> — nada se vende suelto, todo viene incluido en tu nivel.
+      </div>
+
+      <!-- TIMELINE -->
+      <div class="timeline" id="timeline-box" style="display:none">
+        <div class="tl-title">TU CAMINO CON TRUCO</div>
+        <div class="tl-steps" id="tl-steps"></div>
+      </div>
+
+    </div><!-- /step 1 -->
+
+  <!-- NOTA DOMINIO/HOSTING -->
+  <div id="hosting-note" style="display:none;background:rgba(217,168,63,.06);border:1px solid rgba(217,168,63,.2);border-radius:10px;padding:14px 18px;margin-bottom:28px;font-size:.82rem;color:var(--grey);line-height:1.65;">
+    <b style="color:var(--gold);">Dominio y hosting: tu responsabilidad, no la nuestra.</b> El dominio (tu dirección web, ej. <em>tunegocio.com</em>) y el hosting (el servidor donde vive tu web) los contratas y pagas tú directamente con el proveedor que elijas. TRUCO technology te asesora y configura todo, pero la titularidad y el coste son siempre tuyos. Coste estimado: dominio desde 10-15 €/año · hosting desde 5-15 €/mes según proveedor.
+  </div>
+
+  </div><!-- /step-panel-1 -->
+
+  <div class="step-panel" id="step-panel-2">
+  <button type="button" class="wizard-back" onclick="goToStep(1)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Cambiar Departamento</button>
+
+  <!-- PASO 2 -->
+  <div class="step">
+    <div class="step-hd"><div class="step-num">2</div><h2>Tus datos de contacto</h2></div>
+
+    <div class="client-toggle">
+      <button type="button" class="ct-btn active" id="ct-btn-new" onclick="setClientMode('new')">Primera vez con TRUCO</button>
+      <button type="button" class="ct-btn" id="ct-btn-existing" onclick="setClientMode('existing')">Ya soy cliente</button>
+    </div>
+
+    <div id="existing-login-box" style="display:none;margin-bottom:18px;">
+      <div class="form-grid">
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" id="login-email-checkout" autocomplete="username" placeholder="tu@email.com">
+        </div>
+        <div class="form-field">
+          <label>Contraseña</label>
+          <input type="password" id="login-pass-checkout" autocomplete="current-password" placeholder="Tu contraseña">
+        </div>
+      </div>
+      <button type="button" onclick="checkoutLogin()" style="margin-top:10px;background:var(--blue);border:none;border-radius:8px;color:#fff;padding:10px 20px;font-size:.85rem;font-weight:600;cursor:pointer;">Entrar</button>
+      <div class="error-msg" id="checkout-login-error" style="display:none;margin-top:8px;">Credenciales incorrectas.</div>
+    </div>
+
+    <div id="existing-confirmed-box" style="display:none;background:var(--green-dim);border:1px solid rgba(34,197,94,.3);border-radius:10px;padding:14px 18px;margin-bottom:18px;font-size:.85rem;color:var(--grey);line-height:1.55;">
+      ✓ Hola, <b id="existing-confirmed-name" style="color:var(--white);"></b> — hemos identificado tu cuenta y aplicado tu descuento de cliente. No hace falta que rellenes tus datos otra vez.
+      <a onclick="undoClientLogin()" style="display:block;margin-top:6px;color:var(--blue);cursor:pointer;font-size:.86rem;">Usar otros datos →</a>
+    </div>
+
+    <div class="form-grid" id="checkout-fields-grid">
+      <div class="form-field" data-field="nombre">
+        <label>Nombre completo <span class="req">*</span></label>
+        <input type="text" id="f-nombre" autocomplete="name" placeholder="Tu nombre y apellidos" oninput="vField(this)">
+        <span class="error-msg">Campo obligatorio</span>
+      </div>
+      <div class="form-field" data-field="email">
+        <label>Email <span class="req">*</span></label>
+        <input type="email" id="f-email" autocomplete="email" placeholder="tu@email.com" oninput="vEmail(this)">
+        <span class="error-msg">Introduce un email válido</span>
+      </div>
+      <div class="form-field" data-field="telefono">
+        <label>Teléfono <span class="req">*</span></label>
+        <input type="tel" id="f-telefono" autocomplete="tel" placeholder="+34 600 000 000" oninput="vField(this)">
+        <span class="error-msg">Campo obligatorio</span>
+      </div>
+      <div class="form-field" data-field="negocio">
+        <label>Nombre del negocio <span class="req">*</span></label>
+        <input type="text" id="f-negocio" autocomplete="organization" placeholder="Tu empresa o nombre comercial" oninput="vField(this)">
+        <span class="error-msg">Campo obligatorio</span>
+      </div>
+      <div class="form-field" data-field="tipo">
+        <label>Sector <span class="req">*</span></label>
+        <select id="f-tipo" onchange="vField(this)">
+          <option value="">Selecciona tu sector</option>
+            <option value="dental">Clínica dental</option>
+          <option>Clínica / Centro médico</option>
+            <option value="autonomo">Autónomos / Oficios</option>
+          <option>Despacho / Consultoría</option>
+          <option>Comercio / Tienda</option>
+          <option>Restaurante / Hostelería</option>
+          <option>Inmobiliaria</option>
+          <option>Centro de estética / Belleza</option>
+          <option>Gimnasio / Deportes</option>
+          <option>Formación / Academia</option>
+          <option>Servicios profesionales</option>
+          <option>Otro</option>
+        </select>
+        <span class="error-msg">Selecciona una opción</span>
+      </div>
+      <div class="form-field" data-field="nif">
+        <label>NIF / CIF <span style="color:var(--grey);font-weight:400;">(para factura)</span></label>
+        <input type="text" id="f-nif" placeholder="Opcional">
+      </div>
+      <div class="form-field full" data-field="mensaje">
+        <label>¿Qué es lo más urgente para tu negocio? <span style="color:var(--grey);font-weight:400;">(opcional)</span></label>
+        <textarea id="f-mensaje" placeholder="Cuéntanos brevemente tu situación actual..."></textarea>
+      </div>
+    </div>
+
+    <div class="form-grid" id="new-password-box" style="margin-top:14px;">
+      <div class="form-field full">
+        <label>Crea tu contraseña de acceso al portal <span class="req">*</span></label>
+        <input type="password" id="reg-password" autocomplete="new-password" placeholder="Mínimo 8 caracteres" oninput="updatePasswordStrength()">
+        <div class="pw-strength-bar"><div class="pw-strength-fill" id="pw-strength-fill"></div></div>
+        <div class="pw-strength-label" id="pw-strength-label"></div>
+        <div class="pw-reqs">
+          <span id="pw-req-length">8+ caracteres</span>
+          <span id="pw-req-upper">1 mayúscula</span>
+          <span id="pw-req-lower">1 minúscula</span>
+          <span id="pw-req-special">1 carácter especial</span>
+        </div>
+      </div>
+      <div class="form-field full">
+        <label>Repite la contraseña <span class="req">*</span></label>
+        <input type="password" id="reg-password2" autocomplete="new-password" placeholder="Repite la contraseña" oninput="checkPasswordMatch()">
+        <span class="error-msg">Las contraseñas no coinciden</span>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /step-panel-2 -->
+
+  <div class="step-panel" id="step-panel-3">
+  <button type="button" class="wizard-back" onclick="goToStep(2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Volver a tus datos</button>
+
+  <!-- PASO 3 -->
+  <div class="step">
+    <div class="step-hd"><div class="step-num">3</div><h2>Método de pago</h2></div>
+
+    <div id="payment-mode-block" style="display:none;margin-bottom:24px;">
+      <div class="cat-label" style="margin-top:0;">¿Cómo lo pagas?</div>
+      <div class="pay-option-list">
+        <div class="pay-option active" id="btn-unico" onclick="setTierPaymentMode('unico')">
+          <div class="pay-option-radio"></div>
+          <div class="pay-option-icon"><svg viewBox="0 0 40 26" fill="none"><rect x="1" y="1" width="38" height="24" rx="4" stroke="currentColor" stroke-width="1.6" style="color:var(--grey);"/><rect x="1" y="7" width="38" height="4" fill="currentColor" style="color:var(--grey);"/><rect x="5" y="17" width="10" height="3" rx="1" fill="currentColor" style="color:var(--grey);"/></svg></div>
+          <div class="pay-option-body">
+            <div class="pay-option-title">Tarjeta</div>
+            <div class="pay-option-sub">Visa, Mastercard, Amex</div>
+          </div>
+          <div class="pay-option-tag">Ahorra 12%</div>
+        </div>
+        <div class="pay-option" id="btn-financiado" onclick="setTierPaymentMode('financiado')">
+          <div class="pay-option-radio"></div>
+          <div class="pay-option-icon"><svg viewBox="0 0 40 26"><text x="20" y="17" font-family="Arial,sans-serif" font-weight="800" font-style="italic" font-size="11" text-anchor="middle"><tspan fill="#1b3a66">Pay</tspan><tspan fill="#2f7bff">Pal</tspan></text></svg></div>
+          <div class="pay-option-body">
+            <div class="pay-option-title">PayPal</div>
+            <div class="pay-option-sub">Con tu saldo o tarjeta · paga a plazos si PayPal te lo ofrece</div>
+          </div>
+          <div class="pay-option-tag">Ahorra 12%</div>
+        </div>
+        <div class="pay-option" id="btn-transferencia" onclick="setTierPaymentMode('transferencia')">
+          <div class="pay-option-radio"></div>
+          <div class="pay-option-icon"><svg viewBox="0 0 30 24"><path d="M15 3 L26 9.5 H4 Z" fill="currentColor" style="color:var(--grey);"/><rect x="6" y="10.5" width="2.6" height="9" fill="currentColor" style="color:var(--grey);"/><rect x="13.7" y="10.5" width="2.6" height="9" fill="currentColor" style="color:var(--grey);"/><rect x="21.4" y="10.5" width="2.6" height="9" fill="currentColor" style="color:var(--grey);"/><rect x="4" y="20.5" width="22" height="2.2" fill="currentColor" style="color:var(--grey);"/></svg></div>
+          <div class="pay-option-body">
+            <div class="pay-option-title">Transferencia bancaria</div>
+            <div class="pay-option-sub">Sin tarjeta — confirmación manual en 1-2 días</div>
+          </div>
+          <div class="pay-option-tag">Ahorra 12%</div>
+        </div>
+      </div>
+      <div class="pay-methods-row" id="pay-methods-unico">
+        <svg class="pay-method-card" width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="4" fill="#1A1F71"/><text x="19" y="16" font-family="Georgia,serif" font-style="italic" font-weight="700" font-size="10" fill="#fff" text-anchor="middle">VISA</text></svg>
+        <svg class="pay-method-card" width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="4" fill="#F7F7F7"/><circle cx="16" cy="12" r="7" fill="#EB001B"/><circle cx="22" cy="12" r="7" fill="#F79E1B" fill-opacity=".85"/></svg>
+        <svg class="pay-method-card" width="38" height="24" viewBox="0 0 38 24"><rect width="38" height="24" rx="4" fill="#2E2E2E"/><text x="19" y="15" font-family="Arial,sans-serif" font-weight="700" font-size="8" fill="#fff" text-anchor="middle" letter-spacing="0.5">AMEX</text></svg>
+      </div>
+      <div class="pay-methods-row" id="pay-methods-paypal" style="display:none;">
+        <svg class="pay-method-card" width="62" height="24" viewBox="0 0 62 24"><rect width="62" height="24" rx="4" fill="#F7F7F7"/><text x="31" y="16" font-family="Arial,sans-serif" font-weight="800" font-style="italic" font-size="10" text-anchor="middle"><tspan fill="#003087">Pay</tspan><tspan fill="#009cde">Pal</tspan></text></svg>
+      </div>
+      <div class="pay-methods-row" id="pay-methods-transferencia" style="display:none;">
+        <svg class="pay-method-card" width="30" height="24" viewBox="0 0 30 24"><rect width="30" height="24" rx="4" fill="#1b3a66"/><path d="M15 5 L24 10 H6 Z" fill="#d9a83f"/><rect x="8" y="11" width="2.5" height="7" fill="#f2f0ea"/><rect x="13.5" y="11" width="2.5" height="7" fill="#f2f0ea"/><rect x="19" y="11" width="2.5" height="7" fill="#f2f0ea"/><rect x="6" y="19" width="18" height="2" fill="#f2f0ea"/></svg>
+        <span style="font-size:.78rem;color:var(--grey);">Sin comisiones — pagas exactamente lo que ves aquí</span>
+      </div>
+      <div class="annual-highlight" id="annual-note" style="margin-top:14px;">
+        <b id="payment-mode-title">Pago único por adelantado — ahorras un 12%.</b> <span id="payment-mode-desc">Se cobra tu primer año de Departamento de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.</span>
+      </div>
+      <div id="transfer-instructions-box" style="display:none;margin-top:14px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:12px;padding:16px 18px;font-size:.86rem;color:var(--grey);line-height:1.6;">
+        Al confirmar te daremos <b style="color:var(--white);">nuestro IBAN y un código de referencia único</b> que debes escribir en el concepto de la transferencia. En cuanto la veamos entrar en nuestro banco (normalmente 1-2 días laborables), activamos tu cuenta y te avisamos por email.
+      </div>
+    </div>
+
+    <div class="legal-box">
+      <div class="check-row">
+        <input type="checkbox" id="ch-rgpd" onchange="updateBtn()">
+        <div class="check-text"><b>Protección de datos (RGPD / LOPD-GDD) *</b> — He leído y acepto la <a href="privacidad.html" target="_blank">Política de Privacidad</a>. Autorizo el tratamiento de mis datos personales por TRUCO technology para la gestión de mi contratación, conforme al Reglamento (UE) 2016/679 y la Ley Orgánica 3/2018. Mis datos no serán cedidos a terceros sin mi consentimiento.</div>
+      </div>
+      <div class="check-row">
+        <input type="checkbox" id="ch-terminos" onchange="updateBtn()">
+        <div class="check-text"><b>Términos y condiciones *</b> — He revisado el <b style="color:var(--white);">Resumen del pedido</b> de la derecha (qué incluye, precio total y permanencia si la hay) y he leído y acepto los <a href="terminos.html" target="_blank">Términos y Condiciones</a>, incluyendo el período de implantación, la renovación automática mensual y los límites de uso incluidos en las automatizaciones de IA. <b style="color:var(--white);">Entiendo que el dominio y el hosting son contratados y pagados directamente por mí, y que TRUCO technology no asume su titularidad ni su coste.</b></div>
+      </div>
+      <div class="check-row">
+        <input type="checkbox" id="ch-anexo" onchange="updateBtn()">
+        <div class="check-text"><b>Anexo de Autorización de Accesos y Tratamiento de Datos *</b> — He leído y acepto el <a href="autorizacion-accesos.html" target="_blank">Anexo de Autorización de Accesos</a>, por el que autorizo a TRUCO technology a acceder a las cuentas y sistemas necesarios (correo, redes sociales, calendario, facturación, etc.) para prestar el servicio contratado como mi departamento tecnológico externalizado.</div>
+      </div>
+      <div class="check-row">
+        <input type="checkbox" id="ch-comercial">
+        <div class="check-text"><b>Comunicaciones comerciales</b> <em style="color:var(--grey);">(opcional)</em> — Acepto recibir comunicaciones sobre novedades y mejoras del servicio.</div>
+      </div>
+    </div>
+    <p id="payment-note" style="margin-top:12px;font-size:.86rem;color:var(--grey);line-height:1.6;padding:0 4px;">Al confirmar serás redirigido a <strong style="color:var(--white);">Stripe</strong>, la pasarela usada por millones de empresas en todo el mundo. Tu información bancaria nunca pasa por nuestros servidores.</p>
+  </div>
+
+  </div><!-- /step-panel-3 -->
+
+</div><!-- /form-col -->
+
+<!-- RESUMEN -->
+<div class="summary-col">
+  <div class="summary-box">
+    <div class="sb-header">
+      <div class="sb-tag">Resumen del pedido</div>
+      <h3 id="sb-title">Ningún plan seleccionado</h3>
+      <div class="sb-sub" id="sb-sub">Elige una opción para ver el resumen.</div>
+    </div>
+    <div id="sb-empty" class="sb-empty">Selecciona un plan arriba.</div>
+    <div id="sb-breakdown" class="sb-breakdown" style="display:none"></div>
+    <div id="sb-renewal" class="sb-renewal" style="display:none"></div>
+    <div class="trust-row">
+      <div class="trust-chip">SSL</div>
+      <div class="trust-chip" id="trust-chip-provider">Stripe</div>
+      <div class="trust-chip">🇪🇺 RGPD</div>
+      <div class="trust-chip">Sin sorpresas</div>
+    </div>
+    <div class="sb-cta">
+      <button class="pay-btn" id="payBtn" disabled onclick="handleMainCtaClick()">
+        <span id="btn-text">Selecciona un plan</span>
+      </button>
+      <button class="sb-email-btn" id="sb-email-btn" style="display:none;" onclick="emailMeSummary()">✉ Enviarme este resumen, lo decido con calma</button>
+    </div>
+    <div class="sb-secure" id="sb-secure">Procesado por Stripe · Cifrado 256-bit</div>
+  </div>
+</div>
+
+</div><!-- /checkout -->
+
+<div class="mobile-sticky-bar" id="mobile-sticky-bar">
+  <div class="msb-info">
+    <span class="msb-label" id="msb-label">Plan</span>
+    <span class="msb-price" id="msb-price"></span>
+  </div>
+  <button class="msb-btn" onclick="document.querySelector('.summary-box').scrollIntoView({behavior:'smooth',block:'start'})">Ver resumen ↓</button>
+</div>
+
+
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="founding-offer.js"></script>
+<script src="solutions-pricing.js"></script>
+<script>
+// Al crear cada Stripe Payment Link real, configura su redirección tras el pago
+// a bienvenida.html?plan=<clave> (ej. bienvenida.html?plan=arranque-lite) para
+// que el cliente llegue directo a agendar su reunión de bienvenida prioritaria.
+
+// ── RECONOCIMIENTO DE CLIENTE EXISTENTE ──
+// Si quien navega tiene una sesión activa del portal de clientes (ver
+// portal/login.html), se le reconoce en silencio y se le aplica un descuento
+// automático — sin códigos que gestionar ni que se puedan filtrar/adivinar:
+// el descuento vive ligado exclusivamente a su sesión autenticada. Si no hay
+// sesión (el 100% de las visitas hoy), esto no cambia nada del comportamiento.
+const PORTAL_SUPABASE_URL = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
+const PORTAL_SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
+const CLIENT_DISCOUNT = 0.05;
+const REFERRAL_NEW_DISCOUNT = 0.10; // para quien compra por primera vez con un ?ref= válido de otro cliente
+const REFERRAL_CREDIT_DISCOUNT = 0.15; // para el cliente que refirió, canjeando 1 crédito ganado
+let clienteExistente = false;
+let portalSb = null;
+let clientMode = 'new'; // 'new' | 'existing'
+let loggedInClientData = null;
+let referralCodeValid = false;
+let referralCodeUsed = '';
+
+function initPortalSb() {
+  if (portalSb) return portalSb;
+  if (typeof supabase === 'undefined' || PORTAL_SUPABASE_URL.startsWith('REEMPLAZA_')) return null;
+  portalSb = supabase.createClient(PORTAL_SUPABASE_URL, PORTAL_SUPABASE_ANON_KEY);
+  return portalSb;
+}
+
+async function checkClienteSession() {
+  try {
+    const sb = initPortalSb();
+    if (!sb) return;
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return;
+    setClientMode('existing');
+    await applyLoggedInClient();
+  } catch (e) {
+    // Si algo falla aquí, sencillamente no se aplica el descuento — nunca
+    // debe romper ni ralentizar el flujo de pago normal.
+  }
+}
+checkClienteSession();
+
+// ── PROGRAMA DE REFERIDOS: DESACTIVADO por ahora (los clientes ya tienen ofertas exclusivas en su portal).
+// Se ignora ?ref= y no se aplica ningún descuento por referido. El resto del código queda inerte.
+async function validateReferralCode(){
+  try{
+    const sb=initPortalSb();
+    if(!sb)return;
+    const{data,error}=await sb.rpc('validate_referral_code',{p_code:referralCodeUsed});
+    if(!error&&data===true){referralCodeValid=true;updateAll();}
+  }catch(e){/* si falla, sencillamente no se aplica el descuento de referido */}
+}
+
+function setClientMode(mode) {
+  clientMode = mode;
+  const btnNew = document.getElementById('ct-btn-new'), btnExisting = document.getElementById('ct-btn-existing');
+  if (btnNew) btnNew.classList.toggle('active', mode === 'new');
+  if (btnExisting) btnExisting.classList.toggle('active', mode === 'existing');
+  const pwBox = document.getElementById('new-password-box');
+  if (pwBox) pwBox.style.display = mode === 'new' ? 'grid' : 'none';
+  const loginBox = document.getElementById('existing-login-box');
+  if (loginBox) loginBox.style.display = (mode === 'existing' && !loggedInClientData) ? 'block' : 'none';
+  const grid = document.getElementById('checkout-fields-grid');
+  if (mode === 'new') {
+    const confirmed = document.getElementById('existing-confirmed-box');
+    if (confirmed) confirmed.style.display = 'none';
+    showAllCheckoutFields();
+  } else if (mode === 'existing' && !loggedInClientData) {
+    // Antes de iniciar sesión no hace falta pedir nombre/teléfono/negocio/etc
+    // — solo email y contraseña, sus datos ya los tenemos en su ficha.
+    if (grid) grid.style.display = 'none';
+  }
+}
+
+async function checkoutLogin() {
+  const email = document.getElementById('login-email-checkout').value.trim();
+  const password = document.getElementById('login-pass-checkout').value;
+  const errEl = document.getElementById('checkout-login-error');
+  errEl.style.display = 'none';
+  if (!email || !password) return;
+  const sb = initPortalSb();
+  if (!sb) return;
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  if (error) {
+    errEl.textContent = 'Credenciales incorrectas.';
+    errEl.style.display = 'block';
+    return;
+  }
+  await applyLoggedInClient();
+}
+
+function setVal(id, v) {
+  const el = document.getElementById(id);
+  if (el && v) el.value = v;
+}
+
+function showAllCheckoutFields() {
+  const grid = document.getElementById('checkout-fields-grid');
+  if (!grid) return;
+  grid.style.display = 'grid';
+  grid.querySelectorAll('.form-field').forEach(f => { f.style.display = ''; });
+}
+
+async function applyLoggedInClient() {
+  const sb = initPortalSb();
+  if (!sb) return;
+  const { data: client, error } = await sb.from('clients').select('*').single();
+  if (error || !client) return;
+  loggedInClientData = client;
+  clienteExistente = true;
+  const loginEmailEl = document.getElementById('login-email-checkout'), loginPassEl = document.getElementById('login-pass-checkout');
+  if (loginEmailEl) loginEmailEl.value = '';
+  if (loginPassEl) loginPassEl.value = '';
+  const loginBox = document.getElementById('existing-login-box');
+  if (loginBox) loginBox.style.display = 'none';
+  const confirmed = document.getElementById('existing-confirmed-box');
+  if (confirmed) { confirmed.style.display = 'block'; document.getElementById('existing-confirmed-name').textContent = client.nombre || client.email; }
+
+  setVal('f-nombre', client.nombre);
+  setVal('f-email', client.email);
+  setVal('f-telefono', client.telefono);
+  setVal('f-negocio', client.negocio);
+  if (client.tipo) { const tipoEl = document.getElementById('f-tipo'); if (tipoEl) tipoEl.value = client.tipo; }
+  setVal('f-nif', client.nif);
+
+  // Solo pedimos lo que de verdad no sepamos ya de su ficha — el resto no
+  // hace falta que lo vuelva a escribir.
+  const missing = ['nombre', 'telefono', 'negocio', 'tipo'].filter(k => !client[k]);
+  const grid = document.getElementById('checkout-fields-grid');
+  if (missing.length === 0) {
+    grid.style.display = 'none';
+  } else {
+    grid.style.display = 'grid';
+    grid.querySelectorAll('.form-field').forEach(f => {
+      const key = f.dataset.field;
+      f.style.display = (missing.includes(key) || key === 'mensaje') ? '' : 'none';
+    });
+  }
+  const pwBox = document.getElementById('new-password-box');
+  if (pwBox) pwBox.style.display = 'none';
+  updateAll();
+}
+
+function undoClientLogin() {
+  loggedInClientData = null;
+  clienteExistente = false;
+  const confirmed = document.getElementById('existing-confirmed-box');
+  if (confirmed) confirmed.style.display = 'none';
+  showAllCheckoutFields();
+  if (clientMode === 'new') { const pwBox = document.getElementById('new-password-box'); if (pwBox) pwBox.style.display = 'grid'; }
+  ['f-nombre', 'f-email', 'f-telefono', 'f-negocio', 'f-nif'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  const tipoEl = document.getElementById('f-tipo'); if (tipoEl) tipoEl.value = '';
+  if (portalSb) portalSb.auth.signOut();
+  updateAll();
+}
+
+// ── CONTRASEÑA DE ACCESO AL PORTAL (solo para clientes nuevos) ──
+// Mínimo 8 caracteres, 1 mayúscula, 1 minúscula y 1 carácter especial —
+// se comprueba en vivo y también se bloquea el pago si no se cumple.
+function passwordChecks(pw) {
+  return {
+    length: pw.length >= 8,
+    upper: /[A-Z]/.test(pw),
+    lower: /[a-z]/.test(pw),
+    special: /[^A-Za-z0-9]/.test(pw),
+  };
+}
+
+function updatePasswordStrength() {
+  const pw = document.getElementById('reg-password').value;
+  const checks = passwordChecks(pw);
+  const score = Object.values(checks).filter(Boolean).length;
+  const fill = document.getElementById('pw-strength-fill');
+  const label = document.getElementById('pw-strength-label');
+  const colors = ['var(--red)', 'var(--red)', 'var(--gold)', 'var(--gold)', 'var(--green)'];
+  const labels = ['', 'Muy débil', 'Débil', 'Buena', 'Muy segura'];
+  fill.style.width = (pw ? Math.max(12, (score / 4) * 100) : 0) + '%';
+  fill.style.background = colors[score];
+  label.textContent = pw ? labels[score] : '';
+  label.style.color = colors[score];
+  Object.keys(checks).forEach(k => {
+    const el = document.getElementById('pw-req-' + k);
+    if (el) el.classList.toggle('met', checks[k]);
+  });
+  checkPasswordMatch();
+  return checks;
+}
+
+function checkPasswordMatch() {
+  const pw2El = document.getElementById('reg-password2');
+  if (!pw2El) return;
+  const pw = document.getElementById('reg-password').value;
+  const pw2 = pw2El.value;
+  if (!pw2) { pw2El.classList.remove('error'); return; }
+  pw2El.classList.toggle('error', pw !== pw2);
+}
+const PROJECTS={web:{name:'Web Profesional',base:1390},digital:{name:'Digitaliza tu Empresa',base:590}};
+const DIGITAL_BUYOUT=0; // la alta e integración ya va incluida dentro del precio de cada solución
+const DESDE_NOTES={
+  crm:'<b style="color:var(--gold);">CRM:</b> el precio mostrado es un "desde" — requiere una auditoría inicial gratuita para cerrar el número final, antes de que decidas nada.',
+  integraciones:'<b style="color:var(--gold);">Integraciones:</b> el precio mostrado es un "desde" — consultamos qué herramientas usas antes de cerrar el número final.',
+  docs:'<b style="color:var(--gold);">Gestión Documental:</b> el precio mostrado es un "desde" — necesitamos ver el volumen y tipo de documentos antes de cerrar el número final.',
+  automatizaciones:'<b style="color:var(--gold);">Flujos automáticos a medida:</b> no es un "desde" abierto — son 3 precios cerrados según la complejidad del flujo (350€/650€/1.200€), lo confirmamos en la primera llamada.'
+};
+// Automatizaciones "desde" sin precio cerrado: se pueden marcar como interés
+// en cualquier escalón, pero nunca se pagan directamente aquí — siempre
+// requieren una auditoría previa para cerrar el número final (ver DESDE_NOTES).
+const OPEN_PRICE_SOLUTIONS=[
+  {value:'crm',name:'CRM',from:950},
+  {value:'integraciones',name:'Integraciones',from:600},
+  {value:'docs',name:'Gestión Documental',from:400}
+];
+
+// Combina descuentos disponibles (cliente existente) SIN apilarlos
+// — si aplican varios, se usa el mayor de todos, nunca la suma.
+function getBestDiscountInfo(count){
+  const candidates=[
+    {rate:clienteExistente?CLIENT_DISCOUNT:0,label:'Cliente TRUCO'},
+  ];
+  const best=candidates.reduce((a,b)=>b.rate>a.rate?b:a,{rate:0,label:''});
+  return best.rate>0?{applies:true,rate:best.rate,label:best.label}:{applies:false,rate:0};
+}
+
+const DIRECT={'arranque-basic':{name:'Departamento Tecnológico Basic™',arranque:'basic'},'arranque-start':{name:'Departamento Tecnológico Start™',arranque:'start'},'arranque-lite':{name:'Departamento Tecnológico Lite™',arranque:'lite'},'arranque-pro':{name:'Departamento Tecnológico Pro™',arranque:'pro'}};
+const ARRANQUES={
+  basic:{name:'Basic™',monthly:currentPrice('basic'),permanenciaMeses:12,freeSols:1,maintainMax:2,webGrade:'profesional'},
+  start:{name:'Start™',monthly:currentPrice('start'),permanenciaMeses:12,freeSols:1,maintainMax:2},
+  lite:{name:'Lite™',monthly:currentPrice('lite'),permanenciaMeses:12,freeSols:2,maintainMax:3},
+  pro:{name:'Pro™',monthly:currentPrice('pro'),permanenciaMeses:12,freeSols:3,maintainMax:6}
+};
+const CLOSED_PRICE_SOLUTIONS=[
+  {value:'whatsapp',name:'IA para WhatsApp',price:solutionPrice('whatsapp')},
+  {value:'web-ia',name:'IA para tu Web',price:solutionPrice('web-ia')},
+  {value:'llamadas',name:'IA para Llamadas',price:solutionPrice('llamadas')},
+  {value:'email-ia',name:'IA para Correo',price:solutionPrice('email-ia')},
+  {value:'reservas',name:'Reservas y Agenda',price:solutionPrice('reservas')},
+  {value:'firma',name:'Firma Digital',price:solutionPrice('firma')},
+  {value:'ciberseguridad',name:'Ciberseguridad Pyme',price:solutionPrice('ciberseguridad')},
+  {value:'automatizaciones',name:'Flujos automáticos a medida',price:solutionPrice('automatizaciones')},
+  {value:'truki',name:'Facturación automática (TruKi)',price:solutionPrice('truki')}
+];
+// Igual que ARRANQUES.*.monthly con los Departamentos: el valor de arriba se
+// fija al cargar el script con el fallback de solutions-pricing.js — si el
+// precio real de Supabase llega después (async), hay que refrescar esto o el
+// checkout seguiría cobrando el precio antiguo aunque la pantalla ya
+// muestre el nuevo.
+function refreshClosedPriceSolutions(){
+  CLOSED_PRICE_SOLUTIONS.forEach(s=>{ s.price=solutionPrice(s.value); });
+}
+window.onSolutionsPricingUpdated.push(function(){
+  refreshClosedPriceSolutions();
+  if(typeof selectedDirect!=='undefined'&&selectedDirect&&DIRECT[selectedDirect])updateAll();
+});
+
+function renderFoundingPrices(){
+  const renewEl=document.getElementById('renew-price-esencial');if(renewEl)renewEl.textContent=STANDARD_PRICES.lite;
+  // ARRANQUES.lite/pro.monthly se fijó al cargar el script con el valor de
+  // fallback — si el contador real llegó después (async, desde Supabase),
+  // hay que recalcularlo aquí o el resumen/checkout seguiría cobrando el
+  // precio antiguo aunque el badge ya muestre el nuevo.
+  ARRANQUES.lite.monthly=currentPrice('lite');
+  ARRANQUES.pro.monthly=currentPrice('pro');
+  ARRANQUES.start.monthly=currentPrice('start');
+  ARRANQUES.basic.monthly=currentPrice('basic');
+  ['lite','pro','start','basic'].forEach(tier=>{
+    // El precio que se ve primero es el real que se paga al empezar (año 1,
+    // pago único con el 12% de dto. — misma fórmula que getActivePlan()),
+    // no la cuota mensual que solo aplica a partir del segundo año.
+    const p=annualPricing(tier);
+    const m=p.monthly;
+    const priceEl=document.getElementById('pc-price-'+tier);
+    const vatEl=document.getElementById('pc-vat-'+tier);
+    const afterEl=document.getElementById('pc-after-'+tier);
+    const badgeEl=document.getElementById('pc-founding-badge-'+tier);
+    const oldEl=document.getElementById('pc-founding-old-'+tier);
+    if(priceEl)priceEl.innerHTML=fmtEuro(p.total)+' €<sub>primer año, pago único</sub>';
+    if(vatEl)vatEl.textContent=fmtEuro(p.totalIva)+' € con IVA · o fracciona con PayPal';
+    if(afterEl)afterEl.textContent='Luego '+m+' €/mes + IVA, sin permanencia';
+    if(badgeEl){
+      if(foundingActive(tier)){
+        const total=FOUNDING_SPOTS_TOTAL[tier];
+        badgeEl.innerHTML='🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[tier]+' de '+total+' plazas';
+      }else{
+        badgeEl.innerHTML='';
+      }
+    }
+    if(oldEl)oldEl.innerHTML='';
+  });
+}
+renderFoundingPrices();
+// El registro se hace con una función aparte (no renderFoundingPrices
+// directamente) porque este callback puede llegar a ejecutarse antes de que
+// terminen de declararse selectedDirect/DIRECT más abajo en este mismo
+// script — como es async, para cuando de verdad se dispare ya existirán.
+window.onFoundingSpotsUpdated.push(function(){
+  renderFoundingPrices();
+  if(typeof selectedDirect!=='undefined'&&selectedDirect&&DIRECT[selectedDirect])updateAll();
+});
+const TIER_POOLS={
+  basic:{max:1,label:'Elige tu automatización gratis',sols:[
+    {value:'whatsapp',name:'IA para WhatsApp'},
+    {value:'email-ia',name:'IA para Correo'},
+    {value:'truki',name:'Facturación automática (TruKi)'}
+  ]},
+  start:{max:1,label:'Elige tu automatización gratis',sols:[
+    {value:'whatsapp',name:'IA para WhatsApp'},
+    {value:'web-ia',name:'IA para tu Web'},
+    {value:'email-ia',name:'IA para Correo'},
+    {value:'reservas',name:'Reservas y Agenda'},
+    {value:'truki',name:'Facturación automática (TruKi)'}
+  ]},
+  lite:{max:2,label:'Elige 2 automatizaciones gratis',sols:[
+    {value:'whatsapp',name:'IA para WhatsApp'},
+    {value:'email-ia',name:'IA para Correo'},
+    {value:'truki',name:'Facturación automática (TruKi)'},
+    {value:'llamadas',name:'IA para Llamadas'},
+    {value:'firma',name:'Firma Digital'}
+  ]},
+  pro:{max:3,label:'Elige 3 automatizaciones gratis',sols:[
+    {value:'whatsapp',name:'IA para WhatsApp'},
+    {value:'llamadas',name:'IA para Llamadas'},
+    {value:'email-ia',name:'IA para Correo'},
+    {value:'firma',name:'Firma Digital'},
+    {value:'ciberseguridad',name:'Ciberseguridad Pyme'},
+    {value:'automatizaciones',name:'Flujos automáticos a medida'}
+  ]}
+};
+const TIMELINES={'arranque-basic':[{l:'Primera automatización funcionando',v:'Máx. 30 días',c:'gold'},{l:'Ecosistema completo funcionando',v:'Máx. 90 días',c:'gold'},{l:'Web Profesional + tu automatización instaladas',v:'Gratis',c:'gold'},{l:'Primer año (pagado por adelantado)',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}],'arranque-start':[{l:'Primera automatización funcionando',v:'Máx. 30 días',c:'gold'},{l:'Ecosistema completo funcionando',v:'Máx. 90 días',c:'gold'},{l:'Instalación de tu automatización',v:'Gratis',c:'gold'},{l:'Primer año (pagado por adelantado)',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}],'arranque-lite':[{l:'Primera automatización funcionando',v:'Máx. 30 días',c:'gold'},{l:'Ecosistema completo funcionando',v:'Máx. 90 días',c:'gold'},{l:'Web + 2 automatizaciones instaladas',v:'Gratis',c:'gold'},{l:'Primer año (pagado por adelantado)',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}],'arranque-pro':[{l:'Primera automatización funcionando',v:'Máx. 30 días',c:'gold'},{l:'Ecosistema completo funcionando',v:'Máx. 90 días',c:'gold'},{l:'Web Profesional + 3 automatizaciones instaladas',v:'Gratis',c:'gold'},{l:'Primer año (pagado por adelantado)',v:'12 meses',c:'blue'},{l:'Al terminar',v:'Renueva, o te lo llevas todo — código incluido',c:'grey'}]};
+
+let selectedProject=null,selectedDirect=null,selectedTierSolutions=[],selectedExtraSolutions=[],selectedAuditSolutions=[],tierPaymentMode='unico',selectedDigitalPlan=null,digitalTotalPrice=590,digitalAddon=false;
+
+// ── WIZARD: 3 pasos (Departamento → Datos → Pago) en vez de todo en una sola
+// página larga. La lógica de precios/validación de abajo no cambia nada —
+// esto solo controla qué bloque se ve en cada momento.
+let wizardStep=1;
+
+function goToStep(n){
+  wizardStep=n;
+  for(let i=1;i<=3;i++){
+    const panel=document.getElementById('step-panel-'+i);
+    if(panel)panel.classList.toggle('active',i===n);
+  }
+  for(let i=1;i<=3;i++){
+    const dot=document.getElementById('wdot-'+i);
+    if(dot){dot.classList.toggle('current',i===n);dot.classList.toggle('done',i<n);}
+  }
+  syncCtaForStep();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Extraído de handlePay(): valida nombre/email/teléfono/negocio/sector (o el
+// login si es cliente existente) y la contraseña si es alta nueva. NO valida
+// RGPD/términos — eso es del Paso 3 (método de pago), se comprueba aparte en
+// handlePay() justo antes de cobrar.
+function validateContactAndAccount(){
+  const n=document.getElementById('f-nombre'),e=document.getElementById('f-email'),p=document.getElementById('f-telefono'),b=document.getElementById('f-negocio'),s=document.getElementById('f-tipo');
+  let ok=true;const missing=[];
+  if(clientMode==='existing'&&!loggedInClientData){
+    ok=false;missing.push('Inicia sesión como cliente arriba, o elige "Primera vez con TRUCO"');
+  }else{
+    const checkField=(f,label)=>{if(f&&!f.value.trim()){f.classList.add('error');ok=false;missing.push(label);}else if(f)f.classList.remove('error');};
+    checkField(n,'Nombre completo');
+    checkField(p,'Teléfono');
+    checkField(b,'Nombre del negocio');
+    checkField(s,'Sector');
+    if(e&&(!e.value.trim()||!e.value.includes('@'))){e.classList.add('error');ok=false;missing.push('Email válido');}else if(e)e.classList.remove('error');
+  }
+  if(clientMode==='new'){
+    const pw=document.getElementById('reg-password'),pw2=document.getElementById('reg-password2');
+    const checks=updatePasswordStrength();
+    const allOk=Object.values(checks).every(Boolean);
+    if(!allOk){pw.classList.add('error');ok=false;missing.push('Contraseña: mínimo 8 caracteres, 1 mayúscula, 1 minúscula y 1 carácter especial');}else pw.classList.remove('error');
+    if(pw.value!==pw2.value){pw2.classList.add('error');ok=false;missing.push('Las dos contraseñas no coinciden');}else pw2.classList.remove('error');
+  }
+  return{ok,missing};
+}
+
+function solProgress(){
+  if(!selectedDirect||!DIRECT[selectedDirect])return{have:0,max:0,need:0};
+  const pool=TIER_POOLS[DIRECT[selectedDirect].arranque];
+  if(!pool)return{have:0,max:0,need:0};
+  const have=selectedTierSolutions.length;
+  return{have,max:pool.max,need:Math.max(0,pool.max-have)};
+}
+function incompleteLabel(){
+  const p=solProgress();
+  return p.need>0?'Elige '+p.need+(p.need>1?' automatizaciones':' automatización')+' más ('+p.have+' de '+p.max+') ↑':'Elige tu automatización gratis arriba';
+}
+function handleMainCtaClick(){
+  trucoTrackClick('pago_confirmar_pagar');
+  if(wizardStep===1){
+    const plan=getActivePlan();
+    if(!plan){alert('Elige un Departamento Tecnológico arriba antes de continuar.');return;}
+    if(plan.solutionsIncomplete){alert(incompleteLabel().replace(' ↑','')+' antes de continuar.');scrollToSolutionsPicker();return;}
+    goToStep(2);
+  }else if(wizardStep===2){
+    const v=validateContactAndAccount();
+    if(!v.ok){alert('Antes de continuar, completa lo siguiente:\n\n• '+v.missing.join('\n• '));return;}
+    goToStep(3);
+  }else{
+    handlePay();
+  }
+}
+
+// Ajusta el texto/estado del botón principal (en la barra lateral, siempre
+// visible) según el paso del wizard en el que se esté. En el Paso 3 no hace
+// nada — ahí manda updateSummary(), que ya calculaba el texto real
+// ("Confirmar y pagar con Stripe/PayPal") antes de que existiera el wizard.
+function syncCtaForStep(){
+  if(wizardStep===3)return;
+  const btn=document.getElementById('payBtn'),txt=document.getElementById('btn-text');
+  if(!btn||!txt)return;
+  if(wizardStep===1){
+    const plan=getActivePlan();
+    btn.disabled=!plan;
+    txt.textContent=!plan?'Selecciona un plan':plan.solutionsIncomplete?incompleteLabel():'Siguiente: tus datos →';
+  }else if(wizardStep===2){
+    btn.disabled=false;
+    txt.textContent='Siguiente: método de pago →';
+  }
+}
+
+function setTierPaymentMode(mode){
+  tierPaymentMode=mode;
+  document.getElementById('btn-unico').classList.toggle('active',mode==='unico');
+  document.getElementById('btn-financiado').classList.toggle('active',mode==='financiado');
+  document.getElementById('btn-transferencia').classList.toggle('active',mode==='transferencia');
+  const title=document.getElementById('payment-mode-title'),desc=document.getElementById('payment-mode-desc');
+  const iconsUnico=document.getElementById('pay-methods-unico'),iconsPaypal=document.getElementById('pay-methods-paypal'),iconsTransfer=document.getElementById('pay-methods-transferencia');
+  const transferBox=document.getElementById('transfer-instructions-box');
+  if(iconsUnico)iconsUnico.style.display=mode==='unico'?'flex':'none';
+  if(iconsPaypal)iconsPaypal.style.display=mode==='financiado'?'flex':'none';
+  if(iconsTransfer)iconsTransfer.style.display=mode==='transferencia'?'flex':'none';
+  if(transferBox)transferBox.style.display=mode==='transferencia'?'block':'none';
+  if(mode==='unico'){
+    title.textContent='Pago único con tarjeta — ahorras un 12%.';
+    desc.textContent='Se cobra tu primer año de Departamento de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.';
+  }else if(mode==='financiado'){
+    title.textContent='Paga con PayPal, sin que dependa de nosotros.';
+    desc.textContent='Pagas con PayPal y, si PayPal te lo ofrece, puedes fraccionar el pago en su propio checkout: «Paga en 3 plazos» (de 20 € a 2.000 €, sin intereses, durante 2 meses) o «Paga en 6, 12 o 24 plazos» (de 120 € a 5.000 €, con los intereses que fija PayPal). Es PayPal quien decide si te lo ofrece, y la financiación y sus condiciones son de PayPal. Nosotros cobramos el total de golpe. Con PayPal también tienes el 12% de descuento por pagar el año por adelantado.';
+  }else{
+    title.textContent='Transferencia bancaria — ahorras un 12%, sin tarjeta ni cuenta de PayPal.';
+    desc.textContent='Ideal si tu empresa solo opera con cuenta bancaria. Es un pago único igual que con tarjeta, así que lleva el mismo 12% de descuento — la única diferencia es que la confirmación no es instantánea: activamos tu cuenta en cuanto veamos la transferencia en nuestro banco.';
+  }
+  updateAll();
+}
+
+function resetDigitalAddon(){
+  digitalAddon=false;
+  document.querySelectorAll('#solutions-grid input[type=checkbox]:checked').forEach(cb=>cb.checked=false);
+  const automChip=document.getElementById('chip-automatizaciones');
+  if(automChip){automChip.dataset.price=350;document.querySelectorAll('#chip-automatizaciones input[name=autom-band]').forEach(r=>r.checked=(r.value==='350'));}
+  const priceEl=document.getElementById('digital-price-display');if(priceEl)priceEl.innerHTML='desde 350 €<sub> + IVA</sub>';
+  const resultEl=document.getElementById('solutions-result');if(resultEl)resultEl.style.display='none';
+  const d90=document.getElementById('digital-90d');if(d90)d90.style.display='none';
+  const dp=document.getElementById('digital-implantacion');if(dp)dp.style.display='none';
+  selectedDigitalPlan=null;digitalTotalPrice=590;
+}
+
+// showPath()/selectPath() ya no hacen falta — solo queda un camino (Departamento), siempre visible.
+// Se dejan como no-op para que ninguna llamada residual rompa nada.
+function showPath(path){}
+function selectPath(path){}
+
+function syncPlanCollapse(){
+  const grid=document.getElementById('plan-pack-grid'),bar=document.getElementById('other-plans-bar');
+  if(!grid||!bar)return;
+  if(selectedDirect&&DIRECT[selectedDirect]){
+    grid.classList.add('has-selection');grid.classList.remove('show-all');
+    bar.style.display='flex';
+    document.getElementById('chosen-plan-name').textContent=DIRECT[selectedDirect].name;
+    document.getElementById('toggle-other-plans').textContent='Ver otros departamentos ▾';
+  }else{
+    grid.classList.remove('has-selection','show-all');
+    bar.style.display='none';
+  }
+}
+function toggleOtherPlans(){
+  const grid=document.getElementById('plan-pack-grid');if(!grid)return;
+  const show=grid.classList.toggle('show-all');
+  document.getElementById('toggle-other-plans').textContent=show?'Ocultar otros departamentos ▴':'Ver otros departamentos ▾';
+}
+function selectDirect(id){
+  if(selectedDirect===id){
+    selectedDirect=null;selectedTierSolutions=[];selectedExtraSolutions=[];selectedAuditSolutions=[];tierPaymentMode='unico';
+    document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected'));
+    resetDigitalAddon();
+    const pp0=document.getElementById('project-panel');if(pp0)pp0.style.display='none';
+    const tp0=document.getElementById('tier-solutions-picker');if(tp0)tp0.style.display='none';
+    const pm0=document.getElementById('payment-mode-block');if(pm0)pm0.style.display='none';
+    const eb0=document.getElementById('extra-solutions-block');if(eb0)eb0.style.display='none';
+    syncPlanCollapse();
+    updateAll();
+    return;
+  }
+  selectedProject=null;selectedDirect=id;selectedTierSolutions=[];selectedExtraSolutions=[];selectedAuditSolutions=[];tierPaymentMode='unico';
+  showPath('depto');
+  document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('card-'+id).classList.add('selected');
+  resetDigitalAddon();
+  const pp=document.getElementById('project-panel');if(pp)pp.style.display='none';
+  const pm=document.getElementById('payment-mode-block');if(pm){pm.style.display='block';document.getElementById('btn-unico').classList.add('active');document.getElementById('btn-financiado').classList.remove('active');document.getElementById('payment-mode-title').textContent='Pago único por adelantado — ahorras un 12%.';document.getElementById('payment-mode-desc').textContent='Se cobra tu primer año de Departamento de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.';}
+  const ep=document.getElementById('extra-solutions-panel');if(ep)ep.style.display='none';
+  const et=document.getElementById('extra-sol-toggle');if(et)et.classList.remove('open');
+  syncPlanCollapse();
+  renderTierSolutionsPicker();
+  renderExtraSolutionsPanel();
+  scrollToSolutionsPicker();
+  updateAll();
+}
+
+function renderTierSolutionsPicker(){
+  const picker=document.getElementById('tier-solutions-picker');
+  if(!selectedDirect||!DIRECT[selectedDirect]){if(picker)picker.style.display='none';return;}
+  const tier=DIRECT[selectedDirect].arranque;
+  const pool=TIER_POOLS[tier];
+  if(!pool){if(picker)picker.style.display='none';return;}
+  picker.style.display='block';
+  document.getElementById('tier-solutions-label').textContent=pool.label;
+  const grid=document.getElementById('tier-solutions-grid');
+  const complete=selectedTierSolutions.length>=pool.max;
+  const solsToShow=complete?pool.sols.filter(s=>selectedTierSolutions.includes(s.value)):pool.sols;
+  grid.innerHTML=solsToShow.map(s=>{
+    const checked=selectedTierSolutions.includes(s.value);
+    return '<label class="sol-chip"><input type="checkbox" value="'+s.value+'" '+(checked?'checked':'')+' onchange="toggleTierSolution(\''+s.value+'\')"><span>'+s.name+'</span></label>';
+  }).join('');
+  updateTierSolutionsNote();
+}
+
+function toggleTierSolution(value){
+  const tier=DIRECT[selectedDirect].arranque;
+  const max=TIER_POOLS[tier].max;
+  const i=selectedTierSolutions.indexOf(value);
+  if(i>-1){
+    selectedTierSolutions.splice(i,1);
+  }else{
+    if(selectedTierSolutions.length>=max)selectedTierSolutions.shift();
+    selectedTierSolutions.push(value);
+    const ei=selectedExtraSolutions.indexOf(value);if(ei>-1)selectedExtraSolutions.splice(ei,1);
+  }
+  renderTierSolutionsPicker();
+  renderExtraSolutionsPanel();
+  updateAll();
+}
+
+function renderExtraSolutionsPanel(){
+  const block=document.getElementById('extra-solutions-block');
+  if(!selectedDirect||!DIRECT[selectedDirect]){if(block)block.style.display='none';return;}
+  const tier=DIRECT[selectedDirect].arranque;
+  const arr=ARRANQUES[tier];
+  const maxExtra=arr.maintainMax-arr.freeSols;
+  if(!block)return;
+  if(maxExtra<=0){block.style.display='none';return;}
+  block.style.display='block';
+  const alreadyIncluded=tier==='pro'?['web-ia','reservas']:[];
+  // Llamadas, Ciberseguridad y Flujos a medida solo se pueden añadir (gratis
+  // o de pago) a partir de Lite™ — en Start™/Basic™ ni siquiera pagando.
+  const liteProOnly=['llamadas','ciberseguridad','automatizaciones'];
+  const restricted=(tier==='start'||tier==='basic')?liteProOnly:[];
+  const available=CLOSED_PRICE_SOLUTIONS.filter(s=>!selectedTierSolutions.includes(s.value)&&!alreadyIncluded.includes(s.value)&&!restricted.includes(s.value));
+  const atMax=selectedExtraSolutions.length>=maxExtra;
+  const grid=document.getElementById('extra-solutions-grid');
+  grid.innerHTML=available.map(s=>{
+    const checked=selectedExtraSolutions.includes(s.value);
+    const disabled=(!checked&&atMax);
+    return '<label class="sol-chip'+(disabled?' sol-chip-disabled':'')+'"><input type="checkbox" value="'+s.value+'" '+(checked?'checked':'')+(disabled?' disabled':'')+' onchange="toggleExtraSolution(\''+s.value+'\')"><span>'+s.name+' — '+s.price+' € + IVA</span></label>';
+  }).join('');
+  const note=document.getElementById('extra-solutions-note');
+  const left=maxExtra-selectedExtraSolutions.length;
+  if(note){
+    if(selectedExtraSolutions.length===0){
+      note.textContent='Puedes añadir hasta '+maxExtra+' '+(maxExtra>1?'automatizaciones':'automatización')+' más al precio de catálogo — se instala igual que la gratis, sin recargo de alta.';
+      note.style.color='var(--grey)';
+    }else if(left>0){
+      note.textContent='Añadida'+(selectedExtraSolutions.length>1?'s':'')+'. Puedes añadir '+left+' más.';
+      note.style.color='var(--gold)';
+    }else{
+      note.textContent='Máximo de automatizaciones mantenidas en tu escalón alcanzado.';
+      note.style.color='var(--gold)';
+    }
+  }
+  const countEl=document.getElementById('extra-sol-toggle-count');
+  if(countEl){
+    const totalCount=selectedExtraSolutions.length+selectedAuditSolutions.length;
+    if(totalCount>0){countEl.style.display='inline-block';countEl.textContent='+'+totalCount;}
+    else{countEl.style.display='none';}
+  }
+  renderOpenSolutionsGrid();
+}
+
+// CRM / Integraciones / Gestión Documental: nunca tienen precio cerrado, así
+// que marcarlas aquí solo expresa interés — nunca suman al total ni se
+// pueden pagar directamente. Siempre muestran el aviso de auditoría previa.
+function renderOpenSolutionsGrid(){
+  const grid=document.getElementById('extra-solutions-open-grid');
+  if(!grid)return;
+  const tier=(selectedDirect&&DIRECT[selectedDirect])?DIRECT[selectedDirect].arranque:null;
+  // CRM, Integraciones y Gestión Documental: igual que Llamadas/Ciberseguridad
+  // /Flujos, solo entran a partir de Lite™ — en Start™/Basic™ no se muestran.
+  if(tier==='start'||tier==='basic'){
+    grid.innerHTML='';
+    const note=document.getElementById('extra-solutions-open-note');
+    if(note)note.innerHTML='CRM, Integraciones y Gestión Documental están disponibles a partir del Departamento <b style="color:var(--white);">Lite™</b>. <a href="departamentos/lite.html" style="color:var(--gold);font-weight:700;">Ver Lite™ →</a>';
+    return;
+  }
+  grid.innerHTML=OPEN_PRICE_SOLUTIONS.map(s=>{
+    const checked=selectedAuditSolutions.includes(s.value);
+    return '<label class="sol-chip'+(checked?' sol-chip-audit':'')+'"><input type="checkbox" value="'+s.value+'" '+(checked?'checked':'')+' onchange="toggleAuditSolution(\''+s.value+'\')"><span>'+s.name+' — desde '+s.from+' € + IVA</span></label>';
+  }).join('');
+  const note=document.getElementById('extra-solutions-open-note');
+  if(note){
+    if(selectedAuditSolutions.length===0){
+      note.textContent='';
+    }else{
+      note.innerHTML=selectedAuditSolutions.map(v=>DESDE_NOTES[v]).filter(Boolean).join('<br><br>')+'<br><br><b style="color:var(--gold);">No se paga directamente aquí</b> — reserva la auditoría gratuita y cerramos el precio final antes de nada.<br><br><a href="index.html#chat-section" style="display:inline-block;color:var(--gold);font-weight:700;text-decoration:underline;">Reservar auditoría gratuita →</a>';
+    }
+  }
+}
+
+function toggleAuditSolution(value){
+  const i=selectedAuditSolutions.indexOf(value);
+  if(i>-1)selectedAuditSolutions.splice(i,1);
+  else selectedAuditSolutions.push(value);
+  renderOpenSolutionsGrid();
+  const countEl=document.getElementById('extra-sol-toggle-count');
+  if(countEl){
+    const totalCount=selectedExtraSolutions.length+selectedAuditSolutions.length;
+    if(totalCount>0){countEl.style.display='inline-block';countEl.textContent='+'+totalCount;}
+    else{countEl.style.display='none';}
+  }
+  updateAll();
+}
+
+function toggleExtraSolution(value){
+  const tier=DIRECT[selectedDirect].arranque;
+  const arr=ARRANQUES[tier];
+  const maxExtra=arr.maintainMax-arr.freeSols;
+  const i=selectedExtraSolutions.indexOf(value);
+  if(i>-1){
+    selectedExtraSolutions.splice(i,1);
+  }else{
+    if(selectedExtraSolutions.length>=maxExtra)return;
+    selectedExtraSolutions.push(value);
+  }
+  renderExtraSolutionsPanel();
+  updateAll();
+}
+
+function toggleExtraSolutionsPanel(){
+  const panel=document.getElementById('extra-solutions-panel');
+  const btn=document.getElementById('extra-sol-toggle');
+  if(!panel)return;
+  const open=panel.style.display!=='none';
+  panel.style.display=open?'none':'block';
+  if(btn)btn.classList.toggle('open',!open);
+}
+
+function scrollToSolutionsPicker(){
+  const picker=document.getElementById('tier-solutions-picker');
+  if(!picker||picker.style.display==='none')return;
+  setTimeout(()=>{
+    picker.scrollIntoView({behavior:'smooth',block:'center'});
+    picker.classList.add('picker-pulse');
+    setTimeout(()=>picker.classList.remove('picker-pulse'),1600);
+  },80);
+}
+
+function updateTierSolutionsNote(){
+  const tier=DIRECT[selectedDirect].arranque;
+  const max=TIER_POOLS[tier].max;
+  const note=document.getElementById('tier-solutions-note');
+  const left=max-selectedTierSolutions.length;
+  if(left>0){
+    note.textContent='Selecciona '+left+' más para completar tu '+(max>1?'selección gratis.':'automatización gratis.');
+    note.style.color='var(--gold)';
+  }else{
+    note.textContent=(max>1?'Automatizaciones':'Automatización')+' gratis seleccionada'+(max>1?'s':'')+'. ¿Necesitas otra? Se instala al precio de catálogo, sin recargo de alta, una vez seas cliente.';
+    note.style.color='var(--green)';
+  }
+}
+
+function selectProject(proj){
+  if(selectedProject===proj){
+    selectedProject=null;
+    ['card-arranque-start','card-arranque-basic','card-arranque-lite','card-arranque-pro'].forEach(id=>document.getElementById(id).classList.remove('selected'));
+    ['card-esencial','card-web'].forEach(id=>document.getElementById(id).classList.remove('selected'));
+    const pp1=document.getElementById('project-panel');if(pp1)pp1.style.display='none';
+    const wp1=document.getElementById('web-implantacion');if(wp1)wp1.style.display='none';
+    renderCrossSellNotes();
+    updateAll();
+    return;
+  }
+  selectedDirect=null;selectedTierSolutions=[];selectedExtraSolutions=[];selectedAuditSolutions=[];tierPaymentMode='unico';selectedProject=proj;
+  showPath('proyecto');
+  ['card-arranque-start','card-arranque-basic','card-arranque-lite','card-arranque-pro'].forEach(id=>document.getElementById(id).classList.remove('selected'));
+  ['card-esencial','card-web'].forEach(id=>document.getElementById(id).classList.remove('selected'));
+  document.getElementById('card-'+proj).classList.add('selected');
+  const tp=document.getElementById('tier-solutions-picker');if(tp)tp.style.display='none';
+  const pm=document.getElementById('payment-mode-block');if(pm)pm.style.display='none';
+  const eb=document.getElementById('extra-solutions-block');if(eb)eb.style.display='none';
+  const pp=document.getElementById('project-panel');
+  const wp=document.getElementById('web-implantacion');
+  if(pp)pp.style.display='block';
+  if(wp)wp.style.display='block';
+  updateAll();
+}
+
+function toggleDigitalAddon(){
+  digitalAddon=!digitalAddon;
+  const card=document.getElementById('card-digital');
+  card.classList.toggle('selected',digitalAddon);
+  const dp=document.getElementById('digital-implantacion');
+  if(digitalAddon){
+    if(selectedDirect){
+      selectedDirect=null;selectedTierSolutions=[];selectedExtraSolutions=[];selectedAuditSolutions=[];tierPaymentMode='unico';
+      document.querySelectorAll('.plan-card').forEach(c=>{if(c!==card)c.classList.remove('selected');});
+      const tp=document.getElementById('tier-solutions-picker');if(tp)tp.style.display='none';
+      const pm=document.getElementById('payment-mode-block');if(pm)pm.style.display='none';
+      const eb=document.getElementById('extra-solutions-block');if(eb)eb.style.display='none';
+    }
+    if(dp)dp.style.display='block';
+  }else{
+    document.querySelectorAll('#solutions-grid input[type=checkbox]:checked').forEach(cb=>cb.checked=false);
+    const automChip=document.getElementById('chip-automatizaciones');
+    if(automChip){automChip.dataset.price=350;document.querySelectorAll('#chip-automatizaciones input[name=autom-band]').forEach(r=>r.checked=(r.value==='350'));}
+    document.getElementById('digital-price-display').innerHTML='desde 350 €<sub> + IVA</sub>';
+    document.getElementById('solutions-result').style.display='none';
+    document.getElementById('digital-90d').style.display='none';
+    selectedDigitalPlan=null;digitalTotalPrice=590;
+    if(dp)dp.style.display='none';
+  }
+  updateAll();
+}
+
+function toggleAutomatizacionesBands(checked){
+  if(!checked){
+    document.querySelectorAll('#chip-automatizaciones input[name=autom-band]').forEach(r=>r.checked=(r.value==='350'));
+    const chip=document.getElementById('chip-automatizaciones');if(chip)chip.dataset.price=350;
+  }
+  updateSolutions();
+}
+function setAutomatizacionesBand(price){
+  const chip=document.getElementById('chip-automatizaciones');
+  if(chip)chip.dataset.price=price;
+  updateSolutions();
+}
+function updateSolutions(){
+  const checks=document.querySelectorAll('#solutions-grid input[type=checkbox]:checked');
+  const count=checks.length;
+  const resultEl=document.getElementById('solutions-result');
+  let total=0;checks.forEach(c=>{total+=parseInt(c.closest('.sol-chip').dataset.price||0);});
+  const priceEl=document.getElementById('digital-price-display');
+  const desdeNote=document.getElementById('solutions-desde-note');
+  if(desdeNote){
+    const desdeChecked=Array.from(checks).map(c=>c.value).filter(v=>DESDE_NOTES[v]);
+    if(desdeChecked.length>0){
+      desdeNote.style.display='block';
+      desdeNote.innerHTML=desdeChecked.map(v=>DESDE_NOTES[v]).join('<br>');
+    }else{
+      desdeNote.style.display='none';
+    }
+  }
+  if(count===0){
+    priceEl.innerHTML='desde 350 €<sub> + IVA</sub>';
+    resultEl.style.display='none';selectedDigitalPlan=null;
+  }else if(count>3){
+    priceEl.innerHTML='Consultar<sub> presupuesto</sub>';
+    resultEl.style.display='block';
+    resultEl.style.background='rgba(217,168,63,.08)';resultEl.style.border='1px solid rgba(217,168,63,.2)';
+    resultEl.innerHTML='<b style="color:var(--gold);">'+count+' automatizaciones seleccionadas</b> — Elaboramos presupuesto personalizado. <b style="color:var(--white);">Continúa y te contactamos en 24h.</b>';
+    selectedDigitalPlan='pro';digitalTotalPrice=0;
+  }else{
+    const discInfo=getBestDiscountInfo(count);
+    const discounted=discInfo.applies?Math.round(total*(1-discInfo.rate)*100)/100:total;
+    priceEl.innerHTML=(discInfo.applies?'<s style="color:var(--grey);font-size:.7em;">'+(total+DIGITAL_BUYOUT)+' €</s> ':'')+(discounted+DIGITAL_BUYOUT)+' €<sub> + IVA</sub>';
+    resultEl.style.display='block';
+    const packLine=discInfo.applies?'<div style="font-size:.80rem;color:var(--gold);font-weight:600;margin-bottom:4px;">'+discInfo.label+': -'+Math.round(discInfo.rate*100)+'% en automatizaciones (ahorras '+(total-discounted).toFixed(2).replace('.',',')+' €)</div>':'';
+    const desglose=packLine+'<div style="font-size:.80rem;color:var(--grey);margin-bottom:6px;">'+(discInfo.applies?'<s>'+total+' €</s> '+discounted.toFixed(2).replace('.',',')+' €':total+' €')+' + IVA — '+(count>1?'automatizaciones elegidas, alta e integración incluidas':'automatización elegida, alta e integración incluidas')+'</div>';
+    if(count<=2){
+      selectedDigitalPlan='lite';
+      resultEl.style.background='rgba(34,197,94,.08)';resultEl.style.border='1px solid rgba(34,197,94,.25)';
+      resultEl.innerHTML=desglose+'<b style="color:var(--green);">'+count+' '+(count>1?'automatizaciones':'automatización')+'</b> — <b style="color:var(--white);">Departamento Lite™</b> · 90 días de implantación, luego '+STANDARD_PRICES.lite+'€/mes + IVA.';
+    }else{
+      selectedDigitalPlan='pro';
+      resultEl.style.background='rgba(47,123,255,.08)';resultEl.style.border='1px solid rgba(47,123,255,.25)';
+      resultEl.innerHTML=desglose+'<b style="color:var(--blue);">3 automatizaciones</b> — <b style="color:var(--white);">Departamento Pro™</b> · 90 días de implantación, luego '+STANDARD_PRICES.pro+'€/mes + IVA.';
+    }
+    digitalTotalPrice=discounted;
+  }
+  const d90=document.getElementById('digital-90d');
+  if(d90&&count>0){
+    const dn=count>=3?'Pro™':'Lite™';const dp2=count>=3?STANDARD_PRICES.pro:STANDARD_PRICES.lite;
+    d90.style.display='block';
+    d90.innerHTML='<b style="color:var(--white);">90 días de implantación:</b> te acompañamos con la coordinación, los ajustes y el soporte, <span style="color:var(--green);font-weight:600;">incluido en el precio</span> · después, renovación automática a '+dp2+'€/mes + IVA (Departamento '+dn+') · cancela cuando quieras avisando con 7 días.';
+  }else if(d90){d90.style.display='none';}
+  if(digitalAddon)updateAll();
+}
+
+function getRenewalDate(days){
+  const d=new Date();d.setDate(d.getDate()+(days||30));
+  return d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
+}
+
+function getActivePlan(){
+  if(selectedDirect){
+    const d=DIRECT[selectedDirect];const arr=ARRANQUES[d.arranque];
+    const esFundador=foundingActive(d.arranque);
+    const pool=TIER_POOLS[d.arranque];
+    const solNames=pool?selectedTierSolutions.map(v=>{const s=pool.sols.find(x=>x.value===v);return s?s.name:v;}):[];
+    const webLine=d.arranque==='lite'?[{l:'Web (reacondicionada, o Web Profesional nueva si no tienes)',v:'GRATIS',cls:'free'},{l:'Chat + agenda en tu web, de fábrica',v:'GRATIS',cls:'free'}]:d.arranque==='pro'?[{l:'Web Profesional',v:'GRATIS',cls:'free'},{l:'IA para tu Web',v:'GRATIS',cls:'free'},{l:'Reservas y Agenda',v:'GRATIS',cls:'free'}]:d.arranque==='basic'?[{l:'Web Profesional',v:'GRATIS',cls:'free'},{l:'Chat + agenda en tu web, de fábrica',v:'GRATIS',cls:'free'},{l:'Salud técnica de posicionamiento',v:'INCLUIDA',cls:'free'}]:[];
+    const solWord=arr.freeSols>1?arr.freeSols+' automatizaciones':arr.freeSols===1?'1 automatización':'';
+    const solLines=arr.freeSols===0?[]:solNames.length?solNames.map(n=>({l:n,v:'GRATIS',cls:'free'})):[{l:solWord+' a elegir',v:'Pendiente de elegir'}];
+    const extraSols=selectedExtraSolutions.map(v=>CLOSED_PRICE_SOLUTIONS.find(x=>x.value===v)).filter(Boolean);
+    const extraTotal=extraSols.reduce((s,x)=>s+x.price,0);
+    const extraLines=extraSols.map(x=>({l:'+ '+x.name+' (adicional)',v:fmtEuro(x.price)+' € + IVA'}));
+    const isUnico=tierPaymentMode==='unico';
+    const isTransferencia=tierPaymentMode==='transferencia';
+    let priceLines,totalCommitment,subPago;
+    if(isUnico||isTransferencia||tierPaymentMode==='financiado'){
+      const totBase=arr.monthly*arr.permanenciaMeses;const tot=Math.round(totBase*0.88*100)/100;
+      const descuento=totBase-tot;
+      const baseImponible=tot+extraTotal;const iva=baseImponible*0.21;
+      totalCommitment=baseImponible+iva;
+      subPago=isTransferencia?'Pago único por transferencia':tierPaymentMode==='financiado'?'Pago con PayPal':'Pago único';
+      priceLines=[];
+      if(esFundador)priceLines.push({l:'🏷️ Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[d.arranque]+' de '+FOUNDING_SPOTS_TOTAL[d.arranque]+' plazas',v:'Aplicado ✓',cls:'free'});
+      priceLines.push(
+        {l:arr.permanenciaMeses+' meses × '+arr.monthly+' €/mes'+(esFundador?' (fundador)':''),v:fmtEuro(totBase)+' €'},
+        {l:'Descuento por pago único (12%)',v:'-'+fmtEuro(descuento)+' €'},
+        {l:'Precio tras el descuento',v:fmtEuro(tot)+' €'},
+      );
+      if(extraTotal>0)priceLines.push({l:'Automatizaciones adicionales, instalación única',v:fmtEuro(extraTotal)+' €'});
+      priceLines.push({l:'IVA (21%)',v:fmtEuro(iva)+' €'},{l:'Total con IVA',v:fmtEuro(totalCommitment)+' €',total:true});
+    }else{
+      const ivaM=arr.monthly*0.21;const totMes=arr.monthly+ivaM;
+      const extraConIva=extraTotal*1.21;
+      totalCommitment=totMes*arr.permanenciaMeses+extraConIva;
+      subPago='Pago con PayPal';
+      priceLines=[];
+      if(esFundador)priceLines.push({l:'🏷️ Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[d.arranque]+' de '+FOUNDING_SPOTS_TOTAL[d.arranque]+' plazas',v:'Aplicado ✓',cls:'free'});
+      priceLines.push({l:'Cuota base'+(esFundador?' (fundador)':''),v:fmtEuro(arr.monthly)+' €/mes'},{l:'IVA (21%)',v:fmtEuro(ivaM)+' €/mes'},{l:'Equivalente / mes con IVA',v:fmtEuro(totMes)+' €'});
+      if(extraTotal>0)priceLines.push({l:'+ Automatizaciones adicionales, pago único aparte',v:fmtEuro(extraConIva)+' € con IVA'});
+      priceLines.push({l:'Cargo único a PayPal ('+arr.permanenciaMeses+' meses de golpe)',v:fmtEuro(totalCommitment)+' €',total:true});
+    }
+    const renewalMsg='<b>Paga una vez. Olvídate 365 días.</b> Nada de facturas mensuales — tu primer año de Departamento (web, automatización, mantenimiento, reuniones) va incluido en este pago y funciona los 365 días, sin reembolso si decides no usarlo. Pasado el año, sigues mes a mes si quieres, sin compromiso nuevo.';
+    const auditSols=selectedAuditSolutions.map(v=>OPEN_PRICE_SOLUTIONS.find(x=>x.value===v)).filter(Boolean);
+    const auditLines=auditSols.map(x=>({l:'+ '+x.name+' (pendiente de auditoría)',v:'desde '+x.from+' € — sin cerrar'}));
+    return{key:selectedDirect,name:d.name,sub:subPago+' · '+arr.permanenciaMeses+' meses incluidos'+(solWord?' · '+solWord+' gratis':'')+(extraSols.length?' + '+extraSols.length+' adicional'+(extraSols.length>1?'es':''):''),arranqueType:d.arranque,breakdown:[...webLine,...solLines,...extraLines,...auditLines,{divider:true},...priceLines],monthlyAfter:arr.monthly,totalRaw:totalCommitment,paymentMode:tierPaymentMode,timeline:selectedDirect,renewalMsg,solutionsIncomplete:selectedTierSolutions.length<arr.freeSols,needsAudit:auditSols.length>0,founding:esFundador};
+  }
+  return null;
+}
+
+function updateSummary(plan){
+  const te=document.getElementById('sb-title'),se=document.getElementById('sb-sub'),ee=document.getElementById('sb-empty'),be=document.getElementById('sb-breakdown'),re=document.getElementById('sb-renewal'),btn=document.getElementById('payBtn'),txt=document.getElementById('btn-text'),tbox=document.getElementById('timeline-box'),tsteps=document.getElementById('tl-steps');
+  const msbBar=document.getElementById('mobile-sticky-bar'),checkoutEl=document.querySelector('.checkout');
+  if(!plan){te.textContent='Ningún plan seleccionado';se.textContent='Elige una opción para ver el resumen.';ee.style.display='block';be.style.display='none';re.style.display='none';if(tbox)tbox.style.display='none';btn.disabled=true;txt.textContent='Selecciona un plan';if(msbBar)msbBar.classList.remove('active');if(checkoutEl)checkoutEl.classList.remove('has-sticky-bar');const eb=document.getElementById('sb-email-btn');if(eb)eb.style.display='none';return;}
+  te.textContent=plan.name;se.textContent=plan.sub;ee.style.display='none';
+  let bh='';plan.breakdown.forEach(r=>{if(r.divider){bh+='<div class="sbr-divider"></div>';return;}bh+=`<div class="sbr-row${r.total?' sbr-total':''}"><span class="sbr-label">${r.l}</span><span class="sbr-val${r.cls?' '+r.cls:''}">${r.v}</span></div>`;});
+  be.innerHTML=bh;be.style.display='block';
+  const isCombined=plan.timeline&&plan.timeline.includes('-solutions-');
+  const isWeb=!isCombined&&plan.timeline&&(plan.timeline.startsWith('esencial')||plan.timeline==='web-lite');
+  const isDig=!isCombined&&plan.timeline&&plan.timeline.startsWith('digital');
+  const hasGift=isCombined||isWeb||isDig;
+  const days=isCombined?90:isWeb?30:isDig?90:30;
+  const renewDate=getRenewalDate(days);
+  if(plan.renewalMsg){re.innerHTML=plan.renewalMsg;}
+  else if(plan.renewalNote==='anual'){const da=new Date();da.setFullYear(da.getFullYear()+1);re.innerHTML='Renovación automática anual a partir del <span class="renewal-date">'+da.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'})+'</span> · Renueva o cancela al vencer el año';}
+  else if(hasGift){re.innerHTML='Pasados los '+days+' días de implantación, renovación automática de 1 mes a <span class="renewal-amount">'+plan.monthlyAfter.toFixed(2).replace('.',',')+' €&nbsp;+&nbsp;IVA</span> a partir del <span class="renewal-date">'+renewDate+'</span> · Cancela cuando quieras avisando con 7 días';}
+  else{re.innerHTML='Renovación automática de 1 mes a <span class="renewal-amount">'+plan.monthlyAfter.toFixed(2).replace('.',',')+' €&nbsp;+&nbsp;IVA</span> a partir del <span class="renewal-date">'+renewDate+'</span> · Cancela cuando quieras avisando con 7 días';}
+  re.style.display='block';
+  const tl=TIMELINES[plan.timeline];
+  if(tl&&tsteps&&tbox){const cols={gold:'var(--gold)',green:'var(--green)',blue:'var(--blue)',grey:'var(--grey)'};tsteps.innerHTML=tl.map(s=>`<div class="tl-step"><div class="tl-dot" style="background:${cols[s.c]||'var(--grey)'}"></div><div class="tl-info"><div class="tl-label">${s.l}</div><div class="tl-val" style="color:${cols[s.c]||'var(--grey)'}">${s.v}</div></div></div>`).join('');tbox.style.display='block';}
+  if(plan.solutionsIncomplete){
+    btn.disabled=(wizardStep===3);
+    txt.textContent=incompleteLabel();
+  }else if(plan.needsAudit){
+    btn.disabled=true;
+    txt.textContent='Reserva la auditoría gratuita para cerrar el precio';
+  }else{
+    btn.disabled=false;
+    const esPaypal=selectedDirect&&tierPaymentMode==='financiado'&&!plan.customQuote;
+    const esTransferencia=selectedDirect&&tierPaymentMode==='transferencia'&&!plan.customQuote;
+    txt.textContent=plan.customQuote?'→ Solicitar presupuesto personalizado':esPaypal?'→ Confirmar y pagar con PayPal':esTransferencia?'→ Confirmar y ver el IBAN':'→ Confirmar y pagar con Stripe';
+  }
+  const paymentNote=document.getElementById('payment-note');
+  const esPaypalNote=selectedDirect&&tierPaymentMode==='financiado'&&!plan.customQuote;
+  const esTransferenciaNote=selectedDirect&&tierPaymentMode==='transferencia'&&!plan.customQuote;
+  if(paymentNote){
+    paymentNote.innerHTML=esPaypalNote?'Al confirmar serás redirigido a <strong style="color:var(--white);">PayPal</strong> — si PayPal te lo ofrece, podrás fraccionar el pago en su propio checkout: «Paga en 3 plazos» (20–2.000 €, sin intereses) o «Paga en 6, 12 o 24 plazos» (120–5.000 €, con intereses). La aprobación y las condiciones son de PayPal. Tu información bancaria nunca pasa por nuestros servidores.':esTransferenciaNote?'Al confirmar verás nuestro <strong style="color:var(--white);">IBAN y un código de referencia</strong> para hacer la transferencia. Activamos tu cuenta en cuanto la veamos entrar en nuestro banco.':'Al confirmar serás redirigido a <strong style="color:var(--white);">Stripe</strong>, la pasarela usada por millones de empresas en todo el mundo. Tu información bancaria nunca pasa por nuestros servidores.';
+  }
+  const trustChip=document.getElementById('trust-chip-provider'),sbSecure=document.getElementById('sb-secure');
+  if(trustChip)trustChip.textContent=esPaypalNote?'PayPal':esTransferenciaNote?'Transferencia':'Stripe';
+  if(sbSecure)sbSecure.textContent=esPaypalNote?'Procesado por PayPal · Cifrado 256-bit':esTransferenciaNote?'Sin comisiones · Confirmación manual':'Procesado por Stripe · Cifrado 256-bit';
+  if(msbBar){
+    const totalEls=be.querySelectorAll('.sbr-total .sbr-val');
+    const totalTxt=totalEls.length?totalEls[totalEls.length-1].textContent:'';
+    document.getElementById('msb-label').textContent=plan.name;
+    document.getElementById('msb-price').textContent=totalTxt;
+    msbBar.classList.add('active');
+    if(checkoutEl)checkoutEl.classList.add('has-sticky-bar');
+  }
+  const emailBtn=document.getElementById('sb-email-btn');if(emailBtn)emailBtn.style.display='block';
+}
+
+function emailMeSummary(){
+  const plan=getActivePlan();
+  if(!plan)return;
+  const toEmail=(document.getElementById('f-email')||{}).value?.trim()||'';
+  const lines=[];
+  plan.breakdown.forEach(r=>{if(r.divider)return;lines.push(r.l+': '+r.v);});
+  const body='Resumen de tu contratación con TRUCO technology:\n\n'+plan.name+'\n'+plan.sub+'\n\n'+lines.join('\n')+'\n\nCuando quieras retomarlo, entra en pago.html y vuelve a elegir las mismas opciones.';
+  const subject='Tu resumen — '+plan.name;
+  const mailto='mailto:'+encodeURIComponent(toEmail)+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  window.location.href=mailto;
+}
+
+function renderCrossSellNotes(){
+  const pc=document.getElementById('proyecto-digitaliza-crosssell');
+  if(pc){
+    if(selectedProject){
+      pc.style.display='block';
+      document.getElementById('proyecto-crosssell-text').textContent=digitalAddon?'✓ Ya tienes automatizaciones tecnológicas añadidas a tu pedido.':'¿También quieres añadir automatizaciones tecnológicas (WhatsApp, CRM, Ciberseguridad...)?';
+    }else{
+      pc.style.display='none';
+    }
+  }
+  const dc=document.getElementById('digitaliza-project-crosssell');
+  if(dc){
+    if(digitalAddon){
+      dc.style.display='block';
+      document.getElementById('digitaliza-crosssell-text').textContent=selectedProject?'✓ Ya tienes Web Profesional añadida a tu pedido.':'¿También necesitas una web nueva?';
+    }else{
+      dc.style.display='none';
+    }
+  }
+}
+function updateAll(){updateSummary(getActivePlan());renderCrossSellNotes();syncCtaForStep();}
+
+function vField(el){
+  if(!el.value.trim()){el.classList.add('error');}else{el.classList.remove('error');}
+}
+function vEmail(el){
+  if(!el.value.trim()||!el.value.includes('@')){el.classList.add('error');}else{el.classList.remove('error');}
+}
+const ANEXO_VERSION='2026-09-17';
+function updateBtn(){
+  const r=document.getElementById('ch-rgpd'),t=document.getElementById('ch-terminos'),a=document.getElementById('ch-anexo');
+  if(r&&r.checked)r.parentElement.style.outline='';
+  if(t&&t.checked)t.parentElement.style.outline='';
+  if(a&&a.checked)a.parentElement.style.outline='';
+}
+
+// Solo se manda cuando hay 3 soluciones o menos — más de eso ya es
+// "presupuesto personalizado" gestionado a mano por el founder, no hace falta
+// persistirlo automáticamente en client_solutions.
+function buildSolutionsPayload(){
+  if(selectedDirect&&DIRECT[selectedDirect]){
+    const tier=DIRECT[selectedDirect].arranque;
+    const pool=TIER_POOLS[tier];
+    const free=selectedTierSolutions.map(v=>{
+      const s=pool.sols.find(x=>x.value===v);
+      return{key:v,name:s?s.name:v,price:0,free:true};
+    });
+    const extra=selectedExtraSolutions.map(v=>{
+      const s=CLOSED_PRICE_SOLUTIONS.find(x=>x.value===v);
+      return{key:v,name:s?s.name:v,price:s?s.price:0,free:false};
+    });
+    return[...free,...extra];
+  }
+  const checks=Array.from(document.querySelectorAll('#solutions-grid input[type=checkbox]:checked'));
+  if(checks.length>0&&checks.length<=3){
+    return checks.map(c=>{
+      const chip=c.closest('.sol-chip');
+      const raw=(chip.querySelector('span')?.textContent||c.value).trim();
+      const name=raw.split(' — ')[0].split(' – ')[0];
+      return{key:c.value,name,price:parseInt(chip.dataset.price||0),free:false};
+    });
+  }
+  return[];
+}
+
+function trucoSessionId(){
+  let id=localStorage.getItem('truco_session_id');
+  if(!id){id=(crypto.randomUUID?crypto.randomUUID():'sess-'+Date.now()+'-'+Math.random().toString(36).slice(2));localStorage.setItem('truco_session_id',id);}
+  return id;
+}
+
+async function handlePay(){
+  const n=document.getElementById('f-nombre'),e=document.getElementById('f-email'),p=document.getElementById('f-telefono'),b=document.getElementById('f-negocio'),s=document.getElementById('f-tipo');
+  const r=document.getElementById('ch-rgpd'),t=document.getElementById('ch-terminos'),a=document.getElementById('ch-anexo');
+
+  // Los datos de contacto/cuenta ya se validaron al pasar del Paso 2 al Paso
+  // 3 (ver handleMainCtaClick) — se vuelve a comprobar aquí por si acaso
+  // (alguien llega al Paso 3 sin pasar por ahí, p. ej. con el botón
+  // atrás/adelante del navegador), y aquí además se comprueban RGPD/términos/Anexo,
+  // que son del Paso 3.
+  const cv=validateContactAndAccount();
+  let ok=cv.ok;const missing=cv.missing.slice();
+
+  if(r&&!r.checked){r.parentElement.style.outline='1px solid var(--red)';ok=false;missing.push('Aceptar la Protección de datos (RGPD)');}else if(r)r.parentElement.style.outline='';
+  if(t&&!t.checked){t.parentElement.style.outline='1px solid var(--red)';ok=false;missing.push('Aceptar los Términos y condiciones');}else if(t)t.parentElement.style.outline='';
+  if(a&&!a.checked){a.parentElement.style.outline='1px solid var(--red)';ok=false;missing.push('Aceptar el Anexo de Autorización de Accesos');}else if(a)a.parentElement.style.outline='';
+
+  if(!ok){
+    alert('Antes de continuar, completa o marca lo siguiente:\n\n• '+missing.join('\n• '));
+    if(cv.missing.length>0)goToStep(2);
+    return;
+  }
+  const plan=getActivePlan();if(!plan)return;
+
+  // Guardamos el lead en cuanto sabemos qué plan quiere, pase lo que pase después
+  // (presupuesto personalizado, Stripe aún no disponible, o pago normal): es el
+  // momento en que sabemos que es un cliente real interesado.
+  try{
+    const nif=document.getElementById('f-nif'),msg=document.getElementById('f-mensaje');
+    await fetch('/.netlify/functions/save-lead',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        source:'checkout',session_id:trucoSessionId(),
+        nombre:n.value.trim(),email:e.value.trim(),telefono:p.value.trim(),
+        negocio:b.value.trim(),tipo:s.value.trim(),nif:nif?nif.value.trim():null,
+        nota:'Inició compra: '+plan.name+(msg&&msg.value.trim()?' — Mensaje: '+msg.value.trim():'')
+      })
+    });
+  }catch(err){/* nunca bloquear el pago por un fallo al guardar el lead */}
+
+  // Si es la primera vez, crea ya su cuenta del portal con la contraseña que
+  // acaba de elegir — así no depende de un email de invitación posterior para
+  // poder entrar. Si ya estaba logueado (clientMode==='existing'), no hace
+  // falta: ya tiene cuenta.
+  if(clientMode==='new'){
+    try{
+      const sb=initPortalSb();
+      if(sb){
+        const{data:signUpData,error:signUpErr}=await sb.auth.signUp({
+          email:e.value.trim(),
+          password:document.getElementById('reg-password').value,
+          options:{data:{nombre:n.value.trim()}}
+        });
+        if(!signUpErr&&signUpData&&signUpData.user){
+          await fetch('/.netlify/functions/link-client-signup',{
+            method:'POST',headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({email:e.value.trim(),auth_user_id:signUpData.user.id})
+          });
+        }
+      }
+    }catch(err){/* nunca bloquear el pago por un fallo al crear la cuenta — el founder puede invitarle a mano después */}
+  }
+
+  if(plan.customQuote){alert('Con más de 3 automatizaciones elaboramos un presupuesto personalizado. Te contactamos en menos de 24h. Mientras tanto, escríbenos por WhatsApp o reserva una consultoría gratuita.');return;}
+  if(!plan.totalRaw){alert('Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');return;}
+
+  // Pago único → Stripe (tarjeta). Financiado → PayPal (su checkout ofrece
+  // "Paga en 3" al comprador si es elegible) — sustituye al antiguo aviso de
+  // "te escribimos por WhatsApp para cerrar con SeQura", ver [[n8n-hosting-decision-and-payment-backup]].
+  const usaPaypal=selectedDirect&&plan.paymentMode==='financiado';
+  const usaTransferencia=selectedDirect&&plan.paymentMode==='transferencia';
+  const endpoint=usaPaypal?'/.netlify/functions/create-paypal-order':usaTransferencia?'/.netlify/functions/create-bank-transfer-order':'/.netlify/functions/create-checkout';
+
+  const payBtn=document.getElementById('payBtn'),payBtnText=document.getElementById('btn-text');
+  if(payBtn){payBtn.disabled=true;}
+  if(payBtnText){payBtnText.dataset.origText=payBtnText.textContent;payBtnText.textContent=usaTransferencia?'Generando tu referencia…':'Conectando con el pago…';}
+  try{
+    const resp=await fetch(endpoint,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        name:'TRUCO technology — '+plan.name,
+        description:plan.sub+' · IVA incluido',
+        amountCents:Math.round(plan.totalRaw*100),
+        customerEmail:e.value.trim(),
+        customerName:n.value.trim(),
+        planKey:plan.key,
+        arranqueTier:plan.arranqueType||'',
+        founding:!!plan.founding,
+        solutions:buildSolutionsPayload(),
+        refCode:'',
+        consumeReferralCredit:'',
+        anexoAceptado:true,anexoVersion:ANEXO_VERSION
+      })
+    });
+    const data=await resp.json();
+    if(usaTransferencia&&data.ok&&data.referenceCode){
+      const params=new URLSearchParams({ref:data.referenceCode,amount:String(data.amountCents),plan:data.planName||plan.name});
+      window.location.href='transferencia.html?'+params.toString();
+      return;
+    }
+    if(data.ok&&data.url){window.location.href=data.url;return;}
+  }catch(err){/* sigue al aviso de abajo */}
+  if(payBtn){payBtn.disabled=false;}
+  if(payBtnText){payBtnText.textContent=payBtnText.dataset.origText;}
+  alert(usaPaypal?'No hemos podido conectar con PayPal ahora mismo. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.':usaTransferencia?'No hemos podido generar tu referencia de transferencia ahora mismo. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.':'Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');
+}
+
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');const icon=btn.querySelector('.faq-icon');
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el=>{el.classList.remove('open');const ic=el.querySelector('.faq-icon');if(ic)ic.textContent='+';});
+  if(!isOpen){item.classList.add('open');if(icon)icon.textContent='−';}
+}
+
+(function preselectFromUrl(){
+  const params=new URLSearchParams(location.search);
+  const plan=params.get('plan');
+  if(plan==='arranque-lite'||plan==='arranque-pro'||plan==='arranque-start'||plan==='arranque-basic')selectDirect(plan);
+  else if(plan==='esencial'||plan==='web'||plan==='digital')selectDirect('arranque-basic');
+})();
+</script>
+<script src="analytics-tracking.js"></script>
+</body>
+</html>

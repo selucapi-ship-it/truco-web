@@ -178,6 +178,21 @@
     show(0);
   })();
 
+
+  /* ───────── Comparativa: el chat de socio se reproduce al verse ───────── */
+  (function () {
+    var chat = document.getElementById('vsChat');
+    if (!chat || reduced || !('IntersectionObserver' in window)) return;
+    var msgs = [].slice.call(chat.querySelectorAll('.vs-msg'));
+    chat.classList.add('vs-anim');
+    var done = false;
+    new IntersectionObserver(function (es, obs) {
+      if (done || !es[0].isIntersecting) return;
+      done = true; obs.disconnect();
+      msgs.forEach(function (m, i) { setTimeout(function () { m.classList.add('show'); }, 500 + i * 1300); });
+    }, { threshold: 0.5 }).observe(chat);
+  })();
+
   /* ───────── Expansores “ver todo lo que puedes elegir” ───────── */
   [].slice.call(document.querySelectorAll('.entry-more')).forEach(function (b) {
     b.addEventListener('click', function (e) {

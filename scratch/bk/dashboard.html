@@ -291,14 +291,14 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 
   <div class="grid">
     <div class="card chat-card">
-      <div class="card-tag">Tu chat de socio</div>
-      <h2>Cuéntanos un cambio o un problema</h2>
+      <div class="card-tag">Tu asistente</div>
+      <h2>Resuelve tus dudas</h2>
       <div id="chat-log"></div>
       <div class="chat-input-row">
-        <input type="text" id="chat-input" placeholder="Escribe tu duda, un cambio o un problema…" onkeydown="if(event.key==='Enter')sendChat()">
+        <input type="text" id="chat-input" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendChat()">
         <button id="chat-send-btn" onclick="sendChat()">Enviar</button>
       </div>
-      <div class="chat-hint">Asistente virtual de inteligencia artificial (no es una persona). Conoce lo que tienes contratado. Si le pides un cambio o le cuentas un problema, lo pasa a tu Departamento: Jose lo revisa y lo aprueba antes de tocar nada.</div>
+      <div class="chat-hint">Este asistente conoce lo que tienes contratado — para temas de venta general, usa el chat de la web pública.</div>
     </div>
   </div>
 </div>
@@ -475,7 +475,7 @@ async function installApp() {
 if (!isStandalone()) document.addEventListener('DOMContentLoaded', () => { const el = document.getElementById('install-strip'); if (el) el.style.display = ''; });
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('crm-sw.js').catch(() => {});
 
-const TASK_STATUS_LABELS = { open: 'Recibida · pendiente del visto bueno', in_progress: 'Aprobada · en marcha', blocked: 'Bloqueada', done: 'Hecha', cancelled: 'Cancelada' };
+const TASK_STATUS_LABELS = { open: 'Recibida', in_progress: 'En marcha', blocked: 'Bloqueada', done: 'Hecha', cancelled: 'Cancelada' };
 
 async function loadTasks() {
   const list = document.getElementById('task-list');
@@ -618,7 +618,6 @@ async function sendChat() {
     const reply = data.text || 'No he podido resolver esto — escríbenos directamente y te ayudamos.';
     appendMsg('bot', reply);
     chatHistory.push({ role: 'user', text }, { role: 'bot', text: reply });
-    if (data.task_created) { appendMsg('bot', '✓ Petición enviada a tu Departamento. Jose la revisa y te avisamos aquí cuando esté hecha.'); loadTasks(); }
   } catch (e) {
     appendMsg('bot', 'No hemos podido conectar con el asistente ahora mismo. Inténtalo de nuevo en un momento.');
   }

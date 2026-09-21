@@ -202,3 +202,51 @@ details.m-fold>summary{display:none;}
   #sectores .sectores-cta{margin-top:18px;}
   #sectores .sectores-cta p{font-size:.86rem;}
 }
+
+/* ───────── COMPARATIVA: lo que te entregan vs lo que hace TRUCO ───────── */
+.vs{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:stretch;}
+.vs-col{border-radius:20px;padding:22px;border:1px solid var(--grey-line);display:flex;flex-direction:column;gap:16px;min-width:0;}
+.vs-them{background:linear-gradient(160deg,#261b1c,#1c1b20 70%);border-color:rgba(239,107,107,.32);}
+.vs-us{background:linear-gradient(160deg,#2a2210,#1c1b20 70%);border-color:rgba(217,168,63,.65);box-shadow:0 24px 60px -28px rgba(217,168,63,.45);}
+.vs-tag{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+.vs-them .vs-tag{color:#ef8a8a;}
+.vs-us .vs-tag{color:var(--gold);}
+.vs-mid{display:flex;align-items:center;justify-content:center;}
+.vs-mid span{width:46px;height:46px;border-radius:50%;background:var(--gold);color:#16151a;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:.85rem;box-shadow:0 0 0 6px rgba(217,168,63,.15);}
+/* plantilla vacía */
+.vs-tpl{background:#e9e9ec;border-radius:12px;overflow:hidden;transform:rotate(-1.2deg);box-shadow:0 14px 30px -14px rgba(0,0,0,.7);}
+.vs-tpl-bar{display:flex;align-items:center;gap:6px;background:#d4d4d9;padding:8px 12px;}
+.vs-tpl-bar i{width:8px;height:8px;border-radius:50%;background:#9a9aa3;}
+.vs-tpl-bar span{margin-left:8px;font:600 .68rem Arial,sans-serif;color:#666;}
+.vs-tpl-body{padding:14px;display:flex;flex-direction:column;gap:8px;position:relative;font-family:Arial,sans-serif;}
+.vs-tpl-logo{font-weight:700;font-size:.78rem;color:#555;border:2px dashed #b9b9c0;border-radius:6px;padding:8px;text-align:center;}
+.vs-ph{border:1.5px dashed #c46a6a;background:rgba(196,106,106,.08);border-radius:6px;padding:8px 10px;font-size:.78rem;color:#a24b4b;font-weight:600;}
+.vs-turn{position:absolute;right:10px;bottom:8px;background:#ef6b6b;color:#fff;font-size:.72rem;font-weight:800;padding:5px 10px;border-radius:99px;transform:rotate(-4deg);}
+/* chat de socio */
+.vs-chat{background:var(--bg);border:1px solid var(--grey-line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:190px;}
+.vs-chat-bar{display:flex;align-items:center;gap:8px;font-size:.8rem;margin-bottom:2px;}
+.vs-chat-logo{width:24px;height:24px;border:1.5px solid var(--gold);border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font:700 .8rem var(--font-display);color:var(--gold);}
+.vs-chat-bar em{margin-left:auto;font-style:normal;color:var(--green);font-size:.7rem;}
+.vs-msg{max-width:88%;padding:8px 12px;border-radius:12px;font-size:.86rem;line-height:1.4;opacity:1;transition:opacity .5s ease,transform .5s ease;}
+.vs-msg small{display:block;font-family:var(--font-mono);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);margin-bottom:2px;}
+.vs-msg.you{align-self:flex-end;background:var(--blue-dim);border:1px solid rgba(47,123,255,.35);border-bottom-right-radius:3px;}
+.vs-msg.dept{align-self:flex-start;background:rgba(217,168,63,.1);border:1px solid rgba(217,168,63,.45);border-bottom-left-radius:3px;}
+.vs-msg b{color:var(--gold);}
+.vs-chat.vs-anim .vs-msg{opacity:0;transform:translateY(8px);}
+.vs-chat.vs-anim .vs-msg.show{opacity:1;transform:none;}
+/* listas */
+.vs-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px;}
+.vs-list li{display:flex;gap:11px;align-items:flex-start;font-size:.94rem;line-height:1.45;color:var(--grey);}
+.vs-list li b{color:var(--white);}
+.vs-ic{flex-shrink:0;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.vs-ic svg{width:13px;height:13px;}
+.vs-list li.no .vs-ic{background:rgba(239,107,107,.16);color:#ef6b6b;}
+.vs-list li.yes .vs-ic{background:var(--gold);color:#16151a;}
+@media(max-width:820px){
+  .vs{grid-template-columns:1fr;gap:12px;}
+  .vs-mid{margin:-4px 0;}
+  .vs-mid span{width:38px;height:38px;font-size:.75rem;}
+  .vs-col{padding:18px 16px;}
+}
+.chat-ai-note{font-size:.72rem;color:var(--grey);background:rgba(217,168,63,.08);border-bottom:1px solid var(--grey-line);padding:6px 14px;line-height:1.35;}
+.vs-tpl-body{padding-bottom:42px;}

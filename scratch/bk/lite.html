@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-<title>Departamento Tecnológico Basic™ — TRUCO technology</title>
-<meta name="description" content="Web interactiva con salud técnica de posicionamiento, asistente IA que resuelve las dudas de tu empresa y agenda con citas online, gratis, + 1 automatización más a elegir (WhatsApp, Correo o TruKi). Desde 149€/mes.">
+<title>Departamento Tecnológico Lite™ — TRUCO technology</title>
+<meta name="description" content="Tu web con chat y agenda de fábrica + 2 automatizaciones tecnológicas, completamente gratis al contratar. Mantenimiento, seguridad e incidencias resueltas desde el primer día.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -41,7 +41,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .nav-back{font-size:.85rem;color:var(--grey);transition:color var(--tr);display:flex;align-items:center;gap:6px;}
 .nav-back svg{width:14px;height:14px;}
 .nav-back:hover{color:var(--white);}
-.nav-cta{background:var(--gold);color:#1a1206;padding:9px 20px;border-radius:7px;font-size:.85rem;font-weight:700;white-space:nowrap;}
+.nav-cta{background:var(--blue);color:#fff;padding:9px 20px;border-radius:7px;font-size:.85rem;font-weight:600;white-space:nowrap;}
 @media(max-width:600px){.nav-sub{display:none;}.nav-back{display:none;}.nav-cta{padding:8px 14px;font-size:.78rem;}.t-mark{width:34px;height:34px;font-size:18px;}}
 
 .icon-badge{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 8px 18px -8px currentColor;animation:iconFloat 3.6s ease-in-out infinite;}
@@ -55,18 +55,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 @keyframes iconFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
 @media(prefers-reduced-motion:reduce){.icon-badge{animation:none;}}
 
-.page-hero{position:relative;padding:130px 0 60px;border-bottom:1px solid var(--grey-line);background:radial-gradient(ellipse 70% 90% at 15% 0%,rgba(217,168,63,.08) 0%,transparent 60%);overflow:hidden;}
+.page-hero{position:relative;padding:130px 0 60px;border-bottom:1px solid var(--grey-line);background:radial-gradient(ellipse 70% 90% at 15% 0%,rgba(34,197,94,.07) 0%,transparent 60%);overflow:hidden;}
 .hero-glow{position:absolute;border-radius:50%;filter:blur(50px);pointer-events:none;z-index:0;}
-.hero-glow.blue{width:520px;height:520px;background:radial-gradient(circle,rgba(47,123,255,.15),transparent 70%);top:-220px;right:-140px;animation:heroFloat1 14s ease-in-out infinite alternate;}
-.hero-glow.gold{width:380px;height:380px;background:radial-gradient(circle,rgba(217,168,63,.16),transparent 70%);bottom:-160px;left:-120px;animation:heroFloat2 18s ease-in-out infinite alternate;}
+.hero-glow.blue{width:520px;height:520px;background:radial-gradient(circle,rgba(47,123,255,.18),transparent 70%);top:-220px;right:-140px;animation:heroFloat1 14s ease-in-out infinite alternate;}
+.hero-glow.gold{width:380px;height:380px;background:radial-gradient(circle,rgba(34,197,94,.14),transparent 70%);bottom:-160px;left:-120px;animation:heroFloat2 18s ease-in-out infinite alternate;}
 @keyframes heroFloat1{0%{transform:translate(0,0) scale(1);}100%{transform:translate(-50px,40px) scale(1.12);}}
 @keyframes heroFloat2{0%{transform:translate(0,0) scale(1);}100%{transform:translate(40px,-30px) scale(1.08);}}
 @media(prefers-reduced-motion:reduce){.hero-glow{animation:none;}}
-.ph-tag{font-family:var(--font-m);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:9px;margin-bottom:18px;position:relative;z-index:1;}
+.ph-tag{font-family:var(--font-m);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--green);display:inline-flex;align-items:center;gap:9px;margin-bottom:18px;position:relative;z-index:1;}
 .ph-tag svg{width:15px;height:15px;}
 .page-hero h1{font-size:clamp(2.1rem,4vw,3.3rem);font-weight:700;margin-bottom:16px;max-width:960px;position:relative;z-index:1;}
-.page-hero p{font-size:1.05rem;color:var(--grey);line-height:1.75;max-width:640px;position:relative;z-index:1;}
-.page-hero p strong{color:var(--white);}
+.page-hero p{font-size:1.05rem;color:var(--grey);line-height:1.75;max-width:620px;position:relative;z-index:1;}
 .hero-price-box{position:relative;z-index:1;margin-top:32px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;padding:28px 32px;display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap;}
 .hp-founding-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(90deg,#f2c14e,var(--gold) 55%,#c98f1f);color:#1a1206;font-weight:800;font-size:.8rem;padding:6px 14px;border-radius:20px;margin-bottom:10px;}
 .hp-founding-badge:empty{display:none;margin-bottom:0;}
@@ -107,11 +106,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .feat-grid .feat-card:nth-child(5){transition-delay:.24s;}
 .feat-grid .feat-card:nth-child(6){transition-delay:.30s;}
 .feat-grid .feat-card:nth-child(7){transition-delay:.36s;}
-.feat-card:hover{border-color:var(--gold);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 16px 32px -14px rgba(0,0,0,.5);}
-.feat-card svg{width:19px;height:19px;color:var(--gold);flex-shrink:0;margin-top:2px;}
+.feat-grid .feat-card:nth-child(8){transition-delay:.42s;}
+.feat-card:hover{border-color:var(--green);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 16px 32px -14px rgba(0,0,0,.5);}
+.feat-card svg{width:19px;height:19px;color:var(--green);flex-shrink:0;margin-top:2px;}
 .feat-card p{font-size:.95rem;color:var(--white);line-height:1.55;}
-.feat-card.blue svg{color:var(--blue);}
-.feat-card.blue:hover{border-color:var(--blue);}
+.feat-card.gold svg{color:var(--gold);}
+.feat-card.gold:hover{border-color:var(--gold);}
 .limit-note{position:relative;z-index:1;background:var(--bg-panel);border:1px solid var(--grey-line);border-left:3px solid var(--gold);border-radius:10px;padding:16px 20px;margin-top:20px;font-size:.92rem;color:var(--grey);line-height:1.6;}
 .forget-box{position:relative;z-index:1;margin-top:24px;background:linear-gradient(135deg,rgba(217,168,63,.16),rgba(217,168,63,.03));border:1.5px solid var(--gold);border-radius:16px;padding:28px 32px;text-align:center;}
 .forget-box .fb-eyebrow{font-family:var(--font-m);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin-bottom:10px;}
@@ -119,9 +119,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .forget-box h3 em{font-style:normal;color:var(--gold);}
 .forget-box p{color:var(--grey);font-size:.94rem;max-width:580px;margin:0 auto;line-height:1.65;}
 .forget-box p b{color:var(--white);}
-.limit-note b{color:var(--white);}
-.limit-note a{color:var(--blue);font-weight:600;}
-@media(max-width:768px){.feat-grid{grid-template-columns:1fr;}}
 
 .value-highlight{position:relative;z-index:1;background:linear-gradient(135deg,rgba(217,168,63,.2),rgba(217,168,63,.06));border:1.5px solid var(--gold);border-radius:16px;padding:24px 26px;margin-top:24px;overflow:hidden;animation:vhGlow 2.4s ease-in-out infinite;}
 @keyframes vhGlow{0%,100%{box-shadow:0 0 0 0 rgba(217,168,63,.3);}50%{box-shadow:0 0 0 8px rgba(217,168,63,0);}}
@@ -134,26 +131,27 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .vh-list li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:.95rem;color:var(--white);padding-left:22px;position:relative;}
 .vh-list li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:800;font-size:1.05rem;}
 .vh-tag{font-size:.74rem;color:var(--grey);font-family:var(--font-m);white-space:nowrap;flex-shrink:0;}
-
-.wib-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
-.wib-item{background:linear-gradient(160deg,var(--bg-card),var(--bg-panel));border:1px solid var(--grey-line);border-radius:10px;padding:14px 16px;font-size:.85rem;color:var(--grey);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 18px -14px rgba(0,0,0,.5);}
-.wib-item:hover{transform:scale(1.035);border-color:var(--blue);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 12px 24px -12px rgba(0,0,0,.4);}
-.wib-item b{display:block;color:var(--white);font-size:.92rem;margin-bottom:3px;}
-@media(max-width:900px){.wib-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:600px){.wib-grid{grid-template-columns:1fr;}}
-
+.limit-note b{color:var(--white);}
+.limit-note a{color:var(--blue);font-weight:600;}
 .compare-wrap{overflow-x:auto;}
-.compare-table{width:100%;border-collapse:collapse;min-width:640px;}
+.compare-table{width:100%;border-collapse:collapse;min-width:520px;}
 .compare-table th,.compare-table td{padding:14px 16px;text-align:left;font-size:.9rem;border-bottom:1px solid var(--grey-line);}
 .compare-table th{font-family:var(--font-m);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);font-weight:600;}
 .compare-table td:not(:first-child),.compare-table th:not(:first-child){text-align:center;}
 .compare-table .col-pro{background:var(--blue-dim);}
 .compare-table th.col-pro{color:var(--blue);border-bottom:2px solid var(--blue);}
 .compare-table td.col-pro{border-bottom:1px solid rgba(47,123,255,.25);}
-.compare-table .col-this{background:var(--gold-dim);}
-.compare-table th.col-this{color:var(--gold);border-bottom:2px solid var(--gold);}
-.compare-table td.col-this{border-bottom:1px solid rgba(217,168,63,.25);}
+.compare-table .col-this{background:var(--green-dim);}
+.compare-table th.col-this{color:var(--green);border-bottom:2px solid var(--green);}
+.compare-table td.col-this{border-bottom:1px solid rgba(34,197,94,.25);}
 .compare-table .cell-limit{color:var(--grey);font-size:.8rem;}
+@media(max-width:768px){.feat-grid{grid-template-columns:1fr;}}
+
+.wib-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.wib-item{background:linear-gradient(160deg,var(--bg-card),var(--bg-panel));border:1px solid var(--grey-line);border-radius:10px;padding:14px 16px;font-size:.85rem;color:var(--grey);transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 18px -14px rgba(0,0,0,.5);}
+.wib-item:hover{transform:scale(1.035);border-color:var(--blue);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 12px 24px -12px rgba(0,0,0,.4);}
+.wib-item b{display:block;color:var(--white);font-size:.92rem;margin-bottom:3px;}
+@media(max-width:900px){.wib-grid{grid-template-columns:repeat(2,1fr);}}
 
 .who-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px;}
 .who-card{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:22px 20px;position:relative;overflow:hidden;transition:border-color var(--tr),transform var(--tr),box-shadow var(--tr),background var(--tr);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 14px 30px -18px rgba(0,0,0,.6);}
@@ -175,33 +173,33 @@ nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:cen
 .cross-nav-title{font-family:var(--font-m);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
 .cross-nav-items{display:flex;gap:12px;flex-wrap:wrap;}
 .cross-nav-chip{display:flex;align-items:center;gap:10px;background:linear-gradient(160deg,var(--bg-card),var(--bg-panel));border:1px solid var(--grey-line);border-radius:10px;padding:11px 16px;font-size:.85rem;font-weight:600;color:var(--white);transition:border-color var(--tr),transform var(--tr),box-shadow var(--tr);box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 8px 18px -14px rgba(0,0,0,.5);}
-.cross-nav-chip:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 14px 26px -12px rgba(0,0,0,.45);}
-.cross-nav-chip .arrow{color:var(--gold);width:15px;height:15px;transition:transform var(--tr);}
+.cross-nav-chip:hover{border-color:var(--blue);transform:translateY(-3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 14px 26px -12px rgba(0,0,0,.45);}
+.cross-nav-chip .arrow{color:var(--blue);width:15px;height:15px;transition:transform var(--tr);}
 .cross-nav-chip:hover .arrow{transform:translateX(3px);}
 
 .faq-section{padding:60px 0;}
 .faq-list{max-width:800px;}
 .faq-item{border-bottom:1px solid var(--grey-line);}
 .faq-q{width:100%;background:none;border:none;color:var(--white);display:flex;justify-content:space-between;align-items:center;padding:20px 0;font-family:var(--font-d);font-size:1rem;font-weight:700;cursor:pointer;text-align:left;gap:16px;transition:color var(--tr);}
-.faq-q:hover{color:var(--gold);}
+.faq-q:hover{color:var(--blue);}
 .faq-icon{flex-shrink:0;width:24px;height:24px;border:1px solid var(--grey-line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:all var(--tr);}
-.faq-item.open .faq-icon{background:var(--gold);border-color:var(--gold);color:#1a1206;}
+.faq-item.open .faq-icon{background:var(--blue);border-color:var(--blue);}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;}
 .faq-item.open .faq-a{max-height:400px;padding-bottom:20px;}
 .faq-a p{font-size:.95rem;color:var(--grey);line-height:1.75;}
 
 .cta-section{padding:60px 0 96px;}
-.cta-inner{background:linear-gradient(135deg,var(--gold-dim),var(--bg-panel));border:1px solid rgba(217,168,63,.35);border-radius:18px;padding:48px;display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;}
+.cta-inner{background:linear-gradient(135deg,var(--green-dim),var(--bg-panel));border:1px solid rgba(34,197,94,.35);border-radius:18px;padding:48px;display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;}
 .cta-inner h2{font-size:clamp(1.4rem,3vw,2rem);font-weight:700;max-width:620px;line-height:1.3;}
 .cta-inner p{font-size:.92rem;color:var(--grey);margin-top:10px;line-height:1.6;}
 .cta-btns{display:flex;gap:12px;flex-shrink:0;flex-wrap:wrap;}
-.btn-primary{position:relative;overflow:hidden;background:var(--gold);color:#1a1206;padding:13px 24px;border-radius:8px;font-weight:700;font-size:.9rem;white-space:nowrap;transition:opacity var(--tr),transform var(--tr);display:inline-flex;align-items:center;gap:8px;}
+.btn-primary{position:relative;overflow:hidden;background:var(--blue);color:#fff;padding:13px 24px;border-radius:8px;font-weight:600;font-size:.9rem;white-space:nowrap;transition:opacity var(--tr),transform var(--tr);display:inline-flex;align-items:center;gap:8px;}
 .btn-primary:hover{opacity:.92;transform:translateY(-2px);}
 .btn-primary::after{content:'';position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-20deg);transition:left .65s ease;}
 .btn-primary:hover::after{left:130%;}
 .btn-primary svg{width:15px;height:15px;position:relative;}
 .btn-ghost{border:1px solid var(--grey-line);color:var(--white);padding:13px 24px;border-radius:8px;font-weight:600;font-size:.9rem;white-space:nowrap;transition:border-color var(--tr),transform var(--tr);display:inline-block;}
-.btn-ghost:hover{border-color:var(--gold);transform:translateY(-2px);}
+.btn-ghost:hover{border-color:var(--blue);transform:translateY(-2px);}
 @media(max-width:768px){.cta-inner{flex-direction:column;align-items:flex-start;padding:32px;}}
 
 footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:28px 0;}
@@ -253,7 +251,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   .float-btn{width:52px;height:52px;font-size:1.3rem;}
   .float-label{display:none;}
 }
-
 /* ── KIT VISUAL: qué incluye Basic ── */
 .kit-lead{color:var(--grey);font-size:.95rem;line-height:1.6;max-width:640px;margin:0 0 22px;}
 .kit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
@@ -336,7 +333,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
   </a>
   <div class="nav-right">
     <a class="nav-back" href="../index.html#servicios"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> Departamento Tecnológico</a>
-    <a class="nav-cta" href="../pago.html?plan=arranque-basic" onclick="trucoTrackClick(&#39;deptpage_basic_contratar_nav&#39;)">Contratar Basic™</a>
+    <a class="nav-cta" href="../pago.html?plan=arranque-lite" onclick="trucoTrackClick(&#39;deptpage_lite_contratar_nav&#39;)">Contratar Lite™</a>
   </div>
 </nav>
 
@@ -344,15 +341,15 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
   <div class="hero-glow blue"></div>
   <div class="hero-glow gold"></div>
   <div class="container">
-    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> ★ El punto de entrada recomendado · Web Profesional + 1 automatización más, gratis</div>
-    <h1>Departamento Tecnológico Basic™</h1>
-    <p>No montamos webs bonitas que no venden. Montamos webs que trabajan por ti 24/7 — <strong>responden dudas y agendan citas en tu calendario, siempre</strong>.<span class="m-hide"> Y si eliges WhatsApp como tu automatización, podrás hacer que tu agente derive la conversación y hasta cierre la venta ahí mismo. Basic™ te da la Web Profesional completa más 1 automatización más a elegir, todo instalado completamente gratis.</span></p>
-    <div id="que-incluye" style="margin:8px 0 34px;">
+    <div class="ph-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg> El primer Departamento que cubre varios canales a la vez</div>
+    <h1>Departamento Tecnológico Lite™</h1>
+    <p>¿Te escriben por WhatsApp, te llaman y te preguntan en la web, y no llegas a todo a la vez? Lite™ es el escalón pensado exactamente para eso: <strong>una web nueva (o la que ya tienes, renovada) + 2 automatizaciones a elegir</strong> — WhatsApp, llamadas, reservas, lo que tu negocio necesite — todo instalado completamente gratis, para que ningún canal se te quede sin cubrir. Después, mantenimiento, seguridad, copias de respaldo, incidencias resueltas y una reunión mensual para seguir ajustándolo contigo.</p>
+        <div id="que-incluye" style="margin:8px 0 34px;">
     <div class="section-divider"><h2 class="sd-tag gold">Lo que trabaja por ti, todo incluido</h2><div class="sd-line"></div></div>
-    <p class="kit-lead">No es «una web y una automatización». Basic™ son <b style="color:var(--white)">tres herramientas ya montadas</b> y, encima, una a tu elección. <span style="font-size:.78rem;">(Las pantallas son ejemplos ilustrativos.)</span></p>
+    <p class="kit-lead">No es «una web y dos automatizaciones». Son <b style="color:var(--white)">tres herramientas ya montadas</b> y, encima, <b style="color:var(--white)">dos a tu elección</b>. <span style="font-size:.78rem;">(Las pantallas son ejemplos ilustrativos.)</span></p>
     <div class="kit-grid">
       <div class="kit-card">
-        <div class="kit-tag">Incluido · web</div>
+        <div class="kit-tag">Incluido</div>
         <h3>Web interactiva que sube en Google</h3>
         <div class="kit-vis" aria-hidden="true">
           <div class="kv-bar"><span class="kv-dot"></span><span class="kv-dot"></span><span class="kv-dot"></span><span class="kv-url">tunegocio.es</span></div>
@@ -362,7 +359,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
         <p>La escribimos y la montamos nosotros. Cada mes la revisamos y la mejoramos para que te encuentren más.</p>
       </div>
       <div class="kit-card">
-        <div class="kit-tag">Incluido · asistente IA</div>
+        <div class="kit-tag">Incluido</div>
         <h3>Un asistente que responde a tus clientes</h3>
         <div class="kit-vis" aria-hidden="true">
           <div class="kv-msg u">¿Hacéis presupuesto sin compromiso?</div>
@@ -373,7 +370,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
         <p>Contesta dudas a cualquier hora, con lo que de verdad ofreces. Tú no tienes que estar.</p>
       </div>
       <div class="kit-card">
-        <div class="kit-tag">Incluido · agenda</div>
+        <div class="kit-tag">Incluido</div>
         <h3>Citas que se agendan solas</h3>
         <div class="kit-vis" aria-hidden="true">
           <div class="kv-week"><span class="kv-day">LUN</span><span class="kv-day">MAR</span><span class="kv-day">MIÉ</span><span class="kv-day">JUE</span><span class="kv-day">VIE</span>
@@ -384,8 +381,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
         <p>Tus clientes reservan en tus huecos libres, sin llamarte. Tu agenda se completa sola.</p>
       </div>
     </div>
-
-    <div class="kit-plus"><span>+</span><h3>Una automatización a tu elección</h3></div>
+    <div class="kit-plus"><span>+</span><h3>Dos automatizaciones a tu elección</h3></div>
     <div class="kit-grid kit-choose">
       <div class="kit-card">
         <div class="kit-tag">Opción A</div>
@@ -399,6 +395,17 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
       </div>
       <div class="kit-card">
         <div class="kit-tag">Opción B</div>
+        <h3>IA para Llamadas</h3>
+        <div class="kit-vis" aria-hidden="true">
+          <div class="kv-msg u">📞 «Hola, quería pedir cita»</div>
+          <div class="kv-msg b">Claro, ¿qué día te viene bien?</div>
+          <div class="kv-msg u">El viernes por la mañana</div>
+          <div class="kv-ok">✓ Cita agendada · viernes 10:00</div>
+        </div>
+        <p>Contesta el teléfono por ti y deja la cita en tu agenda.</p>
+      </div>
+      <div class="kit-card">
+        <div class="kit-tag">Opción C</div>
         <h3>IA para Correo</h3>
         <div class="kit-vis" aria-hidden="true">
           <div class="kit-mail"><span>Ana · Presupuesto</span><i>respondido ✓</i></div>
@@ -409,7 +416,16 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
         <p>Responde tus emails habituales y solo te avisa de lo importante.</p>
       </div>
       <div class="kit-card">
-        <div class="kit-tag">Opción C</div>
+        <div class="kit-tag">Opción D</div>
+        <h3>Firma Digital</h3>
+        <div class="kit-vis" aria-hidden="true">
+          <div class="kit-inv"><b>Contrato de servicios</b><span class="kv-line" style="background:#cfcbc2"></span><span class="kv-line" style="background:#cfcbc2;width:75%"></span><span style="font-family:cursive;font-size:.9rem">Ana Ruiz</span></div>
+          <div class="kv-ok">✓ Firmado con validez legal</div>
+        </div>
+        <p>Tus clientes firman con validez legal, sin desplazarse.</p>
+      </div>
+      <div class="kit-card">
+        <div class="kit-tag">Opción E</div>
         <h3>Facturas con tu voz (TruKi)</h3>
         <div class="kit-vis" aria-hidden="true">
           <div class="kv-msg u">«Factura a Ana, 300 euros, reforma»</div>
@@ -418,7 +434,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
         <p>Dictas y sale la factura hecha, sin abrir ningún programa.</p>
       </div>
     </div>
-</div>
+  </div>
     <div style="margin:0 0 34px;">
     <div class="eco2" id="ecosistema-truco">
   <div class="eco2-grid">
@@ -458,27 +474,16 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
     </div>
   </div>
 </div>
-<details class="eco2-more"><summary>¿Tienes dudas? Más información sobre lo incluido en todos los Departamentos</summary>
-  <div class="eco2-more-grid">
-    <div><b>¿Qué es exactamente el CRM TRUCO?</b><p>Una libreta de clientes que se rellena sola. Cada persona que te escribe o reserva una cita entra con su historial y su estado (nuevo, contactado, cita, cliente…). Puedes mover los contactos, importar los que ya tienes y descargarlos a Excel cuando quieras.</p></div>
-    <div><b>¿Y el calendario?</b><p>Las citas caen en tus huecos libres. Puedes vincular tu Google Calendar o abrirlo en Outlook o Apple con un enlace.</p></div>
-    <div><b>¿Cómo entro y desde dónde?</b><p>Con tu correo y tu contraseña, en tu portal. Se instala como app en el móvil y se actualiza sola cada vez que entras.</p></div>
-    <div><b>¿Los datos son míos?</b><p>Sí. Los datos de tus clientes son tuyos: los descargas o los borras cuando quieras, y si te vas te los llevas.</p></div>
-    <div><b>¿Cuesta algo aparte?</b><p>No. Va incluido en los cuatro Departamentos (Start, Basic, Lite y Pro), desde el primer año.</p></div>
-    <div><b>¿Y si ya tengo un CRM o una agenda montados?</b><p>Cuéntanoslo: auditamos lo que ya tienes y vemos contigo si conviene mantenerlo o pasarlo aquí.</p></div>
-  </div>
-</details>
-
     </div>
-    <div class="hero-price-box">
+        <div class="hero-price-box">
       <div>
-        <div class="hp-founding-badge" id="hp-founding-badge-elemental"></div>
-        <div class="hp-main" id="hp-main-elemental"></div>
-        <div class="hp-vat" id="hp-vat-elemental"></div>
-        <div class="hp-annual" id="hp-annual-elemental"></div>
-        <div class="hp-founding-old" id="hp-founding-old-elemental"></div>
+        <div class="hp-founding-badge" id="hp-founding-badge-lite"></div>
+        <div class="hp-main" id="hp-main-lite"></div>
+        <div class="hp-vat" id="hp-vat-lite"></div>
+        <div class="hp-annual" id="hp-annual-lite"></div>
+        <div class="hp-founding-old" id="hp-founding-old-lite"></div>
       </div>
-      <a class="btn-primary" href="../pago.html?plan=arranque-basic" onclick="trucoTrackClick(&#39;deptpage_basic_contratar_hero&#39;)">Contratar Basic™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      <a class="btn-primary" href="../pago.html?plan=arranque-lite" onclick="trucoTrackClick(&#39;deptpage_lite_contratar_hero&#39;)">Contratar Lite™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       <p style="margin:12px 0 0;font-size:.86rem;color:var(--gold-light,#ecc878);font-weight:600;">⏱ Tu primera automatización, funcionando en un máximo de 30 días · todo tu ecosistema, en un máximo de 90.</p>
       <div style="margin:22px 0 4px;"><div class="garantia" id="compromiso-truco">
   <div class="g-eyebrow">Nuestro compromiso contigo</div>
@@ -494,82 +499,79 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
     <div class="forget-box">
       <div class="fb-eyebrow">La diferencia real</div>
       <h3>Paga una vez.<br><em>Olvídate 365 días.</em></h3>
-      <p>Nada de facturas mensuales que te hacen dudar si merece la pena seguir. Un pago, y tu Departamento Tecnológico completo — web, automatización, mantenimiento, reuniones — <b>funcionando los 365 días del año</b>, sin que tengas que volver a pensar en ello hasta que tú decidas.</p>
+      <p>Nada de facturas que se acumulan por cada herramienta suelta. Un pago, y tu web + tus 2 automatizaciones <b>funcionando los 365 días del año</b>, con el mismo equipo detrás de las tres — sin que tengas que coordinar nada tú.</p>
     </div>
-    <div class="limit-note"><b>La web y la automatización ya no se pagan aparte, van incluidas.</b> Es lo que hace posible este regalo: tu primer año de Departamento va pagado por adelantado, no una cuota mensual que se cobre poco a poco. Basic™ es donde empieza tu ecosistema tecnológico — cuando tu negocio necesite cubrir varios canales a la vez (WhatsApp + web + llamadas, por ejemplo), el paso natural es <a href="lite.html">Lite™</a> o <a href="pro.html">Pro™</a>, sin perder nada de lo que ya tienes.</div>
+    <div class="limit-note"><b>La web y las automatizaciones ya no se pagan aparte, van incluidas.</b> Es lo que hace posible este regalo: tu primer año de Departamento va pagado por adelantado, no una cuota mensual que se cobre poco a poco. Si tu negocio ya combina 4 o más herramientas a la vez, mira el <a href="pro.html">Departamento Pro™</a>, que mantiene hasta 6.</div>
     <div class="value-highlight">
       <div class="vh-eyebrow">Lo que incluye tu Departamento</div>
-      <div class="vh-save">Web Profesional + automatización <b>incluidas en la cuota</b>, sin pagarlas aparte</div>
+      <div class="vh-save">Web + 2 automatizaciones <b>incluidas en la cuota</b>, sin pagarlas aparte</div>
       <ul class="vh-list">
-        <li>Web interactiva con salud técnica de posicionamiento <span class="vh-tag">valor 1.390 €</span></li>
-        <li>Asistente IA para tu web que resuelve las dudas de tu empresa <span class="vh-tag">incluido</span></li>
-        <li>Agenda con citas online integradas <span class="vh-tag">incluida</span></li>
-        <li>1 automatización más a elegir <span class="vh-tag">valor 350-590 €</span></li>
-        <li>CRM TRUCO y calendario <span class="vh-tag">incluidos</span></li>
+        <li>Web Profesional o reacondicionada <span class="vh-tag">valor 1.390 €</span></li>
+        <li>Chat + agenda en tu web <span class="vh-tag">de fábrica, siempre</span></li>
+        <li>2 automatizaciones a elegir <span class="vh-tag">valor 700-1.280 €</span></li>
         <li>Gestión de tu Departamento <span class="vh-tag">cada mes, sin parar</span></li>
+        <li>Reunión mensual de revisión <span class="vh-tag">30 min</span></li>
       </ul>
     </div>
   </div>
 </div>
 
-
 <div class="section-block reveal">
   <div class="container">
-    <details class="fold" open><summary><h2 class="sd-tag gold">¿Para quién es Basic™?</h2><div class="sd-line"></div></summary>
-    <p style="color:var(--grey);font-size:.92rem;line-height:1.7;max-width:760px;margin-bottom:4px;">Para negocios que quieren una web que no se limite a estar ahí bonita, sino que trabaje: que responda dudas y agende citas sola, siempre — más una automatización extra para el canal por el que de verdad te llegan los clientes.</p>
+    <details class="fold" open><summary><h2 class="sd-tag green">¿Para quién es Lite™?</h2><div class="sd-line"></div></summary>
+    <p style="color:var(--grey);font-size:.92rem;line-height:1.7;max-width:760px;margin-bottom:4px;">Si tu negocio ya tiene un local, un horario y clientes que buscan información antes de venir, necesitas algo más que un WhatsApp — necesitas una web que trabaje por ti mientras estás ocupado con el cliente que tienes delante.</p>
     <div class="who-grid">
       <div class="who-card">
-        <div class="icon-badge gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="10"/></svg></div>
-        <h4>Negocios que empiezan de cero</h4>
-        <p>Todavía no tienes web, o vives solo del boca a boca. Basic™ te pone en marcha con una web que además atiende y agenda por ti, sin que tengas que aprender nada.</p>
+        <div class="icon-badge gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2l1.5 1.5L6 2l1.5 1.5L9 2l1.5 1.5L12 2v20l-1.5-1.5L9 22l-1.5-1.5L6 22l-1.5-1.5L3 22z"/><line x1="16" y1="8" x2="21" y2="8"/><line x1="16" y1="12" x2="21" y2="12"/><line x1="16" y1="16" x2="18" y2="16"/></svg></div>
+        <h4>Restaurantes y hostelería</h4>
+        <p>Una web con tu carta y reservas online, sin depender de apps de terceros que se llevan comisión por cada mesa que te reservan.</p>
       </div>
       <div class="who-card">
-        <div class="icon-badge blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10M18 20V4M6 20v-4"/></svg></div>
-        <h4>Profesionales que necesitan credibilidad</h4>
-        <p>Consultores, terapeutas, formadores: una web cuidada que agenda la cita sola es lo primero que mira un cliente potencial antes de confiar en ti.</p>
+        <div class="icon-badge blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+        <h4>Tiendas con web anticuada</h4>
+        <p>Llevas años con una web que no genera ni una llamada. La renovamos y le añadimos IA para tu Web o WhatsApp — que empiece a traerte clientes de verdad.</p>
       </div>
       <div class="who-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
-        <h4>Negocios que no aparecen en las búsquedas</h4>
-        <p>Tu competencia sale antes que tú al buscar tu propio sector en tu ciudad. La salud técnica de posicionamiento es la base para revertir eso.</p>
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/></svg></div>
+        <h4>Academias y centros de formación</h4>
+        <p>Web con horarios, cursos y matrícula online — para que quien busca información a las diez de la noche no tenga que esperar a que abráis.</p>
       </div>
       <div class="who-card">
-        <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-        <h4>Quien quiere que WhatsApp también cierre ventas</h4>
-        <p>Eliges IA para WhatsApp como tu automatización y tu agente puede derivar la conversación y cerrar la venta ahí mismo, sin que tengas que intervenir.</p>
+        <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <h4>Talleres y negocios con local propio</h4>
+        <p>Carpinterías, talleres mecánicos, cerrajerías: una web que da confianza antes de que el cliente cruce la puerta, más WhatsApp para presupuestos rápidos.</p>
       </div>
     </div>
-    <div class="limit-note" style="margin-top:22px;"><b>¿Necesitas más de 1 automatización además de la web?</b> Ese es el siguiente escalón — mira <a href="lite.html">Lite™</a> para 2 a elegir, o <a href="pro.html">Pro™</a> para 3.</div>
+    <div class="limit-note" style="margin-top:22px;"><b>Si tu negocio ya combina 4 o más herramientas a la vez</b> — varios canales, varias personas atendiendo — mira el <a href="pro.html">Departamento Pro™</a>, que mantiene hasta 6.</div>
   </details></div>
 </div>
 
 <div class="section-block reveal" style="padding-bottom:20px;padding-top:0;">
   <div class="container">
-    <details class="fold" open><summary><h2 class="sd-tag gold">Así trabajamos contigo</h2><div class="sd-line"></div></summary>
+    <details class="fold" open><summary><h2 class="sd-tag green">Así trabajamos contigo</h2><div class="sd-line"></div></summary>
     <div class="hww-steps">
-      <div class="hww-step"><div class="hww-step-num">1</div><p><b>Auditoría de tu negocio.</b> Antes de diseñar nada, te preguntamos cómo trabajas, quién es tu cliente y qué te diferencia de la competencia.</p></div>
-      <div class="hww-step"><div class="hww-step-num">2</div><p><b>Diseño, contenido y automatización a medida.</b> Escribimos y montamos tu web nosotros, y configuramos tu automatización con los datos reales de tu negocio.</p></div>
-      <div class="hww-step"><div class="hww-step-num">3</div><p><b>Revisión técnica constante.</b> Velocidad, indexación, enlaces rotos, ficha de Google — lo vigilamos y corregimos solos, sin que tengas que pedirlo.</p></div>
-      <div class="hww-step"><div class="hww-step-num">4</div><p><b>Cambios sin que tú toques nada.</b> ¿Un precio, un horario, un texto? Nos escribes y lo hacemos nosotros.</p></div>
-      <div class="hww-step"><div class="hww-step-num">5</div><p><b>Tu web y tu automatización pueden cerrar la cita o la venta por ti.</b> Cuando un cliente quiere reservar o comprar, lo atienden y lo agendan sin que tengas que intervenir.</p></div>
+      <div class="hww-step"><div class="hww-step-num">1</div><p><b>Auditoría de tu negocio.</b> Antes de montar nada, te preguntamos cómo trabajas, qué preguntan tus clientes y qué información hace falta para representarte bien.</p></div>
+      <div class="hww-step"><div class="hww-step-num">2</div><p><b>Configuración y entrenamiento a medida.</b> No te entregamos un asistente en blanco para que lo enseñes tú — lo configuramos y entrenamos nosotros con los datos de tu negocio.</p></div>
+      <div class="hww-step"><div class="hww-step-num">3</div><p><b>Cambios sin que tú toques nada.</b> ¿Quieres actualizar un precio, un horario, una respuesta? Nos escribes y lo hacemos nosotros.</p></div>
+      <div class="hww-step"><div class="hww-step-num">4</div><p><b>Revisiones que agendamos nosotros.</b> No tienes que acordarte de pedir cita — te la agendamos y tú solo confirmas un hueco en tu calendario.</p></div>
+      <div class="hww-step"><div class="hww-step-num">5</div><p><b>Tu asistente incluso puede cerrar ventas por ti.</b> Cuando uno de tus clientes está listo para contratar, tu asistente cierra el trato con él sin que tú tengas que intervenir.</p></div>
     </div>
   </details></div>
 </div>
 
 <div class="section-block reveal">
   <div class="container">
-    <details class="fold" open><summary><h2 class="sd-tag gold">Incluye</h2><div class="sd-line"></div></summary>
+    <details class="fold" open><summary><h2 class="sd-tag green">Incluye</h2><div class="sd-line"></div></summary>
     <div class="feat-grid">
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><circle cx="7" cy="6.5" r=".6"/><line x1="7" y1="14" x2="13" y2="14"/></svg><p><b>Web interactiva con salud técnica de posicionamiento</b> — velocidad, indexación, enlaces rotos y ficha de Google, vigilados sin parar</p></div><div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><circle cx="9" cy="10" r=".8"/><circle cx="15" cy="10" r=".8"/></svg><p><b>Asistente IA para tu web</b> que resuelve las dudas de tu empresa: contesta a tus clientes las 24 horas con la información de tu negocio</p></div><div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 15l2.5 2.5L16 13"/></svg><p><b>Agenda con citas online integradas</b> — tus clientes reservan solos desde tu web y las citas caen en tu calendario</p></div><div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><p><b>CRM TRUCO</b> — cada persona que te escribe o reserva una cita entra sola con su historial y su estado. Lo ves en tu portal y como app en el móvil, con tu nombre y tu logo, y lo descargas a Excel cuando quieras</p></div>
-      
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><p><b>Mantenimiento y copias de seguridad</b> periódicas y verificadas, siempre incluidas</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p><b>Mantenimiento web</b> — actualizaciones, seguridad y rendimiento</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><p><b>Copias de seguridad</b> periódicas y verificadas</p></div>
       <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><p><b>Resolución de incidencias</b> técnicas sin coste adicional, por orden de llegada</p></div>
-      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p><b>Informe mensual</b> de salud técnica — qué se ha revisado y qué se ha corregido</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p><b>Reunión mensual</b> de revisión y asesoramiento (30 min)</p></div>
+      <div class="feat-card"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg><p><b>¿Quieres una 3ª automatización?</b> Se instala al precio de catálogo, sin recargo de alta — tu cuota no sube</p></div>
+      <div class="feat-card gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><p><b>Límite de 3 automatizaciones tecnológicas</b> mantenidas en total — si necesitas más, mira Pro™</p></div>
     </div>
   </details></div>
 </div>
-
-
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
@@ -577,21 +579,24 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
     <div class="compare-wrap">
       <table class="compare-table">
         <thead>
-          <tr><th>&nbsp;</th><th>Start™ · <span id="table-price-start"></span>/mes</th><th class="col-this">Basic™ · <span id="table-price-basic"></span>/mes</th><th>Lite™ · <span id="table-price-lite"></span>/mes</th><th class="col-pro">Pro™ · <span id="table-price-pro"></span>/mes</th></tr>
+          <tr><th>&nbsp;</th><th>Start™ · <span id="table-price-start"></span>/mes</th><th>Basic™ · <span id="table-price-basic"></span>/mes</th><th class="col-this">Lite™ · <span id="table-price-lite"></span>/mes</th><th class="col-pro">Pro™ · <span id="table-price-pro"></span>/mes</th></tr>
         </thead>
         <tbody>
-          <tr><td>Web incluida</td><td class="cell-limit">No incluida</td><td class="col-this"><b>Web interactiva + asistente IA + agenda online</b></td><td><b>Reacondicionada o nueva: interactiva + asistente IA + agenda online</b></td><td class="col-pro"><b>Web Profesional interactiva + asistente IA + agenda online</b></td></tr>
-          <tr><td>Salud técnica de posicionamiento</td><td class="cell-limit">—</td><td class="col-this"><b>Incluida</b></td><td class=""><b>Incluida</b></td><td class=""><b>Incluida</b></td></tr>
-          <tr><td>Automatizaciones a elegir</td><td>1 a elegir</td><td class="col-this"><b>1 más a elegir</b></td><td>2 a elegir</td><td class="col-pro">3 a elegir</td></tr>
-          <tr><td>Automatizaciones mantenidas (rango)</td><td class="cell-limit">Hasta 2</td><td class="col-this cell-limit">Hasta 2</td><td class="cell-limit">Hasta 3</td><td class="col-pro"><b>Hasta 6</b></td></tr>
-          <tr><td>CRM TRUCO y calendario</td><td>Incluido</td><td class="col-this"><b>Incluido</b></td><td>Incluido</td><td class="col-pro">Incluido</td></tr>
-          <tr><td>Primer año incluido</td><td>Sí</td><td class="col-this"><b>Sí</b></td><td>Sí</td><td class="col-pro">Sí</td></tr>
-          <tr><td>Ideal para</td><td class="cell-limit">Una necesidad puntual, sin web</td><td class="col-this"><b>Web + 1 automatización clave</b></td><td class="cell-limit">1 web + 1-3 herramientas</td><td class="col-pro"><b>3+ herramientas activas</b></td></tr>
+          <tr><td>Web incluida</td><td class="cell-limit">No incluida</td><td><b>Web Profesional, con chat + agenda de fábrica</b></td><td class="col-this"><b>Reacondicionada o nueva, con chat + agenda de fábrica</b></td><td class="col-pro"><b>Web Profesional</b></td></tr>
+          <tr><td>Automatizaciones a elegir</td><td>1 a elegir</td><td>1 más a elegir</td><td class="col-this"><b>2 a elegir</b></td><td class="col-pro">3 a elegir</td></tr>
+          <tr><td>Automatizaciones mantenidas (rango)</td><td class="cell-limit">Hasta 2</td><td class="cell-limit">Hasta 2</td><td class="col-this cell-limit">Hasta 3</td><td class="col-pro"><b>Hasta 6</b></td></tr>
+          <tr><td>Primer año incluido</td><td>Sí</td><td>Sí</td><td class="col-this"><b>Sí</b></td><td class="col-pro">Sí</td></tr>
+          <tr><td>Resolución de incidencias</td><td class="cell-limit">Por orden de llegada</td><td class="cell-limit">Por orden de llegada</td><td class="col-this cell-limit">Por orden de llegada</td><td class="col-pro"><b>Prioridad alta, &lt;24h</b></td></tr>
+          <tr><td>Revisión de rendimiento</td><td class="cell-limit">—</td><td class="cell-limit">Salud técnica automática</td><td class="col-this cell-limit">Mensual básica</td><td class="col-pro"><b>Continua</b></td></tr>
+          <tr><td>Reunión de seguimiento</td><td class="cell-limit">—</td><td class="cell-limit">—</td><td class="col-this cell-limit">30 min/mes</td><td class="col-pro"><b>45 min/mes + estrategia</b></td></tr>
+          <tr><td>Ideal para</td><td class="cell-limit">Una necesidad puntual, sin web</td><td class="cell-limit">Web + 1 automatización clave</td><td class="col-this cell-limit">1 web + 1-3 herramientas</td><td class="col-pro"><b>3+ herramientas activas</b></td></tr>
         </tbody>
       </table>
     </div>
   </details></div>
 </div>
+
+
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
@@ -599,9 +604,8 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
       <h2 class="cross-nav-title">Relacionado</h2>
       <div class="cross-nav-items">
         <a class="cross-nav-chip" href="start.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Start™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        <a class="cross-nav-chip" href="lite.html"><div class="icon-badge sm green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Lite™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="cross-nav-chip" href="basic.html"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Basic™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         <a class="cross-nav-chip" href="pro.html"><div class="icon-badge sm blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>Departamento Pro™ <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-        <a class="cross-nav-chip" href="../proyectos/web-profesional.html" style="border-color:rgba(217,168,63,.5);"><div class="icon-badge sm gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>¿Quieres ver la web que se te va a construir? <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
   </div>
@@ -609,7 +613,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
 
 <div class="section-block reveal" style="padding-top:0;padding-bottom:0;">
   <div class="container">
-    <div class="limit-note"><b>¿Necesitas combinar más de 1 automatización?</b> <a href="lite.html">Lite™</a> te da tu web + 2 automatizaciones a elegir, mismo espíritu de todo incluido, un peldaño más completo.</div>
+    <div class="limit-note"><b>¿Tu negocio ya combina varias herramientas a la vez?</b> <a href="pro.html">Pro™</a> es el ecosistema tecnológico completo: web + 3 automatizaciones a elegir, mantenimiento de hasta 6 y prioridad máxima en incidencias.</div>
   </div>
 </div>
 
@@ -619,12 +623,12 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
   <div class="container">
     <div class="cta-inner">
       <div>
-        <h2>¿Listo para una web que trabaje por ti?</h2>
-        <p>Pago único con 12% dto., con tarjeta o PayPal. Tu primer año va incluido — Web Profesional + 1 automatización gratis, luego sigues mes a mes sin permanencia.</p>
+        <h2>¿Listo para que tu tecnología esté en buenas manos?</h2>
+        <p>Pago único con 12% dto., con tarjeta o PayPal. Tu primer año va incluido — web + 2 automatizaciones gratis, luego sigues mes a mes sin permanencia.</p>
       </div>
       <div class="cta-btns">
         <a class="btn-ghost" href="../index.html#chat-section">¿Aún tienes dudas? Habla con el Asistente TRUCO</a>
-        <a class="btn-primary" href="../pago.html?plan=arranque-basic" onclick="trucoTrackClick(&#39;deptpage_basic_contratar_bottom&#39;)">Contratar Basic™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        <a class="btn-primary" href="../pago.html?plan=arranque-lite" onclick="trucoTrackClick(&#39;deptpage_lite_contratar_bottom&#39;)">Contratar Lite™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
       </div>
     </div>
   </div>
@@ -648,7 +652,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
 <!-- ── FLOAT CHAT BTN ── -->
 <div id="float-chat">
   <div class="float-label" id="floatLabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:3px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> ¿Hablamos?</div>
-  <button class="float-btn" onclick="location.href='../index.html#chat-section'" title="Hablar con el asistente virtual">
+  <button class="float-btn" onclick="location.href='../index.html#chat-section'" title="Hablar con el asistente">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
     <span class="float-notif" id="floatNotif"></span>
   </button>
@@ -663,31 +667,31 @@ setTimeout(function(){
 
 <script src="../founding-offer.js"></script>
 <script>
-function renderFoundingPricesElemental(){
-  const p=annualPricing('basic');
-  const mStart=currentPrice('start'),mLite=currentPrice('lite'),mPro=currentPrice('pro');
+function renderFoundingPricesLite(){
+  const p=annualPricing('lite');
+  const mPro=currentPrice('pro');
   const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
-  const esFundador=foundingActive('basic');
-  const tachado=esFundador?'<span class="price-old">'+fmtEuro(standardAnnualPricing('basic').total)+' €</span> ':'';
-  set('hp-main-elemental',tachado+fmtEuro(p.total)+' €<sub>primer año, pago único</sub>');
-  set('hp-vat-elemental',fmtEuro(p.totalIva)+' € con IVA · pago único (12% dto.), con tarjeta o PayPal');
-  set('hp-annual-elemental','Luego '+p.monthly+' €/mes + IVA, sin permanencia. Tu primer año ya incluye la integración completa de tu web y tu automatización, configuradas con los datos reales de tu negocio, y la gestión de tu Departamento cada mes.');
-  set('table-price-start',mStart+' €');
-  set('table-price-basic',p.monthly+' €');
-  set('table-price-lite',mLite+' €');
+  const esFundador=foundingActive('lite');
+  const tachado=esFundador?'<span class="price-old">'+fmtEuro(standardAnnualPricing('lite').total)+' €</span> ':'';
+  set('hp-main-lite',tachado+fmtEuro(p.total)+' €<sub>primer año, pago único</sub>');
+  set('hp-vat-lite',fmtEuro(p.totalIva)+' € con IVA · pago único (12% dto.), con tarjeta o PayPal');
+  set('hp-annual-lite','Luego '+p.monthly+' €/mes + IVA, sin permanencia. Tu primer año ya incluye la integración completa de tu web y tus automatizaciones, configuradas con los datos reales de tu negocio, y la gestión de tu Departamento cada mes.');
+  set('table-price-lite',p.monthly+' €');
   set('table-price-pro',mPro+' €');
-  set('faq-total-elemental',fmtEuro(p.total)+'€');
+  set('table-price-start',currentPrice('start')+' €');
+  set('table-price-basic',currentPrice('basic')+' €');
+  set('faq-total-lite',fmtEuro(p.total)+'€');
   if(esFundador){
-    set('hp-founding-badge-elemental','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT.basic+' de '+FOUNDING_SPOTS_TOTAL.basic+' plazas');
-    const stdBasic=standardAnnualPricing('basic');
-    set('hp-founding-old-elemental','Si eres fundador, mantienes este precio para siempre. Si no, el precio estándar es '+stdBasic.monthly+' €/mes ('+fmtEuro(stdBasic.total)+' €/año).');
+    set('hp-founding-badge-lite','🏷 Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT.lite+' de 10 plazas');
+    const stdLite=standardAnnualPricing('lite');
+    set('hp-founding-old-lite','Si eres fundador, mantienes este precio para siempre. Si no, el precio estándar es '+stdLite.monthly+' €/mes ('+fmtEuro(stdLite.total)+' €/año).');
   }else{
-    set('hp-founding-badge-elemental','');
-    set('hp-founding-old-elemental','');
+    set('hp-founding-badge-lite','');
+    set('hp-founding-old-lite','');
   }
 }
-renderFoundingPricesElemental();
-window.onFoundingSpotsUpdated.push(renderFoundingPricesElemental);
+renderFoundingPricesLite();
+window.onFoundingSpotsUpdated.push(renderFoundingPricesLite);
 </script>
 <script>
 function toggleFaq(btn){

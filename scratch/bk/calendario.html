@@ -186,11 +186,6 @@ h1{font-family:var(--font-d);font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.15
 .apptab.hl{border-color:var(--gold,#d9a83f);color:var(--gold-light,#ecc878);}
 .topnav{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 0 6px;}
 @media(max-width:700px){.topnav{position:sticky;top:0;background:var(--bg);z-index:30;padding:10px 0;}}
-.agenda{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:6px 18px 14px;margin:14px 0 4px;max-height:520px;overflow:auto;}
-.ag-day{font-family:var(--font-m,'JetBrains Mono',monospace);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold,#d9a83f);margin:16px 0 6px;}
-.ag-ev{display:flex;gap:14px;padding:9px 0;border-top:1px solid var(--line);font-size:.92rem;}
-.ag-t{flex:0 0 96px;color:var(--grey);font-variant-numeric:tabular-nums;}
-.ag-n{color:var(--white);min-width:0;overflow-wrap:anywhere;}
 .cal-wrap{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:18px;}
 .cal-wrap iframe{display:block;width:100%;height:640px;border:0;background:#fff;}
 .sec{background:linear-gradient(165deg,var(--panel),var(--card));border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:18px;}
@@ -308,11 +303,10 @@ function renderCal() {
   const el = document.getElementById('calSec');
   if (settings.calendar_id) {
     const src = encodeURIComponent(settings.calendar_id);
-    el.innerHTML = `<h2>Tu agenda</h2><p>Vinculada a <b style="color:var(--white)">${esc(settings.calendar_id)}</b>. Aquí ves tus próximas citas, sin necesidad de iniciar sesión en Google.</p>
-      <div id="agenda" class="agenda"><div class="tip">Cargando tu agenda…</div></div>
-      <div class="row2"><button class="btn ghost" onclick="loadAgenda()">Actualizar</button><button class="btn ghost" onclick="window.open('https://calendar.google.com/calendar/u/0/r','_blank')">Abrir en Google Calendar</button><button class="btn ghost" onclick="editCal()">Cambiar calendario</button><button class="btn ghost" onclick="unlinkCal()">Desvincular</button></div>
+    el.innerHTML = `<h2>Tu calendario</h2><p>Vinculado a <b style="color:var(--white)">${esc(settings.calendar_id)}</b>. Para verlo tienes que haber iniciado sesión en Google con esa cuenta en este navegador.</p>
+      <div class="cal-wrap" style="margin-top:14px"><iframe title="Calendario" src="https://calendar.google.com/calendar/embed?src=${src}&ctz=Europe%2FMadrid&mode=WEEK&showTitle=0&showPrint=0&showTz=0&hl=es"></iframe></div>
+      <div class="row2"><button class="btn ghost" onclick="editCal()">Cambiar calendario</button><button class="btn ghost" onclick="unlinkCal()">Desvincular</button></div>
       ${autoTip()}`;
-    loadAgenda();
   } else {
     el.innerHTML = `<h2>Vincula tu Google Calendar</h2><p>Verás toda tu agenda aquí dentro, junto a las citas que agendan tus asistentes.</p>
       <ol class="steps2"><li>Abre <b>Google Calendar</b> → ajustes (⚙) → elige tu calendario a la izquierda.</li><li>Baja hasta <b>«Integrar el calendario»</b> y copia el <b>ID del calendario</b> (suele ser tu correo de Gmail).</li><li>Pégalo aquí abajo y pulsa <b>Vincular</b>.</li></ol>
@@ -320,35 +314,6 @@ function renderCal() {
       ${autoTip()}<p class="tip">¿Usas Outlook o Apple Calendar? Usa el enlace de suscripción de abajo: sirve para cualquier calendario.</p>`;
   }
 }
-
-async function loadAgenda() {
-  const box = document.getElementById('agenda'); if (!box) return;
-  box.innerHTML = '<div class="tip">Cargando tu agenda…</div>';
-  try {
-    const { data: { session } } = await sb.auth.getSession();
-    const r = await fetch('/.netlify/functions/calendar-events?days=21', { headers: { Authorization: 'Bearer ' + session.access_token } });
-    const d = await r.json();
-    if (!d.ok) {
-      box.innerHTML = d.error === 'not_shared'
-        ? `<div class="tip"><b>Todavía no podemos leer ese calendario.</b> Compártelo con <code>${esc(d.service_account || SERVICE_ACCOUNT)}</code> (Google Calendar → tu calendario → «Compartir con determinadas personas») con permiso «Realizar cambios en los eventos». En cuanto lo hagas, aparecerá aquí.</div>`
-        : '<div class="tip">No hemos podido cargar tu agenda ahora mismo. Inténtalo de nuevo en un momento.</div>';
-      return;
-    }
-    if (!d.events.length) { box.innerHTML = '<div class="tip">No tienes citas en los próximos 21 días.</div>'; return; }
-    const fd = t => new Date(t).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Europe/Madrid' });
-    const fh = t => new Date(t).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Madrid' });
-    let day = '', html = '';
-    d.events.forEach(e => {
-      const dk = fd(e.start);
-      if (dk !== day) { day = dk; html += `<h4 class="ag-day">${esc(dk)}</h4>`; }
-      html += `<div class="ag-ev"><span class="ag-t">${e.allDay ? 'Todo el día' : fh(e.start) + '–' + fh(e.end)}</span><span class="ag-n">${esc(e.title)}${e.location ? ' · ' + esc(e.location) : ''}</span></div>`;
-    });
-    box.innerHTML = html;
-  } catch (e) {
-    box.innerHTML = '<div class="tip">No hemos podido cargar tu agenda ahora mismo. Inténtalo de nuevo en un momento.</div>';
-  }
-}
-
 function autoTip() {
   return `<p class="tip"><b>Para que tus asistentes agenden solos en ese calendario</b>, compártelo con <code>${SERVICE_ACCOUNT}</code> con permiso <b>«Realizar cambios en los eventos»</b> (Google Calendar → tu calendario → «Compartir con determinadas personas»). Es lo que permite que las citas caigan directamente en tus huecos libres.</p>`;
 }

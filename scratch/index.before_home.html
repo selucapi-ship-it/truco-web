@@ -976,7 +976,6 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
 }
 </script>
 <link rel="stylesheet" href="assets/eco-demo.css">
-<link rel="stylesheet" href="assets/dept-visual.css">
 </head>
 <body>
 <script>
@@ -1023,7 +1022,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
     <li><a href="portal/login.html" style="opacity:.75;">Acceso clientes</a></li>
     <li><a href="pago.html">Contratar</a></li>
   </ul>
-<a class="nav-cta" href="#chat-section" onclick="trucoTrackClick('nav_hablar_asistente')">Hablar con el asistente virtual</a>
+<a class="nav-cta" href="#chat-section" onclick="trucoTrackClick('nav_hablar_asistente')">Hablar con el asistente</a>
   <div class="nav-toggle" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </div>
@@ -1036,14 +1035,14 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
     <div class="hero-left">
       <div class="hero-kicker"><span class="dot"></span>Tu departamento tecnológico · España</div>
       <h1 class="hero-h1">
-        Deja de cargar <br>con todo tú solo. <br>
-        Ahora tienes <br><em>quien trabaje para ti.</em>
+        Deja de cargar<br>con todo tú solo.<br>
+        Ahora tienes<br><em>quien trabaje para ti.</em>
       </h1>
       <p class="hero-sub"><strong>Contestamos tu WhatsApp, agendamos tus citas, guardamos a cada cliente y hasta cerramos ventas</strong> — mientras tú trabajas o descansas.</p>
-      <p class="hero-sub hero-sub-2">Tus asistentes de IA, <strong>entrenados para tu negocio</strong> y una web que vende, trabajando en cuanto lo ponemos en marcha. Por la noche abres tu portal y lo tienes todo: tu CRM, tu calendario y lo que ha pasado hoy. <strong>El tiempo libre vuelve a ser tuyo.</strong></p>
+      <p class="hero-sub">Tus asistentes de IA, <strong>entrenados para tu negocio</strong> y una web que vende, trabajando en cuanto lo ponemos en marcha. Por la noche abres tu portal y lo tienes todo: tu CRM, tu calendario y lo que ha pasado hoy. <strong>El tiempo libre vuelve a ser tuyo.</strong></p>
       <p class="hero-question">Para eso ya estamos nosotros.</p>
       <div class="hero-btns">
-<a class="btn-primary" href="#chat-section" onclick="trucoTrackClick('hero_hablar_asistente')">Hablar con el asistente virtual</a>
+<a class="btn-primary" href="#chat-section" onclick="trucoTrackClick('hero_hablar_asistente')">Hablar con el asistente</a>
 <a class="btn-ghost" href="servicios.html" onclick="trucoTrackClick('hero_ver_servicios')">Ver servicios</a>
       </div>
       <div class="hero-trust">
@@ -1056,8 +1055,8 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
           <span class="hero-trust-num" id="hero-from-1">729 €</span>
           <span class="hero-trust-label">primer año, todo incluido (desde Start™)</span>
         </div>
-        <div class="hero-trust-sep hero-trust-3"></div>
-        <div class="hero-trust-item hero-trust-3">
+        <div class="hero-trust-sep"></div>
+        <div class="hero-trust-item">
           <span class="hero-trust-num" style="color:var(--green);">3 asistentes IA</span>
           <span class="hero-trust-label">con Pro™: WhatsApp + Llamadas + Web, gratis</span>
         </div>
@@ -1156,7 +1155,54 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
 </section>
 
 <!-- ── ECOSISTEMA: CRM + calendario incluidos ── -->
-
+<section id="ecosistema" class="section reveal" style="padding-top:56px;padding-bottom:20px;">
+  <div class="container">
+<div class="eco2" id="ecosistema-truco">
+  <div class="eco2-grid">
+    <div>
+      <span class="eco2-badge">✦ Incluido en todos los Departamentos</span>
+      <div class="eco2-eyebrow">Ecosistema TRUCO technology</div>
+      <h2>Tu negocio funciona solo. <em>Tú, a lo tuyo.</em></h2>
+      <p class="eco2-lead">TRUCO atiende tus canales, agenda tus citas, guarda a cada cliente y hasta cierra ventas <b>mientras tú trabajas o descansas</b>. Por la noche abres tu portal y lo tienes todo.</p>
+      <ul class="eco2-feats">
+        <li><span class="ic">☀️</span><span><b>Mientras trabajas</b>Tus asistentes contestan WhatsApp, web y correo (y llamadas, según tu Departamento). Tú no paras a mirar el móvil.</span></li>
+        <li><span class="ic">📅</span><span><b>Se agenda solo</b>Las citas caen en tus huecos libres, en tu calendario y sin llamadas de ida y vuelta.</span></li>
+        <li><span class="ic">👥</span><span><b>Se guarda solo</b>Cada persona entra en tu CRM con su historial. Sin hojas de cálculo ni post-its.</span></li>
+        <li><span class="ic">🌙</span><span><b>Por la noche, 5 minutos</b>Abres tu portal —como app en el móvil— y lo tienes todo: citas de mañana, quién espera respuesta y qué ha entrado hoy.</span></li>
+      </ul>
+      <p class="eco2-note">Demo interactiva con datos de ejemplo.</p>
+    </div>
+    <div class="eco2-mock" id="ecoApp">
+      <div class="eco2-bar"><span class="eco2-logo">T</span><b>Tu negocio</b><span class="sp"></span>
+        <div class="eco2-tabs" role="tablist" aria-label="Demo del portal">
+          <button type="button" class="eco2-tab on" role="tab" data-go="portal">🏠 Portal</button>
+          <button type="button" class="eco2-tab" role="tab" data-go="crm">👥 Mi CRM</button>
+          <button type="button" class="eco2-tab" role="tab" data-go="cal">📅 Mi calendario</button>
+        </div></div>
+      <div class="eco2-view" data-v="portal">
+        <p class="eco2-hi">Buenas noches, Ana 👋<small>Esto es lo que ha pasado hoy mientras tú trabajabas.</small></p>
+        <div class="eco2-tiles">
+          <button type="button" class="eco2-tile" id="eco-tile-crm" data-go="crm"><i>→</i><b>👥 Mi CRM</b><span></span></button>
+          <button type="button" class="eco2-tile" id="eco-tile-cal" data-go="cal"><i>→</i><b>📅 Mi calendario</b><span></span></button>
+        </div>
+        <div class="eco2-feed-h">Hoy, sin que hicieras nada</div>
+        <div class="eco2-feed" id="eco-feed"></div>
+      </div>
+      <div class="eco2-view" data-v="crm" hidden>
+        <div class="eco2-kpis" id="eco-kpis"></div>
+        <div class="eco2-board" id="eco-board"></div>
+        <div class="eco2-det" id="eco-det"></div>
+      </div>
+      <div class="eco2-view" data-v="cal" hidden>
+        <div id="eco-cal"></div>
+        <div class="eco2-pills"><span class="eco2-pill">✓ Google Calendar vinculado</span><span class="eco2-pill">✓ Enlace para Outlook y Apple</span><span class="eco2-pill">✓ Como app en tu móvil</span></div>
+      </div>
+      <div class="eco2-hint">👆 Pruébalo: pulsa las pestañas y mueve los contactos. Datos de ejemplo.</div>
+    </div>
+  </div>
+</div>
+  </div>
+</section>
 
 
 <!-- ── PILLARS ── -->
@@ -1190,87 +1236,61 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
   <div class="pillars-footer">Web + <b>asistentes de IA</b> — instalados y mantenidos dentro de tu Departamento. Cero clientes perdidos, dudas resueltas las 24 horas.</div>
 </div>
 
-<!-- ── ASÍ TRABAJA TU DEPARTAMENTO TECNOLÓGICO ── -->
+<!-- ── ASÍ TRABAJARÍA TU DEPARTAMENTO TECNOLÓGICO ── -->
 <div id="how-we-work">
   <div class="container">
-    <div class="section-tag gold">Así trabaja tu departamento tecnológico</div>
-    <h2 class="section-h2">Tú hablas con uno. Él se encarga de todo.</h2>
-    <p class="section-sub" style="max-width:720px;margin:0 auto;">Como un asesor financiero, pero de tecnología: le dices lo que necesitas y tu Departamento lo ejecuta en tu WhatsApp, tu correo, tu base de datos, tu asistente y tu web. Es el único interlocutor entre tu empresa y toda tu tecnología.</p>
-    <div class="dh" id="deptHub">
-      <div class="dh-stage">
-        <div class="dh-company"><span class="dh-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><div><div class="dh-who">Tu empresa</div><div class="dh-say" aria-live="polite"></div></div></div>
-        <div class="dh-stem s1"></div>
-        <div class="dh-hub">
-          <div class="dh-hub-top"><span class="dh-logo">T</span><h3>Tu Departamento Tecnológico</h3></div>
-          <p>El único interlocutor: tú le hablas a él y él actúa sobre todo lo demás.</p>
-          <span class="dh-status"><i></i><span>Listo</span></span>
-        </div>
-        <div class="dh-stem s2"></div>
-        <div class="dh-nodes">
-          <button type="button" class="dh-sys" data-k="wa"><span class="dh-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2.5" width="16" height="27" rx="3.5"/><path d="M13 6h6"/><path d="M12.5 12h7a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5H16l-2.5 2v-2h-1a1.5 1.5 0 0 1-1.5-1.5v-3a1.5 1.5 0 0 1 1.5-1.5z"/><path d="M14.5 24.5h3"/></svg></span><b>WhatsApp</b><small></small></button><button type="button" class="dh-sys" data-k="mail"><span class="dh-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="7" width="25" height="18" rx="3"/><path d="M4.5 9l11.5 9 11.5-9"/></svg></span><b>Correo</b><small></small></button><button type="button" class="dh-sys" data-k="db"><span class="dh-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="16" cy="8" rx="10" ry="4"/><path d="M6 8v8c0 2.2 4.5 4 10 4s10-1.8 10-4V8"/><path d="M6 16v8c0 2.2 4.5 4 10 4s10-1.8 10-4v-8"/></svg></span><b>Base de datos</b><small></small></button><button type="button" class="dh-sys" data-k="bot"><span class="dh-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="22" height="16" rx="5"/><path d="M16 9V4.5"/><circle cx="16" cy="4" r="1.3"/><circle cx="11.5" cy="17" r="1.6"/><circle cx="20.5" cy="17" r="1.6"/><path d="M12 21.5h8"/></svg></span><b>Asistente virtual</b><small></small></button><button type="button" class="dh-sys" data-k="web"><span class="dh-ico"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="25" height="22" rx="3"/><path d="M3.5 11h25"/><circle cx="7.5" cy="8" r=".8"/><circle cx="10.5" cy="8" r=".8"/><path d="M9 16h6M9 20h9"/><rect x="19" y="15" width="6" height="8" rx="1.2"/></svg></span><b>Web interactiva</b><small></small></button>
-        </div>
+    <div class="section-tag gold">Así trabajaría tu departamento tecnológico</div>
+    <h2 class="section-h2">No te vendemos una IA en blanco para que la entrenes tú.</h2>
+    <div class="hww-grid">
+      <div class="hww-item">
+        <div class="hww-head"><div class="hww-icon gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><div class="hww-num">Paso 1</div></div>
+        <h4>Te auditamos primero</h4>
+        <p>Para entender cómo trabajas y qué necesitas.</p>
       </div>
-      <div class="dh-report" aria-live="polite"><span class="dh-logo">T</span><span><b>Tu Departamento</b> · dime qué necesitas y mira cómo actúa sobre todo a la vez.</span></div>
-      <div class="dh-chips-h">Pruébalo: elige qué le pides</div>
-      <div class="dh-chips">
-        <button type="button" class="dh-chip">Me he puesto enfermo</button>
-        <button type="button" class="dh-chip">Cambiar el horario</button>
-        <button type="button" class="dh-chip">Lanzar una oferta</button>
-        <button type="button" class="dh-chip">¿Qué ha pasado hoy?</button>
-        <button type="button" class="dh-chip">Ajustar a mi asistente</button>
+      <div class="hww-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      <div class="hww-item">
+        <div class="hww-head"><div class="hww-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="hww-num">Paso 2</div></div>
+        <h4>Nosotros lo entrenamos</h4>
+        <p>Para que tú no tengas que hacer nada. Tu Departamento ajusta y adapta todo lo que contrates a tu negocio.</p>
       </div>
-      <div class="dh-steps"><span><b>1</b>Te auditamos</span><span><b>2</b>Lo entrenamos</span><span><b>3</b>Creamos tu ecosistema</span></div>
+      <div class="hww-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+      <div class="hww-item">
+        <div class="hww-head"><div class="hww-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div><div class="hww-num">Paso 3</div></div>
+        <h4>Creamos tu ecosistema</h4>
+        <p>Web, WhatsApp, correo, facturas, llamadas — automatizado. Tú solo te preocupas de tu negocio.</p>
+      </div>
     </div>
     <p class="hww-close">Somos tu Departamento.</p>
   </div>
 </div>
 
-<!-- ── CÓMO TRABAJAMOS CONTIGO ── -->
+<!-- ── CÓMO TRABAJAMOS CONTIGO (día a día, no solo el arranque) ── -->
 <div class="container">
-  <div class="hiw2">
-    <div class="hiw2-intro">
-      <div class="section-tag gold" style="justify-content:center;">Cómo trabajamos contigo</div>
-      <h3>No entregamos un proyecto y desaparecemos. Nos quedamos.</h3>
+  <div class="hiw-wrap">
+    <div class="hiw-intro">
+      <div class="section-tag gold">Cómo trabajamos contigo</div>
+      <h3>No entregamos un proyecto y desaparecemos. Nos quedamos — para que tu negocio no pare de crecer.</h3>
+      <p>Aquí no compras una herramienta que tienes que aprender a manejar — te despreocupas de la tecnología para siempre. Así reaccionamos, sin que tengas que pedirlo:</p>
     </div>
-    <div class="vs" id="vsCompare">
-      <div class="vs-col vs-them">
-        <div class="vs-tag">Lo que te entregan otras empresas</div>
-        <div class="vs-tpl" aria-hidden="true">
-          <div class="vs-tpl-bar"><i></i><i></i><i></i><span>plantilla-vacia.zip</span></div>
-          <div class="vs-tpl-body">
-            <div class="vs-tpl-logo">[ Tu logo aquí ]</div>
-            <div class="vs-ph">[ Rellena tus precios ]</div>
-            <div class="vs-ph">[ Rellena tus horarios ]</div>
-            <div class="vs-ph">[ Rellena las respuestas del bot ]</div>
-            <div class="vs-turn">Tu turno →</div>
-          </div>
-        </div>
-        <ul class="vs-list">
-          <li class="no"><span class="vs-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span><span><b>Una plantilla vacía</b> que tienes que rellenar tú.</span></li>
-          <li class="no"><span class="vs-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span><span><b>Cada cambio lo haces tú:</b> precios, horarios, respuestas, ajustes.</span></li>
-          <li class="no"><span class="vs-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span><span><b>Deja de ser una solución</b> y pasa a ser una tarea más de tu día a día.</span></li>
-          <li class="no"><span class="vs-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></span><span><b>Trabajas a deshoras</b> para que la tecnología funcione.</span></li>
-        </ul>
+    <div class="hiw-grid">
+      <div class="hiw-card">
+        <div class="hiw-when">Sale algo nuevo que puede beneficiar a tu negocio</div>
+        <div class="hiw-then">Lo vemos nosotros primero. Te lo proponemos ya estudiado y, si encaja, <b>lo tienes implantado sin mover un dedo.</b></div>
       </div>
-      <div class="vs-mid"><span>VS</span></div>
-      <div class="vs-col vs-us">
-        <div class="vs-tag">Lo que hace TRUCO</div>
-        <div class="vs-chat" id="vsChat" aria-hidden="true">
-          <div class="vs-chat-bar"><span class="vs-chat-logo">T</span><b>Tu chat de socio</b><em>en línea</em></div>
-          <div class="vs-msg you"><small>Tú</small>Me he puesto malo: cambia las citas de hoy.</div>
-          <div class="vs-msg dept"><small>Tu Departamento</small><b>Recibido.</b> Te aviso en cuanto esté hecho.</div>
-          <div class="vs-msg dept done"><small>Tu Departamento</small><b>Hecho ✓</b> Citas avisadas y con nueva hora propuesta.</div>
-        </div>
-        <ul class="vs-list">
-          <li class="yes"><span class="vs-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7"/></svg></span><span><b>Te hacemos una auditoría</b> y analizamos cómo trabajas.</span></li>
-          <li class="yes"><span class="vs-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7"/></svg></span><span><b>Automatizamos todo a tu gusto</b> y lo adaptamos a tu negocio.</span></li>
-          <li class="yes"><span class="vs-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7"/></svg></span><span><b>Te olvidas de la tecnología</b> de tu empresa: la lleva tu Departamento.</span></li>
-          <li class="yes"><span class="vs-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7"/></svg></span><span><b>Se acabó trabajar a deshoras:</b> lo hace tu Departamento por ti.</span></li>
-          <li class="yes"><span class="vs-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12.5 10 17.5 19 7"/></svg></span><span><b>Tú solo nos escribes</b> por tu chat de socio y nosotros actuamos.</span></li>
-        </ul>
+      <div class="hiw-card">
+        <div class="hiw-when">Algo no funciona como te gustaría</div>
+        <div class="hiw-then">Nos escribes y el problema desaparece. <b>Tú no vuelves a tocarlo — nunca.</b></div>
+      </div>
+      <div class="hiw-card">
+        <div class="hiw-when">Te vas de vacaciones y quieres cambiar un precio, una oferta o un horario</div>
+        <div class="hiw-then">Nos mandas un mensaje desde la playa. <b>Cuando vuelvas, ya está hecho.</b></div>
+      </div>
+      <div class="hiw-card">
+        <div class="hiw-when">Quieres ajustar cómo trabaja tu asistente</div>
+        <div class="hiw-then">¿Que no cierre ventas solo? ¿Que te resuma cada conversación antes de la cita? Lo ajustamos <b>a tu manera, no a la nuestra.</b></div>
       </div>
     </div>
-    <p class="hiw2-close">No contratas un servicio que se acaba. Contratas a alguien que se queda.</p>
+    <p class="hiw-close">No contratas un servicio que se acaba. Contratas a alguien que se queda — siempre ahí, para que tu negocio no deje de crecer.</p>
   </div>
 </div>
 
@@ -1279,10 +1299,9 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
   <div class="container">
     <div class="sectores-intro">
       <div class="s-tag">¿Es esto para ti?</div>
-      <h2>Si esto te suena,<br>no es un lujo: es una necesidad.</h2>
-      <p>Perder un mensaje, olvidar una cita o tardar en responder tiene un coste real. Elige tu sector.</p>
+      <h2>Si lo que describes te suena,<br>el Departamento Basic™ no es una opción.</h2>
+      <p>Es una necesidad. Hay profesiones donde perder un mensaje, olvidar una cita o tardar en responder tiene un coste real. Aquí van las más comunes.</p>
     </div>
-    <div class="sp" id="sectorPicker"><div class="sp-chips" role="tablist" aria-label="Sectores"></div><div class="sp-panel" aria-live="polite"></div></div>
     <div class="sectores-carousel" id="sectoresCarousel">
       <div class="sc-track-wrap">
         <div class="sc-track" id="scTrack">
@@ -1414,7 +1433,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
       <div class="sc-dots" id="scDots"></div>
     </div>
     <div class="sectores-cta">
-      <p><b>¿Tu sector no está aquí?</b> Si recibes mensajes de clientes y quieres que alguien los atienda por ti, esto es para ti.</p>
+      <p><b>¿Tu sector no está aquí?</b> Si recibes mensajes de clientes y quieres que alguien los atienda por ti sin que tengas que comprar nada nuevo, el Departamento Tecnológico es para ti.</p>
 <a class="btn-primary" href="#chat-section" onclick="trucoTrackClick('midpage_cuentanos_tu_caso')">Cuéntanos tu caso →</a>
     </div>
   </div>
@@ -1423,18 +1442,66 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
 <!-- ── CÓMO EMPEZAMOS ── -->
 <section id="como-empezamos" class="section reveal">
   <div class="container">
-    <div class="section-tag">Encuentra lo que necesitas</div>
-    <h2 class="section-h2">Cada Departamento resuelve algo distinto. ¿Cuál necesitas tú?</h2>
-    <p class="section-sub">Esto es lo que automatizamos en cada uno. El detalle completo y el precio están en su propia página.</p>
+    <div class="section-tag">Encuentra tu situación</div>
+    <h2 class="section-h2">¿Cuál de estas frases describe mejor tu negocio ahora mismo?</h2>
+    <p class="section-sub">Cada Departamento resuelve una necesidad concreta. Reconócete en una y ya sabes por dónde empezar — el precio y el detalle completo están un poco más abajo.</p>
     <div class="entry-strip">
       <div class="entry-steps entry-steps-4">
-        <div class="entry-card c-gold" onclick="location.href='departamentos/start.html'" style="cursor:pointer;"><div class="entry-head"><div class="entry-icon"><span class="entry-icon-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg></span></div><h4>Start™</h4></div><div class="entry-kicker">Eliges 1 automatización — sin web</div><ul class="entry-needs"><li>Automatizamos tu <b>WhatsApp</b> para que no pierdas clientes y las citas se agenden solas.</li><li>Automatizamos tu <b>correo</b> para que no tengas que contestar tú a nada.</li><li class="extra-m">Ponemos una <b>IA en tu web</b> para que resuelva dudas y capte clientes mientras trabajas.</li><li class="extra">Automatizamos tus <b>reservas</b> para que nunca se te solapen las citas.</li><li class="extra">Automatizamos tus <b>facturas</b> para que dejes de perder horas facturando a mano.</li></ul><button type="button" class="entry-more" data-label="Ver todo lo que puedes elegir (+3)">Ver todo lo que puedes elegir (+3)</button><a class="entry-cta" href="departamentos/start.html">Ver Start™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
-        <div class="entry-card c-teal" onclick="location.href='departamentos/basic.html'" style="cursor:pointer;"><div class="entry-recommended-badge">★ Recomendado</div><div class="entry-head"><div class="entry-icon"><span class="entry-icon-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="7" y1="14" x2="13" y2="14"/></svg></span></div><h4>Basic™</h4></div><div class="entry-kicker">Web + eliges 1 automatización</div><ul class="entry-needs"><li>Creamos tu <b>web profesional</b> (con chat y agenda de fábrica) para que te encuentren y te reserven solos.</li><li>Automatizamos tu <b>WhatsApp</b> para que no pierdas clientes y las citas se agenden solas.</li><li class="extra-m">Automatizamos tu <b>correo</b> para que no tengas que contestar tú a nada.</li><li class="extra">Automatizamos tus <b>facturas</b> para que dejes de perder horas facturando a mano.</li></ul><button type="button" class="entry-more" data-label="Ver todo lo que puedes elegir (+2)">Ver todo lo que puedes elegir (+2)</button><a class="entry-cta" href="departamentos/basic.html">Ver Basic™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
-        <div class="entry-card c-green" onclick="location.href='departamentos/lite.html'" style="cursor:pointer;"><div class="entry-head"><div class="entry-icon"><span class="entry-icon-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/><line x1="3" y1="12" x2="21" y2="12"/></svg></span></div><h4>Lite™</h4></div><div class="entry-kicker">Web + eliges 2 automatizaciones</div><ul class="entry-needs"><li>Ponemos tu <b>web al día</b> —reacondicionada o nueva—, con chat y agenda, para que trabaje por ti.</li><li>Automatizamos tu <b>WhatsApp</b> para que no pierdas clientes y las citas se agenden solas.</li><li class="extra-m">Ponemos una <b>IA que coge tus llamadas</b> para que no pierdas ninguna mientras trabajas.</li><li class="extra">Automatizamos tu <b>correo</b> para que no tengas que contestar tú a nada.</li><li class="extra">Automatizamos tus <b>facturas</b> para que dejes de perder horas facturando a mano.</li><li class="extra">Automatizamos la <b>firma digital</b> para cerrar contratos sin papeles ni idas y venidas.</li></ul><button type="button" class="entry-more" data-label="Ver todo lo que puedes elegir (+4)">Ver todo lo que puedes elegir (+4)</button><a class="entry-cta" href="departamentos/lite.html">Ver Lite™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
-        <div class="entry-card c-blue" onclick="location.href='departamentos/pro.html'" style="cursor:pointer;"><div class="entry-head"><div class="entry-icon"><span class="entry-icon-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span></div><h4>Pro™</h4></div><div class="entry-kicker">Web + eliges 3 automatizaciones</div><ul class="entry-needs"><li>Creamos tu <b>web profesional</b> (con chat y agenda de fábrica) para que te encuentren y te reserven solos.</li><li>Automatizamos tu <b>WhatsApp</b> para que no pierdas clientes y las citas se agenden solas.</li><li class="extra-m">Ponemos una <b>IA que coge tus llamadas</b> para que no pierdas ninguna mientras trabajas.</li><li class="extra">Automatizamos tu <b>correo</b> para que no tengas que contestar tú a nada.</li><li class="extra">Automatizamos la <b>firma digital</b> para cerrar contratos sin papeles ni idas y venidas.</li><li class="extra">Revisamos tu <b>ciberseguridad</b> para que un susto informático no pare tu negocio.</li><li class="extra">Creamos <b>flujos a tu medida</b> para que dejes de repetir tareas a mano.</li></ul><button type="button" class="entry-more" data-label="Ver todo lo que puedes elegir (+5)">Ver todo lo que puedes elegir (+5)</button><a class="entry-cta" href="departamentos/pro.html">Ver Pro™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
+        <div class="entry-card c-gold" onclick="location.href='departamentos/start.html'" style="cursor:pointer;">
+          <div class="entry-step-num">01 / 04</div>
+          <div class="entry-icon"><span class="entry-icon-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg></span></div>
+          <div class="entry-kicker">Solo necesitas UNA cosa</div>
+          <h4>Start™</h4>
+          <ul class="entry-pains">
+            <li>Pierdo clientes por no contestar el WhatsApp a tiempo</li>
+            <li>Pierdo horas facturando a mano</li>
+            <li>Se me solapan las citas</li>
+          </ul>
+          <p class="entry-close">Este es tu Departamento. <span style="color:var(--grey);font-weight:400;font-size:.82em;">(asistencia enfocada a esa única automatización — si necesitas más, el paso es Basic™)</span></p>
+          <a class="entry-cta" href="departamentos/start.html">Ver Start™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+        <div class="entry-card c-teal" onclick="location.href='departamentos/basic.html'" style="cursor:pointer;">
+          <div class="entry-step-num">02 / 04</div>
+          <div class="entry-recommended-badge">★ Recomendado</div>
+          <div class="entry-icon"><span class="entry-icon-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="7" y1="14" x2="13" y2="14"/></svg></span></div>
+          <div class="entry-kicker">Tu web, pero que además trabaje por ti</div>
+          <h4>Basic™</h4>
+          <ul class="entry-pains">
+            <li>No tengo web, o la que tengo no vende nada</li>
+            <li>Pierdo clientes que preguntan fuera de horario</li>
+            <li>Quiero que mi web agende citas sola, sin que yo intervenga</li>
+          </ul>
+          <p class="entry-close">Este es tu Departamento.</p>
+          <a class="entry-cta" href="departamentos/basic.html">Ver Basic™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+        <div class="entry-card c-green" onclick="location.href='departamentos/lite.html'" style="cursor:pointer;">
+          <div class="entry-step-num">03 / 04</div>
+          <div class="entry-icon"><span class="entry-icon-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/><line x1="3" y1="12" x2="21" y2="12"/></svg></span></div>
+          <div class="entry-kicker">Cubre todos tus canales a la vez</div>
+          <h4>Lite™</h4>
+          <ul class="entry-pains">
+            <li>Me escriben por WhatsApp, me llaman y me preguntan en la web — y no llego a todo</li>
+            <li>Se me pierden citas entre un canal y otro</li>
+            <li>Quiero WhatsApp + Llamadas + Web cubiertos de una vez, con el mismo equipo</li>
+          </ul>
+          <p class="entry-close">Este es tu Departamento.</p>
+          <a class="entry-cta" href="departamentos/lite.html">Ver Lite™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+        <div class="entry-card c-blue" onclick="location.href='departamentos/pro.html'" style="cursor:pointer;">
+          <div class="entry-step-num">04 / 04</div>
+          <div class="entry-icon"><span class="entry-icon-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span></div>
+          <div class="entry-kicker">El departamento tecnológico completo</div>
+          <h4>Pro™</h4>
+          <ul class="entry-pains">
+            <li>Ya tengo varias automatizaciones y necesito que alguien las mantenga todas a la vez</li>
+            <li>Cada incidencia técnica me para el negocio hasta que la resuelvo yo</li>
+            <li>Quiero un departamento de verdad, no herramientas sueltas que gestiono yo</li>
+          </ul>
+          <p class="entry-close">Este es tu Departamento.</p>
+          <a class="entry-cta" href="departamentos/pro.html">Ver Pro™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
       </div>
     </div>
-    <p class="entry-all">En todos: tu CRM y calendario propios, mantenimiento y soporte incluidos.</p>
   </div>
 </section>
 
@@ -1634,71 +1701,86 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
 <section id="servicios" class="section reveal" style="padding-top:0;">
   <div class="container">
     <div class="section-tag">Departamento Tecnológico TRUCO™</div>
-    <h2 class="section-h2">Elige tu Departamento</h2>
-    <p class="section-sub">Cada uno tiene su propia página con todo lo que incluye y su precio.</p>
-    <div class="dp-grid">
-      <a class="dp-card c-gold" href="departamentos/start.html"><div class="dp-name">Start™</div><div class="dp-tag">1 automatización a tu elección, sin web.</div><span class="dp-go">Ver departamento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></a>
-      <a class="dp-card c-teal" href="departamentos/basic.html"><span class="dp-badge">RECOMENDADO</span><div class="dp-name">Basic™</div><div class="dp-tag">Web profesional + 1 automatización.</div><span class="dp-go">Ver departamento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></a>
-      <a class="dp-card c-green" href="departamentos/lite.html"><div class="dp-name">Lite™</div><div class="dp-tag">Web + 2 automatizaciones.</div><span class="dp-go">Ver departamento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></a>
-      <a class="dp-card c-blue" href="departamentos/pro.html"><div class="dp-name">Pro™</div><div class="dp-tag">Web profesional + 3 automatizaciones.</div><span class="dp-go">Ver departamento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></a>
+    <h2 class="section-h2">Elige el tamaño de departamento que necesita tu negocio</h2>
+    <p class="section-sub">Todo va gratis dentro de tu Departamento — nada se vende suelto — porque tu primer año va incluido en el precio. De un vistazo: el detalle completo de cada uno vive en su propia página.</p>
+    <div class="tiers-grid tiers-grid-glance">
+      <div class="tier-card entry" onclick="location.href='departamentos/start.html'" style="cursor:pointer;">
+        <span class="tier-badge">Punto de entrada · para cualquiera</span>
+        <div class="tier-name">Departamento Start™</div>
+        <div class="tier-role">1 automatización a elegir, sin web. <b>Tu equipo tecnológico, tú solo escribes.</b></div>
+        <div class="tier-founding-badge" id="tier-founding-badge-start"></div>
+        <div class="tier-price" id="tier-price-start"></div>
+        <div class="tier-vat" id="tier-vat-start"></div>
+        <div class="tier-after" id="tier-after-start" style="font-size:.82rem;font-weight:600;color:var(--tc);margin-bottom:4px;"></div>
+        <div class="tier-founding-old" id="tier-founding-old-start"></div>
+        <div class="tier-annual">Pago único (12% dto.), con tarjeta o PayPal — luego sigues mes a mes, <span>sin permanencia</span></div>
+        <ul class="tier-list tier-list-glance">
+          <li>1 automatización a elegir, gratis</li>
+          <li>Acompañamiento completo</li>
+          <li>Sin web — el paso natural es Basic™</li>
+        </ul>
+        <a class="entry-cta" href="departamentos/start.html" style="margin-top:12px;">Ver detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="tier-card featured" onclick="location.href='departamentos/basic.html'" style="cursor:pointer;">
+        <span class="tier-badge">Web que trabaja + 1 automatización</span>
+        <div class="tier-name">Departamento Basic™</div>
+        <div class="tier-role">Web Profesional con chat y agenda de fábrica + 1 automatización más. <b>Tu equipo tecnológico, tú solo escribes.</b></div>
+        <div class="tier-founding-badge" id="tier-founding-badge-basic"></div>
+        <div class="tier-price" id="tier-price-basic"></div>
+        <div class="tier-vat" id="tier-vat-basic"></div>
+        <div class="tier-after" id="tier-after-basic" style="font-size:.82rem;font-weight:600;color:var(--tc);margin-bottom:4px;"></div>
+        <div class="tier-founding-old" id="tier-founding-old-basic"></div>
+        <div class="tier-annual">Pago único (12% dto.), con tarjeta o PayPal — luego sigues mes a mes, <span>sin permanencia</span></div>
+        <ul class="tier-list tier-list-glance">
+          <li>Web Profesional con chat + agenda, de fábrica</li>
+          <li>1 automatización gratis más, a elegir</li>
+          <li>Ideal si necesitas presencia + un extra</li>
+        </ul>
+        <a class="entry-cta" href="departamentos/basic.html" style="margin-top:12px;">Ver detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="tier-card tier-lite" onclick="location.href='departamentos/lite.html'" style="cursor:pointer;">
+        <span class="tier-badge">Cubre todos tus canales</span>
+        <div class="tier-name">Departamento Lite™</div>
+        <div class="tier-role">Web + 2 automatizaciones — WhatsApp, llamadas y web cubiertos a la vez. <b>Tu equipo tecnológico, tú solo escribes.</b></div>
+        <div class="tier-founding-badge" id="tier-founding-badge-lite"></div>
+        <div class="tier-price" id="tier-price-lite"></div>
+        <div class="tier-vat" id="tier-vat-lite"></div>
+        <div class="tier-after" id="tier-after-lite" style="font-size:.82rem;font-weight:600;color:var(--tc);margin-bottom:4px;"></div>
+        <div class="tier-founding-old" id="tier-founding-old-lite"></div>
+        <div class="tier-annual">Pago único (12% dto.), con tarjeta o PayPal — luego sigues mes a mes, <span>sin permanencia</span></div>
+        <ul class="tier-list tier-list-glance">
+          <li>Web (reacondicionada o Profesional nueva)</li>
+          <li>2 automatizaciones gratis · mantiene hasta 3</li>
+          <li>Reunión mensual de 30 min</li>
+        </ul>
+        <a class="entry-cta" href="departamentos/lite.html" style="margin-top:12px;">Ver detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+      <div class="tier-card tier-pro" onclick="location.href='departamentos/pro.html'" style="cursor:pointer;">
+        <span class="tier-badge">Para negocios que quieren escalar</span>
+        <div class="tier-name">Departamento Pro™</div>
+        <div class="tier-role">Web Profesional + 3 automatizaciones a elegir. <b>Tu equipo tecnológico, tú solo escribes.</b></div>
+        <div class="tier-founding-badge" id="tier-founding-badge-pro"></div>
+        <div class="tier-price" id="tier-price-pro"></div>
+        <div class="tier-vat" id="tier-vat-pro"></div>
+        <div class="tier-after" id="tier-after-pro" style="font-size:.82rem;font-weight:600;color:var(--tc);margin-bottom:4px;"></div>
+        <div class="tier-founding-old" id="tier-founding-old-pro"></div>
+        <div class="tier-annual">Pago único (12% dto.), con tarjeta o PayPal — luego sigues mes a mes, <span>sin permanencia</span></div>
+        <ul class="tier-list tier-list-glance">
+          <li>Web Profesional + chat/agenda de fábrica</li>
+          <li>3 automatizaciones gratis · mantiene hasta 6</li>
+          <li>Prioridad alta en incidencias</li>
+        </ul>
+        <a class="entry-cta" href="departamentos/pro.html" style="margin-top:12px;">Ver detalle completo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
     </div>
     <div class="dedication-note">
-      <b>En los 4, tu primer año va incluido en el precio.</b> <a href="servicios.html" style="color:var(--blue);">Comparativa completa y catálogo en Servicios →</a>
+      <b>En los 4 escalones, tu primer año va incluido en el precio</b> — es lo que permite regalar la web y las automatizaciones. <a href="servicios.html" style="color:var(--blue);">Comparativa completa y catálogo en Servicios →</a>
     </div>
-  </div>
-</section>
-
-<section id="ecosistema" class="section reveal" style="padding-top:56px;padding-bottom:20px;">
-  <div class="container">
-<div class="eco2" id="ecosistema-truco">
-  <div class="eco2-grid">
-    <div>
-      <span class="eco2-badge">✦ Incluido en todos los Departamentos</span>
-      <div class="eco2-eyebrow">Ecosistema TRUCO technology</div>
-      <h2>Tu negocio funciona solo. <em>Tú, a lo tuyo.</em></h2>
-      <p class="eco2-lead">TRUCO atiende tus canales, agenda tus citas, guarda a cada cliente y hasta cierra ventas <b>mientras tú trabajas o descansas</b>. Por la noche abres tu portal y lo tienes todo.</p>
-      <ul class="eco2-feats">
-        <li><span class="ic">☀️</span><span><b>Mientras trabajas</b>Tus asistentes contestan WhatsApp, web y correo (y llamadas, según tu Departamento). Tú no paras a mirar el móvil.</span></li>
-        <li><span class="ic">📅</span><span><b>Se agenda solo</b>Las citas caen en tus huecos libres, en tu calendario y sin llamadas de ida y vuelta.</span></li>
-        <li><span class="ic">👥</span><span><b>Se guarda solo</b>Cada persona entra en tu CRM con su historial. Sin hojas de cálculo ni post-its.</span></li>
-        <li><span class="ic">🌙</span><span><b>Por la noche, 5 minutos</b>Abres tu portal —como app en el móvil— y lo tienes todo: citas de mañana, quién espera respuesta y qué ha entrado hoy.</span></li>
-      </ul>
-      <p class="eco2-note">Demo interactiva con datos de ejemplo.</p>
-    </div>
-    <div class="eco2-mock" id="ecoApp">
-      <div class="eco2-bar"><span class="eco2-logo">T</span><b>Tu negocio</b><span class="sp"></span>
-        <div class="eco2-tabs" role="tablist" aria-label="Demo del portal">
-          <button type="button" class="eco2-tab on" role="tab" data-go="portal">🏠 Portal</button>
-          <button type="button" class="eco2-tab" role="tab" data-go="crm">👥 Mi CRM</button>
-          <button type="button" class="eco2-tab" role="tab" data-go="cal">📅 Mi calendario</button>
-        </div></div>
-      <div class="eco2-view" data-v="portal">
-        <p class="eco2-hi">Buenas noches, Ana 👋<small>Esto es lo que ha pasado hoy mientras tú trabajabas.</small></p>
-        <div class="eco2-tiles">
-          <button type="button" class="eco2-tile" id="eco-tile-crm" data-go="crm"><i>→</i><b>👥 Mi CRM</b><span></span></button>
-          <button type="button" class="eco2-tile" id="eco-tile-cal" data-go="cal"><i>→</i><b>📅 Mi calendario</b><span></span></button>
-        </div>
-        <div class="eco2-feed-h">Hoy, sin que hicieras nada</div>
-        <div class="eco2-feed" id="eco-feed"></div>
-      </div>
-      <div class="eco2-view" data-v="crm" hidden>
-        <div class="eco2-kpis" id="eco-kpis"></div>
-        <div class="eco2-board" id="eco-board"></div>
-        <div class="eco2-det" id="eco-det"></div>
-      </div>
-      <div class="eco2-view" data-v="cal" hidden>
-        <div id="eco-cal"></div>
-        <div class="eco2-pills"><span class="eco2-pill">✓ Google Calendar vinculado</span><span class="eco2-pill">✓ Enlace para Outlook y Apple</span><span class="eco2-pill">✓ Como app en tu móvil</span></div>
-      </div>
-      <div class="eco2-hint">👆 Pruébalo: pulsa las pestañas y mueve los contactos. Datos de ejemplo.</div>
-    </div>
-  </div>
-</div>
   </div>
 </section>
 
 <!-- ── FOUNDER ── -->
-<section id="nosotros" class="m-fold-sec reveal"><details class="m-fold" open><summary>El fundador detrás de tu departamento</summary>
+<section id="nosotros" class="reveal">
   <div id="founder" class="section">
     <div class="container">
       <div class="founder-inner">
@@ -1718,9 +1800,9 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
       </div>
     </div>
   </div>
-</details></section>
+</section>
 <!-- ── ¿YA TIENES ALGO AUTOMATIZADO? ── -->
-<section id="ya-automatizado" class="m-fold-sec section reveal"><details class="m-fold" open><summary>¿Ya tienes algo automatizado?</summary>
+<section id="ya-automatizado" class="section reveal">
   <div class="container">
     <div class="section-tag gold">¿Ya tienes algo automatizado?</div>
     <h2 class="section-h2">Si montaste un bot y ahora lo peleas tú solo, el problema no es tuyo — es de quién te lo vendió.</h2>
@@ -1731,9 +1813,9 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
     <p class="hww-close" style="text-align:left;margin-top:24px;">Somos tu Departamento.</p>
     <a class="btn-primary" href="#chat-section" style="margin-top:18px;display:inline-block;">Cuéntanos qué tienes montado →</a>
   </div>
-</details></section>
+</section>
 
-<section id="compromiso" class="m-fold-sec section reveal" style="padding-top:28px;padding-bottom:28px;"><details class="m-fold" open><summary>Lo que te prometemos, por escrito</summary><div class="container"><div class="garantia" id="compromiso-truco">
+<section id="compromiso" class="section reveal" style="padding-top:28px;padding-bottom:28px;"><div class="container"><div class="garantia" id="compromiso-truco">
   <div class="g-eyebrow">Nuestro compromiso contigo</div>
   <h3>Lo que te prometemos, por escrito</h3>
   <div class="g-grid">
@@ -1742,10 +1824,10 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
     <div class="g-item"><div class="g-ic">📦</div><div><b>Te lo llevas todo si te vas</b><span>Web, contenido y configuración, en pen drive o en la nube. Desde ese momento, el mantenimiento de las plataformas pasa a ser tuyo.</span></div></div>
     <div class="g-item"><div class="g-ic">🤝</div><div><b>Consultoría gratuita y honesta</b><span>Antes de pagar te decimos qué encaja con tu negocio. Y si no encajamos, también te lo decimos.</span></div></div>
   </div>
-</div></div></details></section>
+</div></div></section>
 
 <!-- ── FAQ ── -->
-<section id="faq" class="m-fold-sec section reveal" style="padding-top:0;"><details class="m-fold" open><summary>Preguntas frecuentes</summary>
+<section id="faq" class="section reveal" style="padding-top:0;">
   <div class="container">
     <div class="section-tag">Preguntas frecuentes</div>
     <h2 class="section-h2">Todo lo que necesitas saber antes de empezar</h2>
@@ -1795,7 +1877,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
       <a class="btn-ghost" href="#chat-section">¿Tienes otra pregunta? Pregúntale al asistente →</a>
     </div>
   </div>
-</details></section>
+</section>
 
 <!-- ── CHAT IA ── -->
 <section id="chat-section" class="reveal">
@@ -1804,7 +1886,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
       <div class="chat-inner">
         <div class="chat-intro">
           <div class="section-tag">Asistente TRUCO</div>
-          <h2 class="section-h2">Habla con nuestro asistente virtual (IA) ahora mismo</h2>
+          <h2 class="section-h2">Habla con nuestro asistente ahora mismo</h2>
           <p>Pregúntale cualquier cosa: precios, servicios, cómo empezar, si somos la opción correcta para tu negocio. Nuestro asistente está disponible ahora mismo para resolver todas tus dudas.</p>
 <button class="chat-cta-btn" onclick="trucoTrackClick('chatsection_empezar_a_chatear');openChat()">Empezar a chatear</button>
           <div class="social-follow">
@@ -1829,7 +1911,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
         <p>Reserva una consultoría gratuita y te decimos, sin compromiso, qué tamaño de departamento encaja con tu negocio hoy.</p>
       </div>
       <div class="cta-btns">
-<a class="btn-primary" href="#chat-section" onclick="trucoTrackClick('ctafinal_hablar_asistente')">Hablar con el asistente virtual</a>
+<a class="btn-primary" href="#chat-section" onclick="trucoTrackClick('ctafinal_hablar_asistente')">Hablar con el asistente</a>
 <a class="btn-ghost" href="servicios.html" onclick="trucoTrackClick('ctafinal_ver_servicios')">Ver servicios</a>
       </div>
     </div>
@@ -1867,7 +1949,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
           <li><a href="#nosotros">Quiénes somos</a></li>
           <li><a href="#faq">Preguntas frecuentes</a></li>
           <li><a href="pago.html">Ir a contratación</a></li>
-          <li><a href="#chat-section">Hablar con el asistente virtual</a></li>
+          <li><a href="#chat-section">Hablar con el asistente</a></li>
           <li><a href="#cta-final">Consultoría gratuita</a></li>
         </ul>
       </div>
@@ -1889,7 +1971,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
 <!-- ── FLOAT CHAT BTN ── -->
 <div id="float-chat">
   <div class="float-label" id="floatLabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:3px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> ¿Hablamos?</div>
-  <button class="float-btn" onclick="trucoTrackClick('float_chat_btn');openChat()" title="Hablar con el asistente virtual">
+  <button class="float-btn" onclick="trucoTrackClick('float_chat_btn');openChat()" title="Hablar con el asistente">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
     <span class="float-notif" id="floatNotif"></span>
   </button>
@@ -1900,13 +1982,12 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
   <div class="chat-header">
     <div class="chat-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
     <div>
-      <div class="chat-hname">Asistente virtual TRUCO</div>
-      <div class="chat-hsub">Inteligencia artificial · Departamento Tecnológico</div>
+      <div class="chat-hname">Asistente TRUCO</div>
+      <div class="chat-hsub">Departamento Tecnológico</div>
     </div>
     <div class="chat-status"></div>
     <button class="chat-close-btn" onclick="closeChat()" title="Cerrar" aria-label="Cerrar chat">✕</button>
   </div>
-  <div class="chat-ai-note">Estás hablando con un asistente virtual de inteligencia artificial, no con una persona.</div>
   <div class="chat-msgs" id="chatMsgs"></div>
   <div class="chat-input-row">
     <input class="chat-input" id="chatIn" type="text" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendMsg()">
@@ -1915,7 +1996,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
   <div class="voice-agent-row">
     <button class="voice-agent-btn audit-btn" onclick="trucoTrackClick('chat_agenda_auditoria');showBookingCard()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Agenda auditoría</button>
     <button class="voice-agent-btn" id="voiceAgentBtn" onclick="trucoTrackClick('chat_hablar_asistente_virtual');toggleVoiceAgent()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg> Hablar con asistente virtual</button>
-    <a class="voice-agent-btn voice-call-link" href="tel:+34868290450" onclick="trucoTrackClick('chat_llamar_asistente')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg> Llamar al asistente virtual</a>
+    <a class="voice-agent-btn voice-call-link" href="tel:+34868290450" onclick="trucoTrackClick('chat_llamar_asistente')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg> Llamar al asistente</a>
     <div class="voice-agent-status" id="voiceAgentStatus" style="display:none;"></div>
     <div class="voice-call-num">O llama al <a href="tel:+34868290450">868 29 04 50</a></div>
   </div>
@@ -2013,7 +2094,7 @@ function openChat(){
     showTyping();
     setTimeout(() => {
       hideTyping();
-      addMsg('bot', 'Hola, soy el asistente virtual (IA) de <b>TRUCOtechnology</b>.');
+      addMsg('bot', 'Hola, soy el asistente de <b>TRUCOtechnology</b>.');
       showTyping();
       setTimeout(() => {
         hideTyping();
@@ -2057,8 +2138,8 @@ const KB = {
   saludo: {
     patterns: ['hola','buenas','buenos días','buenas tardes','buenas noches','hey','qué tal','hi','hello','saludos','ey','buenas tengo una duda'],
     responses: [
-      '¡Hola! Soy el asistente virtual (IA) de <b>TRUCO technology</b>. Cuéntame tu negocio y te digo sin rodeos si podemos ayudarte. ¿A qué te dedicas?',
-      '¡Buenas! Encantado de tenerte por aquí. Soy el asistente virtual (IA) de <b>TRUCO technology</b>. ¿En qué puedo ayudarte hoy?',
+      '¡Hola! Soy el asistente de <b>TRUCO technology</b>. Cuéntame tu negocio y te digo sin rodeos si podemos ayudarte. ¿A qué te dedicas?',
+      '¡Buenas! Encantado de tenerte por aquí. Soy el asistente de <b>TRUCO technology</b>. ¿En qué puedo ayudarte hoy?',
       '¡Hola! Me alegra que hayas pasado por aquí. ¿Tienes alguna duda sobre nuestros servicios o quieres que te cuente qué podemos hacer por tu empresa?',
       '¡Hola! ¿Qué tal? Dime qué tipo de negocio tienes y en dos minutos te digo si y cómo podemos ayudarte.'
     ]
@@ -3177,7 +3258,7 @@ function sendMsg() {
     }
     if (!aiResp.unresolved) {
       // TRUCO PRO lo resuelve directamente.
-      addMsg('bot', aiResp.text, 'Asistente virtual TRUCO (IA)', true);
+      addMsg('bot', aiResp.text, 'Asistente TRUCO PRO', true);
       chatHistory.push({ role: 'bot', text: aiResp.text });
       maybeAskSector();
     } else if (aiResp.reason === 'off_topic') {
@@ -3185,7 +3266,7 @@ function sendMsg() {
       // educado, SIN ofrecer cita — un "¿eres tonto?" no debe acabar
       // empujando a reservar.
       const msg = aiResp.text || 'Lo siento, pero ese tema no corresponde a TRUCOtechnology.';
-      addMsg('bot', msg, aiResp.text ? 'Asistente virtual TRUCO (IA)' : null, true);
+      addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null, true);
       chatHistory.push({ role: 'bot', text: msg });
     } else if (['missing_api_key', 'api_error', 'empty_response', 'exception', 'http_error', 'rate_limited'].includes(aiResp.reason)) {
       // TRUCO PRO no está disponible ahora mismo por un fallo técnico (no
@@ -3211,7 +3292,7 @@ function sendMsg() {
       // haría mejor papel, así que se muestra su explicación y se ofrece
       // agendar directamente, siempre, no solo la primera vez.
       const msg = aiResp.text || 'Eso se sale de lo que puedo resolverte yo — pero si quieres, te reservo ahora mismo una consultoría gratuita con el equipo y lo resolvemos ahí.';
-      addMsg('bot', msg, aiResp.text ? 'Asistente virtual TRUCO (IA)' : null, true);
+      addMsg('bot', msg, aiResp.text ? 'Asistente TRUCO PRO' : null, true);
       chatHistory.push({ role: 'bot', text: msg });
       chatCtaOffered = true;
       setTimeout(() => showBookingCard(), 400);
@@ -3278,7 +3359,7 @@ async function toggleVoiceAgent() {
     btn.textContent = 'Colgar';
     btn.classList.add('active');
     btn.disabled = false;
-    status.textContent = 'Hablando con el Asistente virtual TRUCO (IA) — habla con normalidad';
+    status.textContent = 'Hablando con el Asistente TRUCO PRO — habla con normalidad';
   } catch (e) {
     status.textContent = 'No se pudo conectar. Inténtalo de nuevo o escríbenos por WhatsApp.';
     btn.textContent = 'Hablar con asistente virtual';
@@ -3313,7 +3394,7 @@ function resetVoiceUI() {
   <a href="#sectores" style="background:linear-gradient(90deg,#f2c14e,var(--gold) 55%,#c98f1f);color:#1a1206;font-weight:800;">¿Es esto para ti?</a>
   <a href="#faq">FAQ</a>
 <a href="pago.html" style="color:var(--blue);font-weight:700;" onclick="trucoTrackClick('mobilemenu_ir_a_contratacion')">Ir a contratación →</a>
-<a href="#chat-section" onclick="trucoTrackClick('mobilemenu_hablar_asistente')">Hablar con el asistente virtual →</a>
+<a href="#chat-section" onclick="trucoTrackClick('mobilemenu_hablar_asistente')">Hablar con el asistente →</a>
 </div>
 
 <script>
@@ -3559,6 +3640,5 @@ function loadGA(){
 (function(){var m=window.innerWidth<=700;document.querySelectorAll('details.fold,details.fold-inline').forEach(function(d){d.open=!m;});})();
 </script>
 <script src="assets/eco-demo.js" defer></script>
-<script src="assets/dept-visual.js" defer></script>
 </body>
 </html>
