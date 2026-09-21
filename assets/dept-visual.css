@@ -490,3 +490,15 @@ body.bk-open{overflow:hidden;}
   #soluciones-showcase .need-title{display:block !important;-webkit-line-clamp:unset !important;overflow:visible !important;font-size:.8rem !important;}
   #soluciones-showcase .need-card{gap:6px;}
 }
+
+/* ═════════ CHAT MÓVIL con teclado (estilo WhatsApp) ═════════ */
+#chatBox .chat-msgs{min-height:0;overscroll-behavior:contain;}
+@media(max-width:700px){
+  body.chat-lock{position:fixed;left:0;right:0;width:100%;overflow:hidden;}
+  #chatBox .chat-header,#chatBox .chat-input-row{flex-shrink:0;}
+  #chatBox .chat-input{font-size:16px;}
+  body.kb-open #chatBox .voice-agent-row,body.kb-open #chatBox .chat-ai-note{display:none;}
+  body.kb-open #chatBox .chat-header{padding-top:6px;padding-bottom:6px;}
+  #chatBox .chat-input-row{padding-bottom:calc(10px + env(safe-area-inset-bottom));}
+  body.kb-open #chatBox .chat-input-row{padding-bottom:10px;}
+}

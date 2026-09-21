@@ -221,6 +221,40 @@
         });
       });
     }).observe(msgs, { childList: true });
+    /* ── Teclado del móvil: el chat ocupa solo el área visible y la conversación queda a la vista ── */
+    var vv = window.visualViewport, lockY = 0, locked = false;
+    function toBottom() { if (msgs) msgs.scrollTop = msgs.scrollHeight; }
+    function fit(hOv, tOv) {
+      var open = box.classList.contains('open');
+      if (!isMobile() || !open) {
+        box.style.removeProperty('height'); box.style.removeProperty('top'); box.style.removeProperty('bottom');
+        document.body.classList.remove('kb-open');
+        return;
+      }
+      var h = typeof hOv === 'number' ? hOv : (vv ? vv.height : window.innerHeight);
+      var t = typeof tOv === 'number' ? tOv : (vv ? vv.offsetTop : 0);
+      box.style.top = Math.max(0, t) + 'px';
+      box.style.bottom = 'auto';
+      box.style.height = Math.round(h) + 'px';
+      var kb = (window.innerHeight - h) > 120;
+      document.body.classList.toggle('kb-open', kb);
+      toBottom();
+    }
+    window.trucoChatFit = fit;
+    if (vv) { vv.addEventListener('resize', function () { fit(); }); vv.addEventListener('scroll', function () { fit(); }); }
+    window.addEventListener('resize', function () { fit(); });
+    var inp = document.getElementById('chatIn');
+    if (inp) {
+      inp.addEventListener('focus', function () { [60, 250, 600].forEach(function (ms) { setTimeout(function () { fit(); toBottom(); window.scrollTo(0, 0); }, ms); }); });
+      inp.addEventListener('blur', function () { setTimeout(function () { fit(); }, 150); });
+    }
+    if (msgs) new MutationObserver(function () { if (isMobile() && box.classList.contains('open')) toBottom(); }).observe(msgs, { childList: true, subtree: true });
+    // bloquear el scroll de la página de fondo mientras el chat está abierto en móvil
+    new MutationObserver(function () {
+      var open = box.classList.contains('open') && isMobile();
+      if (open && !locked) { lockY = window.scrollY; document.body.style.top = (-lockY) + 'px'; document.body.classList.add('chat-lock'); locked = true; fit(); }
+      else if (!open && locked) { document.body.classList.remove('chat-lock'); document.body.style.top = ''; window.scrollTo(0, lockY); locked = false; fit(); }
+    }).observe(box, { attributes: true, attributeFilter: ['class'] });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && box.classList.contains('open') && typeof closeChat === 'function') closeChat();
     });
