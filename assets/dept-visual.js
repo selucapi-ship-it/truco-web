@@ -145,6 +145,8 @@
         sol: 'Con tus tarifas y tu disponibilidad real, responde al momento y agenda la visita. <b>Si hay que cambiar algo, nos escribes a nosotros: tú nunca lo tocas.</b>' },
       'sectores/gimnasios.html': { chip: 'Gimnasios', ic: '🏋️', label: 'Te pasa', pains: ['Interesados por Instagram que no reciben respuesta', 'Bajas de socios a los que nadie atendió a tiempo'],
         sol: 'Se integra con lo que ya usas, atiende, retiene socios y agenda seguimientos. <b>Tú entrenas, nosotros cuidamos que no se vayan.</b>' },
+      'sectores/restaurantes.html': { chip: 'Restaurantes', ic: '🍽️', label: 'Te pasa', pains: ['Llamadas para pedir o reservar que nadie coge en hora punta', 'Reservas por WhatsApp a deshoras sin respuesta'],
+        sol: 'Coge el teléfono, toma el pedido y reserva mesa, también por WhatsApp y desde tu web. <b>La cocina sigue y el restaurante no para.</b>' },
       'sectores/comercio-pequeno.html': { chip: 'Comercio', ic: '🛍️', label: 'Por ejemplo', pains: ['Peluquería, barbería, esteticista', 'Papelería, frutería, florería, tienda de barrio'],
         sol: 'No necesitas web ni automatizarlo todo: con el Departamento <b>Start™</b> automatizamos gratis esa única cosa que se te escapa — WhatsApp, reservas o facturación.' }
     };

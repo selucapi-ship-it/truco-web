@@ -50,6 +50,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://www.trucotechnology.com/sectores/restaurantes.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://www.trucotechnology.com/sectores/estetica.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
