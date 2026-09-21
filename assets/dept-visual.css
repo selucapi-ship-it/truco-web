@@ -384,3 +384,7 @@ body.bk-open{overflow:hidden;}
   .scg-card i{max-height:22px;opacity:1;margin-top:4px;font-size:.72rem;}
 }
 @media(prefers-reduced-motion:reduce){.scg-card,.scg-card img,.scg-card::after{transition:none !important;}.scg.scg-js .scg-card{opacity:1;transform:none;}}
+/* fotos claras de personas: menos oscurecido que las anteriores */
+.scg-card img{filter:saturate(1.02) brightness(.9) contrast(1.03);}
+.scg-card:hover img,.scg-card:focus-visible img{filter:saturate(1.08) brightness(1.02) contrast(1.03);}
+.scg-card::before{background:linear-gradient(180deg,rgba(14,13,18,0) 35%,rgba(14,13,18,.6) 68%,rgba(14,13,18,.94) 100%),linear-gradient(135deg,rgba(47,123,255,.12),rgba(217,168,63,.08));}
