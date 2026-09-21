@@ -193,6 +193,41 @@
     }, { threshold: 0.5 }).observe(chat);
   })();
 
+
+  /* ───────── Chat: se amplía cuando conversas; pantalla completa en móvil ───────── */
+  (function () {
+    var box = document.getElementById('chatBox');
+    if (!box) return;
+    var bd = document.createElement('div'); bd.id = 'chatBackdrop';
+    bd.addEventListener('click', function () { setBig(false); });
+    document.body.appendChild(bd);
+    function isMobile() { return window.innerWidth <= 700; }
+    function setBig(on) {
+      box.classList.toggle('big', !!on);
+      document.body.classList.toggle('chat-big', !!on && !isMobile());
+    }
+    window.toggleChatBig = function () { setBig(!box.classList.contains('big')); };
+    function sync() {
+      var open = box.classList.contains('open');
+      document.body.classList.toggle('chat-open', open);
+      if (!open) { setBig(false); }
+    }
+    new MutationObserver(sync).observe(box, { attributes: true, attributeFilter: ['class'] });
+    var msgs = document.getElementById('chatMsgs');
+    if (msgs) new MutationObserver(function (list) {
+      list.forEach(function (m) {
+        [].slice.call(m.addedNodes).forEach(function (n) {
+          if (n.nodeType === 1 && n.classList.contains('user') && !isMobile()) setBig(true);
+        });
+      });
+    }).observe(msgs, { childList: true });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && box.classList.contains('open') && typeof closeChat === 'function') closeChat();
+    });
+    var fl = document.getElementById('floatLabel');
+    if (fl) fl.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (typeof openChat === 'function') openChat(); } });
+  })();
+
   /* ───────── Expansores “ver todo lo que puedes elegir” ───────── */
   [].slice.call(document.querySelectorAll('.entry-more')).forEach(function (b) {
     b.addEventListener('click', function (e) {

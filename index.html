@@ -1016,7 +1016,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
   </a>
   <ul class="nav-links">
     <li><a href="servicios.html">Servicios</a></li>
-    <li><a href="#como-empezamos">Cómo empezamos</a></li>
+    <li><a href="#servicios">Departamentos</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#sectores" class="nav-links-pack">¿Es esto para ti?</a></li>
     <li><a href="#faq">FAQ</a></li>
@@ -1043,9 +1043,10 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
       <p class="hero-sub hero-sub-2">Tus asistentes de IA, <strong>entrenados para tu negocio</strong> y una web que vende, trabajando en cuanto lo ponemos en marcha. Por la noche abres tu portal y lo tienes todo: tu CRM, tu calendario y lo que ha pasado hoy. <strong>El tiempo libre vuelve a ser tuyo.</strong></p>
       <p class="hero-question">Para eso ya estamos nosotros.</p>
       <div class="hero-btns">
-<a class="btn-primary" href="#chat-section" onclick="trucoTrackClick('hero_hablar_asistente')">Hablar con el asistente virtual</a>
-<a class="btn-ghost" href="servicios.html" onclick="trucoTrackClick('hero_ver_servicios')">Ver servicios</a>
+<a class="btn-primary" href="javascript:void(0)" onclick="trucoTrackClick('hero_auditoria');openBooking()">Reservar auditoría gratuita</a>
+<a class="btn-ghost" href="javascript:void(0)" onclick="trucoTrackClick('hero_podemos_ayudarte');openChat()">¿Podemos ayudarte con algo?</a>
       </div>
+      <p class="hero-first-step"><b>Primer paso: una auditoría gratuita con una persona</b> de nuestro departamento tecnológico. Estudiamos tu negocio y te aconsejamos la mejor opción, sin compromiso.</p>
       <div class="hero-trust">
         <div class="hero-trust-item">
           <span class="hero-trust-num">20K+</span>
@@ -1280,9 +1281,9 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
     <div class="sectores-intro">
       <div class="s-tag">¿Es esto para ti?</div>
       <h2>Si esto te suena,<br>no es un lujo: es una necesidad.</h2>
-      <p>Perder un mensaje, olvidar una cita o tardar en responder tiene un coste real. Elige tu sector.</p>
+      <p>Elige tu tipo de negocio y te enseñamos cómo lo resolvemos.</p>
     </div>
-    <div class="sp" id="sectorPicker"><div class="sp-chips" role="tablist" aria-label="Sectores"></div><div class="sp-panel" aria-live="polite"></div></div>
+    <div class="scg" id="sectorCards"><a class="scg-card" href="sectores/abogados.html"><span class="scg-ic">⚖️</span><b>Abogados y bufetes</b><em>Citas y mensajes al día</em><i>Ver mi sector →</i></a><a class="scg-card" href="sectores/clinicas.html"><span class="scg-ic">🩺</span><b>Clínicas</b><em>Pacientes y citas bajo control</em><i>Ver mi sector →</i></a><a class="scg-card" href="sectores/inmobiliarias.html"><span class="scg-ic">🏠</span><b>Inmobiliarias</b><em>El que responde primero, vende</em><i>Ver mi sector →</i></a><a class="scg-card" href="sectores/estetica.html"><span class="scg-ic">💅</span><b>Estética y belleza</b><em>Reservas a cualquier hora</em><i>Ver mi sector →</i></a><a class="scg-card" href="sectores/oficios.html"><span class="scg-ic">🔧</span><b>Autónomos de oficios</b><em>Presupuestos sin coger el móvil</em><i>Ver mi sector →</i></a><a class="scg-card" href="sectores/gimnasios.html"><span class="scg-ic">🏋️</span><b>Gimnasios</b><em>Socios atendidos y retenidos</em><i>Ver mi sector →</i></a><a class="scg-card" href="sectores/comercio-pequeno.html"><span class="scg-ic">🛍️</span><b>Comercio y pequeños negocios</b><em>Resuelve UNA cosa</em><i>Ver mi sector →</i></a></div>
     <div class="sectores-carousel" id="sectoresCarousel">
       <div class="sc-track-wrap">
         <div class="sc-track" id="scTrack">
@@ -1421,20 +1422,21 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
 </section>
 
 <!-- ── CÓMO EMPEZAMOS ── -->
-<section id="como-empezamos" class="section reveal">
+<section id="servicios" class="section reveal" style="padding-top:0;">
   <div class="container">
     <div class="section-tag">Encuentra lo que necesitas</div>
-    <h2 class="section-h2">Cada Departamento resuelve algo distinto. ¿Cuál necesitas tú?</h2>
-    <p class="section-sub">Esto es lo que automatizamos en cada uno. El detalle completo y el precio están en su propia página.</p>
-    <div class="entry-strip">
-      <div class="entry-steps entry-steps-4">
-        <div class="entry-card c-gold" onclick="location.href='departamentos/start.html'" style="cursor:pointer;"><div class="entry-head"><div class="entry-icon"><span class="entry-icon-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg></span></div><h4>Start™</h4></div><div class="entry-kicker">Eliges 1 automatización — sin web</div><ul class="entry-needs"><li>Automatizamos tu <b>WhatsApp</b> para que no pierdas clientes y las citas se agenden solas.</li><li>Automatizamos tu <b>correo</b> para que no tengas que contestar tú a nada.</li><li class="extra-m">Ponemos una <b>IA en tu web</b> para que resuelva dudas y capte clientes mientras trabajas.</li><li class="extra">Automatizamos tus <b>reservas</b> para que nunca se te solapen las citas.</li><li class="extra">Automatizamos tus <b>facturas</b> para que dejes de perder horas facturando a mano.</li></ul><button type="button" class="entry-more" data-label="Ver todo lo que puedes elegir (+3)">Ver todo lo que puedes elegir (+3)</button><a class="entry-cta" href="departamentos/start.html">Ver Start™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
-        <div class="entry-card c-teal" onclick="location.href='departamentos/basic.html'" style="cursor:pointer;"><div class="entry-recommended-badge">★ Recomendado</div><div class="entry-head"><div class="entry-icon"><span class="entry-icon-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="7" y1="14" x2="13" y2="14"/></svg></span></div><h4>Basic™</h4></div><div class="entry-kicker">Web + eliges 1 automatización</div><ul class="entry-needs"><li>Creamos tu <b>web profesional</b> (con chat y agenda de fábrica) para que te encuentren y te reserven solos.</li><li>Automatizamos tu <b>WhatsApp</b> para que no pierdas clientes y las citas se agenden solas.</li><li class="extra-m">Automatizamos tu <b>correo</b> para que no tengas que contestar tú a nada.</li><li class="extra">Automatizamos tus <b>facturas</b> para que dejes de perder horas facturando a mano.</li></ul><button type="button" class="entry-more" data-label="Ver todo lo que puedes elegir (+2)">Ver todo lo que puedes elegir (+2)</button><a class="entry-cta" href="departamentos/basic.html">Ver Basic™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
-        <div class="entry-card c-green" onclick="location.href='departamentos/lite.html'" style="cursor:pointer;"><div class="entry-head"><div class="entry-icon"><span class="entry-icon-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/><line x1="3" y1="12" x2="21" y2="12"/></svg></span></div><h4>Lite™</h4></div><div class="entry-kicker">Web + eliges 2 automatizaciones</div><ul class="entry-needs"><li>Ponemos tu <b>web al día</b> —reacondicionada o nueva—, con chat y agenda, para que trabaje por ti.</li><li>Automatizamos tu <b>WhatsApp</b> para que no pierdas clientes y las citas se agenden solas.</li><li class="extra-m">Ponemos una <b>IA que coge tus llamadas</b> para que no pierdas ninguna mientras trabajas.</li><li class="extra">Automatizamos tu <b>correo</b> para que no tengas que contestar tú a nada.</li><li class="extra">Automatizamos tus <b>facturas</b> para que dejes de perder horas facturando a mano.</li><li class="extra">Automatizamos la <b>firma digital</b> para cerrar contratos sin papeles ni idas y venidas.</li></ul><button type="button" class="entry-more" data-label="Ver todo lo que puedes elegir (+4)">Ver todo lo que puedes elegir (+4)</button><a class="entry-cta" href="departamentos/lite.html">Ver Lite™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
-        <div class="entry-card c-blue" onclick="location.href='departamentos/pro.html'" style="cursor:pointer;"><div class="entry-head"><div class="entry-icon"><span class="entry-icon-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span></div><h4>Pro™</h4></div><div class="entry-kicker">Web + eliges 3 automatizaciones</div><ul class="entry-needs"><li>Creamos tu <b>web profesional</b> (con chat y agenda de fábrica) para que te encuentren y te reserven solos.</li><li>Automatizamos tu <b>WhatsApp</b> para que no pierdas clientes y las citas se agenden solas.</li><li class="extra-m">Ponemos una <b>IA que coge tus llamadas</b> para que no pierdas ninguna mientras trabajas.</li><li class="extra">Automatizamos tu <b>correo</b> para que no tengas que contestar tú a nada.</li><li class="extra">Automatizamos la <b>firma digital</b> para cerrar contratos sin papeles ni idas y venidas.</li><li class="extra">Revisamos tu <b>ciberseguridad</b> para que un susto informático no pare tu negocio.</li><li class="extra">Creamos <b>flujos a tu medida</b> para que dejes de repetir tareas a mano.</li></ul><button type="button" class="entry-more" data-label="Ver todo lo que puedes elegir (+5)">Ver todo lo que puedes elegir (+5)</button><a class="entry-cta" href="departamentos/pro.html">Ver Pro™ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a></div>
-      </div>
+    <h2 class="section-h2">Elige tu Departamento</h2>
+    <p class="section-sub">Cada uno resuelve una necesidad distinta. En todos, tu Departamento incluye CRM, calendario, mantenimiento y soporte. El detalle y el precio están en su página.</p>
+    <div class="dq-legend"><span><i class="in">✓</i> Incluido siempre</span><span><i class="pk">○</i> Tú eliges una parte de esta lista</span></div>
+    <div class="dq-grid">
+      <a class="dq-card c-gold" href="departamentos/start.html"><div class="dq-name">Start™</div><div class="dq-need">Cuando solo necesitas resolver UNA cosa.</div><div class="dq-lab">Incluido siempre</div><ul class="dq-list"><li class="in">CRM y calendario</li><li class="in">Mantenimiento y soporte</li></ul><div class="dq-lab pick">Tú eliges 1 de estas 5</div><ul class="dq-list"><li class="pk">WhatsApp que contesta y agenda</li><li class="pk">Correo que se contesta solo</li><li class="pk">IA en tu web</li><li class="pk">Reservas sin solapes</li><li class="pk">Facturas automáticas</li></ul><span class="dq-go">Ver el Departamento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></a>
+      <a class="dq-card c-teal" href="departamentos/basic.html"><span class="dq-badge">RECOMENDADO</span><div class="dq-name">Basic™</div><div class="dq-need">Tu web, trabajando por ti.</div><div class="dq-lab">Incluido siempre</div><ul class="dq-list"><li class="in">Web interactiva con salud técnica</li><li class="in">Asistente IA en tu web</li><li class="in">Agenda con citas online</li><li class="in">CRM y calendario</li></ul><div class="dq-lab pick">Tú eliges 1 de estas 3</div><ul class="dq-list"><li class="pk">WhatsApp que contesta y agenda</li><li class="pk">Correo que se contesta solo</li><li class="pk">Facturas automáticas</li></ul><span class="dq-go">Ver el Departamento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></a>
+      <a class="dq-card c-green" href="departamentos/lite.html"><div class="dq-name">Lite™</div><div class="dq-need">Todos tus canales a la vez.</div><div class="dq-lab">Incluido siempre</div><ul class="dq-list"><li class="in">Web (la tuya reacondicionada o nueva)</li><li class="in">Asistente IA en tu web y agenda online</li><li class="in">CRM y calendario</li><li class="in">Reunión mensual</li></ul><div class="dq-lab pick">Tú eliges 2 de estas 5</div><ul class="dq-list"><li class="pk">WhatsApp</li><li class="pk">Correo</li><li class="pk">Facturas</li><li class="pk">Llamadas con IA</li><li class="pk">Firma digital</li></ul><span class="dq-go">Ver el Departamento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></a>
+      <a class="dq-card c-blue" href="departamentos/pro.html"><div class="dq-name">Pro™</div><div class="dq-need">El departamento completo.</div><div class="dq-lab">Incluido siempre</div><ul class="dq-list"><li class="in">Web profesional</li><li class="in">Asistente IA en tu web y agenda online</li><li class="in">CRM y calendario</li><li class="in">Supervisión continua y prioridad</li></ul><div class="dq-lab pick">Tú eliges 3 de estas 6</div><ul class="dq-list"><li class="pk">WhatsApp</li><li class="pk">Llamadas con IA</li><li class="pk">Correo</li><li class="pk">Firma digital</li><li class="pk">Ciberseguridad</li><li class="pk">Flujos a tu medida</li></ul><span class="dq-go">Ver el Departamento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></a>
     </div>
-    <p class="entry-all">En todos: tu CRM y calendario propios, mantenimiento y soporte incluidos.</p>
+    <div class="dedication-note">
+      <b>Tu primer año va incluido en el precio.</b> <a href="servicios.html" style="color:var(--blue);">Comparativa completa y catálogo en Servicios →</a>
+    </div>
   </div>
 </section>
 
@@ -1631,22 +1633,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
 </script>
 
 <!-- ── SERVICIOS ── -->
-<section id="servicios" class="section reveal" style="padding-top:0;">
-  <div class="container">
-    <div class="section-tag">Departamento Tecnológico TRUCO™</div>
-    <h2 class="section-h2">Elige tu Departamento</h2>
-    <p class="section-sub">Cada uno tiene su propia página con todo lo que incluye y su precio.</p>
-    <div class="dp-grid">
-      <a class="dp-card c-gold" href="departamentos/start.html"><div class="dp-name">Start™</div><div class="dp-tag">1 automatización a tu elección, sin web.</div><span class="dp-go">Ver departamento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></a>
-      <a class="dp-card c-teal" href="departamentos/basic.html"><span class="dp-badge">RECOMENDADO</span><div class="dp-name">Basic™</div><div class="dp-tag">Web profesional + 1 automatización.</div><span class="dp-go">Ver departamento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></a>
-      <a class="dp-card c-green" href="departamentos/lite.html"><div class="dp-name">Lite™</div><div class="dp-tag">Web + 2 automatizaciones.</div><span class="dp-go">Ver departamento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></a>
-      <a class="dp-card c-blue" href="departamentos/pro.html"><div class="dp-name">Pro™</div><div class="dp-tag">Web profesional + 3 automatizaciones.</div><span class="dp-go">Ver departamento <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span></a>
-    </div>
-    <div class="dedication-note">
-      <b>En los 4, tu primer año va incluido en el precio.</b> <a href="servicios.html" style="color:var(--blue);">Comparativa completa y catálogo en Servicios →</a>
-    </div>
-  </div>
-</section>
+
 
 <section id="ecosistema" class="section reveal" style="padding-top:56px;padding-bottom:20px;">
   <div class="container">
@@ -1740,7 +1727,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
     <div class="g-item"><div class="g-ic">🛡️</div><div><b>Todo funcionando en 90 días, o 3 meses de regalo</b><span>Si pasados 90 días desde que nos entregas tus accesos e información no está todo funcionando, te regalamos 3 meses más de Departamento.</span></div></div>
     <div class="g-item"><div class="g-ic">🔧</div><div><b>Ajustes sin límite el primer mes</b><span>Durante la integración ajustamos lo que haga falta. A partir del segundo mes, los ajustes se gestionan según tu Departamento.</span></div></div>
     <div class="g-item"><div class="g-ic">📦</div><div><b>Te lo llevas todo si te vas</b><span>Web, contenido y configuración, en pen drive o en la nube. Desde ese momento, el mantenimiento de las plataformas pasa a ser tuyo.</span></div></div>
-    <div class="g-item"><div class="g-ic">🤝</div><div><b>Consultoría gratuita y honesta</b><span>Antes de pagar te decimos qué encaja con tu negocio. Y si no encajamos, también te lo decimos.</span></div></div>
+    <div class="g-item"><div class="g-ic">🤝</div><div><b>Auditoría gratuita con una persona, y honesta</b><span>Antes de pagar te decimos qué encaja con tu negocio. Y si no encajamos, también te lo decimos.</span></div></div>
   </div>
 </div></div></details></section>
 
@@ -1776,7 +1763,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Qué garantías tengo? <span class="faq-icon">+</span></button>
-        <div class="faq-a"><p>Cuatro: <b>(1)</b> si pasados 90 días desde que nos das tus accesos e información no está todo funcionando, te regalamos 3 meses más de Departamento; <b>(2)</b> ajustes sin límite durante el primer mes de integración, y después según tu Departamento; <b>(3)</b> si te vas, te llevas todo en pen drive o en la nube (desde entonces, el mantenimiento de las plataformas es tuyo); y <b>(4)</b> consultoría gratuita y honesta antes de pagar: si no encajamos, te lo decimos.</p></div>
+        <div class="faq-a"><p>Cuatro: <b>(1)</b> si pasados 90 días desde que nos das tus accesos e información no está todo funcionando, te regalamos 3 meses más de Departamento; <b>(2)</b> ajustes sin límite durante el primer mes de integración, y después según tu Departamento; <b>(3)</b> si te vas, te llevas todo en pen drive o en la nube (desde entonces, el mantenimiento de las plataformas es tuyo); y <b>(4)</b> auditoría gratuita con una persona, y honesta, antes de pagar: si no encajamos, te lo decimos.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)">¿Cómo se paga? <span class="faq-icon">+</span></button>
@@ -1826,7 +1813,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
     <div class="cta-inner">
       <div>
         <h2>¿Por qué esperar para tener el equipo técnico que tu negocio necesita?</h2>
-        <p>Reserva una consultoría gratuita y te decimos, sin compromiso, qué tamaño de departamento encaja con tu negocio hoy.</p>
+        <p>Reserva una auditoría gratuita con una persona y te decimos, sin compromiso, qué tamaño de departamento encaja con tu negocio hoy.</p>
       </div>
       <div class="cta-btns">
 <a class="btn-primary" href="#chat-section" onclick="trucoTrackClick('ctafinal_hablar_asistente')">Hablar con el asistente virtual</a>
@@ -1868,7 +1855,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
           <li><a href="#faq">Preguntas frecuentes</a></li>
           <li><a href="pago.html">Ir a contratación</a></li>
           <li><a href="#chat-section">Hablar con el asistente virtual</a></li>
-          <li><a href="#cta-final">Consultoría gratuita</a></li>
+          <li><a href="#cta-final">Auditoría gratuita con una persona</a></li>
         </ul>
       </div>
     </div>
@@ -1886,9 +1873,21 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
   </div>
 </footer>
 
+
+<!-- ── RESERVA DE AUDITORÍA (pantalla completa en móvil) ── -->
+<div id="bookOverlay" role="dialog" aria-modal="true" aria-label="Reservar auditoría gratuita" hidden>
+  <div class="bk-panel">
+    <div class="bk-head">
+      <div><b>Auditoría gratuita con una persona del equipo</b><span>20-30 min · Sin compromiso · Estudiamos tu negocio y te aconsejamos la mejor opción</span></div>
+      <button type="button" class="bk-close" onclick="closeBooking()" aria-label="Cerrar el calendario">✕ Cerrar</button>
+    </div>
+    <iframe id="bookFrame" title="Elegir día y hora para la auditoría gratuita"></iframe>
+  </div>
+</div>
+
 <!-- ── FLOAT CHAT BTN ── -->
 <div id="float-chat">
-  <div class="float-label" id="floatLabel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:3px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg> ¿Hablamos?</div>
+  <div class="float-label" id="floatLabel" onclick="trucoTrackClick('float_label');openChat()" role="button" tabindex="0">¿Podemos ayudarte con algo?</div>
   <button class="float-btn" onclick="trucoTrackClick('float_chat_btn');openChat()" title="Hablar con el asistente virtual">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
     <span class="float-notif" id="floatNotif"></span>
@@ -1904,7 +1903,8 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
       <div class="chat-hsub">Inteligencia artificial · Departamento Tecnológico</div>
     </div>
     <div class="chat-status"></div>
-    <button class="chat-close-btn" onclick="closeChat()" title="Cerrar" aria-label="Cerrar chat">✕</button>
+    <button class="chat-expand-btn" type="button" onclick="toggleChatBig()" title="Ampliar el chat" aria-label="Ampliar el chat">⤢</button>
+    <button class="chat-close-btn" onclick="closeChat()" title="Cerrar" aria-label="Cerrar chat">✕<span class="cc-txt"> Cerrar</span></button>
   </div>
   <div class="chat-ai-note">Estás hablando con un asistente virtual de inteligencia artificial, no con una persona.</div>
   <div class="chat-msgs" id="chatMsgs"></div>
@@ -1913,7 +1913,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
     <button class="chat-send" onclick="sendMsg()">Enviar</button>
   </div>
   <div class="voice-agent-row">
-    <button class="voice-agent-btn audit-btn" onclick="trucoTrackClick('chat_agenda_auditoria');showBookingCard()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Agenda auditoría</button>
+    <button class="voice-agent-btn audit-btn" onclick="trucoTrackClick('chat_agenda_auditoria');openBooking()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Auditoría gratuita con una persona</button>
     <button class="voice-agent-btn" id="voiceAgentBtn" onclick="trucoTrackClick('chat_hablar_asistente_virtual');toggleVoiceAgent()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg> Hablar con asistente virtual</button>
     <a class="voice-agent-btn voice-call-link" href="tel:+34868290450" onclick="trucoTrackClick('chat_llamar_asistente')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:5px;"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg> Llamar al asistente virtual</a>
     <div class="voice-agent-status" id="voiceAgentStatus" style="display:none;"></div>
@@ -2362,7 +2362,7 @@ const KB = {
   no_tengo_tiempo: {
     patterns: ['no tengo tiempo','ahora no puedo','estoy muy liado','no tengo tiempo para esto'],
     responses: [
-      'Justo por eso está pensado así: la parte que más tiempo lleva (la implantación) la hacemos nosotros. A ti solo te pedimos una reunión inicial para entender tu negocio, y algún momento puntual de validación. El resto — configuración, pruebas, mantenimiento — corre de nuestra parte. ¿Tienes 20-30 minutos algún día de esta semana para una consultoría gratuita y lo vemos con calma?'
+      'Justo por eso está pensado así: la parte que más tiempo lleva (la implantación) la hacemos nosotros. A ti solo te pedimos una reunión inicial para entender tu negocio, y algún momento puntual de validación. El resto — configuración, pruebas, mantenimiento — corre de nuestra parte. ¿Tienes 20-30 minutos algún día de esta semana para una auditoría gratuita con una persona y lo vemos con calma?'
     ]
   },
 
@@ -2490,9 +2490,9 @@ const KB = {
 
   // ── CITA / CONTACTO HUMANO ──
   reservar_cita: {
-    patterns: ['reservar cita','reservar consultoría','quiero una consultoría','agendar una llamada','agendar cita','agéndame','agendame','quiero agendar','puedes agendarme','quiero una cita','dame una cita','ponme una cita','resérvame','reservame','cómo contrato','quiero empezar ya','quiero reservar','consultoría gratuita','pedir cita','quiero cita','necesito una cita','coge una cita','coger cita','quiero una auditoría','quiero una auditoria','necesito una auditoría','necesito una auditoria','pedir una auditoría','pedir una auditoria','solicitar una auditoría','solicitar una auditoria','agendar una auditoría','agendar una auditoria','auditoría gratuita','auditoria gratuita','quiero auditoria','quiero auditoría','una reunión con vosotros','una reunion con vosotros','hablar con el equipo'],
+    patterns: ['reservar cita','reservar consultoría','quiero una consultoría','agendar una llamada','agendar cita','agéndame','agendame','quiero agendar','puedes agendarme','quiero una cita','dame una cita','ponme una cita','resérvame','reservame','cómo contrato','quiero empezar ya','quiero reservar','auditoría gratuita con una persona','pedir cita','quiero cita','necesito una cita','coge una cita','coger cita','quiero una auditoría','quiero una auditoria','necesito una auditoría','necesito una auditoria','pedir una auditoría','pedir una auditoria','solicitar una auditoría','solicitar una auditoria','agendar una auditoría','agendar una auditoria','auditoría gratuita','auditoria gratuita','quiero auditoria','quiero auditoría','una reunión con vosotros','una reunion con vosotros','hablar con el equipo'],
     responses: [
-      'Me alegra que quieras dar el paso.\n\nLa consultoría gratuita dura unos 20-30 minutos. Analizamos tu empresa, te decimos qué automatizaciones encajan y qué costaría. Sin compromiso.\n\n¿Prefieres elegir día y hora tú mismo o que te contactemos nosotros?',
+      'Me alegra que quieras dar el paso.\n\nLa auditoría gratuita con una persona dura unos 20-30 minutos. Analizamos tu empresa, te decimos qué automatizaciones encajan y qué costaría. Sin compromiso.\n\n¿Prefieres elegir día y hora tú mismo o que te contactemos nosotros?',
       '¡Perfecto! La consultoría es gratuita y sin compromiso. En 20-30 minutos te explicamos exactamente cómo encajaría TRUCO en tu empresa y qué inversión necesitarías. ¿Cuándo tienes disponibilidad?'
     ],
     action: 'MOSTRAR_CITA'
@@ -2501,14 +2501,14 @@ const KB = {
   hablar_con_humano: {
     patterns: ['quiero hablar con una persona','quiero hablar con alguien real','esto es un bot','eres un robot','quiero hablar con un humano'],
     responses: [
-      'Soy el asistente virtual de TRUCO, sí — pero puedo resolverte prácticamente cualquier duda sobre precios, planes y proceso ahora mismo. Si prefieres hablar directamente con una persona del equipo, lo mejor es reservar la consultoría gratuita (20-30 min, sin compromiso) o [escribir por WhatsApp](https://wa.me/34681899793). ¿Qué prefieres?'
+      'Soy el asistente virtual de TRUCO, sí — pero puedo resolverte prácticamente cualquier duda sobre precios, planes y proceso ahora mismo. Si prefieres hablar directamente con una persona del equipo, lo mejor es reservar la auditoría gratuita con una persona del equipo (20-30 min, sin compromiso) o [escribir por WhatsApp](https://wa.me/34681899793). ¿Qué prefieres?'
     ]
   },
 
   horario_atencion: {
     patterns: ['horario de atención','a qué hora atendéis','estáis disponibles','horario de soporte'],
     responses: [
-      'Este asistente está disponible 24/7 para resolver dudas al momento. Para hablar con el equipo humano, la vía más rápida es reservar una consultoría gratuita a la hora que mejor te venga, o [escribir por WhatsApp](https://wa.me/34681899793) (L-V 10:00-20:00, sáb 10:00-15:00). ¿Quieres que te muestre el calendario de citas?'
+      'Este asistente está disponible 24/7 para resolver dudas al momento. Para hablar con el equipo humano, la vía más rápida es reservar una auditoría gratuita con una persona del equipo a la hora que mejor te venga, o [escribir por WhatsApp](https://wa.me/34681899793) (L-V 10:00-20:00, sáb 10:00-15:00). ¿Quieres que te muestre el calendario de citas?'
     ]
   },
 
@@ -2630,7 +2630,7 @@ const KB = {
   experiencia_referencias: {
     patterns: ['tenéis clientes','tenéis referencias','casos de éxito','tenéis experiencia','cuánto tiempo lleváis','sois nuevos'],
     responses: [
-      'Trabajamos precisamente con la filosofía de un departamento tecnológico serio: ajustamos la implantación las veces que haga falta sin coste adicional, con la Garantía de Ajuste TRUCO™, y un único interlocutor para todo. Preferimos que lo compruebes tú mismo antes que prometerte cifras. ¿Quieres que analicemos tu caso concreto en una consultoría gratuita?'
+      'Trabajamos precisamente con la filosofía de un departamento tecnológico serio: ajustamos la implantación las veces que haga falta sin coste adicional, con la Garantía de Ajuste TRUCO™, y un único interlocutor para todo. Preferimos que lo compruebes tú mismo antes que prometerte cifras. ¿Quieres que analicemos tu caso concreto en una auditoría gratuita con una persona?'
     ]
   },
 
@@ -2781,7 +2781,7 @@ function getResponse(intentKey, state) {
       && state.discussedTopics.size >= 3
       && !state.ctaOffered;
     if (readyToClose) {
-      text += '\n\nParece que ya tienes bastante claro el panorama. Si quieres, damos el último paso: una consultoría gratuita de 20-30 min donde revisamos tu caso concreto y confirmamos precio y plan exacto — sin compromiso.';
+      text += '\n\nParece que ya tienes bastante claro el panorama. Si quieres, damos el último paso: una auditoría gratuita con una persona del equipo de 20-30 min donde revisamos tu caso concreto y confirmamos precio y plan exacto — sin compromiso.';
       action = 'MOSTRAR_CITA';
     }
   }
@@ -3008,39 +3008,43 @@ function showTyping() {
 }
 function hideTyping() { const e = document.getElementById('typing'); if(e) e.remove(); }
 
+const BOOKING_URL = 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0EQUIRw33OP7zOOmNgLOS2sdzZBf_fAUi4VM6BIsH0K9S64p42mC4SQ9P5rjHlrjK9jz8aftQe?gv=true';
+let bookingLogged = false;
+function openBooking() {
+  const ov = document.getElementById('bookOverlay');
+  if (!ov) { window.open(BOOKING_URL, '_blank', 'noopener'); return; }
+  const fr = document.getElementById('bookFrame');
+  if (!fr.getAttribute('src')) fr.setAttribute('src', BOOKING_URL);
+  ov.hidden = false;
+  document.body.classList.add('bk-open');
+  if (!bookingLogged) { bookingLogged = true; try { logChatLead('Abrió el calendario de la auditoría gratuita con una persona.'); } catch (e) {} }
+}
+function closeBooking() {
+  const ov = document.getElementById('bookOverlay');
+  if (ov) ov.hidden = true;
+  document.body.classList.remove('bk-open');
+}
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeBooking(); });
+
+// Tarjeta dentro del chat: ya no incrusta el botón pequeño de Google, abre el calendario grande.
 function showBookingCard() {
   const existing = document.querySelector('.booking-card');
   if (existing) {
     existing.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     return;
   }
-  logChatLead('Se le mostró el calendario de reserva de consultoría gratuita.');
+  logChatLead('Se le ofreció la auditoría gratuita con una persona.');
   chatHadBookingCard = true;
   saveChatState();
   const card = document.createElement('div');
   card.className = 'msg bot booking-card';
   card.innerHTML = `
-    <div style="font-size:.82rem;font-weight:700;color:var(--white);margin-bottom:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;display:inline-block;vertical-align:-0.15em;margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Reserva tu consultoría gratuita</div>
-    <div style="font-size:.76rem;color:var(--grey);margin-bottom:12px;line-height:1.5;">20-30 minutos · Sin compromiso · Te decimos exactamente qué necesita tu negocio.</div>
-    <div class="gcal-booking-btn" style="margin-bottom:8px;"></div>
+    <div style="font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:6px;">Auditoría gratuita con una persona</div>
+    <div style="font-size:.86rem;color:var(--grey);margin-bottom:12px;line-height:1.5;">Una persona de nuestro departamento tecnológico estudia tu negocio y te aconseja la mejor opción. 20-30 minutos, sin compromiso.</div>
+    <button type="button" class="bk-open-btn" onclick="openBooking()">Elegir día y hora →</button>
   `;
   document.getElementById('chatMsgs').appendChild(card);
   document.getElementById('chatMsgs').scrollTop = 99999;
-  loadGoogleBookingButton(card.querySelector('.gcal-booking-btn'));
-}
-
-function loadGoogleBookingButton(target, attempts) {
-  attempts = attempts || 0;
-  if (window.calendar && window.calendar.schedulingButton) {
-    calendar.schedulingButton.load({
-      url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0EQUIRw33OP7zOOmNgLOS2sdzZBf_fAUi4VM6BIsH0K9S64p42mC4SQ9P5rjHlrjK9jz8aftQe?gv=true',
-      color: '#2f7bff',
-      label: 'Elegir día y hora →',
-      target,
-    });
-  } else if (attempts < 25) {
-    setTimeout(() => loadGoogleBookingButton(target, attempts + 1), 200);
-  }
 }
 
 let chatHistory = [];
@@ -3095,7 +3099,7 @@ function answerWithLocalBot(intentKey) {
     ctaOffered: chatCtaOffered
   });
   chatLocalBotTopics.add(intentKey);
-  addMsg('bot', localMsg);
+  addMsg('bot', localMsg, 'Asistente virtual TRUCO (IA)');
   chatHistory.push({ role: 'bot', text: localMsg });
   if (action === 'MOSTRAR_CITA') {
     chatCtaOffered = true;
@@ -3146,17 +3150,8 @@ function sendMsg() {
     if (loQuiereSoloInfo) return;
   }
 
-  // El bot local responde PRIMERO cuando está realmente seguro de la
-  // intención (dos o más patrones coincidentes, o uno lo bastante específico)
-  // — así la cuota diaria, muy limitada, de Gemini se reserva para las
-  // preguntas que el motor de reglas no puede resolver bien. Si no está
-  // seguro, se comporta exactamente igual que antes: pasa la pregunta a la IA.
-  const localGuess = TRUCO_CHAT.detectIntentWithConfidence(text);
-  if (localGuess.key !== 'fallback' && (localGuess.exactScore >= 2 || localGuess.exactSpecificity >= 6)) {
-    answerWithLocalBot(localGuess.key);
-    return;
-  }
-
+  // Desde la primera pregunta responde el asistente de IA. El motor de reglas local
+  // solo entra como red de seguridad cuando la IA falla por un motivo técnico.
   // El resto de preguntas va al asistente de IA (TRUCO PRO), porque entiende
   // matices que el motor local no puede. El motor local (TRUCO_CHAT) vuelve a
   // entrar en juego más abajo, como red de seguridad silenciosa, cuando la IA
@@ -3198,7 +3193,7 @@ function sendMsg() {
       if (intentKey !== 'fallback') {
         answerWithLocalBot(intentKey);
       } else {
-        const msg = 'Ahora mismo tengo mucha demanda y no puedo darte una respuesta tan completa como me gustaría — pero si quieres, te reservo ahora mismo una consultoría gratuita con el equipo y lo resolvemos ahí.';
+        const msg = 'Ahora mismo tengo mucha demanda y no puedo darte una respuesta tan completa como me gustaría — pero si quieres, te reservo ahora mismo una auditoría gratuita con una persona del equipo y lo resolvemos ahí.';
         addMsg('bot', msg);
         chatHistory.push({ role: 'bot', text: msg });
         chatCtaOffered = true;
@@ -3210,7 +3205,7 @@ function sendMsg() {
       // muy específico, presupuesto a medida...) — aquí el bot local tampoco
       // haría mejor papel, así que se muestra su explicación y se ofrece
       // agendar directamente, siempre, no solo la primera vez.
-      const msg = aiResp.text || 'Eso se sale de lo que puedo resolverte yo — pero si quieres, te reservo ahora mismo una consultoría gratuita con el equipo y lo resolvemos ahí.';
+      const msg = aiResp.text || 'Eso se sale de lo que puedo resolverte yo — pero si quieres, te reservo ahora mismo una auditoría gratuita con una persona del equipo y lo resolvemos ahí.';
       addMsg('bot', msg, aiResp.text ? 'Asistente virtual TRUCO (IA)' : null, true);
       chatHistory.push({ role: 'bot', text: msg });
       chatCtaOffered = true;
@@ -3308,7 +3303,7 @@ function resetVoiceUI() {
 <!-- MOBILE NAV -->
 <div class="mobile-nav" id="mobileNav">
   <a href="servicios.html">Servicios</a>
-  <a href="#como-empezamos">Cómo empezamos</a>
+  <a href="#servicios">Departamentos</a>
   <a href="#nosotros">Nosotros</a>
   <a href="#sectores" style="background:linear-gradient(90deg,#f2c14e,var(--gold) 55%,#c98f1f);color:#1a1206;font-weight:800;">¿Es esto para ti?</a>
   <a href="#faq">FAQ</a>
