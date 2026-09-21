@@ -228,6 +228,20 @@
     if (fl) fl.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (typeof openChat === 'function') openChat(); } });
   })();
 
+
+  /* ───────── Sectores: las tarjetas con imagen aparecen escalonadas ───────── */
+  (function () {
+    var g = document.getElementById('sectorCards');
+    if (!g || reduced || !('IntersectionObserver' in window)) return;
+    var cards = [].slice.call(g.querySelectorAll('.scg-card'));
+    g.classList.add('scg-js');
+    new IntersectionObserver(function (es, obs) {
+      if (!es[0].isIntersecting) return;
+      obs.disconnect();
+      cards.forEach(function (c, i) { setTimeout(function () { c.classList.add('in'); }, i * 110); });
+    }, { threshold: 0.12 }).observe(g);
+  })();
+
   /* ───────── Expansores “ver todo lo que puedes elegir” ───────── */
   [].slice.call(document.querySelectorAll('.entry-more')).forEach(function (b) {
     b.addEventListener('click', function (e) {
