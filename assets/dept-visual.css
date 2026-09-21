@@ -502,3 +502,8 @@ body.bk-open{overflow:hidden;}
   #chatBox .chat-input-row{padding-bottom:calc(10px + env(safe-area-inset-bottom));}
   body.kb-open #chatBox .chat-input-row{padding-bottom:10px;}
 }
+
+/* el chat nunca se desplaza por dentro (evita que el teclado oculte la cabecera) */
+#chatBox{overflow:clip !important;}
+@supports not (overflow:clip){#chatBox{overflow:hidden !important;}}
+#chatBox .chat-header{position:relative;z-index:3;}

@@ -224,6 +224,7 @@
     /* ── Teclado del móvil: el chat ocupa solo el área visible y la conversación queda a la vista ── */
     var vv = window.visualViewport, lockY = 0, locked = false;
     function toBottom() { if (msgs) msgs.scrollTop = msgs.scrollHeight; }
+    var baseH = Math.max(window.innerHeight, vv ? vv.height : 0);
     function fit(hOv, tOv) {
       var open = box.classList.contains('open');
       if (!isMobile() || !open) {
@@ -236,8 +237,15 @@
       box.style.top = Math.max(0, t) + 'px';
       box.style.bottom = 'auto';
       box.style.height = Math.round(h) + 'px';
-      var kb = (window.innerHeight - h) > 120;
+      // altura de referencia = la de la pantalla sin teclado (con el teclado abierto el navegador
+      // puede reducir también la ventana, así que no vale comparar solo con innerHeight)
+      var inpEl = document.getElementById('chatIn');
+      if (document.activeElement !== inpEl) baseH = Math.max(window.innerHeight, vv ? vv.height : 0, typeof hOv === 'number' ? hOv : 0);
+      var kb = h < baseH - 120;
       document.body.classList.toggle('kb-open', kb);
+      // el navegador puede desplazar el contenido interno al enfocar el campo: volver siempre arriba
+      box.scrollTop = 0;
+      if (box.parentElement) box.parentElement.scrollTop = 0;
       toBottom();
     }
     window.trucoChatFit = fit;
