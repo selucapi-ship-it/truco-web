@@ -325,6 +325,19 @@
     start(); setTimeout(start, 300); sync();
   })();
 
+
+  /* ───────── Cookies: el botón flotante del chat sube por encima del aviso ───────── */
+  (function () {
+    var b = document.getElementById('cookie-banner');
+    if (!b) return;
+    function set() {
+      var h = b.style.display === 'none' || getComputedStyle(b).display === 'none' ? 0 : b.offsetHeight;
+      document.documentElement.style.setProperty('--cbh', h + 'px');
+    }
+    new MutationObserver(set).observe(b, { attributes: true, attributeFilter: ['style'] });
+    window.addEventListener('resize', set); set(); setTimeout(set, 400); setTimeout(set, 1500);
+  })();
+
   /* ───────── Expansores “ver todo lo que puedes elegir” ───────── */
   [].slice.call(document.querySelectorAll('.entry-more')).forEach(function (b) {
     b.addEventListener('click', function (e) {

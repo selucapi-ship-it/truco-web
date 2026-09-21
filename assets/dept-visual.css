@@ -507,3 +507,7 @@ body.bk-open{overflow:hidden;}
 #chatBox{overflow:clip !important;}
 @supports not (overflow:clip){#chatBox{overflow:hidden !important;}}
 #chatBox .chat-header{position:relative;z-index:3;}
+
+/* ═════════ COOKIES: el aviso nunca tapa el botón del chat ni la conversación ═════════ */
+#float-chat{bottom:calc(var(--cbh,0px) + 14px) !important;transition:bottom .25s ease;}
+body.chat-open #cookie-banner,body.chat-lock #cookie-banner{display:none !important;}
