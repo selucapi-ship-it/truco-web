@@ -430,3 +430,55 @@ body.bk-open{overflow:hidden;}
 .hp-chip.b{right:12px;bottom:12px;}
 .hp-long{display:inline;}
 @media(max-width:700px){.hp-long{display:none;}.hp-chip{font-size:.7rem;padding:5px 10px;}.hp-chip.a{left:8px;top:8px;}.hp-chip.b{right:8px;bottom:8px;}}
+
+/* ═════════ BOTÓN DE AYUDA: naranja; el flotante, solo el icono ═════════ */
+.float-label{display:none !important;}
+#float-chat{gap:0;}
+.float-btn{background:linear-gradient(135deg,#ffb347,#f97316) !important;animation:floatPulseOr 2.4s ease-in-out infinite !important;}
+.float-btn svg{stroke:#2a1204;}
+@keyframes floatPulseOr{0%,100%{box-shadow:0 4px 20px rgba(249,115,22,.5),0 0 0 0 rgba(249,115,22,.55);}50%{box-shadow:0 4px 26px rgba(249,115,22,.7),0 0 0 12px rgba(249,115,22,0);}}
+.chat-cta-btn{background:linear-gradient(135deg,#ffb347,#f97316) !important;color:#2a1204 !important;border:none !important;font-weight:800 !important;box-shadow:0 10px 28px -8px rgba(249,115,22,.55);}
+.chat-cta-btn:hover{filter:brightness(1.06);transform:translateY(-2px);}
+
+/* ═════════ DEPARTAMENTOS: carrusel visible con flechas; Basic al centro ═════════ */
+.dq-wrap{position:relative;}
+.dq-arrow{display:none;}
+.dq-dots{display:none;}
+.dq-card.c-teal{border-color:rgba(45,212,191,.55);}
+@media(min-width:1001px){
+  .dq-card.c-teal{transform:translateY(-10px);box-shadow:0 24px 50px -22px rgba(45,212,191,.35);}
+  .dq-card.c-teal:hover{transform:translateY(-16px);}
+  .dq-card.c-teal .dq-badge{font-size:.7rem;padding:4px 11px;}
+}
+@media(max-width:1000px){
+  .dq-grid{display:flex !important;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding:12px 11% 18px;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;}
+  .dq-grid::-webkit-scrollbar{display:none;}
+  .dq-card{flex:0 0 78%;scroll-snap-align:center;}
+  .dq-wrap::before,.dq-wrap::after{content:'';position:absolute;top:0;bottom:44px;width:9%;z-index:2;pointer-events:none;}
+  .dq-wrap::before{left:0;background:linear-gradient(90deg,var(--bg),transparent);}
+  .dq-wrap::after{right:0;background:linear-gradient(270deg,var(--bg),transparent);}
+  .dq-arrow{display:flex;position:absolute;top:38%;z-index:3;width:44px;height:44px;border-radius:50%;align-items:center;justify-content:center;border:1px solid rgba(217,168,63,.7);background:rgba(20,19,25,.9);color:var(--gold);font-size:1.7rem;line-height:1;padding:0 0 3px;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.5);}
+  .dq-arrow.prev{left:4px;}
+  .dq-arrow.next{right:4px;}
+  .dq-arrow[disabled]{opacity:.25;cursor:default;}
+  .dq-dots{display:flex;justify-content:center;gap:8px;margin-top:2px;}
+  .dq-dots i{width:8px;height:8px;border-radius:99px;background:var(--grey-line);transition:all .25s;}
+  .dq-dots i.on{width:24px;background:var(--gold);}
+}
+@media(min-width:561px) and (max-width:1000px){.dq-card{flex-basis:46%;}.dq-grid{padding:12px 8% 18px;}}
+
+/* ═════════ AUTOMATIZACIONES: cuadrícula compacta ═════════ */
+@media(max-width:700px){
+  #soluciones-showcase .need-grid{display:grid !important;grid-template-columns:1fr 1fr;gap:10px;}
+  #soluciones-showcase .need-card{padding:12px 12px !important;min-height:0;}
+  #soluciones-showcase .need-title{font-size:.78rem !important;line-height:1.3;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+  #soluciones-showcase .need-sub{font-size:.72rem !important;}
+  #soluciones-showcase .section-sub{display:none;}
+}
+
+/* ═════════ DIFERENCIA REAL: en móvil solo nuestra demo (la plantilla vacía ya sale arriba) ═════════ */
+@media(max-width:700px){
+  #golpe-realidad .gr-compare>div:first-child,#golpe-realidad .gr-vs,#golpe-realidad .section-sub{display:none !important;}
+  #golpe-realidad .section-h2{font-size:1.5rem;}
+  #cta-final .cta-inner p{display:none;}
+}

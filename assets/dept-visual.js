@@ -242,6 +242,47 @@
     }, { threshold: 0.12 }).observe(g);
   })();
 
+
+  /* ───────── Departamentos: carrusel con flechas, Basic centrado al empezar ───────── */
+  (function () {
+    var track = document.getElementById('dqTrack'), wrap = document.getElementById('dqWrap');
+    if (!track || !wrap) return;
+    var cards = [].slice.call(track.querySelectorAll('.dq-card'));
+    var prev = wrap.querySelector('.dq-arrow.prev'), next = wrap.querySelector('.dq-arrow.next');
+    var dots = document.getElementById('dqDots');
+    cards.forEach(function () { dots.appendChild(document.createElement('i')); });
+    function mobile() { return window.innerWidth <= 1000; }
+    function idxNow() {
+      var c = track.scrollLeft + track.clientWidth / 2, best = 0, d = 1e9;
+      cards.forEach(function (el, i) { var m = Math.abs(el.offsetLeft + el.offsetWidth / 2 - c); if (m < d) { d = m; best = i; } });
+      return best;
+    }
+    function goTo(i) {
+      i = Math.max(0, Math.min(cards.length - 1, i));
+      var el = cards[i];
+      track.scrollTo({ left: el.offsetLeft - (track.clientWidth - el.offsetWidth) / 2, behavior: reduced ? 'auto' : 'smooth' });
+    }
+    function sync() {
+      var i = idxNow();
+      [].slice.call(dots.children).forEach(function (d, k) { d.classList.toggle('on', k === i); });
+      prev.disabled = i === 0; next.disabled = i === cards.length - 1;
+    }
+    prev.addEventListener('click', function () { goTo(idxNow() - 1); });
+    next.addEventListener('click', function () { goTo(idxNow() + 1); });
+    track.addEventListener('scroll', function () { window.requestAnimationFrame(sync); }, { passive: true });
+    window.addEventListener('resize', sync);
+    // Basic (el recomendado) empieza en el centro: Start queda a la izquierda, Lite y Pro a la derecha
+    function start() {
+      if (!mobile()) return;
+      var el = cards[1];
+      track.style.scrollBehavior = 'auto';
+      track.scrollLeft = el.offsetLeft - (track.clientWidth - el.offsetWidth) / 2;
+      track.style.scrollBehavior = '';
+      sync();
+    }
+    start(); setTimeout(start, 300); sync();
+  })();
+
   /* ───────── Expansores “ver todo lo que puedes elegir” ───────── */
   [].slice.call(document.querySelectorAll('.entry-more')).forEach(function (b) {
     b.addEventListener('click', function (e) {
