@@ -636,6 +636,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
             <div class="pay-option-title">PayPal</div>
             <div class="pay-option-sub">Con tu saldo o tarjeta · paga a plazos si PayPal te lo ofrece</div>
           </div>
+          <div class="pay-option-tag">Ahorra 12%</div>
         </div>
         <div class="pay-option" id="btn-transferencia" onclick="setTierPaymentMode('transferencia')">
           <div class="pay-option-radio"></div>
@@ -1176,7 +1177,7 @@ function setTierPaymentMode(mode){
     desc.textContent='Se cobra tu primer año de Departamento de una vez, con un 12% de descuento por adelantarlo. Es la opción más sencilla y la más económica.';
   }else if(mode==='financiado'){
     title.textContent='Paga con PayPal, sin que dependa de nosotros.';
-    desc.textContent='Pagas con PayPal y, si PayPal te lo ofrece, puedes fraccionar el pago en su propio checkout: «Paga en 3 plazos» (de 20 € a 2.000 €, sin intereses, durante 2 meses) o «Paga en 6, 12 o 24 plazos» (de 120 € a 5.000 €, con los intereses que fija PayPal). Es PayPal quien decide si te lo ofrece, y la financiación y sus condiciones son de PayPal. Nosotros cobramos el total de golpe. Con PayPal no se aplica el 12% de descuento del pago único.';
+    desc.textContent='Pagas con PayPal y, si PayPal te lo ofrece, puedes fraccionar el pago en su propio checkout: «Paga en 3 plazos» (de 20 € a 2.000 €, sin intereses, durante 2 meses) o «Paga en 6, 12 o 24 plazos» (de 120 € a 5.000 €, con los intereses que fija PayPal). Es PayPal quien decide si te lo ofrece, y la financiación y sus condiciones son de PayPal. Nosotros cobramos el total de golpe. Con PayPal también tienes el 12% de descuento por pagar el año por adelantado.';
   }else{
     title.textContent='Transferencia bancaria — ahorras un 12%, sin tarjeta ni cuenta de PayPal.';
     desc.textContent='Ideal si tu empresa solo opera con cuenta bancaria. Es un pago único igual que con tarjeta, así que lleva el mismo 12% de descuento — la única diferencia es que la confirmación no es instantánea: activamos tu cuenta en cuanto veamos la transferencia en nuestro banco.';
@@ -1555,12 +1556,12 @@ function getActivePlan(){
     const isUnico=tierPaymentMode==='unico';
     const isTransferencia=tierPaymentMode==='transferencia';
     let priceLines,totalCommitment,subPago;
-    if(isUnico||isTransferencia){
+    if(isUnico||isTransferencia||tierPaymentMode==='financiado'){
       const totBase=arr.monthly*arr.permanenciaMeses;const tot=Math.round(totBase*0.88*100)/100;
       const descuento=totBase-tot;
       const baseImponible=tot+extraTotal;const iva=baseImponible*0.21;
       totalCommitment=baseImponible+iva;
-      subPago=isTransferencia?'Pago único por transferencia':'Pago único';
+      subPago=isTransferencia?'Pago único por transferencia':tierPaymentMode==='financiado'?'Pago con PayPal':'Pago único';
       priceLines=[];
       if(esFundador)priceLines.push({l:'🏷️ Precio de fundador · Quedan '+FOUNDING_SPOTS_LEFT[d.arranque]+' de '+FOUNDING_SPOTS_TOTAL[d.arranque]+' plazas',v:'Aplicado ✓',cls:'free'});
       priceLines.push(
