@@ -1,0 +1,23 @@
+Ultra-realistic vertical photograph, 9:16 aspect ratio, professional advertising photography (not illustration, not 3D render, not CGI, no cartoon style). Dark, moody background in near-black charcoal tone (#16151a) filling most of the frame, with warm golden accent lighting (#d9a83f) and cream-white highlights. Cinematic, high-end tech-meets-small-business advertising aesthetic, shallow depth of field, soft directional light, subtle film grain, sharp focus on the main subject.
+
+SCENE: A small shop counter early on a Monday morning, shot from a slightly high angle. A worn paper appointment diary lies open, its pages covered in crossed-out handwritten notes and scribbled arrows where entries were rewritten and corrected. Beside it, a smartphone lies face-up showing a WhatsApp-style chat list with a bright red unread-message badge over several conversation threads. A half-full cup of coffee sits nearby, still steaming faintly. Warm, low golden-hour sunlight streams in from a window just out of frame, catching the steam and the edges of the diary pages, casting a long soft shadow across the counter. The rest of the small shop fades into the dark charcoal background, softly out of focus. The overall mood is quiet tension: a small business owner's Monday already slipping away in unpaid, invisible tasks.
+
+TEXT OVERLAYS (render as clean, elegant graphic design elements integrated into the photograph, in the exact Spanish wording given, using a modern sans-serif typeface in cream-white and golden #d9a83f tones):
+
+1. Top of the image, small and centered: the logo "TRUCO technology" in golden #d9a83f bold lettering, with the subtitle "Departamento Tecnológico" directly beneath it in smaller cream-white lettering.
+
+2. Just below the logo, a small pill-shaped tag with a thin golden border containing the text: "LUNES · CARAVACA DE LA CRUZ · 27°C"
+
+3. Below that, a short uppercase label in golden letter-spaced small caps: "TIEMPO PERDIDO"
+
+4. Center of the image, as a bold two-line headline in large cream-white type with the second line in golden #d9a83f:
+"SEIS HORAS A LA SEMANA"
+"QUE NADIE TE PAGA"
+
+5. Beneath the headline, a short italic quote-style line in smaller cream-white type: "El tiempo perdido no aparece en ningún recibo."
+
+6. Lower third of the image, a golden badge or ribbon shape containing two lines of bold dark text: "PRECIO FUNDADOR" and, smaller beneath it, "Plazas limitadas"
+
+7. Bottom of the image, centered closing lines in cream-white type: "Paga una vez. Olvídate 365 días." directly above the smaller golden text "trucotechnology.com"
+
+Composition: portrait orientation filling the full 9:16 frame, generous negative space around the text elements so nothing feels cramped, balanced visual hierarchy from logo at top to closing line at bottom, professional Instagram-ad polish, no watermarks, no stock-photo artifacts, no distorted text, all Spanish text spelled exactly as given and fully legible.
