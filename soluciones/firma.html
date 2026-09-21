@@ -287,43 +287,29 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="section-block reveal">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag depto">Problemas habituales</span><div class="sd-line"></div></div>
-    <div class="problem-grid">
-      <div class="problem-card">
+    <div class="section-divider"><span class="sd-tag depto">Del problema a la solución</span><div class="sd-line"></div></div>
+    <style>.pair-grid{display:flex;flex-direction:column;gap:14px;margin-top:8px;}.pair{display:grid;grid-template-columns:1fr 34px 1fr;align-items:stretch;gap:10px;}.pair .problem-card{height:100%;}.pair-arrow{display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.4rem;font-weight:800;}@media(max-width:760px){.pair{grid-template-columns:1fr;gap:4px;}.pair-arrow{transform:rotate(90deg);height:26px;}}</style><div class="pair-grid"><div class="pair"><div class="problem-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></div>
         <p>Un contrato se queda parado días porque hay que imprimirlo, firmarlo a mano y volver a escanearlo.</p>
-      </div>
-      <div class="problem-card">
+      </div><div class="pair-arrow" aria-hidden="true">→</div><div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+        <p>El documento deja de quedarse parado camino de una impresora: se firma directamente en la pantalla, en el momento.</p>
+      </div></div><div class="pair"><div class="problem-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
         <p>Coordinar la firma con un cliente que no puede pasar por la oficina alarga cada proceso innecesariamente.</p>
-      </div>
-      <div class="problem-card">
+      </div><div class="pair-arrow" aria-hidden="true">→</div><div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <p>Cierras el acuerdo aunque el cliente esté a 300 km, sin que nadie tenga que coger el coche para pasar a firmar.</p>
+      </div></div><div class="pair"><div class="problem-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></div>
         <p>Los documentos firmados en papel se pierden, se manchan o simplemente no se encuentran cuando hacen falta.</p>
-      </div>
-    </div>
+      </div><div class="pair-arrow" aria-hidden="true">→</div><div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><path d="M9 10l2 2 4-4"/></svg></div>
+        <p>Nada de carpetas ni cajones: cada documento firmado queda guardado y localizable, con validez legal garantizada.</p>
+      </div></div></div>
   </div>
 </div>
 
-<div class="section-block reveal" style="padding-top:0;">
-  <div class="container">
-    <div class="section-divider"><span class="sd-tag green">Cómo mejora tu empresa</span><div class="sd-line"></div></div>
-    <div class="problem-grid">
-      <div class="problem-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
-        <p>El documento deja de quedarse parado camino de una impresora: se firma directamente en la pantalla, en el momento.</p>
-      </div>
-      <div class="problem-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-        <p>Cierras el acuerdo aunque el cliente esté a 300 km, sin que nadie tenga que coger el coche para pasar a firmar.</p>
-      </div>
-      <div class="problem-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><path d="M9 10l2 2 4-4"/></svg></div>
-        <p>Nada de carpetas ni cajones: cada documento firmado queda guardado y localizable, con validez legal garantizada.</p>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
@@ -334,17 +320,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </div>
 
-<div class="section-block reveal" style="padding-top:0;">
-  <div class="container">
-    <div class="section-divider"><span class="sd-tag depto">Beneficios</span><div class="sd-line"></div></div>
-    <ul class="benefits-list">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Ni tú ni tus clientes instaláis nada — se firma desde el navegador</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Vale para cualquier documento que hoy firmes en papel</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Sin límite de firmas al mes</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Precio cerrado, sin cuotas por firma ni sorpresas después</li>
-    </ul>
-  </div>
-</div>
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">

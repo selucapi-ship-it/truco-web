@@ -282,43 +282,29 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="section-block reveal">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag depto">Problemas habituales</span><div class="sd-line"></div></div>
-    <div class="problem-grid">
-      <div class="problem-card">
+    <div class="section-divider"><span class="sd-tag depto">Del problema a la solución</span><div class="sd-line"></div></div>
+    <style>.pair-grid{display:flex;flex-direction:column;gap:14px;margin-top:8px;}.pair{display:grid;grid-template-columns:1fr 34px 1fr;align-items:stretch;gap:10px;}.pair .problem-card{height:100%;}.pair-arrow{display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.4rem;font-weight:800;}@media(max-width:760px){.pair{grid-template-columns:1fr;gap:4px;}.pair-arrow{transform:rotate(90deg);height:26px;}}</style><div class="pair-grid"><div class="pair"><div class="problem-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
         <p>Usas las mismas contraseñas sencillas en varias herramientas, y ni siquiera sabes si son seguras.</p>
-      </div>
-      <div class="problem-card">
+      </div><div class="pair-arrow" aria-hidden="true">→</div><div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1.5"/></svg></div>
+        <p>Se acaba el "1234" repetido en todo: cada acceso queda protegido con estándares reales de seguridad, no con el hábito de siempre.</p>
+      </div></div><div class="pair"><div class="problem-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></div>
         <p>No tienes copias de seguridad automáticas, así que un fallo o un ataque podría hacerte perder información crítica.</p>
-      </div>
-      <div class="problem-card">
+      </div><div class="pair-arrow" aria-hidden="true">→</div><div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.9A7 7 0 1 1 15.7 8h1.3a4 4 0 1 1 0 8H7"/></svg></div>
+        <p>El día que algo falla —un disco roto, un archivo corrupto, un despiste— tu información ya está a salvo en otro sitio, sin que nadie tenga que rezar.</p>
+      </div></div><div class="pair"><div class="problem-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
         <p>Crees que "a mi empresa esto no le va a pasar" — hasta que le pasa a un negocio como el tuyo.</p>
-      </div>
-    </div>
+      </div><div class="pair-arrow" aria-hidden="true">→</div><div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+        <p>La próxima vez que llegue un correo que "parece" del banco o de un proveedor, alguien de tu equipo lo va a reconocer antes de hacer clic.</p>
+      </div></div></div>
   </div>
 </div>
 
-<div class="section-block reveal" style="padding-top:0;">
-  <div class="container">
-    <div class="section-divider"><span class="sd-tag green">Cómo mejora tu empresa</span><div class="sd-line"></div></div>
-    <div class="problem-grid">
-      <div class="problem-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1.5"/></svg></div>
-        <p>Se acaba el "1234" repetido en todo: cada acceso queda protegido con estándares reales de seguridad, no con el hábito de siempre.</p>
-      </div>
-      <div class="problem-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.9A7 7 0 1 1 15.7 8h1.3a4 4 0 1 1 0 8H7"/></svg></div>
-        <p>El día que algo falla —un disco roto, un archivo corrupto, un despiste— tu información ya está a salvo en otro sitio, sin que nadie tenga que rezar.</p>
-      </div>
-      <div class="problem-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
-        <p>La próxima vez que llegue un correo que "parece" del banco o de un proveedor, alguien de tu equipo lo va a reconocer antes de hacer clic.</p>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
@@ -329,17 +315,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </div>
 
-<div class="section-block reveal" style="padding-top:0;">
-  <div class="container">
-    <div class="section-divider"><span class="sd-tag depto">Beneficios</span><div class="sd-line"></div></div>
-    <ul class="benefits-list">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Auditoría inicial que te dice exactamente qué arreglar, no una lista genérica</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Formación de solo 30 minutos, apta para cualquiera sin conocimientos técnicos</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Precio cerrado hasta 5 puestos, con escalado claro si creces</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Deja claro qué cubre y qué no — prevención real, no promesas vacías</li>
-    </ul>
-  </div>
-</div>
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">

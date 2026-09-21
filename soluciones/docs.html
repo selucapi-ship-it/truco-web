@@ -280,43 +280,29 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="section-block reveal">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag depto">Problemas habituales</span><div class="sd-line"></div></div>
-    <div class="problem-grid">
-      <div class="problem-card">
+    <div class="section-divider"><span class="sd-tag depto">Del problema a la solución</span><div class="sd-line"></div></div>
+    <style>.pair-grid{display:flex;flex-direction:column;gap:14px;margin-top:8px;}.pair{display:grid;grid-template-columns:1fr 34px 1fr;align-items:stretch;gap:10px;}.pair .problem-card{height:100%;}.pair-arrow{display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.4rem;font-weight:800;}@media(max-width:760px){.pair{grid-template-columns:1fr;gap:4px;}.pair-arrow{transform:rotate(90deg);height:26px;}}</style><div class="pair-grid"><div class="pair"><div class="problem-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></div>
         <p>Buscar un contrato o una factura antigua significa revolver entre carpetas de correo, el ordenador y algún cajón.</p>
-      </div>
-      <div class="problem-card">
+      </div><div class="pair-arrow" aria-hidden="true">→</div><div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <p>Ese contrato de hace dos años deja de ser una excavación arqueológica: aparece en segundos, sea quien sea quien lo busque.</p>
+      </div></div><div class="pair"><div class="problem-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
         <p>Documentos importantes se pierden o se guardan solo en el ordenador de una persona concreta.</p>
-      </div>
-      <div class="problem-card">
+      </div><div class="pair-arrow" aria-hidden="true">→</div><div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1m4 0h1m-6 4h1m4 0h1"/></svg></div>
+        <p>La información deja de vivir repartida entre el correo de uno y el ordenador de otro — vive en un solo sitio, de la empresa.</p>
+      </div></div><div class="pair"><div class="problem-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg></div>
         <p>No hay control real sobre quién puede ver o modificar cada documento de la empresa.</p>
-      </div>
-    </div>
+      </div><div class="pair-arrow" aria-hidden="true">→</div><div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1.5"/></svg></div>
+        <p>Sabes en todo momento quién ha entrado a cada documento y qué ha tocado, sin tener que preguntarlo.</p>
+      </div></div></div>
   </div>
 </div>
 
-<div class="section-block reveal" style="padding-top:0;">
-  <div class="container">
-    <div class="section-divider"><span class="sd-tag green">Cómo mejora tu empresa</span><div class="sd-line"></div></div>
-    <div class="problem-grid">
-      <div class="problem-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
-        <p>Ese contrato de hace dos años deja de ser una excavación arqueológica: aparece en segundos, sea quien sea quien lo busque.</p>
-      </div>
-      <div class="problem-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1m4 0h1m-6 4h1m4 0h1"/></svg></div>
-        <p>La información deja de vivir repartida entre el correo de uno y el ordenador de otro — vive en un solo sitio, de la empresa.</p>
-      </div>
-      <div class="problem-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1.5"/></svg></div>
-        <p>Sabes en todo momento quién ha entrado a cada documento y qué ha tocado, sin tener que preguntarlo.</p>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
@@ -327,17 +313,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </div>
 
-<div class="section-block reveal" style="padding-top:0;">
-  <div class="container">
-    <div class="section-divider"><span class="sd-tag depto">Beneficios</span><div class="sd-line"></div></div>
-    <ul class="benefits-list">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Migramos y organizamos tu archivo actual — no partes de cero</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Intuitivo desde el primer día, sin formación previa necesaria</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Permisos configurados por persona: cada uno ve solo lo que debe</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Precio según el volumen real de tu archivo, sin sorpresas</li>
-    </ul>
-  </div>
-</div>
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">

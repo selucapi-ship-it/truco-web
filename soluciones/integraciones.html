@@ -288,43 +288,29 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="section-block reveal">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag depto">Problemas habituales</span><div class="sd-line"></div></div>
-    <div class="problem-grid">
-      <div class="problem-card">
+    <div class="section-divider"><span class="sd-tag depto">Del problema a la solución</span><div class="sd-line"></div></div>
+    <style>.pair-grid{display:flex;flex-direction:column;gap:14px;margin-top:8px;}.pair{display:grid;grid-template-columns:1fr 34px 1fr;align-items:stretch;gap:10px;}.pair .problem-card{height:100%;}.pair-arrow{display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.4rem;font-weight:800;}@media(max-width:760px){.pair{grid-template-columns:1fr;gap:4px;}.pair-arrow{transform:rotate(90deg);height:26px;}}</style><div class="pair-grid"><div class="pair"><div class="problem-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
         <p>Usas varios programas —facturación, CRM, tienda online— y ninguno se entera de lo que hace el otro.</p>
-      </div>
-      <div class="problem-card">
+      </div><div class="pair-arrow" aria-hidden="true">→</div><div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+        <p>Ese mismo dato que hoy tecleas dos o tres veces —en la tienda, en el CRM, en la facturación— viaja solo entre tus programas.</p>
+      </div></div><div class="pair"><div class="problem-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></div>
         <p>Tu equipo pasa datos a mano de una herramienta a otra, perdiendo tiempo y arriesgándose a equivocarse.</p>
-      </div>
-      <div class="problem-card">
+      </div><div class="pair-arrow" aria-hidden="true">→</div><div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <p>Ya no hace falta abrir cinco pestañas para saber qué está pasando: la información de todos tus programas se ve en un solo sitio.</p>
+      </div></div><div class="pair"><div class="problem-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
         <p>Tomar una decisión requiere abrir cinco pantallas distintas para juntar la información.</p>
-      </div>
-    </div>
+      </div><div class="pair-arrow" aria-hidden="true">→</div><div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <p>Desaparecen los errores que aparecen justo cuando el mismo dato se teclea a mano dos veces y las dos no coinciden.</p>
+      </div></div></div>
   </div>
 </div>
 
-<div class="section-block reveal" style="padding-top:0;">
-  <div class="container">
-    <div class="section-divider"><span class="sd-tag green">Cómo mejora tu empresa</span><div class="sd-line"></div></div>
-    <div class="problem-grid">
-      <div class="problem-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
-        <p>Ese mismo dato que hoy tecleas dos o tres veces —en la tienda, en el CRM, en la facturación— viaja solo entre tus programas.</p>
-      </div>
-      <div class="problem-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-        <p>Ya no hace falta abrir cinco pestañas para saber qué está pasando: la información de todos tus programas se ve en un solo sitio.</p>
-      </div>
-      <div class="problem-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-        <p>Desaparecen los errores que aparecen justo cuando el mismo dato se teclea a mano dos veces y las dos no coinciden.</p>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
@@ -335,17 +321,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </div>
 
-<div class="section-block reveal" style="padding-top:0;">
-  <div class="container">
-    <div class="section-divider"><span class="sd-tag depto">Beneficios</span><div class="sd-line"></div></div>
-    <ul class="benefits-list">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Funciona con la mayoría de programas de gestión, facturación, tienda y CRM del mercado</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Solo pedimos el acceso necesario para la conexión concreta, con seguridad</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Precio exacto solo después de conocer tus herramientas, sin sorpresas</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Si sumas una herramienta nueva más adelante, se añade sin rehacer nada</li>
-    </ul>
-  </div>
-</div>
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">

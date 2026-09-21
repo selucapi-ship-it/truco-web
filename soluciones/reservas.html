@@ -291,43 +291,29 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="section-block reveal">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag depto">Problemas habituales</span><div class="sd-line"></div></div>
-    <div class="problem-grid">
-      <div class="problem-card">
+    <div class="section-divider"><span class="sd-tag depto">Del problema a la solución</span><div class="sd-line"></div></div>
+    <style>.pair-grid{display:flex;flex-direction:column;gap:14px;margin-top:8px;}.pair{display:grid;grid-template-columns:1fr 34px 1fr;align-items:stretch;gap:10px;}.pair .problem-card{height:100%;}.pair-arrow{display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.4rem;font-weight:800;}@media(max-width:760px){.pair{grid-template-columns:1fr;gap:4px;}.pair-arrow{transform:rotate(90deg);height:26px;}}</style><div class="pair-grid"><div class="pair"><div class="problem-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
         <p>El teléfono suena constantemente para pedir cita, interrumpiendo el trabajo que estás haciendo en ese momento.</p>
-      </div>
-      <div class="problem-card">
+      </div><div class="pair-arrow" aria-hidden="true">→</div><div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+        <p>Nadie llama para "ver si hay hueco": mira la disponibilidad real y reserva ahí mismo, sin intermediarios.</p>
+      </div></div><div class="pair"><div class="problem-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
         <p>Se cruzan citas, se olvidan confirmaciones y aparecen huecos vacíos en la agenda por falta de recordatorios.</p>
-      </div>
-      <div class="problem-card">
+      </div><div class="pair-arrow" aria-hidden="true">→</div><div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <p>Se acabaron los huecos vacíos por un olvido: los recordatorios salen solos, sin que tengas que acordarte tú.</p>
+      </div></div><div class="pair"><div class="problem-card">
         <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
         <p>Fuera de tu horario de atención, cualquier cliente que quiera reservar simplemente no puede.</p>
-      </div>
-    </div>
+      </div><div class="pair-arrow" aria-hidden="true">→</div><div class="problem-card">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></div>
+        <p>Un domingo a las 22:00 se puede reservar igual que un martes a mediodía — tu agenda no tiene horario de cierre.</p>
+      </div></div></div>
   </div>
 </div>
 
-<div class="section-block reveal" style="padding-top:0;">
-  <div class="container">
-    <div class="section-divider"><span class="sd-tag green">Cómo mejora tu empresa</span><div class="sd-line"></div></div>
-    <div class="problem-grid">
-      <div class="problem-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
-        <p>Nadie llama para "ver si hay hueco": mira la disponibilidad real y reserva ahí mismo, sin intermediarios.</p>
-      </div>
-      <div class="problem-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-        <p>Se acabaron los huecos vacíos por un olvido: los recordatorios salen solos, sin que tengas que acordarte tú.</p>
-      </div>
-      <div class="problem-card">
-        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></div>
-        <p>Un domingo a las 22:00 se puede reservar igual que un martes a mediodía — tu agenda no tiene horario de cierre.</p>
-      </div>
-    </div>
-  </div>
-</div>
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
@@ -351,17 +337,6 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </div>
 
-<div class="section-block reveal" style="padding-top:0;">
-  <div class="container">
-    <div class="section-divider"><span class="sd-tag depto">Beneficios</span><div class="sd-line"></div></div>
-    <ul class="benefits-list">
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Cero citas duplicadas o mal apuntadas</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Se integra con el calendario que ya usas, sin gestionar dos sistemas</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Tú defines tus horarios, servicios y duración de cada cita</li>
-      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Sin límite de reservas al mes</li>
-    </ul>
-  </div>
-</div>
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
