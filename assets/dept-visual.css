@@ -422,3 +422,11 @@ body.bk-open{overflow:hidden;}
 .dq-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(14,13,18,.7));}
 .dq-card:hover .dq-img img{transform:scale(1.07);}
 .dq-badge{z-index:2;}
+/* avisos del hero: sutiles, fuera de las burbujas de la foto */
+.hp-chip{padding:6px 11px;font-size:.72rem;font-weight:600;background:rgba(20,19,25,.66);border-color:rgba(255,255,255,.14);box-shadow:0 6px 18px rgba(0,0,0,.28);animation-duration:6.5s;}
+.hp-chip i{width:7px;height:7px;box-shadow:0 0 0 3px rgba(34,197,94,.2);}
+.hp-chip.b i{box-shadow:0 0 0 3px rgba(217,168,63,.2);}
+.hp-chip.a{left:12px;top:12px;}
+.hp-chip.b{right:12px;bottom:12px;}
+.hp-long{display:inline;}
+@media(max-width:700px){.hp-long{display:none;}.hp-chip{font-size:.7rem;padding:5px 10px;}.hp-chip.a{left:8px;top:8px;}.hp-chip.b{right:8px;bottom:8px;}}
