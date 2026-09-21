@@ -323,6 +323,7 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
 
 </style>
 <link rel="stylesheet" href="../assets/eco-demo.css">
+<link rel="stylesheet" href="../assets/sim.css">
 </head>
 <body>
 
@@ -471,6 +472,16 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
 </div>
 
 <style>.page-photo{position:relative;max-width:1040px;margin:34px auto 0;padding:0 24px;}.page-photo .pp-img{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--grey-line);}.page-photo img{display:block;width:100%;height:auto;aspect-ratio:950/594;object-fit:cover;opacity:.78;filter:saturate(.92);-webkit-mask-image:linear-gradient(180deg,#000 60%,transparent 100%);mask-image:linear-gradient(180deg,#000 60%,transparent 100%);}.pp-chip{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:8px;max-width:78%;padding:7px 12px;border-radius:99px;background:rgba(20,19,25,.8);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.16);color:#fff;font-size:.74rem;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.35);animation:ppFloat 5s ease-in-out infinite;}.pp-chip i{width:8px;height:8px;border-radius:50%;background:#22c55e;flex-shrink:0;box-shadow:0 0 0 4px rgba(34,197,94,.25);}.pp-chip.a{left:20px;top:16px;}.pp-chip.b{right:20px;bottom:18px;animation-delay:-2.5s;}.pp-chip.b i{background:var(--gold);box-shadow:0 0 0 4px rgba(217,168,63,.25);}@keyframes ppFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}@media(prefers-reduced-motion:reduce){.pp-chip{animation:none;}}@media(max-width:700px){.page-photo{margin-top:22px;padding:0 16px;}.page-photo .pp-img{border-radius:14px;}.pp-chip{font-size:.68rem;padding:6px 10px;}.pp-chip.a{left:24px;top:12px;}.pp-chip.b{right:24px;bottom:12px;}}.dept-line{margin:14px 0 4px;font-size:.9rem;line-height:1.55;color:var(--grey);border-left:3px solid var(--gold);padding-left:12px;max-width:560px;}.dept-line a{color:var(--gold);font-weight:700;}.dept-cmp{text-align:center;padding:8px 0 4px;}.dept-cmp a{display:inline-block;padding:12px 22px;border:1px solid var(--grey-line);border-radius:99px;color:var(--white);font-weight:700;background:var(--bg-card);}</style><figure class="page-photo"><div class="pp-img"><img src="../assets/escenas/lite.jpg" alt="Un profesional de una clínica atendiendo a la vez teléfono, portátil y mensajes" width="950" height="594" loading="lazy"><span class="pp-chip a"><i></i>Llamada contestada</span><span class="pp-chip b"><i></i>Recordatorio enviado</span></div></figure>
+
+<div class="section-block reveal" id="simSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Web + dos automatizaciones</span><div class="sd-line"></div></div>
+    <div class="sim-loss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Un cliente puede escribirte, llamarte o entrar en tu web. <b>Si solo cubres uno de los canales, pierdes los otros dos</b>.</span></div>
+    <h2 class="sim-h2">Todos los canales, cubiertos. <em>Sin dejar a nadie sin respuesta.</em></h2>
+    <p class="sim-sub">Lite™ suma dos automatizaciones a tu web: por ejemplo WhatsApp y llamadas, con todo guardado en tu calendario y tu CRM.</p>
+    <div id="simScreen"></div>
+  </div>
+</div>
 
 <div class="section-block reveal">
   <div class="container">
@@ -648,5 +659,7 @@ function toggleFaq(btn){
 (function(){var m=window.innerWidth<=700;document.querySelectorAll('details.fold,details.fold-inline').forEach(function(d){d.open=!m;});})();
 </script>
 <script src="../assets/eco-demo.js" defer></script>
+<script>window.SIM_SCREEN={"url": "tu-negocio · portal · hoy", "leftTitle": "Tus canales", "rightTitle": "Movimientos de hoy", "noun": ["movimiento", "movimientos"], "cols": 4, "icon": "phone", "legend": [["Sin atender", "background:#5b5866"], ["Resuelto", "background:var(--green)"]], "tiles": [{"id": "t0", "label": "Web", "sub": "navegando", "state": "busy"}, {"id": "t1", "label": "WhatsApp", "sub": "sin atender", "state": "busy"}, {"id": "t2", "label": "Llamadas", "sub": "sonando", "state": "busy"}, {"id": "t3", "label": "Correo", "sub": "sin leer", "state": "busy"}, {"id": "t4", "label": "Agenda", "sub": "sin citas", "state": "busy"}, {"id": "t5", "label": "CRM", "sub": "vacío", "state": "busy"}, {"id": "t6", "label": "Llamada", "sub": "sonando", "state": "busy"}, {"id": "t7", "label": "Mensaje", "sub": "sin atender", "state": "busy"}], "events": [{"tile": "t2", "h": "10:12", "n": "Jaime", "sub": "Llamada atendida · cita martes 10:30", "src": "Teléfono", "toast": ["Llamada atendida", "Jaime · cita martes 10:30"], "tileText": "atendida", "state": "ok"}, {"tile": "t1", "h": "13:40", "n": "Rosa G.", "sub": "WhatsApp contestado", "src": "WhatsApp", "toast": ["Mensaje contestado · WhatsApp", "Rosa G. · consulta resuelta"], "tileText": "contestado", "state": "ok"}, {"tile": "t0", "h": "18:22", "n": "Andrés P.", "sub": "Reserva desde tu web", "src": "Web", "toast": ["Cita reservada · Web", "Andrés P. · miércoles 17:00"], "tileText": "reservada", "state": "ok"}]};</script>
+<script src="../assets/sim.js" defer></script>
 </body>
 </html>

@@ -217,6 +217,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   footer{padding-bottom:100px;}
 }
 </style>
+<link rel="stylesheet" href="../assets/sim.css">
 </head>
 <body>
 
@@ -254,6 +255,25 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </div>
 
 <style>.page-photo{position:relative;max-width:1040px;margin:34px auto 0;padding:0 24px;}.page-photo .pp-img{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--grey-line);}.page-photo img{display:block;width:100%;height:auto;aspect-ratio:1400/788;object-fit:cover;opacity:.78;filter:saturate(.92);-webkit-mask-image:linear-gradient(180deg,#000 60%,transparent 100%);mask-image:linear-gradient(180deg,#000 60%,transparent 100%);}.pp-chip{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:8px;max-width:78%;padding:7px 12px;border-radius:99px;background:rgba(20,19,25,.8);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.16);color:#fff;font-size:.74rem;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.35);animation:ppFloat 5s ease-in-out infinite;}.pp-chip i{width:8px;height:8px;border-radius:50%;background:#22c55e;flex-shrink:0;box-shadow:0 0 0 4px rgba(34,197,94,.25);}.pp-chip.a{left:20px;top:16px;}.pp-chip.b{right:20px;bottom:18px;animation-delay:-2.5s;}.pp-chip.b i{background:var(--gold);box-shadow:0 0 0 4px rgba(217,168,63,.25);}@keyframes ppFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}@media(prefers-reduced-motion:reduce){.pp-chip{animation:none;}}@media(max-width:700px){.page-photo{margin-top:22px;padding:0 16px;}.page-photo .pp-img{border-radius:14px;}.pp-chip{font-size:.68rem;padding:6px 10px;}.pp-chip.a{left:24px;top:12px;}.pp-chip.b{right:24px;bottom:12px;}}</style><figure class="page-photo"><div class="pp-img"><img src="../assets/paginas/web-profesional.jpg" alt="Una tienda de ropa con su web profesional al día" width="1400" height="788" loading="lazy"><span class="pp-chip a"><i></i>Visitante atendido en tu web</span><span class="pp-chip b"><i></i>Contacto recibido en tu CRM</span></div></figure>
+
+<div class="section-block reveal" id="simSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Una web que trabaja</span><div class="sd-line"></div></div>
+    <div class="sim-loss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Una web lenta, sin actualizar y sin nadie que la atienda <b>es peor que no tener web</b>: quien entra, se va.</span></div>
+    <h2 class="sim-h2">Tu web, viva. <em>Y cuidada todos los meses.</em></h2>
+    <p class="sim-sub">No es una página que se sube y se olvida: atiende visitas, agenda citas y se mantiene al día por nosotros.</p>
+    <div id="simScreen"></div>
+  </div>
+</div>
+
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Salud técnica</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Rápida, encontrable y sin enlaces rotos.</h2>
+    <p class="sim-sub">Lo que se vigila cada mes para que tu web siga posicionando.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
 
 <div class="section-block reveal">
   <div class="container">
@@ -423,5 +443,8 @@ function toggleFaq(btn){
 })();
 </script>
 <script src="../analytics-tracking.js"></script>
+<script>window.SIM_SCREEN={"url": "tu-web · portal · visitas", "leftTitle": "Visitas de tu web", "rightTitle": "Movimientos de hoy", "noun": ["movimiento", "movimientos"], "cols": 4, "icon": "web", "legend": [["Navegando", "background:#5b5866"], ["Atendida", "background:var(--green)"]], "tiles": [{"id": "t0", "label": "Visita 1", "sub": "navegando", "state": "busy"}, {"id": "t1", "label": "Visita 2", "sub": "navegando", "state": "busy"}, {"id": "t2", "label": "Visita 3", "sub": "navegando", "state": "busy"}, {"id": "t3", "label": "Visita 4", "sub": "navegando", "state": "busy"}, {"id": "t4", "label": "Visita 5", "sub": "navegando", "state": "busy"}, {"id": "t5", "label": "Visita 6", "sub": "navegando", "state": "busy"}, {"id": "t6", "label": "Visita 7", "sub": "navegando", "state": "busy"}, {"id": "t7", "label": "Visita 8", "sub": "navegando", "state": "busy"}], "events": [{"tile": "t0", "h": "03:12", "n": "Elena P.", "sub": "Duda resuelta por el asistente", "src": "Web", "toast": ["Visitante atendido · Web", "Elena P. · duda resuelta"], "tileText": "atendida", "state": "ok"}, {"tile": "t3", "h": "11:05", "n": "Tomás R.", "sub": "Cita reservada en tu agenda", "src": "Web", "toast": ["Cita reservada · Web", "Tomás R. · viernes 17:30"], "tileText": "reservada", "state": "ok"}, {"tile": "t5", "h": "22:20", "n": "Alba T.", "sub": "Contacto guardado en tu CRM", "src": "Web", "toast": ["Contacto guardado", "Alba T. · en tu CRM"], "tileText": "guardado", "state": "ok"}]};window.SIM_EXTRAS={"cards": [{"type": "checklist", "tag": "Revisión mensual", "h": "Tu web, en forma", "sub": "Las comprobaciones técnicas básicas de posicionamiento.", "items": [["Velocidad de carga", "optimizada"], ["Indexación en Google", "revisada"], ["Enlaces rotos", "corregidos"], ["Mantenimiento y actualizaciones", "continuos"]]}]};</script>
+<script src="../assets/sim.js" defer></script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>
