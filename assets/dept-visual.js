@@ -12,6 +12,10 @@
     web:  { label: 'Web interactiva',  idle: 'Tu escaparate, siempre al día' }
   };
   var REQ = [
+    { chip: 'Me he puesto enfermo',
+      say: '“Me he puesto enfermo: aplaza las citas de hoy.”',
+      acts: { wa: 'Avisa a cada cliente y propone nueva hora', mail: 'Avisa a quien tenía cita y escribió por correo', db: 'Libera tu agenda de hoy', bot: 'Chat y llamadas avisan de que hoy no atiendes', web: 'Cierra los huecos de hoy en tu agenda' },
+      done: 'Todas las citas de hoy avisadas y con nueva hora propuesta. Tú, a descansar.' },
     { chip: 'Cambiar el horario',
       say: '“Este sábado abrimos solo de 9 a 14.”',
       acts: { wa: 'Ya responde con el horario nuevo', mail: 'Contesta con el horario nuevo', db: 'El calendario ajusta los huecos libres', bot: 'Chat y llamadas avisan del cambio', web: 'Horario actualizado en tu web' },
