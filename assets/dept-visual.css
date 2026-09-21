@@ -252,14 +252,14 @@ details.m-fold>summary{display:none;}
 .vs-tpl-body{padding-bottom:42px;}
 
 /* ═════════ CHAT LEGIBLE: más grande en escritorio, pantalla completa en móvil ═════════ */
-#chatBox{width:440px;height:min(640px,calc(100vh - 40px));}
-#chatBox .msg{font-size:.92rem;}
+#chatBox{width:min(520px,94vw);height:min(720px,calc(100vh - 40px));}
+#chatBox .msg{font-size:1rem;}
 .chat-expand-btn{background:none;border:none;color:var(--grey);font-size:1.15rem;line-height:1;cursor:pointer;padding:4px 6px;}
 .chat-expand-btn:hover{color:var(--white);}
 .chat-close-btn .cc-txt{display:none;}
 #chatBackdrop{position:fixed;inset:0;background:rgba(10,10,14,.62);backdrop-filter:blur(3px);z-index:890;opacity:0;pointer-events:none;transition:opacity .2s;}
 body.chat-big #chatBackdrop{opacity:1;pointer-events:auto;}
-#chatBox.big{right:50%;bottom:50%;width:min(780px,94vw);height:min(88vh,820px);max-height:none;transform:translate(50%,calc(50% + 16px)) scale(.97);}
+#chatBox.big{right:50%;bottom:50%;width:min(1000px,94vw);height:min(92vh,900px);max-height:none;transform:translate(50%,calc(50% + 16px)) scale(.97);}
 #chatBox.big.open{transform:translate(50%,50%) scale(1);}
 #chatBox.big .msg{font-size:1.02rem;line-height:1.6;max-width:82%;}
 #chatBox.big .chat-input{font-size:1rem;padding:13px 16px;}
@@ -301,7 +301,7 @@ body.chat-big #chatBackdrop{opacity:1;pointer-events:auto;}
 /* ═════════ RESERVA DE AUDITORÍA a pantalla completa ═════════ */
 #bookOverlay[hidden]{display:none;}
 #bookOverlay{position:fixed;inset:0;z-index:1000;background:rgba(10,10,14,.7);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;}
-.bk-panel{display:flex;flex-direction:column;width:min(920px,94vw);height:min(90vh,860px);background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);}
+.bk-panel{display:flex;flex-direction:column;width:min(1240px,95vw);height:min(94vh,980px);background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);}
 .bk-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;background:var(--bg-panel);color:var(--white);border-bottom:1px solid var(--grey-line);}
 .bk-head b{display:block;font-size:.98rem;}
 .bk-head span{display:block;font-size:.76rem;color:var(--grey);margin-top:2px;line-height:1.35;}
