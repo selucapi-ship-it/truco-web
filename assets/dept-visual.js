@@ -124,6 +124,60 @@
   var hub = document.getElementById('deptHub');
   if (hub) initHub(hub);
 
+
+  /* ───────── ¿Es esto para ti?: selector de sectores (lee las tarjetas del carrusel) ───────── */
+  (function () {
+    var box = document.getElementById('sectorPicker');
+    var sec = document.getElementById('sectores');
+    if (!box || !sec) return;
+    var cards = [].slice.call(sec.querySelectorAll('.sector-card'));
+    if (!cards.length) return;
+    var SHORT = {
+      'sectores/abogados.html': { chip: 'Abogados', ic: '⚖️', label: 'Te pasa', pains: ['WhatsApps acumulados mientras estás en juicio', 'Citas que se pierden por falta de confirmación'],
+        sol: 'Entrenamos tu asistente con tus protocolos de consulta: atiende, agenda la reunión y te avisa. <b>Apareces cuando el cliente ya sabe que eres su abogado.</b>' },
+      'sectores/clinicas.html': { chip: 'Clínicas', ic: '🩺', label: 'Te pasa', pains: ['Pacientes que llaman en consulta y no vuelven a intentarlo', 'Citas que se olvidan porque nadie avisó'],
+        sol: 'Tu asistente conoce tu agenda y tus protocolos: responde dudas, confirma y recuerda cada cita. <b>Tú solo revisas la agenda por la mañana y por la noche.</b>' },
+      'sectores/inmobiliarias.html': { chip: 'Inmobiliarias', ic: '🏠', label: 'Te pasa', pains: ['Interesados que escriben a las 23h y al día siguiente ya llamaron a otra agencia', 'Leads de portales que se enfrían esperando'],
+        sol: 'Entrenado con las fichas de tus propiedades, responde al segundo, agenda la visita y hace seguimiento. <b>Si el interesado está listo, puede cerrar la venta sin que intervengas.</b>' },
+      'sectores/estetica.html': { chip: 'Estética', ic: '💅', label: 'Te pasa', pains: ['Consultas de disponibilidad mientras estás atendiendo', 'Cancelaciones de última hora que nadie ocupa'],
+        sol: 'Recibe las consultas, enlaza con tu agenda y ocupa cada cancelación. <b>Tú trabajas, el negocio se llena solo.</b>' },
+      'sectores/oficios.html': { chip: 'Oficios', ic: '🔧', label: 'Te pasa', pains: ['Presupuestos por WhatsApp que no puedes contestar en obra', 'Clientes que se van al siguiente porque no coges el teléfono'],
+        sol: 'Con tus tarifas y tu disponibilidad real, responde al momento y agenda la visita. <b>Si hay que cambiar algo, nos escribes a nosotros: tú nunca lo tocas.</b>' },
+      'sectores/gimnasios.html': { chip: 'Gimnasios', ic: '🏋️', label: 'Te pasa', pains: ['Interesados por Instagram que no reciben respuesta', 'Bajas de socios a los que nadie atendió a tiempo'],
+        sol: 'Se integra con lo que ya usas, atiende, retiene socios y agenda seguimientos. <b>Tú entrenas, nosotros cuidamos que no se vayan.</b>' },
+      'sectores/comercio-pequeno.html': { chip: 'Comercio', ic: '🛍️', label: 'Por ejemplo', pains: ['Peluquería, barbería, esteticista', 'Papelería, frutería, florería, tienda de barrio'],
+        sol: 'No necesitas web ni automatizarlo todo: con el Departamento <b>Start™</b> automatizamos gratis esa única cosa que se te escapa — WhatsApp, reservas o facturación.' }
+    };
+    var data = cards.map(function (c) {
+      var a = c.querySelector('.sc-card-cta'), href = a ? a.getAttribute('href') : '#';
+      var t = (c.querySelector('.sc-title') || {}).textContent || '', sub = (c.querySelector('.sc-sub') || {}).textContent || '';
+      var sh = SHORT[href] || {};
+      return {
+        href: href, title: t, sub: sub, chip: sh.chip || t, ic: sh.ic || '•', label: sh.label || 'Te pasa',
+        pains: sh.pains || [].slice.call(c.querySelectorAll('.sc-pains li')).map(function (l) { return l.textContent; }),
+        sol: sh.sol || ((c.querySelector('.sc-solution p') || {}).innerHTML || '')
+      };
+    });
+    var chips = box.querySelector('.sp-chips'), panel = box.querySelector('.sp-panel'), btns = [];
+    function show(i) {
+      var d = data[i];
+      btns.forEach(function (b, k) { b.classList.toggle('on', k === i); b.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
+      panel.innerHTML = '<div class="sp-head"><b>' + d.title + '</b><span>' + d.sub + '</span></div>' +
+        '<div class="sp-row"><em>' + d.label + '</em><ul>' + d.pains.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul></div>' +
+        '<div class="sp-row sp-sol"><em>Lo que hacemos</em><p>' + d.sol + '</p></div>' +
+        '<a class="sc-card-cta" href="' + d.href + '">Ver cómo queda en mi sector →</a>';
+    }
+    data.forEach(function (d, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'sp-chip'; b.setAttribute('role', 'tab');
+      b.innerHTML = '<span>' + d.ic + '</span>' + d.chip;
+      b.addEventListener('click', function () { show(i); });
+      chips.appendChild(b); btns.push(b);
+    });
+    sec.classList.add('sp-on');
+    show(0);
+  })();
+
   /* ───────── Expansores “ver todo lo que puedes elegir” ───────── */
   [].slice.call(document.querySelectorAll('.entry-more')).forEach(function (b) {
     b.addEventListener('click', function (e) {
