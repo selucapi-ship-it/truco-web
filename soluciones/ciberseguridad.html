@@ -306,6 +306,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Tu revisión de esta noche</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Mientras duermes, se revisa todo. <em>Y te lo cuentan por la mañana.</em></h2>
+    <p class="sim-sub">Seguridad básica y constante, pensada para que una pyme no pare por un imprevisto.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 
@@ -461,5 +470,7 @@ window.onSolutionsPricingUpdated.push(renderCiberseguridadPrice);
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "Resumen de anoche", "icon": "shield", "s0": "Revisando tus equipos…", "s1": "Revisando…", "s2": "Todo al día", "lines": [{"w": "ia", "t": "Buenos días. He revisado tus equipos esta noche."}, {"w": "ia", "t": "Copia de seguridad completada ✓", "fx": {"row": ["Copia de seguridad", "Completada"]}}, {"w": "ia", "t": "Un equipo tiene el antivirus a punto de caducar. Ya lo hemos avisado para renovarlo.", "fx": {"row": ["Antivirus", "Renovación en curso"]}}, {"w": "cli", "t": "Gracias. Renuévalo hoy."}, {"w": "ia", "t": "Hecho. Accesos revisados y todo al día.", "fx": {"row": ["Accesos", "Revisados"], "done": true}}], "card": {"kind": "panel", "head": ["Estado de seguridad", "revisando", "al día"], "meta": "Seguridad básica, no una garantía total", "stamp": "✓ Todo al día"}, "timer": false, "cliLabel": "Tú"};window.SIM_SCREEN={"url": "tu-negocio · portal · seguridad", "leftTitle": "Equipos y accesos", "rightTitle": "Revisiones de hoy", "noun": ["revisión", "revisiones"], "tiles": [{"id": "t0", "label": "Equipo 1", "sub": "sin revisar", "state": "busy"}, {"id": "t1", "label": "Equipo 2", "sub": "sin revisar", "state": "busy"}, {"id": "t2", "label": "Equipo 3", "sub": "sin revisar", "state": "busy"}, {"id": "t3", "label": "Equipo 4", "sub": "sin revisar", "state": "busy"}, {"id": "t4", "label": "Servidor", "sub": "sin revisar", "state": "busy"}, {"id": "t5", "label": "Correo", "sub": "sin revisar", "state": "busy"}, {"id": "t6", "label": "Wi-Fi", "sub": "sin revisar", "state": "busy"}, {"id": "t7", "label": "Móviles", "sub": "sin revisar", "state": "busy"}], "events": [{"tile": "t4", "h": "03:00", "n": "Copia de seguridad", "sub": "Completada", "src": "Automático", "toast": ["Copia completada", "Copia de seguridad · servidor"], "tileText": "protegido", "state": "ok"}, {"tile": "t1", "h": "03:20", "n": "Antivirus", "sub": "Renovación en curso", "src": "Aviso", "toast": ["Aviso enviado", "Antivirus · renovación"], "tileText": "aviso", "state": "res"}, {"tile": "t5", "h": "03:40", "n": "Accesos del correo", "sub": "Revisados", "src": "Automático", "toast": ["Accesos revisados", "Correo · accesos"], "tileText": "protegido", "state": "ok"}], "legend": [["Sin revisar", "background:#5b5866"], ["Con aviso", "background:var(--gold)"], ["Protegido", "background:var(--green)"]], "icon": "shield", "cols": 4};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "checklist", "tag": "Revisión nocturna", "h": "Todo lo que se comprueba", "sub": "Seguridad básica imprescindible, no una garantía de protección total.", "items": [["Copia de seguridad", "completada"], ["Antivirus de los equipos", "al día"], ["Accesos y contraseñas", "revisados"], ["Actualizaciones", "instaladas"]]}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

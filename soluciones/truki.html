@@ -325,6 +325,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Tu factura, dictada</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Le hablas. <em>Escribe la factura.</em></h2>
+    <p class="sim-sub">Tú dices el cliente, el concepto y el importe; la factura sale ordenada y lista para enviar.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -542,5 +551,7 @@ window.onSolutionsPricingUpdated.push(renderTrukiPrice);
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "Factura por voz", "icon": "doc", "s0": "Escuchando…", "s1": "Preparando factura…", "s2": "Factura enviada", "lines": [{"w": "cli", "t": "Factura a Ana Ruiz, trescientos euros, reforma del baño.", "fx": {"row": ["Cliente", "Ana Ruiz"]}}, {"w": "ia", "t": "Factura preparada: Ana Ruiz, reforma del baño, 300,00 €. ¿La envío?", "fx": {"row": ["Concepto", "Reforma del baño"]}}, {"w": "cli", "t": "Sí, envíala", "fx": {"row": ["Importe", "300,00 €"]}}, {"w": "ia", "t": "Enviada por correo a Ana ✓ y guardada en tus facturas.", "fx": {"done": true}}], "card": {"kind": "ticket", "head": ["Factura F-0012", "borrador", "enviada"], "meta": "Enviada a Ana Ruiz", "stamp": "✓ Enviada"}, "timer": false, "iaLabel": "TruKi", "cliLabel": "Tú (voz)"};window.SIM_SCREEN={"url": "tu-negocio · portal · facturas", "leftTitle": "Facturas · este mes", "rightTitle": "Movimientos", "noun": ["factura", "facturas"], "tiles": [{"id": "t0", "label": "F-0009", "sub": "pendiente", "state": "busy"}, {"id": "t1", "label": "F-0010", "sub": "pendiente", "state": "busy"}, {"id": "t2", "label": "F-0011", "sub": "pendiente", "state": "busy"}, {"id": "t3", "label": "F-0012", "sub": "pendiente", "state": "busy"}, {"id": "t4", "label": "F-0013", "sub": "pendiente", "state": "busy"}, {"id": "t5", "label": "F-0014", "sub": "pendiente", "state": "busy"}, {"id": "t6", "label": "F-0015", "sub": "pendiente", "state": "busy"}, {"id": "t7", "label": "F-0016", "sub": "pendiente", "state": "busy"}], "events": [{"tile": "t3", "h": "18:20", "n": "Ana Ruiz", "sub": "Reforma del baño · 300,00 €", "src": "Voz", "toast": ["Factura creada por voz", "Ana Ruiz · 300,00 €"], "tileText": "enviada", "state": "res"}, {"tile": "t1", "h": "18:35", "n": "Bar Manolo", "sub": "Cobro registrado", "src": "Cobro", "toast": ["Cobro registrado", "Bar Manolo · cobrada"], "tileText": "cobrada", "state": "ok"}, {"tile": "t5", "h": "19:10", "n": "Taller Ortiz", "sub": "Presupuesto → factura", "src": "Chat", "toast": ["Factura creada por chat", "Taller Ortiz · enviada"], "tileText": "enviada", "state": "res"}], "legend": [["Pendiente", "background:#5b5866"], ["Enviada", "background:var(--gold)"], ["Cobrada", "background:var(--green)"]], "icon": "doc", "cols": 4};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "doc", "tag": "Factura F-0012", "h": "Escrita por ti, sin teclear", "sub": "Revisas y envías desde el móvil.", "rows": [["Cliente", "Ana Ruiz"], ["Concepto", "Reforma del baño"]], "text": "Factura F-0012 · Reforma del baño · Total: 300,00 €.", "btns": ["Revisar", "Enviar"]}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

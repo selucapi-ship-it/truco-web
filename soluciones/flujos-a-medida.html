@@ -303,6 +303,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Elige tu flujo</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Simple, media o compleja. <em>La automatización que necesitas.</em></h2>
+    <p class="sim-sub">Según cuántos pasos y cuántas herramientas intervengan, así se diseña.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 <div class="section-block reveal">
   <div class="container">
@@ -521,5 +530,7 @@ window.onSolutionsPricingUpdated.push(renderFlujosPrice);
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "Flujo a medida", "icon": "bolt", "s0": "Formulario recibido", "s1": "Ejecutando…", "s2": "Flujo completado", "lines": [{"w": "ia", "t": "Formulario recibido en tu web: Lucía pide un presupuesto.", "fx": {"row": ["Paso 1", "Formulario recibido"]}}, {"w": "ia", "t": "Su ficha ya está creada en tu CRM.", "fx": {"row": ["Paso 2", "Ficha en el CRM"]}}, {"w": "ia", "t": "Le he enviado un email de confirmación.", "fx": {"row": ["Paso 3", "Email enviado"]}}, {"w": "ia", "t": "Y te he creado una tarea para llamarla mañana.", "fx": {"row": ["Paso 4", "Tarea para ti"], "done": true}}], "card": {"kind": "panel", "head": ["Formulario → CRM → email", "en curso", "completado"], "meta": "Nadie tuvo que acordarse", "stamp": "✓ Flujo completado"}, "timer": false};window.SIM_SCREEN={"url": "tu-negocio · portal · flujos", "leftTitle": "Flujos activos", "rightTitle": "Ejecutados hoy", "noun": ["ejecución", "ejecuciones"], "tiles": [{"id": "t0", "label": "Formulario → CRM", "sub": "esperando", "state": "busy"}, {"id": "t1", "label": "Pedido → Factura", "sub": "esperando", "state": "busy"}, {"id": "t2", "label": "Cita → Recordatorio", "sub": "esperando", "state": "busy"}, {"id": "t3", "label": "Baja → Encuesta", "sub": "esperando", "state": "busy"}], "events": [{"tile": "t0", "h": "09:12", "n": "Formulario web", "sub": "Ficha creada + email enviado", "src": "Flujo", "toast": ["Flujo ejecutado", "Formulario → CRM"], "tileText": "ejecutado", "state": "ok"}, {"tile": "t1", "h": "11:40", "n": "Pedido nuevo", "sub": "Factura creada + aviso", "src": "Flujo", "toast": ["Flujo ejecutado", "Pedido → Factura"], "tileText": "ejecutado", "state": "ok"}, {"tile": "t2", "h": "17:05", "n": "Cita de mañana", "sub": "Recordatorio enviado", "src": "Flujo", "toast": ["Flujo ejecutado", "Cita → Recordatorio"], "tileText": "ejecutado", "state": "ok"}], "legend": [["Esperando", "background:#5b5866"], ["Ejecutado", "background:var(--green)"]], "icon": "bolt", "cols": 2};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "picker", "tag": "Tres niveles", "h": "Mira uno de cada", "sub": "Pulsa un nivel para ver un ejemplo real.", "tabs": [{"l": "Simple", "h": "Formulario → CRM → email", "p": ["Alguien rellena tu formulario web", "Su ficha se crea en el CRM", "Recibe un email de confirmación"], "r": "Un flujo de pocos pasos"}, {"l": "Media", "h": "Pedido → factura → aviso a almacén", "p": ["Entra un pedido nuevo", "Se genera la factura", "Se avisa a almacén para prepararlo"], "r": "Un flujo de varios pasos"}, {"l": "Compleja", "h": "Cita → recordatorio → seguimiento", "p": ["Se agenda una cita", "Se envía el recordatorio", "Tras la visita se hace el seguimiento"], "r": "Varias herramientas conectadas"}]}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

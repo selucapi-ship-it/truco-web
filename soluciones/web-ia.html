@@ -331,6 +331,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Entrenado con tu negocio</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Responde como tú. <em>Porque se aprende tu negocio.</em></h2>
+    <p class="sim-sub">Antes de encenderlo, lo entrenamos con lo que realmente ofreces y con tus reglas.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 
@@ -507,5 +516,7 @@ function toggleFaq(btn){
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "Chat de tu web", "icon": "web", "s0": "Visitante nuevo", "s1": "Respondiendo…", "s2": "Contacto guardado", "lines": [{"w": "cli", "t": "Hola, ¿trabajáis también con empresas de fuera de la ciudad?"}, {"w": "ia", "t": "Sí, atendemos a toda la provincia. ¿Quieres reservar una cita para contárnoslo?"}, {"w": "cli", "t": "Sí, el lunes por la mañana"}, {"w": "ia", "t": "Lunes a las 10:00 libre. ¿Me dices tu nombre?", "fx": {"row": ["Cita", "Lunes 10:00"]}}, {"w": "cli", "t": "Elena Pardo", "fx": {"row": ["Nombre", "Elena Pardo"]}}, {"w": "ia", "t": "Hecho, Elena ✓ Tu cita y tus datos quedan guardados.", "fx": {"done": true}}], "card": {"kind": "panel", "head": ["Ficha del visitante", "en curso", "guardada"], "meta": "Origen: tu web", "stamp": "✓ En tu CRM"}, "timer": false, "cliLabel": "Visitante"};window.SIM_SCREEN={"url": "tu-negocio · portal · web", "leftTitle": "Visitas de tu web · hoy", "rightTitle": "Atendidas por tu asistente", "noun": ["visita", "visitas"], "tiles": [{"id": "t0", "label": "Visita 1", "sub": "navegando", "state": "busy"}, {"id": "t1", "label": "Visita 2", "sub": "navegando", "state": "busy"}, {"id": "t2", "label": "Visita 3", "sub": "navegando", "state": "busy"}, {"id": "t3", "label": "Visita 4", "sub": "navegando", "state": "busy"}, {"id": "t4", "label": "Visita 5", "sub": "navegando", "state": "busy"}, {"id": "t5", "label": "Visita 6", "sub": "navegando", "state": "busy"}, {"id": "t6", "label": "Visita 7", "sub": "navegando", "state": "busy"}, {"id": "t7", "label": "Visita 8", "sub": "navegando", "state": "busy"}], "events": [{"tile": "t0", "h": "03:12", "n": "Elena Pardo", "sub": "Cita lunes 10:00", "src": "Web", "toast": ["Visitante atendido · Web", "Elena Pardo · cita lunes 10:00"], "tileText": "atendida", "state": "ok"}, {"tile": "t3", "h": "14:30", "n": "Roberto L.", "sub": "Pregunta de precios resuelta", "src": "Web", "toast": ["Visitante atendido · Web", "Roberto L. · consulta resuelta"], "tileText": "atendida", "state": "ok"}, {"tile": "t5", "h": "22:05", "n": "Alba T.", "sub": "Solicitud de contacto guardada", "src": "Web", "toast": ["Visitante atendido · Web", "Alba T. · contacto guardado"], "tileText": "atendida", "state": "ok"}], "legend": [["Navegando", "background:#5b5866"], ["Atendida", "background:var(--green)"]], "icon": "web", "cols": 4};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "checklist", "tag": "Puesta en marcha", "h": "Lo que aprende tu asistente", "sub": "Solo contesta con lo que tú has aprobado.", "items": [["Tus servicios y precios", "cargados"], ["Horarios y ubicación", "cargados"], ["Preguntas frecuentes", "cargadas"], ["Cuándo pasarte al cliente", "configurado"]]}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

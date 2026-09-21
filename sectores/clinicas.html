@@ -348,6 +348,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Solo para clínicas</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Pacientes que acuden. <em>Y consentimientos firmados sin papel.</em></h2>
+    <p class="sim-sub">Recordar cada cita y documentar cada tratamiento, sin que nadie de tu equipo tenga que hacerlo a mano.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -532,5 +541,7 @@ function toggleFaq(btn){
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "Llamada a la clínica", "icon": "phone", "s0": "Llamada entrante…", "s1": "Llamada en curso", "s2": "Cita guardada", "lines": [{"w": "ia", "t": "Buenos días, le atiende el asistente virtual (IA) de la clínica. ¿En qué puedo ayudarle?"}, {"w": "cli", "t": "Quería pedir cita con el fisioterapeuta, me duele la rodilla."}, {"w": "ia", "t": "Lamento oírlo. Tengo el jueves a las 9:30 o el viernes a las 12:00. ¿Cuál le va mejor?"}, {"w": "cli", "t": "El jueves, a nombre de Carmen.", "fx": {"row": ["Motivo", "Fisioterapia · rodilla"]}}, {"w": "ia", "t": "Cita confirmada: jueves a las 9:30, a nombre de Carmen. Le avisaremos antes de la visita.", "fx": {"done": true}}], "card": {"kind": "panel", "head": ["Cita de fisioterapia", "en curso", "guardada"], "meta": "Carmen · jueves 9:30", "stamp": "✓ En la agenda"}, "cliLabel": "Paciente"};window.SIM_SCREEN={"url": "tu-clínica · portal · agenda", "leftTitle": "Agenda · jueves", "rightTitle": "Citas de hoy", "noun": ["cita", "citas"], "tiles": [{"id": "t0", "label": "09:00", "sub": "ocupado", "state": "busy"}, {"id": "t1", "label": "09:30", "sub": "libre", "state": ""}, {"id": "t2", "label": "10:30", "sub": "libre", "state": ""}, {"id": "t3", "label": "11:30", "sub": "ocupado", "state": "busy"}, {"id": "t4", "label": "12:00", "sub": "libre", "state": ""}, {"id": "t5", "label": "13:00", "sub": "libre", "state": ""}, {"id": "t6", "label": "16:00", "sub": "libre", "state": ""}, {"id": "t7", "label": "17:00", "sub": "libre", "state": ""}], "events": [{"tile": "t1", "h": "09:30", "n": "Carmen", "sub": "Fisioterapia · por teléfono", "src": "Teléfono", "toast": ["Nueva cita · Teléfono", "Carmen · 9:30"], "tileText": "9:30", "state": "res"}, {"tile": "t3", "h": "11:30", "n": "Luis M.", "sub": "Revisión · desde la web", "src": "Web", "toast": ["Nueva cita · Web", "Luis M. · 11:30"], "tileText": "11:30", "state": "res"}, {"tile": "t6", "h": "16:00", "n": "Ana B.", "sub": "Seguimiento · WhatsApp", "src": "WhatsApp", "toast": ["Nueva cita · WhatsApp", "Ana B. · 16:00"], "tileText": "16:00", "state": "res"}], "legend": [["Libre", "background:#17161c;border:1px solid #3a3841"], ["Ocupado", "background:#5b5866"], ["Reservado", "background:var(--gold)"]], "icon": "cal", "cols": 4, "phone": {"title": "Pedir cita", "fields": [["Servicio", "Revisión"], ["Día", "Jueves"], ["Hora", "11:30"]], "btn": "Pedir cita", "pressOn": 1}};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "timeline", "tag": "Recordatorios", "h": "Menos citas perdidas", "sub": "El asistente avisa al paciente antes de la visita y reacciona si cancela.", "steps": [{"i": "bell", "t": "Recordatorio al paciente", "s": "Un día antes de la cita", "h": "-24 h"}, {"i": "check", "t": "El paciente confirma", "s": "Con un solo toque", "h": "confirmada"}, {"i": "cal", "t": "Si cancela, el hueco se libera", "s": "Y el asistente puede ofrecerlo a otro paciente", "h": "hueco libre"}, {"i": "user", "t": "Hueco ocupado", "s": "La agenda vuelve a estar completa", "h": "✓", "g": true}]}, {"type": "sign", "tag": "Firma digital", "h": "Consentimiento informado sin papel", "sub": "Lo firma en el móvil y queda guardado en su historial.", "doc": "Consentimiento informado", "signer": "Carmen", "stamp": "FIRMADO", "after": "Guardado en su historial"}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

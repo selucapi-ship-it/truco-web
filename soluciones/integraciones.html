@@ -310,6 +310,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Del pedido a la factura</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Un pedido entra. <em>Y todo lo demás ocurre solo.</em></h2>
+    <p class="sim-sub">Cada herramienta avisa a la siguiente sin que tengas que copiar nada.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 
@@ -470,5 +479,7 @@ window.onSolutionsPricingUpdated.push(renderIntegracionesPrice);
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "Tus herramientas, conectadas", "icon": "bolt", "s0": "Pedido nuevo", "s1": "Conectando…", "s2": "Todo sincronizado", "lines": [{"w": "ia", "t": "Pedido nuevo en tu tienda online: Lucía Vega.", "fx": {"row": ["Tienda", "Pedido recibido"]}}, {"w": "ia", "t": "Lo he pasado a facturación y la factura ya está hecha.", "fx": {"row": ["Facturación", "Factura creada"]}}, {"w": "ia", "t": "He avisado por WhatsApp al almacén para prepararlo.", "fx": {"row": ["Almacén", "Aviso enviado"]}}, {"w": "ia", "t": "Y la clienta ya está en tu CRM.", "fx": {"row": ["CRM", "Cliente guardado"], "done": true}}], "card": {"kind": "panel", "head": ["Pedido de Lucía Vega", "en curso", "sincronizado"], "meta": "Sin copiar ni pegar nada", "stamp": "✓ Todo conectado"}, "timer": false};window.SIM_SCREEN={"url": "tu-negocio · portal · conexiones", "leftTitle": "Tus herramientas", "rightTitle": "Datos que viajan solos", "noun": ["envío", "envíos"], "tiles": [{"id": "t0", "label": "Tienda", "sub": "sin conectar", "state": "busy"}, {"id": "t1", "label": "Facturas", "sub": "sin conectar", "state": "busy"}, {"id": "t2", "label": "Calendario", "sub": "sin conectar", "state": "busy"}, {"id": "t3", "label": "CRM", "sub": "sin conectar", "state": "busy"}, {"id": "t4", "label": "Correo", "sub": "sin conectar", "state": "busy"}, {"id": "t5", "label": "WhatsApp", "sub": "sin conectar", "state": "busy"}, {"id": "t6", "label": "Contabilidad", "sub": "sin conectar", "state": "busy"}, {"id": "t7", "label": "Web", "sub": "sin conectar", "state": "busy"}], "events": [{"tile": "t0", "h": "12:01", "n": "Pedido de Lucía Vega", "sub": "Tienda → Facturas", "src": "Sincro", "toast": ["Datos enviados", "Tienda → Facturas"], "tileText": "conectada", "state": "ok"}, {"tile": "t3", "h": "12:01", "n": "Lucía Vega", "sub": "Tienda → CRM", "src": "Sincro", "toast": ["Datos enviados", "Tienda → CRM"], "tileText": "conectada", "state": "ok"}, {"tile": "t5", "h": "12:02", "n": "Aviso al almacén", "sub": "Facturas → WhatsApp", "src": "Sincro", "toast": ["Datos enviados", "Facturas → WhatsApp"], "tileText": "conectada", "state": "ok"}], "legend": [["Sin conectar", "background:#5b5866"], ["Conectada", "background:var(--green)"]], "icon": "bolt", "cols": 4};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "flow", "tag": "Conexión entre herramientas", "h": "Sin copiar y pegar", "sub": "Así viaja un pedido entre tus programas.", "nodes": [{"i": "cart", "t": "Pedido en tu tienda", "s": "Lucía Vega"}, {"i": "doc", "t": "Factura creada", "s": "En facturación"}, {"i": "chat", "t": "Aviso al almacén", "s": "Por WhatsApp"}, {"i": "user", "t": "Cliente guardado", "s": "En tu CRM"}], "end": "Todo sincronizado, sin tocar nada"}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

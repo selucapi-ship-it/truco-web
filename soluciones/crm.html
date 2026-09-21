@@ -308,6 +308,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Tu tablero</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Cada cliente avanza. <em>Nadie se queda parado.</em></h2>
+    <p class="sim-sub">Mira todos tus clientes de un vistazo y en qué punto está cada uno.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 
@@ -463,5 +472,7 @@ window.onSolutionsPricingUpdated.push(renderCrmPrice);
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "WhatsApp → tu CRM", "icon": "chat", "s0": "Mensaje nuevo", "s1": "Creando ficha…", "s2": "Ficha creada", "lines": [{"w": "cli", "t": "Hola, soy Javier Ruiz. Quería un presupuesto para una web para mi taller."}, {"w": "ia", "t": "Encantado, Javier. Te lo preparamos; ¿cuándo te viene bien una llamada?", "fx": {"row": ["Nombre", "Javier Ruiz"]}}, {"w": "cli", "t": "El miércoles por la tarde", "fx": {"row": ["Origen", "WhatsApp"]}}, {"w": "ia", "t": "Anotado. Te llamamos el miércoles por la tarde ✓", "fx": {"row": ["Estado", "Nuevo · llamada miércoles"], "done": true}}], "card": {"kind": "panel", "head": ["Ficha de cliente", "en curso", "creada"], "meta": "Con su historial completo", "stamp": "✓ En tu CRM"}, "timer": false};window.SIM_SCREEN={"url": "tu-negocio · portal · crm", "leftTitle": "Tus contactos", "rightTitle": "Movimientos de hoy", "noun": ["movimiento", "movimientos"], "tiles": [{"id": "t0", "label": "Javier R.", "sub": "nuevo", "state": "busy"}, {"id": "t1", "label": "Ana L.", "sub": "nuevo", "state": "busy"}, {"id": "t2", "label": "Marta S.", "sub": "nuevo", "state": "busy"}, {"id": "t3", "label": "Diego F.", "sub": "nuevo", "state": "busy"}, {"id": "t4", "label": "La Plaza", "sub": "nuevo", "state": "busy"}, {"id": "t5", "label": "Clínica Sol", "sub": "nuevo", "state": "busy"}, {"id": "t6", "label": "Iván T.", "sub": "nuevo", "state": "busy"}, {"id": "t7", "label": "Rocío M.", "sub": "nuevo", "state": "busy"}], "events": [{"tile": "t0", "h": "10:05", "n": "Javier Ruiz", "sub": "Nuevo · llamada el miércoles", "src": "WhatsApp", "toast": ["Ficha creada · WhatsApp", "Javier Ruiz · nuevo"], "tileText": "nuevo", "state": "res"}, {"tile": "t2", "h": "12:30", "n": "Marta Soto", "sub": "Pasa a «Con cita»", "src": "Reserva", "toast": ["Estado actualizado", "Marta Soto · con cita"], "tileText": "con cita", "state": "res"}, {"tile": "t3", "h": "17:45", "n": "Diego Ferrer", "sub": "Pasa a «Cliente»", "src": "Llamada", "toast": ["Estado actualizado", "Diego Ferrer · cliente"], "tileText": "cliente", "state": "ok"}], "legend": [["Sin gestionar", "background:#5b5866"], ["Con seguimiento", "background:var(--gold)"], ["Cliente", "background:var(--green)"]], "icon": "user", "cols": 4, "caption": "Ejemplo de un CRM. Los datos son ficticios."};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "kanban", "tag": "Tablero de clientes", "h": "De nuevo a cerrado", "sub": "Se mueven solos según lo que pasa: un mensaje, una cita, un contrato.", "cols": ["Nuevo", "Seguimiento", "Cerrado"], "cards": [{"id": "a", "t": "Ana López", "s": "Pidió presupuesto", "col": 0}, {"id": "b", "t": "Javier Ruiz", "s": "Presupuesto enviado", "col": 1}, {"id": "c", "t": "Marta Soto", "s": "Segunda llamada", "col": 1}, {"id": "d", "t": "Diego Ferrer", "s": "Contrato firmado", "col": 2}], "moves": [["a", 1, "Ana López pasa a «Seguimiento»"], ["b", 2, "Javier Ruiz cierra: cliente ✓"], ["c", 2, "Marta Soto cierra: cliente ✓"]]}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

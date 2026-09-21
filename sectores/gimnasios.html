@@ -332,6 +332,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Solo para gimnasios</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Socios que se apuntan. <em>Y socios que se quedan.</em></h2>
+    <p class="sim-sub">Captar es solo la mitad: aquí se ve cómo se recupera al socio que empieza a faltar.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -512,5 +521,7 @@ function toggleFaq(btn){
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "Mensaje de un interesado", "icon": "chat", "s0": "Mensaje nuevo", "s1": "Contestando…", "s2": "Clase reservada", "lines": [{"w": "cli", "t": "Hola, vi vuestro Instagram. ¿Se puede probar una clase antes de apuntarse?"}, {"w": "ia", "t": "¡Hola! Sí, puedes reservar una clase de prueba. Tengo hoy a las 19:00 o mañana a las 10:00."}, {"w": "cli", "t": "Hoy a las 19:00", "fx": {"row": ["Clase", "Prueba · hoy 19:00"]}}, {"w": "ia", "t": "¿A nombre de quién?"}, {"w": "cli", "t": "Diego", "fx": {"row": ["Nombre", "Diego"]}}, {"w": "ia", "t": "Reservado: hoy a las 19:00 ✓ Te esperamos.", "fx": {"done": true}}], "card": {"kind": "panel", "head": ["Clase de prueba", "en curso", "reservada"], "meta": "Diego · hoy 19:00", "stamp": "✓ En tu agenda"}, "timer": false, "cliLabel": "Interesado"};window.SIM_SCREEN={"url": "tu-gimnasio · portal · clases", "leftTitle": "Clases · hoy", "rightTitle": "Reservas recibidas", "noun": ["reserva", "reservas"], "tiles": [{"id": "t0", "label": "07:00", "sub": "ocupado", "state": "busy"}, {"id": "t1", "label": "09:00", "sub": "libre", "state": ""}, {"id": "t2", "label": "10:00", "sub": "libre", "state": ""}, {"id": "t3", "label": "13:00", "sub": "libre", "state": ""}, {"id": "t4", "label": "17:00", "sub": "libre", "state": ""}, {"id": "t5", "label": "18:00", "sub": "ocupado", "state": "busy"}, {"id": "t6", "label": "19:00", "sub": "libre", "state": ""}, {"id": "t7", "label": "20:30", "sub": "libre", "state": ""}], "events": [{"tile": "t6", "h": "19:00", "n": "Diego", "sub": "Clase de prueba · Instagram", "src": "Instagram", "toast": ["Nueva reserva · Instagram", "Diego · prueba 19:00"], "tileText": "19:00", "state": "res"}, {"tile": "t2", "h": "10:00", "n": "Sonia P.", "sub": "Clase dirigida · web", "src": "Web", "toast": ["Nueva reserva · Web", "Sonia P. · 10:00"], "tileText": "10:00", "state": "res"}, {"tile": "t4", "h": "17:00", "n": "Ramón G.", "sub": "Sesión con entrenador · móvil", "src": "Móvil", "toast": ["Nueva reserva · Móvil", "Ramón G. · 17:00"], "tileText": "17:00", "state": "res"}], "legend": [["Libre", "background:#17161c;border:1px solid #3a3841"], ["Ocupado", "background:#5b5866"], ["Reservado", "background:var(--gold)"]], "icon": "cal", "cols": 4, "phone": {"title": "Reservar clase", "fields": [["Clase", "Funcional"], ["Día", "Hoy"], ["Hora", "19:00"]], "btn": "Reservar", "pressOn": 0}};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "kanban", "tag": "CRM de socios", "h": "Cada persona, en su etapa", "sub": "Del interesado al socio, y a los que están a punto de irse.", "cols": ["Interesado", "Prueba", "Socio", "En riesgo"], "cards": [{"id": "a", "t": "Diego", "s": "Instagram", "col": 0}, {"id": "b", "t": "Sonia P.", "s": "Clase de prueba", "col": 1}, {"id": "c", "t": "Ramón G.", "s": "Socio", "col": 2}, {"id": "d", "t": "Carla M.", "s": "Lleva días sin venir", "col": 3}], "moves": [["a", 1, "Diego reserva su clase de prueba"], ["b", 2, "Sonia P. se hace socia ✓"], ["d", 2, "Carla M. vuelve a entrenar ✓"]]}, {"type": "timeline", "tag": "Retención", "h": "El socio que faltaba, de vuelta", "sub": "El asistente detecta la ausencia y le escribe antes de que se dé de baja.", "steps": [{"i": "warn", "t": "Un socio lleva días sin venir", "s": "Lo detecta la ficha del socio", "h": "aviso"}, {"i": "chat", "t": "El asistente le escribe", "s": "Un mensaje cercano, con tus horarios", "h": "WhatsApp"}, {"i": "cal", "t": "Vuelve a reservar", "s": "Elige clase en dos toques", "h": "reserva"}, {"i": "star", "t": "Socio recuperado", "s": "Sin que tú hicieras nada", "h": "✓", "g": true}]}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

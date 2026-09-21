@@ -311,6 +311,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Recordatorios</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Menos citas perdidas. <em>Y huecos que se recuperan.</em></h2>
+    <p class="sim-sub">La reserva no acaba al agendar: se recuerda, se confirma y, si cancela, se reaprovecha.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -479,5 +488,7 @@ function toggleFaq(btn){
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "Reserva desde el móvil", "icon": "cal", "s0": "Nueva reserva…", "s1": "Eligiendo hueco…", "s2": "Reserva guardada", "lines": [{"w": "ia", "t": "¿Qué día te viene bien?"}, {"w": "cli", "t": "El viernes por la tarde"}, {"w": "ia", "t": "El viernes tengo libre a las 16:00, 17:30 y 19:00. ¿Cuál eliges?"}, {"w": "cli", "t": "A las 17:30, por favor", "fx": {"row": ["Hora", "Viernes 17:30"]}}, {"w": "ia", "t": "Reservado: viernes a las 17:30 ✓ Te llegará un aviso antes de la cita.", "fx": {"done": true}}], "card": {"kind": "panel", "head": ["Reserva", "en curso", "guardada"], "meta": "Viernes · 17:30", "stamp": "✓ En tu agenda"}, "timer": false};window.SIM_SCREEN={"url": "tu-negocio · portal · agenda", "leftTitle": "Agenda · viernes", "rightTitle": "Reservas de hoy", "noun": ["reserva", "reservas"], "tiles": [{"id": "t0", "label": "10:00", "sub": "ocupado", "state": "busy"}, {"id": "t1", "label": "11:00", "sub": "libre", "state": ""}, {"id": "t2", "label": "12:00", "sub": "libre", "state": ""}, {"id": "t3", "label": "16:00", "sub": "libre", "state": ""}, {"id": "t4", "label": "17:30", "sub": "libre", "state": ""}, {"id": "t5", "label": "18:30", "sub": "ocupado", "state": "busy"}, {"id": "t6", "label": "19:00", "sub": "libre", "state": ""}, {"id": "t7", "label": "20:00", "sub": "libre", "state": ""}], "events": [{"tile": "t4", "h": "17:30", "n": "Elena P.", "sub": "1 persona · desde el móvil", "src": "Móvil", "toast": ["Nueva reserva · Móvil", "Elena P. · 17:30"], "tileText": "17:30", "state": "res"}, {"tile": "t3", "h": "16:00", "n": "Tomás R.", "sub": "1 persona · desde la web", "src": "Web", "toast": ["Nueva reserva · Web", "Tomás R. · 16:00"], "tileText": "16:00", "state": "res"}, {"tile": "t6", "h": "19:00", "n": "Marina S.", "sub": "2 personas · por teléfono", "src": "Teléfono", "toast": ["Nueva reserva · Teléfono", "Marina S. · 19:00"], "tileText": "19:00", "state": "res"}], "legend": [["Libre", "background:#17161c;border:1px solid #3a3841"], ["Ocupado", "background:#5b5866"], ["Reservado", "background:var(--gold)"]], "icon": "cal", "cols": 4, "phone": {"title": "Reservar hora", "fields": [["Día", "Viernes"], ["Hora", "17:30"], ["Nombre", "Elena"]], "btn": "Reservar", "pressOn": 0}};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "timeline", "tag": "Recordatorios", "h": "De la reserva a la visita", "sub": "Aviso antes de la cita, confirmación y reacción ante cancelaciones.", "steps": [{"i": "cal", "t": "Reserva guardada", "s": "Desde la web o el móvil", "h": "ahora"}, {"i": "bell", "t": "Recordatorio al cliente", "s": "Un día antes", "h": "-24 h"}, {"i": "check", "t": "El cliente confirma", "s": "Con un solo toque", "h": "confirmada"}, {"i": "star", "t": "Cita cumplida", "s": "Y a por la siguiente", "h": "✓", "g": true}]}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

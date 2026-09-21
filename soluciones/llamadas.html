@@ -327,6 +327,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Registro de llamadas</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Cada llamada, anotada. <em>Ninguna se pierde.</em></h2>
+    <p class="sim-sub">Sabes quién llamó, qué quería y qué pasó con cada una.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 
@@ -495,5 +504,7 @@ function toggleFaq(btn){
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "Llamada entrante", "icon": "phone", "s0": "Llamada entrante…", "s1": "Llamada en curso", "s2": "Cita guardada", "lines": [{"w": "ia", "t": "Buenas tardes, le atiende el asistente virtual (IA). ¿En qué puedo ayudarle?"}, {"w": "cli", "t": "Quería pedir cita para vacunar a mi gatito."}, {"w": "ia", "t": "Claro. Tengo el martes a las 10:30 o el miércoles a las 17:00. ¿Cuál prefiere?"}, {"w": "cli", "t": "El martes, a nombre de Jaime.", "fx": {"row": ["Día", "Martes 10:30"]}}, {"w": "ia", "t": "Cita confirmada: martes a las 10:30, a nombre de Jaime. Queda anotada en la agenda.", "fx": {"done": true}}], "card": {"kind": "panel", "head": ["Cita anotada", "en curso", "guardada"], "meta": "Jaime · martes 10:30", "stamp": "✓ En tu agenda"}};window.SIM_SCREEN={"url": "tu-negocio · portal · llamadas", "leftTitle": "Llamadas · hoy", "rightTitle": "Atendidas por tu asistente", "noun": ["llamada", "llamadas"], "tiles": [{"id": "t0", "label": "Llamada 1", "sub": "sonando", "state": "busy"}, {"id": "t1", "label": "Llamada 2", "sub": "sonando", "state": "busy"}, {"id": "t2", "label": "Llamada 3", "sub": "sonando", "state": "busy"}, {"id": "t3", "label": "Llamada 4", "sub": "sonando", "state": "busy"}, {"id": "t4", "label": "Llamada 5", "sub": "sonando", "state": "busy"}, {"id": "t5", "label": "Llamada 6", "sub": "sonando", "state": "busy"}, {"id": "t6", "label": "Llamada 7", "sub": "sonando", "state": "busy"}, {"id": "t7", "label": "Llamada 8", "sub": "sonando", "state": "busy"}], "events": [{"tile": "t0", "h": "10:12", "n": "Jaime", "sub": "Cita martes 10:30", "src": "Teléfono", "toast": ["Llamada atendida", "Jaime · cita martes 10:30"], "tileText": "atendida", "state": "ok"}, {"tile": "t2", "h": "13:40", "n": "Rosa G.", "sub": "Consulta de horarios", "src": "Teléfono", "toast": ["Llamada atendida", "Rosa G. · consulta de horarios"], "tileText": "atendida", "state": "ok"}, {"tile": "t5", "h": "18:22", "n": "Andrés P.", "sub": "Cita miércoles 17:00", "src": "Teléfono", "toast": ["Llamada atendida", "Andrés P. · cita miércoles 17:00"], "tileText": "atendida", "state": "ok"}], "legend": [["Sonando", "background:#5b5866"], ["Atendida", "background:var(--green)"]], "icon": "phone", "cols": 4};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "checklist", "tag": "Tu registro", "h": "Todas las llamadas, resueltas", "sub": "Lo agendado, lo resuelto y lo que necesita tu atención.", "items": [["Jaime · cita martes 10:30", "agendada"], ["Rosa G. · consulta de horarios", "resuelta"], ["Andrés P. · pide presupuesto", "te avisa a ti"], ["Llamada fuera de horario", "atendida"]]}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

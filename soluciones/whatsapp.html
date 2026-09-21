@@ -334,6 +334,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Cuando hace falta una persona</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">El asistente sabe cuándo pasarte la conversación.</h2>
+    <p class="sim-sub">No lo resuelve todo: lo que es delicado te llega a ti, con el contexto completo.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 
@@ -501,5 +510,7 @@ function toggleFaq(btn){
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "WhatsApp del negocio", "icon": "chat", "s0": "Mensaje nuevo · 22:47", "s1": "Contestando…", "s2": "Cita agendada", "lines": [{"w": "cli", "t": "Hola, ¿tenéis hueco esta semana para una revisión?"}, {"w": "ia", "t": "¡Hola! Sí: tengo el jueves a las 11:00 o el viernes a las 17:30. ¿Cuál te va mejor?"}, {"w": "cli", "t": "El jueves"}, {"w": "ia", "t": "¿A nombre de quién?"}, {"w": "cli", "t": "Sara Molina", "fx": {"row": ["Día", "Jueves 11:00"]}}, {"w": "ia", "t": "Cita confirmada: jueves a las 11:00, a nombre de Sara ✓", "fx": {"done": true}}], "card": {"kind": "panel", "head": ["Cita agendada", "en curso", "ahora"], "meta": "Sara Molina · jueves 11:00", "stamp": "✓ En tu calendario"}, "timer": false, "aria": "Simulación: un cliente escribe por WhatsApp de noche y el asistente virtual agenda su cita"};window.SIM_SCREEN={"url": "tu-negocio · portal · mensajes", "leftTitle": "Conversaciones · hoy", "rightTitle": "Atendidas por tu asistente", "noun": ["conversación", "conversaciones"], "tiles": [{"id": "t0", "label": "Sara M.", "sub": "sin leer", "state": "busy"}, {"id": "t1", "label": "Pablo", "sub": "sin leer", "state": "busy"}, {"id": "t2", "label": "Lucía R.", "sub": "sin leer", "state": "busy"}, {"id": "t3", "label": "Mateo", "sub": "sin leer", "state": "busy"}, {"id": "t4", "label": "Irene", "sub": "sin leer", "state": "busy"}, {"id": "t5", "label": "Carlos", "sub": "sin leer", "state": "busy"}, {"id": "t6", "label": "Noa", "sub": "sin leer", "state": "busy"}, {"id": "t7", "label": "Álvaro", "sub": "sin leer", "state": "busy"}], "events": [{"tile": "t0", "h": "22:47", "n": "Sara M.", "sub": "Cita jueves 11:00", "src": "WhatsApp", "toast": ["Mensaje respondido · WhatsApp", "Sara M. · cita jueves 11:00"], "tileText": "respondida", "state": "ok"}, {"tile": "t3", "h": "23:15", "n": "Mateo", "sub": "Pregunta de horarios resuelta", "src": "WhatsApp", "toast": ["Mensaje respondido · WhatsApp", "Mateo · horarios"], "tileText": "respondida", "state": "ok"}, {"tile": "t6", "h": "07:05", "n": "Noa", "sub": "Cita viernes 17:30", "src": "WhatsApp", "toast": ["Mensaje respondido · WhatsApp", "Noa · cita viernes 17:30"], "tileText": "respondida", "state": "ok"}], "legend": [["Sin leer", "background:#5b5866"], ["Respondida", "background:var(--green)"]], "icon": "chat", "cols": 4, "caption": "Ejemplo de la bandeja de un negocio. Los datos son ficticios."};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "notify", "tag": "Relevo a una persona", "h": "Sin repetir preguntas", "sub": "Tú entras cuando de verdad aporta algo que un mensaje automático no puede.", "items": [{"i": "chat", "t": "El asistente responde", "s": "Horarios y precios, al momento"}, {"i": "warn", "t": "Caso delicado detectado", "s": "Te lo pasa con todo el contexto", "c": "red"}, {"i": "user", "t": "Tú continúas la conversación", "s": "Sin volver a preguntar nada", "c": "green"}]}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

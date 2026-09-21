@@ -308,6 +308,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Así se firma</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Un trazo en el móvil. <em>Y el trato queda cerrado.</em></h2>
+    <p class="sim-sub">Sin imprimir, sin escanear y con la copia guardada al instante.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 
@@ -458,5 +467,7 @@ function toggleFaq(btn){
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "Contrato para firmar", "icon": "doc", "s0": "Documento enviado", "s1": "Esperando firma…", "s2": "Firmado", "lines": [{"w": "ia", "t": "Hola, Marta. Tu presupuesto está listo para firmar desde el móvil, en un minuto.", "fx": {"row": ["Documento", "Presupuesto"]}}, {"w": "cli", "t": "Perfecto, lo abro ahora."}, {"w": "ia", "t": "Firma en el recuadro y pulsa «Terminar». Recibirás una copia."}, {"w": "cli", "t": "Hecho.", "fx": {"row": ["Firmante", "Marta Soler"]}}, {"w": "ia", "t": "Documento firmado ✓ y guardado en tu archivo.", "fx": {"done": true}}], "card": {"kind": "panel", "head": ["Presupuesto", "pendiente de firma", "firmado"], "meta": "Marta Soler · hoy", "stamp": "✓ Firmado y archivado"}, "timer": false};window.SIM_SCREEN={"url": "tu-negocio · portal · documentos", "leftTitle": "Documentos · esta semana", "rightTitle": "Firmados", "noun": ["firma", "firmas"], "tiles": [{"id": "t0", "label": "Presupuesto", "sub": "sin firmar", "state": "busy"}, {"id": "t1", "label": "Contrato", "sub": "sin firmar", "state": "busy"}, {"id": "t2", "label": "Encargo", "sub": "sin firmar", "state": "busy"}, {"id": "t3", "label": "Autorización", "sub": "sin firmar", "state": "busy"}, {"id": "t4", "label": "Alta cliente", "sub": "sin firmar", "state": "busy"}, {"id": "t5", "label": "Acuerdo", "sub": "sin firmar", "state": "busy"}, {"id": "t6", "label": "Anexo", "sub": "sin firmar", "state": "busy"}, {"id": "t7", "label": "Renovación", "sub": "sin firmar", "state": "busy"}], "events": [{"tile": "t0", "h": "10:02", "n": "Marta Soler", "sub": "Presupuesto firmado", "src": "Móvil", "toast": ["Documento firmado", "Marta Soler · presupuesto"], "tileText": "firmado", "state": "ok"}, {"tile": "t3", "h": "12:48", "n": "Pedro Vidal", "sub": "Autorización firmada", "src": "Ordenador", "toast": ["Documento firmado", "Pedro Vidal · autorización"], "tileText": "firmado", "state": "ok"}, {"tile": "t5", "h": "16:30", "n": "Clínica Norte", "sub": "Acuerdo firmado", "src": "Móvil", "toast": ["Documento firmado", "Clínica Norte · acuerdo"], "tileText": "firmado", "state": "ok"}], "legend": [["Sin firmar", "background:#5b5866"], ["Firmado", "background:var(--green)"]], "icon": "doc", "cols": 4};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "sign", "tag": "Firma digital", "h": "Presupuesto firmado hoy", "sub": "El cliente firma desde donde esté.", "doc": "Presupuesto de servicios", "signer": "Marta Soler", "stamp": "FIRMADO", "after": "Copia guardada en tu archivo"}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

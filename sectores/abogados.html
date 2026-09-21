@@ -332,6 +332,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Solo para despachos</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Tus expedientes en orden. <em>Y el encargo, firmado hoy.</em></h2>
+    <p class="sim-sub">Lo que un despacho necesita más allá de contestar: seguimiento de cada asunto y firma sin papel.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -513,5 +522,7 @@ function toggleFaq(btn){
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "WhatsApp del despacho", "icon": "chat", "s0": "Mensaje nuevo · 23:10", "s1": "Contestando…", "s2": "Consulta reservada", "lines": [{"w": "cli", "t": "Buenas noches, necesito un abogado laboralista lo antes posible."}, {"w": "ia", "t": "Buenas noches. Le ayudo a reservar una primera consulta con el despacho. ¿Qué día le viene bien?"}, {"w": "cli", "t": "El miércoles por la mañana", "fx": {"row": ["Materia", "Laboral"]}}, {"w": "ia", "t": "Miércoles a las 10:00 disponible. ¿A nombre de quién la reservo?"}, {"w": "cli", "t": "Raúl Campos", "fx": {"row": ["Cliente", "Raúl Campos"]}}, {"w": "ia", "t": "Reservada: miércoles 10:00 ✓ Si tiene documentación del caso, tráigala a la cita.", "fx": {"done": true}}], "card": {"kind": "panel", "head": ["Primera consulta", "en curso", "reservada"], "meta": "Raúl Campos · miércoles 10:00", "stamp": "✓ En tu agenda"}, "timer": false, "cliLabel": "Cliente potencial"};window.SIM_SCREEN={"url": "tu-despacho · portal · agenda", "leftTitle": "Agenda · esta semana", "rightTitle": "Consultas reservadas", "noun": ["consulta", "consultas"], "tiles": [{"id": "t0", "label": "09:00", "sub": "ocupado", "state": "busy"}, {"id": "t1", "label": "10:00", "sub": "libre", "state": ""}, {"id": "t2", "label": "11:00", "sub": "libre", "state": ""}, {"id": "t3", "label": "12:00", "sub": "ocupado", "state": "busy"}, {"id": "t4", "label": "16:00", "sub": "libre", "state": ""}, {"id": "t5", "label": "17:00", "sub": "ocupado", "state": "busy"}, {"id": "t6", "label": "18:00", "sub": "libre", "state": ""}, {"id": "t7", "label": "19:00", "sub": "libre", "state": ""}], "events": [{"tile": "t1", "h": "10:00", "n": "Raúl Campos", "sub": "Laboral · primera consulta", "src": "WhatsApp", "toast": ["Nueva consulta · WhatsApp", "Raúl Campos · miércoles 10:00"], "tileText": "10:00", "state": "res"}, {"tile": "t4", "h": "16:00", "n": "Marta Vidal", "sub": "Familia · primera consulta", "src": "Web", "toast": ["Nueva consulta · Web", "Marta Vidal · 16:00"], "tileText": "16:00", "state": "res"}, {"tile": "t6", "h": "18:00", "n": "Empresa Sol", "sub": "Mercantil · primera consulta", "src": "Teléfono", "toast": ["Nueva consulta · Teléfono", "Empresa Sol · 18:00"], "tileText": "18:00", "state": "res"}], "legend": [["Libre", "background:#17161c;border:1px solid #3a3841"], ["Ocupado", "background:#5b5866"], ["Reservado", "background:var(--gold)"]], "icon": "cal", "cols": 4, "phone": {"title": "Pedir consulta", "fields": [["Materia", "Laboral"], ["Día", "Miércoles"], ["Hora", "10:00"]], "btn": "Pedir cita", "pressOn": 0}};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "kanban", "tag": "CRM profesional", "h": "Cada asunto, en su fase", "sub": "De la primera consulta al expediente cerrado, sin hojas de cálculo.", "cols": ["Consulta", "Encargo", "En curso", "Cerrado"], "cards": [{"id": "a", "t": "Raúl Campos", "s": "Laboral", "col": 0}, {"id": "b", "t": "Marta Vidal", "s": "Familia", "col": 0}, {"id": "c", "t": "Empresa Sol", "s": "Mercantil", "col": 1}, {"id": "d", "t": "Hnos. Ortega", "s": "Herencia", "col": 2}], "moves": [["a", 1, "Raúl Campos pasa a «Encargo»"], ["c", 2, "Empresa Sol pasa a «En curso»"], ["d", 3, "Hnos. Ortega: expediente cerrado ✓"]]}, {"type": "sign", "tag": "Firma digital", "h": "La hoja de encargo, firmada hoy", "sub": "El cliente firma desde el móvil y la copia queda en su expediente.", "doc": "Hoja de encargo profesional", "signer": "Raúl Campos", "stamp": "FIRMADO", "after": "Copia al cliente y al expediente"}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

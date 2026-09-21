@@ -330,6 +330,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Solo para autónomos de oficios</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Presupuestos que salen solos. <em>Urgencias que te encuentran.</em></h2>
+    <p class="sim-sub">Lo que necesitas en obra: preparar el presupuesto sin sentarte y enterarte al momento de lo urgente.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -510,5 +519,7 @@ function toggleFaq(btn){
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "WhatsApp del fontanero", "icon": "chat", "s0": "Mensaje nuevo", "s1": "Contestando…", "s2": "Aviso enviado", "lines": [{"w": "cli", "t": "Se me ha roto una tubería en la cocina, ¿podéis venir hoy?"}, {"w": "ia", "t": "Lamento la avería. ¿Hay agua saliendo ahora mismo?"}, {"w": "cli", "t": "Sí, un poco", "fx": {"row": ["Urgencia", "Alta"]}}, {"w": "ia", "t": "Entendido. ¿Me dices la dirección para avisar al técnico?"}, {"w": "cli", "t": "Calle Olmo 12", "fx": {"row": ["Dirección", "Calle Olmo 12"]}}, {"w": "ia", "t": "Anotado. El técnico recibe el aviso ahora mismo ✓", "fx": {"done": true}}], "card": {"kind": "panel", "head": ["Aviso urgente", "en curso", "enviado"], "meta": "Cocina · Calle Olmo 12", "stamp": "✓ Técnico avisado"}, "timer": false, "cliLabel": "Cliente"};window.SIM_SCREEN={"url": "tu-negocio · portal · avisos", "leftTitle": "Avisos · hoy", "rightTitle": "Trabajos entrantes", "noun": ["aviso", "avisos"], "tiles": [{"id": "t0", "label": "Aviso 1", "sub": "sin atender", "state": "busy"}, {"id": "t1", "label": "Aviso 2", "sub": "sin atender", "state": "busy"}, {"id": "t2", "label": "Aviso 3", "sub": "sin atender", "state": "busy"}, {"id": "t3", "label": "Aviso 4", "sub": "sin atender", "state": "busy"}, {"id": "t4", "label": "Aviso 5", "sub": "sin atender", "state": "busy"}, {"id": "t5", "label": "Aviso 6", "sub": "sin atender", "state": "busy"}, {"id": "t6", "label": "Aviso 7", "sub": "sin atender", "state": "busy"}, {"id": "t7", "label": "Aviso 8", "sub": "sin atender", "state": "busy"}], "events": [{"tile": "t0", "h": "10:14", "n": "Calle Olmo 12", "sub": "Avería en cocina · urgente", "src": "WhatsApp", "toast": ["Urgencia · técnico avisado", "Calle Olmo 12 · tubería"], "tileText": "avisado", "state": "res"}, {"tile": "t3", "h": "12:30", "n": "Piso en Gran Vía", "sub": "Presupuesto de reforma", "src": "Teléfono", "toast": ["Trabajo entrante", "Gran Vía · presupuesto"], "tileText": "agendado", "state": "ok"}, {"tile": "t5", "h": "17:20", "n": "Local de Marta", "sub": "Revisión eléctrica · viernes", "src": "Web", "toast": ["Trabajo entrante", "Local de Marta · viernes"], "tileText": "agendado", "state": "ok"}], "legend": [["Sin atender", "background:#5b5866"], ["Urgente", "background:var(--gold)"], ["Agendado", "background:var(--green)"]], "icon": "bolt", "cols": 4};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "doc", "tag": "Presupuesto por voz", "h": "Lo dictas, se escribe", "sub": "Lo revisas y lo envías desde el móvil, sin sentarte al ordenador.", "rows": [["Para", "Marta Vidal"], ["Trabajo", "Cambio de tubería en la cocina"]], "text": "Presupuesto: sustitución de la tubería y reparación de la pared. Incluye materiales y mano de obra.", "btns": ["Revisar", "Enviar al cliente"]}, {"type": "notify", "tag": "Avisos urgentes", "h": "Solo lo urgente te interrumpe", "sub": "Cuando hay una avería, el aviso llega al momento, con la dirección.", "items": [{"i": "warn", "t": "Urgencia: escape de agua", "s": "Calle Olmo 12 · cocina", "c": "red"}, {"i": "cal", "t": "Visita agendada", "s": "Viernes 9:00 · revisión eléctrica"}, {"i": "check", "t": "Presupuesto aceptado", "s": "Local de Marta", "c": "green"}]}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

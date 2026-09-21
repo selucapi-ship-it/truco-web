@@ -332,6 +332,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Solo para restaurantes</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">La cocina, siempre al día. <em>Los pedidos, en su sitio.</em></h2>
+    <p class="sim-sub">Lo que necesita un restaurante en hora punta: que cada pedido llegue ordenado y que tú te enteres sin soltar el fuego.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -518,5 +527,7 @@ function toggleFaq(btn){
 
 <script>window.SIM_TALK={"title": "Pedido por teléfono", "icon": "phone", "s0": "Llamada entrante…", "s1": "Llamada en curso", "s2": "Pedido guardado", "lines": [{"w": "ia", "t": "Buenas noches, le atiende el asistente virtual (IA) del restaurante. ¿Qué le pongo?"}, {"w": "cli", "t": "Hola, quería tres pizzas medianas de barbacoa.", "fx": {"row": ["3×", "Pizza mediana Barbacoa"]}}, {"w": "ia", "t": "Perfecto: tres pizzas medianas de barbacoa. ¿Algo más?"}, {"w": "cli", "t": "Sí, una ensalada César y dos refrescos de cola.", "fx": {"row": [["1×", "Ensalada César"], ["2×", "Refresco de cola"]]}}, {"w": "ia", "t": "Anotado. ¿Es para recoger o para tomar aquí?"}, {"w": "cli", "t": "Para recoger, a las nueve, a nombre de Lucía.", "fx": {"meta": true}}, {"w": "ia", "t": "Pedido confirmado para Lucía a las 21:00. ¡Gracias, hasta ahora!", "fx": {"done": true}}], "card": {"kind": "ticket", "head": ["Pedido · para recoger", "en curso", "21:00"], "meta": "A nombre de Lucía · 21:00", "stamp": "✓ Guardado en tu portal"}};window.SIM_SCREEN={"url": "tu-restaurante · portal · reservas", "leftTitle": "Sala · sábado", "rightTitle": "Reservas de hoy", "noun": ["reserva", "reservas"], "cols": 4, "icon": "cal", "tiles": [{"id": "t0", "label": "M1", "sub": "ocupada", "state": "busy", "round": false}, {"id": "t1", "label": "M2", "sub": "libre", "state": "", "round": false}, {"id": "t2", "label": "M3", "sub": "libre", "state": "", "round": true}, {"id": "t3", "label": "M4", "sub": "libre", "state": "", "round": false}, {"id": "t4", "label": "M5", "sub": "libre", "state": "", "round": false}, {"id": "t5", "label": "M6", "sub": "ocupada", "state": "busy", "round": true}, {"id": "t6", "label": "M7", "sub": "libre", "state": "", "round": false}, {"id": "t7", "label": "M8", "sub": "libre", "state": "", "round": false}], "events": [{"tile": "t4", "h": "21:00", "n": "Marcos R.", "sub": "4 personas · mesa M5", "src": "Teléfono", "toast": ["Nueva reserva · Teléfono", "Marcos R. · 4 personas · 21:00"], "tileText": "21:00 · 4p", "state": "res"}, {"tile": "t1", "h": "20:30", "n": "Ana G.", "sub": "2 personas · mesa M2", "src": "Web", "toast": ["Nueva reserva · Web", "Ana G. · 2 personas · 20:30"], "tileText": "20:30 · 2p", "state": "res"}, {"tile": "t6", "h": "21:30", "n": "Grupo Ruiz", "sub": "6 personas · mesa M7", "src": "Móvil", "toast": ["Nueva reserva · Móvil", "Grupo Ruiz · 6 personas · 21:30"], "tileText": "21:30 · 6p", "state": "res"}], "legend": [["Libre", "background:#17161c;border:1px solid #3a3841"], ["Ocupado", "background:#5b5866"], ["Reservado", "background:var(--gold)"]], "phone": {"title": "Reservar mesa", "fields": [["Día", "Sábado"], ["Personas", "6"], ["Hora", "21:30"]], "btn": "Reservar", "pressOn": 2}, "caption": "Ejemplo de la agenda de un restaurante. Los datos son ficticios."};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "kanban", "tag": "Tablero de pedidos", "h": "Del teléfono a la mesa", "sub": "Cada pedido entra ordenado y avanza hasta que el cliente lo recoge.", "cols": ["Nuevo", "En cocina", "Listo", "Recogido"], "cards": [{"id": "a", "t": "Lucía · 21:00", "s": "3 pizzas + ensalada", "col": 0}, {"id": "b", "t": "Mario · 21:15", "s": "2 hamburguesas", "col": 0}, {"id": "c", "t": "Ana · 21:30", "s": "Menú del día", "col": 1}], "moves": [["a", 1, "El pedido de Lucía pasa a cocina"], ["c", 2, "El pedido de Ana está listo"], ["c", 3, "Ana ha recogido su pedido ✓"]]}, {"type": "notify", "tag": "Tu móvil en hora punta", "h": "Te enteras de todo, sin mirar", "sub": "Pedidos y reservas llegan como avisos, vengan de donde vengan.", "items": [{"i": "phone", "t": "Pedido por teléfono", "s": "Lucía · 3 pizzas barbacoa"}, {"i": "cal", "t": "Reserva de mesa", "s": "Grupo Ruiz · 6 personas · 21:30"}, {"i": "chat", "t": "Pedido por WhatsApp", "s": "Mario · 2 hamburguesas", "c": "green"}]}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

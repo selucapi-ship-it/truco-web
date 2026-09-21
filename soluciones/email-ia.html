@@ -326,6 +326,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Borrador de respuesta</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">La respuesta, preparada. <em>Tú das el visto bueno.</em></h2>
+    <p class="sim-sub">El asistente redacta con tu tono y tus datos; nada sale sin que tú lo apruebes.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 
@@ -473,5 +482,7 @@ function toggleFaq(btn){
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "Bandeja de entrada", "icon": "mail", "s0": "Correo nuevo", "s1": "Leyendo…", "s2": "Borrador listo", "lines": [{"w": "cli", "t": "Asunto: Presupuesto reforma de cocina. «Buenas, ¿podéis enviarme un presupuesto para la próxima semana?»"}, {"w": "ia", "t": "Es una petición de presupuesto. La he clasificado como prioritaria.", "fx": {"row": ["Clasificado", "Presupuesto"]}}, {"w": "ia", "t": "Te he preparado el borrador de respuesta con tus datos para que lo revises.", "fx": {"row": ["Borrador", "Listo para revisar"]}}, {"w": "ia", "t": "Y el contacto ya está guardado en su ficha.", "fx": {"row": ["Contacto", "Guardado en tu CRM"], "done": true}}], "card": {"kind": "panel", "head": ["Correo procesado", "en curso", "listo"], "meta": "Tú decides si se envía", "stamp": "✓ Esperando tu revisión"}, "timer": false, "iaLabel": "Tu asistente (IA)", "cliLabel": "Correo recibido"};window.SIM_SCREEN={"url": "tu-negocio · portal · correo", "leftTitle": "Bandeja · hoy", "rightTitle": "Procesados por tu asistente", "noun": ["correo", "correos"], "tiles": [{"id": "t0", "label": "Presupuesto", "sub": "sin leer", "state": "busy"}, {"id": "t1", "label": "Factura", "sub": "sin leer", "state": "busy"}, {"id": "t2", "label": "Cita", "sub": "sin leer", "state": "busy"}, {"id": "t3", "label": "Consulta", "sub": "sin leer", "state": "busy"}, {"id": "t4", "label": "Pedido", "sub": "sin leer", "state": "busy"}, {"id": "t5", "label": "Proveedor", "sub": "sin leer", "state": "busy"}, {"id": "t6", "label": "Queja", "sub": "sin leer", "state": "busy"}, {"id": "t7", "label": "Reserva", "sub": "sin leer", "state": "busy"}], "events": [{"tile": "t0", "h": "09:02", "n": "Presupuesto reforma", "sub": "Clasificado · borrador listo", "src": "Correo", "toast": ["Correo clasificado", "Presupuesto · borrador listo"], "tileText": "clasificado", "state": "ok"}, {"tile": "t2", "h": "09:15", "n": "Cita para el jueves", "sub": "Clasificado · en tu calendario", "src": "Correo", "toast": ["Correo clasificado", "Cita · guardada en calendario"], "tileText": "clasificado", "state": "ok"}, {"tile": "t6", "h": "09:40", "n": "Queja de un cliente", "sub": "Marcada como urgente", "src": "Correo", "toast": ["Correo clasificado", "Queja · marcada como urgente"], "tileText": "urgente", "state": "ok"}], "legend": [["Sin leer", "background:#5b5866"], ["Clasificado", "background:var(--green)"]], "icon": "mail", "cols": 4};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "doc", "tag": "Borrador", "h": "Escrito para que solo lo revises", "sub": "Lo lees, lo ajustas si quieres y lo envías.", "rows": [["Para", "cliente@ejemplo.com"], ["Asunto", "Re: Presupuesto reforma de cocina"]], "text": "Hola, gracias por escribirnos. Para prepararte el presupuesto necesito saber las medidas de la cocina y la fecha que mejor te encaja. Puedo llamarte mañana por la mañana. Un saludo.", "btns": ["Editar", "Enviar"]}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

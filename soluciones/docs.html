@@ -302,6 +302,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Pregúntale a tu archivo</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Cualquier papel, en segundos. <em>Solo preguntando.</em></h2>
+    <p class="sim-sub">Dejas de abrir carpetas: escribes lo que buscas y aparece.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 
@@ -461,5 +470,7 @@ window.onSolutionsPricingUpdated.push(renderDocsPrice);
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "Archivo inteligente", "icon": "doc", "s0": "Documento recibido", "s1": "Archivando…", "s2": "Archivado", "lines": [{"w": "ia", "t": "Ha llegado una factura de un proveedor por correo."}, {"w": "ia", "t": "La he leído y archivada: Proveedores · septiembre.", "fx": {"row": ["Tipo", "Factura recibida"]}}, {"w": "cli", "t": "¿Dónde está el contrato de alquiler del local?"}, {"w": "ia", "t": "En Contratos · Local · 2026. ¿Te lo abro?", "fx": {"row": ["Búsqueda", "Contrato del local"], "done": true}}], "card": {"kind": "panel", "head": ["Documentos", "archivando", "ordenado"], "meta": "Carpeta: Proveedores · septiembre", "stamp": "✓ Archivado"}, "timer": false, "cliLabel": "Tú"};window.SIM_SCREEN={"url": "tu-negocio · portal · archivo", "leftTitle": "Carpetas", "rightTitle": "Archivado hoy", "noun": ["documento", "documentos"], "tiles": [{"id": "t0", "label": "Facturas", "sub": "sin ordenar", "state": "busy"}, {"id": "t1", "label": "Contratos", "sub": "sin ordenar", "state": "busy"}, {"id": "t2", "label": "Nóminas", "sub": "sin ordenar", "state": "busy"}, {"id": "t3", "label": "Seguros", "sub": "sin ordenar", "state": "busy"}, {"id": "t4", "label": "Impuestos", "sub": "sin ordenar", "state": "busy"}, {"id": "t5", "label": "Clientes", "sub": "sin ordenar", "state": "busy"}, {"id": "t6", "label": "Proveedores", "sub": "sin ordenar", "state": "busy"}, {"id": "t7", "label": "Varios", "sub": "sin ordenar", "state": "busy"}], "events": [{"tile": "t6", "h": "09:10", "n": "Factura de proveedor", "sub": "Proveedores · septiembre", "src": "Correo", "toast": ["Documento archivado", "Factura · Proveedores"], "tileText": "ordenado", "state": "ok"}, {"tile": "t1", "h": "11:30", "n": "Contrato del local", "sub": "Contratos · 2026", "src": "Escaneo", "toast": ["Documento archivado", "Contrato · Contratos"], "tileText": "ordenado", "state": "ok"}, {"tile": "t4", "h": "16:05", "n": "Modelo trimestral", "sub": "Impuestos · T3", "src": "Correo", "toast": ["Documento archivado", "Modelo · Impuestos"], "tileText": "ordenado", "state": "ok"}], "legend": [["Sin ordenar", "background:#5b5866"], ["Ordenado", "background:var(--green)"]], "icon": "doc", "cols": 4};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "search", "tag": "Buscador", "h": "Escribes, aparece", "sub": "Documentos ordenados y localizables.", "q": "¿Dónde está el contrato del local?", "results": [{"i": "doc", "t": "Contrato de alquiler del local", "s": "Contratos · Local · 2026", "a": "Abrir"}, {"i": "folder", "t": "Anexo de prórroga", "s": "Contratos · Local · 2026", "a": "Abrir"}]}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

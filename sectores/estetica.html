@@ -332,6 +332,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Solo para centros de estética</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Cada clienta, conocida. <em>Cada hueco, aprovechado.</em></h2>
+    <p class="sim-sub">Lo que marca la diferencia en un centro: recordar a cada persona y no perder ni una cita.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -512,5 +521,7 @@ function toggleFaq(btn){
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "WhatsApp del centro", "icon": "chat", "s0": "Mensaje nuevo", "s1": "Contestando…", "s2": "Reserva confirmada", "lines": [{"w": "cli", "t": "Hola, ¿tenéis hueco para manicura mañana por la tarde?"}, {"w": "ia", "t": "¡Hola! Sí: mañana a las 16:30 o a las 18:00. ¿Cuál prefieres?"}, {"w": "cli", "t": "A las 18, perfecto", "fx": {"row": ["Servicio", "Manicura"]}}, {"w": "ia", "t": "¿A nombre de quién?"}, {"w": "cli", "t": "Paula", "fx": {"row": ["Clienta", "Paula"]}}, {"w": "ia", "t": "Reserva confirmada mañana a las 18:00 ✓ Te esperamos.", "fx": {"done": true}}], "card": {"kind": "panel", "head": ["Reserva de manicura", "en curso", "confirmada"], "meta": "Paula · mañana 18:00", "stamp": "✓ En tu agenda"}, "timer": false, "cliLabel": "Clienta"};window.SIM_SCREEN={"url": "tu-centro · portal · agenda", "leftTitle": "Cabinas · mañana", "rightTitle": "Reservas de hoy", "noun": ["reserva", "reservas"], "tiles": [{"id": "t0", "label": "10:00", "sub": "ocupado", "state": "busy"}, {"id": "t1", "label": "11:00", "sub": "libre", "state": ""}, {"id": "t2", "label": "12:30", "sub": "libre", "state": ""}, {"id": "t3", "label": "16:30", "sub": "libre", "state": ""}, {"id": "t4", "label": "17:30", "sub": "libre", "state": ""}, {"id": "t5", "label": "18:00", "sub": "libre", "state": ""}, {"id": "t6", "label": "19:00", "sub": "ocupado", "state": "busy"}, {"id": "t7", "label": "20:00", "sub": "libre", "state": ""}], "events": [{"tile": "t5", "h": "18:00", "n": "Paula", "sub": "Manicura · WhatsApp", "src": "WhatsApp", "toast": ["Nueva reserva · WhatsApp", "Paula · manicura 18:00"], "tileText": "18:00", "state": "res"}, {"tile": "t1", "h": "11:00", "n": "Nerea C.", "sub": "Facial · desde la web", "src": "Web", "toast": ["Nueva reserva · Web", "Nerea C. · facial 11:00"], "tileText": "11:00", "state": "res"}, {"tile": "t3", "h": "16:30", "n": "Lidia F.", "sub": "Cancelación ocupada · Móvil", "src": "Móvil", "toast": ["Hueco de cancelación ocupado", "Lidia F. · 16:30"], "tileText": "16:30", "state": "res"}], "legend": [["Libre", "background:#17161c;border:1px solid #3a3841"], ["Ocupado", "background:#5b5866"], ["Reservado", "background:var(--gold)"]], "icon": "cal", "cols": 4, "phone": {"title": "Reservar cita", "fields": [["Servicio", "Facial"], ["Día", "Mañana"], ["Hora", "11:00"]], "btn": "Reservar", "pressOn": 1}};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "checklist", "tag": "Ficha de la clienta", "h": "Sabes qué le gusta", "sub": "Historial, preferencias y próximos retoques en un solo sitio.", "items": [["Historial de tratamientos", "guardado"], ["Preferencias y alergias", "anotadas"], ["Próxima cita", "agendada"], ["Aviso de retoque", "programado"]]}, {"type": "notify", "tag": "Tu móvil, sin ruido", "h": "Solo lo que importa", "sub": "Te enteras de lo relevante sin dejar lo que tienes en las manos.", "items": [{"i": "cal", "t": "Nueva reserva", "s": "Paula · manicura · mañana 18:00"}, {"i": "bell", "t": "Recordatorio enviado", "s": "A Nerea, para su facial de hoy"}, {"i": "star", "t": "Hueco de cancelación ocupado", "s": "Lidia F. · 16:30", "c": "green"}]}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

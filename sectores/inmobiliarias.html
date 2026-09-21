@@ -332,6 +332,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Solo para inmobiliarias</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Cada comprador, en su embudo. <em>Cada encargo, firmado.</em></h2>
+    <p class="sim-sub">Saber en qué punto está cada interesado y cerrar el encargo de venta sin desplazamientos.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -513,5 +522,7 @@ function toggleFaq(btn){
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "Mensaje desde el portal", "icon": "chat", "s0": "Mensaje nuevo · 23:12", "s1": "Contestando…", "s2": "Visita reservada", "lines": [{"w": "cli", "t": "Vi el piso de la calle Mayor en el portal, ¿sigue disponible?"}, {"w": "ia", "t": "¡Hola! Sí, sigue disponible. ¿Te gustaría visitarlo? Tengo el jueves a las 18:00 o el sábado a las 11:00."}, {"w": "cli", "t": "El sábado", "fx": {"row": ["Inmueble", "Calle Mayor"]}}, {"w": "ia", "t": "¿A nombre de quién reservo la visita?"}, {"w": "cli", "t": "Irene Solano", "fx": {"row": ["Interesada", "Irene Solano"]}}, {"w": "ia", "t": "Visita reservada: sábado a las 11:00 ✓ Te enviamos la dirección exacta.", "fx": {"done": true}}], "card": {"kind": "panel", "head": ["Visita al inmueble", "en curso", "reservada"], "meta": "Irene Solano · sábado 11:00", "stamp": "✓ En tu calendario"}, "timer": false, "cliLabel": "Interesado"};window.SIM_SCREEN={"url": "tu-agencia · portal · visitas", "leftTitle": "Visitas · esta semana", "rightTitle": "Visitas reservadas", "noun": ["visita", "visitas"], "tiles": [{"id": "t0", "label": "Jue 17:00", "sub": "libre", "state": ""}, {"id": "t1", "label": "Jue 18:00", "sub": "libre", "state": ""}, {"id": "t2", "label": "Vie 12:00", "sub": "ocupado", "state": "busy"}, {"id": "t3", "label": "Vie 17:00", "sub": "libre", "state": ""}, {"id": "t4", "label": "Sáb 10:00", "sub": "libre", "state": ""}, {"id": "t5", "label": "Sáb 11:00", "sub": "libre", "state": ""}, {"id": "t6", "label": "Sáb 12:00", "sub": "libre", "state": ""}, {"id": "t7", "label": "Sáb 13:00", "sub": "libre", "state": ""}], "events": [{"tile": "t5", "h": "Sáb 11:00", "n": "Irene Solano", "sub": "Calle Mayor · desde el portal", "src": "Portal", "toast": ["Nueva visita · Portal", "Irene Solano · sábado 11:00"], "tileText": "reservada", "state": "res"}, {"tile": "t1", "h": "Jue 18:00", "n": "Familia Ortega", "sub": "Piso en el centro · WhatsApp", "src": "WhatsApp", "toast": ["Nueva visita · WhatsApp", "Familia Ortega · jueves 18:00"], "tileText": "reservada", "state": "res"}, {"tile": "t7", "h": "Sáb 13:00", "n": "Óscar T.", "sub": "Chalet · por teléfono", "src": "Teléfono", "toast": ["Nueva visita · Teléfono", "Óscar T. · sábado 13:00"], "tileText": "reservada", "state": "res"}], "legend": [["Libre", "background:#17161c;border:1px solid #3a3841"], ["Ocupado", "background:#5b5866"], ["Reservado", "background:var(--gold)"]], "icon": "cal", "cols": 4};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "kanban", "tag": "CRM de compradores", "h": "Del interesado a la firma", "sub": "Nadie se queda esperando: cada persona avanza por su embudo.", "cols": ["Interesado", "Visita", "Oferta", "Firmado"], "cards": [{"id": "a", "t": "Irene Solano", "s": "Calle Mayor", "col": 0}, {"id": "b", "t": "Fam. Ortega", "s": "Piso centro", "col": 1}, {"id": "c", "t": "Óscar T.", "s": "Chalet", "col": 1}, {"id": "d", "t": "Lidia F.", "s": "Ático", "col": 2}], "moves": [["a", 1, "Irene Solano ya tiene visita"], ["b", 2, "Familia Ortega hace una oferta"], ["d", 3, "Lidia F.: operación firmada ✓"]]}, {"type": "sign", "tag": "Firma digital", "h": "La hoja de encargo, en el móvil", "sub": "El propietario firma desde casa y no hace falta desplazarse.", "doc": "Hoja de encargo de venta", "signer": "Propietario", "stamp": "FIRMADO", "after": "Copia al propietario y a tu archivo"}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>

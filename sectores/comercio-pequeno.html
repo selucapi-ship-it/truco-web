@@ -329,6 +329,15 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
     <div id="simScreen"></div>
   </div>
 </div>
+<div class="section-block reveal" style="padding-top:0;" id="simExtrasSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Solo para comercios</span><div class="sd-line"></div></div>
+    <h2 class="sim-h2">Elige tu única cosa. <em>La resolvemos gratis para empezar.</em></h2>
+    <p class="sim-sub">No hace falta automatizarlo todo. Elige lo que más te quita tiempo y mira cómo quedaría.</p>
+    <div id="simExtras"></div>
+  </div>
+</div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -524,5 +533,7 @@ function toggleFaq(btn){
 <script src="../analytics-tracking.js"></script>
 <script>window.SIM_TALK={"title": "WhatsApp de la tienda", "icon": "chat", "s0": "Mensaje nuevo", "s1": "Contestando…", "s2": "Consulta resuelta", "lines": [{"w": "cli", "t": "Hola, ¿abrís el sábado por la tarde?"}, {"w": "ia", "t": "¡Hola! Los sábados abrimos por la mañana y por la tarde. ¿Quieres que te reserve algo para recoger?"}, {"w": "cli", "t": "Sí, el pedido de ayer", "fx": {"row": ["Consulta", "Horario del sábado"]}}, {"w": "ia", "t": "Anotado: te lo dejamos preparado para recoger el sábado ✓", "fx": {"row": ["Pedido", "Para recoger el sábado"], "done": true}}], "card": {"kind": "panel", "head": ["Consulta de cliente", "en curso", "resuelta"], "meta": "Sin que dejaras de atender el mostrador", "stamp": "✓ Resuelta"}, "timer": false};window.SIM_SCREEN={"url": "tu-tienda · portal · mensajes", "leftTitle": "Consultas · esta semana", "rightTitle": "Resueltas por tu asistente", "noun": ["consulta", "consultas"], "tiles": [{"id": "t0", "label": "Horario", "sub": "sin contestar", "state": "busy"}, {"id": "t1", "label": "Precio", "sub": "sin contestar", "state": "busy"}, {"id": "t2", "label": "Pedido", "sub": "sin contestar", "state": "busy"}, {"id": "t3", "label": "Stock", "sub": "sin contestar", "state": "busy"}, {"id": "t4", "label": "Reserva", "sub": "sin contestar", "state": "busy"}, {"id": "t5", "label": "Envío", "sub": "sin contestar", "state": "busy"}, {"id": "t6", "label": "Cambio", "sub": "sin contestar", "state": "busy"}, {"id": "t7", "label": "Otra duda", "sub": "sin contestar", "state": "busy"}], "events": [{"tile": "t0", "h": "21:10", "n": "Consulta de horario", "sub": "Sábado por la tarde", "src": "WhatsApp", "toast": ["Consulta resuelta", "Horario · resuelta"], "tileText": "resuelta", "state": "ok"}, {"tile": "t2", "h": "22:35", "n": "Pedido para recoger", "sub": "Preparado para el sábado", "src": "WhatsApp", "toast": ["Consulta resuelta", "Pedido · preparado"], "tileText": "resuelta", "state": "ok"}, {"tile": "t3", "h": "08:05", "n": "Consulta de stock", "sub": "Disponible en tienda", "src": "Web", "toast": ["Consulta resuelta", "Stock · resuelta"], "tileText": "resuelta", "state": "ok"}], "legend": [["Sin contestar", "background:#5b5866"], ["Resuelta", "background:var(--green)"]], "icon": "chat", "cols": 4};</script>
 <script src="../assets/sim.js" defer></script>
+<script>window.SIM_EXTRAS={"cards": [{"type": "picker", "tag": "Elige una", "h": "La que más te quita tiempo", "sub": "Pulsa una opción. Puedes cambiar de idea cuando quieras.", "tabs": [{"l": "WhatsApp", "h": "Contestar sin mirar el móvil", "p": ["Horarios, precios y disponibilidad respondidos al momento", "Los mensajes de la noche, contestados por la mañana… o antes", "Tú solo intervienes cuando hace falta una persona"], "r": "Resultado: cero mensajes sin responder"}, {"l": "Reservas", "h": "Una agenda que se llena sola", "p": ["El cliente reserva desde el móvil o tu web", "Recordatorios antes de cada cita", "Los huecos cancelados se pueden volver a ocupar"], "r": "Resultado: menos huecos vacíos"}, {"l": "Facturas", "h": "Facturar sin abrir un programa", "p": ["Dictas o escribes la venta y sale la factura", "Se envía al cliente y queda guardada", "Todo ordenado para tu gestoría"], "r": "Resultado: facturas al día"}]}]};</script>
+<script src="../assets/sim-extras.js" defer></script>
 </body>
 </html>
