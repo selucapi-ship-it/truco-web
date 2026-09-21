@@ -260,6 +260,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   .float-label{display:none;}
 }
 </style>
+<link rel="stylesheet" href="../assets/sim.css">
 </head>
 <body>
 
@@ -288,26 +289,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Agenda citas en tu calendario</span></div>
         </div>
       </div>
-      <div class="browser-wrap">
-        <div class="browser-mock float">
-          <div class="bm-bar"><span class="bm-dot"></span><span class="bm-dot"></span><span class="bm-dot"></span><span class="bm-url">tuempresa.com</span></div>
-          <div class="bm-page">
-            <div class="bm-line w60" style="height:16px;margin-bottom:14px;"></div>
-            <div class="bm-line w80"></div>
-            <div class="bm-line w40" style="margin-bottom:20px;"></div>
-            <div class="bm-line w60"></div>
-            <div class="bm-line w80"></div>
-            <div class="bm-widget">
-              <div class="bm-widget-top"><div class="pm-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></div><div class="bm-widget-title">Asistente</div></div>
-              <div class="bm-widget-body">
-                <div class="pm-bubble in">¿Cuál es el precio del plan básico?</div>
-                <div class="pm-bubble out">Va incluido en tu Departamento Tecnológico. ¿Quieres que te lo detalle?</div>
-                <div class="pm-bubble in">Sí, por favor</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div id="simTalk"></div>
     </div>
   </div>
 </div>
@@ -340,44 +322,16 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </div>
 
 
-<div class="section-block reveal" style="padding-top:0;">
+<div class="section-block reveal" id="simSection">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag gold">Ejemplo práctico</span><div class="sd-line"></div></div>
-    <div class="example-wrap">
-      <div class="example-col">
-        <span class="example-label before"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Antes</span>
-        <div class="browser-mock" style="margin:0 auto;width:280px;">
-          <div class="bm-bar"><span class="bm-dot"></span><span class="bm-dot"></span><span class="bm-dot"></span><span class="bm-url">tuempresa.com</span></div>
-          <div class="bm-page" style="min-height:200px;">
-            <div class="bm-line w60" style="height:16px;margin-bottom:14px;"></div>
-            <div class="bm-line w80"></div>
-            <div class="bm-line w40"></div>
-          </div>
-        </div>
-        <div class="pm-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Visitante se va sin dejar contacto</div>
-      </div>
-      <div class="example-col">
-        <span class="example-label after"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Después</span>
-        <div class="browser-mock" style="margin:0 auto;width:280px;">
-          <div class="bm-bar"><span class="bm-dot"></span><span class="bm-dot"></span><span class="bm-dot"></span><span class="bm-url">tuempresa.com</span></div>
-          <div class="bm-page" style="min-height:200px;">
-            <div class="bm-line w60" style="height:16px;margin-bottom:14px;"></div>
-            <div class="bm-line w80"></div>
-            <div class="bm-line w40" style="margin-bottom:16px;"></div>
-            <div class="bm-widget" style="position:static;width:100%;margin-top:8px;">
-              <div class="bm-widget-top"><div class="pm-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg></div><div class="bm-widget-title">Asistente</div></div>
-              <div class="bm-widget-body" style="min-height:70px;">
-                <div class="pm-bubble in">¿Hacéis envíos internacionales?</div>
-                <div class="pm-bubble out">Sí, a toda Europa. Déjame tu email y te paso tarifas.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="pm-note good"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Contacto cualificado captado</div>
-      </div>
-    </div>
+    <div class="section-divider"><span class="sd-tag gold">Tu web, trabajando</span><div class="sd-line"></div></div>
+    <div class="sim-loss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Tu web recibe visitas a las tres de la madrugada y nadie les responde: <b>se van sin dejar ni un dato</b>.</span></div>
+    <h2 class="sim-h2">Tu web ya no es un folleto. <em>Atiende, resuelve y capta.</em></h2>
+    <p class="sim-sub">Un asistente virtual responde las dudas de tu negocio y, cuando el visitante está listo, reserva la cita y guarda sus datos.</p>
+    <div id="simScreen"></div>
   </div>
 </div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -551,5 +505,7 @@ function toggleFaq(btn){
 })();
 </script>
 <script src="../analytics-tracking.js"></script>
+<script>window.SIM_TALK={"title": "Chat de tu web", "icon": "web", "s0": "Visitante nuevo", "s1": "Respondiendo…", "s2": "Contacto guardado", "lines": [{"w": "cli", "t": "Hola, ¿trabajáis también con empresas de fuera de la ciudad?"}, {"w": "ia", "t": "Sí, atendemos a toda la provincia. ¿Quieres reservar una cita para contárnoslo?"}, {"w": "cli", "t": "Sí, el lunes por la mañana"}, {"w": "ia", "t": "Lunes a las 10:00 libre. ¿Me dices tu nombre?", "fx": {"row": ["Cita", "Lunes 10:00"]}}, {"w": "cli", "t": "Elena Pardo", "fx": {"row": ["Nombre", "Elena Pardo"]}}, {"w": "ia", "t": "Hecho, Elena ✓ Tu cita y tus datos quedan guardados.", "fx": {"done": true}}], "card": {"kind": "panel", "head": ["Ficha del visitante", "en curso", "guardada"], "meta": "Origen: tu web", "stamp": "✓ En tu CRM"}, "timer": false, "cliLabel": "Visitante"};window.SIM_SCREEN={"url": "tu-negocio · portal · web", "leftTitle": "Visitas de tu web · hoy", "rightTitle": "Atendidas por tu asistente", "noun": ["visita", "visitas"], "tiles": [{"id": "t0", "label": "Visita 1", "sub": "navegando", "state": "busy"}, {"id": "t1", "label": "Visita 2", "sub": "navegando", "state": "busy"}, {"id": "t2", "label": "Visita 3", "sub": "navegando", "state": "busy"}, {"id": "t3", "label": "Visita 4", "sub": "navegando", "state": "busy"}, {"id": "t4", "label": "Visita 5", "sub": "navegando", "state": "busy"}, {"id": "t5", "label": "Visita 6", "sub": "navegando", "state": "busy"}, {"id": "t6", "label": "Visita 7", "sub": "navegando", "state": "busy"}, {"id": "t7", "label": "Visita 8", "sub": "navegando", "state": "busy"}], "events": [{"tile": "t0", "h": "03:12", "n": "Elena Pardo", "sub": "Cita lunes 10:00", "src": "Web", "toast": ["Visitante atendido · Web", "Elena Pardo · cita lunes 10:00"], "tileText": "atendida", "state": "ok"}, {"tile": "t3", "h": "14:30", "n": "Roberto L.", "sub": "Pregunta de precios resuelta", "src": "Web", "toast": ["Visitante atendido · Web", "Roberto L. · consulta resuelta"], "tileText": "atendida", "state": "ok"}, {"tile": "t5", "h": "22:05", "n": "Alba T.", "sub": "Solicitud de contacto guardada", "src": "Web", "toast": ["Visitante atendido · Web", "Alba T. · contacto guardado"], "tileText": "atendida", "state": "ok"}], "legend": [["Navegando", "background:#5b5866"], ["Atendida", "background:var(--green)"]], "icon": "web", "cols": 4};</script>
+<script src="../assets/sim.js" defer></script>
 </body>
 </html>

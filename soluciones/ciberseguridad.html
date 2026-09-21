@@ -235,6 +235,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   .float-label{display:none;}
 }
 </style>
+<link rel="stylesheet" href="../assets/sim.css">
 </head>
 <body>
 
@@ -263,17 +264,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>2FA y copias automáticas</span></div>
         </div>
       </div>
-      <div class="sec-wrap">
-        <div class="sec-mock float">
-          <div class="sec-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Estado de seguridad</span></div>
-          <div class="sec-list">
-            <div class="sec-item"><div class="sec-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>Auditoría inicial completada</span></div>
-            <div class="sec-item"><div class="sec-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>2FA activado en plataformas críticas</span></div>
-            <div class="sec-item"><div class="sec-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>Gestor de contraseñas activo</span></div>
-            <div class="sec-item"><div class="sec-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><span>Copias de seguridad al día</span></div>
-          </div>
-        </div>
-      </div>
+      <div id="simTalk"></div>
     </div>
   </div>
 </div>
@@ -306,14 +297,16 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </div>
 
 
-<div class="section-block reveal" style="padding-top:0;">
+<div class="section-block reveal" id="simSection">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag gold">Ejemplo práctico</span><div class="sd-line"></div></div>
-    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:700px;margin-bottom:8px;"><b style="color:var(--white);">Antes:</b> un empleado recibe un correo que parece de un proveedor habitual pidiendo un pago urgente. Nadie sabe identificarlo como fraude y casi se hace la transferencia.</p>
-    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:700px;margin-bottom:24px;"><b style="color:var(--white);">Después:</b> el equipo, formado en los riesgos más comunes, identifica la señal de alarma y lo reporta antes de que pase nada — con las mismas protecciones que ves activas arriba.</p>
-    <p style="color:var(--grey);font-size:.85rem;">No hace falta ser un experto en tecnología: con unas medidas básicas bien implantadas se evita la inmensa mayoría de problemas reales.</p>
+    <div class="section-divider"><span class="sd-tag gold">Un negocio que no se para</span><div class="sd-line"></div></div>
+    <div class="sim-loss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Un correo falso o un disco roto sin copia puede <b>parar tu negocio durante días</b>. Y siempre pasa cuando menos te lo esperas.</span></div>
+    <h2 class="sim-h2">Tu negocio, vigilado. <em>Sin que tengas que pensarlo.</em></h2>
+    <p class="sim-sub">Copias de seguridad, equipos al día y accesos revisados: la seguridad básica que toda pyme necesita y casi ninguna tiene.</p>
+    <div id="simScreen"></div>
   </div>
 </div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -466,5 +459,7 @@ renderCiberseguridadPrice();
 window.onSolutionsPricingUpdated.push(renderCiberseguridadPrice);
 </script>
 <script src="../analytics-tracking.js"></script>
+<script>window.SIM_TALK={"title": "Resumen de anoche", "icon": "shield", "s0": "Revisando tus equipos…", "s1": "Revisando…", "s2": "Todo al día", "lines": [{"w": "ia", "t": "Buenos días. He revisado tus equipos esta noche."}, {"w": "ia", "t": "Copia de seguridad completada ✓", "fx": {"row": ["Copia de seguridad", "Completada"]}}, {"w": "ia", "t": "Un equipo tiene el antivirus a punto de caducar. Ya lo hemos avisado para renovarlo.", "fx": {"row": ["Antivirus", "Renovación en curso"]}}, {"w": "cli", "t": "Gracias. Renuévalo hoy."}, {"w": "ia", "t": "Hecho. Accesos revisados y todo al día.", "fx": {"row": ["Accesos", "Revisados"], "done": true}}], "card": {"kind": "panel", "head": ["Estado de seguridad", "revisando", "al día"], "meta": "Seguridad básica, no una garantía total", "stamp": "✓ Todo al día"}, "timer": false, "cliLabel": "Tú"};window.SIM_SCREEN={"url": "tu-negocio · portal · seguridad", "leftTitle": "Equipos y accesos", "rightTitle": "Revisiones de hoy", "noun": ["revisión", "revisiones"], "tiles": [{"id": "t0", "label": "Equipo 1", "sub": "sin revisar", "state": "busy"}, {"id": "t1", "label": "Equipo 2", "sub": "sin revisar", "state": "busy"}, {"id": "t2", "label": "Equipo 3", "sub": "sin revisar", "state": "busy"}, {"id": "t3", "label": "Equipo 4", "sub": "sin revisar", "state": "busy"}, {"id": "t4", "label": "Servidor", "sub": "sin revisar", "state": "busy"}, {"id": "t5", "label": "Correo", "sub": "sin revisar", "state": "busy"}, {"id": "t6", "label": "Wi-Fi", "sub": "sin revisar", "state": "busy"}, {"id": "t7", "label": "Móviles", "sub": "sin revisar", "state": "busy"}], "events": [{"tile": "t4", "h": "03:00", "n": "Copia de seguridad", "sub": "Completada", "src": "Automático", "toast": ["Copia completada", "Copia de seguridad · servidor"], "tileText": "protegido", "state": "ok"}, {"tile": "t1", "h": "03:20", "n": "Antivirus", "sub": "Renovación en curso", "src": "Aviso", "toast": ["Aviso enviado", "Antivirus · renovación"], "tileText": "aviso", "state": "res"}, {"tile": "t5", "h": "03:40", "n": "Accesos del correo", "sub": "Revisados", "src": "Automático", "toast": ["Accesos revisados", "Correo · accesos"], "tileText": "protegido", "state": "ok"}], "legend": [["Sin revisar", "background:#5b5866"], ["Con aviso", "background:var(--gold)"], ["Protegido", "background:var(--green)"]], "icon": "shield", "cols": 4};</script>
+<script src="../assets/sim.js" defer></script>
 </body>
 </html>

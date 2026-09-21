@@ -240,6 +240,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   .float-label{display:none;}
 }
 </style>
+<link rel="stylesheet" href="../assets/sim.css">
 </head>
 <body>
 
@@ -268,21 +269,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Cero citas duplicadas</span></div>
         </div>
       </div>
-      <div class="cal-wrap">
-        <div class="cal-mock float">
-          <div class="cal-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Agenda — Junio</span></div>
-          <div class="cal-grid">
-            <div class="cal-day-label">L</div><div class="cal-day-label">M</div><div class="cal-day-label">X</div><div class="cal-day-label">J</div><div class="cal-day-label">V</div><div class="cal-day-label">S</div><div class="cal-day-label">D</div>
-            <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day booked">3</div><div class="cal-day">4</div><div class="cal-day booked">5</div><div class="cal-day">6</div><div class="cal-day">7</div>
-            <div class="cal-day">8</div><div class="cal-day today">9</div><div class="cal-day booked">10</div><div class="cal-day">11</div><div class="cal-day booked">12</div><div class="cal-day">13</div><div class="cal-day">14</div>
-          </div>
-          <div class="cal-slot-list">
-            <div class="cal-slot show booked"><span>Lun 9 — 10:00</span><span class="cs-badge">Reservado</span></div>
-            <div class="cal-slot show booked"><span>Lun 9 — 12:30</span><span class="cs-badge">Reservado</span></div>
-            <div class="cal-slot show"><span>Lun 9 — 17:30</span><span class="cs-badge">Libre</span></div>
-          </div>
-        </div>
-      </div>
+      <div id="simTalk"></div>
     </div>
   </div>
 </div>
@@ -315,14 +302,16 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </div>
 
 
-<div class="section-block reveal" style="padding-top:0;">
+<div class="section-block reveal" id="simSection">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag gold">Ejemplo práctico</span><div class="sd-line"></div></div>
-    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:700px;margin-bottom:8px;"><b style="color:var(--white);">Antes:</b> un cliente quiere pedir cita un domingo por la tarde. Llama, no contesta nadie, y prueba con otro negocio.</p>
-    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:700px;margin-bottom:24px;"><b style="color:var(--white);">Después:</b> el mismo domingo reserva directamente online, ve los huecos disponibles en tiempo real (como en la agenda de arriba) y recibe la confirmación al instante.</p>
-    <p style="color:var(--grey);font-size:.85rem;">Se conecta con el calendario que ya usas, así que no hay doble gestión ni riesgo de citas duplicadas.</p>
+    <div class="section-divider"><span class="sd-tag gold">Tu agenda, sola</span><div class="sd-line"></div></div>
+    <div class="sim-loss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Cada hueco vacío en tu agenda es <b>dinero que no vuelve</b>. Y cada cita sin confirmar, un hueco que se queda vacío.</span></div>
+    <h2 class="sim-h2">Tus clientes reservan solos. <em>Tú solo miras la agenda.</em></h2>
+    <p class="sim-sub">Desde tu web o desde el móvil: eligen día y hora entre tus huecos libres y la cita queda guardada al instante.</p>
+    <div id="simScreen"></div>
   </div>
 </div>
+
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
@@ -488,5 +477,7 @@ function toggleFaq(btn){
 })();
 </script>
 <script src="../analytics-tracking.js"></script>
+<script>window.SIM_TALK={"title": "Reserva desde el móvil", "icon": "cal", "s0": "Nueva reserva…", "s1": "Eligiendo hueco…", "s2": "Reserva guardada", "lines": [{"w": "ia", "t": "¿Qué día te viene bien?"}, {"w": "cli", "t": "El viernes por la tarde"}, {"w": "ia", "t": "El viernes tengo libre a las 16:00, 17:30 y 19:00. ¿Cuál eliges?"}, {"w": "cli", "t": "A las 17:30, por favor", "fx": {"row": ["Hora", "Viernes 17:30"]}}, {"w": "ia", "t": "Reservado: viernes a las 17:30 ✓ Te llegará un aviso antes de la cita.", "fx": {"done": true}}], "card": {"kind": "panel", "head": ["Reserva", "en curso", "guardada"], "meta": "Viernes · 17:30", "stamp": "✓ En tu agenda"}, "timer": false};window.SIM_SCREEN={"url": "tu-negocio · portal · agenda", "leftTitle": "Agenda · viernes", "rightTitle": "Reservas de hoy", "noun": ["reserva", "reservas"], "tiles": [{"id": "t0", "label": "10:00", "sub": "ocupado", "state": "busy"}, {"id": "t1", "label": "11:00", "sub": "libre", "state": ""}, {"id": "t2", "label": "12:00", "sub": "libre", "state": ""}, {"id": "t3", "label": "16:00", "sub": "libre", "state": ""}, {"id": "t4", "label": "17:30", "sub": "libre", "state": ""}, {"id": "t5", "label": "18:30", "sub": "ocupado", "state": "busy"}, {"id": "t6", "label": "19:00", "sub": "libre", "state": ""}, {"id": "t7", "label": "20:00", "sub": "libre", "state": ""}], "events": [{"tile": "t4", "h": "17:30", "n": "Elena P.", "sub": "1 persona · desde el móvil", "src": "Móvil", "toast": ["Nueva reserva · Móvil", "Elena P. · 17:30"], "tileText": "17:30", "state": "res"}, {"tile": "t3", "h": "16:00", "n": "Tomás R.", "sub": "1 persona · desde la web", "src": "Web", "toast": ["Nueva reserva · Web", "Tomás R. · 16:00"], "tileText": "16:00", "state": "res"}, {"tile": "t6", "h": "19:00", "n": "Marina S.", "sub": "2 personas · por teléfono", "src": "Teléfono", "toast": ["Nueva reserva · Teléfono", "Marina S. · 19:00"], "tileText": "19:00", "state": "res"}], "legend": [["Libre", "background:#17161c;border:1px solid #3a3841"], ["Ocupado", "background:#5b5866"], ["Reservado", "background:var(--gold)"]], "icon": "cal", "cols": 4, "phone": {"title": "Reservar hora", "fields": [["Día", "Viernes"], ["Hora", "17:30"], ["Nombre", "Elena"]], "btn": "Reservar", "pressOn": 0}};</script>
+<script src="../assets/sim.js" defer></script>
 </body>
 </html>

@@ -258,6 +258,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   .float-label{display:none;}
 }
 </style>
+<link rel="stylesheet" href="../assets/sim.css">
 </head>
 <body>
 
@@ -286,29 +287,22 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Cero errores manuales</span></div>
         </div>
       </div>
-      <div class="flow-wrap">
-        <div class="flow-mock float">
-          <div class="flow-node">
-            <div class="fn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
-            <div><div class="fn-text">Pedido recibido</div><div class="fn-sub">Tienda online</div></div>
-          </div>
-          <div class="flow-connector"></div>
-          <div class="flow-node">
-            <div class="fn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 1z"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/></svg></div>
-            <div><div class="fn-text">Factura generada</div><div class="fn-sub">Automático</div></div>
-          </div>
-          <div class="flow-connector"></div>
-          <div class="flow-node">
-            <div class="fn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
-            <div><div class="fn-text">Almacén avisado</div><div class="fn-sub">Sin intervención humana</div></div>
-          </div>
-        </div>
-      </div>
+      <div id="simTalk"></div>
     </div>
   </div>
 </div>
 
 <style>.page-photo{position:relative;max-width:1040px;margin:34px auto 0;padding:0 24px;}.page-photo .pp-img{position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--grey-line);}.page-photo img{display:block;width:100%;height:auto;aspect-ratio:1200/750;object-fit:cover;opacity:.78;filter:saturate(.92);-webkit-mask-image:linear-gradient(180deg,#000 60%,transparent 100%);mask-image:linear-gradient(180deg,#000 60%,transparent 100%);}.pp-chip{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:8px;max-width:78%;padding:7px 12px;border-radius:99px;background:rgba(20,19,25,.8);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.16);color:#fff;font-size:.74rem;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.35);animation:ppFloat 5s ease-in-out infinite;}.pp-chip i{width:8px;height:8px;border-radius:50%;background:#22c55e;flex-shrink:0;box-shadow:0 0 0 4px rgba(34,197,94,.25);}.pp-chip.a{left:20px;top:16px;}.pp-chip.b{right:20px;bottom:18px;animation-delay:-2.5s;}.pp-chip.b i{background:var(--gold);box-shadow:0 0 0 4px rgba(217,168,63,.25);}@keyframes ppFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}@media(prefers-reduced-motion:reduce){.pp-chip{animation:none;}}@media(max-width:700px){.page-photo{margin-top:22px;padding:0 16px;}.page-photo .pp-img{border-radius:14px;}.pp-chip{font-size:.68rem;padding:6px 10px;}.pp-chip.a{left:24px;top:12px;}.pp-chip.b{right:24px;bottom:12px;}}</style><figure class="page-photo"><div class="pp-img"><img src="../assets/paginas/flujos-a-medida.jpg" alt="Un joven ante su portátil con automatizaciones conectadas a medida" width="1200" height="750" loading="lazy"><span class="pp-chip a"><i></i>Formulario recibido</span><span class="pp-chip b"><i></i>Aviso enviado por email</span></div></figure>
+
+<div class="section-block reveal" id="simSection">
+  <div class="container">
+    <div class="section-divider"><span class="sd-tag gold">Lo repetitivo, en piloto automático</span><div class="sd-line"></div></div>
+    <div class="sim-loss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Las tareas repetitivas se hacen mal cuando estás cansado y <b>no se hacen cuando estás liado</b>.</span></div>
+    <h2 class="sim-h2">Si lo haces cada semana, lo hacemos solo. <em>A tu medida.</em></h2>
+    <p class="sim-sub">Diseñamos el flujo exacto de tu negocio: cuando pasa algo, lo siguiente ocurre sin que nadie tenga que acordarse.</p>
+    <div id="simScreen"></div>
+  </div>
+</div>
 
 <div class="section-block reveal">
   <div class="container">
@@ -525,5 +519,7 @@ renderFlujosPrice();
 window.onSolutionsPricingUpdated.push(renderFlujosPrice);
 </script>
 <script src="../analytics-tracking.js"></script>
+<script>window.SIM_TALK={"title": "Flujo a medida", "icon": "bolt", "s0": "Formulario recibido", "s1": "Ejecutando…", "s2": "Flujo completado", "lines": [{"w": "ia", "t": "Formulario recibido en tu web: Lucía pide un presupuesto.", "fx": {"row": ["Paso 1", "Formulario recibido"]}}, {"w": "ia", "t": "Su ficha ya está creada en tu CRM.", "fx": {"row": ["Paso 2", "Ficha en el CRM"]}}, {"w": "ia", "t": "Le he enviado un email de confirmación.", "fx": {"row": ["Paso 3", "Email enviado"]}}, {"w": "ia", "t": "Y te he creado una tarea para llamarla mañana.", "fx": {"row": ["Paso 4", "Tarea para ti"], "done": true}}], "card": {"kind": "panel", "head": ["Formulario → CRM → email", "en curso", "completado"], "meta": "Nadie tuvo que acordarse", "stamp": "✓ Flujo completado"}, "timer": false};window.SIM_SCREEN={"url": "tu-negocio · portal · flujos", "leftTitle": "Flujos activos", "rightTitle": "Ejecutados hoy", "noun": ["ejecución", "ejecuciones"], "tiles": [{"id": "t0", "label": "Formulario → CRM", "sub": "esperando", "state": "busy"}, {"id": "t1", "label": "Pedido → Factura", "sub": "esperando", "state": "busy"}, {"id": "t2", "label": "Cita → Recordatorio", "sub": "esperando", "state": "busy"}, {"id": "t3", "label": "Baja → Encuesta", "sub": "esperando", "state": "busy"}], "events": [{"tile": "t0", "h": "09:12", "n": "Formulario web", "sub": "Ficha creada + email enviado", "src": "Flujo", "toast": ["Flujo ejecutado", "Formulario → CRM"], "tileText": "ejecutado", "state": "ok"}, {"tile": "t1", "h": "11:40", "n": "Pedido nuevo", "sub": "Factura creada + aviso", "src": "Flujo", "toast": ["Flujo ejecutado", "Pedido → Factura"], "tileText": "ejecutado", "state": "ok"}, {"tile": "t2", "h": "17:05", "n": "Cita de mañana", "sub": "Recordatorio enviado", "src": "Flujo", "toast": ["Flujo ejecutado", "Cita → Recordatorio"], "tileText": "ejecutado", "state": "ok"}], "legend": [["Esperando", "background:#5b5866"], ["Ejecutado", "background:var(--green)"]], "icon": "bolt", "cols": 2};</script>
+<script src="../assets/sim.js" defer></script>
 </body>
 </html>

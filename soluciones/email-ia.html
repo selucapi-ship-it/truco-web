@@ -255,6 +255,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   .float-label{display:none;}
 }
 </style>
+<link rel="stylesheet" href="../assets/sim.css">
 </head>
 <body>
 
@@ -283,17 +284,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span>Se integra con tu correo actual</span></div>
         </div>
       </div>
-      <div class="inbox-wrap">
-        <div class="inbox-mock float">
-          <div class="inbox-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span class="inbox-title">Bandeja de entrada</span><span class="inbox-count">4 nuevos</span></div>
-          <div class="inbox-list">
-            <div class="inbox-row"><span class="ir-dot"></span><div class="ir-body"><div class="ir-from">María G.</div><div class="ir-subj">¿Cuál es el plazo de entrega?</div></div><span class="ir-label">Respondido</span></div>
-            <div class="inbox-row priority"><span class="ir-dot"></span><div class="ir-body"><div class="ir-from">Proveedor Sur SL</div><div class="ir-subj">Urgente: incidencia en pedido #4521</div></div><span class="ir-label">Prioritario</span></div>
-            <div class="inbox-row"><span class="ir-dot"></span><div class="ir-body"><div class="ir-from">Carlos M.</div><div class="ir-subj">Consulta sobre precios</div></div><span class="ir-label">Respondido</span></div>
-            <div class="inbox-row"><span class="ir-dot"></span><div class="ir-body"><div class="ir-from">Laura P.</div><div class="ir-subj">Horario de atención</div></div><span class="ir-label">Respondido</span></div>
-          </div>
-        </div>
-      </div>
+      <div id="simTalk"></div>
     </div>
   </div>
 </div>
@@ -326,35 +317,16 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </div>
 
 
-<div class="section-block reveal" style="padding-top:0;">
+<div class="section-block reveal" id="simSection">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag gold">Ejemplo práctico</span><div class="sd-line"></div></div>
-    <div class="example-wrap">
-      <div class="example-col">
-        <span class="example-label before"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Antes</span>
-        <div class="inbox-mock" style="margin:0 auto;">
-          <div class="inbox-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span class="inbox-title">Bandeja de entrada</span><span class="inbox-count">40 sin leer</span></div>
-          <div class="inbox-list" style="min-height:180px;">
-            <div class="inbox-row show" style="border-color:#3a2020;"><span class="ir-dot" style="background:var(--red);"></span><div class="ir-body"><div class="ir-from">18 correos</div><div class="ir-subj">Preguntas de plazos, sin responder</div></div></div>
-            <div class="inbox-row show" style="border-color:#3a2020;"><span class="ir-dot" style="background:var(--red);"></span><div class="ir-body"><div class="ir-from">Proveedor Sur SL</div><div class="ir-subj">Urgente — enterrado entre el resto</div></div></div>
-          </div>
-        </div>
-        <div class="pm-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>1 hora al día clasificando a mano</div>
-      </div>
-      <div class="example-col">
-        <span class="example-label after"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Después</span>
-        <div class="inbox-mock" style="margin:0 auto;">
-          <div class="inbox-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span class="inbox-title">Bandeja de entrada</span><span class="inbox-count">1 requiere acción</span></div>
-          <div class="inbox-list" style="min-height:180px;">
-            <div class="inbox-row"><span class="ir-dot"></span><div class="ir-body"><div class="ir-from">18 correos</div><div class="ir-subj">Plazos de entrega</div></div><span class="ir-label">Respondido</span></div>
-            <div class="inbox-row priority"><span class="ir-dot"></span><div class="ir-body"><div class="ir-from">Proveedor Sur SL</div><div class="ir-subj">Urgente: incidencia en pedido</div></div><span class="ir-label">Prioritario</span></div>
-          </div>
-        </div>
-        <div class="pm-note good"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Bandeja clasificada en segundos</div>
-      </div>
-    </div>
+    <div class="section-divider"><span class="sd-tag gold">Tu bandeja, ordenada</span><div class="sd-line"></div></div>
+    <div class="sim-loss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Tu bandeja se llena mientras trabajas. Cada correo sin contestar a tiempo es <b>una venta que se enfría</b>.</span></div>
+    <h2 class="sim-h2">Tus correos, leídos y ordenados. <em>Con la respuesta preparada.</em></h2>
+    <p class="sim-sub">El asistente clasifica cada correo, prepara un borrador de respuesta y tú lo revisas antes de enviarlo.</p>
+    <div id="simScreen"></div>
   </div>
 </div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -499,5 +471,7 @@ function toggleFaq(btn){
 })();
 </script>
 <script src="../analytics-tracking.js"></script>
+<script>window.SIM_TALK={"title": "Bandeja de entrada", "icon": "mail", "s0": "Correo nuevo", "s1": "Leyendo…", "s2": "Borrador listo", "lines": [{"w": "cli", "t": "Asunto: Presupuesto reforma de cocina. «Buenas, ¿podéis enviarme un presupuesto para la próxima semana?»"}, {"w": "ia", "t": "Es una petición de presupuesto. La he clasificado como prioritaria.", "fx": {"row": ["Clasificado", "Presupuesto"]}}, {"w": "ia", "t": "Te he preparado el borrador de respuesta con tus datos para que lo revises.", "fx": {"row": ["Borrador", "Listo para revisar"]}}, {"w": "ia", "t": "Y el contacto ya está guardado en su ficha.", "fx": {"row": ["Contacto", "Guardado en tu CRM"], "done": true}}], "card": {"kind": "panel", "head": ["Correo procesado", "en curso", "listo"], "meta": "Tú decides si se envía", "stamp": "✓ Esperando tu revisión"}, "timer": false, "iaLabel": "Tu asistente (IA)", "cliLabel": "Correo recibido"};window.SIM_SCREEN={"url": "tu-negocio · portal · correo", "leftTitle": "Bandeja · hoy", "rightTitle": "Procesados por tu asistente", "noun": ["correo", "correos"], "tiles": [{"id": "t0", "label": "Presupuesto", "sub": "sin leer", "state": "busy"}, {"id": "t1", "label": "Factura", "sub": "sin leer", "state": "busy"}, {"id": "t2", "label": "Cita", "sub": "sin leer", "state": "busy"}, {"id": "t3", "label": "Consulta", "sub": "sin leer", "state": "busy"}, {"id": "t4", "label": "Pedido", "sub": "sin leer", "state": "busy"}, {"id": "t5", "label": "Proveedor", "sub": "sin leer", "state": "busy"}, {"id": "t6", "label": "Queja", "sub": "sin leer", "state": "busy"}, {"id": "t7", "label": "Reserva", "sub": "sin leer", "state": "busy"}], "events": [{"tile": "t0", "h": "09:02", "n": "Presupuesto reforma", "sub": "Clasificado · borrador listo", "src": "Correo", "toast": ["Correo clasificado", "Presupuesto · borrador listo"], "tileText": "clasificado", "state": "ok"}, {"tile": "t2", "h": "09:15", "n": "Cita para el jueves", "sub": "Clasificado · en tu calendario", "src": "Correo", "toast": ["Correo clasificado", "Cita · guardada en calendario"], "tileText": "clasificado", "state": "ok"}, {"tile": "t6", "h": "09:40", "n": "Queja de un cliente", "sub": "Marcada como urgente", "src": "Correo", "toast": ["Correo clasificado", "Queja · marcada como urgente"], "tileText": "urgente", "state": "ok"}], "legend": [["Sin leer", "background:#5b5866"], ["Clasificado", "background:var(--green)"]], "icon": "mail", "cols": 4};</script>
+<script src="../assets/sim.js" defer></script>
 </body>
 </html>

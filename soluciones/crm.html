@@ -237,6 +237,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   .float-label{display:none;}
 }
 </style>
+<link rel="stylesheet" href="../assets/sim.css">
 </head>
 <body>
 
@@ -265,23 +266,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Nada se olvida</span></div>
         </div>
       </div>
-      <div class="kanban-wrap">
-        <div class="kanban-mock float">
-          <div class="kanban-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span>Pipeline de clientes</span></div>
-          <div class="kanban-cols">
-            <div class="kanban-col"><div class="kanban-col-title">Nuevo</div>
-              <div class="kanban-card show"><b>Ana López</b>Pidió presupuesto</div>
-            </div>
-            <div class="kanban-col" id="colSeguimiento"><div class="kanban-col-title">Seguimiento</div>
-              <div class="kanban-card show" id="movingCard"><b>Javier Ruiz</b>Presupuesto enviado</div>
-              <div class="kanban-card show"><b>Marta Soto</b>Segunda llamada</div>
-            </div>
-            <div class="kanban-col" id="colCerrado"><div class="kanban-col-title">Cerrado</div>
-              <div class="kanban-card show"><b>Diego Ferrer</b>Contrato firmado</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div id="simTalk"></div>
     </div>
   </div>
 </div>
@@ -314,14 +299,16 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </div>
 
 
-<div class="section-block reveal" style="padding-top:0;">
+<div class="section-block reveal" id="simSection">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag gold">Ejemplo práctico</span><div class="sd-line"></div></div>
-    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:700px;margin-bottom:8px;"><b style="color:var(--white);">Antes:</b> un cliente pidió presupuesto hace tres semanas. El comercial que le atendió está de baja y nadie sabe que hay que hacerle seguimiento. El cliente contrata a la competencia.</p>
-    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:700px;margin-bottom:24px;"><b style="color:var(--white);">Después:</b> el sistema recuerda que ese cliente lleva tres semanas sin respuesta y avisa para que alguien retome el contacto a tiempo. Observa cómo pasa de "Seguimiento" a "Cerrado" en el pipeline de arriba, sin que nadie tenga que estar pendiente.</p>
-    <p style="color:var(--grey);font-size:.85rem;">Adaptado a tu sector y a tu forma de trabajar, no a un proceso genérico que no encaja con tu negocio.</p>
+    <div class="section-divider"><span class="sd-tag gold">Ningún cliente se pierde</span><div class="sd-line"></div></div>
+    <div class="sim-loss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Los clientes que se quedan sin seguimiento porque <b>nadie se acordó de llamarles</b> se pierden en silencio, y nunca lo sabrás.</span></div>
+    <h2 class="sim-h2">Cada cliente, en su sitio. <em>Sin apuntar nada.</em></h2>
+    <p class="sim-sub">Cada persona que te escribe, llama o reserva entra sola en tu CRM con su historial y su estado.</p>
+    <div id="simScreen"></div>
   </div>
 </div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -474,5 +461,7 @@ renderCrmPrice();
 window.onSolutionsPricingUpdated.push(renderCrmPrice);
 </script>
 <script src="../analytics-tracking.js"></script>
+<script>window.SIM_TALK={"title": "WhatsApp → tu CRM", "icon": "chat", "s0": "Mensaje nuevo", "s1": "Creando ficha…", "s2": "Ficha creada", "lines": [{"w": "cli", "t": "Hola, soy Javier Ruiz. Quería un presupuesto para una web para mi taller."}, {"w": "ia", "t": "Encantado, Javier. Te lo preparamos; ¿cuándo te viene bien una llamada?", "fx": {"row": ["Nombre", "Javier Ruiz"]}}, {"w": "cli", "t": "El miércoles por la tarde", "fx": {"row": ["Origen", "WhatsApp"]}}, {"w": "ia", "t": "Anotado. Te llamamos el miércoles por la tarde ✓", "fx": {"row": ["Estado", "Nuevo · llamada miércoles"], "done": true}}], "card": {"kind": "panel", "head": ["Ficha de cliente", "en curso", "creada"], "meta": "Con su historial completo", "stamp": "✓ En tu CRM"}, "timer": false};window.SIM_SCREEN={"url": "tu-negocio · portal · crm", "leftTitle": "Tus contactos", "rightTitle": "Movimientos de hoy", "noun": ["movimiento", "movimientos"], "tiles": [{"id": "t0", "label": "Javier R.", "sub": "nuevo", "state": "busy"}, {"id": "t1", "label": "Ana L.", "sub": "nuevo", "state": "busy"}, {"id": "t2", "label": "Marta S.", "sub": "nuevo", "state": "busy"}, {"id": "t3", "label": "Diego F.", "sub": "nuevo", "state": "busy"}, {"id": "t4", "label": "La Plaza", "sub": "nuevo", "state": "busy"}, {"id": "t5", "label": "Clínica Sol", "sub": "nuevo", "state": "busy"}, {"id": "t6", "label": "Iván T.", "sub": "nuevo", "state": "busy"}, {"id": "t7", "label": "Rocío M.", "sub": "nuevo", "state": "busy"}], "events": [{"tile": "t0", "h": "10:05", "n": "Javier Ruiz", "sub": "Nuevo · llamada el miércoles", "src": "WhatsApp", "toast": ["Ficha creada · WhatsApp", "Javier Ruiz · nuevo"], "tileText": "nuevo", "state": "res"}, {"tile": "t2", "h": "12:30", "n": "Marta Soto", "sub": "Pasa a «Con cita»", "src": "Reserva", "toast": ["Estado actualizado", "Marta Soto · con cita"], "tileText": "con cita", "state": "res"}, {"tile": "t3", "h": "17:45", "n": "Diego Ferrer", "sub": "Pasa a «Cliente»", "src": "Llamada", "toast": ["Estado actualizado", "Diego Ferrer · cliente"], "tileText": "cliente", "state": "ok"}], "legend": [["Sin gestionar", "background:#5b5866"], ["Con seguimiento", "background:var(--gold)"], ["Cliente", "background:var(--green)"]], "icon": "user", "cols": 4, "caption": "Ejemplo de un CRM. Los datos son ficticios."};</script>
+<script src="../assets/sim.js" defer></script>
 </body>
 </html>

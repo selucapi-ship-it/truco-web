@@ -263,6 +263,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   .float-label{display:none;}
 }
 </style>
+<link rel="stylesheet" href="../assets/sim.css">
 </head>
 <body>
 
@@ -291,20 +292,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"/></svg><span>Disponible 24/7</span></div>
         </div>
       </div>
-      <div class="phone-wrap">
-        <div class="phone-mock float">
-          <div class="pm-topbar">
-            <div class="pm-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-            <div><div class="pm-name">Tu negocio</div><div class="pm-status">en línea</div></div>
-          </div>
-          <div class="pm-body">
-            <div class="pm-bubble in">Hola! ¿Tenéis hueco el lunes por la tarde?<span class="pm-time">20:14</span></div>
-            <div class="pm-bubble out">¡Hola! Sí, tenemos hueco a las 17:30 o a las 19:00 el lunes. ¿Cuál te viene mejor?<span class="pm-time">20:14</span></div>
-            <div class="pm-bubble in">A las 17:30 perfecto<span class="pm-time">20:15</span></div>
-            <div class="pm-bubble out">Reserva confirmada para el lunes a las 17:30 ✓ Te esperamos.<span class="pm-time">20:15</span></div>
-          </div>
-        </div>
-      </div>
+      <div id="simTalk"></div>
     </div>
   </div>
 </div>
@@ -337,44 +325,16 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </div>
 
 
-<div class="section-block reveal" style="padding-top:0;">
+<div class="section-block reveal" id="simSection">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag gold">Ejemplo práctico</span><div class="sd-line"></div></div>
-    <div class="example-wrap">
-      <div class="example-col">
-        <span class="example-label before"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Antes</span>
-        <div class="phone-mock" style="margin:0 auto;">
-          <div class="pm-topbar">
-            <div class="pm-avatar" style="background:#3a3940;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-            <div><div class="pm-name">Tu negocio</div><div class="pm-status" style="color:var(--grey);">desconectado</div></div>
-          </div>
-          <div class="pm-body">
-            <div class="pm-bubble in">¿Tenéis hueco el lunes?<span class="pm-time">sáb 20:14</span></div>
-            <div class="pm-bubble in" style="background:#2e1f22;">¿Hola?<span class="pm-time">dom 09:02</span></div>
-            <div class="pm-bubble in" style="background:#2e1f22;">Vale, reservo en otro sitio<span class="pm-time">dom 11:40</span></div>
-          </div>
-        </div>
-        <div class="pm-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Cliente perdido — 15 horas sin respuesta</div>
-      </div>
-      <div class="example-col">
-        <span class="example-label after"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Después</span>
-        <div class="phone-mock" style="margin:0 auto;">
-          <div class="pm-topbar">
-            <div class="pm-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-            <div><div class="pm-name">Tu negocio</div><div class="pm-status">en línea</div></div>
-          </div>
-          <div class="pm-body">
-            <div class="pm-bubble in">¿Tenéis hueco el lunes?<span class="pm-time">sáb 20:14</span></div>
-            <div class="pm-bubble out">¡Hola! Sí, tenemos hueco a las 17:30. ¿Te reservo?<span class="pm-time">sáb 20:14</span></div>
-            <div class="pm-bubble in">Perfecto, resérvamelo<span class="pm-time">sáb 20:15</span></div>
-            <div class="pm-bubble out">Reserva confirmada ✓ Te esperamos el lunes.<span class="pm-time">sáb 20:15</span></div>
-          </div>
-        </div>
-        <div class="pm-note good"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Reserva confirmada — 1 minuto</div>
-      </div>
-    </div>
+    <div class="section-divider"><span class="sd-tag gold">Mientras duermes</span><div class="sd-line"></div></div>
+    <div class="sim-loss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Un cliente que escribe a las 22:00 y no recibe respuesta, <b>escribe a otro negocio</b>. El que responde primero, vende.</span></div>
+    <h2 class="sim-h2">Tu WhatsApp contesta y agenda. <em>Aunque estés durmiendo.</em></h2>
+    <p class="sim-sub">Cada mensaje recibe respuesta al momento. Si el cliente quiere cita, queda en tu calendario sin que toques el móvil.</p>
+    <div id="simScreen"></div>
   </div>
 </div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -539,5 +499,7 @@ function toggleFaq(btn){
 })();
 </script>
 <script src="../analytics-tracking.js"></script>
+<script>window.SIM_TALK={"title": "WhatsApp del negocio", "icon": "chat", "s0": "Mensaje nuevo · 22:47", "s1": "Contestando…", "s2": "Cita agendada", "lines": [{"w": "cli", "t": "Hola, ¿tenéis hueco esta semana para una revisión?"}, {"w": "ia", "t": "¡Hola! Sí: tengo el jueves a las 11:00 o el viernes a las 17:30. ¿Cuál te va mejor?"}, {"w": "cli", "t": "El jueves"}, {"w": "ia", "t": "¿A nombre de quién?"}, {"w": "cli", "t": "Sara Molina", "fx": {"row": ["Día", "Jueves 11:00"]}}, {"w": "ia", "t": "Cita confirmada: jueves a las 11:00, a nombre de Sara ✓", "fx": {"done": true}}], "card": {"kind": "panel", "head": ["Cita agendada", "en curso", "ahora"], "meta": "Sara Molina · jueves 11:00", "stamp": "✓ En tu calendario"}, "timer": false, "aria": "Simulación: un cliente escribe por WhatsApp de noche y el asistente virtual agenda su cita"};window.SIM_SCREEN={"url": "tu-negocio · portal · mensajes", "leftTitle": "Conversaciones · hoy", "rightTitle": "Atendidas por tu asistente", "noun": ["conversación", "conversaciones"], "tiles": [{"id": "t0", "label": "Sara M.", "sub": "sin leer", "state": "busy"}, {"id": "t1", "label": "Pablo", "sub": "sin leer", "state": "busy"}, {"id": "t2", "label": "Lucía R.", "sub": "sin leer", "state": "busy"}, {"id": "t3", "label": "Mateo", "sub": "sin leer", "state": "busy"}, {"id": "t4", "label": "Irene", "sub": "sin leer", "state": "busy"}, {"id": "t5", "label": "Carlos", "sub": "sin leer", "state": "busy"}, {"id": "t6", "label": "Noa", "sub": "sin leer", "state": "busy"}, {"id": "t7", "label": "Álvaro", "sub": "sin leer", "state": "busy"}], "events": [{"tile": "t0", "h": "22:47", "n": "Sara M.", "sub": "Cita jueves 11:00", "src": "WhatsApp", "toast": ["Mensaje respondido · WhatsApp", "Sara M. · cita jueves 11:00"], "tileText": "respondida", "state": "ok"}, {"tile": "t3", "h": "23:15", "n": "Mateo", "sub": "Pregunta de horarios resuelta", "src": "WhatsApp", "toast": ["Mensaje respondido · WhatsApp", "Mateo · horarios"], "tileText": "respondida", "state": "ok"}, {"tile": "t6", "h": "07:05", "n": "Noa", "sub": "Cita viernes 17:30", "src": "WhatsApp", "toast": ["Mensaje respondido · WhatsApp", "Noa · cita viernes 17:30"], "tileText": "respondida", "state": "ok"}], "legend": [["Sin leer", "background:#5b5866"], ["Respondida", "background:var(--green)"]], "icon": "chat", "cols": 4, "caption": "Ejemplo de la bandeja de un negocio. Los datos son ficticios."};</script>
+<script src="../assets/sim.js" defer></script>
 </body>
 </html>

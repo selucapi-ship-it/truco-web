@@ -241,6 +241,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   .float-label{display:none;}
 }
 </style>
+<link rel="stylesheet" href="../assets/sim.css">
 </head>
 <body>
 
@@ -269,19 +270,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h6"/></svg><span>Sin cambiar de herramientas</span></div>
         </div>
       </div>
-      <div class="hub-wrap">
-        <div class="hub-mock float" id="hubMock">
-          <div class="hub-line" style="width:2px;height:78px;top:38px;left:150px;transform:rotate(35deg);" data-line></div>
-          <div class="hub-line" style="width:2px;height:78px;top:38px;left:150px;transform:rotate(-35deg) translateX(-2px);" data-line></div>
-          <div class="hub-line" style="width:2px;height:78px;top:150px;left:150px;transform:rotate(35deg) translateX(-2px);" data-line></div>
-          <div class="hub-line" style="width:2px;height:78px;top:150px;left:150px;transform:rotate(-35deg);" data-line></div>
-          <div class="hub-center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
-          <div class="hub-node tl" data-node><svg class="hn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><div class="hn-label">Tienda online</div></div>
-          <div class="hub-node tr" data-node><svg class="hn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2h16v20l-3-2-3 2-3-2-3 2-3-2-1 1z"/><line x1="8" y1="7" x2="16" y2="7"/></svg><div class="hn-label">Facturación</div></div>
-          <div class="hub-node bl" data-node><svg class="hn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><div class="hn-label">CRM</div></div>
-          <div class="hub-node br" data-node><svg class="hn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg><div class="hn-label">Almacén</div></div>
-        </div>
-      </div>
+      <div id="simTalk"></div>
     </div>
   </div>
 </div>
@@ -312,14 +301,16 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 </div>
 
 
-<div class="section-block reveal" style="padding-top:0;">
+<div class="section-block reveal" id="simSection">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag gold">Ejemplo práctico</span><div class="sd-line"></div></div>
-    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:700px;margin-bottom:8px;"><b style="color:var(--white);">Antes:</b> una venta online no actualiza el stock del programa de gestión. Alguien tiene que revisarlo y corregirlo a mano cada día.</p>
-    <p style="color:var(--grey);font-size:.9rem;line-height:1.7;max-width:700px;margin-bottom:24px;"><b style="color:var(--white);">Después:</b> en cuanto se produce la venta, el stock se actualiza solo en todos los sistemas conectados (como en el diagrama de arriba). Nadie tiene que tocar nada.</p>
-    <p style="color:var(--grey);font-size:.85rem;">Conectamos tus herramientas actuales entre sí — no hace falta cambiar de programas ni volver a formar a tu equipo.</p>
+    <div class="section-divider"><span class="sd-tag gold">Tus herramientas, hablándose</span><div class="sd-line"></div></div>
+    <div class="sim-loss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Copiar lo mismo en tres programas distintos es <b>trabajo que nadie ve</b>… hasta que se comete un error.</span></div>
+    <h2 class="sim-h2">Lo que entra en un sitio, aparece en los demás. <em>Solo.</em></h2>
+    <p class="sim-sub">Conectamos tus herramientas para que los datos viajen solos de una a otra, sin copiar y pegar.</p>
+    <div id="simScreen"></div>
   </div>
 </div>
+
 
 
 <div class="section-block reveal" style="padding-top:0;">
@@ -477,5 +468,7 @@ renderIntegracionesPrice();
 window.onSolutionsPricingUpdated.push(renderIntegracionesPrice);
 </script>
 <script src="../analytics-tracking.js"></script>
+<script>window.SIM_TALK={"title": "Tus herramientas, conectadas", "icon": "bolt", "s0": "Pedido nuevo", "s1": "Conectando…", "s2": "Todo sincronizado", "lines": [{"w": "ia", "t": "Pedido nuevo en tu tienda online: Lucía Vega.", "fx": {"row": ["Tienda", "Pedido recibido"]}}, {"w": "ia", "t": "Lo he pasado a facturación y la factura ya está hecha.", "fx": {"row": ["Facturación", "Factura creada"]}}, {"w": "ia", "t": "He avisado por WhatsApp al almacén para prepararlo.", "fx": {"row": ["Almacén", "Aviso enviado"]}}, {"w": "ia", "t": "Y la clienta ya está en tu CRM.", "fx": {"row": ["CRM", "Cliente guardado"], "done": true}}], "card": {"kind": "panel", "head": ["Pedido de Lucía Vega", "en curso", "sincronizado"], "meta": "Sin copiar ni pegar nada", "stamp": "✓ Todo conectado"}, "timer": false};window.SIM_SCREEN={"url": "tu-negocio · portal · conexiones", "leftTitle": "Tus herramientas", "rightTitle": "Datos que viajan solos", "noun": ["envío", "envíos"], "tiles": [{"id": "t0", "label": "Tienda", "sub": "sin conectar", "state": "busy"}, {"id": "t1", "label": "Facturas", "sub": "sin conectar", "state": "busy"}, {"id": "t2", "label": "Calendario", "sub": "sin conectar", "state": "busy"}, {"id": "t3", "label": "CRM", "sub": "sin conectar", "state": "busy"}, {"id": "t4", "label": "Correo", "sub": "sin conectar", "state": "busy"}, {"id": "t5", "label": "WhatsApp", "sub": "sin conectar", "state": "busy"}, {"id": "t6", "label": "Contabilidad", "sub": "sin conectar", "state": "busy"}, {"id": "t7", "label": "Web", "sub": "sin conectar", "state": "busy"}], "events": [{"tile": "t0", "h": "12:01", "n": "Pedido de Lucía Vega", "sub": "Tienda → Facturas", "src": "Sincro", "toast": ["Datos enviados", "Tienda → Facturas"], "tileText": "conectada", "state": "ok"}, {"tile": "t3", "h": "12:01", "n": "Lucía Vega", "sub": "Tienda → CRM", "src": "Sincro", "toast": ["Datos enviados", "Tienda → CRM"], "tileText": "conectada", "state": "ok"}, {"tile": "t5", "h": "12:02", "n": "Aviso al almacén", "sub": "Facturas → WhatsApp", "src": "Sincro", "toast": ["Datos enviados", "Facturas → WhatsApp"], "tileText": "conectada", "state": "ok"}], "legend": [["Sin conectar", "background:#5b5866"], ["Conectada", "background:var(--green)"]], "icon": "bolt", "cols": 4};</script>
+<script src="../assets/sim.js" defer></script>
 </body>
 </html>

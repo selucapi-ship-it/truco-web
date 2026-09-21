@@ -256,6 +256,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   .float-label{display:none;}
 }
 </style>
+<link rel="stylesheet" href="../assets/sim.css">
 </head>
 <body>
 
@@ -284,20 +285,7 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Agenda de la primera reunión automática</span></div>
         </div>
       </div>
-      <div class="phone-wrap">
-        <div class="phone-mock float">
-          <div class="pm-topbar">
-            <div class="pm-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-            <div><div class="pm-name">Tu bufete</div><div class="pm-status">en línea</div></div>
-          </div>
-          <div class="pm-body">
-            <div class="pm-bubble in">Buenas noches, necesito consultar un tema urgente de un despido</div>
-            <div class="pm-bubble out">Entiendo la urgencia. Cuéntame brevemente el caso y te confirmo la primera reunión disponible con el letrado.</div>
-            <div class="pm-bubble in">Perfecto, mañana a primera hora si es posible</div>
-            <div class="pm-bubble out">Reunión confirmada mañana a las 9:00 ✓ El letrado ya tiene el resumen antes de que llegues.</div>
-          </div>
-        </div>
-      </div>
+      <div id="simTalk"></div>
     </div>
   </div>
 </div>
@@ -335,188 +323,16 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
   </div>
 </div>
 
-<div class="section-block reveal" style="padding-top:0;">
+<div class="section-block reveal" id="simSection">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag gold">Ejemplo práctico</span><div class="sd-line"></div></div>
-    <div class="example-wrap">
-      <div class="example-col">
-        <span class="example-label before"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Antes</span>
-        <div class="phone-mock" style="margin:0 auto;">
-          <div class="pm-topbar">
-            <div class="pm-avatar" style="background:#3a3940;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-            <div><div class="pm-name">Un cliente</div><div class="pm-status" style="color:var(--grey);">desconectado</div></div>
-          </div>
-          <div class="pm-body">
-            <div class="pm-bubble in">Necesito asesoría para un despido, ¿podéis atenderme esta semana?<span class="pm-time">Cliente</span></div>
-            <div class="pm-bubble in" style="background:#2e1f22;">¿Hola?<span class="pm-time">+4h</span></div>
-          </div>
-        </div>
-        <div class="pm-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Contrató a otro despacho esa misma tarde</div>
-      </div>
-      <div class="example-col">
-        <span class="example-label after"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Después</span>
-        <div class="phone-mock" style="margin:0 auto;">
-          <div class="pm-topbar">
-            <div class="pm-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-            <div><div class="pm-name">Un cliente</div><div class="pm-status">en línea</div></div>
-          </div>
-          <div class="pm-body">
-            <div class="pm-bubble in">Necesito asesoría para un despido, ¿podéis atenderme esta semana?<span class="pm-time">Cliente</span></div>
-            <div class="pm-bubble out">Claro, llevamos casos de despido habitualmente. Tengo hueco el jueves a las 12:00 para una primera consulta. ¿Te viene bien?<span class="pm-time">Asistente IA</span></div>
-            <div class="pm-bubble in">Sí, perfecto<span class="pm-time">Cliente</span></div>
-            <div class="pm-bubble out">Consulta confirmada el jueves a las 12:00 ✓<span class="pm-time">Asistente IA</span></div>
-          </div>
-        </div>
-        <div class="pm-note good"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Cliente captado mientras seguías en la sala</div>
-      </div>
-    </div>
-
-    <div class="wc-compare">
-      <div>
-        <div class="wc-label">Sin Web Profesional</div>
-        <div class="wc-browser">
-          <div class="wc-bar">
-            <div class="wc-dot" style="background:#ff5f57;"></div>
-            <div class="wc-dot" style="background:#febc2e;"></div>
-            <div class="wc-dot" style="background:#28c840;"></div>
-            <div class="wc-url">abogados-asociados.wixsite.com</div>
-          </div>
-          <div style="background:#f4f4f4;padding:22px 24px 26px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-              <div style="font-family:Arial,sans-serif;font-weight:700;font-size:.95rem;color:#333;">LOGO BUFETE</div>
-              <div style="display:flex;gap:12px;font-family:Arial,sans-serif;font-size:.62rem;color:#555;">
-                <span>Inicio</span><span>Áreas</span><span>Equipo</span><span>Contacto</span>
-              </div>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center;">
-              <div>
-                <div style="font-family:Arial,sans-serif;font-weight:700;font-size:1.1rem;color:#222;line-height:1.3;">Bienvenidos a nuestro despacho</div>
-                <div style="font-family:Arial,sans-serif;font-size:.7rem;color:#777;margin-top:6px;line-height:1.5;">Asesoramiento legal profesional para particulares y empresas.</div>
-                <div style="display:inline-block;background:#4267b2;color:#fff;font-family:Arial,sans-serif;font-size:.68rem;font-weight:700;padding:8px 16px;border-radius:3px;margin-top:12px;">Contactar</div>
-              </div>
-              <div style="aspect-ratio:4/3;background:repeating-linear-gradient(45deg,#d9d9d9,#d9d9d9 10px,#cfcfcf 10px,#cfcfcf 20px);border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:Arial,sans-serif;font-size:.6rem;color:#999;">FOTO STOCK GENÉRICA</div>
-            </div>
-            <div style="margin-top:22px;padding-top:18px;border-top:1px solid #ddd;">
-              <div style="font-family:Arial,sans-serif;font-weight:700;font-size:.72rem;color:#444;margin-bottom:12px;">Nuestros servicios</div>
-              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-                <div style="background:#e8e8e8;border-radius:3px;padding:16px 8px;text-align:center;font-family:Arial,sans-serif;font-size:.6rem;color:#777;">Servicio 1</div>
-                <div style="background:#e8e8e8;border-radius:3px;padding:16px 8px;text-align:center;font-family:Arial,sans-serif;font-size:.6rem;color:#777;">Servicio 2</div>
-                <div style="background:#e8e8e8;border-radius:3px;padding:16px 8px;text-align:center;font-family:Arial,sans-serif;font-size:.6rem;color:#777;">Servicio 3</div>
-              </div>
-            </div>
-            <div style="margin-top:20px;padding-top:16px;border-top:1px solid #ddd;">
-              <div style="font-family:Arial,sans-serif;font-weight:700;font-size:.72rem;color:#444;margin-bottom:10px;">Contacta con nosotros</div>
-              <div style="display:flex;flex-direction:column;gap:8px;">
-                <div style="background:#f0f0f0;border:1px solid #ddd;border-radius:3px;height:26px;"></div>
-                <div style="background:#f0f0f0;border:1px solid #ddd;border-radius:3px;height:26px;"></div>
-                <div style="background:#f0f0f0;border:1px solid #ddd;border-radius:3px;height:48px;"></div>
-                <div style="display:inline-block;background:#4267b2;color:#fff;font-family:Arial,sans-serif;font-size:.62rem;font-weight:700;padding:8px 16px;border-radius:3px;width:fit-content;">Enviar</div>
-              </div>
-            </div>
-            <div style="margin-top:20px;padding-top:16px;border-top:1px solid #ddd;display:flex;justify-content:space-between;align-items:center;">
-              <div style="font-family:Arial,sans-serif;font-size:.58rem;color:#999;">© 2019 Todos los derechos reservados</div>
-              <div style="display:flex;gap:8px;">
-                <div style="width:20px;height:20px;border-radius:50%;background:#d9d9d9;"></div>
-                <div style="width:20px;height:20px;border-radius:50%;background:#d9d9d9;"></div>
-                <div style="width:20px;height:20px;border-radius:50%;background:#d9d9d9;"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <p class="wc-caption">Una web de bufete genérica, con el mismo pie de página que traen mil plantillas más. Si mañana amplías tus áreas o cambia tu equipo, te toca aprenderlo tú — o pagar de nuevo a quien te la hizo.</p>
-      </div>
-
-      <div class="wc-vs">VS</div>
-
-      <div>
-        <div class="wc-label gold">Con Web Profesional</div>
-        <div class="wc-browser gold">
-          <div class="wc-bar">
-            <div class="wc-dot" style="background:#ff5f57;"></div>
-            <div class="wc-dot" style="background:#febc2e;"></div>
-            <div class="wc-dot" style="background:#28c840;"></div>
-            <div class="wc-url" style="font-family:var(--font-b);">martinabogados.es</div>
-          </div>
-          <div style="background:linear-gradient(165deg,#1c1712,#100e0a 55%,#241a10);padding:24px 26px 26px;position:relative;overflow:hidden;">
-            <div style="position:absolute;inset:0;background:radial-gradient(ellipse 380px 260px at 85% -10%,rgba(184,132,46,.16),transparent 65%);"></div>
-            <div style="position:relative;">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                <div style="font-family:var(--font-d);font-weight:800;font-size:1rem;color:#f2ece0;">Martín Abogados</div>
-                <div style="display:flex;gap:14px;align-items:center;font-family:var(--font-b);font-size:.62rem;color:#c9bfa8;font-weight:600;">
-                  <span>Áreas</span><span>Equipo</span><span style="background:#d9a83f;color:#1a1206;padding:5px 13px;border-radius:20px;font-weight:700;">Consulta gratuita</span>
-                </div>
-              </div>
-              <div style="font-family:var(--font-d);font-weight:700;font-size:1.05rem;color:#f2ece0;line-height:1.25;margin-bottom:4px;">Defendemos lo tuyo <span style="color:#d9a83f;font-style:italic;">como si fuera nuestro</span></div>
-              <div style="display:flex;gap:12px;margin-bottom:14px;font-family:var(--font-b);font-size:.58rem;color:#a89c86;">
-                <span>★★★★★ 4.9 (61)</span><span>+20 años de trayectoria</span>
-              </div>
-
-              <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;">
-                <span style="font-family:var(--font-b);font-size:.6rem;font-weight:600;color:#e0ac4c;background:rgba(217,168,63,.1);border:1px solid rgba(217,168,63,.28);padding:5px 12px;border-radius:20px;">Laboral</span>
-                <span style="font-family:var(--font-b);font-size:.6rem;font-weight:600;color:#e0ac4c;background:rgba(217,168,63,.1);border:1px solid rgba(217,168,63,.28);padding:5px 12px;border-radius:20px;">Civil</span>
-                <span style="font-family:var(--font-b);font-size:.6rem;font-weight:600;color:#e0ac4c;background:rgba(217,168,63,.1);border:1px solid rgba(217,168,63,.28);padding:5px 12px;border-radius:20px;">Penal</span>
-                <span style="font-family:var(--font-b);font-size:.6rem;font-weight:600;color:#e0ac4c;background:rgba(217,168,63,.1);border:1px solid rgba(217,168,63,.28);padding:5px 12px;border-radius:20px;">Mercantil</span>
-              </div>
-
-              <div style="display:flex;gap:18px;margin-bottom:18px;flex-wrap:wrap;">
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#e0ac4c,#a8721f);display:flex;align-items:center;justify-content:center;font-family:var(--font-b);font-weight:700;font-size:.58rem;color:#1a1206;flex-shrink:0;">MR</div>
-                  <div style="font-family:var(--font-b);font-size:.58rem;color:#c9bfa8;line-height:1.3;">Martín Ruiz<br><span style="color:#7d715f;">Laboral</span></div>
-                </div>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#e0ac4c,#a8721f);display:flex;align-items:center;justify-content:center;font-family:var(--font-b);font-weight:700;font-size:.58rem;color:#1a1206;flex-shrink:0;">JL</div>
-                  <div style="font-family:var(--font-b);font-size:.58rem;color:#c9bfa8;line-height:1.3;">Julia López<br><span style="color:#7d715f;">Civil</span></div>
-                </div>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#e0ac4c,#a8721f);display:flex;align-items:center;justify-content:center;font-family:var(--font-b);font-weight:700;font-size:.58rem;color:#1a1206;flex-shrink:0;">AS</div>
-                  <div style="font-family:var(--font-b);font-size:.58rem;color:#c9bfa8;line-height:1.3;">Andrés Soto<br><span style="color:#7d715f;">Penal</span></div>
-                </div>
-              </div>
-
-              <div class="wc-flow-row">
-                <div style="flex:1;background:#171310;border-radius:12px;border:1.5px solid rgba(184,132,46,.4);padding:14px;display:flex;flex-direction:column;box-shadow:0 16px 40px rgba(0,0,0,.35);">
-                  <div style="font-family:var(--font-b);font-weight:700;font-size:.62rem;color:#f2ece0;margin-bottom:10px;">Jueves 12:00</div>
-                  <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:12px;">
-                    <div style="aspect-ratio:1;border-radius:4px;background:#2b2620;"></div>
-                    <div style="aspect-ratio:1;border-radius:4px;background:#2b2620;"></div>
-                    <div style="aspect-ratio:1;border-radius:4px;background:#2b2620;"></div>
-                    <div class="wc-cal-reveal" style="aspect-ratio:1;border-radius:4px;background:linear-gradient(135deg,#e0ac4c,#b8842e);"></div>
-                    <div style="aspect-ratio:1;border-radius:4px;background:#2b2620;"></div>
-                    <div style="aspect-ratio:1;border-radius:4px;background:#2b2620;"></div>
-                    <div style="aspect-ratio:1;border-radius:4px;background:#2b2620;"></div>
-                  </div>
-                  <div class="wc-cal-reveal" style="background:rgba(224,172,76,.12);border:1px solid rgba(224,172,76,.4);border-radius:8px;padding:10px 11px;">
-                    <div style="font-family:var(--font-b);font-weight:700;font-size:.6rem;color:#f2ece0;">Consulta laboral</div>
-                    <div style="font-family:var(--font-b);font-size:.54rem;color:#a89c86;margin-top:3px;">12:00 · Con Martín Ruiz ✓</div>
-                  </div>
-                  <div style="flex:1;"></div>
-                  <div class="wc-cal-reveal" style="font-family:var(--font-m);font-size:.46rem;letter-spacing:.06em;text-transform:uppercase;color:#8a6a2e;text-align:right;margin-top:10px;">Agendado solo</div>
-                </div>
-                <div id="abogados-chat-demo" class="phone-mock" style="width:225px;border-radius:12px;border-width:2px;border-color:#8a6a2e;box-shadow:0 16px 40px rgba(0,0,0,.55);">
-                  <div class="pm-topbar" style="background:#171310;">
-                    <div class="pm-avatar" style="background:linear-gradient(135deg,#e0ac4c,#a8721f);color:#1a1206;"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-                    <div><div class="pm-name" style="font-size:.66rem;color:#f2ece0;">Asistente Martín Abogados</div><div class="pm-status" style="font-size:.5rem;">en línea</div></div>
-                  </div>
-                  <div class="pm-body" style="min-height:auto;padding:10px 9px;background:#100d0a;">
-                    <div class="pm-bubble in" style="font-size:.6rem;background:#2b2620;">Necesito ayuda con un despido, ¿con quién hablo?<span class="pm-time">Cliente</span></div>
-                    <div class="pm-bubble out" style="font-size:.6rem;background:linear-gradient(135deg,#e0ac4c,#b8842e);color:#1a1206;">Te paso con Martín Ruiz, especialista en laboral. ¿Jueves a las 12:00?<span class="pm-time" style="color:rgba(26,18,6,.65);">Asistente IA</span></div>
-                    <div class="pm-bubble in" style="font-size:.6rem;background:#2b2620;">Perfecto<span class="pm-time">Cliente</span></div>
-                    <div class="pm-bubble out" style="font-size:.6rem;background:linear-gradient(135deg,#e0ac4c,#b8842e);color:#1a1206;">Cita confirmada con Martín Ruiz — jueves 12:00 ✓<span class="pm-time" style="color:rgba(26,18,6,.65);">Asistente IA</span></div>
-                  </div>
-                </div>
-              </div>
-
-              <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(217,168,63,.12);border:1px solid rgba(217,168,63,.3);border-radius:20px;padding:5px 12px;font-family:var(--font-b);font-size:.58rem;font-weight:700;color:#e0ac4c;margin-bottom:10px;"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Mantenimiento y actualizaciones incluidas</div>
-              <p style="font-family:var(--font-b);font-size:.66rem;color:#a89c86;line-height:1.55;margin-bottom:6px;">Nuevas áreas, casos de éxito, cambios en el equipo — tu Departamento Tecnológico mantiene tu web al día, sin que tengas que tocar nada.</p>
-              <div style="font-family:var(--font-m);font-size:.54rem;letter-spacing:.06em;text-transform:uppercase;color:#7d715f;">Última actualización: hace 3 días</div>
-            </div>
-          </div>
-        </div>
-        <p class="wc-caption">No es una web que haces una vez — es tu Departamento Tecnológico cuidándola y actualizándola, siempre.</p>
-      </div>
-    </div>
+    <div class="section-divider"><span class="sd-tag gold">El primero en contestar, gana el caso</span><div class="sd-line"></div></div>
+    <div class="sim-loss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Quien necesita un abogado llama a varios despachos. <b>El primero que contesta se queda el cliente</b>, y tú estabas en juicio.</span></div>
+    <h2 class="sim-h2">Tu despacho contesta. <em>Tú, a lo tuyo.</em></h2>
+    <p class="sim-sub">El asistente atiende cada mensaje, recoge lo básico del caso y reserva la primera consulta en tu agenda. Sin dar asesoramiento legal: eso es tuyo.</p>
+    <div id="simScreen"></div>
   </div>
 </div>
+
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
@@ -695,5 +511,7 @@ function toggleFaq(btn){
 })();
 </script>
 <script src="../analytics-tracking.js"></script>
+<script>window.SIM_TALK={"title": "WhatsApp del despacho", "icon": "chat", "s0": "Mensaje nuevo · 23:10", "s1": "Contestando…", "s2": "Consulta reservada", "lines": [{"w": "cli", "t": "Buenas noches, necesito un abogado laboralista lo antes posible."}, {"w": "ia", "t": "Buenas noches. Le ayudo a reservar una primera consulta con el despacho. ¿Qué día le viene bien?"}, {"w": "cli", "t": "El miércoles por la mañana", "fx": {"row": ["Materia", "Laboral"]}}, {"w": "ia", "t": "Miércoles a las 10:00 disponible. ¿A nombre de quién la reservo?"}, {"w": "cli", "t": "Raúl Campos", "fx": {"row": ["Cliente", "Raúl Campos"]}}, {"w": "ia", "t": "Reservada: miércoles 10:00 ✓ Si tiene documentación del caso, tráigala a la cita.", "fx": {"done": true}}], "card": {"kind": "panel", "head": ["Primera consulta", "en curso", "reservada"], "meta": "Raúl Campos · miércoles 10:00", "stamp": "✓ En tu agenda"}, "timer": false, "cliLabel": "Cliente potencial"};window.SIM_SCREEN={"url": "tu-despacho · portal · agenda", "leftTitle": "Agenda · esta semana", "rightTitle": "Consultas reservadas", "noun": ["consulta", "consultas"], "tiles": [{"id": "t0", "label": "09:00", "sub": "ocupado", "state": "busy"}, {"id": "t1", "label": "10:00", "sub": "libre", "state": ""}, {"id": "t2", "label": "11:00", "sub": "libre", "state": ""}, {"id": "t3", "label": "12:00", "sub": "ocupado", "state": "busy"}, {"id": "t4", "label": "16:00", "sub": "libre", "state": ""}, {"id": "t5", "label": "17:00", "sub": "ocupado", "state": "busy"}, {"id": "t6", "label": "18:00", "sub": "libre", "state": ""}, {"id": "t7", "label": "19:00", "sub": "libre", "state": ""}], "events": [{"tile": "t1", "h": "10:00", "n": "Raúl Campos", "sub": "Laboral · primera consulta", "src": "WhatsApp", "toast": ["Nueva consulta · WhatsApp", "Raúl Campos · miércoles 10:00"], "tileText": "10:00", "state": "res"}, {"tile": "t4", "h": "16:00", "n": "Marta Vidal", "sub": "Familia · primera consulta", "src": "Web", "toast": ["Nueva consulta · Web", "Marta Vidal · 16:00"], "tileText": "16:00", "state": "res"}, {"tile": "t6", "h": "18:00", "n": "Empresa Sol", "sub": "Mercantil · primera consulta", "src": "Teléfono", "toast": ["Nueva consulta · Teléfono", "Empresa Sol · 18:00"], "tileText": "18:00", "state": "res"}], "legend": [["Libre", "background:#17161c;border:1px solid #3a3841"], ["Ocupado", "background:#5b5866"], ["Reservado", "background:var(--gold)"]], "icon": "cal", "cols": 4, "phone": {"title": "Pedir consulta", "fields": [["Materia", "Laboral"], ["Día", "Miércoles"], ["Hora", "10:00"]], "btn": "Pedir cita", "pressOn": 0}};</script>
+<script src="../assets/sim.js" defer></script>
 </body>
 </html>
