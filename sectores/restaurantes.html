@@ -284,19 +284,118 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
           <div class="hero-stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Reservas de mesa desde el móvil o la web</span></div>
         </div>
       </div>
-      <div class="phone-wrap">
-        <div class="phone-mock float">
-          <div class="pm-topbar">
-            <div class="pm-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-            <div><div class="pm-name">Tu restaurante</div><div class="pm-status">en línea</div></div>
-          </div>
-          <div class="pm-body">
-            <div class="pm-bubble in">Hola, ¿tenéis mesa para 4 el sábado a las 21:00?</div>
-            <div class="pm-bubble out">¡Hola! Sí, tenemos mesa a las 21:00. ¿A nombre de quién?</div>
-            <div class="pm-bubble in">Marcos</div>
-            <div class="pm-bubble out">Reserva confirmada: sábado 21:00, 4 personas ✓ Os esperamos.</div>
-          </div>
+      <style>
+/* ═══ Simulaciones de restaurante ═══ */
+.rs-call{width:100%;max-width:470px;margin:0 auto;background:linear-gradient(160deg,#211f27,#141318);border:1px solid rgba(217,168,63,.35);border-radius:24px;box-shadow:0 40px 90px -30px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.04);overflow:hidden;position:relative;text-align:left;}
+.rs-call::before{content:'';position:absolute;inset:-40% -20% auto auto;width:340px;height:340px;background:radial-gradient(circle,rgba(217,168,63,.22),transparent 65%);pointer-events:none;}
+.rs-c-top{display:flex;align-items:center;gap:12px;padding:16px 18px 12px;position:relative;}
+.rs-ring{position:relative;width:46px;height:46px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;color:#06210f;flex-shrink:0;}
+.rs-ring svg{width:22px;height:22px;position:relative;z-index:1;}
+.rs-ring::before,.rs-ring::after{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid var(--green);animation:rsPing 2s ease-out infinite;}
+.rs-ring::after{animation-delay:1s;}
+.rs-call.done .rs-ring::before,.rs-call.done .rs-ring::after{animation:none;opacity:0;}
+@keyframes rsPing{0%{transform:scale(1);opacity:.7;}100%{transform:scale(2.1);opacity:0;}}
+.rs-c-who b{display:block;font-size:.98rem;}
+.rs-c-who span{font-family:var(--font-m);font-size:.66rem;letter-spacing:.08em;color:var(--green);text-transform:uppercase;}
+.rs-timer{margin-left:auto;font-family:var(--font-m);font-size:.9rem;color:var(--white);background:rgba(255,255,255,.07);padding:5px 11px;border-radius:99px;}
+.rs-wave{display:flex;align-items:center;justify-content:center;gap:4px;height:38px;padding:0 18px;}
+.rs-wave i{display:block;width:4px;height:8px;border-radius:4px;background:linear-gradient(180deg,var(--gold),#f6c85a);animation:rsWave 1s ease-in-out infinite;}
+.rs-wave i:nth-child(3n){animation-duration:.7s;}.rs-wave i:nth-child(3n+1){animation-duration:1.3s;}.rs-wave i:nth-child(2n){animation-delay:-.4s;}
+.rs-wave i:nth-child(5n){background:linear-gradient(180deg,var(--blue),#7fb0ff);}
+.rs-call.done .rs-wave i{animation:none;height:6px;opacity:.35;}
+@keyframes rsWave{0%,100%{height:6px;}50%{height:32px;}}
+.rs-talk{padding:6px 16px 8px;display:flex;flex-direction:column;gap:9px;min-height:250px;}
+.rs-line{max-width:88%;padding:9px 13px;border-radius:14px;font-size:.86rem;line-height:1.45;opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s;}
+.rs-line.show{opacity:1;transform:none;}
+.rs-line small{display:block;font-family:var(--font-m);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;opacity:.75;}
+.rs-line.ia{align-self:flex-start;background:rgba(47,123,255,.14);border:1px solid rgba(47,123,255,.35);border-bottom-left-radius:4px;}
+.rs-line.cli{align-self:flex-end;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-bottom-right-radius:4px;}
+.rs-line.typing::after{content:'▍';margin-left:2px;animation:rsBlink .8s steps(1) infinite;color:var(--gold);}
+@keyframes rsBlink{50%{opacity:0;}}
+.rs-ticket{margin:4px 14px 16px;background:#f5f1e6;color:#231f16;border-radius:6px 6px 14px 14px;padding:13px 15px 12px;position:relative;font-family:var(--font-m);font-size:.74rem;box-shadow:0 14px 30px -14px rgba(0,0,0,.7);}
+.rs-ticket::before{content:'';position:absolute;left:0;right:0;top:-6px;height:7px;background:radial-gradient(circle at 6px 0,transparent 5px,#f5f1e6 5.5px) 0 0/12px 7px repeat-x;}
+.rs-tk-h{display:flex;justify-content:space-between;font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.66rem;border-bottom:1px dashed #b9b09a;padding-bottom:6px;margin-bottom:6px;}
+.rs-tk-items{list-style:none;min-height:66px;}
+.rs-tk-items li{display:flex;gap:8px;padding:2.5px 0;opacity:0;transform:translateX(-8px);transition:.35s;}
+.rs-tk-items li.show{opacity:1;transform:none;}
+.rs-tk-items li b{min-width:26px;color:#8a5a06;}
+.rs-tk-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px dashed #b9b09a;margin-top:6px;padding-top:7px;min-height:30px;}
+.rs-tk-meta{opacity:0;transition:.35s;}.rs-tk-meta.show{opacity:1;}
+.rs-stamp{display:inline-flex;align-items:center;gap:5px;color:#0d7a37;font-weight:700;border:2px solid #0d7a37;border-radius:6px;padding:2px 8px;transform:rotate(-5deg) scale(1.6);opacity:0;transition:transform .35s cubic-bezier(.3,1.6,.5,1),opacity .2s;}
+.rs-stamp.show{opacity:1;transform:rotate(-5deg) scale(1);}
+.rs-replay{display:block;margin:0 auto 14px;background:none;border:1px solid var(--grey-line);color:var(--grey);border-radius:99px;padding:7px 16px;font:600 .78rem var(--font-b);cursor:pointer;}
+.rs-replay:hover{color:var(--white);border-color:var(--gold);}
+.rs-note{text-align:center;font-family:var(--font-m);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);padding-bottom:12px;}
+
+/* portátil */
+.rs-stage{display:grid;grid-template-columns:1fr;gap:0;position:relative;margin:8px auto 0;max-width:1000px;}
+.rs-laptop{position:relative;width:100%;}
+.rs-screen{background:#0c0b10;border:10px solid #2a2830;border-bottom-width:12px;border-radius:16px 16px 4px 4px;box-shadow:0 40px 90px -30px rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.06);overflow:hidden;position:relative;}
+.rs-base{height:16px;margin:0 -4%;background:linear-gradient(180deg,#3a3841,#1d1c22);border-radius:0 0 22px 22px;position:relative;box-shadow:0 20px 40px -18px rgba(0,0,0,.8);}
+.rs-base::after{content:'';position:absolute;left:50%;top:0;width:110px;height:6px;transform:translateX(-50%);background:#15141a;border-radius:0 0 10px 10px;}
+.rs-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#17161c;border-bottom:1px solid var(--grey-line);}
+.rs-dots{display:flex;gap:6px;}.rs-dots i{width:10px;height:10px;border-radius:50%;background:#ff5f57;}.rs-dots i:nth-child(2){background:#febc2e;}.rs-dots i:nth-child(3){background:#28c840;}
+.rs-url{margin-left:8px;font-family:var(--font-m);font-size:.62rem;color:var(--grey);background:#0c0b10;border-radius:99px;padding:4px 12px;}
+.rs-live{margin-left:auto;display:flex;align-items:center;gap:6px;font-family:var(--font-m);font-size:.6rem;letter-spacing:.08em;color:var(--green);text-transform:uppercase;}
+.rs-live::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);animation:rsBlink 1.4s steps(1) infinite;}
+.rs-app{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;padding:16px;min-height:340px;position:relative;}
+.rs-h{font-family:var(--font-m);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:10px;display:flex;justify-content:space-between;}
+.rs-floor{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
+.rs-tb{aspect-ratio:1/.85;border-radius:14px;border:1.5px solid #3a3841;background:#17161c;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.72rem;color:var(--grey);position:relative;transition:.45s;}
+.rs-tb b{font-family:var(--font-m);font-size:.82rem;color:var(--white);}
+.rs-tb.round{border-radius:50%;}
+.rs-tb em{font-style:normal;font-size:.58rem;margin-top:2px;}
+.rs-tb.busy{border-color:#5b5866;background:#211f27;}
+.rs-tb.res{border-color:var(--gold);background:linear-gradient(160deg,rgba(217,168,63,.28),rgba(217,168,63,.08));color:#f6d98f;box-shadow:0 0 0 0 rgba(217,168,63,.6);}
+.rs-tb.res.pulse{animation:rsGlow 1s ease-out 2;}
+@keyframes rsGlow{0%{box-shadow:0 0 0 0 rgba(217,168,63,.7);}100%{box-shadow:0 0 0 18px rgba(217,168,63,0);}}
+.rs-list{display:flex;flex-direction:column;gap:8px;}
+.rs-row{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:12px;background:#17161c;border:1px solid #2f2d35;font-size:.78rem;opacity:0;transform:translateY(10px);transition:.4s;}
+.rs-row.show{opacity:1;transform:none;}
+.rs-row .h{font-family:var(--font-m);color:var(--gold);font-size:.74rem;min-width:40px;}
+.rs-row .n{flex:1;line-height:1.25;}.rs-row .n small{display:block;color:var(--grey);font-size:.66rem;}
+.rs-src{font-family:var(--font-m);font-size:.56rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:var(--blue-dim);color:#8db7ff;border:1px solid rgba(47,123,255,.35);}
+.rs-ok{color:var(--green);font-weight:800;}
+.rs-toast{position:absolute;left:16px;right:16px;top:12px;z-index:5;display:flex;align-items:center;gap:12px;background:#f5f1e6;color:#231f16;border-radius:14px;padding:11px 14px;box-shadow:0 20px 40px -14px rgba(0,0,0,.8);transform:translateY(-140%);transition:transform .5s cubic-bezier(.2,1.2,.4,1);font-size:.8rem;}
+.rs-toast.show{transform:none;}
+.rs-toast .ic{width:34px;height:34px;border-radius:10px;background:#231f16;color:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.rs-toast .ic svg{width:18px;height:18px;}
+.rs-toast b{display:block;}.rs-toast span{font-family:var(--font-m);font-size:.62rem;color:#6b6250;}
+.rs-toast .sv{margin-left:auto;font-weight:800;color:#0d7a37;font-family:var(--font-m);font-size:.66rem;opacity:0;transition:.3s;}
+.rs-toast.saved .sv{opacity:1;}
+/* móvil de reservas */
+.rs-mob{position:absolute;right:-2%;bottom:-30px;width:150px;background:#0d0d11;border:5px solid #050506;border-radius:24px;box-shadow:0 26px 50px -10px rgba(0,0,0,.8);padding:12px 10px 12px;font-size:.62rem;z-index:6;animation:phoneFloat 6s ease-in-out infinite;}
+.rs-mob h5{font-family:var(--font-b);font-size:.72rem;margin-bottom:8px;}
+.rs-mob div.f{background:#1b1a20;border:1px solid #33313a;border-radius:8px;padding:5px 7px;margin-bottom:5px;display:flex;justify-content:space-between;color:var(--grey);}
+.rs-mob div.f b{color:var(--white);}
+.rs-mob button{width:100%;border:0;border-radius:8px;background:var(--gold);color:#16151a;font:800 .68rem var(--font-b);padding:7px;margin-top:2px;transition:.3s;}
+.rs-mob button.press{transform:scale(.94);background:#f6d98f;}
+.rs-caption{text-align:center;color:var(--grey);font-size:.86rem;margin-top:40px;}
+.rs-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:.66rem;color:var(--grey);}
+.rs-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px;}
+@media(max-width:860px){
+  .rs-app{grid-template-columns:1fr;padding:12px;gap:14px;}
+  .rs-floor{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;}.rs-tb{font-size:.6rem;}.rs-tb b{font-size:.72rem;}.rs-tb em{font-size:.5rem;}.rs-app>div{min-width:0;}
+  .rs-mob{position:relative;right:auto;bottom:auto;margin:14px auto -8px;animation:none;}
+  .rs-caption{margin-top:22px;}
+  .rs-talk{min-height:230px;}
+}
+@media(prefers-reduced-motion:reduce){.rs-ring::before,.rs-ring::after,.rs-wave i,.rs-mob{animation:none !important;}.rs-line,.rs-row,.rs-tk-items li,.rs-tk-meta,.rs-stamp{transition:none !important;}}
+</style><div class="rs-call" id="rsCall" aria-label="Simulación: una llamada para hacer un pedido, atendida por el asistente virtual (IA)">
+        <div class="rs-c-top">
+          <div class="rs-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div class="rs-c-who"><b>Pedido por teléfono</b><span id="rsState">Llamada entrante…</span></div>
+          <div class="rs-timer" id="rsTimer">00:00</div>
         </div>
+        <div class="rs-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="rs-talk" id="rsTalk"></div>
+        <div class="rs-ticket" id="rsTicket">
+          <div class="rs-tk-h"><span>Pedido · para recoger</span><span id="rsTkTime">--:--</span></div>
+          <ul class="rs-tk-items" id="rsItems"></ul>
+          <div class="rs-tk-foot"><span class="rs-tk-meta" id="rsMeta">A nombre de Lucía · 21:00</span><span class="rs-stamp" id="rsStamp">✓ Guardado en tu portal</span></div>
+        </div>
+        <button type="button" class="rs-replay" id="rsReplay" hidden>↻ Ver la llamada otra vez</button>
+        <div class="rs-note">Simulación de ejemplo · asistente virtual (IA)</div>
       </div>
     </div>
   </div>
@@ -337,40 +436,31 @@ footer{background:var(--bg-panel);border-top:1px solid var(--grey-line);padding:
 
 <div class="section-block reveal" style="padding-top:0;">
   <div class="container">
-    <div class="section-divider"><span class="sd-tag gold">Ejemplo práctico</span><div class="sd-line"></div></div>
-    <div class="example-wrap">
-      <div class="example-col">
-        <span class="example-label before"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Antes</span>
-        <div class="phone-mock" style="margin:0 auto;">
-          <div class="pm-topbar">
-            <div class="pm-avatar" style="background:#3a3940;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-            <div><div class="pm-name">Un cliente</div><div class="pm-status" style="color:var(--grey);">desconectado</div></div>
-          </div>
-          <div class="pm-body">
-            <div class="pm-bubble in">¿Podéis prepararme 2 raciones de croquetas y un arroz para recoger a las 21:00?<span class="pm-time">Cliente</span></div>
-            <div class="pm-bubble in" style="background:#2e1f22;">¿Hola?<span class="pm-time">+3h</span></div>
-          </div>
-        </div>
-        <div class="pm-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Pidió en otro restaurante, porque nadie contestó</div>
-      </div>
-      <div class="example-col">
-        <span class="example-label after"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Después</span>
-        <div class="phone-mock" style="margin:0 auto;">
-          <div class="pm-topbar">
-            <div class="pm-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-            <div><div class="pm-name">Un cliente</div><div class="pm-status">en línea</div></div>
-          </div>
-          <div class="pm-body">
-            <div class="pm-bubble in">Quiero pedir 2 raciones de croquetas y un arroz para recoger a las 21:00<span class="pm-time">Cliente</span></div>
-            <div class="pm-bubble out">Anotado: 2 raciones de croquetas y 1 arroz, recogida a las 21:00. ¿A nombre de quién?<span class="pm-time">Asistente IA</span></div>
-            <div class="pm-bubble in">Lucía<span class="pm-time">Cliente</span></div>
-            <div class="pm-bubble out">Pedido confirmado para Lucía a las 21:00 ✓<span class="pm-time">Asistente IA</span></div>
+    <div class="section-divider"><span class="sd-tag gold">Tu agenda de mesas</span><div class="sd-line"></div></div>
+    <h2 style="font-size:clamp(1.5rem,3.2vw,2.2rem);margin:6px 0 8px;text-wrap:balance;">Cada reserva se guarda sola. <em style="color:var(--gold);">Tú solo miras la sala.</em></h2>
+    <p style="color:var(--grey);max-width:640px;margin-bottom:26px;">Da igual si el cliente llama, escribe o reserva desde tu web o desde su móvil: la mesa queda guardada en tu calendario al momento.</p>
+    <div class="rs-stage" id="rsStage" aria-label="Simulación: reservas de mesa guardándose en el ordenador del restaurante">
+      <div class="rs-laptop">
+        <div class="rs-screen">
+          <div class="rs-bar"><div class="rs-dots"><i></i><i></i><i></i></div><span class="rs-url">tu-restaurante · portal · reservas</span><span class="rs-live">en directo</span></div>
+          <div class="rs-app">
+            <div class="rs-toast" id="rsToast"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><b id="rsTName">Nueva reserva</b><span id="rsTInfo"></span></div><div class="sv">✓ GUARDADA</div></div>
+            <div>
+              <div class="rs-h"><span>Sala · sábado</span><span id="rsCount">0 reservas</span></div>
+              <div class="rs-floor" id="rsFloor"></div>
+              <div class="rs-legend"><span><i style="background:#17161c;border:1px solid #3a3841"></i>Libre</span><span><i style="background:#5b5866"></i>Ocupada</span><span><i style="background:var(--gold)"></i>Reservada</span></div>
+            </div>
+            <div>
+              <div class="rs-h"><span>Reservas de hoy</span><span>ordenadas</span></div>
+              <div class="rs-list" id="rsList"></div>
+            </div>
           </div>
         </div>
-        <div class="pm-note good"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Pedido anotado sin soltar a los clientes que tenías delante</div>
+        <div class="rs-base"></div>
+        <div class="rs-mob" aria-hidden="true"><h5>Reservar mesa</h5><div class="f"><span>Día</span><b>Sábado</b></div><div class="f"><span>Personas</span><b>6</b></div><div class="f"><span>Hora</span><b>21:30</b></div><button type="button" id="rsMobBtn">Reservar</button></div>
       </div>
     </div>
-
+    <p class="rs-caption">Ejemplo de la agenda de un restaurante. Los datos son ficticios.</p>
   </div>
 </div>
 
@@ -555,5 +645,119 @@ function toggleFaq(btn){
 })();
 </script>
 <script src="../analytics-tracking.js"></script>
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var sleep = function(ms){ return new Promise(function(r){ setTimeout(r, ms); }); };
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* ───── 1. Llamada con pedido ───── */
+  var talk = $('rsTalk'), items = $('rsItems'), call = $('rsCall');
+  if (talk && call) {
+    var SCRIPT = [
+      ['ia',  'Buenas noches, le atiende el asistente virtual (IA) del restaurante. ¿Qué le pongo?', null],
+      ['cli', 'Hola, quería tres pizzas medianas de barbacoa.', ['3', 'Pizza mediana Barbacoa']],
+      ['ia',  'Perfecto: tres pizzas medianas de barbacoa. ¿Algo más?', null],
+      ['cli', 'Sí, una ensalada César y dos refrescos de cola.', [['1', 'Ensalada César'], ['2', 'Refresco de cola']]],
+      ['ia',  'Anotado. ¿Es para recoger o para tomar aquí?', null],
+      ['cli', 'Para recoger, a las nueve, a nombre de Lucía.', 'meta'],
+      ['ia',  'Pedido confirmado para Lucía a las 21:00. ¡Gracias, hasta ahora!', 'done']
+    ];
+    var token = 0, secs = 0, tmr = null;
+    var fmt = function(n){ return ('0' + Math.floor(n / 60)).slice(-2) + ':' + ('0' + (n % 60)).slice(-2); };
+    function reset(){
+      talk.innerHTML = ''; items.innerHTML = '';
+      $('rsMeta').classList.remove('show'); $('rsStamp').classList.remove('show');
+      $('rsState').textContent = 'Llamada entrante…'; call.classList.remove('done'); $('rsTimer').textContent = '00:00'; $('rsTkTime').textContent = '--:--';
+      $('rsReplay').hidden = true; secs = 0;
+    }
+    function addItem(q, name){ var li = document.createElement('li'); li.innerHTML = '<b>' + q + '×</b><span>' + name + '</span>'; items.appendChild(li); requestAnimationFrame(function(){ li.classList.add('show'); }); }
+    function finish(){
+      $('rsState').textContent = 'Pedido guardado'; call.classList.add('done'); $('rsTkTime').textContent = '21:00';
+      $('rsMeta').classList.add('show'); $('rsStamp').classList.add('show'); $('rsReplay').hidden = false;
+    }
+    async function play(){
+      var my = ++token; reset(); clearInterval(tmr);
+      if (reduce) {
+        SCRIPT.forEach(function(s){ var d = document.createElement('div'); d.className = 'rs-line show ' + s[0]; d.innerHTML = '<small>' + (s[0] === 'ia' ? 'Asistente virtual (IA)' : 'Cliente') + '</small>' + s[1]; talk.appendChild(d); });
+        addItem(3, 'Pizza mediana Barbacoa'); addItem(1, 'Ensalada César'); addItem(2, 'Refresco de cola');
+        Array.prototype.forEach.call(items.children, function(li){ li.classList.add('show'); }); finish(); return;
+      }
+      await sleep(900); if (my !== token) return;
+      $('rsState').textContent = 'Llamada en curso'; $('rsTkTime').textContent = 'en curso';
+      tmr = setInterval(function(){ secs++; $('rsTimer').textContent = fmt(secs); }, 1000);
+      for (var i = 0; i < SCRIPT.length; i++) {
+        var s = SCRIPT[i], d = document.createElement('div');
+        d.className = 'rs-line ' + s[0] + ' typing';
+        d.innerHTML = '<small>' + (s[0] === 'ia' ? 'Asistente virtual (IA)' : 'Cliente') + '</small><span></span>';
+        talk.appendChild(d); requestAnimationFrame(function(x){ return function(){ x.classList.add('show'); }; }(d));
+        var span = d.querySelector('span'), txt = s[1];
+        for (var c = 0; c < txt.length; c++) { if (my !== token) return; span.textContent += txt[c]; await sleep(s[0] === 'ia' ? 24 : 30); }
+        d.classList.remove('typing');
+        var fx = s[2];
+        if (Array.isArray(fx)) { (Array.isArray(fx[0]) ? fx : [fx]).forEach(function(z){ addItem(z[0], z[1]); }); }
+        else if (fx === 'meta') { $('rsMeta').classList.add('show'); }
+        else if (fx === 'done') { await sleep(450); if (my !== token) return; clearInterval(tmr); finish(); return; }
+        talk.scrollTop = talk.scrollHeight;
+        await sleep(650); if (my !== token) return;
+      }
+    }
+    $('rsReplay').addEventListener('click', play);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(es, o){ if (es[0].isIntersecting) { o.disconnect(); play(); } }, { threshold: .35 }).observe(call);
+    } else { play(); }
+  }
+
+  /* ───── 2. Portátil: reservas de mesa que se guardan solas ───── */
+  var floor = $('rsFloor'), list = $('rsList');
+  if (floor && list) {
+    var TABLES = [['1',0,'busy'],['2',0],['3',1],['4',0],['5',0],['6',1,'busy'],['7',0],['8',0]];
+    TABLES.forEach(function(t){
+      var d = document.createElement('div'); d.className = 'rs-tb' + (t[1] ? ' round' : '') + (t[2] ? ' ' + t[2] : ''); d.id = 'rsT' + t[0];
+      d.innerHTML = '<b>M' + t[0] + '</b><em>' + (t[2] === 'busy' ? 'ocupada' : 'libre') + '</em>'; floor.appendChild(d);
+    });
+    var BOOK = [
+      { t: '5', h: '21:00', n: 'Marcos R.', p: 4, src: 'Teléfono', ic: 'tel' },
+      { t: '2', h: '20:30', n: 'Ana G.', p: 2, src: 'Web', ic: 'web' },
+      { t: '7', h: '21:30', n: 'Grupo Ruiz', p: 6, src: 'Móvil', ic: 'mov' }
+    ];
+    var running = 0, visible = false;
+    function resetB(){
+      list.innerHTML = ''; $('rsCount').textContent = '0 reservas';
+      TABLES.forEach(function(t){ var el = $('rsT' + t[0]); el.classList.remove('res', 'pulse'); el.querySelector('em').textContent = t[2] === 'busy' ? 'ocupada' : 'libre'; });
+      $('rsToast').classList.remove('show', 'saved');
+    }
+    function commit(b, idx){
+      var el = $('rsT' + b.t); el.classList.add('res', 'pulse'); el.querySelector('em').textContent = b.h + ' · ' + b.p + 'p';
+      var row = document.createElement('div'); row.className = 'rs-row';
+      row.innerHTML = '<span class="h">' + b.h + '</span><span class="n">' + b.n + '<small>' + b.p + ' personas · mesa M' + b.t + '</small></span><span class="rs-src">' + b.src + '</span><span class="rs-ok">✓</span>';
+      list.appendChild(row); requestAnimationFrame(function(){ row.classList.add('show'); });
+      $('rsCount').textContent = (idx + 1) + (idx ? ' reservas' : ' reserva');
+    }
+    async function loop(my){
+      while (my === running) {
+        resetB(); await sleep(900);
+        for (var i = 0; i < BOOK.length; i++) {
+          if (my !== running) return; var b = BOOK[i];
+          $('rsTName').textContent = 'Nueva reserva · ' + b.src; $('rsTInfo').textContent = b.n + ' · ' + b.p + ' personas · ' + b.h;
+          var mb = $('rsMobBtn'); if (b.ic === 'mov') { mb.classList.add('press'); }
+          $('rsToast').classList.remove('saved'); $('rsToast').classList.add('show'); await sleep(1100);
+          if (my !== running) return; $('rsToast').classList.add('saved'); commit(b, i); await sleep(1300);
+          mb.classList.remove('press'); $('rsToast').classList.remove('show'); await sleep(700);
+        }
+        await sleep(3600);
+      }
+    }
+    var stage = $('rsStage');
+    if (reduce) { resetB(); BOOK.forEach(commit); $('rsToast').classList.remove('show'); }
+    else if (stage && 'IntersectionObserver' in window) {
+      new IntersectionObserver(function(es){
+        if (es[0].isIntersecting && !running) { running = 1; loop(1); }
+        else if (!es[0].isIntersecting && running) { running = 0; }
+      }, { threshold: .3 }).observe(stage);
+    }
+  }
+})();
+</script>
 </body>
 </html>
