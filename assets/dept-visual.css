@@ -482,3 +482,11 @@ body.bk-open{overflow:hidden;}
   #golpe-realidad .section-h2{font-size:1.5rem;}
   #cta-final .cta-inner p{display:none;}
 }
+/* ajustes tras revisar en móvil */
+.gr-h-m{display:none;}
+@media(max-width:700px){
+  .gr-h-d{display:none;}
+  .gr-h-m{display:inline;}
+  #soluciones-showcase .need-title{display:block !important;-webkit-line-clamp:unset !important;overflow:visible !important;font-size:.8rem !important;}
+  #soluciones-showcase .need-card{gap:6px;}
+}
