@@ -321,15 +321,21 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
 @media(max-width:1000px){
   .tier-wrap .tiers-cols{display:flex !important;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding:6px 8% 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;}
   .tier-wrap .tiers-cols::-webkit-scrollbar{display:none;}
-  .tier-wrap .service-card{flex:0 0 84%;scroll-snap-align:center;}
+  .tier-wrap{margin:0 -32px;}
+  .tier-wrap .tiers-cols{padding:6px 6vw 16px;}
+  .tier-wrap .service-card{flex:0 0 88vw;max-width:440px;min-width:0;scroll-snap-align:center;margin-bottom:0;}
+  .tier-wrap .service-card .sc-footer{flex-direction:column;align-items:stretch;padding:18px 18px;}
+  .tier-wrap .service-card .btn-primary{white-space:normal;text-align:center;justify-content:center;width:100%;}
+  .tier-wrap .service-card .sc-header,.tier-wrap .service-card [style*="padding:20px 24px"],.tier-wrap .service-card [style*="padding:0 24px 16px"]{padding-left:18px !important;padding-right:18px !important;}
+  .tier-wrap .service-card .sc-desc,.tier-wrap .service-card .sc-list li{overflow-wrap:anywhere;}
   .tier-arrow{display:flex;position:absolute;top:110px;z-index:3;width:44px;height:44px;border-radius:50%;align-items:center;justify-content:center;border:1px solid rgba(217,168,63,.7);background:rgba(20,19,25,.9);color:var(--gold);font-size:1.7rem;line-height:1;padding:0 0 3px;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.5);}
-  .tier-arrow.prev{left:2px;}.tier-arrow.next{right:2px;}
+  .tier-arrow.prev{left:8px;}.tier-arrow.next{right:8px;}
   .tier-arrow[disabled]{opacity:.25;cursor:default;}
   .tier-dots{display:flex;justify-content:center;gap:8px;margin-top:2px;}
   .tier-dots i{width:8px;height:8px;border-radius:99px;background:var(--grey-line);transition:all .25s;}
   .tier-dots i.on{width:24px;background:var(--gold);}
 }
-@media(min-width:561px) and (max-width:1000px){.tier-wrap .service-card{flex-basis:52%;}}
+@media(min-width:561px) and (max-width:1000px){.tier-wrap{margin:0;}.tier-wrap .service-card{flex-basis:52%;max-width:none;}}
 </style>
 </head>
 <body>
