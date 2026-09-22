@@ -225,7 +225,7 @@ def _fetch_live_pricing_block() -> str:
     )
 
 
-_DIAS_SEMANA = {"lunes": 0, "martes": 1, "miercoles": 2, "jueves": 3, "viernes": 4}
+_DIAS_SEMANA = {"lunes": 0, "martes": 1, "miercoles": 2, "jueves": 3, "viernes": 4, "sabado": 5}
 
 
 def _resolver_fecha_dia(now, dia, semana_que_viene):
@@ -245,78 +245,66 @@ def _resolver_fecha_dia(now, dia, semana_que_viene):
     return None
 
 
-def _dt_evento(ev, clave):
-    """Convierte start/end de un evento de la API a datetime en Madrid, o None
-    si es un evento de día completo (solo fecha, sin hora) — esos no cuentan
-    como ventana horaria ni como conflicto de hueco."""
-    v = ev.get(clave) or {}
-    raw = v.get('dateTime')
-    if not raw:
-        return None
-    dt = datetime.datetime.fromisoformat(raw)
-    return dt.astimezone(MADRID_TZ)
+
+# Disponibilidad real del founder, tal como la tiene configurada en su Página
+# de reserva de Google Calendar (Ajustes de esa página → Disponibilidad
+# general). Google NO expone esta configuración por ninguna API — comprobado
+# contra la documentación oficial (los tipos de evento que reconoce la API
+# son default/birthday/focusTime/outOfOffice/workingLocation; "página de
+# reserva" no es uno de ellos) y contra cómo funcionan de verdad los
+# asistentes de voz que agendan citas (Vapi, Retell, n8n...): todos piden
+# este dato una vez, ninguno lo adivina mirando el calendario. Si el founder
+# cambia estas horas en Google Calendar, hay que actualizar este diccionario
+# a mano (weekday(): lunes=0 ... domingo=6; no aparece = cerrado ese día).
+HORARIO_SEMANAL_MINUTOS = {
+    0: (16 * 60, 20 * 60 + 30),   # lunes 16:00–20:30
+    1: (16 * 60, 18 * 60 + 30),   # martes 16:00–18:30 (más corto)
+    2: (16 * 60, 20 * 60 + 30),   # miércoles 16:00–20:30
+    3: (16 * 60, 20 * 60 + 30),   # jueves 16:00–20:30
+    4: (16 * 60, 20 * 60 + 30),   # viernes 16:00–20:30
+    5: (9 * 60, 12 * 60 + 30),    # sábado 09:00–12:30
+    # domingo (6): no disponible
+}
+# "Franja de programación: hasta 4 horas antes" en la Página de reserva.
+MIN_LEAD_MINUTES_CITA = 240
 
 
-def _find_slots_on_day(service, target_date, excluir_horas=None, max_slots=1, min_lead_minutes=60):
+def _find_slots_on_day(service, target_date, excluir_horas=None, max_slots=1, min_lead_minutes=MIN_LEAD_MINUTES_CITA):
     """Busca huecos SOLO dentro de target_date, nunca en otros días — así el
     cliente elige el día y el agente solo mira disponibilidad ahí, en vez de
     ofrecer una lista larga de días y horas de golpe. excluir_horas deja
     fuera los huecos que ya se le ofrecieron a este cliente y rechazó, para
     que la siguiente llamada en el mismo día devuelva uno distinto.
 
-    La ventana horaria de cada día NO está fija en el código — se lee del
-    propio calendario: el evento cuyo título contiene "trucotechnology" (el
-    bloque de la Página de reserva que el founder configura en Google
-    Calendar) marca el inicio y el fin real de ese día. Si cambia esas horas
-    en Google Calendar, aquí se recoge solo con volver a preguntar — nunca
-    hay que tocar código. El resto de eventos reales de ese día (citas ya
-    puestas, compromisos personales) se tratan como huecos ocupados, igual
-    que antes hacía freebusy — pero ahora en la misma llamada a la API, sin
-    necesidad de una consulta de freebusy aparte."""
+    La ventana de cada día sale de HORARIO_SEMANAL_MINUTOS (arriba). Dentro de
+    esa ventana, se consulta freebusy para no ofrecer nunca un hueco que
+    choque con algo real ya puesto en el calendario (una cita ya reservada,
+    un compromiso personal, etc.)."""
     excluir_horas = set(excluir_horas or [])
     now = datetime.datetime.now(MADRID_TZ)
-    if target_date.weekday() >= 5:  # sábado o domingo, no se trabaja
-        return []
-    day_min = datetime.datetime.combine(target_date, datetime.time(0, 0), tzinfo=MADRID_TZ)
-    day_max = datetime.datetime.combine(target_date, datetime.time(23, 59, 59), tzinfo=MADRID_TZ)
-    if day_max <= now:
-        return []  # ese día ya ha pasado por completo
-
-    events_resp = service.events().list(
-        calendarId=CALENDAR_ID,
-        timeMin=day_min.isoformat(),
-        timeMax=day_max.isoformat(),
-        singleEvents=True,
-        orderBy='startTime',
-    ).execute()
-
-    ventana = None
-    busy_ranges = []
-    for ev in events_resp.get('items', []):
-        if ev.get('status') == 'cancelled':
-            continue
-        start = _dt_evento(ev, 'start')
-        end = _dt_evento(ev, 'end')
-        if not start or not end:
-            continue  # evento de día completo, no define ventana ni bloquea horas
-        titulo = (ev.get('summary') or '').strip().lower()
-        # "truco" a secas (no "trucotechnology" pegado) para que dé igual si el
-        # evento se llama "Truco Technology", "TRUCOTECHNOLOGY" o con cualquier
-        # espaciado — el bug real era este: buscaba la palabra pegada y con un
-        # espacio de por medio nunca encontraba el evento, dejando la ventana
-        # en None y abriendo la puerta a que el modelo se inventara una hora.
-        if ventana is None and 'truco' in titulo:
-            ventana = (start, end)
-        else:
-            busy_ranges.append((start, end))
-
-    if ventana is None:
-        # Ese día no tiene configurada ninguna ventana de disponibilidad en el
-        # calendario — no hay huecos que ofrecer, nunca se inventa un horario.
-        return []
-    day_start, day_end = ventana
+    rango = HORARIO_SEMANAL_MINUTOS.get(target_date.weekday())
+    if rango is None:
+        return []  # ese día de la semana no hay disponibilidad configurada
+    day_start = datetime.datetime.combine(target_date, datetime.time(0, 0), tzinfo=MADRID_TZ) + datetime.timedelta(minutes=rango[0])
+    day_end = datetime.datetime.combine(target_date, datetime.time(0, 0), tzinfo=MADRID_TZ) + datetime.timedelta(minutes=rango[1])
     if day_end <= now:
-        return []
+        return []  # esa ventana ya ha pasado por completo
+
+    busy = service.freebusy().query(
+        body={
+            "timeMin": day_start.isoformat(),
+            "timeMax": day_end.isoformat(),
+            "timeZone": "Europe/Madrid",
+            "items": [{"id": CALENDAR_ID}],
+        }
+    ).execute()
+    busy_ranges = [
+        (
+            datetime.datetime.fromisoformat(b["start"]).astimezone(MADRID_TZ),
+            datetime.datetime.fromisoformat(b["end"]).astimezone(MADRID_TZ),
+        )
+        for b in busy["calendars"][CALENDAR_ID]["busy"]
+    ]
 
     earliest_bookable = max(day_start, now + datetime.timedelta(minutes=min_lead_minutes))
     slot_start = earliest_bookable
@@ -462,7 +450,7 @@ class TrucoAgent(Agent):
         self,
         context: RunContext,
         dia: Annotated[
-            Literal["hoy", "manana", "lunes", "martes", "miercoles", "jueves", "viernes"],
+            Literal["hoy", "manana", "lunes", "martes", "miercoles", "jueves", "viernes", "sabado"],
             Field(description="El día que ha propuesto EL CLIENTE — pregúntaselo siempre primero ('¿qué día te vendría bien?'), nunca elijas tú un día ni ofrezcas una lista de días. Solo llama a esta herramienta cuando el cliente ya haya dicho un día concreto."),
         ],
         semana_que_viene: Annotated[
@@ -488,8 +476,8 @@ class TrucoAgent(Agent):
             return "La agenda no está disponible ahora mismo. Ofrece que alguien del equipo le llame, o usa mostrar_calendario_en_pantalla."
         now = datetime.datetime.now(MADRID_TZ)
         target_date = _resolver_fecha_dia(now, dia, semana_que_viene)
-        if target_date is None or target_date.weekday() >= 5:
-            return "Ese día no es laborable (cae en fin de semana) o no se ha entendido bien. Pregunta al cliente por otro día, o usa mostrar_calendario_en_pantalla si prefiere elegir él mismo."
+        if target_date is None or target_date.weekday() == 6:
+            return "Ese día no está disponible (domingo cerrado) o no se ha entendido bien. Pregunta al cliente por otro día, o usa mostrar_calendario_en_pantalla si prefiere elegir él mismo."
         try:
             slots = await asyncio.to_thread(_find_slots_on_day, service, target_date, excluir_horas=excluir_horas)
         except Exception:
