@@ -6,20 +6,13 @@
 // get_whatsapp_bot_config_by_phone_number_id() — ver
 // supabase/migration_client_whatsapp_bot_config.sql.
 //
-// Decisión de arquitectura (tarea #222 / "backend compartido"): esto
-// reemplaza la idea original de "n8n autoalojado en un VPS" para ESTE
-// automatismo concreto — misma función para todos los clientes, cero coste
-// de servidor nuevo, reutiliza Netlify Functions que ya está en producción
-// (chat-ai.js, antonia-chat.js). n8n seguiría siendo la opción para
-// automatismos que de verdad necesiten editor visual o integraciones que no
-// sean "webhook → leer config → llamar a Gemini → responder".
-//
-// SIN PROBAR END-TO-END TODAVÍA: la parte de leer la config y construir la
-// respuesta con Gemini SÍ está probada (test manual con datos reales en
-// Supabase). El envío real por la API de WhatsApp Cloud no se puede probar
-// hasta que la Verificación de Empresa de Meta esté aprobada y al menos un
-// cliente haya completado el Embedded Signup — hasta entonces esto está
-// listo pero no hay ningún número real conectado que lo dispare.
+// Formato de función v2 de Netlify (export default, Request/Response web
+// estándar) — necesario SOLO para esta función: usa META_WHATSAPP_SYSTEM_TOKEN
+// y TRUCO_OWN_PHONE_NUMBER_ID, y sumarlas al resto de variables del sitio
+// superaba el límite de 4KB que AWS Lambda impone a las funciones "clásicas"
+// (formato v1, exports.handler) — ver https://ntl.fyi/functions-migrate. Las
+// demás funciones del sitio siguen en v1 sin tocar; solo esta se libra del
+// límite al no pasar por el runtime clásico de Lambda.
 //
 // RELLENAR en Netlify antes de que esto funcione con clientes reales:
 //   - WHATSAPP_CLIENTS_VERIFY_TOKEN  (cadena que tú eliges, se la das a Meta
@@ -39,6 +32,9 @@
 // propio meta_access_token y se usa ESE en vez del compartido. Ver
 // supabase/migration_whatsapp_per_client_meta_token.sql — diseño aditivo:
 // si la columna es NULL, todo sigue igual que siempre.
+
+import { crmCapture } from './lib/crm.js';
+import { notifyTelegram } from './lib/chat-guard.js';
 
 function authHeaders(key) {
   const h = { 'Content-Type': 'application/json', apikey: key };
@@ -141,9 +137,6 @@ async function registrarInteraccion(supabaseUrl, serviceKey, clientId, nota) {
   }
 }
 
-const { crmCapture } = require('./lib/crm');
-const { notifyTelegram } = require('./lib/chat-guard');
-
 // ── "JOSE": el propio WhatsApp de TRUCO (+34 681 89 97 93) ──
 // No es "un cliente más": no tiene ficha en client_whatsapp_bot_config (esa
 // tabla es para las empresas que contratan IA para WhatsApp). Este número
@@ -155,10 +148,6 @@ const { notifyTelegram } = require('./lib/chat-guard');
 // como variable sensible).
 function normalizarTelefono(t) {
   return String(t || '').replace(/\D/g, '').replace(/^0+/, '');
-}
-
-function quiereHablarDePrecio(texto) {
-  return /precio|cuesta|cu[aá]nto|coste|costo|tarifa|cuota|mensualidad|pagar|pago|barat|caro|€|euro|descuento|oferta|fundador|financi|paypal|tarjeta|presupuesto|plazos|iva|cobr/i.test(texto || '');
 }
 
 async function buscarClientePorTelefono(supabaseUrl, serviceKey, telefono) {
@@ -179,9 +168,9 @@ async function buscarClientePorTelefono(supabaseUrl, serviceKey, telefono) {
   }
 }
 
-const JOSE_PROMPT_BASE = `Eres Jose, el asistente virtual (IA) de TRUCOtechnology, respondiendo por el WhatsApp de la empresa. Escribes en español, en frases cortas y naturales de WhatsApp — nunca un email largo, nunca markdown ni enlaces con formato, si das una web escríbela tal cual (trucotechnology.com).
+const JOSE_PROMPT_BASE = `Eres Jose, el asistente virtual de TRUCOtechnology, respondiendo por el WhatsApp de la empresa. Escribes en español, en frases cortas y naturales de WhatsApp — nunca un email largo, nunca markdown ni enlaces con formato, si das una web escríbela tal cual (trucotechnology.com).
 
-TRANSPARENCIA: eres una IA, no una persona. Si te preguntan si eres una persona, dilo con claridad.
+TRANSPARENCIA: te presentas como el asistente virtual de TRUCOtechnology. Solo si te preguntan directamente si eres una persona, dilo con claridad.
 
 QUÉ ES TRUCO: Departamento Tecnológico externalizado para pymes y autónomos en España. 4 escalones — Start™ (sin web, 1 automatización), Basic™ (web + 1 automatización, el recomendado para la mayoría de negocios con local), Lite™ (web + 2 automatizaciones), Pro™ (web + 3 automatizaciones). El primer año se paga de una vez (con 12% dto. si pagas con tarjeta o PayPal); después, mes a mes sin permanencia.
 
@@ -216,19 +205,21 @@ async function manejarMensajeJose(supabaseUrl, serviceKey, geminiKey, phoneNumbe
   }
 }
 
-exports.handler = async function (event) {
+export default async (req) => {
+  const url = new URL(req.url);
+
   // Verificación del webhook — Meta la llama una vez al registrar la URL.
-  if (event.httpMethod === 'GET') {
-    const params = event.queryStringParameters || {};
+  if (req.method === 'GET') {
+    const params = url.searchParams;
     const verifyToken = process.env.WHATSAPP_CLIENTS_VERIFY_TOKEN;
-    if (params['hub.mode'] === 'subscribe' && verifyToken && params['hub.verify_token'] === verifyToken) {
-      return { statusCode: 200, body: params['hub.challenge'] || '' };
+    if (params.get('hub.mode') === 'subscribe' && verifyToken && params.get('hub.verify_token') === verifyToken) {
+      return new Response(params.get('hub.challenge') || '', { status: 200 });
     }
-    return { statusCode: 403, body: 'Forbidden' };
+    return new Response('Forbidden', { status: 403 });
   }
 
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method not allowed' };
+  if (req.method !== 'POST') {
+    return new Response('Method not allowed', { status: 405 });
   }
 
   // Meta espera un 200 rápido siempre que el payload sea válido — nunca
@@ -236,9 +227,9 @@ exports.handler = async function (event) {
   // de texto, o Meta empieza a reintentar y desactiva el webhook.
   let body;
   try {
-    body = JSON.parse(event.body || '{}');
+    body = await req.json();
   } catch (e) {
-    return { statusCode: 200, body: 'ok' };
+    return new Response('ok', { status: 200 });
   }
 
   try {
@@ -246,7 +237,7 @@ exports.handler = async function (event) {
     const mensaje = value?.messages?.[0];
     const phoneNumberId = value?.metadata?.phone_number_id;
     if (!mensaje || mensaje.type !== 'text' || !phoneNumberId) {
-      return { statusCode: 200, body: 'ok' }; // estado/entrega, no un mensaje de texto real
+      return new Response('ok', { status: 200 }); // estado/entrega, no un mensaje de texto real
     }
 
     const supabaseUrl = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
@@ -254,26 +245,26 @@ exports.handler = async function (event) {
     const geminiKey = process.env.GEMINI_API_KEY;
     if (!supabaseUrl || !serviceKey || !geminiKey) {
       console.error('[WHATSAPP_CLIENT_BOT] Faltan variables de entorno obligatorias');
-      return { statusCode: 200, body: 'ok' };
+      return new Response('ok', { status: 200 });
     }
 
     // El propio número de TRUCO ("Jose") no es un cliente más de la tabla
     // compartida — tiene su propio conocimiento y su propia lógica.
     if (phoneNumberId === process.env.TRUCO_OWN_PHONE_NUMBER_ID) {
       await manejarMensajeJose(supabaseUrl, serviceKey, geminiKey, phoneNumberId, mensaje, value?.contacts?.[0]?.profile?.name);
-      return { statusCode: 200, body: 'ok' };
+      return new Response('ok', { status: 200 });
     }
 
     const cfg = await buscarConfigPorNumero(supabaseUrl, serviceKey, phoneNumberId);
     if (!cfg) {
       // Número no reconocido, cliente sin la automatización activa, o en pausa.
-      return { statusCode: 200, body: 'ok' };
+      return new Response('ok', { status: 200 });
     }
 
     const textoUsuario = mensaje.text.body.slice(0, 2000);
     const systemPrompt = construirSystemPrompt(cfg);
     const respuesta = await llamarGemini(geminiKey, systemPrompt, textoUsuario);
-    if (!respuesta) return { statusCode: 200, body: 'ok' };
+    if (!respuesta) return new Response('ok', { status: 200 });
 
     await enviarRespuestaWhatsapp(phoneNumberId, mensaje.from, respuesta, cfg.meta_access_token);
     await registrarInteraccion(supabaseUrl, serviceKey, cfg.client_id, `WhatsApp — cliente escribió: "${textoUsuario}" — bot respondió: "${respuesta}"`);
@@ -283,9 +274,9 @@ exports.handler = async function (event) {
       texto: `Escribió: "${textoUsuario.slice(0, 250)}" · El asistente respondió: "${respuesta.slice(0, 250)}"`,
     });
 
-    return { statusCode: 200, body: 'ok' };
+    return new Response('ok', { status: 200 });
   } catch (e) {
     console.error('[WHATSAPP_CLIENT_BOT] excepcion', e.message);
-    return { statusCode: 200, body: 'ok' }; // 200 siempre, para no activar reintentos de Meta
+    return new Response('ok', { status: 200 }); // 200 siempre, para no activar reintentos de Meta
   }
 };
