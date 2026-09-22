@@ -142,6 +142,79 @@ async function registrarInteraccion(supabaseUrl, serviceKey, clientId, nota) {
 }
 
 const { crmCapture } = require('./lib/crm');
+const { notifyTelegram } = require('./lib/chat-guard');
+
+// ── "JOSE": el propio WhatsApp de TRUCO (+34 681 89 97 93) ──
+// No es "un cliente más": no tiene ficha en client_whatsapp_bot_config (esa
+// tabla es para las empresas que contratan IA para WhatsApp). Este número
+// necesita el mismo conocimiento que el chat de la web (Departamentos,
+// precios solo si preguntan, sectores...) y distinguir si quien escribe ya
+// es cliente de TRUCO (mirando clients.telefono) o todavía no.
+// TRUCO_OWN_PHONE_NUMBER_ID = el phone_number_id que da Meta a ese número
+// (no es secreto, es solo un identificador — se guarda en Netlify sin marcar
+// como variable sensible).
+function normalizarTelefono(t) {
+  return String(t || '').replace(/\D/g, '').replace(/^0+/, '');
+}
+
+function quiereHablarDePrecio(texto) {
+  return /precio|cuesta|cu[aá]nto|coste|costo|tarifa|cuota|mensualidad|pagar|pago|barat|caro|€|euro|descuento|oferta|fundador|financi|paypal|tarjeta|presupuesto|plazos|iva|cobr/i.test(texto || '');
+}
+
+async function buscarClientePorTelefono(supabaseUrl, serviceKey, telefono) {
+  const norm = normalizarTelefono(telefono);
+  if (!norm) return null;
+  // Compara por los últimos 9 dígitos para no depender de cómo esté guardado
+  // el prefijo (+34, 0034, sin prefijo...).
+  const ultimos9 = norm.slice(-9);
+  try {
+    const resp = await fetch(`${supabaseUrl}/rest/v1/clients?select=id,negocio,nombre,arranque_tier,telefono&telefono=ilike.*${ultimos9}`, {
+      headers: authHeaders(serviceKey),
+    });
+    if (!resp.ok) return null;
+    const rows = await resp.json();
+    return Array.isArray(rows) && rows[0] ? rows[0] : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+const JOSE_PROMPT_BASE = `Eres Jose, el asistente virtual (IA) de TRUCOtechnology, respondiendo por el WhatsApp de la empresa. Escribes en español, en frases cortas y naturales de WhatsApp — nunca un email largo, nunca markdown ni enlaces con formato, si das una web escríbela tal cual (trucotechnology.com).
+
+TRANSPARENCIA: eres una IA, no una persona. Si te preguntan si eres una persona, dilo con claridad.
+
+QUÉ ES TRUCO: Departamento Tecnológico externalizado para pymes y autónomos en España. 4 escalones — Start™ (sin web, 1 automatización), Basic™ (web + 1 automatización, el recomendado para la mayoría de negocios con local), Lite™ (web + 2 automatizaciones), Pro™ (web + 3 automatizaciones). El primer año se paga de una vez (con 12% dto. si pagas con tarjeta o PayPal); después, mes a mes sin permanencia.
+
+REGLA DE PRECIOS: NUNCA menciones cifras en euros, descuentos ni plazas de fundador si no te lo preguntan expresamente. Recomienda por lo que resuelve, no por lo que cuesta.
+
+RESTAURANTES: la IA para Llamadas coge el teléfono, toma el pedido y reserva mesa; también por WhatsApp y web. El escalón natural es Lite™ (Llamadas + WhatsApp).
+
+El primer paso siempre es una auditoría gratuita con una persona real del equipo (no tú): 20-30 min, sin compromiso. Ofrécela cuando ya hayas entendido su negocio, no en el primer mensaje.
+
+Si te preguntan algo que no sabes o que se sale de esto, dilo con naturalidad y ofrece la auditoría gratuita para resolverlo con una persona.`;
+
+const JOSE_PROSPECTO = `\n\nQUIÉN TE ESCRIBE: alguien que todavía NO es cliente de TRUCO. Diagnostica su negocio (a qué se dedica, qué le está costando) y recomienda el Departamento que encaje, sin presionar.`;
+
+function josePromptCliente(cliente) {
+  const nombre = cliente.negocio || cliente.nombre || 'el cliente';
+  return `\n\nQUIÉN TE ESCRIBE: ${nombre}, que YA es cliente de TRUCO (Departamento ${cliente.arranque_tier || 'contratado'}). No le vendas nada: ayúdale con su duda o su cuenta. Si necesita un cambio real (ajustar algo de su Departamento, una incidencia, una automatización nueva), dile que se lo pasas al equipo y que le responden — no prometas que tú lo vas a hacer.`;
+}
+
+async function manejarMensajeJose(supabaseUrl, serviceKey, geminiKey, phoneNumberId, mensaje, nombreContacto) {
+  const de = mensaje.from;
+  const texto = mensaje.text.body.slice(0, 2000);
+  const cliente = await buscarClientePorTelefono(supabaseUrl, serviceKey, de);
+  const prompt = JOSE_PROMPT_BASE + (cliente ? josePromptCliente(cliente) : JOSE_PROSPECTO);
+  const respuesta = await llamarGemini(geminiKey, prompt, texto);
+  if (!respuesta) return;
+  await enviarRespuestaWhatsapp(phoneNumberId, de, respuesta, null);
+  if (cliente) {
+    await registrarInteraccion(supabaseUrl, serviceKey, cliente.id, `WhatsApp (Jose) — escribió: "${texto}" — Jose respondió: "${respuesta}"`);
+    await crmCapture({ clientId: cliente.id, source: 'whatsapp', kind: 'mensaje', nombre: nombreContacto, telefono: de, texto: `Escribió: "${texto.slice(0, 250)}" · Jose respondió: "${respuesta.slice(0, 250)}"` });
+  } else {
+    await notifyTelegram(`💬 WhatsApp de TRUCO (Jose): nuevo mensaje de un posible cliente.\nDe: ${nombreContacto || de} (${de})\nEscribió: "${texto.slice(0, 300)}"\nJose respondió: "${respuesta.slice(0, 300)}"`);
+  }
+}
 
 exports.handler = async function (event) {
   // Verificación del webhook — Meta la llama una vez al registrar la URL.
@@ -181,6 +254,13 @@ exports.handler = async function (event) {
     const geminiKey = process.env.GEMINI_API_KEY;
     if (!supabaseUrl || !serviceKey || !geminiKey) {
       console.error('[WHATSAPP_CLIENT_BOT] Faltan variables de entorno obligatorias');
+      return { statusCode: 200, body: 'ok' };
+    }
+
+    // El propio número de TRUCO ("Jose") no es un cliente más de la tabla
+    // compartida — tiene su propio conocimiento y su propia lógica.
+    if (phoneNumberId === process.env.TRUCO_OWN_PHONE_NUMBER_ID) {
+      await manejarMensajeJose(supabaseUrl, serviceKey, geminiKey, phoneNumberId, mensaje, value?.contacts?.[0]?.profile?.name);
       return { statusCode: 200, body: 'ok' };
     }
 
