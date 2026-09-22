@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 from google.genai import types
 from livekit import agents, rtc
 from livekit.agents import AgentServer, AgentSession, Agent, RunContext, function_tool
+from livekit.agents.voice import AudioConfig, BackgroundAudioPlayer, BuiltinAudioClip
 from livekit.plugins import google
 from pydantic import Field
 
@@ -20,7 +21,6 @@ load_dotenv(".env.local")
 logger = logging.getLogger(__name__)
 
 MADRID_TZ = zoneinfo.ZoneInfo("Europe/Madrid")
-BUSINESS_HOURS = (9, 18)  # 9:00 a 18:00
 SLOT_MINUTES = 30
 CALENDAR_ID = os.environ.get("GOOGLE_CALENDAR_ID", "primary")
 
@@ -245,35 +245,73 @@ def _resolver_fecha_dia(now, dia, semana_que_viene):
     return None
 
 
+def _dt_evento(ev, clave):
+    """Convierte start/end de un evento de la API a datetime en Madrid, o None
+    si es un evento de día completo (solo fecha, sin hora) — esos no cuentan
+    como ventana horaria ni como conflicto de hueco."""
+    v = ev.get(clave) or {}
+    raw = v.get('dateTime')
+    if not raw:
+        return None
+    dt = datetime.datetime.fromisoformat(raw)
+    return dt.astimezone(MADRID_TZ)
+
+
 def _find_slots_on_day(service, target_date, excluir_horas=None, max_slots=1, min_lead_minutes=60):
     """Busca huecos SOLO dentro de target_date, nunca en otros días — así el
     cliente elige el día y el agente solo mira disponibilidad ahí, en vez de
     ofrecer una lista larga de días y horas de golpe. excluir_horas deja
     fuera los huecos que ya se le ofrecieron a este cliente y rechazó, para
-    que la siguiente llamada en el mismo día devuelva uno distinto."""
+    que la siguiente llamada en el mismo día devuelva uno distinto.
+
+    La ventana horaria de cada día NO está fija en el código — se lee del
+    propio calendario: el evento cuyo título contiene "trucotechnology" (el
+    bloque de la Página de reserva que el founder configura en Google
+    Calendar) marca el inicio y el fin real de ese día. Si cambia esas horas
+    en Google Calendar, aquí se recoge solo con volver a preguntar — nunca
+    hay que tocar código. El resto de eventos reales de ese día (citas ya
+    puestas, compromisos personales) se tratan como huecos ocupados, igual
+    que antes hacía freebusy — pero ahora en la misma llamada a la API, sin
+    necesidad de una consulta de freebusy aparte."""
     excluir_horas = set(excluir_horas or [])
     now = datetime.datetime.now(MADRID_TZ)
     if target_date.weekday() >= 5:  # sábado o domingo, no se trabaja
         return []
-    day_start = datetime.datetime.combine(target_date, datetime.time(BUSINESS_HOURS[0], 0), tzinfo=MADRID_TZ)
-    day_end = datetime.datetime.combine(target_date, datetime.time(BUSINESS_HOURS[1], 0), tzinfo=MADRID_TZ)
-    if day_end <= now:
+    day_min = datetime.datetime.combine(target_date, datetime.time(0, 0), tzinfo=MADRID_TZ)
+    day_max = datetime.datetime.combine(target_date, datetime.time(23, 59, 59), tzinfo=MADRID_TZ)
+    if day_max <= now:
         return []  # ese día ya ha pasado por completo
-    busy = service.freebusy().query(
-        body={
-            "timeMin": day_start.isoformat(),
-            "timeMax": day_end.isoformat(),
-            "timeZone": "Europe/Madrid",
-            "items": [{"id": CALENDAR_ID}],
-        }
+
+    events_resp = service.events().list(
+        calendarId=CALENDAR_ID,
+        timeMin=day_min.isoformat(),
+        timeMax=day_max.isoformat(),
+        singleEvents=True,
+        orderBy='startTime',
     ).execute()
-    busy_ranges = [
-        (
-            datetime.datetime.fromisoformat(b["start"]).astimezone(MADRID_TZ),
-            datetime.datetime.fromisoformat(b["end"]).astimezone(MADRID_TZ),
-        )
-        for b in busy["calendars"][CALENDAR_ID]["busy"]
-    ]
+
+    ventana = None
+    busy_ranges = []
+    for ev in events_resp.get('items', []):
+        if ev.get('status') == 'cancelled':
+            continue
+        start = _dt_evento(ev, 'start')
+        end = _dt_evento(ev, 'end')
+        if not start or not end:
+            continue  # evento de día completo, no define ventana ni bloquea horas
+        titulo = (ev.get('summary') or '').strip().lower()
+        if ventana is None and 'trucotechnology' in titulo:
+            ventana = (start, end)
+        else:
+            busy_ranges.append((start, end))
+
+    if ventana is None:
+        # Ese día no tiene configurada ninguna ventana de disponibilidad en el
+        # calendario — no hay huecos que ofrecer, nunca se inventa un horario.
+        return []
+    day_start, day_end = ventana
+    if day_end <= now:
+        return []
 
     earliest_bookable = max(day_start, now + datetime.timedelta(minutes=min_lead_minutes))
     slot_start = earliest_bookable
@@ -681,6 +719,20 @@ async def entrypoint(ctx: agents.JobContext):
     ctx.add_shutdown_callback(_on_shutdown)
 
     await session.start(room=ctx.room, agent=agent)
+
+    # Sonido de ambiente de fondo (oficina, muy bajo) durante toda la llamada,
+    # más un sonido de "pensando" (tecleo) que suena SOLO mientras el agente
+    # está procesando una respuesta o esperando una herramienta — llena el
+    # hueco de silencio que antes sonaba a llamada cortada, sin depender de
+    # que el modelo acierte siempre con una muletilla hablada.
+    background_audio = BackgroundAudioPlayer(
+        ambient_sound=AudioConfig(BuiltinAudioClip.OFFICE_AMBIENCE, volume=0.3),
+        thinking_sound=[
+            AudioConfig(BuiltinAudioClip.KEYBOARD_TYPING, volume=0.6),
+            AudioConfig(BuiltinAudioClip.KEYBOARD_TYPING2, volume=0.5),
+        ],
+    )
+    await background_audio.start(room=ctx.room, agent_session=session)
 
     if not allowed:
         state["end_reason"] = "bloqueado" if blocked else "tope_mensual"
