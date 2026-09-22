@@ -39,7 +39,7 @@ exports.handler = async function (event) {
 
   const sa = cuentaServicio();
   if (!sa) return json(200, { error: 'no_service_account' });
-  const calendarId = process.env.GOOGLE_CALENDAR_ID || 'primary';
+  const calendarId = q.cal || process.env.GOOGLE_CALENDAR_ID || 'primary';
   const token = await tokenGoogle(sa, 'https://www.googleapis.com/auth/calendar.readonly');
   if (!token) return json(200, { error: 'google_auth_failed' });
 
