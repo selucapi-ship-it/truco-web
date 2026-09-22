@@ -224,6 +224,16 @@ section{padding:48px 40px;}
 .qr-caption{font-family:var(--mono);font-size:.64rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.06em;}
 
 footer{padding:20px 40px 40px;text-align:center;font-family:var(--mono);font-size:.68rem;color:var(--ink-faint);}
+
+/* ── FOTO ── */
+.photo-band{position:relative;overflow:hidden;border-bottom:1px solid var(--line);}
+.photo-band img{width:100%;display:block;height:320px;object-fit:cover;filter:saturate(1.05) contrast(1.02);}
+.photo-band::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,13,19,0) 38%,var(--bg) 97%);}
+.pb-chip{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:99px;background:rgba(13,12,17,.82);border:1px solid rgba(255,255,255,.16);color:#fff;font-family:var(--sans);font-size:.82rem;font-weight:600;box-shadow:0 10px 24px rgba(0,0,0,.4);}
+.pb-chip i{width:8px;height:8px;border-radius:50%;background:#22c55e;flex-shrink:0;}
+.pb-chip.a{left:26px;top:24px;}
+.pb-chip.b{right:26px;bottom:22px;}
+.pb-chip.b i{background:var(--gold-hot);}
 </style>
 
 <div class="wrap">
@@ -249,6 +259,8 @@ footer{padding:20px 40px 40px;text-align:center;font-family:var(--mono);font-siz
     </div>
     <div class="fine-print">*Dominio y hosting van aparte, elegidos y pagados por ti.</div>
   </div>
+
+  <figure class="photo-band"><img src="assets/escenas/basic.jpg" alt="Una profesional con su portátil en su local, gestionando su web" width="1200" height="800" loading="lazy"><span class="pb-chip a"><i></i>Consulta respondida en tu web</span><span class="pb-chip b"><i></i>Reserva confirmada</span></figure>
 
   <div class="forget">
     <div class="kicker">La diferencia real</div>

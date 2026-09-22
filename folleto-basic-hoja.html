@@ -42,6 +42,9 @@
 
   /* ── HEADER ── */
   .head{display:flex;align-items:center;justify-content:space-between;padding:6mm 13mm 0;}
+  .head-right{display:flex;align-items:center;gap:10px;}
+  .head-photo{width:34px;height:34px;border-radius:8px;overflow:hidden;border:1.5px solid var(--gold);flex-shrink:0;}
+  .head-photo img{width:100%;height:100%;object-fit:cover;display:block;}
   .brand{display:flex;align-items:center;gap:9px;}
   .brand-mark{width:26px;height:26px;border:1.5px solid var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:.9rem;color:var(--gold);flex-shrink:0;}
   .brand-name{font-family:var(--font-m);font-weight:600;letter-spacing:.04em;font-size:.8rem;color:var(--ink);}
@@ -75,7 +78,7 @@
   .price-meta .then{font-family:var(--font-m);font-size:.62rem;color:var(--green);}
 
   /* ── FORGET BAND ── */
-  .forget{margin:6mm 13mm 0;background:linear-gradient(120deg,#1a1508,var(--bg-panel) 65%);border:1px solid var(--line);border-radius:12px;padding:13px 22px;text-align:center;}
+  .forget{position:relative;margin:6mm 13mm 0;background:linear-gradient(120deg,rgba(26,21,8,.72),rgba(18,22,31,.94) 65%),url('assets/escenas/basic.jpg') center 32%/cover;border:1px solid var(--line);border-radius:12px;padding:13px 22px;text-align:center;}
   .forget b{font-family:var(--font-d);font-weight:400;text-transform:uppercase;color:var(--gold-hot);font-size:.98rem;letter-spacing:.01em;}
   .forget span{font-size:.74rem;color:var(--ink-dim);}
 
@@ -130,7 +133,7 @@
 
   <div class="head">
     <div class="brand"><div class="brand-mark">T</div><div class="brand-name">TRUCO<b>technology</b></div></div>
-    <div class="dept-tag">Departamento Tecnológico · Basic™ · <b>★ Recomendado</b></div>
+    <div class="head-right"><div class="head-photo"><img src="assets/escenas/basic.jpg" alt="Cliente Basic™ trabajando con su web"></div><div class="dept-tag">Departamento Tecnológico · Basic™ · <b>★ Recomendado</b></div></div>
   </div>
 
   <div class="hero">
