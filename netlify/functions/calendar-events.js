@@ -7,6 +7,8 @@
 // usan las reservas y el asistente de voz) con permiso «Realizar cambios en los eventos».
 //
 // GET /.netlify/functions/calendar-events?days=14[&cal=<id>]   (Authorization: Bearer <sesión>)
+// GET /.netlify/functions/calendar-events?from=<ISO>&to=<ISO>[&cal=<id>]  (para un mes/rango concreto,
+//   usado por el calendario visual navegable del portal — from/to tienen prioridad sobre days si vienen los dos)
 //  - Cliente: siempre su calendar_id de crm_settings (el que mande el navegador se ignora).
 //  - Founder: ?cal=<id> o, si no, GOOGLE_CALENDAR_ID.
 
@@ -75,9 +77,19 @@ exports.handler = async function (event) {
   const token = await tokenGoogle(sa, 'https://www.googleapis.com/auth/calendar.readonly');
   if (!token) return json(200, { ok: false, error: 'google_auth' });
 
-  const days = Math.min(Math.max(parseInt(q.days, 10) || 14, 1), 90);
-  const timeMin = new Date(Date.now() - 6 * 3600 * 1000).toISOString();
-  const timeMax = new Date(Date.now() + days * 86400000).toISOString();
+  let timeMin, timeMax;
+  const fromDate = q.from ? new Date(q.from) : null;
+  const toDate = q.to ? new Date(q.to) : null;
+  if (fromDate && !isNaN(fromDate) && toDate && !isNaN(toDate)) {
+    // rango explícito (mes visible del calendario navegable) — sin límite de 90 días,
+    // ya que aquí el propio cliente decide qué mes mirar, pasado o futuro.
+    timeMin = fromDate.toISOString();
+    timeMax = toDate.toISOString();
+  } else {
+    const days = Math.min(Math.max(parseInt(q.days, 10) || 14, 1), 90);
+    timeMin = new Date(Date.now() - 6 * 3600 * 1000).toISOString();
+    timeMax = new Date(Date.now() + days * 86400000).toISOString();
+  }
   const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calId)}/events?timeMin=${encodeURIComponent(timeMin)}&timeMax=${encodeURIComponent(timeMax)}&singleEvents=true&orderBy=startTime&maxResults=100`;
   const g = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
   if (g.status === 403 || g.status === 404) {

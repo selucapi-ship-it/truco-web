@@ -209,6 +209,36 @@ h1{font-family:var(--font-d);font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.15
 .ap .w small{color:var(--grey);}
 .tip{font-size:.8rem;color:var(--grey);border:1px dashed var(--line);border-radius:10px;padding:10px 12px;margin-top:12px;}
 .tip code{color:var(--gold-l);word-break:break-all;}
+
+/* ── CALENDARIO VISUAL (mes navegable) ── */
+.cal2{background:linear-gradient(165deg,var(--panel),var(--card));border:1px solid var(--line);border-radius:16px;padding:16px 18px 18px;margin-bottom:18px;}
+.cal2-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.cal2-title{font-family:var(--font-d);font-size:1.15rem;flex:1;text-align:center;text-transform:capitalize;}
+.cal2-nav{background:var(--bg);border:1px solid var(--line);color:var(--white);width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:1.1rem;line-height:1;flex-shrink:0;}
+.cal2-nav:hover{border-color:var(--gold);color:var(--gold-l);}
+.cal2-today-btn{background:var(--bg);border:1px solid var(--line);color:var(--grey);border-radius:8px;padding:7px 12px;font:600 .76rem var(--font-b);cursor:pointer;flex-shrink:0;}
+.cal2-today-btn:hover{border-color:var(--gold);color:var(--gold-l);}
+.cal2-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;}
+.cal2-dow{font-family:var(--font-m);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);text-align:center;padding:2px 0 8px;}
+.cal2-cell{min-height:76px;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:5px 5px 4px;cursor:pointer;display:flex;flex-direction:column;gap:2px;transition:border-color .15s,background .15s;min-width:0;}
+.cal2-cell:hover{border-color:var(--gold);}
+.cal2-cell.out{opacity:.32;}
+.cal2-cell.today{border-color:var(--gold);background:linear-gradient(165deg,rgba(217,168,63,.16),var(--bg));}
+.cal2-cell.sel{box-shadow:0 0 0 1.5px var(--gold) inset;}
+.cal2-daynum{font-size:.78rem;font-weight:700;font-variant-numeric:tabular-nums;}
+.cal2-cell.today .cal2-daynum{color:var(--gold-l);}
+.cal2-ev{font-size:.6rem;line-height:1.3;background:var(--gold-dim);color:var(--gold-l);border-radius:4px;padding:1px 4px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.cal2-ev.g{background:rgba(47,123,255,.16);color:#9cc2ff;}
+.cal2-more{font-size:.58rem;color:var(--grey);padding-left:2px;}
+.cal2-dot{display:none;}
+.cal2-day-panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 18px 16px;margin-bottom:18px;}
+.cal2-day-panel h4{font-family:var(--font-d);font-size:1.05rem;margin-bottom:8px;text-transform:capitalize;}
+.cal2-day-panel .empty{color:var(--grey);font-size:.86rem;}
+@media(max-width:640px){
+  .cal2-cell{min-height:44px;align-items:center;}
+  .cal2-ev,.cal2-more{display:none;}
+  .cal2-cell.has .cal2-dot{display:block;width:5px;height:5px;border-radius:50%;background:var(--gold);margin-top:2px;}
+}
 </style>
 </head>
 <body>
@@ -229,7 +259,18 @@ h1{font-family:var(--font-d);font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.15
   </div></div>
 
   <div class="kpis" id="kpis" style="grid-template-columns:repeat(3,1fr)"></div>
-  <div class="today" id="agenda"></div>
+  <div class="today" id="agendaHoy"></div>
+
+  <div class="cal2" id="cal2">
+    <div class="cal2-head">
+      <button type="button" class="cal2-nav" id="calPrev" aria-label="Mes anterior">‹</button>
+      <div class="cal2-title" id="calTitle">—</div>
+      <button type="button" class="cal2-nav" id="calNext" aria-label="Mes siguiente">›</button>
+      <button type="button" class="cal2-today-btn" id="calTodayBtn">Hoy</button>
+    </div>
+    <div class="cal2-grid" id="calGrid"></div>
+  </div>
+  <div class="cal2-day-panel" id="calDayPanel"></div>
 
   <div class="sec" id="calSec"></div>
   <div class="sec" id="icsSec"></div>
@@ -261,6 +302,7 @@ async function boot() {
   citas = rs || [];
   gate.style.display = 'none'; document.getElementById('app').style.display = '';
   renderBrand(); renderAgenda(); renderCal(); renderIcs();
+  initCalGrid();
 }
 const brandName = () => settings.brand_name || client.negocio || client.nombre || 'Mi negocio';
 function renderBrand() {
@@ -286,7 +328,7 @@ function renderAgenda() {
     <div class="kpi"><div class="n">${sem}</div><div class="l">Citas en 7 días</div></div>
     <div class="kpi"><div class="n" style="font-size:1.4rem">${prox ? new Date(prox.inicio).toLocaleString('es-ES', { weekday: 'short', hour: '2-digit', minute: '2-digit' }) : '—'}</div><div class="l">Próxima cita</div></div>`;
   const list = citas.filter(c => new Date(c.fin || c.inicio) >= now - 36e5).slice(0, 40);
-  if (!list.length) { document.getElementById('agenda').innerHTML = '<h2>Próximas citas <span>agenda</span></h2><div class="t-row"><span class="why">Aún no tienes citas agendadas. Cuando tus asistentes reserven una, aparecerá aquí.</span></div>'; return; }
+  if (!list.length) { document.getElementById('agendaHoy').innerHTML = '<h2>Próximas citas <span>agenda</span></h2><div class="t-row"><span class="why">Aún no tienes citas agendadas. Cuando tus asistentes reserven una, aparecerá aquí.</span></div>'; return; }
   let out = '<h2>Próximas citas <span>agendadas por tus asistentes</span></h2>', last = '';
   list.forEach(c => {
     const k = dayKey(c.inicio);
@@ -296,7 +338,107 @@ function renderAgenda() {
       <div class="w"><b>${esc(c.cliente_final_nombre || 'Cliente')}</b><small>${esc(c.servicio_nombre || 'Cita')}${tel ? ' · ' + esc(tel) : ''}</small></div>
       ${tel ? `<a class="mini" href="tel:${esc(tel.replace(/\s/g, ''))}">📞 Llamar</a><a class="mini" href="https://wa.me/${esc(tel.replace(/\D/g, ''))}" target="_blank" rel="noopener">💬 WhatsApp</a>` : ''}</div>`;
   });
-  document.getElementById('agenda').innerHTML = out;
+  document.getElementById('agendaHoy').innerHTML = out;
+}
+
+/* ── CALENDARIO VISUAL: mes navegable, con las citas de reservas_creadas
+   y (si está vinculado) los eventos del Google Calendar del cliente, fusionados
+   en la misma cuadrícula — sustituye a la vieja lista de texto "Cargando tu
+   agenda…" que además tenía un id duplicado con #agendaHoy y por eso nunca
+   llegaba a actualizarse. */
+let calView = new Date(); calView.setDate(1); calView.setHours(0, 0, 0, 0);
+let calSelDate = null, monthCitas = [], monthGoogle = [];
+const DOW = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+function initCalGrid() {
+  document.getElementById('calPrev').onclick = () => { calView.setMonth(calView.getMonth() - 1); loadMonthCal(); };
+  document.getElementById('calNext').onclick = () => { calView.setMonth(calView.getMonth() + 1); loadMonthCal(); };
+  document.getElementById('calTodayBtn').onclick = () => { calView = new Date(); calView.setDate(1); calView.setHours(0, 0, 0, 0); calSelDate = null; loadMonthCal(); };
+  loadMonthCal();
+}
+async function loadMonthCal() {
+  const grid = document.getElementById('calGrid');
+  const y = calView.getFullYear(), m = calView.getMonth();
+  document.getElementById('calTitle').textContent = calView.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+  const from = new Date(y, m, 1), to = new Date(y, m + 1, 1);
+  try {
+    const { data: rs } = await sb.from('reservas_creadas').select('*').gte('inicio', from.toISOString()).lt('inicio', to.toISOString());
+    monthCitas = rs || [];
+  } catch (e) { monthCitas = []; }
+  monthGoogle = [];
+  const statusBox = document.getElementById('calGoogleStatus');
+  if (settings.calendar_id) {
+    try {
+      const { data: { session } } = await sb.auth.getSession();
+      const r = await fetch(`/.netlify/functions/calendar-events?from=${encodeURIComponent(from.toISOString())}&to=${encodeURIComponent(to.toISOString())}`, { headers: { Authorization: 'Bearer ' + session.access_token } });
+      const d = await r.json();
+      if (d.ok) {
+        monthGoogle = d.events || [];
+        if (statusBox) statusBox.style.display = 'none';
+      } else if (statusBox) {
+        statusBox.style.display = '';
+        statusBox.className = 'tip';
+        statusBox.innerHTML = d.error === 'not_shared'
+          ? `<b>Todavía no podemos leer ese calendario.</b> Compártelo con <code>${esc(d.service_account || SERVICE_ACCOUNT)}</code> (Google Calendar → tu calendario → «Compartir con determinadas personas») con permiso «Realizar cambios en los eventos». Mientras tanto, ves aquí arriba las citas que agendan tus asistentes.`
+          : 'No hemos podido leer tu Google Calendar ahora mismo. Mientras tanto, ves aquí arriba las citas que agendan tus asistentes.';
+      }
+    } catch (e) {
+      if (statusBox) { statusBox.style.display = ''; statusBox.className = 'tip'; statusBox.innerHTML = 'No hemos podido leer tu Google Calendar ahora mismo. Mientras tanto, ves aquí arriba las citas que agendan tus asistentes.'; }
+    }
+  }
+  renderCalGrid();
+}
+function eventsForDay(dateStr) {
+  const out = [];
+  monthCitas.forEach(c => {
+    if (new Date(c.inicio).toDateString() !== dateStr) return;
+    out.push({ time: new Date(c.inicio).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }), title: c.cliente_final_nombre || 'Cita', sub: c.servicio_nombre || '', source: 'cita' });
+  });
+  monthGoogle.forEach(e => {
+    if (new Date(e.start).toDateString() !== dateStr) return;
+    out.push({ time: e.allDay ? 'Todo el día' : new Date(e.start).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }), title: e.title, sub: e.location || '', source: 'google' });
+  });
+  out.sort((a, b) => a.time.localeCompare(b.time));
+  return out;
+}
+function calDayCell(d, out) {
+  const ds = d.toDateString();
+  const evs = eventsForDay(ds);
+  const isToday = ds === new Date().toDateString();
+  let chips = evs.slice(0, 2).map(e => `<div class="cal2-ev${e.source === 'google' ? ' g' : ''}">${esc(e.time)} ${esc(e.title)}</div>`).join('');
+  if (evs.length > 2) chips += `<div class="cal2-more">+${evs.length - 2} más</div>`;
+  return `<div class="cal2-cell${out ? ' out' : ''}${isToday ? ' today' : ''}${evs.length ? ' has' : ''}${calSelDate === ds ? ' sel' : ''}" data-date="${esc(ds)}"><div class="cal2-daynum">${d.getDate()}</div><span class="cal2-dot"></span>${chips}</div>`;
+}
+function renderCalGrid() {
+  const y = calView.getFullYear(), m = calView.getMonth();
+  const first = new Date(y, m, 1);
+  const startOffset = (first.getDay() + 6) % 7; // lunes = primer día de la semana
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  let html = DOW.map(d => `<div class="cal2-dow">${d}</div>`).join('');
+  for (let i = startOffset; i > 0; i--) html += calDayCell(new Date(y, m, 1 - i), true);
+  for (let d = 1; d <= daysInMonth; d++) html += calDayCell(new Date(y, m, d), false);
+  const total = startOffset + daysInMonth, trailing = (7 - (total % 7)) % 7;
+  for (let i = 1; i <= trailing; i++) html += calDayCell(new Date(y, m + 1, i), true);
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = html;
+  grid.querySelectorAll('.cal2-cell').forEach(c => c.addEventListener('click', () => selectCalDay(c.dataset.date)));
+  if (!calSelDate || new Date(calSelDate).getMonth() !== m) {
+    const todayCell = grid.querySelector('.cal2-cell.today');
+    selectCalDay(todayCell ? todayCell.dataset.date : new Date(y, m, 1).toDateString());
+    return;
+  }
+  showCalDayPanel(calSelDate);
+}
+function selectCalDay(ds) {
+  calSelDate = ds;
+  document.querySelectorAll('.cal2-cell').forEach(c => c.classList.toggle('sel', c.dataset.date === ds));
+  showCalDayPanel(ds);
+}
+function showCalDayPanel(ds) {
+  const evs = eventsForDay(ds);
+  const panel = document.getElementById('calDayPanel');
+  const label = new Date(ds).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+  if (!evs.length) { panel.innerHTML = `<h4>${esc(label)}</h4><p class="empty">Sin citas ni eventos este día.</p>`; return; }
+  panel.innerHTML = `<h4>${esc(label)}</h4>` + evs.map(e => `<div class="ap"><div class="h">${esc(e.time)}</div><div class="w"><b>${esc(e.title)}</b>${e.sub ? `<small>${esc(e.sub)}</small>` : ''}</div></div>`).join('');
 }
 
 async function saveSettings(fields) {
@@ -308,11 +450,10 @@ function renderCal() {
   const el = document.getElementById('calSec');
   if (settings.calendar_id) {
     const src = encodeURIComponent(settings.calendar_id);
-    el.innerHTML = `<h2>Tu agenda</h2><p>Vinculada a <b style="color:var(--white)">${esc(settings.calendar_id)}</b>. Aquí ves tus próximas citas, sin necesidad de iniciar sesión en Google.</p>
-      <div id="agenda" class="agenda"><div class="tip">Cargando tu agenda…</div></div>
-      <div class="row2"><button class="btn ghost" onclick="loadAgenda()">Actualizar</button><button class="btn ghost" onclick="window.open('https://calendar.google.com/calendar/u/0/r','_blank')">Abrir en Google Calendar</button><button class="btn ghost" onclick="editCal()">Cambiar calendario</button><button class="btn ghost" onclick="unlinkCal()">Desvincular</button></div>
+    el.innerHTML = `<h2>Tu calendario vinculado</h2><p>Vinculado a <b style="color:var(--white)">${esc(settings.calendar_id)}</b>. Sus eventos ya aparecen fusionados arriba, en tu calendario visual, junto a las citas que agendan tus asistentes.</p>
+      <div id="calGoogleStatus" style="display:none"></div>
+      <div class="row2"><button class="btn ghost" onclick="loadMonthCal()">Actualizar</button><button class="btn ghost" onclick="window.open('https://calendar.google.com/calendar/u/0/r','_blank')">Abrir en Google Calendar</button><button class="btn ghost" onclick="editCal()">Cambiar calendario</button><button class="btn ghost" onclick="unlinkCal()">Desvincular</button></div>
       ${autoTip()}`;
-    loadAgenda();
   } else {
     el.innerHTML = `<h2>Vincula tu Google Calendar</h2><p>Verás toda tu agenda aquí dentro, junto a las citas que agendan tus asistentes.</p>
       <ol class="steps2"><li>Abre <b>Google Calendar</b> → ajustes (⚙) → elige tu calendario a la izquierda.</li><li>Baja hasta <b>«Integrar el calendario»</b> y copia el <b>ID del calendario</b> (suele ser tu correo de Gmail).</li><li>Pégalo aquí abajo y pulsa <b>Vincular</b>.</li></ol>
@@ -321,33 +462,6 @@ function renderCal() {
   }
 }
 
-async function loadAgenda() {
-  const box = document.getElementById('agenda'); if (!box) return;
-  box.innerHTML = '<div class="tip">Cargando tu agenda…</div>';
-  try {
-    const { data: { session } } = await sb.auth.getSession();
-    const r = await fetch('/.netlify/functions/calendar-events?days=21', { headers: { Authorization: 'Bearer ' + session.access_token } });
-    const d = await r.json();
-    if (!d.ok) {
-      box.innerHTML = d.error === 'not_shared'
-        ? `<div class="tip"><b>Todavía no podemos leer ese calendario.</b> Compártelo con <code>${esc(d.service_account || SERVICE_ACCOUNT)}</code> (Google Calendar → tu calendario → «Compartir con determinadas personas») con permiso «Realizar cambios en los eventos». En cuanto lo hagas, aparecerá aquí.</div>`
-        : '<div class="tip">No hemos podido cargar tu agenda ahora mismo. Inténtalo de nuevo en un momento.</div>';
-      return;
-    }
-    if (!d.events.length) { box.innerHTML = '<div class="tip">No tienes citas en los próximos 21 días.</div>'; return; }
-    const fd = t => new Date(t).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Europe/Madrid' });
-    const fh = t => new Date(t).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Madrid' });
-    let day = '', html = '';
-    d.events.forEach(e => {
-      const dk = fd(e.start);
-      if (dk !== day) { day = dk; html += `<h4 class="ag-day">${esc(dk)}</h4>`; }
-      html += `<div class="ag-ev"><span class="ag-t">${e.allDay ? 'Todo el día' : fh(e.start) + '–' + fh(e.end)}</span><span class="ag-n">${esc(e.title)}${e.location ? ' · ' + esc(e.location) : ''}</span></div>`;
-    });
-    box.innerHTML = html;
-  } catch (e) {
-    box.innerHTML = '<div class="tip">No hemos podido cargar tu agenda ahora mismo. Inténtalo de nuevo en un momento.</div>';
-  }
-}
 
 function autoTip() {
   return `<p class="tip"><b>Para que tus asistentes agenden solos en ese calendario</b>, compártelo con <code>${SERVICE_ACCOUNT}</code> con permiso <b>«Realizar cambios en los eventos»</b> (Google Calendar → tu calendario → «Compartir con determinadas personas»). Es lo que permite que las citas caigan directamente en tus huecos libres.</p>`;
@@ -356,10 +470,10 @@ async function saveCal() {
   const v = document.getElementById('calId').value.trim();
   if (!v || !/^[^\s]+$/.test(v)) { alert('Pega el ID del calendario o tu correo de Google (sin espacios).'); return; }
   if (!(await saveSettings({ calendar_id: v }))) { alert('No se pudo guardar.'); return; }
-  renderCal();
+  renderCal(); loadMonthCal();
 }
-function editCal() { settings.calendar_id = null; renderCal(); }
-async function unlinkCal() { if (!confirm('¿Desvincular tu calendario? Seguirás viendo las citas de tus asistentes.')) return; await saveSettings({ calendar_id: null }); renderCal(); }
+function editCal() { settings.calendar_id = null; renderCal(); loadMonthCal(); }
+async function unlinkCal() { if (!confirm('¿Desvincular tu calendario? Seguirás viendo las citas de tus asistentes.')) return; await saveSettings({ calendar_id: null }); renderCal(); loadMonthCal(); }
 
 function icsUrl() { return location.origin + '/.netlify/functions/crm-calendar-ics?t=' + settings.ical_token; }
 function renderIcs() {
