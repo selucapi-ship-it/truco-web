@@ -2036,7 +2036,7 @@ function openChat(){
     showTyping();
     setTimeout(() => {
       hideTyping();
-      addMsg('bot', 'Hola, soy el asistente virtual (IA) de <b>TRUCOtechnology</b>.');
+      addMsg('bot', 'Hola, soy el asistente virtual de <b>TRUCOtechnology</b>.');
       showTyping();
       setTimeout(() => {
         hideTyping();
@@ -2080,8 +2080,8 @@ const KB = {
   saludo: {
     patterns: ['hola','buenas','buenos días','buenas tardes','buenas noches','hey','qué tal','hi','hello','saludos','ey','buenas tengo una duda'],
     responses: [
-      '¡Hola! Soy el asistente virtual (IA) de <b>TRUCO technology</b>. Cuéntame tu negocio y te digo sin rodeos si podemos ayudarte. ¿A qué te dedicas?',
-      '¡Buenas! Encantado de tenerte por aquí. Soy el asistente virtual (IA) de <b>TRUCO technology</b>. ¿En qué puedo ayudarte hoy?',
+      '¡Hola! Soy el asistente virtual de <b>TRUCO technology</b>. Cuéntame tu negocio y te digo sin rodeos si podemos ayudarte. ¿A qué te dedicas?',
+      '¡Buenas! Encantado de tenerte por aquí. Soy el asistente virtual de <b>TRUCO technology</b>. ¿En qué puedo ayudarte hoy?',
       '¡Hola! Me alegra que hayas pasado por aquí. ¿Tienes alguna duda sobre nuestros servicios o quieres que te cuente qué podemos hacer por tu empresa?',
       '¡Hola! ¿Qué tal? Dime qué tipo de negocio tienes y en dos minutos te digo si y cómo podemos ayudarte.'
     ]
@@ -2908,7 +2908,7 @@ function parseNameFromReply(text) {
   // más comunes ("me llamo X", "soy X", "hola, X") para quedarnos con el
   // nombre limpio, y nos quedamos solo con la primera palabra (+1 apellido
   // si lo dan) en vez de una frase larga.
-  let t = text.trim().replace(/^(hola,?\s*)?(me llamo|mi nombre es|soy)\s+/i, '').replace(/[.,!¡¿?]+$/, '').trim();
+  let t = text.trim().replace(/^(hola,?\s*)?(puedes llamarme|me puedes llamar|llámame|llamame|me llamo|mi nombre es|soy)\s+/i, '').replace(/[.,!¡¿?]+$/, '').trim();
   if (!t) t = text.trim();
   const nombre = t.split(/\s+/).slice(0, 2).join(' ').slice(0, 40);
   return nombre ? nombre.charAt(0).toUpperCase() + nombre.slice(1) : 'ahí';
@@ -2962,7 +2962,15 @@ function mdLinksToHtml(text, escapeFirst) {
     esc.textContent = text;
     t = esc.innerHTML;
   }
-  return t.replace(/\[([^\]]+)\]\(([^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  // Solo se convierten en enlace de verdad las páginas reales del propio
+  // sitio (departamentos/soluciones/sectores, servicios.html, pago.html) —
+  // si la IA alguna vez escribe un [texto](url) con cualquier otra cosa (una
+  // página inventada, un dominio externo...), se deja como texto plano en
+  // vez de un enlace azul que no lleva a ningún sitio.
+  const ENLACE_PERMITIDO = /^(departamentos|soluciones|sectores)\/[a-z0-9_-]+\.html$|^(servicios|pago)\.html(#[a-z0-9_-]+)?$/i;
+  return t.replace(/\[([^\]]+)\]\(([^\s)]+)\)/g, (m, label, href) =>
+    ENLACE_PERMITIDO.test(href) ? '<a href="' + href + '" target="_blank" rel="noopener">' + label + '</a>' : label
+  );
 }
 
 function addMsg(role, text, label, untrusted) {
@@ -3122,7 +3130,7 @@ function answerWithLocalBot(intentKey) {
     ctaOffered: chatCtaOffered
   });
   chatLocalBotTopics.add(intentKey);
-  addMsg('bot', localMsg, 'Asistente virtual TRUCO (IA)');
+  addMsg('bot', localMsg, 'Asistente virtual TRUCO');
   chatHistory.push({ role: 'bot', text: localMsg });
   if (action === 'MOSTRAR_CITA') {
     chatCtaOffered = true;
@@ -3195,7 +3203,7 @@ function sendMsg() {
     }
     if (!aiResp.unresolved) {
       // TRUCO PRO lo resuelve directamente.
-      addMsg('bot', aiResp.text, 'Asistente virtual TRUCO (IA)', true);
+      addMsg('bot', aiResp.text, 'Asistente virtual TRUCO', true);
       chatHistory.push({ role: 'bot', text: aiResp.text });
       maybeAskSector();
     } else if (aiResp.reason === 'off_topic') {
@@ -3203,7 +3211,7 @@ function sendMsg() {
       // educado, SIN ofrecer cita — un "¿eres tonto?" no debe acabar
       // empujando a reservar.
       const msg = aiResp.text || 'Lo siento, pero ese tema no corresponde a TRUCOtechnology.';
-      addMsg('bot', msg, aiResp.text ? 'Asistente virtual TRUCO (IA)' : null, true);
+      addMsg('bot', msg, aiResp.text ? 'Asistente virtual TRUCO' : null, true);
       chatHistory.push({ role: 'bot', text: msg });
     } else if (['missing_api_key', 'api_error', 'empty_response', 'exception', 'http_error', 'rate_limited'].includes(aiResp.reason)) {
       // TRUCO PRO no está disponible ahora mismo por un fallo técnico (no
@@ -3229,7 +3237,7 @@ function sendMsg() {
       // haría mejor papel, así que se muestra su explicación y se ofrece
       // agendar directamente, siempre, no solo la primera vez.
       const msg = aiResp.text || 'Eso se sale de lo que puedo resolverte yo — pero si quieres, te reservo ahora mismo una auditoría gratuita con una persona del equipo y lo resolvemos ahí.';
-      addMsg('bot', msg, aiResp.text ? 'Asistente virtual TRUCO (IA)' : null, true);
+      addMsg('bot', msg, aiResp.text ? 'Asistente virtual TRUCO' : null, true);
       chatHistory.push({ role: 'bot', text: msg });
       chatCtaOffered = true;
       setTimeout(() => showBookingCard(), 400);
@@ -3296,7 +3304,7 @@ async function toggleVoiceAgent() {
     btn.textContent = 'Colgar';
     btn.classList.add('active');
     btn.disabled = false;
-    status.textContent = 'Hablando con el Asistente virtual TRUCO (IA) — habla con normalidad';
+    status.textContent = 'Hablando con el Asistente virtual TRUCO — habla con normalidad';
   } catch (e) {
     status.textContent = 'No se pudo conectar. Inténtalo de nuevo o escríbenos por WhatsApp.';
     btn.textContent = 'Hablar con asistente virtual';

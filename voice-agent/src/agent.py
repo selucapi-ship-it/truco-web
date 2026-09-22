@@ -292,11 +292,11 @@ def _find_slots_on_day(service, target_date, excluir_horas=None, max_slots=1, mi
         slot_start += datetime.timedelta(minutes=SLOT_MINUTES)
     return slots
 
-SYSTEM_INSTRUCTIONS = """Eres el asistente virtual (IA) de TRUCOtechnology, el que atiende el teléfono. Hablas en español de España, con acento castellano peninsular (pronunciación, entonación y vocabulario de España, nunca latinoamericano), con voz cercana y natural, con calidez y sin frases genéricas de máquina — pero siempre dejando claro que eres una inteligencia artificial. Como es una llamada de voz, responde en frases cortas y naturales, sin listas, sin markdown, sin leer símbolos en voz alta.
+SYSTEM_INSTRUCTIONS = """Eres el asistente virtual de TRUCOtechnology, el que atiende el teléfono. Hablas en español de España, con acento castellano peninsular (pronunciación, entonación y vocabulario de España, nunca latinoamericano), con voz cercana y natural, con calidez y sin frases genéricas de máquina. Como es una llamada de voz, responde en frases cortas y naturales, sin listas, sin markdown, sin leer símbolos en voz alta.
 
 DATOS REALES DE TRUCO technology (no inventes nada fuera de esto; si no lo sabes, dilo):
 
-TRANSPARENCIA (obligatoria, manda sobre el estilo): eres una inteligencia artificial y lo dices con claridad al empezar la llamada y siempre que te pregunten si eres una persona o un robot. Nunca finjas ser una persona. Puedes sonar cercano y natural, pero sin engañar. 
+TRANSPARENCIA: te presentas como el asistente virtual de TRUCOtechnology, no hace falta que insistas en que eres "una inteligencia artificial". Solo si te preguntan directamente si eres una persona o un robot, dilo con claridad — nunca finjas ser una persona.
 QUÉ ES: Departamento Tecnológico externalizado para pymes y autónomos en España — es lo único que vendemos, todo lleva a él. Hay cuatro Departamentos, Start, Basic, Lite y Pro: en los cuatro, el primer año va pagado por adelantado, con tarjeta o con PayPal, y eso es lo que permite que la web y las automatizaciones vayan completamente gratis desde el minuto uno, nunca se cobra la implantación aparte. Start es el punto de entrada: solo una automatización, sin web. Basic, Lite y Pro ya incluyen web, con un número creciente de automatizaciones gratis según subes de nivel. Ya no vendemos proyectos sueltos sin compromiso — la web y las automatizaciones de siempre se contratan dentro de uno de estos cuatro Departamentos. Un único interlocutor para toda la tecnología del negocio: no hace falta hablar con la empresa de la web, la de WhatsApp y la del CRM por separado.
 
 ECOSISTEMA INCLUIDO EN LOS 4 DEPARTAMENTOS (sin coste aparte): además de las automatizaciones, todo cliente TRUCO tiene en su portal uno, un CRM propio: una libreta de contactos que se llena sola con lo que atienden sus asistentes (hoy: reservas de cita, WhatsApp y correo), con embudo (nuevo, contactado, con cita, cliente), historial de cada persona, notas y un aviso de hoy toca seguimiento con botones de llamar y WhatsApp; puede descargar sus contactos (todos, solo los nuevos desde su última descarga, por fechas o por estado) e importar la base de datos que ya tenga (archivo CSV), con su propio nombre y logo; dos, un calendario con las citas que agendan sus asistentes, que puede vincular a su Google Calendar (o a Outlook/Apple con un enlace de suscripción privado); y y tres, todo se instala como app en el móvil o el ordenador y se actualiza sola. Es exclusivo de ser cliente TRUCO y va incluido sea cual sea el Departamento. Menciónalo cuando encaje de forma natural (al hablar de citas, WhatsApp, no pierdo clientes o cuando dudan si merece la pena), en una o dos frases, sin agobiar. NO inventes más funciones: el CRM no factura ni gestiona tareas ni informes. El CRM a medida con funciones avanzadas es una ampliación aparte, con auditoría previa. Por teléfono, cuéntalo en una frase corta y natural, sin enumerar todo.
@@ -377,11 +377,12 @@ Tienes tres herramientas para la auditoría gratuita con una persona, de 20-30 m
 
 
 class TrucoAgent(Agent):
-    def __init__(self, room=None, instructions=SYSTEM_INSTRUCTIONS, caller_number=None, call_state=None):
+    def __init__(self, room=None, instructions=SYSTEM_INSTRUCTIONS, caller_number=None, call_state=None, channel="web"):
         super().__init__(instructions=instructions)
         self._room = room
         self._caller_number = caller_number
         self._state = call_state if call_state is not None else {}
+        self._channel = channel
 
     @function_tool
     async def registrar_contacto(
@@ -400,11 +401,16 @@ class TrucoAgent(Agent):
         se entera del sector o de que solo quiere información general. Nunca lo
         menciones en voz alta, hazlo mientras sigues charlando con normalidad."""
         self._state["nombre"] = nombre
-        _log_crm_interaction(
+        # _log_crm_interaction hace una petición HTTP síncrona (requests.post) — llamarla
+        # directamente aquí bloquearía el bucle de eventos de toda la sesión de voz mientras
+        # espera respuesta de red, y eso es lo que se oye como un silencio muerto en la
+        # llamada. asyncio.to_thread la manda a un hilo aparte para no congelar el audio.
+        asyncio.create_task(asyncio.to_thread(
+            _log_crm_interaction,
             nombre=nombre,
             telefono=self._caller_number,
             nota=f"Motivo: {motivo}." + (f" Sector/negocio: {sector}." if sector else ""),
-        )
+        ))
         return "Registrado. Sigue la conversación con normalidad."
 
     @function_tool
@@ -428,7 +434,12 @@ class TrucoAgent(Agent):
         cliente. Nunca la uses para ofrecer varios huecos o varios días de golpe:
         primero pregúntale qué día le viene bien, y llama a esta herramienta solo
         con ese día."""
-        service = _get_calendar_service()
+        # _get_calendar_service() y _find_slots_on_day() hacen peticiones HTTP síncronas
+        # a Google (construir el cliente y la consulta freebusy) — ejecutarlas directas
+        # en el bucle de eventos de la llamada de voz congela TODO el audio (entrada y
+        # salida) mientras esperan red, sonando como un silencio muerto. asyncio.to_thread
+        # las manda a un hilo aparte para que la conversación siga fluida mientras tanto.
+        service = await asyncio.to_thread(_get_calendar_service)
         if service is None:
             return "La agenda no está disponible ahora mismo. Ofrece que alguien del equipo le llame, o usa mostrar_calendario_en_pantalla."
         now = datetime.datetime.now(MADRID_TZ)
@@ -436,7 +447,7 @@ class TrucoAgent(Agent):
         if target_date is None or target_date.weekday() >= 5:
             return "Ese día no es laborable (cae en fin de semana) o no se ha entendido bien. Pregunta al cliente por otro día, o usa mostrar_calendario_en_pantalla si prefiere elegir él mismo."
         try:
-            slots = _find_slots_on_day(service, target_date, excluir_horas=excluir_horas)
+            slots = await asyncio.to_thread(_find_slots_on_day, service, target_date, excluir_horas=excluir_horas)
         except Exception:
             logger.exception("Error consultando disponibilidad")
             return "No se pudo consultar la agenda ahora mismo. Ofrece que alguien del equipo le llame."
@@ -463,11 +474,21 @@ class TrucoAgent(Agent):
     async def mostrar_calendario_en_pantalla(self, context: RunContext) -> str:
         """Llama a esta herramienta cuando, después de un par de intentos, no
         consigas cuadrar un hueco con el cliente por voz, o en cualquier momento
-        en que el cliente prefiera elegir él mismo el día y la hora exactos. Le
-        hace aparecer un calendario de autoservicio en la pantalla del chat de
-        la web (si está en la web viendo el chat) para que reserve él mismo, sin
-        más idas y vueltas por voz. Nunca dejes al cliente sin ninguna forma de
-        reservar — usa siempre esto como última opción antes de colgar sin cita."""
+        en que el cliente prefiera elegir él mismo el día y la hora exactos. SOLO
+        funciona si el cliente está en la web viendo el chat — si llama por
+        teléfono no hay ninguna pantalla, así que en ese caso la herramienta
+        misma te lo dice y NUNCA debes mencionar una pantalla ni un chat.
+        Nunca dejes al cliente sin ninguna forma de reservar — usa esto como
+        última opción antes de colgar sin cita, o pide directamente el día y la
+        hora exacta que prefiera y llama a reservar_cita con lo que te diga."""
+        if self._channel != "web":
+            return (
+                "Esta llamada es por TELÉFONO, no hay ninguna pantalla ni chat visible — "
+                "NUNCA le digas que mire una pantalla ni que escriba por el chat de la web. "
+                "En vez de eso, pregúntale directamente qué día y hora exacta prefiere (aunque "
+                "sea fuera de los huecos que ya le has ofrecido) y llama a reservar_cita con eso, "
+                "o dile que un miembro del equipo le llamará para cuadrar el hueco."
+            )
         if self._room is None:
             return "No se pudo activar el calendario en pantalla. Dile que también puede reservar escribiendo por el chat de la web, o que alguien del equipo le llamará."
         try:
@@ -501,21 +522,28 @@ class TrucoAgent(Agent):
         telefono = otro_telefono.strip() if (otro_telefono.strip() or not llamar_al_mismo_numero) else (self._caller_number or "")
         if not telefono:
             return "Falta el teléfono al que llamarle. Pídeselo al cliente y vuelve a llamar a esta herramienta."
-        service = _get_calendar_service()
+        # Igual que en consultar_disponibilidad: construir el servicio y crear el evento
+        # son peticiones HTTP síncronas a Google — se mandan a un hilo aparte con
+        # asyncio.to_thread para no congelar el audio de la llamada mientras esperan red.
+        service = await asyncio.to_thread(_get_calendar_service)
         if service is None:
             return "No se pudo confirmar la reserva. Ofrece que alguien del equipo le llame."
         try:
             start = datetime.datetime.fromisoformat(fecha_hora_iso)
             end = start + datetime.timedelta(minutes=SLOT_MINUTES)
-            service.events().insert(
-                calendarId=CALENDAR_ID,
-                body={
-                    "summary": f"Consultoría gratuita TRUCO — {nombre}",
-                    "description": f"Reservada por llamada de voz.\nLlamar al: {telefono}",
-                    "start": {"dateTime": start.isoformat(), "timeZone": "Europe/Madrid"},
-                    "end": {"dateTime": end.isoformat(), "timeZone": "Europe/Madrid"},
-                },
-            ).execute()
+
+            def _crear_evento():
+                service.events().insert(
+                    calendarId=CALENDAR_ID,
+                    body={
+                        "summary": f"Consultoría gratuita TRUCO — {nombre}",
+                        "description": f"Reservada por llamada de voz.\nLlamar al: {telefono}",
+                        "start": {"dateTime": start.isoformat(), "timeZone": "Europe/Madrid"},
+                        "end": {"dateTime": end.isoformat(), "timeZone": "Europe/Madrid"},
+                    },
+                ).execute()
+
+            await asyncio.to_thread(_crear_evento)
         except Exception:
             logger.exception("Error creando la reserva")
             return "No se pudo confirmar la reserva. Ofrece que alguien del equipo le llame."
@@ -523,11 +551,12 @@ class TrucoAgent(Agent):
         self._state["booked"] = True
         self._state["end_reason"] = "cita_agendada"
         self._state["hangup_after_ts"] = datetime.datetime.now(datetime.timezone.utc).timestamp()
-        _log_crm_interaction(
+        asyncio.create_task(asyncio.to_thread(
+            _log_crm_interaction,
             nombre=nombre,
             telefono=telefono,
             nota=f"Reservó consultoría por voz para el {_formatear_fecha_es(start)}. Llamar al {telefono}.",
-        )
+        ))
         mismo = "a este mismo número" if (llamar_al_mismo_numero and not otro_telefono.strip()) else "al número que me has dado"
         return (
             f"Reserva confirmada para {nombre} el {_formatear_fecha_es(start)}. AHORA despídete en UNA sola intervención breve y cálida: "
@@ -585,16 +614,22 @@ async def entrypoint(ctx: agents.JobContext):
     state = {"nombre": None, "booked": False, "end_reason": "cliente_colgo"}
     transcript = []
 
+    PHONE_NO_SCREEN = (
+        " ESTO ES UNA LLAMADA DE TELÉFONO, no hay pantalla ni chat visible: nunca digas cosas como "
+        "\"te dejo un calendario en la pantalla\", \"mira el chat de la web\" ni \"puedes verlo tú mismo\" — "
+        "quien te llama solo te oye. Si no cuadráis un hueco por voz, pregúntale directamente qué día y hora "
+        "exacta prefiere y llama a reservar_cita, o dile que un miembro del equipo le llamará para cerrarlo."
+    )
     if channel == "phone":
         if caller_number:
             call_block = (
                 f"DATOS DE ESTA LLAMADA: llama desde un teléfono, número {caller_number} (ya lo tienes, no se lo pidas "
-                "ni lo leas entero en voz alta). La llamada dura como máximo unos 5 minutos."
+                "ni lo leas entero en voz alta). La llamada dura como máximo unos 5 minutos." + PHONE_NO_SCREEN
             )
         else:
             call_block = (
                 "DATOS DE ESTA LLAMADA: llama desde un teléfono con el número oculto, así que NO tienes su número. "
-                "Si quiere reservar cita, pídele el teléfono al que llamarle. La llamada dura como máximo unos 5 minutos."
+                "Si quiere reservar cita, pídele el teléfono al que llamarle. La llamada dura como máximo unos 5 minutos." + PHONE_NO_SCREEN
             )
     else:
         call_block = (
@@ -607,6 +642,7 @@ async def entrypoint(ctx: agents.JobContext):
         instructions=call_block + "\n\n" + live_pricing_block + "\n\n" + SYSTEM_INSTRUCTIONS,
         caller_number=caller_number,
         call_state=state,
+        channel=channel,
     )
 
     @session.on("conversation_item_added")
@@ -686,7 +722,7 @@ async def entrypoint(ctx: agents.JobContext):
     ctx.add_shutdown_callback(_cancel_limit)
 
     await session.generate_reply(
-        instructions="Saluda brevemente en español y, en la primera frase, di con claridad que eres el asistente virtual de TRUCO technology, una inteligencia artificial, y que la conversación se transcribe para atenderle mejor. Después pregunta el nombre de quien llama, antes de nada más."
+        instructions="Saluda brevemente en español y, en la primera frase, di con claridad que eres el asistente virtual de TRUCO technology y que la conversación se transcribe para atenderle mejor. Después pregunta el nombre de quien llama, antes de nada más."
     )
 
 
