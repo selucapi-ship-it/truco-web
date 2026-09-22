@@ -300,7 +300,12 @@ def _find_slots_on_day(service, target_date, excluir_horas=None, max_slots=1, mi
         if not start or not end:
             continue  # evento de día completo, no define ventana ni bloquea horas
         titulo = (ev.get('summary') or '').strip().lower()
-        if ventana is None and 'trucotechnology' in titulo:
+        # "truco" a secas (no "trucotechnology" pegado) para que dé igual si el
+        # evento se llama "Truco Technology", "TRUCOTECHNOLOGY" o con cualquier
+        # espaciado — el bug real era este: buscaba la palabra pegada y con un
+        # espacio de por medio nunca encontraba el evento, dejando la ventana
+        # en None y abriendo la puerta a que el modelo se inventara una hora.
+        if ventana is None and 'truco' in titulo:
             ventana = (start, end)
         else:
             busy_ranges.append((start, end))
@@ -406,7 +411,7 @@ REGLAS:
 RESERVAR CITAS POR VOZ — el cliente elige el día, tú solo confirmas hueco a hueco:
 Tienes tres herramientas para la auditoría gratuita con una persona, de 20-30 minutos: `consultar_disponibilidad`, `reservar_cita` y `mostrar_calendario_en_pantalla`. Cuando el cliente quiera reservar o tú se lo propongas y acepte:
 1. NUNCA sueltes tú una lista de días u horas de golpe. Pregúntale primero: "¿qué día te vendría bien?" y espera a que él proponga uno (hoy, mañana, o un día de la semana — "el miércoles", "el miércoles que viene", etc.).
-2. En cuanto diga un día, di primero algo como "vale, dejame ver qué tengo el miércoles" y SOLO ENTONCES llama a `consultar_disponibilidad` con ese día — nunca calles mientras la consultas. Cuando tengas el resultado, ofrécele en voz alta SOLO el hueco que te devuelva (una hora, no una lista) — por ejemplo "para el miércoles tengo las 11, ¿te viene bien?".
+2. En cuanto diga un día, di primero algo como "vale, dejame ver qué tengo el miércoles" y SOLO ENTONCES llama a `consultar_disponibilidad` con ese día — nunca calles mientras la consultas. REGLA ABSOLUTA: la única hora que puedes decir en voz alta es la que la herramienta te haya devuelto literalmente en su respuesta — NUNCA calcules, asumas ni te inventes una hora por tu cuenta (ni "las 9", ni ninguna otra) aunque te parezca razonable. Si la herramienta responde que no hay huecos ese día, dilo tal cual y pregunta por otro día — nunca ofrezcas una hora que no venga en el texto que te devolvió la herramienta.
 3. Si ese hueco no le viene bien pero quiere seguir ese mismo día, vuelve a llamar a `consultar_disponibilidad` con el mismo día y añadiendo el [iso: ...] que acabas de ofrecer a `excluir_horas`, para que te dé otro distinto ese mismo día. Repite esto tantas veces como haga falta dentro del mismo día.
 4. Si la herramienta te dice que ya no quedan huecos ese día, o si el cliente prefiere directamente otro día, pregúntale qué otro día le viene bien y repite el proceso desde el paso 2 — nunca calcules tú tampoco qué día es "el siguiente", eso lo hace la herramienta.
 5. Si después de un par de días probados no conseguís cuadrar nada, o el cliente en cualquier momento prefiere elegir él mismo la hora exacta, llama a `mostrar_calendario_en_pantalla` — le aparece un calendario en la pantalla del chat de la web para que reserve él mismo sin más vueltas por voz. Dile algo como "te acabo de dejar un calendario en la pantalla del chat, ahí puedes elegir tú mismo el día y la hora que mejor te venga". Nunca dejes al cliente colgado diciendo simplemente que no hay hueco — siempre termina en una reserva confirmada o en el calendario en pantalla.
