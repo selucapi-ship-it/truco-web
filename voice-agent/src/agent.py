@@ -22,6 +22,9 @@ logger = logging.getLogger(__name__)
 
 MADRID_TZ = zoneinfo.ZoneInfo("Europe/Madrid")
 SLOT_MINUTES = 30
+# "Ajustes de cita reservada: 15 min entre citas" en la Página de reserva —
+# se deja ese margen antes y después de cualquier cita ya puesta al buscar hueco.
+BUFFER_MINUTOS = 15
 CALENDAR_ID = os.environ.get("GOOGLE_CALENDAR_ID", "primary")
 
 _DIAS_ES = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
@@ -316,7 +319,8 @@ def _find_slots_on_day(service, target_date, excluir_horas=None, max_slots=1, mi
     slots = []
     while slot_start + datetime.timedelta(minutes=SLOT_MINUTES) <= day_end and len(slots) < max_slots:
         slot_end = slot_start + datetime.timedelta(minutes=SLOT_MINUTES)
-        overlaps = any(slot_start < b_end and slot_end > b_start for b_start, b_end in busy_ranges)
+        buffer = datetime.timedelta(minutes=BUFFER_MINUTOS)
+        overlaps = any(slot_start < (b_end + buffer) and slot_end > (b_start - buffer) for b_start, b_end in busy_ranges)
         ya_ofrecido = slot_start.isoformat() in excluir_horas
         if not overlaps and not ya_ofrecido:
             slots.append(slot_start)
