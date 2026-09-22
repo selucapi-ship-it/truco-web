@@ -20,11 +20,6 @@ load_dotenv(".env.local")
 
 logger = logging.getLogger(__name__)
 
-# Marcador temporal de diagnostico — confirma si el worker que responde de
-# verdad esta ejecutando este fichero (y no una copia/proceso antiguo
-# atascado). Se quita en cuanto se confirme.
-AGENT_CODE_VERSION = "DEBUG-2026-09-22-21h50"
-
 MADRID_TZ = zoneinfo.ZoneInfo("Europe/Madrid")
 SLOT_MINUTES = 30
 # "Ajustes de cita reservada: 15 min entre citas" en la Página de reserva —
@@ -504,11 +499,9 @@ class TrucoAgent(Agent):
         # fecha/hora de memoria a partir de lo dicho en voz alta (ahí es donde se
         # cuelan la mayoría de errores de reserva: el modelo calcula mal el día
         # o la zona horaria al convertir).
-        _rango_debug = HORARIO_SEMANAL_MINUTOS.get(target_date.weekday())
         return (
-            f"[{AGENT_CODE_VERSION} weekday={target_date.weekday()} rango={_rango_debug}] "
             f"Hueco disponible: {_formatear_fecha_es(s)} [iso: {s.isoformat()}]. Ofrécele SOLO este hueco "
-            f"al cliente en voz alta, nunca leas el [iso: ...] ni el marcador de depuración entre corchetes. "
+            f"al cliente en voz alta, nunca leas el [iso: ...]. "
             f"Si no le viene bien, vuelve a llamar a esta misma herramienta con el mismo día y añade este iso "
             f"a excluir_horas para que te dé otro distinto ese mismo día. Si prefiere otro día, repite el "
             f"proceso con el día nuevo que te diga."
@@ -614,6 +607,15 @@ server = AgentServer()
 
 @server.rtc_session()
 async def entrypoint(ctx: agents.JobContext):
+    # gemini-2.5-flash-native-audio-preview-12-2025 es un modelo en preview de
+    # Google — de vez en cuando la conexión en tiempo real da un error real de
+    # Google (APIError 1011 "Deadline expired before operation could
+    # complete", documentado y reportado por otros usuarios de la API de
+    # Gemini, nada que ver con este código). LiveKit lo marca como
+    # recoverable=True y reconecta solo, pero justo en ese hueco el modelo
+    # puede sonar confuso un turno (inventar una hora, leer el [iso: ...] en
+    # voz alta) hasta que se recupera. Si esto se vuelve frecuente, valorar
+    # cambiar a un modelo Gemini realtime ya estable (no preview).
     session = AgentSession(
         llm=google.realtime.RealtimeModel(
             model="gemini-2.5-flash-native-audio-preview-12-2025",
