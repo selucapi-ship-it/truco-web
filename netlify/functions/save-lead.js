@@ -17,7 +17,7 @@ exports.handler = async function (event) {
   }
 
   const source = payload.source;
-  if (!['checkout', 'chat', 'voice'].includes(source)) {
+  if (!['checkout', 'chat', 'voice', 'auditoria'].includes(source)) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Invalid source' }) };
   }
 

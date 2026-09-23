@@ -1904,7 +1904,38 @@ details.fold-inline[open]>summary{margin-bottom:10px;}
       <div><b>Auditoría gratuita con una persona del equipo</b><span>20-30 min · Sin compromiso · Estudiamos tu negocio y te aconsejamos la mejor opción</span></div>
       <button type="button" class="bk-close" onclick="closeBooking()" aria-label="Cerrar el calendario">✕ Cerrar</button>
     </div>
-    <iframe id="bookFrame" title="Elegir día y hora para la auditoría gratuita"></iframe>
+    <div id="bookFormStep" class="bk-form-step">
+      <h3>Antes de elegir el día, cuéntanos un poco de ti</h3>
+      <p>Así llegamos a la auditoría ya sabiendo de tu negocio, sin perder el tiempo en lo básico.</p>
+      <div class="bk-form-grid">
+        <div class="bk-field">
+          <label>Nombre completo <span class="bk-req">*</span></label>
+          <input type="text" id="bk-nombre" placeholder="Tu nombre">
+          <span class="bk-err">Campo obligatorio</span>
+        </div>
+        <div class="bk-field">
+          <label>Teléfono <span class="bk-req">*</span></label>
+          <input type="tel" id="bk-telefono" placeholder="+34 600 000 000">
+          <span class="bk-err">Escribe un teléfono válido (mínimo 9 números)</span>
+        </div>
+        <div class="bk-field">
+          <label>Email <span class="bk-req">*</span></label>
+          <input type="email" id="bk-email" placeholder="tu@email.com">
+          <span class="bk-err">Introduce un email válido</span>
+        </div>
+        <div class="bk-field">
+          <label>Nombre del negocio <span class="bk-req">*</span></label>
+          <input type="text" id="bk-negocio" placeholder="Tu empresa o nombre comercial">
+          <span class="bk-err">Campo obligatorio</span>
+        </div>
+      </div>
+      <div class="bk-field bk-field-full">
+        <label>¿Qué te gustaría resolver? <span class="bk-opcional">(opcional)</span></label>
+        <textarea id="bk-mensaje" placeholder="Cuéntanos brevemente tu situación..."></textarea>
+      </div>
+      <button type="button" class="bk-submit" id="bk-submit-btn" onclick="submitBookingForm()">Continuar y elegir día →</button>
+    </div>
+    <iframe id="bookFrame" title="Elegir día y hora para la auditoría gratuita" style="display:none;"></iframe>
   </div>
 </div>
 
@@ -3040,20 +3071,64 @@ function showTyping() {
 function hideTyping() { const e = document.getElementById('typing'); if(e) e.remove(); }
 
 const BOOKING_URL = 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0EQUIRw33OP7zOOmNgLOS2sdzZBf_fAUi4VM6BIsH0K9S64p42mC4SQ9P5rjHlrjK9jz8aftQe?gv=true';
-let bookingLogged = false;
+// Antes de esto, Google se quedaba con los datos de quien reservaba (si es que
+// los pedía) y nunca llegaban a nuestra base de datos — el founder abría el
+// calendario y no tenía ni idea de con quién iba a hablar hasta la propia
+// llamada. Ahora se piden aquí y se guardan en clients/interactions
+// (source: 'auditoria') antes de enseñar el calendario de verdad.
+let bookingFormDone = false;
 function openBooking() {
   const ov = document.getElementById('bookOverlay');
   if (!ov) { window.open(BOOKING_URL, '_blank', 'noopener'); return; }
-  const fr = document.getElementById('bookFrame');
-  if (!fr.getAttribute('src')) fr.setAttribute('src', BOOKING_URL);
   ov.hidden = false;
   document.body.classList.add('bk-open');
-  if (!bookingLogged) { bookingLogged = true; try { logChatLead('Abrió el calendario de la auditoría gratuita con una persona.'); } catch (e) {} }
+  if (bookingFormDone) { showBookingCalendarStep(); return; }
+  document.getElementById('bookFormStep').style.display = 'block';
+  document.getElementById('bookFrame').style.display = 'none';
+  // Rellena solo si el chat ya sabe su nombre/negocio — nunca sobrescribe lo
+  // que el visitante ya haya escrito a mano en este mismo formulario.
+  const nombreEl = document.getElementById('bk-nombre'), negocioEl = document.getElementById('bk-negocio');
+  if (chatUserName && !nombreEl.value) nombreEl.value = chatUserName;
+  if (chatUserSector && !negocioEl.value) negocioEl.value = chatUserSector;
+}
+function showBookingCalendarStep() {
+  const fr = document.getElementById('bookFrame');
+  if (!fr.getAttribute('src')) fr.setAttribute('src', BOOKING_URL);
+  document.getElementById('bookFormStep').style.display = 'none';
+  fr.style.display = 'block';
 }
 function closeBooking() {
   const ov = document.getElementById('bookOverlay');
   if (ov) ov.hidden = true;
   document.body.classList.remove('bk-open');
+}
+async function submitBookingForm() {
+  const nombre = document.getElementById('bk-nombre'), telefono = document.getElementById('bk-telefono'),
+        email = document.getElementById('bk-email'), negocio = document.getElementById('bk-negocio'),
+        mensaje = document.getElementById('bk-mensaje');
+  let ok = true;
+  [nombre, negocio].forEach(f => { if (!f.value.trim()) { f.classList.add('bk-invalid'); ok = false; } else f.classList.remove('bk-invalid'); });
+  if (telefono.value.replace(/\D/g, '').length < 9) { telefono.classList.add('bk-invalid'); ok = false; } else telefono.classList.remove('bk-invalid');
+  if (!email.value.trim() || !email.value.includes('@')) { email.classList.add('bk-invalid'); ok = false; } else email.classList.remove('bk-invalid');
+  if (!ok) return;
+  const btn = document.getElementById('bk-submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Un momento…';
+  try {
+    await fetch('/.netlify/functions/save-lead', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        source: 'auditoria', session_id: trucoSessionId(),
+        nombre: nombre.value.trim(), telefono: telefono.value.trim(), email: email.value.trim(),
+        negocio: negocio.value.trim(),
+        nota: 'Reservó una auditoría gratuita.' + (mensaje.value.trim() ? ' Qué quiere resolver: ' + mensaje.value.trim() : ''),
+      }),
+    });
+  } catch (e) { /* nunca bloquear la reserva por un fallo al guardar el lead */ }
+  bookingFormDone = true;
+  btn.disabled = false;
+  btn.textContent = 'Continuar y elegir día →';
+  showBookingCalendarStep();
 }
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeBooking(); });
 
