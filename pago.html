@@ -866,12 +866,25 @@ async function applyLoggedInClient() {
   setVal('f-email', client.email);
   setVal('f-telefono', client.telefono);
   setVal('f-negocio', client.negocio);
-  if (client.tipo) { const tipoEl = document.getElementById('f-tipo'); if (tipoEl) tipoEl.value = client.tipo; }
+  // El "tipo" del cliente en la ficha del admin es texto libre (lo escribe el
+  // founder a mano) mientras que este <select> solo admite un listado fijo de
+  // opciones — si el texto guardado no coincide con ninguna, asignar el value
+  // falla en silencio y el select queda vacío. Comprobamos que de verdad haya
+  // "pegado" antes de darlo por bueno; si no, se trata como dato que falta
+  // para que el campo se muestre y el cliente pueda elegirlo él mismo.
+  let tipoMatched = false;
+  const tipoEl = document.getElementById('f-tipo');
+  if (client.tipo && tipoEl) {
+    tipoEl.value = client.tipo;
+    tipoMatched = tipoEl.value === client.tipo;
+    if (!tipoMatched) tipoEl.value = '';
+  }
   setVal('f-nif', client.nif);
 
   // Solo pedimos lo que de verdad no sepamos ya de su ficha — el resto no
   // hace falta que lo vuelva a escribir.
-  const missing = ['nombre', 'telefono', 'negocio', 'tipo'].filter(k => !client[k]);
+  const missing = ['nombre', 'telefono', 'negocio'].filter(k => !client[k]);
+  if (!tipoMatched) missing.push('tipo');
   const grid = document.getElementById('checkout-fields-grid');
   if (missing.length === 0) {
     grid.style.display = 'none';

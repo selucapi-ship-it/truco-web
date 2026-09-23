@@ -309,6 +309,10 @@ async function loadContacts() {
 async function boot() {
   const { data: { session } } = await sb.auth.getSession();
   if (!session) { location.href = 'login.html'; return; }
+  // Ver dashboard.html: cierra la sesión y manda de vuelta al login si la
+  // cuenta tiene 2FA activada pero esta sesión no completó el segundo factor.
+  const { data: aal } = await sb.auth.mfa.getAuthenticatorAssuranceLevel();
+  if (aal && aal.currentLevel !== aal.nextLevel) { await sb.auth.signOut(); location.href = 'login.html'; return; }
   const { data: cl, error } = await sb.from('clients').select('*').single();
   const gate = document.getElementById('gate');
   if (error || !cl) { gate.innerHTML = '<h2>No encontramos tu ficha</h2><p>Escríbenos y lo revisamos.</p><a class="btn" href="dashboard.html">← Mi portal</a>'; return; }

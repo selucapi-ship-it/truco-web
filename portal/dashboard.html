@@ -182,6 +182,36 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .install-strip{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:14px;padding:14px 18px;margin:-4px 0 22px;}
 .install-strip b{display:block;font-size:.95rem;}
 .install-strip span{color:var(--grey);font-size:.82rem;}
+
+#settings-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);width:38px;height:38px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s;flex-shrink:0;}
+#settings-btn:hover{border-color:var(--gold);color:var(--gold-light);}
+#settings-btn svg{width:18px;height:18px;}
+.nav-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+@media(max-width:420px){
+  .nav-brand{font-size:.84rem;}
+  .nav-sub{display:none;}
+  #logout-btn{padding:8px 11px;font-size:.76rem;}
+}
+
+#settings-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+.settings-box{width:100%;max-width:640px;margin:0 auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:18px;padding:30px 32px;box-shadow:var(--shadow-card);position:relative;}
+.stats-close{float:right;background:none;border:1px solid var(--grey-line);border-radius:8px;width:32px;height:32px;color:var(--grey);font-size:1rem;cursor:pointer;transition:border-color .15s,color .15s;}
+.stats-close:hover{border-color:var(--red);color:var(--red);}
+.prices-card{background:linear-gradient(165deg,var(--bg-card),var(--bg-panel));border:1px solid var(--grey-line);border-radius:14px;padding:20px 22px;margin-bottom:20px;}
+.prices-card-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;}
+.prices-card-head h3{font-family:var(--font-d);font-size:1.02rem;margin:0;color:var(--white);}
+.settings-box .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--blue);color:#fff;border:none;border-radius:10px;padding:12px 20px;font-family:var(--font-b);font-size:.88rem;font-weight:700;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s,color .15s;box-shadow:0 4px 14px rgba(47,123,255,.28);white-space:nowrap;}
+.settings-box .btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(47,123,255,.38);}
+.settings-box .btn.sm{padding:8px 14px;font-size:.78rem;border-radius:8px;gap:5px;box-shadow:none;}
+.settings-box .btn.ghost{background:var(--bg-card);border:1.5px solid var(--grey-line);color:var(--white);box-shadow:none;}
+.settings-box .btn.ghost:hover{border-color:var(--blue);color:var(--blue-light);transform:none;box-shadow:none;}
+.settings-box .btn.ghost.danger{border-color:rgba(239,68,68,.4);color:#ff8a80;}
+.settings-box .btn.ghost.danger:hover{border-color:var(--red);color:var(--red);background:rgba(239,68,68,.08);}
+.settings-box input[type=password],.settings-box input[type=text]{background:var(--bg-card);border:1px solid var(--grey-line);border-radius:8px;padding:9px 11px;color:var(--white);font-size:.85rem;outline:none;font-family:var(--font-b);}
+.settings-box .login-error{color:var(--red);font-size:.8rem;margin-top:10px;display:none;}
+.status-badge{font-family:var(--font-m);font-size:.6rem;padding:3px 9px;border-radius:12px;text-transform:uppercase;letter-spacing:.04em;border:1px solid transparent;display:inline-block;}
+.status-cliente{background:var(--green-dim);color:var(--green);border-color:rgba(34,197,94,.25);}
+.status-descartado{background:rgba(141,151,166,.15);color:var(--grey);border-color:var(--grey-line);}
 </style>
 </head>
 <body>
@@ -192,8 +222,43 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
     <div><div class="nav-brand">TRUCO<span>technology</span></div><div class="nav-sub">Portal de clientes</div></div>
   </a>
   <div class="apptabs"><a class="apptab on" href="dashboard.html">🏠 Portal</a><a class="apptab" href="crm.html">👥 Mi CRM</a><a class="apptab" href="calendario.html">📅 Mi calendario</a></div>
-  <button id="logout-btn" onclick="doLogout()">Cerrar sesión</button>
+  <div class="nav-right">
+    <button id="settings-btn" onclick="openSettingsOverlay()" title="Ajustes de tu cuenta" aria-label="Ajustes de tu cuenta">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" stroke="currentColor" stroke-width="1.4"/><path d="M19.4 13.5a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V19.5a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H4.5a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 6.1 8.5a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H10.5a1.65 1.65 0 0 0 1-1.51V2.5a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V8.5c.14.6.6 1.08 1.19 1.28.19.06.39.1.6.11H21.5a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="logout-btn" onclick="doLogout()">Cerrar sesión</button>
+  </div>
 </nav>
+
+<div id="settings-overlay">
+  <div class="settings-box">
+    <button class="stats-close" onclick="closeSettingsOverlay()">✕</button>
+    <h2>Ajustes de tu cuenta</h2>
+    <p style="color:var(--grey);font-size:.82rem;margin:0 0 22px;max-width:480px;">Configuración de tu propio acceso al portal.</p>
+
+    <div class="prices-card">
+      <div class="prices-card-head"><h3>Contraseña</h3></div>
+      <p style="color:var(--grey);font-size:.85rem;margin-bottom:16px;max-width:420px;">Cámbiala cuando quieras. Se aplica al instante — la próxima vez que entres, usa la nueva.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;max-width:420px;">
+        <input type="password" id="settings-new-pass" placeholder="Contraseña nueva" autocomplete="new-password" style="flex:1;min-width:160px;">
+        <input type="password" id="settings-new-pass-repeat" placeholder="Repítela" autocomplete="new-password" style="flex:1;min-width:160px;">
+      </div>
+      <button class="btn" style="margin-top:12px;" onclick="cambiarPassword()">Cambiar contraseña</button>
+      <div class="login-error" id="settings-pass-error"></div>
+    </div>
+
+    <div class="prices-card">
+      <div class="prices-card-head"><h3>Verificación en dos pasos</h3></div>
+      <p style="color:var(--grey);font-size:.82rem;margin-bottom:18px;max-width:480px;">Además de la contraseña, te pedirá un código de una app autenticadora (Google Authenticator, Authy, 1Password...) en tu móvil cada vez que entres.</p>
+      <div id="mfa-status-wrap"></div>
+    </div>
+
+    <div class="prices-card" style="margin-bottom:0;opacity:.6;">
+      <div class="prices-card-head"><h3>Notificaciones</h3></div>
+      <p style="color:var(--grey);font-size:.82rem;margin:0;">Próximamente podrás activar un aviso cuando entre algo nuevo en tu cuenta (un contacto, una cita...).</p>
+    </div>
+  </div>
+</div>
 
 <div id="login-gate">Comprobando tu sesión…</div>
 
@@ -254,15 +319,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
     </div>
   </div>
 
-  <div class="grid">
-    <div class="card" style="grid-column:1/-1;">
-      <div class="card-tag">Para ti</div>
-      <h2>Ofertas exclusivas</h2>
-      <div id="offers-list"><div class="empty-note">Cargando…</div></div>
-      <div class="offers-footer">La compra se hace en la web normal — <a href="../servicios.html#automatizaciones">Digitaliza tu Empresa</a> o directamente en <a href="../pago.html">pago.html</a>. Al estar identificado, se te reconoce automáticamente y se te aplica tu descuento de cliente.</div>
-    </div>
-  </div>
-
   <div class="grid" id="crm-grid" style="display:none;">
     <div class="card" id="crm-card" style="grid-column:1/-1;">
       <div class="card-tag">Tus contactos</div>
@@ -287,9 +343,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
   </div>
 
   <div class="grid">
-  </div>
-
-  <div class="grid">
     <div class="card chat-card">
       <div class="card-tag">Tu chat de socio</div>
       <h2>Cuéntanos un cambio o un problema</h2>
@@ -299,6 +352,15 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         <button id="chat-send-btn" onclick="sendChat()">Enviar</button>
       </div>
       <div class="chat-hint">Asistente virtual de inteligencia artificial (no es una persona). Conoce lo que tienes contratado. Si le pides un cambio o le cuentas un problema, lo pasa a tu Departamento: Jose lo revisa y lo aprueba antes de tocar nada.</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card" style="grid-column:1/-1;">
+      <div class="card-tag">Para ti</div>
+      <h2>Ofertas exclusivas</h2>
+      <div id="offers-list"><div class="empty-note">Cargando…</div></div>
+      <div class="offers-footer">La compra se hace en la web normal — <a href="../servicios.html#automatizaciones">Digitaliza tu Empresa</a> o directamente en <a href="../pago.html">pago.html</a>. Al estar identificado, se te reconoce automáticamente y se te aplica tu descuento de cliente.</div>
     </div>
   </div>
 </div>
@@ -381,6 +443,99 @@ let sb = null;
 let accessToken = null;
 let chatHistory = [];
 
+// ── AJUSTES DE CUENTA (contraseña + verificación en dos pasos) ──
+// Mismo patrón ya probado en admin/panel.html (Supabase Auth updateUser +
+// MFA TOTP), adaptado aquí para clientes. No existía nada de esto en el
+// portal antes de esto.
+async function openSettingsOverlay() {
+  document.getElementById('settings-overlay').style.display = 'block';
+  document.getElementById('settings-new-pass').value = '';
+  document.getElementById('settings-new-pass-repeat').value = '';
+  document.getElementById('settings-pass-error').style.display = 'none';
+  await renderMfaStatus();
+}
+function closeSettingsOverlay() {
+  document.getElementById('settings-overlay').style.display = 'none';
+}
+
+async function cambiarPassword() {
+  const pass = document.getElementById('settings-new-pass').value;
+  const repeat = document.getElementById('settings-new-pass-repeat').value;
+  const errEl = document.getElementById('settings-pass-error');
+  errEl.style.display = 'none';
+  if (pass.length < 8) { errEl.textContent = 'La contraseña debe tener al menos 8 caracteres.'; errEl.style.display = 'block'; return; }
+  if (pass !== repeat) { errEl.textContent = 'Las dos contraseñas no coinciden.'; errEl.style.display = 'block'; return; }
+  const { error } = await sb.auth.updateUser({ password: pass });
+  if (error) { errEl.textContent = 'No se pudo cambiar: ' + error.message; errEl.style.display = 'block'; return; }
+  document.getElementById('settings-new-pass').value = '';
+  document.getElementById('settings-new-pass-repeat').value = '';
+  alert('Contraseña cambiada — úsala la próxima vez que entres.');
+}
+
+async function renderMfaStatus() {
+  const wrap = document.getElementById('mfa-status-wrap');
+  const { data, error } = await sb.auth.mfa.listFactors();
+  if (error) { wrap.innerHTML = '<div class="empty-note">No se pudo comprobar el estado: ' + escapeHtml(error.message) + '</div>'; return; }
+  const verified = data.totp.find(f => f.status === 'verified');
+  if (verified) {
+    wrap.innerHTML = `
+      <div style="margin-bottom:12px;"><span class="status-badge status-cliente">Activada</span></div>
+      <p style="color:var(--grey);font-size:.85rem;margin-bottom:18px;max-width:420px;">Cada vez que entres, además de la contraseña te pedirá el código de tu app autenticadora. Si cambias de móvil o pierdes acceso a ella, desactívala aquí y vuelve a configurarla con el nuevo dispositivo.</p>
+      <button class="btn sm ghost danger" onclick="desactivarMfa('${verified.id}')">Desactivar verificación en dos pasos</button>
+    `;
+  } else {
+    wrap.innerHTML = `
+      <div style="margin-bottom:12px;"><span class="status-badge status-descartado">Sin activar</span></div>
+      <p style="color:var(--grey);font-size:.85rem;margin-bottom:18px;max-width:420px;">Añade una app autenticadora (Google Authenticator, Authy, 1Password...) para que entrar al portal pida también un código de tu móvil, además de la contraseña.</p>
+      <button class="btn" onclick="iniciarEnrolamientoMfa()">Activar verificación en dos pasos</button>
+      <div id="mfa-enroll-wrap" style="margin-top:20px;"></div>
+    `;
+  }
+}
+
+async function iniciarEnrolamientoMfa() {
+  const { data, error } = await sb.auth.mfa.enroll({ factorType: 'totp' });
+  if (error) { alert('No se pudo iniciar la activación: ' + error.message); return; }
+  const enrollWrap = document.getElementById('mfa-enroll-wrap');
+  enrollWrap.innerHTML = `
+    <div style="background:var(--bg-card);border:1px solid var(--grey-line);border-radius:12px;padding:20px;max-width:380px;">
+      <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+        <div style="background:#fff;padding:10px;border-radius:10px;flex-shrink:0;line-height:0;"><img src="${data.totp.qr_code}" alt="Código QR de verificación en dos pasos" style="display:block;width:150px;height:150px;"></div>
+        <div style="flex:1;min-width:160px;">
+          <p style="font-size:.8rem;color:var(--grey);margin-bottom:10px;">1. Escanea este código con tu app autenticadora.</p>
+          <p style="font-size:.7rem;color:var(--grey);">¿No puedes escanear? Clave manual:</p>
+          <code style="color:var(--white);word-break:break-all;font-size:.72rem;">${escapeHtml(data.totp.secret)}</code>
+        </div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <input type="text" id="mfa-enroll-code" placeholder="2. Código de 6 dígitos" inputmode="numeric" maxlength="6" style="max-width:170px;">
+        <button class="btn sm" onclick="confirmarEnrolamientoMfa('${data.id}')">Verificar y activar</button>
+      </div>
+      <div class="login-error" id="mfa-enroll-error"></div>
+    </div>
+  `;
+}
+
+async function confirmarEnrolamientoMfa(factorId) {
+  const code = document.getElementById('mfa-enroll-code').value.trim();
+  const errEl = document.getElementById('mfa-enroll-error');
+  errEl.style.display = 'none';
+  if (!code) return;
+  const { data: challenge, error: challengeErr } = await sb.auth.mfa.challenge({ factorId });
+  if (challengeErr) { errEl.textContent = challengeErr.message; errEl.style.display = 'block'; return; }
+  const { error: verifyErr } = await sb.auth.mfa.verify({ factorId, challengeId: challenge.id, code });
+  if (verifyErr) { errEl.textContent = 'Código incorrecto, prueba de nuevo.'; errEl.style.display = 'block'; return; }
+  alert('Verificación en dos pasos activada — a partir de ahora, cada vez que entres te pedirá también el código de tu app.');
+  await renderMfaStatus();
+}
+
+async function desactivarMfa(factorId) {
+  if (!confirm('¿Seguro que quieres desactivar la verificación en dos pasos? El portal volverá a pedir solo la contraseña.')) return;
+  const { error } = await sb.auth.mfa.unenroll({ factorId });
+  if (error) { alert('No se pudo desactivar: ' + error.message); return; }
+  await renderMfaStatus();
+}
+
 function isConfigured() {
   return !SUPABASE_URL.startsWith('REEMPLAZA_') && !SUPABASE_ANON_KEY.startsWith('REEMPLAZA_');
 }
@@ -393,6 +548,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   const { data: { session } } = await sb.auth.getSession();
   if (!session) {
+    window.location.href = 'login.html';
+    return;
+  }
+  // Si la cuenta tiene la verificación en dos pasos activada pero esta sesión
+  // se quedó en aal1 (p.ej. alguien escribe la URL directamente con una
+  // sesión de contraseña ya abierta, sin completar el código), no se deja
+  // entrar — se cierra la sesión y se manda de vuelta al login a completarlo.
+  const { data: aal } = await sb.auth.mfa.getAuthenticatorAssuranceLevel();
+  if (aal && aal.currentLevel !== aal.nextLevel) {
+    await sb.auth.signOut();
     window.location.href = 'login.html';
     return;
   }
