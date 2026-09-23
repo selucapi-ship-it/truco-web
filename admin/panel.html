@@ -202,6 +202,16 @@
   .ficha-tab:hover{color:var(--white);}
   .ficha-tab.on{color:var(--blue-light);border-color:var(--blue);}
   .ficha-tab-panel{display:flex;flex-direction:column;}
+  .audit-cat{border:1px solid var(--grey-line);border-radius:12px;margin-bottom:10px;overflow:hidden;background:var(--bg-card);}
+  .audit-cat summary{cursor:pointer;padding:12px 16px;font-weight:700;font-size:.85rem;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .audit-cat summary::-webkit-details-marker{display:none;}
+  .audit-cat[open] summary{border-bottom:1px solid var(--grey-line);}
+  .audit-q{padding:12px 16px;border-bottom:1px solid var(--grey-line);}
+  .audit-q:last-child{border-bottom:none;}
+  .audit-q label{display:block;font-size:.82rem;color:var(--white);margin-bottom:4px;font-weight:500;}
+  .audit-q .hint{font-size:.72rem;color:var(--grey);font-style:italic;margin-bottom:6px;}
+  .audit-q textarea{width:100%;min-height:44px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:8px;padding:8px 10px;color:var(--white);font-family:var(--font-b);font-size:.82rem;resize:vertical;}
+  .audit-q textarea:focus{border-color:var(--blue);outline:none;}
   .ficha-name{font-family:var(--font-d);font-size:1.45rem;margin:0 0 6px;letter-spacing:-.01em;}
   .ficha-badges{display:flex;flex-wrap:wrap;gap:0;}
   .ficha-negocio{color:var(--grey);font-size:.85rem;margin-bottom:14px;}
@@ -1415,6 +1425,7 @@
           <button class="ficha-tab" data-tab="actividad" onclick="switchFichaTab('actividad')">Actividad</button>
           <button class="ficha-tab" data-tab="economico" onclick="switchFichaTab('economico')">Económico</button>
           <button class="ficha-tab" data-tab="accesos" onclick="switchFichaTab('accesos')">Accesos y gestión</button>
+          <button class="ficha-tab" data-tab="auditoria" onclick="switchFichaTab('auditoria')">Auditoría</button>
         </div>
 
         <div class="ficha-tab-panel" data-tab-panel="info">
@@ -1525,6 +1536,14 @@
             <button id="deactivate-client-btn" class="btn block danger" onclick="deactivateClient()" style="display:none;">Dar de baja</button>
             <button id="reactivate-client-btn" class="btn block green" onclick="reactivateClient()" style="display:none;">Reactivar cliente</button>
             <button id="rgpd-btn" class="btn block ghost" onclick="requestRgpdErasure()" style="display:none;">Solicitar borrado RGPD</button>
+          </div>
+        </div>
+
+        <div class="ficha-tab-panel" data-tab-panel="auditoria" style="display:none;">
+          <div class="card">
+            <div class="card-tag">Guion de auditoría</div>
+            <p style="color:var(--grey);font-size:.82rem;margin:0 0 14px;">Preguntas por tipo de proyecto/automatización, sacadas del Libro de TRUCOtechnology y de los cuestionarios obligatorios. Se guardan solas al salir de cada campo — abre solo las categorías que apliquen a esta auditoría.</p>
+            <div id="audit-checklist"></div>
           </div>
         </div>
       </div>
@@ -4028,6 +4047,194 @@ function renderClients() {
 function switchFichaTab(tab) {
   document.querySelectorAll('.ficha-tab').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
   document.querySelectorAll('.ficha-tab-panel').forEach(p => { p.style.display = p.dataset.tabPanel === tab ? 'flex' : 'none'; });
+  if (tab === 'auditoria' && selectedClientId) loadAuditChecklist(selectedClientId);
+}
+
+// ── GUION DE AUDITORÍA ───────────────────────────────────────────────────
+// Sacado de dos sitios ya existentes (nada inventado aquí):
+//  - plantillas/cuestionarios-cliente/*.md — cuestionarios obligatorios por
+//    tipo de proyecto (Web Esencial/Profesional, Digitaliza, Chatbot, Agente
+//    de voz, TruKi).
+//  - Desktop/Libro TRUCOtechnology/generate.js — autorizaciones + preguntas
+//    específicas de cada una de las 12 automatizaciones del catálogo, más el
+//    capítulo de Página Web.
+// Las respuestas se guardan por cliente en audit_respuestas (ver
+// supabase/migration_audit_respuestas.sql), identificadas por el "id" fijo
+// de cada pregunta de aquí abajo.
+const AUDIT_CHECKLIST = [
+  { cat: 'Web Esencial', items: [
+    { id: 'we1', q: 'Nombre comercial exacto (tal cual debe aparecer en la web)' },
+    { id: 'we2', q: 'Sector / actividad concreta' },
+    { id: 'we3', q: 'Dirección física (si atiende presencialmente) o "solo online"' },
+    { id: 'we4', q: 'Horario de atención al público' },
+    { id: 'we5', q: 'Años en el mercado / desde cuándo existe el negocio (para "sobre nosotros")' },
+    { id: 'we6', q: '¿Tiene logo ya? (pedir el archivo en la mejor calidad posible)' },
+    { id: 'we7', q: 'Colores corporativos (si no tiene, ¿algún color que le guste o le represente?)' },
+    { id: 'we8', q: 'Tono de la web: ¿formal, cercano, técnico, divertido?' },
+    { id: 'we9', q: 'Web de referencia que le guste el estilo (aunque sea de otro sector)' },
+    { id: 'we10', q: '¿Ya tiene dominio comprado? ¿Cuál? Si no, ¿qué nombre quiere?' },
+    { id: 'we11', q: 'Inicio: frase principal (qué hace, para quién) + 3-4 puntos fuertes del negocio' },
+    { id: 'we12', q: 'Servicios/Productos: listado con descripción breve de cada uno' },
+    { id: 'we13', q: 'Sobre nosotros: historia breve, quién está detrás, por qué confiar en ellos' },
+    { id: 'we14', q: 'Contacto: qué canales mostrar (teléfono, WhatsApp, email, mapa)' },
+    { id: 'we15', q: '5ª página libre: ¿qué necesita? (FAQ, testimonios, galería, precios...)' },
+    { id: 'we16', q: '¿Email para el formulario de contacto? ¿Número de WhatsApp para el botón directo? ¿Botón de llamada?' },
+    { id: 'we17', q: '3-5 palabras clave por las que quiere aparecer en Google + ciudad/zona de servicio' },
+    { id: 'we18', q: '¿Tiene ya política de privacidad / aviso legal? (si no, avisar que hace falta antes de publicar)' },
+  ]},
+  { cat: 'Web Profesional (además de todo lo de Web Esencial)', items: [
+    { id: 'wp1', q: 'Mapa del sitio: listar cada página y una frase de qué va en ella. ¿Necesita blog?' },
+    { id: 'wp2', q: 'Funcionalidades avanzadas: ¿reservas/citas? ¿con qué calendario? ¿pasarela de pago, con qué proveedor? ¿formulario inteligente? ¿chat IA? ¿CRM? ¿área privada? ¿multi-idioma?' },
+    { id: 'wp3', q: 'Referencias visuales concretas (2-3 webs) + manual de marca si tiene (tipografías, colores en HEX)' },
+    { id: 'wp4', q: '¿Fotografía/vídeo profesional disponible, o banco de imágenes de pago?' },
+    { id: 'wp5', q: '¿Google Analytics / Search Console? ¿Cuál es el objetivo de conversión principal?' },
+    { id: 'wp6', q: '¿Cuántas personas del equipo necesitan acceso al backend? ¿Quién es el contacto único?' },
+    { id: 'wp7', q: '¿Usa ya alguna herramienta que la web deba respetar/conectar (ERP, facturación, citas actual)?' },
+  ]},
+  { cat: 'Digitaliza / Automatizaciones (genérico, para cualquier automatización)', items: [
+    { id: 'da1', q: '¿Qué tarea concreta se repite y quita tiempo? (describir el proceso actual paso a paso, tal cual lo hacen hoy)' },
+    { id: 'da2', q: '¿Cuánto tiempo/dinero calcula que pierde al mes con este problema? ¿Qué pasaría si no se soluciona?' },
+    { id: 'da3', q: '¿Qué usa hoy para esto? ¿Hay que sustituir esa herramienta o solo conectarla?' },
+    { id: 'da4', q: 'Lista de TODAS las apps/plataformas que ya usa en el día a día del negocio' },
+    { id: 'da5', q: 'Nº aproximado de clientes/mensajes/pedidos al mes. ¿Hay temporadas de pico?' },
+    { id: 'da6', q: 'Sistemas a conectar (uno por uno) y si puede dar acceso/API key de cada uno' },
+    { id: 'da7', q: 'Flujo paso a paso: "cuando pasa X → el sistema hace Y → y luego Z". ¿Dónde interviene una persona?' },
+    { id: 'da8', q: '¿Qué decisiones delicadas debe tomar siempre una persona (reembolsos, quejas graves, legal/médico)?' },
+  ]},
+  { cat: 'Chatbot IA (WhatsApp / Web / Correo) — cuestionario general', items: [
+    { id: 'cb1', q: '¿Dónde debe responder? WhatsApp / Web / Correo / varios. Detalles del canal elegido.' },
+    { id: 'cb2', q: '¿24h, o solo fuera del horario humano? ¿Quién recibe el aviso cuando escala? Casos que SIEMPRE pasan a una persona' },
+    { id: 'cb3', q: 'Preguntas frecuentes reales (mínimo 10-15) con su respuesta' },
+    { id: 'cb4', q: 'Horarios exactos, ubicación(es), precios que puede dar (¿exactos o "te lo confirmamos"?), políticas (cancelación, devoluciones, pago)' },
+    { id: 'cb5', q: '¿Qué NO debe decir nunca?' },
+    { id: 'cb6', q: 'Tono (formal/cercano/emojis), ejemplos reales de cómo responden hoy, nombre con el que se presenta el bot' },
+    { id: 'cb7', q: '¿Debe agendar citas (con qué calendario)? ¿Recoger un pedido? ¿Filtrar urgentes? ¿Guardar el contacto en un CRM?' },
+    { id: 'cb8', q: '¿Solo español u otros idiomas también?' },
+    { id: 'cb9', q: '¿Quién revisa las conversaciones y con qué frecuencia? ¿Canal de feedback si responde mal algo?' },
+  ]},
+  { cat: 'Agente de voz IA — cuestionario general', items: [
+    { id: 'av1', q: '¿Llamadas entrantes, salientes, o ambas? Si salientes: ¿para qué?' },
+    { id: 'av2', q: '¿Número dedicado ya, o hay que dar uno de alta? ¿Convive con la línea humana o la sustituye?' },
+    { id: 'av3', q: 'Nº aproximado de llamadas al mes y duración media esperada' },
+    { id: 'av4', q: '¿Qué debe hacer en la llamada? (agendar, informar, tomar pedido, filtrar urgencias...)' },
+    { id: 'av5', q: 'Cómo debe presentarse al principio, preguntas que debe hacer en orden, datos que nunca debe inventar' },
+    { id: 'av6', q: 'Casos que debe transferir siempre, a qué número/persona, y qué hacer si nadie coge' },
+    { id: 'av7', q: '¿24/7 o solo fuera del horario humano?' },
+    { id: 'av8', q: '¿Se van a grabar las llamadas? (aviso legal obligatorio si sí) ¿Quién es el responsable del tratamiento?' },
+  ]},
+  { cat: 'TruKi (Facturación/presupuestos)', items: [
+    { id: 'tk1', q: 'Razón social exacta, NIF/CIF/DNI, dirección fiscal completa, logo, ¿IVA distinto al 21% en algún caso?' },
+    { id: 'tk2', q: 'Serie de facturación deseada. ¿Facturas previas con otro programa? ¿En qué número continuar? Serie de presupuestos' },
+    { id: 'tk3', q: 'Catálogo inicial: materiales habituales + precio unitario, precio de la hora de mano de obra (¿varios tipos?)' },
+    { id: 'tk4', q: '¿Necesita presupuestos y facturas, o solo uno? ¿Cuántos trabajadores usan la app? ¿Cómo recibe el cliente final el documento?' },
+    { id: 'tk5', q: '¿Factura a particulares, empresas, o ambos? ¿Clientes recurrentes a precargar?' },
+    { id: 'tk6', q: '¿Quién lleva la contabilidad/impuestos? Su email para el envío automático de informes. ¿Tiene cuenta de correo lista para el SMTP?' },
+  ]},
+  { cat: 'IA para WhatsApp — preguntas específicas', items: [
+    { id: 'wa1', q: '¿Qué tono quieres que use el asistente — formal, cercano, desenfadado?', hint: 'Si dice "lo que tú veas": usar por defecto "profesional y cercano".' },
+    { id: 'wa2', q: 'Dame las 5-10 preguntas que más te repiten tus clientes, con la respuesta real a cada una.', hint: 'Si no tiene ninguna pensada: proponer ejemplos típicos de su sector (horario, precios, ubicación, formas de pago, plazos).' },
+    { id: 'wa3', q: '¿Cuál es tu horario real de atención?', hint: 'Si no tiene horario fijo: usar "Te contestamos lo antes posible" con un rango orientativo amplio.' },
+    { id: 'wa4', q: 'Catálogo de servicios o productos y precios que el asistente puede compartir.', hint: 'Si no quiere dar precios en abierto: el asistente dice "te paso el precio exacto en un momento" y deriva.' },
+    { id: 'wa5', q: '¿Mantienes tu número de siempre (Coexistence) o quieres uno nuevo solo para la IA?', hint: 'Si no lo tiene claro: recomendar mantener el suyo salvo que quiera separar del todo.' },
+    { id: 'wa6', q: '¿Hay algo que el asistente NUNCA debe decir o prometer?', hint: 'Ejemplos: no prometer plazos que no controla, no dar datos de otros clientes, no comprometerse a descuentos sin confirmar.' },
+    { id: 'wa7', q: '¿En qué casos debe avisarte a ti en vez de seguir contestando solo?', hint: 'Por defecto: quejas, presupuestos grandes, y cualquier cosa fuera de lo que sabe responder.' },
+  ]},
+  { cat: 'IA para tu Web — preguntas específicas', items: [
+    { id: 'wb1', q: '¿Qué tono, FAQ, horario y catálogo quieres que use? (igual que en WhatsApp)' },
+    { id: 'wb2', q: '¿Qué usas para gestionar tu web hoy — WordPress, Wix, HTML propio, otro?' },
+    { id: 'wb3', q: '¿Quieres que el chat aparezca en todas las páginas o solo en algunas?', hint: 'Si no lo tiene claro: recomendar que aparezca en todas.' },
+  ]},
+  { cat: 'Reservas y Agenda — preguntas específicas', items: [
+    { id: 'ra1', q: 'Lista de servicios que se pueden reservar y cuánto dura cada uno.', hint: 'Si solo tiene un tipo de cita: 30 o 60 minutos, lo que confirme como más habitual.' },
+    { id: 'ra2', q: 'Horario real de atención (y los descansos).' },
+    { id: 'ra3', q: '¿Cuánto margen quieres dejar entre una cita y la siguiente?', hint: 'Si no lo sabe: proponer 10-15 minutos por defecto.' },
+    { id: 'ra4', q: '¿Confirmación automática de la cita, o prefieres revisarla tú antes?', hint: 'Si duda: recomendar automática.' },
+    { id: 'ra5', q: '¿Quieres que se manden recordatorios automáticos antes de cada cita?' },
+  ]},
+  { cat: 'IA para Correo — preguntas específicas', items: [
+    { id: 'co1', q: '¿Prefieres que las respuestas queden en borrador para revisarlas, o que se envíen solas?', hint: 'Si no lo tiene claro: empezar siempre en borrador.' },
+    { id: 'co2', q: 'Preguntas reales que sueles recibir por correo, con su respuesta.', hint: 'Si no tiene ninguna: pedirle que reenvíe 5-10 correos reales de los últimos meses.' },
+    { id: 'co3', q: 'Firma que quieres que aparezca al final de cada respuesta.' },
+    { id: 'co4', q: 'Tono de las respuestas.' },
+  ]},
+  { cat: 'IA para Llamadas — preguntas específicas', items: [
+    { id: 'll1', q: '¿Prefiere mantener su número de toda la vida, o uno nuevo solo para la IA?', hint: 'Si no lo sabe: recomendar desvío del actual — menos cambio y más barato.' },
+    { id: 'll2', q: '¿Qué debe poder hacer la IA por teléfono — solo informar, o también agendar cita directamente?' },
+    { id: 'll3', q: 'Tono y personalidad de la voz.' },
+    { id: 'll4', q: '¿Cómo debe identificarse siempre al descolgar?', hint: 'Por defecto: "Hola, soy [nombre elegido], el asistente de [negocio], ¿en qué puedo ayudarte?".' },
+    { id: 'll5', q: '¿En qué casos debe pasar la llamada a una persona en vez de seguir sola?' },
+  ]},
+  { cat: 'Firma Digital — preguntas específicas', items: [
+    { id: 'fd1', q: '¿Qué tipo de documentos vas a firmar más — contratos, presupuestos, consentimientos?' },
+    { id: 'fd2', q: '¿Dónde quieres el botón de firma en tu web?', hint: 'Si no lo sabe: burbuja flotante, igual que el chat.' },
+    { id: 'fd3', q: '¿Quieres que te avisemos por email cada vez que alguien firma algo?' },
+  ]},
+  { cat: 'Flujos automáticos a medida — preguntas específicas', items: [
+    { id: 'fm1', q: 'Describe paso a paso lo que haces hoy a mano para esto.', hint: 'Si le cuesta explicarlo: pedirle que comparta pantalla y lo haga una vez delante tuyo.' },
+    { id: 'fm2', q: '¿Qué herramientas usas ya (Gmail, Excel, WhatsApp, algún CRM...)?' },
+    { id: 'fm3', q: '¿Con qué frecuencia ocurre este proceso?' },
+    { id: 'fm4', q: 'Si algo fallara alguna vez, ¿a quién hay que avisar y cómo?' },
+  ]},
+  { cat: 'Ciberseguridad Pyme — preguntas específicas', items: [
+    { id: 'cy1', q: '¿Quién más tiene acceso de administrador a tu web o tu correo hoy?' },
+    { id: 'cy2', q: '¿Has tenido algún incidente de seguridad antes?' },
+    { id: 'cy3', q: '¿Qué datos sensibles manejas (pagos, datos de clientes, historiales)?', hint: 'Si no está seguro: preguntar en concreto por pagos online, salud, o datos de menores.' },
+  ]},
+  { cat: 'Automatización de documentos — preguntas específicas', items: [
+    { id: 'dc1', q: '¿Qué documento se repite más en tu día a día (presupuestos, contratos, informes)?' },
+    { id: 'dc2', q: '¿De dónde salen hoy los datos que rellenan ese documento?' },
+    { id: 'dc3', q: '¿En qué formato lo necesitas — PDF, Word, ambos?' },
+  ]},
+  { cat: 'CRM a medida — preguntas específicas', items: [
+    { id: 'cr1', q: '¿Qué información necesitas ver de un cliente de un vistazo?' },
+    { id: 'cr2', q: '¿Cómo gestionas hoy tus leads y oportunidades?' },
+    { id: 'cr3', q: '¿Quién del equipo lo va a usar en el día a día, y qué debe ver cada uno?' },
+  ]},
+  { cat: 'Integraciones a medida — preguntas específicas', items: [
+    { id: 'in1', q: '¿Qué herramientas quieres que "se hablen" entre sí?' },
+    { id: 'in2', q: '¿Qué información debe pasar de una a otra, y con qué frecuencia?' },
+    { id: 'in3', q: '¿Qué trabajo manual te ahorrarías si esto ya estuviera conectado?' },
+  ]},
+  { cat: 'Página Web — preguntas para que sea única', items: [
+    { id: 'pw1', q: '¿A qué se dedica exactamente el negocio?', hint: 'Si da una respuesta genérica: insistir con "¿qué fue lo último que resolviste para un cliente?".' },
+    { id: 'pw2', q: '¿Tiene logo ya?' },
+    { id: 'pw3', q: 'Fotos reales del local, del equipo (si quieren salir) y de trabajos ya realizados.' },
+    { id: 'pw4', q: 'Colores de marca o referencias de estilo que le gusten.' },
+    { id: 'pw5', q: 'Textos reales de "quiénes somos" y testimonios de clientes si los tiene.' },
+    { id: 'pw6', q: '¿A quién quiere atraer con esta web?', hint: 'Si responde "a todo el mundo": "si solo pudieras elegir un tipo de cliente, ¿cuál sería?".' },
+    { id: 'pw7', q: 'Webs de la competencia que le gusten o no le gusten.' },
+    { id: 'pw8', q: '¿Ya tiene un dominio, o hay que registrar uno nuevo?' },
+  ]},
+];
+
+let auditRespuestasCache = {};
+async function loadAuditChecklist(clientId) {
+  const box = document.getElementById('audit-checklist');
+  if (!box) return;
+  box.innerHTML = '<div class="empty-mini">Cargando…</div>';
+  const { data } = await sb.from('audit_respuestas').select('pregunta_id, respuesta').eq('client_id', clientId);
+  auditRespuestasCache = {};
+  (data || []).forEach(r => { auditRespuestasCache[r.pregunta_id] = r.respuesta; });
+  renderAuditChecklist(clientId);
+}
+function renderAuditChecklist(clientId) {
+  const box = document.getElementById('audit-checklist');
+  box.innerHTML = AUDIT_CHECKLIST.map(cat => `
+    <details class="audit-cat">
+      <summary>${escapeHtml(cat.cat)} <span style="color:var(--grey);font-weight:400;">(${cat.items.length})</span></summary>
+      ${cat.items.map(it => `
+        <div class="audit-q">
+          <label>${escapeHtml(it.q)}</label>
+          ${it.hint ? `<div class="hint">Si no sabe responder: ${escapeHtml(it.hint)}</div>` : ''}
+          <textarea data-pregunta-id="${it.id}" placeholder="Respuesta del cliente..." onblur="saveAuditRespuesta('${clientId}','${it.id}',this.value)">${escapeHtml(auditRespuestasCache[it.id] || '')}</textarea>
+        </div>
+      `).join('')}
+    </details>
+  `).join('');
+}
+async function saveAuditRespuesta(clientId, preguntaId, valor) {
+  await sb.from('audit_respuestas').upsert({ client_id: clientId, pregunta_id: preguntaId, respuesta: valor, updated_at: new Date().toISOString() });
+  auditRespuestasCache[preguntaId] = valor;
 }
 
 async function openFicha(id) {
