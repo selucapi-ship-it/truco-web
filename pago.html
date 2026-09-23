@@ -627,6 +627,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         <span class="error-msg" id="nif-error-msg">Campo obligatorio</span>
         <span class="warn-msg" id="nif-warn-msg">Este NIF/CIF ya está registrado — si es tuyo, inicia sesión arriba en vez de darte de alta otra vez.</span>
       </div>
+      <div class="form-field full" data-field="domicilio">
+        <label>Domicilio fiscal <span class="req">*</span> <span style="color:var(--grey);font-weight:400;">(para factura)</span></label>
+        <input type="text" id="f-domicilio" autocomplete="street-address" placeholder="Calle, número, código postal y ciudad" oninput="vField(this)">
+        <span class="error-msg">Campo obligatorio</span>
+      </div>
       <div class="form-field full" data-field="mensaje">
         <label>¿Qué es lo más urgente para tu negocio? <span style="color:var(--grey);font-weight:400;">(opcional)</span></label>
         <textarea id="f-mensaje" placeholder="Cuéntanos brevemente tu situación actual..."></textarea>
@@ -920,13 +925,14 @@ async function applyLoggedInClient() {
     if (!tipoMatched) tipoEl.value = '';
   }
   setVal('f-nif', client.nif);
+  setVal('f-domicilio', client.domicilio);
 
   // "camposAMostrar": qué campos revelar aunque el resto de la ficha ya esté
-  // completa — nombre/telefono/negocio/nif son obligatorios de verdad; tipo
-  // (sector) es opcional pero se muestra igual si el valor guardado no
-  // coincidía con ninguna opción del desplegable (ver comentario de arriba),
-  // para no perderlo en silencio.
-  const missing = ['nombre', 'telefono', 'negocio', 'nif'].filter(k => !client[k]);
+  // completa — nombre/telefono/negocio/nif/domicilio son obligatorios de
+  // verdad; tipo (sector) es opcional pero se muestra igual si el valor
+  // guardado no coincidía con ninguna opción del desplegable (ver comentario
+  // de arriba), para no perderlo en silencio.
+  const missing = ['nombre', 'telefono', 'negocio', 'nif', 'domicilio'].filter(k => !client[k]);
   if (!tipoMatched) missing.push('tipo');
   const grid = document.getElementById('checkout-fields-grid');
   if (missing.length === 0) {
@@ -1155,7 +1161,7 @@ function goToStep(n){
 // es opcional. NO valida RGPD/términos — eso es del Paso 3 (método de pago),
 // se comprueba aparte en handlePay() justo antes de cobrar.
 function validateContactAndAccount(){
-  const n=document.getElementById('f-nombre'),e=document.getElementById('f-email'),p=document.getElementById('f-telefono'),b=document.getElementById('f-negocio'),nif=document.getElementById('f-nif');
+  const n=document.getElementById('f-nombre'),e=document.getElementById('f-email'),p=document.getElementById('f-telefono'),b=document.getElementById('f-negocio'),nif=document.getElementById('f-nif'),dom=document.getElementById('f-domicilio');
   let ok=true;const missing=[];
   if(clientMode==='existing'&&!loggedInClientData){
     ok=false;missing.push('Inicia sesión como cliente arriba, o elige "Primera vez con TRUCO"');
@@ -1164,6 +1170,7 @@ function validateContactAndAccount(){
     checkField(n,'Nombre completo');
     checkField(b,'Nombre del negocio');
     checkField(nif,'NIF / CIF (obligatorio para la factura)');
+    checkField(dom,'Domicilio fiscal (obligatorio para la factura)');
     if(p&&p.value.replace(/\D/g,'').length<9){p.classList.add('error');ok=false;missing.push('Teléfono válido (mínimo 9 números)');}else if(p)p.classList.remove('error');
     if(e&&(!e.value.trim()||!e.value.includes('@'))){e.classList.add('error');ok=false;missing.push('Email válido');}else if(e)e.classList.remove('error');
   }
@@ -1860,13 +1867,14 @@ async function handlePay(){
   // (presupuesto personalizado, Stripe aún no disponible, o pago normal): es el
   // momento en que sabemos que es un cliente real interesado.
   try{
-    const nif=document.getElementById('f-nif'),msg=document.getElementById('f-mensaje');
+    const nif=document.getElementById('f-nif'),msg=document.getElementById('f-mensaje'),dom=document.getElementById('f-domicilio');
     await fetch('/.netlify/functions/save-lead',{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         source:'checkout',session_id:trucoSessionId(),
         nombre:n.value.trim(),email:e.value.trim(),telefono:p.value.trim(),
         negocio:b.value.trim(),tipo:s.value.trim(),nif:nif?nif.value.trim():null,
+        domicilio:dom?dom.value.trim():null,
         nota:'Inició compra: '+plan.name+(msg&&msg.value.trim()?' — Mensaje: '+msg.value.trim():'')
       })
     });

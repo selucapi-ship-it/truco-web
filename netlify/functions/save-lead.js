@@ -31,6 +31,7 @@ exports.handler = async function (event) {
     p_tipo: payload.tipo ? String(payload.tipo).slice(0, 120) : null,
     p_nif: payload.nif ? String(payload.nif).slice(0, 40) : null,
     p_nota: payload.nota ? String(payload.nota).slice(0, 2000) : null,
+    p_domicilio: payload.domicilio ? String(payload.domicilio).slice(0, 300) : null,
   };
 
   // Las claves nuevas de Supabase (sb_secret_...) solo van en "apikey": si además
