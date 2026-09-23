@@ -261,6 +261,29 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .form-field input.error,.form-field select.error{border-color:var(--red);}
 .error-msg{font-size:.80rem;color:var(--red);display:none;}
 .form-field input.error ~ .error-msg,.form-field select.error ~ .error-msg{display:block;}
+.warn-msg{font-size:.80rem;color:var(--gold);display:none;}
+.form-field input.warn ~ .warn-msg{display:block;}
+
+.field-label-row{display:flex;align-items:center;gap:6px;}
+.info-dot{position:relative;display:inline-flex;}
+.info-dot-btn{width:16px;height:16px;border-radius:50%;border:1px solid var(--grey-line);background:var(--bg-card);color:var(--grey);font-size:.68rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:var(--font-b);}
+.info-dot-btn:hover{border-color:var(--gold);color:var(--gold);}
+.info-dot-pop{display:none;position:absolute;right:0;top:22px;z-index:20;width:230px;max-width:calc(100vw - 56px);background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:10px;padding:11px 13px;font-size:.78rem;color:var(--grey);line-height:1.5;box-shadow:0 10px 26px rgba(0,0,0,.4);}
+.info-dot.open .info-dot-pop{display:block;}
+
+/* AVISO — reemplaza al alert() nativo del navegador, que se veía como un
+   error de la página en vez de un aviso normal del formulario. */
+#notice-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(3px);z-index:500;align-items:center;justify-content:center;padding:20px;}
+#notice-overlay.show{display:flex;}
+.notice-box{width:100%;max-width:400px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:16px;padding:26px 26px 22px;box-shadow:0 20px 50px -14px rgba(0,0,0,.6);}
+.notice-icon{width:38px;height:38px;border-radius:50%;background:var(--gold-dim);border:1px solid rgba(217,168,63,.3);color:var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:1.05rem;font-weight:800;font-family:var(--font-d);}
+.notice-box h3{font-family:var(--font-d);font-size:1.08rem;margin-bottom:10px;}
+.notice-box p{font-size:.86rem;color:var(--grey);line-height:1.55;margin-bottom:6px;}
+.notice-list{margin:6px 0 4px;padding-left:0;list-style:none;}
+.notice-list li{font-size:.86rem;color:var(--white);padding:6px 0 6px 20px;position:relative;border-bottom:1px solid var(--grey-line);}
+.notice-list li:last-child{border-bottom:none;}
+.notice-list li::before{content:'';position:absolute;left:2px;top:15px;width:6px;height:6px;border-radius:50%;background:var(--gold);}
+.notice-box button{margin-top:16px;width:100%;background:var(--blue);border:none;border-radius:9px;color:#fff;padding:12px;font-size:.88rem;font-weight:700;cursor:pointer;font-family:var(--font-b);}
 
 /* CLIENTE EXISTENTE / NUEVO */
 .client-toggle{display:flex;gap:8px;margin-bottom:18px;}
@@ -329,6 +352,16 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 </style>
 </head>
 <body>
+
+<div id="notice-overlay">
+  <div class="notice-box">
+    <div class="notice-icon">!</div>
+    <h3 id="notice-title">Antes de continuar</h3>
+    <p id="notice-text" style="display:none;"></p>
+    <ul class="notice-list" id="notice-list" style="display:none;"></ul>
+    <button onclick="closeNotice()">Entendido</button>
+  </div>
+</div>
 
 <nav>
   <a class="nav-logo" href="index.html">
@@ -556,8 +589,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       </div>
       <div class="form-field" data-field="telefono">
         <label>Teléfono <span class="req">*</span></label>
-        <input type="tel" id="f-telefono" autocomplete="tel" placeholder="+34 600 000 000" oninput="vField(this)">
-        <span class="error-msg">Campo obligatorio</span>
+        <input type="tel" id="f-telefono" autocomplete="tel" placeholder="+34 600 000 000" oninput="vPhone(this)">
+        <span class="error-msg">Escribe un teléfono válido (mínimo 9 números)</span>
       </div>
       <div class="form-field" data-field="negocio">
         <label>Nombre del negocio <span class="req">*</span></label>
@@ -565,8 +598,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         <span class="error-msg">Campo obligatorio</span>
       </div>
       <div class="form-field" data-field="tipo">
-        <label>Sector <span class="req">*</span></label>
-        <select id="f-tipo" onchange="vField(this)">
+        <label>Sector <span style="color:var(--grey);font-weight:400;">(opcional)</span></label>
+        <select id="f-tipo">
           <option value="">Selecciona tu sector</option>
             <option value="dental">Clínica dental</option>
           <option>Clínica / Centro médico</option>
@@ -581,11 +614,18 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
           <option>Servicios profesionales</option>
           <option>Otro</option>
         </select>
-        <span class="error-msg">Selecciona una opción</span>
       </div>
       <div class="form-field" data-field="nif">
-        <label>NIF / CIF <span style="color:var(--grey);font-weight:400;">(para factura)</span></label>
-        <input type="text" id="f-nif" placeholder="Opcional">
+        <div class="field-label-row">
+          <label>NIF / CIF <span class="req">*</span> <span style="color:var(--grey);font-weight:400;">(para factura)</span></label>
+          <span class="info-dot" id="nif-info-dot">
+            <button type="button" class="info-dot-btn" onclick="event.stopPropagation();document.getElementById('nif-info-dot').classList.toggle('open')" aria-label="¿Qué NIF pongo?">?</button>
+            <span class="info-dot-pop">Si eres autónomo, el NIF es el mismo número que tu DNI. Si facturas como empresa, pon el CIF de la empresa.</span>
+          </span>
+        </div>
+        <input type="text" id="f-nif" placeholder="Tu NIF o CIF" oninput="vNif(this)">
+        <span class="error-msg" id="nif-error-msg">Campo obligatorio</span>
+        <span class="warn-msg" id="nif-warn-msg">Este NIF/CIF ya está registrado — si es tuyo, inicia sesión arriba en vez de darte de alta otra vez.</span>
       </div>
       <div class="form-field full" data-field="mensaje">
         <label>¿Qué es lo más urgente para tu negocio? <span style="color:var(--grey);font-weight:400;">(opcional)</span></label>
@@ -881,9 +921,12 @@ async function applyLoggedInClient() {
   }
   setVal('f-nif', client.nif);
 
-  // Solo pedimos lo que de verdad no sepamos ya de su ficha — el resto no
-  // hace falta que lo vuelva a escribir.
-  const missing = ['nombre', 'telefono', 'negocio'].filter(k => !client[k]);
+  // "camposAMostrar": qué campos revelar aunque el resto de la ficha ya esté
+  // completa — nombre/telefono/negocio/nif son obligatorios de verdad; tipo
+  // (sector) es opcional pero se muestra igual si el valor guardado no
+  // coincidía con ninguna opción del desplegable (ver comentario de arriba),
+  // para no perderlo en silencio.
+  const missing = ['nombre', 'telefono', 'negocio', 'nif'].filter(k => !client[k]);
   if (!tipoMatched) missing.push('tipo');
   const grid = document.getElementById('checkout-fields-grid');
   if (missing.length === 0) {
@@ -1107,21 +1150,21 @@ function goToStep(n){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// Extraído de handlePay(): valida nombre/email/teléfono/negocio/sector (o el
-// login si es cliente existente) y la contraseña si es alta nueva. NO valida
-// RGPD/términos — eso es del Paso 3 (método de pago), se comprueba aparte en
-// handlePay() justo antes de cobrar.
+// Extraído de handlePay(): valida nombre/email/teléfono/negocio/NIF (o el
+// login si es cliente existente) y la contraseña si es alta nueva. El Sector
+// es opcional. NO valida RGPD/términos — eso es del Paso 3 (método de pago),
+// se comprueba aparte en handlePay() justo antes de cobrar.
 function validateContactAndAccount(){
-  const n=document.getElementById('f-nombre'),e=document.getElementById('f-email'),p=document.getElementById('f-telefono'),b=document.getElementById('f-negocio'),s=document.getElementById('f-tipo');
+  const n=document.getElementById('f-nombre'),e=document.getElementById('f-email'),p=document.getElementById('f-telefono'),b=document.getElementById('f-negocio'),nif=document.getElementById('f-nif');
   let ok=true;const missing=[];
   if(clientMode==='existing'&&!loggedInClientData){
     ok=false;missing.push('Inicia sesión como cliente arriba, o elige "Primera vez con TRUCO"');
   }else{
     const checkField=(f,label)=>{if(f&&!f.value.trim()){f.classList.add('error');ok=false;missing.push(label);}else if(f)f.classList.remove('error');};
     checkField(n,'Nombre completo');
-    checkField(p,'Teléfono');
     checkField(b,'Nombre del negocio');
-    checkField(s,'Sector');
+    checkField(nif,'NIF / CIF (obligatorio para la factura)');
+    if(p&&p.value.replace(/\D/g,'').length<9){p.classList.add('error');ok=false;missing.push('Teléfono válido (mínimo 9 números)');}else if(p)p.classList.remove('error');
     if(e&&(!e.value.trim()||!e.value.includes('@'))){e.classList.add('error');ok=false;missing.push('Email válido');}else if(e)e.classList.remove('error');
   }
   if(clientMode==='new'){
@@ -1149,12 +1192,12 @@ function handleMainCtaClick(){
   trucoTrackClick('pago_confirmar_pagar');
   if(wizardStep===1){
     const plan=getActivePlan();
-    if(!plan){alert('Elige un Departamento Tecnológico arriba antes de continuar.');return;}
-    if(plan.solutionsIncomplete){alert(incompleteLabel().replace(' ↑','')+' antes de continuar.');scrollToSolutionsPicker();return;}
+    if(!plan){showNotice('Elige un Departamento Tecnológico arriba antes de continuar.');return;}
+    if(plan.solutionsIncomplete){showNotice(incompleteLabel().replace(' ↑','')+' antes de continuar.');scrollToSolutionsPicker();return;}
     goToStep(2);
   }else if(wizardStep===2){
     const v=validateContactAndAccount();
-    if(!v.ok){alert('Antes de continuar, completa lo siguiente:\n\n• '+v.missing.join('\n• '));return;}
+    if(!v.ok){showNotice(v.missing);return;}
     goToStep(3);
   }else{
     handlePay();
@@ -1701,6 +1744,52 @@ function vField(el){
 function vEmail(el){
   if(!el.value.trim()||!el.value.includes('@')){el.classList.add('error');}else{el.classList.remove('error');}
 }
+function vPhone(el){
+  const digits=el.value.replace(/\D/g,'');
+  if(digits.length<9){el.classList.add('error');}else{el.classList.remove('error');}
+}
+
+// ── AVISO propio — sustituye a alert()/confirm() nativos, que se veían como
+// un error del navegador/página en vez de un aviso normal del formulario.
+function showNotice(textOrItems,title){
+  document.getElementById('notice-title').textContent=title||'Antes de continuar';
+  const textEl=document.getElementById('notice-text'),listEl=document.getElementById('notice-list');
+  if(Array.isArray(textOrItems)){
+    textEl.style.display='none';
+    listEl.style.display='block';
+    listEl.innerHTML=textOrItems.map(t=>'<li>'+t.replace(/</g,'&lt;')+'</li>').join('');
+  }else{
+    listEl.style.display='none';
+    textEl.style.display='block';
+    textEl.textContent=textOrItems;
+  }
+  document.getElementById('notice-overlay').classList.add('show');
+}
+function closeNotice(){document.getElementById('notice-overlay').classList.remove('show');}
+
+// ── NIF/CIF: obligatorio para poder emitir factura + aviso si ya existe un
+// cliente con ese mismo NIF (comprobado en el servidor — la web pública no
+// tiene acceso de lectura a la ficha de otros clientes, solo a un booleano).
+let _nifCheckTimer=null,_nifDuplicado=false;
+function vNif(el){
+  const errEl=document.getElementById('nif-error-msg'),warnEl=document.getElementById('nif-warn-msg');
+  el.classList.remove('warn');warnEl.style.display='none';_nifDuplicado=false;
+  if(!el.value.trim()){el.classList.add('error');errEl.textContent='Campo obligatorio';return;}
+  el.classList.remove('error');
+  clearTimeout(_nifCheckTimer);
+  const nif=el.value.trim();
+  _nifCheckTimer=setTimeout(async()=>{
+    try{
+      const resp=await fetch('/.netlify/functions/check-nif',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nif})});
+      const data=await resp.json();
+      if(data&&data.exists&&el.value.trim()===nif){
+        _nifDuplicado=true;
+        el.classList.add('warn');
+        warnEl.style.display='block';
+      }
+    }catch(e){/* si falla la comprobación, no bloquea el alta */}
+  },500);
+}
 const ANEXO_VERSION='2026-09-17';
 function updateBtn(){
   const r=document.getElementById('ch-rgpd'),t=document.getElementById('ch-terminos'),a=document.getElementById('ch-anexo');
@@ -1761,7 +1850,7 @@ async function handlePay(){
   if(a&&!a.checked){a.parentElement.style.outline='1px solid var(--red)';ok=false;missing.push('Aceptar el Anexo de Autorización de Accesos');}else if(a)a.parentElement.style.outline='';
 
   if(!ok){
-    alert('Antes de continuar, completa o marca lo siguiente:\n\n• '+missing.join('\n• '));
+    showNotice(missing);
     if(cv.missing.length>0)goToStep(2);
     return;
   }
@@ -1806,8 +1895,8 @@ async function handlePay(){
     }catch(err){/* nunca bloquear el pago por un fallo al crear la cuenta — el founder puede invitarle a mano después */}
   }
 
-  if(plan.customQuote){alert('Con más de 3 automatizaciones elaboramos un presupuesto personalizado. Te contactamos en menos de 24h. Mientras tanto, escríbenos por WhatsApp o reserva una consultoría gratuita.');return;}
-  if(!plan.totalRaw){alert('Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');return;}
+  if(plan.customQuote){showNotice('Con más de 3 automatizaciones elaboramos un presupuesto personalizado. Te contactamos en menos de 24h. Mientras tanto, escríbenos por WhatsApp o reserva una consultoría gratuita.');return;}
+  if(!plan.totalRaw){showNotice('Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');return;}
 
   // Pago único → Stripe (tarjeta). Financiado → PayPal (su checkout ofrece
   // "Paga en 3" al comprador si es elegible) — sustituye al antiguo aviso de
@@ -1847,7 +1936,7 @@ async function handlePay(){
   }catch(err){/* sigue al aviso de abajo */}
   if(payBtn){payBtn.disabled=false;}
   if(payBtnText){payBtnText.textContent=payBtnText.dataset.origText;}
-  alert(usaPaypal?'No hemos podido conectar con PayPal ahora mismo. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.':usaTransferencia?'No hemos podido generar tu referencia de transferencia ahora mismo. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.':'Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');
+  showNotice(usaPaypal?'No hemos podido conectar con PayPal ahora mismo. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.':usaTransferencia?'No hemos podido generar tu referencia de transferencia ahora mismo. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.':'Este plan estará disponible muy pronto. Escríbenos por WhatsApp o reserva una consultoría gratuita para continuar.');
 }
 
 function toggleFaq(btn){
@@ -1856,6 +1945,11 @@ function toggleFaq(btn){
   document.querySelectorAll('.faq-item.open').forEach(el=>{el.classList.remove('open');const ic=el.querySelector('.faq-icon');if(ic)ic.textContent='+';});
   if(!isOpen){item.classList.add('open');if(icon)icon.textContent='−';}
 }
+
+document.addEventListener('click', () => {
+  const dot = document.getElementById('nif-info-dot');
+  if (dot) dot.classList.remove('open');
+});
 
 (function preselectFromUrl(){
   const params=new URLSearchParams(location.search);
