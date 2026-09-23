@@ -293,7 +293,17 @@
   /* ── ESTADÍSTICAS (overlay, founder-only) ── */
   #stats-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
   #stats-btn:hover{border-color:var(--gold);color:var(--gold);}
-  #stats-overlay,#activity-overlay,#chat-conv-overlay,#cal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+  #stats-overlay,#activity-overlay,#chat-conv-overlay,#cal-overlay,#auditorias-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+  .aud-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
+  .aud-card{background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:14px;padding:16px;cursor:pointer;transition:transform .15s,border-color .15s;display:flex;flex-direction:column;gap:6px;text-align:left;}
+  .aud-card:hover{transform:translateY(-2px);border-color:var(--blue);}
+  .aud-card-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;}
+  .aud-card-name{font-family:var(--font-b);font-weight:700;color:var(--white);font-size:.94rem;}
+  .aud-card-time{color:var(--grey);font-size:.72rem;white-space:nowrap;}
+  .aud-card-negocio{color:var(--blue);font-size:.82rem;}
+  .aud-card-contact{color:var(--grey);font-size:.78rem;}
+  .aud-card-nota{color:var(--white);font-size:.8rem;background:rgba(255,255,255,.04);border-radius:8px;padding:8px 10px;margin-top:2px;}
+  .aud-card-status{font-size:.7rem;color:var(--grey);text-transform:uppercase;letter-spacing:.03em;margin-top:auto;padding-top:6px;}
   .stats-box{width:100%;max-width:920px;margin:0 auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:18px;padding:30px 32px;box-shadow:var(--shadow-card);}
   .stats-box h2{font-family:var(--font-d);font-size:1.5rem;margin:0 0 18px;letter-spacing:-.01em;}
   .stats-close{float:right;background:none;border:1px solid var(--grey-line);border-radius:8px;width:32px;height:32px;color:var(--grey);font-size:1rem;cursor:pointer;transition:border-color .15s,color .15s;}
@@ -612,6 +622,15 @@
       <h2 id="chat-conv-title">Conversación</h2>
       <div id="chat-conv-meta"></div>
       <div id="chat-conv-body"></div>
+    </div>
+  </div>
+
+  <div id="auditorias-overlay" onclick="if(event.target===this)closeAuditoriasOverlay()">
+    <div class="stats-box">
+      <button class="stats-close" onclick="closeAuditoriasOverlay()">✕</button>
+      <h2>🎯 Auditorías reservadas</h2>
+      <p style="color:var(--grey);font-size:.82rem;margin:-8px 0 20px;">Prospectos que han reservado una auditoría gratuita desde la web. Pincha en uno para abrir su ficha con el guion completo de la llamada.</p>
+      <div id="auditorias-cards" class="aud-cards"></div>
     </div>
   </div>
 
@@ -1278,6 +1297,7 @@
         <div class="resumen-group-title">Clientes</div>
         <div class="resumen-tiles">
           <button class="resumen-tile" onclick="showClientesView()">👥<span>Clientes</span></button>
+          <button class="resumen-tile" onclick="openAuditoriasOverlay()">🎯<span>Auditorías</span></button>
           <button class="resumen-tile" id="resumen-tile-activity" onclick="openActivityOverlay()" style="display:none;">📈<span>Interacciones</span></button>
           <button class="resumen-tile" id="resumen-tile-cal" onclick="openCalOverlay()" style="display:none;">📅<span>Calendario</span></button>
         </div>
@@ -1540,6 +1560,24 @@
         </div>
 
         <div class="ficha-tab-panel" data-tab-panel="auditoria" style="display:none;">
+          <div class="card">
+            <div class="card-tag">Lo que elige el cliente</div>
+            <p style="color:var(--grey);font-size:.82rem;margin:0 0 14px;">Marca lo que va aceptando durante la llamada. Al pulsar "Generar presupuesto" te lleva a Presupuestos ya con esto metido, listo para revisar y enviar.</p>
+            <div class="ficha-row" style="border:none;padding-top:0;">
+              <span>Departamento</span>
+              <select id="audit-tier-select" style="max-width:220px;">
+                <option value="">Sin Departamento (venta suelta)</option>
+                <option value="start">Start™</option>
+                <option value="basic">Basic™</option>
+                <option value="lite">Lite™</option>
+                <option value="pro">Pro™</option>
+              </select>
+            </div>
+            <div class="empty-mini" style="margin:10px 0 6px;">Automatizaciones que quiere</div>
+            <div id="audit-autom-list" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;"><div class="empty-mini">Cargando…</div></div>
+            <button class="btn" style="margin-top:14px;" onclick="generarPresupuestoDesdeAuditoria()">📄 Generar presupuesto</button>
+          </div>
+
           <div class="card">
             <div class="card-tag">Guion de auditoría</div>
             <p style="color:var(--grey);font-size:.82rem;margin:0 0 14px;">Preguntas por tipo de proyecto/automatización, sacadas del Libro de TRUCOtechnology y de los cuestionarios obligatorios. Se guardan solas al salir de cada campo — abre solo las categorías que apliquen a esta auditoría.</p>
@@ -1987,6 +2025,51 @@ function clearCalId() {
   try { localStorage.removeItem('panel_cal_id'); } catch (e) {}
   document.getElementById('cal-id').value = '';
   renderCalFrame('');
+}
+
+// ── AUDITORÍAS RESERVADAS — prospectos que han reservado desde la web
+// (interactions.source='auditoria', ver index.html#submitBookingForm) y aún
+// no son ni cliente ni descartado. Pinchar una tarjeta abre su ficha
+// directamente en la pestaña Auditoría, lista con el guion de la llamada. ──
+function openAuditoriasOverlay() {
+  document.getElementById('auditorias-overlay').style.display = 'block';
+  loadAuditoriasProspectos();
+}
+function closeAuditoriasOverlay() {
+  document.getElementById('auditorias-overlay').style.display = 'none';
+}
+async function loadAuditoriasProspectos() {
+  const box = document.getElementById('auditorias-cards');
+  box.innerHTML = '<div class="empty-mini">Cargando…</div>';
+  const { data, error } = await sb
+    .from('interactions')
+    .select('nota, created_at, client_id, clients(id, nombre, negocio, telefono, email, status)')
+    .eq('source', 'auditoria')
+    .order('created_at', { ascending: false })
+    .limit(200);
+  if (error || !data) { box.innerHTML = '<div class="empty-mini">No se pudo cargar.</div>'; return; }
+  const vistos = new Set();
+  const prospectos = [];
+  for (const fila of data) {
+    const c = fila.clients;
+    if (!c || vistos.has(c.id)) continue;
+    vistos.add(c.id);
+    if (['cliente', 'descartado', 'baja'].includes(c.status)) continue;
+    prospectos.push({ ...c, nota: fila.nota, reservado_en: fila.created_at });
+  }
+  if (!prospectos.length) { box.innerHTML = '<div class="empty-mini">No hay auditorías reservadas pendientes de cerrar.</div>'; return; }
+  box.innerHTML = prospectos.map(p => `
+    <div class="aud-card" onclick="closeAuditoriasOverlay();openFicha('${p.id}','auditoria')">
+      <div class="aud-card-top">
+        <div class="aud-card-name">${escapeHtml(p.nombre || 'Sin nombre')}</div>
+        <div class="aud-card-time">${timeAgo(p.reservado_en)}</div>
+      </div>
+      ${p.negocio ? `<div class="aud-card-negocio">${escapeHtml(p.negocio)}</div>` : ''}
+      <div class="aud-card-contact">${[p.telefono ? '📞 ' + escapeHtml(p.telefono) : '', p.email ? '✉️ ' + escapeHtml(p.email) : ''].filter(Boolean).join(' · ')}</div>
+      ${p.nota ? `<div class="aud-card-nota">${escapeHtml(p.nota)}</div>` : ''}
+      <div class="aud-card-status">${escapeHtml(p.status || 'nuevo')}</div>
+    </div>
+  `).join('');
 }
 
 function openStatsOverlay() {
@@ -4047,7 +4130,54 @@ function renderClients() {
 function switchFichaTab(tab) {
   document.querySelectorAll('.ficha-tab').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
   document.querySelectorAll('.ficha-tab-panel').forEach(p => { p.style.display = p.dataset.tabPanel === tab ? 'flex' : 'none'; });
-  if (tab === 'auditoria' && selectedClientId) loadAuditChecklist(selectedClientId);
+  if (tab === 'auditoria' && selectedClientId) { loadAuditChecklist(selectedClientId); renderAuditAutomList(); }
+}
+
+async function renderAuditAutomList() {
+  const box = document.getElementById('audit-autom-list');
+  const catalog = await getSolutionsCatalog();
+  box.innerHTML = catalog.map(s => `
+    <label style="display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--grey);">
+      <input type="checkbox" value="${escapeHtml(s.solution_key)}" style="width:auto;"> ${escapeHtml(s.name)}
+    </label>
+  `).join('');
+}
+
+// Toma lo marcado arriba (Departamento + automatizaciones) y usa el motor
+// REAL de presupuestos (el mismo de la zona de Presupuestos, con sus reglas
+// de gratis/extra por Departamento) para generarlo — no se duplica esa
+// lógica aquí. Deja el presupuesto guardado y con enlace de pago ya
+// generado; el envío por email se hace a mano desde ahí (con el email del
+// cliente ya puesto), para poder revisar antes de que salga algo con un
+// precio hacia un cliente real.
+async function generarPresupuestoDesdeAuditoria() {
+  const client = allClients.find(c => c.id === selectedClientId);
+  if (!client) return;
+  const tierKey = document.getElementById('audit-tier-select').value;
+  const automKeys = [...document.querySelectorAll('#audit-autom-list input:checked')].map(el => el.value);
+  if (!tierKey && !automKeys.length) { alert('Marca al menos un Departamento o una automatización antes de generar el presupuesto.'); return; }
+
+  await openQuotesOverlay();
+
+  if (tierKey) {
+    document.getElementById('q-tier-select').value = tierKey;
+    anadirLineaTier();
+  }
+  for (const key of automKeys) {
+    document.getElementById('q-catalogo-select').value = key;
+    await anadirLineaCatalogo();
+  }
+
+  document.getElementById('q-nombre').value = client.nombre || '';
+  document.getElementById('q-email').value = client.email || '';
+  document.getElementById('q-telefono').value = client.telefono || '';
+  document.getElementById('q-negocio').value = client.negocio || '';
+  document.getElementById('q-nif').value = client.nif || '';
+  renderQuoteLineas();
+
+  await guardarPresupuesto();
+  await generarEnlacePago();
+  toast('Presupuesto generado para ' + (client.nombre || 'el cliente') + ' — revisa qué automatizaciones son gratis con el Departamento y pulsa "Enviar por email" cuando esté listo.');
 }
 
 // ── GUION DE AUDITORÍA ───────────────────────────────────────────────────
@@ -4237,15 +4367,19 @@ async function saveAuditRespuesta(clientId, preguntaId, valor) {
   auditRespuestasCache[preguntaId] = valor;
 }
 
-async function openFicha(id) {
+async function openFicha(id, tab) {
   selectedClientId = id;
   showClientesView();
+  let client = allClients.find(c => c.id === id);
+  // Un prospecto recién creado (p.ej. reservó la auditoría con el panel ya
+  // abierto) puede no estar todavía en la caché local — se recarga una vez
+  // antes de rendirse, en vez de fallar en silencio.
+  if (!client) { await loadClients(); client = allClients.find(c => c.id === id); }
   renderClients();
-  const client = allClients.find(c => c.id === id);
   if (!client) return;
   document.getElementById('ficha-empty').style.display = 'none';
   document.getElementById('ficha-content').style.display = 'block';
-  switchFichaTab('info');
+  switchFichaTab(tab || 'info');
   document.getElementById('ficha-nombre').textContent = client.nombre || 'Sin nombre';
   document.getElementById('ficha-negocio').textContent = client.negocio || '';
   document.getElementById('ficha-email').textContent = client.email || '—';
