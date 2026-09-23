@@ -116,7 +116,13 @@ async function enviarRespuestaWhatsapp(phoneNumberId, destinatario, texto, token
     }),
   });
   if (!resp.ok) {
-    console.error('[WHATSAPP_CLIENT_BOT] Envío fallo', resp.status, await resp.text());
+    const errBody = await resp.text();
+    console.error('[WHATSAPP_CLIENT_BOT] Envío fallo', resp.status, errBody);
+    // DIAGNÓSTICO TEMPORAL (quitar en cuanto Jose responda bien de verdad):
+    // no hay forma de ver los logs de Netlify para esta función, así que
+    // reutilizamos Telegram (ya confirmado que funciona) para ver el error
+    // real de Meta en vez de adivinar.
+    await notifyTelegram(`⚠️ DEBUG envío WhatsApp falló — status ${resp.status}\nphoneNumberId: ${phoneNumberId}\n${errBody.slice(0, 800)}`).catch(() => {});
     return false;
   }
   return true;
