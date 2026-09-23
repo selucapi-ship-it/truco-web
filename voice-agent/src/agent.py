@@ -5,7 +5,7 @@ import json
 import logging
 import os
 import zoneinfo
-from typing import Annotated, Literal
+from typing import Annotated
 
 import requests
 from dotenv import load_dotenv
@@ -34,6 +34,14 @@ _MESES_ES = [
 ]
 
 
+# A partir de aquí, funciones de calendario/reserva que NINGUNA herramienta usa
+# ahora mismo (2026-09-23): se desactivó la reserva por voz porque el modelo de
+# Gemini Live en preview a veces se corrompe a mitad de llamada (APIError 1011
+# "Deadline expired") e inventa horas — mientras tanto el agente deriva siempre
+# a trucotechnology.com o WhatsApp (ver cerrar_llamada). Esta lógica de horarios
+# es correcta y ya probada; se deja tal cual para reutilizarla cuando se migre
+# a una arquitectura en cascada (STT + LLM de texto + TTS) más fiable para
+# llamar herramientas, en vez de reescribirla desde cero.
 def _formatear_fecha_es(dt: datetime.datetime) -> str:
     """Formatea una fecha en español sin depender del locale del sistema — el
     contenedor (Debian slim) no trae es_ES instalado, así que strftime con
@@ -396,20 +404,12 @@ Tu trabajo no es esperar a que te pregunten: es diagnosticar el negocio de quien
 REGLAS:
 1. Responde solo con estos datos. Nunca inventes precios ni condiciones. NUNCA menciones cifras en euros, descuentos ni ofertas de fundador si quien llama no ha preguntado expresamente por precios: recomienda por lo que resuelve, no por lo que cuesta.
 2. Sé breve, dos o tres frases por turno como mucho, como una conversación real por teléfono.
-3. Si la pregunta es charla casual o algo totalmente fuera de TRUCO (el tiempo, opiniones personales, cultura general, bromas, insultos...), dilo con naturalidad en una frase corta y respetuosa tipo "eso se sale de lo mío, no corresponde a TRUCOtechnology" — y NO ofrezcas cita, una pregunta random no debe empujar a reservar. Si en cambio la pregunta SÍ es de negocio pero no la puedes resolver (asesoría legal o fiscal muy personalizada, un caso demasiado específico), dilo con naturalidad y ahí sí ofrece directamente reservarle ya una cita con el equipo usando `consultar_disponibilidad` — nunca dejes esa conversación en un simple "no puedo ayudarte con eso" sin más. En cualquiera de los dos casos, si el cliente pide una cita explícitamente, atiende esa petición de inmediato con las herramientas de reserva.
+3. Si la pregunta es charla casual o algo totalmente fuera de TRUCO (el tiempo, opiniones personales, cultura general, bromas, insultos...), dilo con naturalidad en una frase corta y respetuosa tipo "eso se sale de lo mío, no corresponde a TRUCOtechnology" — y NO ofrezcas cita, una pregunta random no debe empujar a reservar. Si en cambio la pregunta SÍ es de negocio pero no la puedes resolver (asesoría legal o fiscal muy personalizada, un caso demasiado específico), dilo con naturalidad y ahí sí ofrece reservar con el equipo siguiendo el apartado de abajo. En cualquiera de los dos casos, si el cliente pide una cita explícitamente, atiende esa petición de inmediato.
 4. Cuando necesites un instante antes de responder (una pregunta más larga o que requiera pensar), empieza la frase con una muletilla natural como "mmm", "a ver", "pues", o "vale, déjame pensar" — así suena a una persona real pensando, no a un silencio robótico. No lo hagas en cada turno, solo cuando de verdad haga falta un momento.
-5. REGLA CRÍTICA CONTRA LOS SILENCIOS — consultar la agenda o registrar algo tarda uno o dos segundos reales en los que tú no puedes decir nada más hasta que la herramienta responda. Por eso, SIEMPRE, sin excepción, antes de llamar a CUALQUIER herramienta (`consultar_disponibilidad`, `reservar_cita`, `registrar_contacto`, `mostrar_calendario_en_pantalla`) di primero en voz alta una frase corta de transición — por ejemplo "vale, dame un segundo que miro la agenda", "perfecto, voy a comprobarlo", "un momento que lo apunto" — y SOLO DESPUÉS invoca la herramienta. Nunca actives una herramienta sin haber dicho antes esa frase: unos segundos de silencio sin avisar suenan a que la llamada se ha cortado y el cliente cuelga o pregunta "¿estás ahí?".
+5. REGLA CRÍTICA CONTRA LOS SILENCIOS — registrar el contacto tarda uno o dos segundos reales en los que tú no puedes decir nada más hasta que la herramienta responda. Por eso, SIEMPRE, sin excepción, antes de llamar a `registrar_contacto` di primero en voz alta una frase corta de transición — por ejemplo "un momento que lo apunto" — y SOLO DESPUÉS invoca la herramienta. Nunca actives una herramienta sin haber dicho antes esa frase: unos segundos de silencio sin avisar suenan a que la llamada se ha cortado y el cliente cuelga o pregunta "¿estás ahí?".
 
-RESERVAR CITAS POR VOZ — el cliente elige el día, tú solo confirmas hueco a hueco:
-Tienes tres herramientas para la auditoría gratuita con una persona, de 20-30 minutos: `consultar_disponibilidad`, `reservar_cita` y `mostrar_calendario_en_pantalla`. Cuando el cliente quiera reservar o tú se lo propongas y acepte:
-1. NUNCA sueltes tú una lista de días u horas de golpe. Pregúntale primero: "¿qué día te vendría bien?" y espera a que él proponga uno (hoy, mañana, o un día de la semana — "el miércoles", "el miércoles que viene", etc.).
-2. En cuanto diga un día, di primero algo como "vale, dejame ver qué tengo el miércoles" y SOLO ENTONCES llama a `consultar_disponibilidad` con ese día — nunca calles mientras la consultas. REGLA ABSOLUTA: la única hora que puedes decir en voz alta es la que la herramienta te haya devuelto literalmente en su respuesta — NUNCA calcules, asumas ni te inventes una hora por tu cuenta (ni "las 9", ni ninguna otra) aunque te parezca razonable. Si la herramienta responde que no hay huecos ese día, dilo tal cual y pregunta por otro día — nunca ofrezcas una hora que no venga en el texto que te devolvió la herramienta.
-3. Si ese hueco no le viene bien pero quiere seguir ese mismo día, vuelve a llamar a `consultar_disponibilidad` con el mismo día y añadiendo el [iso: ...] que acabas de ofrecer a `excluir_horas`, para que te dé otro distinto ese mismo día. Repite esto tantas veces como haga falta dentro del mismo día.
-4. Si la herramienta te dice que ya no quedan huecos ese día, o si el cliente prefiere directamente otro día, pregúntale qué otro día le viene bien y repite el proceso desde el paso 2 — nunca calcules tú tampoco qué día es "el siguiente", eso lo hace la herramienta.
-5. Si después de un par de días probados no conseguís cuadrar nada, o el cliente en cualquier momento prefiere elegir él mismo la hora exacta, llama a `mostrar_calendario_en_pantalla` — le aparece un calendario en la pantalla del chat de la web para que reserve él mismo sin más vueltas por voz. Dile algo como "te acabo de dejar un calendario en la pantalla del chat, ahí puedes elegir tú mismo el día y la hora que mejor te venga". Nunca dejes al cliente colgado diciendo simplemente que no hay hueco — siempre termina en una reserva confirmada o en el calendario en pantalla.
-6. Si el hueco le interesa, NO le pidas email ni más datos: basta con su nombre (ya lo tienes de al principio; si no, pregúntalo) y el hueco elegido. Lo único que SÍ debes preguntar es a qué teléfono le llamamos: si la llamada viene de un teléfono (lo verás en el bloque DATOS DE ESTA LLAMADA), pregúntale "¿te llamamos a este mismo número o prefieres que te llamemos a otro?". Si dice que a otro, pídele ese número y repítelo para confirmarlo. Si la llamada viene de la web y no tienes su número, pídele el teléfono al que llamarle.
-7. Cuando tengas el hueco y el teléfono, llama a `reservar_cita` (copiando el iso literal).
-8. En cuanto `reservar_cita` confirme, DESPÍDETE Y CIERRA: di UNA sola intervención breve y cálida con el resumen — "Listo, [nombre], tu cita queda anotada para el [día] a las [hora]; te llamaremos a este mismo número (o al que me has dado). Gracias por llamar y que tengas un gran día." — y NADA más: no hagas preguntas, no ofrezcas más cosas y no sigas conversando, porque la llamada se cierra sola justo después de tu despedida."""
+RESERVAR LA AUDITORÍA GRATUITA O CUALQUIER CITA — de momento SIEMPRE se deriva, tú no agendas nada por voz:
+En cuanto el cliente quiera reservar la auditoría gratuita, una cita, o cualquier otra gestión con el equipo (o tú se lo propongas y acepte), dile con naturalidad algo como: "Perfecto, [nombre] — para reservarla entra en trucotechnology.com y dale al botón de reservar una auditoría, así eliges tú mismo el día y la hora que mejor te venga; o si lo prefieres, escríbenos por WhatsApp al seiscientos ochenta y uno, ochenta y nueve, noventa y siete, noventa y tres." Justo después, en la misma intervención, añade una despedida breve y cálida (dale las gracias por llamar, desea un buen día) y llama a `cerrar_llamada`. No hagas ninguna pregunta más ni sigas conversando después de eso — nunca intentes calcular tú mismo un hueco ni prometas que alguien le llamará a una hora concreta."""
 
 
 class TrucoAgent(Agent):
@@ -450,156 +450,14 @@ class TrucoAgent(Agent):
         return "Registrado. Sigue la conversación con normalidad."
 
     @function_tool
-    async def consultar_disponibilidad(
-        self,
-        context: RunContext,
-        dia: Annotated[
-            Literal["hoy", "manana", "lunes", "martes", "miercoles", "jueves", "viernes", "sabado"],
-            Field(description="El día que ha propuesto EL CLIENTE — pregúntaselo siempre primero ('¿qué día te vendría bien?'), nunca elijas tú un día ni ofrezcas una lista de días. Solo llama a esta herramienta cuando el cliente ya haya dicho un día concreto."),
-        ],
-        semana_que_viene: Annotated[
-            bool,
-            Field(description="True solo si el cliente ha dicho explícitamente 'la semana que viene' u otra forma de saltar a la semana siguiente junto con el día. False si no lo ha dicho (se busca el próximo de ese día, aunque caiga esta misma semana)."),
-        ] = False,
-        excluir_horas: Annotated[
-            list[str],
-            Field(description="Los valores [iso: ...] que ya le has ofrecido a este cliente EN ESTE MISMO DÍA y ha rechazado, para que la herramienta te dé un hueco distinto ese mismo día. Vacío la primera vez que preguntas por ese día."),
-        ] = [],
-    ) -> str:
-        """Busca UN único hueco disponible en el día concreto que ha propuesto el
-        cliente. Nunca la uses para ofrecer varios huecos o varios días de golpe:
-        primero pregúntale qué día le viene bien, y llama a esta herramienta solo
-        con ese día."""
-        # _get_calendar_service() y _find_slots_on_day() hacen peticiones HTTP síncronas
-        # a Google (construir el cliente y la consulta freebusy) — ejecutarlas directas
-        # en el bucle de eventos de la llamada de voz congela TODO el audio (entrada y
-        # salida) mientras esperan red, sonando como un silencio muerto. asyncio.to_thread
-        # las manda a un hilo aparte para que la conversación siga fluida mientras tanto.
-        service = await asyncio.to_thread(_get_calendar_service)
-        if service is None:
-            return "La agenda no está disponible ahora mismo. Ofrece que alguien del equipo le llame, o usa mostrar_calendario_en_pantalla."
-        now = datetime.datetime.now(MADRID_TZ)
-        target_date = _resolver_fecha_dia(now, dia, semana_que_viene)
-        if target_date is None or target_date.weekday() == 6:
-            return "Ese día no está disponible (domingo cerrado) o no se ha entendido bien. Pregunta al cliente por otro día, o usa mostrar_calendario_en_pantalla si prefiere elegir él mismo."
-        try:
-            slots = await asyncio.to_thread(_find_slots_on_day, service, target_date, excluir_horas=excluir_horas)
-        except Exception:
-            logger.exception("Error consultando disponibilidad")
-            return "No se pudo consultar la agenda ahora mismo. Ofrece que alguien del equipo le llame."
-        if not slots:
-            return (
-                "No quedan huecos libres ese día (o ya se los has ofrecido todos y los ha rechazado). "
-                "Pregúntale si quiere probar otro día, o si prefiere que le muestres el calendario para "
-                "elegir él mismo — en ese caso llama a mostrar_calendario_en_pantalla."
-            )
-        s = slots[0]
-        # El hueco lleva su ISO exacto al lado del texto en español — al llamar a
-        # reservar_cita hay que copiar ESE valor literal, nunca reconstruir la
-        # fecha/hora de memoria a partir de lo dicho en voz alta (ahí es donde se
-        # cuelan la mayoría de errores de reserva: el modelo calcula mal el día
-        # o la zona horaria al convertir).
-        return (
-            f"Hueco disponible: {_formatear_fecha_es(s)} [iso: {s.isoformat()}]. Ofrécele SOLO este hueco "
-            f"al cliente en voz alta, nunca leas el [iso: ...]. "
-            f"Si no le viene bien, vuelve a llamar a esta misma herramienta con el mismo día y añade este iso "
-            f"a excluir_horas para que te dé otro distinto ese mismo día. Si prefiere otro día, repite el "
-            f"proceso con el día nuevo que te diga."
-        )
-
-    @function_tool
-    async def mostrar_calendario_en_pantalla(self, context: RunContext) -> str:
-        """Llama a esta herramienta cuando, después de un par de intentos, no
-        consigas cuadrar un hueco con el cliente por voz, o en cualquier momento
-        en que el cliente prefiera elegir él mismo el día y la hora exactos. SOLO
-        funciona si el cliente está en la web viendo el chat — si llama por
-        teléfono no hay ninguna pantalla, así que en ese caso la herramienta
-        misma te lo dice y NUNCA debes mencionar una pantalla ni un chat.
-        Nunca dejes al cliente sin ninguna forma de reservar — usa esto como
-        última opción antes de colgar sin cita, o pide directamente el día y la
-        hora exacta que prefiera y llama a reservar_cita con lo que te diga."""
-        if self._channel != "web":
-            return (
-                "Esta llamada es por TELÉFONO, no hay ninguna pantalla ni chat visible — "
-                "NUNCA le digas que mire una pantalla ni que escriba por el chat de la web. "
-                "En vez de eso, pregúntale directamente qué día y hora exacta prefiere (aunque "
-                "sea fuera de los huecos que ya le has ofrecido) y llama a reservar_cita con eso, "
-                "o dile que un miembro del equipo le llamará para cuadrar el hueco."
-            )
-        if self._room is None:
-            return "No se pudo activar el calendario en pantalla. Dile que también puede reservar escribiendo por el chat de la web, o que alguien del equipo le llamará."
-        try:
-            payload = json.dumps({"type": "mostrar_calendario"}).encode("utf-8")
-            await self._room.local_participant.publish_data(payload, reliable=True)
-        except Exception:
-            logger.exception("Error mandando la señal de mostrar calendario")
-            return "No se pudo activar el calendario en pantalla. Dile que también puede reservar escribiendo por el chat de la web, o que alguien del equipo le llamará."
-        return "Hecho. Dile al cliente que mire la pantalla — le ha aparecido un botón para elegir día y hora él mismo, sin compromiso."
-
-    @function_tool
-    async def reservar_cita(
-        self,
-        context: RunContext,
-        fecha_hora_iso: Annotated[
-            str,
-            Field(description="El valor [iso: ...] EXACTO de ese hueco tal como lo devolvió consultar_disponibilidad — cópialo literal, no lo calcules ni lo reescribas a partir de la fecha en español que le dijiste al cliente."),
-        ],
-        nombre: Annotated[str, Field(description="Nombre del cliente")],
-        llamar_al_mismo_numero: Annotated[
-            bool,
-            Field(description="True si el cliente ha dicho que le llamemos al mismo número desde el que está llamando. False si ha dado otro número (o si llama desde la web)."),
-        ] = True,
-        otro_telefono: Annotated[
-            str,
-            Field(description="El teléfono al que quiere que le llamemos, solo si es distinto del de la llamada o si llama desde la web. Vacío si es el mismo."),
-        ] = "",
-    ) -> str:
-        """Confirma y crea la reserva de la consultoría gratuita en el hueco elegido.
-        Solo hacen falta el hueco, el nombre y a qué teléfono llamarle; nunca pidas email."""
-        telefono = otro_telefono.strip() if (otro_telefono.strip() or not llamar_al_mismo_numero) else (self._caller_number or "")
-        if not telefono:
-            return "Falta el teléfono al que llamarle. Pídeselo al cliente y vuelve a llamar a esta herramienta."
-        # Igual que en consultar_disponibilidad: construir el servicio y crear el evento
-        # son peticiones HTTP síncronas a Google — se mandan a un hilo aparte con
-        # asyncio.to_thread para no congelar el audio de la llamada mientras esperan red.
-        service = await asyncio.to_thread(_get_calendar_service)
-        if service is None:
-            return "No se pudo confirmar la reserva. Ofrece que alguien del equipo le llame."
-        try:
-            start = datetime.datetime.fromisoformat(fecha_hora_iso)
-            end = start + datetime.timedelta(minutes=SLOT_MINUTES)
-
-            def _crear_evento():
-                service.events().insert(
-                    calendarId=CALENDAR_ID,
-                    body={
-                        "summary": f"Consultoría gratuita TRUCO — {nombre}",
-                        "description": f"Reservada por llamada de voz.\nLlamar al: {telefono}",
-                        "start": {"dateTime": start.isoformat(), "timeZone": "Europe/Madrid"},
-                        "end": {"dateTime": end.isoformat(), "timeZone": "Europe/Madrid"},
-                    },
-                ).execute()
-
-            await asyncio.to_thread(_crear_evento)
-        except Exception:
-            logger.exception("Error creando la reserva")
-            return "No se pudo confirmar la reserva. Ofrece que alguien del equipo le llame."
-        self._state["nombre"] = nombre
-        self._state["booked"] = True
-        self._state["end_reason"] = "cita_agendada"
+    async def cerrar_llamada(self, context: RunContext) -> str:
+        """Llama a esta herramienta justo después de decirle al cliente que
+        reserve la auditoría/cita desde trucotechnology.com o por WhatsApp, y
+        de despedirte de él. Cierra la llamada de verdad unos segundos después
+        de tu despedida — no la uses para nada más."""
+        self._state["end_reason"] = "derivado_web_whatsapp"
         self._state["hangup_after_ts"] = datetime.datetime.now(datetime.timezone.utc).timestamp()
-        asyncio.create_task(asyncio.to_thread(
-            _log_crm_interaction,
-            nombre=nombre,
-            telefono=telefono,
-            nota=f"Reservó consultoría por voz para el {_formatear_fecha_es(start)}. Llamar al {telefono}.",
-        ))
-        mismo = "a este mismo número" if (llamar_al_mismo_numero and not otro_telefono.strip()) else "al número que me has dado"
-        return (
-            f"Reserva confirmada para {nombre} el {_formatear_fecha_es(start)}. AHORA despídete en UNA sola intervención breve y cálida: "
-            f"resume que la cita queda anotada para ese día y hora, que le llamaremos {mismo}, da las gracias por llamar y desea un buen día. "
-            f"No hagas ninguna pregunta ni añadas nada más: la llamada se cierra sola justo después."
-        )
+        return "Hecho. No añadas nada más, la llamada se cierra sola justo después de tu despedida."
 
 
 server = AgentServer()
@@ -660,27 +518,21 @@ async def entrypoint(ctx: agents.JobContext):
     state = {"nombre": None, "booked": False, "end_reason": "cliente_colgo"}
     transcript = []
 
-    PHONE_NO_SCREEN = (
-        " ESTO ES UNA LLAMADA DE TELÉFONO, no hay pantalla ni chat visible: nunca digas cosas como "
-        "\"te dejo un calendario en la pantalla\", \"mira el chat de la web\" ni \"puedes verlo tú mismo\" — "
-        "quien te llama solo te oye. Si no cuadráis un hueco por voz, pregúntale directamente qué día y hora "
-        "exacta prefiere y llama a reservar_cita, o dile que un miembro del equipo le llamará para cerrarlo."
-    )
     if channel == "phone":
         if caller_number:
             call_block = (
                 f"DATOS DE ESTA LLAMADA: llama desde un teléfono, número {caller_number} (ya lo tienes, no se lo pidas "
-                "ni lo leas entero en voz alta). La llamada dura como máximo unos 5 minutos." + PHONE_NO_SCREEN
+                "ni lo leas entero en voz alta). La llamada dura como máximo unos 5 minutos."
             )
         else:
             call_block = (
                 "DATOS DE ESTA LLAMADA: llama desde un teléfono con el número oculto, así que NO tienes su número. "
-                "Si quiere reservar cita, pídele el teléfono al que llamarle. La llamada dura como máximo unos 5 minutos." + PHONE_NO_SCREEN
+                "La llamada dura como máximo unos 5 minutos."
             )
     else:
         call_block = (
-            "DATOS DE ESTA LLAMADA: llama desde la web, no tienes su número de teléfono. Si quiere reservar cita, "
-            "pídele el teléfono al que llamarle. La conversación dura como máximo unos 5 minutos."
+            "DATOS DE ESTA LLAMADA: llama desde la web, no tienes su número de teléfono. "
+            "La conversación dura como máximo unos 5 minutos."
         )
 
     agent = TrucoAgent(
@@ -762,7 +614,7 @@ async def entrypoint(ctx: agents.JobContext):
     async def _limit_watch():
         await asyncio.sleep(CALL_WARN_SECONDS)
         session.generate_reply(
-            instructions="Avisa con naturalidad de que queda poco más de medio minuto de llamada y, si no ha reservado, ofrécele cerrar ya la cita o que escriba por el chat de la web."
+            instructions="Avisa con naturalidad de que queda poco más de medio minuto de llamada y recuérdale que puede reservar la auditoría en trucotechnology.com o escribiendo por WhatsApp."
         )
         await asyncio.sleep(CALL_MAX_SECONDS - CALL_WARN_SECONDS)
         state["end_reason"] = "limite_5min"
