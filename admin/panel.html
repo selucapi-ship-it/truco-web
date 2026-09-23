@@ -163,6 +163,26 @@
   .stat-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),var(--blue));opacity:.7;}
   .stat-card .n{font-family:var(--font-d);font-size:1.55rem;font-weight:800;line-height:1;color:var(--white);}
   .stat-card .l{font-family:var(--font-m);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);margin-top:6px;}
+
+  /* ── RESUMEN (pantalla principal) ── */
+  #resumen-view{max-width:1100px;margin:0 auto;padding:28px 20px 60px;}
+  .resumen-kpis{display:flex;gap:14px;margin-bottom:22px;flex-wrap:wrap;}
+  .resumen-kpis .stat-card{min-width:150px;padding:18px 20px;}
+  .resumen-kpis .stat-card .n{font-size:2.1rem;}
+  .resumen-alert-card{background:linear-gradient(165deg,rgba(239,68,68,.08),var(--bg-panel) 55%);border:1px solid rgba(239,68,68,.3);border-radius:16px;padding:22px 24px;margin-bottom:26px;box-shadow:var(--shadow-card);}
+  .resumen-alert-card h2{font-family:var(--font-d);font-size:1.15rem;margin:6px 0 14px;}
+  .resumen-msg-item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--grey-line);cursor:pointer;}
+  .resumen-msg-item:last-child{border-bottom:none;}
+  .resumen-msg-item:hover .resumen-msg-who{color:var(--blue-light);}
+  .resumen-msg-who{font-weight:700;font-size:.88rem;transition:color .15s;}
+  .resumen-msg-preview{color:var(--grey);font-size:.8rem;margin-top:2px;max-width:420px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .resumen-msg-when{font-family:var(--font-m);font-size:.68rem;color:var(--grey);white-space:nowrap;}
+  .resumen-groups{display:flex;flex-direction:column;gap:22px;}
+  .resumen-group-title{font-family:var(--font-m);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+  .resumen-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;}
+  .resumen-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:14px;padding:20px 12px;font-size:1.6rem;cursor:pointer;transition:transform .15s,border-color .15s;box-shadow:var(--shadow-card);}
+  .resumen-tile:hover{transform:translateY(-2px);border-color:var(--blue);}
+  .resumen-tile span{font-family:var(--font-b);font-size:.76rem;font-weight:600;color:var(--white);}
   #new-client-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;padding:20px;}
   #truki-declaracion-overlay,#truki-create-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:250;align-items:center;justify-content:center;padding:20px;}
   .new-client-box{width:100%;max-width:440px;max-height:85vh;overflow-y:auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:16px;padding:26px;box-shadow:var(--shadow-card);}
@@ -556,6 +576,7 @@
           <div id="bell-items"></div>
         </div>
       </div>
+      <button id="resumen-btn" onclick="showResumenView()">🏠 Resumen</button>
       <button id="settings-btn" onclick="openSettingsOverlay()">Ajustes</button>
       <button id="cal-btn" onclick="openCalOverlay()" style="display:none;">📅 Calendario</button>
       <button id="stats-btn" onclick="openStatsOverlay()" style="display:none;">Estadísticas</button>
@@ -1233,7 +1254,55 @@
     </div>
   </div>
 
-  <div class="layout">
+  <div id="resumen-view">
+    <div class="resumen-kpis" id="resumen-kpis"></div>
+
+    <div class="resumen-alert-card" id="resumen-msgs-card" style="display:none;">
+      <div class="card-tag">Mensajes nuevos</div>
+      <h2>¿Te ha escrito alguien?</h2>
+      <div id="resumen-msgs-list"><div class="empty-mini">Cargando…</div></div>
+    </div>
+
+    <div class="resumen-groups">
+      <div class="resumen-group">
+        <div class="resumen-group-title">Clientes</div>
+        <div class="resumen-tiles">
+          <button class="resumen-tile" onclick="showClientesView()">👥<span>Clientes</span></button>
+          <button class="resumen-tile" id="resumen-tile-activity" onclick="openActivityOverlay()" style="display:none;">📈<span>Interacciones</span></button>
+          <button class="resumen-tile" id="resumen-tile-cal" onclick="openCalOverlay()" style="display:none;">📅<span>Calendario</span></button>
+        </div>
+      </div>
+      <div class="resumen-group" id="resumen-group-dinero" style="display:none;">
+        <div class="resumen-group-title">Dinero</div>
+        <div class="resumen-tiles">
+          <button class="resumen-tile" onclick="openQuotesOverlay()">📄<span>Presupuestos</span></button>
+          <button class="resumen-tile" onclick="openFacturasOverlay()">🧾<span>Facturas</span></button>
+          <button class="resumen-tile" onclick="openCobrosOverlay()">💳<span>Cobros</span></button>
+          <button class="resumen-tile" onclick="openTransferenciasOverlay()">🏦<span>Transferencias</span></button>
+          <button class="resumen-tile" onclick="openPricesOverlay()">🏷️<span>Precios</span></button>
+          <button class="resumen-tile" onclick="openFiscalOverlay()">📊<span>Fiscalidad</span></button>
+          <button class="resumen-tile" onclick="openTrukiOverlay()">🧮<span>TruKi</span></button>
+        </div>
+      </div>
+      <div class="resumen-group" id="resumen-group-ops" style="display:none;">
+        <div class="resumen-group-title">Operaciones</div>
+        <div class="resumen-tiles">
+          <button class="resumen-tile" onclick="openStatsOverlay()">📈<span>Estadísticas</span></button>
+          <button class="resumen-tile" onclick="openContratacionesOverlay()">✍️<span>Contrataciones</span></button>
+          <button class="resumen-tile" onclick="openTeamOverlay()">🧑‍🤝‍🧑<span>Equipo</span></button>
+          <button class="resumen-tile" onclick="openAuditOverlay()">🔒<span>Auditoría</span></button>
+        </div>
+      </div>
+      <div class="resumen-group">
+        <div class="resumen-group-title">Tu cuenta</div>
+        <div class="resumen-tiles">
+          <button class="resumen-tile" onclick="openSettingsOverlay()">⚙️<span>Ajustes</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout" id="clientes-view" style="display:none;">
     <div class="list-panel">
       <details id="agenda-card" open style="display:none;margin-bottom:16px;border:1px solid var(--grey-line);border-radius:14px;background:var(--bg-panel);">
         <summary style="cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">📅 Mi agenda · próximos 14 días
@@ -1670,8 +1739,13 @@ async function showApp() {
   // volvería vacía por RLS, así que preguntarlo sería trabajo de más).
   document.getElementById('anon-section').style.display = isFounder ? 'block' : 'none';
   document.getElementById('whatsapp-jose-section').style.display = isFounder ? 'block' : 'none';
-  if (isFounder) { loadChatSessions(); loadVoiceCalls(); loadWhatsappJoseSessions(); }
+  if (isFounder) {
+    await Promise.all([loadChatSessions(), loadWhatsappJoseSessions()]);
+    renderResumenMessages();
+    loadVoiceCalls();
+  }
   loadClients();
+  showResumenView();
   if (isFounder) {
     document.getElementById('bell-wrap').style.display = 'inline-block';
     loadNotifications();
@@ -1818,6 +1892,10 @@ async function checkFounderStatus() {
   document.getElementById('cobros-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('transferencias-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('audit-btn').style.display = isFounder ? 'inline-block' : 'none';
+  document.getElementById('resumen-tile-activity').style.display = isFounder ? 'flex' : 'none';
+  document.getElementById('resumen-tile-cal').style.display = isFounder ? 'flex' : 'none';
+  document.getElementById('resumen-group-dinero').style.display = isFounder ? 'block' : 'none';
+  document.getElementById('resumen-group-ops').style.display = isFounder ? 'block' : 'none';
 }
 
 function openTeamOverlay() {
@@ -3822,9 +3900,63 @@ function renderStats() {
     { n: clientes, l: 'Convertidos' },
     { n: estaSemana, l: 'Esta semana' },
   ];
-  document.getElementById('stats-bar').innerHTML = stats.map(s =>
+  const html = stats.map(s =>
     `<div class="stat-card"><div class="n">${s.n}</div><div class="l">${s.l}</div></div>`
   ).join('');
+  document.getElementById('stats-bar').innerHTML = html;
+  const resumenKpis = document.getElementById('resumen-kpis');
+  if (resumenKpis) resumenKpis.innerHTML = html;
+}
+
+// ── RESUMEN (pantalla principal) — reemplaza a la tabla de Clientes como
+// primera pantalla al entrar. "Clientes" pasa a ser un destino más, no la
+// vista por defecto (ver showResumenView()/showClientesView()).
+function showResumenView() {
+  document.getElementById('resumen-view').style.display = 'block';
+  document.getElementById('clientes-view').style.display = 'none';
+}
+function showClientesView() {
+  document.getElementById('resumen-view').style.display = 'none';
+  document.getElementById('clientes-view').style.display = 'grid';
+}
+
+// Junta lo último de WhatsApp (Jose) y del chat de la web en una sola lista,
+// para que un mensaje nuevo salte a la vista nada más entrar — antes solo se
+// veía si ibas a buscarlo dentro de la zona de Clientes.
+function renderResumenMessages() {
+  const card = document.getElementById('resumen-msgs-card');
+  const list = document.getElementById('resumen-msgs-list');
+  if (!isFounder) { card.style.display = 'none'; return; }
+  const items = [
+    ...whatsappJoseSessionsData.map(s => ({
+      when: s.last_seen, who: s.nombre || s.telefono, tipo: '💬 WhatsApp',
+      onclick: `openWhatsappJoseConversation('${s.telefono}')`,
+    })),
+    ...chatSessionsData.map(s => ({
+      when: s.last_seen, who: s.nombre || 'Anónimo (chat web)', tipo: '🌐 Chat web',
+      onclick: `openChatConversation('${s.session_id}')`,
+    })),
+  ].sort((a, b) => new Date(b.when) - new Date(a.when)).slice(0, 6);
+  card.style.display = 'block';
+  if (!items.length) { list.innerHTML = '<div class="empty-mini">Nada nuevo por ahora.</div>'; return; }
+  list.innerHTML = items.map(i => `
+    <div class="resumen-msg-item" onclick="showResumenMsgConv(() => { ${i.onclick}; })">
+      <div>
+        <div class="resumen-msg-who">${i.tipo} · ${escapeHtml(i.who)}</div>
+      </div>
+      <div class="resumen-msg-when">${timeAgo(i.when)}</div>
+    </div>
+  `).join('');
+}
+function showResumenMsgConv(fn) { fn(); }
+function timeAgo(iso) {
+  const mins = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+  if (mins < 1) return 'ahora mismo';
+  if (mins < 60) return 'hace ' + mins + ' min';
+  const hours = Math.round(mins / 60);
+  if (hours < 24) return 'hace ' + hours + (hours === 1 ? ' hora' : ' horas');
+  const days = Math.round(hours / 24);
+  return 'hace ' + days + (days === 1 ? ' día' : ' días');
 }
 
 function exportCSV() {
@@ -3900,6 +4032,7 @@ function switchFichaTab(tab) {
 
 async function openFicha(id) {
   selectedClientId = id;
+  showClientesView();
   renderClients();
   const client = allClients.find(c => c.id === id);
   if (!client) return;
