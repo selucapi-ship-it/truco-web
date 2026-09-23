@@ -177,6 +177,11 @@
   .ficha-panel{padding:20px 22px;}
   #ficha-empty{color:var(--grey);font-size:.85rem;text-align:center;margin-top:60px;}
   .ficha-header{margin-bottom:18px;}
+  .ficha-tabs{display:flex;gap:6px;margin-bottom:16px;border-bottom:1px solid var(--grey-line);flex-wrap:wrap;}
+  .ficha-tab{background:none;border:none;color:var(--grey);font-family:var(--font-b);font-size:.84rem;font-weight:600;padding:9px 4px;margin-right:14px;cursor:pointer;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;}
+  .ficha-tab:hover{color:var(--white);}
+  .ficha-tab.on{color:var(--blue-light);border-color:var(--blue);}
+  .ficha-tab-panel{display:flex;flex-direction:column;}
   .ficha-name{font-family:var(--font-d);font-size:1.45rem;margin:0 0 6px;letter-spacing:-.01em;}
   .ficha-badges{display:flex;flex-wrap:wrap;gap:0;}
   .ficha-negocio{color:var(--grey);font-size:.85rem;margin-bottom:14px;}
@@ -1300,6 +1305,19 @@
         <div id="anon-list"></div>
       </div>
 
+      <div class="anon-section" id="whatsapp-jose-section">
+        <div class="timeline-title">Conversaciones de WhatsApp (Jose)</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:.78rem;flex-wrap:wrap;">
+          <select id="whatsapp-jose-filter" onchange="renderWhatsappJoseSessions()">
+            <option value="">Todas</option>
+            <option value="clientes">Ya son clientes</option>
+            <option value="prospectos">Todavía no son clientes</option>
+          </select>
+          <button class="del-btn" onclick="loadWhatsappJoseSessions()">Actualizar</button>
+        </div>
+        <div id="whatsapp-jose-list"></div>
+      </div>
+
       <div class="anon-section" id="voice-calls-section">
         <div class="timeline-title">Llamadas del asistente de voz</div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:.78rem;flex-wrap:wrap;">
@@ -1323,107 +1341,122 @@
           <div class="contact-actions" id="contact-actions"></div>
         </div>
 
-        <div class="card">
-          <div class="card-tag">Datos de contacto</div>
-          <div class="ficha-row"><span>Email</span><span id="ficha-email"></span></div>
-          <div class="ficha-row"><span>Teléfono</span><span id="ficha-telefono"></span></div>
-          <div class="ficha-row"><span>Sector</span><span id="ficha-tipo"></span></div>
-          <div class="ficha-row"><span>NIF/CIF</span><span id="ficha-nif"></span></div>
+        <div class="ficha-tabs">
+          <button class="ficha-tab on" data-tab="info" onclick="switchFichaTab('info')">Info</button>
+          <button class="ficha-tab" data-tab="actividad" onclick="switchFichaTab('actividad')">Actividad</button>
+          <button class="ficha-tab" data-tab="economico" onclick="switchFichaTab('economico')">Económico</button>
+          <button class="ficha-tab" data-tab="accesos" onclick="switchFichaTab('accesos')">Accesos y gestión</button>
         </div>
 
-        <div class="card">
-          <div class="card-tag">Ciclo de vida</div>
-          <div class="ficha-row">
-            <span>Status</span>
-            <select id="status-select" onchange="updateStatus()">
-              <option value="nuevo">Nuevo</option>
-              <option value="contactado">Contactado</option>
-              <option value="propuesta_enviada">Propuesta enviada</option>
-              <option value="negociando">Negociando</option>
-              <option value="cliente">Cliente</option>
-              <option value="descartado">Descartado</option>
-            </select>
+        <div class="ficha-tab-panel" data-tab-panel="info">
+          <div class="card">
+            <div class="card-tag">Datos de contacto</div>
+            <div class="ficha-row"><span>Email</span><span id="ficha-email"></span></div>
+            <div class="ficha-row"><span>Teléfono</span><span id="ficha-telefono"></span></div>
+            <div class="ficha-row"><span>Sector</span><span id="ficha-tipo"></span></div>
+            <div class="ficha-row"><span>NIF/CIF</span><span id="ficha-nif"></span></div>
           </div>
-          <div class="ficha-row">
-            <span>Etapa de implantación</span>
-            <select id="stage-select" onchange="updateStage()">
-              <option value="contratado">Contratado</option>
-              <option value="en_implantacion">En implantación</option>
-              <option value="revision">En revisión</option>
-              <option value="completado">Completado</option>
-            </select>
-          </div>
-          <div class="ficha-row"><span>Cliente desde</span><span id="ficha-desde"></span></div>
-          <div class="ficha-row"><span>Fecha de alta</span><span id="ficha-alta"></span></div>
-          <div class="ficha-row"><span>Fecha de baja</span><span id="ficha-baja"></span></div>
-          <div class="ficha-row"><span>Acceso al portal</span><span id="ficha-portal-status"></span></div>
-          <button id="invite-portal-btn" onclick="invitePortal()" class="btn sm block ghost" style="margin-top:12px;">Invitar al portal</button>
-        </div>
 
-        <div class="card">
-          <div class="card-tag">Tareas</div>
-          <div id="ficha-tasks"><div class="empty-mini">Cargando…</div></div>
-          <div class="add-task">
-            <input type="text" id="task-title-input" placeholder="Nueva tarea (ej: cambiar horario del bot)">
-            <button class="btn sm" onclick="addTask()">Añadir</button>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-tag">Automatizaciones</div>
-          <div id="ficha-automations"><div class="empty-mini">Sin automatizaciones registradas todavía.</div></div>
-        </div>
-
-        <div class="card">
-          <div class="card-tag">Económico</div>
-          <div id="ficha-econ-contratado"><div class="empty-mini">Cargando…</div></div>
-          <div id="ficha-econ-proximo-cobro" class="econ-highlight" style="display:none;"></div>
-          <div id="ficha-econ-overage"></div>
-          <div class="empty-mini" style="margin-top:10px;">Pagos</div>
-          <div id="ficha-econ-pagos"><div class="empty-mini">Cargando…</div></div>
-        </div>
-
-        <div class="card" id="banking-card" style="display:none;">
-          <div class="card-tag">Domiciliación y cobro</div>
-          <p style="color:var(--grey);font-size:.78rem;margin:0 0 12px;">Para saber de un vistazo si este cliente tiene el pago en orden.</p>
-          <div class="add-access" id="banking-form">
-            <input type="text" id="banking-iban" placeholder="IBAN">
-            <input type="text" id="banking-titular" placeholder="Titular de la cuenta">
-            <label style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--white);">
-              <input type="checkbox" id="banking-activa" style="width:auto;"> Domiciliación activa
-            </label>
-            <button class="btn sm" onclick="guardarDomiciliacion()">Guardar</button>
-          </div>
-          <div id="banking-fecha" class="empty-mini" style="margin-top:8px;"></div>
-        </div>
-
-        <div class="card" id="accesos-card" style="display:none;">
-          <div class="card-tag">Accesos</div>
-          <div id="ficha-accesos"><div class="empty-mini">Cargando…</div></div>
-          <div class="add-access" id="add-access-form">
-            <input type="email" id="access-email-input" placeholder="Email del colaborador (ya debe tener cuenta)">
-            <select id="access-permission-select">
-              <option value="view">Ver</option>
-              <option value="edit">Editar</option>
-            </select>
-            <button class="btn sm" onclick="grantAccess()">Conceder acceso</button>
+          <div class="card">
+            <div class="card-tag">Ciclo de vida</div>
+            <div class="ficha-row">
+              <span>Status</span>
+              <select id="status-select" onchange="updateStatus()">
+                <option value="nuevo">Nuevo</option>
+                <option value="contactado">Contactado</option>
+                <option value="propuesta_enviada">Propuesta enviada</option>
+                <option value="negociando">Negociando</option>
+                <option value="cliente">Cliente</option>
+                <option value="descartado">Descartado</option>
+              </select>
+            </div>
+            <div class="ficha-row">
+              <span>Etapa de implantación</span>
+              <select id="stage-select" onchange="updateStage()">
+                <option value="contratado">Contratado</option>
+                <option value="en_implantacion">En implantación</option>
+                <option value="revision">En revisión</option>
+                <option value="completado">Completado</option>
+              </select>
+            </div>
+            <div class="ficha-row"><span>Cliente desde</span><span id="ficha-desde"></span></div>
+            <div class="ficha-row"><span>Fecha de alta</span><span id="ficha-alta"></span></div>
+            <div class="ficha-row"><span>Fecha de baja</span><span id="ficha-baja"></span></div>
+            <div class="ficha-row"><span>Acceso al portal</span><span id="ficha-portal-status"></span></div>
+            <button id="invite-portal-btn" onclick="invitePortal()" class="btn sm block ghost" style="margin-top:12px;">Invitar al portal</button>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-tag">Historial</div>
-          <div class="add-note">
-            <input type="text" id="note-input" placeholder="Añadir nota (ej: llamé, no contestó)...">
-            <button class="btn sm" onclick="addManualNote()">Añadir</button>
+        <div class="ficha-tab-panel" data-tab-panel="actividad" style="display:none;">
+          <div class="card">
+            <div class="card-tag">Tareas</div>
+            <div id="ficha-tasks"><div class="empty-mini">Cargando…</div></div>
+            <div class="add-task">
+              <input type="text" id="task-title-input" placeholder="Nueva tarea (ej: cambiar horario del bot)">
+              <button class="btn sm" onclick="addTask()">Añadir</button>
+            </div>
           </div>
-          <div id="ficha-timeline" style="margin-top:14px;"></div>
+
+          <div class="card">
+            <div class="card-tag">Historial</div>
+            <div class="add-note">
+              <input type="text" id="note-input" placeholder="Añadir nota (ej: llamé, no contestó)...">
+              <button class="btn sm" onclick="addManualNote()">Añadir</button>
+            </div>
+            <div id="ficha-timeline" style="margin-top:14px;"></div>
+          </div>
         </div>
 
-        <div class="card danger" id="danger-card">
-          <div class="card-tag">Zona de gestión</div>
-          <button id="deactivate-client-btn" class="btn block danger" onclick="deactivateClient()" style="display:none;">Dar de baja</button>
-          <button id="reactivate-client-btn" class="btn block green" onclick="reactivateClient()" style="display:none;">Reactivar cliente</button>
-          <button id="rgpd-btn" class="btn block ghost" onclick="requestRgpdErasure()" style="display:none;">Solicitar borrado RGPD</button>
+        <div class="ficha-tab-panel" data-tab-panel="economico" style="display:none;">
+          <div class="card">
+            <div class="card-tag">Automatizaciones</div>
+            <div id="ficha-automations"><div class="empty-mini">Sin automatizaciones registradas todavía.</div></div>
+          </div>
+
+          <div class="card">
+            <div class="card-tag">Económico</div>
+            <div id="ficha-econ-contratado"><div class="empty-mini">Cargando…</div></div>
+            <div id="ficha-econ-proximo-cobro" class="econ-highlight" style="display:none;"></div>
+            <div id="ficha-econ-overage"></div>
+            <div class="empty-mini" style="margin-top:10px;">Pagos</div>
+            <div id="ficha-econ-pagos"><div class="empty-mini">Cargando…</div></div>
+          </div>
+
+          <div class="card" id="banking-card" style="display:none;">
+            <div class="card-tag">Domiciliación y cobro</div>
+            <p style="color:var(--grey);font-size:.78rem;margin:0 0 12px;">Para saber de un vistazo si este cliente tiene el pago en orden.</p>
+            <div class="add-access" id="banking-form">
+              <input type="text" id="banking-iban" placeholder="IBAN">
+              <input type="text" id="banking-titular" placeholder="Titular de la cuenta">
+              <label style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--white);">
+                <input type="checkbox" id="banking-activa" style="width:auto;"> Domiciliación activa
+              </label>
+              <button class="btn sm" onclick="guardarDomiciliacion()">Guardar</button>
+            </div>
+            <div id="banking-fecha" class="empty-mini" style="margin-top:8px;"></div>
+          </div>
+        </div>
+
+        <div class="ficha-tab-panel" data-tab-panel="accesos" style="display:none;">
+          <div class="card" id="accesos-card" style="display:none;">
+            <div class="card-tag">Accesos</div>
+            <div id="ficha-accesos"><div class="empty-mini">Cargando…</div></div>
+            <div class="add-access" id="add-access-form">
+              <input type="email" id="access-email-input" placeholder="Email del colaborador (ya debe tener cuenta)">
+              <select id="access-permission-select">
+                <option value="view">Ver</option>
+                <option value="edit">Editar</option>
+              </select>
+              <button class="btn sm" onclick="grantAccess()">Conceder acceso</button>
+            </div>
+          </div>
+
+          <div class="card danger" id="danger-card">
+            <div class="card-tag">Zona de gestión</div>
+            <button id="deactivate-client-btn" class="btn block danger" onclick="deactivateClient()" style="display:none;">Dar de baja</button>
+            <button id="reactivate-client-btn" class="btn block green" onclick="reactivateClient()" style="display:none;">Reactivar cliente</button>
+            <button id="rgpd-btn" class="btn block ghost" onclick="requestRgpdErasure()" style="display:none;">Solicitar borrado RGPD</button>
+          </div>
         </div>
       </div>
     </div>
@@ -1636,7 +1669,8 @@ async function showApp() {
   // ni se lanza la consulta si no es founder (para un colaborador siempre
   // volvería vacía por RLS, así que preguntarlo sería trabajo de más).
   document.getElementById('anon-section').style.display = isFounder ? 'block' : 'none';
-  if (isFounder) { loadChatSessions(); loadVoiceCalls(); }
+  document.getElementById('whatsapp-jose-section').style.display = isFounder ? 'block' : 'none';
+  if (isFounder) { loadChatSessions(); loadVoiceCalls(); loadWhatsappJoseSessions(); }
   loadClients();
   if (isFounder) {
     document.getElementById('bell-wrap').style.display = 'inline-block';
@@ -3859,6 +3893,11 @@ function renderClients() {
   }).join('');
 }
 
+function switchFichaTab(tab) {
+  document.querySelectorAll('.ficha-tab').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+  document.querySelectorAll('.ficha-tab-panel').forEach(p => { p.style.display = p.dataset.tabPanel === tab ? 'flex' : 'none'; });
+}
+
 async function openFicha(id) {
   selectedClientId = id;
   renderClients();
@@ -3866,6 +3905,7 @@ async function openFicha(id) {
   if (!client) return;
   document.getElementById('ficha-empty').style.display = 'none';
   document.getElementById('ficha-content').style.display = 'block';
+  switchFichaTab('info');
   document.getElementById('ficha-nombre').textContent = client.nombre || 'Sin nombre';
   document.getElementById('ficha-negocio').textContent = client.negocio || '';
   document.getElementById('ficha-email').textContent = client.email || '—';
@@ -4162,7 +4202,7 @@ async function reloadTimeline(id) {
     .eq('client_id', id)
     .order('created_at', { ascending: false });
 
-  const icons = { checkout: '🛒', chat: '💬', voice: '🎙️', manual: '📝' };
+  const icons = { checkout: '🛒', chat: '💬', voice: '🎙️', manual: '📝', whatsapp: '💚', portal: '🖥️', web: '🌐' };
   document.getElementById('ficha-timeline').innerHTML = (interactions || []).map(i => `
     <div class="tl-item">
       <div class="nota">${icons[i.source] || '•'} ${escapeHtml(i.nota || '(sin nota)')}</div>
@@ -4303,6 +4343,14 @@ if ('serviceWorker' in navigator) navigator.serviceWorker.register('admin-sw.js'
 
 let blockedIpsData = [];
 let chatConvOpenId = null;
+
+// ── Conversaciones de WhatsApp del propio número de TRUCO ("Jose") — mismo
+// patrón que chat_sessions/chat_messages de arriba, pero sin detección de
+// abuso (no aplica a un número de teléfono real). Antes de esto, si quien
+// escribía no era ya cliente, no quedaba nada guardado, solo un aviso suelto
+// de Telegram (ver supabase/migration_whatsapp_jose_conversations.sql).
+let whatsappJoseSessionsData = [];
+let whatsappJoseConvOpenTel = null;
 
 function isIpBlocked(ip) { return !!ip && blockedIpsData.some(b => b.ip === ip); }
 
@@ -4531,6 +4579,70 @@ function renderBlockedIps() {
       <div class="meta">${new Date(b.blocked_at).toLocaleString('es-ES')}${b.reason ? ' · ' + escapeHtml(b.reason) : ''}</div></div>
       <button class="del-btn" data-ip="${escapeHtml(b.ip)}" onclick="unblockIp(this.dataset.ip)">Desbloquear</button>
     </div>`).join('');
+}
+
+async function loadWhatsappJoseSessions() {
+  const { data } = await sb.from('whatsapp_sessions').select('*').order('last_seen', { ascending: false }).limit(200);
+  whatsappJoseSessionsData = data || [];
+  renderWhatsappJoseSessions();
+}
+
+function renderWhatsappJoseSessions() {
+  const list = document.getElementById('whatsapp-jose-list');
+  const filter = document.getElementById('whatsapp-jose-filter').value;
+  let rows = whatsappJoseSessionsData;
+  if (filter === 'clientes') rows = rows.filter(s => s.client_id);
+  if (filter === 'prospectos') rows = rows.filter(s => !s.client_id);
+  if (!rows.length) {
+    list.innerHTML = '<div style="color:var(--grey);font-size:.78rem;">Ninguna todavía.</div>';
+    return;
+  }
+  list.innerHTML = rows.map(s => `
+    <div class="anon-item" style="cursor:pointer;" data-tel="${escapeHtml(s.telefono)}" onclick="openWhatsappJoseConversation(this.dataset.tel)">
+      <div>
+        <div class="q"><b>${s.nombre ? escapeHtml(s.nombre) : s.telefono}</b> ${s.client_id ? '<span class="chat-badge grey">Ya es cliente</span>' : ''}</div>
+        <div class="meta">${new Date(s.last_seen).toLocaleString('es-ES')} · ${escapeHtml(s.telefono)} · ${s.msg_count} mensaje${s.msg_count === 1 ? '' : 's'}</div>
+      </div>
+      <button class="del-btn" data-tel="${escapeHtml(s.telefono)}" onclick="event.stopPropagation();deleteWhatsappJoseSession(this.dataset.tel)">Borrar</button>
+    </div>
+  `).join('');
+}
+
+async function openWhatsappJoseConversation(telefono) {
+  const s = whatsappJoseSessionsData.find(x => x.telefono === telefono);
+  if (!s) return;
+  whatsappJoseConvOpenTel = telefono;
+  document.getElementById('chat-conv-overlay').style.display = 'block';
+  document.getElementById('chat-conv-title').textContent = s.nombre || s.telefono;
+  const body = document.getElementById('chat-conv-body');
+  body.innerHTML = '<div class="empty-mini">Cargando…</div>';
+  document.getElementById('chat-conv-meta').innerHTML = `
+    <div class="chat-conv-meta-row">
+      <span>Teléfono: <b>${escapeHtml(s.telefono)}</b></span>
+      <span>Primera vez: ${new Date(s.first_seen).toLocaleString('es-ES')}</span>
+      <span>${s.msg_count} mensajes</span>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+      ${s.client_id ? `<button class="btn sm ghost" onclick="closeChatConversation();openFicha('${s.client_id}')">Ver ficha del cliente →</button>` : ''}
+      <button class="btn sm ghost" onclick="deleteWhatsappJoseSession(whatsappJoseConvOpenTel, true)">Borrar conversación</button>
+    </div>`;
+
+  const { data, error } = await sb.from('whatsapp_messages').select('role, text, created_at').eq('telefono', telefono).order('id', { ascending: true }).limit(500);
+  if (error) { body.innerHTML = '<div class="empty-mini">No se pudo cargar la conversación.</div>'; return; }
+  body.innerHTML = (data || []).map(m => `
+    <div class="chat-bubble ${m.role === 'user' ? 'user' : 'bot'}">
+      <div class="who">${m.role === 'user' ? (s.nombre ? escapeHtml(s.nombre) : s.telefono) : 'Jose'} · ${new Date(m.created_at).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}</div>
+      <div class="txt">${escapeHtml(m.text)}</div>
+    </div>`).join('') || '<div class="empty-mini">Sin mensajes guardados.</div>';
+}
+
+async function deleteWhatsappJoseSession(telefono, fromOverlay) {
+  if (!telefono) return;
+  if (!confirm('¿Borrar esta conversación de WhatsApp entera? Esta acción no se puede deshacer.')) return;
+  const { error } = await sb.from('whatsapp_sessions').delete().eq('telefono', telefono);
+  if (error) { alert('No se pudo borrar.'); return; }
+  if (fromOverlay) closeChatConversation();
+  await loadWhatsappJoseSessions();
 }
 
 // founder_dashboard_stats() agrega todo en el servidor (security definer,

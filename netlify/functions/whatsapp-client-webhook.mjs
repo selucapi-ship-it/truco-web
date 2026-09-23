@@ -190,6 +190,21 @@ Si te preguntan algo que no sabes o que se sale de esto, dilo con naturalidad y 
 
 const JOSE_PROSPECTO = `\n\nQUIÉN TE ESCRIBE: alguien que todavía NO es cliente de TRUCO. Diagnostica su negocio (a qué se dedica, qué le está costando) y recomienda el Departamento que encaje, sin presionar.`;
 
+// Guarda de verdad el intercambio en whatsapp_sessions/whatsapp_messages
+// (migration_whatsapp_jose_conversations.sql) — antes, si quien escribía no
+// era ya cliente, no quedaba nada guardado, solo un aviso suelto de Telegram.
+async function guardarConversacionWhatsapp(supabaseUrl, serviceKey, telefono, nombre, clientId, textoUsuario, respuesta) {
+  try {
+    await fetch(`${supabaseUrl}/rest/v1/rpc/whatsapp_log_jose_exchange`, {
+      method: 'POST',
+      headers: authHeaders(serviceKey),
+      body: JSON.stringify({ p_telefono: telefono, p_nombre: nombre || null, p_client_id: clientId || null, p_user_text: textoUsuario, p_bot_text: respuesta }),
+    });
+  } catch (e) {
+    console.error('[WHATSAPP_CLIENT_BOT] No se pudo guardar la conversación de Jose', e.message);
+  }
+}
+
 function josePromptCliente(cliente) {
   const nombre = cliente.negocio || cliente.nombre || 'el cliente';
   return `\n\nQUIÉN TE ESCRIBE: ${nombre}, que YA es cliente de TRUCO (Departamento ${cliente.arranque_tier || 'contratado'}). No le vendas nada: ayúdale con su duda o su cuenta. Si necesita un cambio real (ajustar algo de su Departamento, una incidencia, una automatización nueva), dile que se lo pasas al equipo y que le responden — no prometas que tú lo vas a hacer.`;
@@ -203,6 +218,7 @@ async function manejarMensajeJose(supabaseUrl, serviceKey, geminiKey, phoneNumbe
   const respuesta = await llamarGemini(geminiKey, prompt, texto);
   if (!respuesta) return;
   await enviarRespuestaWhatsapp(phoneNumberId, de, respuesta, null);
+  await guardarConversacionWhatsapp(supabaseUrl, serviceKey, de, nombreContacto, cliente ? cliente.id : null, texto, respuesta);
   if (cliente) {
     await registrarInteraccion(supabaseUrl, serviceKey, cliente.id, `WhatsApp (Jose) — escribió: "${texto}" — Jose respondió: "${respuesta}"`);
     await crmCapture({ clientId: cliente.id, source: 'whatsapp', kind: 'mensaje', nombre: nombreContacto, telefono: de, texto: `Escribió: "${texto.slice(0, 250)}" · Jose respondió: "${respuesta.slice(0, 250)}"` });
