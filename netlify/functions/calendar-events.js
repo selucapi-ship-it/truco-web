@@ -13,13 +13,14 @@
 //  - Founder: ?cal=<id> o, si no, GOOGLE_CALENDAR_ID.
 
 const crypto = require('crypto');
+const { getServiceAccountB64 } = require('./lib/google-sa');
 const SUPABASE_URL = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
 
 function b64url(buf) {
   return Buffer.from(buf).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
-function cuentaServicio() {
-  const raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON_B64;
+async function cuentaServicio() {
+  const raw = await getServiceAccountB64();
   if (!raw) return null;
   try { return JSON.parse(Buffer.from(raw, 'base64').toString('utf8')); } catch (e) { return null; }
 }
@@ -72,7 +73,7 @@ exports.handler = async function (event) {
   }
   if (!calId) return json(200, { ok: true, linked: false, events: [] });
 
-  const sa = cuentaServicio();
+  const sa = await cuentaServicio();
   if (!sa) return json(200, { ok: false, error: 'not_configured' });
   const token = await tokenGoogle(sa, 'https://www.googleapis.com/auth/calendar.readonly');
   if (!token) return json(200, { ok: false, error: 'google_auth' });

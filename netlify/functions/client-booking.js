@@ -16,6 +16,7 @@
 
 const crypto = require('crypto');
 const { crmCapture } = require('./lib/crm');
+const { getServiceAccountB64 } = require('./lib/google-sa');
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -38,7 +39,7 @@ function base64url(buf) {
 }
 
 async function getGoogleAccessToken(scope) {
-  const raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON_B64;
+  const raw = await getServiceAccountB64();
   if (!raw) return null;
   const sa = JSON.parse(Buffer.from(raw, 'base64').toString('utf8'));
   const now = Math.floor(Date.now() / 1000);
