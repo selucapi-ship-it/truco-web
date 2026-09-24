@@ -1,0 +1,23 @@
+Ultra-realistic vertical photograph, 9:16 aspect ratio, professional advertising photography (not illustration, not 3D render, not CGI, no cartoon style). Dark, moody background in near-black charcoal tone (#16151a) filling most of the frame, with warm golden accent lighting (#d9a83f) and cream-white highlights. Cinematic, high-end tech-meets-small-business advertising aesthetic, shallow depth of field, soft directional light, subtle film grain, sharp focus on the main subject.
+
+SCENE: A single continuous back-office moment, not a split composition, not a before/after layout, not a floating giant-number graphic, and no dominoes or hourglass props. Inside the small back office of a family-run workshop or shop in Lorca, inland Region of Murcia, at midday during a yellow heat-alert Thursday in late September — hard, bright sunlight slices through half-closed venetian blinds in the background, throwing sharp warm stripes across the dark wall, everything beyond the desk toned down into deep charcoal shadow to keep the dark brand mood rather than a bright daylight photo. On a cluttered wooden desk in the foreground, an old metal desk fan spins at full speed, and a small chaotic flurry of loose paper invoices and delivery notes is caught mid-air, frozen sharply in motion as if just blown off the desk, some sheets crumpled, ink smudged, an analog calculator half-buried under the remaining stack. A tired hand reaches into frame trying to catch one of the flying papers, motion-blurred with urgency. In deliberate contrast, just beside the chaos, a slim tablet stands upright and perfectly still on a small stand, untouched by the wind, its screen glowing calm warm gold and showing a single clean generated invoice with the small printed label "FACTURA · GENERADA" — sharp, steady, and the true visual anchor of the whole composition against all the surrounding motion. The upper portion of the frame is dark negative space reserved for text overlays.
+
+TEXT ELEMENTS (render these exactly, as clean, modern, minimal sans-serif typography, in Spanish, well-composed and legible, not distorted or garbled):
+
+1. Top of the image, small logo lockup: "TRUCO technology" in bold cream-white letters, with the smaller subtitle directly beneath it in gold: "Departamento Tecnológico".
+
+2. Just below the logo, a small pill-shaped label in gold outline with cream text reading: "JUEVES · ALERTA POR CALOR EN LORCA · 36°C".
+
+3. Beneath that, a bold uppercase context label in gold, letter-spaced: "EL CALOR NO ES LO ÚNICO QUE APRIETA".
+
+4. The main two-line headline in large bold cream-white letters, centered in the dark upper space, directly above the flying-papers scene:
+"Mientras el ventilador se lleva tus papeles,"
+"tu factura ya está hecha."
+
+5. A short quote-style line beneath the headline, smaller and italic-style, in cream-white: "Se hace sola, aunque todo lo demás vuele."
+
+6. A golden badge lower in the composition, clearly separated from the photo, containing: "PRECIO FUNDADOR" and beneath it, smaller: "Plazas limitadas".
+
+7. A closing line near the very bottom: "Paga una vez. Olvídate 365 días." followed on the next line by "trucotechnology.com".
+
+All text must be sharp, correctly spelled exactly as written above (including accents), high contrast against the dark background, and laid out with generous spacing so it reads clearly at Instagram Story size. Overall composition: back-office desk scene with the flying papers and the calm glowing tablet in the lower two-thirds, logo lockup at the very top, pill label and context label just beneath it, headline and quote line in the dark upper-middle space, badge and closing line stacked near the bottom third.
