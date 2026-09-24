@@ -583,21 +583,14 @@
       </div>
       <button id="resumen-btn" onclick="showResumenView()">🏠 Resumen</button>
       <button id="settings-btn" onclick="openSettingsOverlay()">Ajustes</button>
-      <button id="cal-btn" onclick="openCalOverlay()" style="display:none;">📅 Calendario</button>
-      <button id="stats-btn" onclick="openStatsOverlay()" style="display:none;">Estadísticas</button>
-      <button id="activity-btn" onclick="openActivityOverlay()" style="display:none;">Interacciones</button>
-      <button id="truki-btn" onclick="openTrukiOverlay()" style="display:none;">TruKi</button>
-      <button id="quotes-btn" onclick="openQuotesOverlay()" style="display:none;">Presupuestos</button>
-      <button id="facturas-btn" onclick="openFacturasOverlay()" style="display:none;">Facturas</button>
-      <button id="prices-btn" onclick="openPricesOverlay()" style="display:none;">Precios</button>
-      <button id="team-btn" onclick="openTeamOverlay()" style="display:none;">Equipo</button>
-      <button id="fiscal-btn" onclick="openFiscalOverlay()" style="display:none;">Fiscalidad</button>
-      <button id="contrataciones-btn" onclick="openContratacionesOverlay()" style="display:none;">Contrataciones</button>
-      <button id="cobros-btn" onclick="openCobrosOverlay()" style="display:none;">Cobros</button>
-      <button id="transferencias-btn" onclick="openTransferenciasOverlay()" style="display:none;">Transferencias</button>
-      <button id="audit-btn" onclick="openAuditOverlay()" style="display:none;">Auditoría</button>
       <button id="install-btn" type="button" onclick="installApp()" style="display:none;">⬇ Instalar app</button>
       <button id="logout-btn" onclick="doLogout()">Cerrar sesión</button>
+      <!-- El resto de accesos (Calendario, Estadísticas, TruKi, Presupuestos, Facturas,
+           Precios, Equipo, Fiscalidad, Gastos recurrentes, Cobros, Transferencias,
+           Auditoría de seguridad) viven SOLO en los tiles agrupados de Resumen —
+           tenerlos duplicados aquí en una fila plana era la causa de que el panel
+           se sintiera desordenado. Todos son founder-exclusivos, igual que sus
+           tiles equivalentes. -->
     </div>
   </div>
 
@@ -1073,7 +1066,7 @@
           <h3>🔁 Gastos fijos (plantillas)</h3>
           <span id="fiscal-template-count"></span>
         </div>
-        <p style="color:var(--grey);font-size:.82rem;margin:-6px 0 14px;">Los que se repiten cada mes — cuota de autónomo, Supabase, Netlify... Guarda uno desde el formulario de arriba, y luego un clic los añade todos como gastos de este mes, sin duplicar los que ya estén. Para editarlos, ver fecha de renovación o el coste fijo total, hazlo desde <a href="#" onclick="closeFiscalOverlay();openContratacionesOverlay();return false;" style="color:var(--gold);">Contrataciones</a>.</p>
+        <p style="color:var(--grey);font-size:.82rem;margin:-6px 0 14px;">Los que se repiten cada mes — cuota de autónomo, Supabase, Netlify... Guarda uno desde el formulario de arriba, y luego un clic los añade todos como gastos de este mes, sin duplicar los que ya estén. Para editarlos, ver fecha de renovación o el coste fijo total, hazlo desde <a href="#" onclick="closeFiscalOverlay();openContratacionesOverlay();return false;" style="color:var(--gold);">Gastos recurrentes</a>.</p>
         <button class="fiscal-btn ghost" onclick="applyFiscalTemplatesThisMonth()">▶ Aplicar gastos fijos de este mes</button>
         <div id="fiscal-template-list" style="margin-top:14px;"></div>
       </div>
@@ -1102,7 +1095,7 @@
   <div id="contrataciones-overlay">
     <div class="truki-box">
       <button class="stats-close" onclick="closeContratacionesOverlay()">✕</button>
-      <h2>Contrataciones</h2>
+      <h2>Gastos recurrentes</h2>
       <p style="color:var(--grey);font-size:.82rem;margin:0 0 18px;max-width:640px;">Todo lo que pagas tú cada mes para mantener el negocio en marcha — Netlify, Supabase, Claude, dominio... Los mismos datos alimentan los "gastos fijos" de Fiscalidad, pero aquí ves de un vistazo cuánto te cuesta y cuándo se renueva.</p>
 
       <div class="fiscal-card periodo" style="margin-bottom:20px;">
@@ -1182,8 +1175,8 @@
   <div id="audit-overlay">
     <div class="truki-box">
       <button class="stats-close" onclick="closeAuditOverlay()">✕</button>
-      <h2>Auditoría</h2>
-      <p style="color:var(--grey);font-size:.82rem;margin:0 0 18px;max-width:640px;">Cada cambio en los datos importantes queda registrado solo — quién, cuándo, y qué valor tenía antes. Útil sobre todo para ver precios antiguos que ya no aparecen en ningún otro sitio.</p>
+      <h2>Auditoría de seguridad</h2>
+      <p style="color:var(--grey);font-size:.82rem;margin:0 0 18px;max-width:640px;">Registro de cambios en los datos importantes — quién tocó qué, cuándo, y qué valor tenía antes. Útil sobre todo para ver precios antiguos que ya no aparecen en ningún otro sitio. (Esto no tiene nada que ver con las auditorías/llamadas con clientes — eso está en el tile "Auditorías" de Clientes.)</p>
       <div style="margin-bottom:16px;">
         <select id="audit-filter-table" onchange="loadAuditLog()" style="background:var(--bg-card);border:1px solid var(--grey-line);color:var(--white);font-family:var(--font-m);font-size:.78rem;padding:9px 12px;border-radius:8px;outline:none;cursor:pointer;">
           <option value="">Tabla: todas</option>
@@ -1197,7 +1190,7 @@
           <option value="data_retention_requests">Solicitudes RGPD</option>
           <option value="fiscal_income">Fiscalidad: ingresos</option>
           <option value="fiscal_expenses">Fiscalidad: gastos</option>
-          <option value="fiscal_expense_templates">Contrataciones</option>
+          <option value="fiscal_expense_templates">Gastos recurrentes</option>
           <option value="pricing_offers">Ofertas de precio</option>
           <option value="quotes">Presupuestos</option>
         </select>
@@ -1284,6 +1277,17 @@
   </div>
 
   <div id="resumen-view">
+    <div class="resumen-alert-card" id="resumen-avisos-card" style="display:none;">
+      <div class="card-tag">⚡ Avisos importantes</div>
+      <div id="resumen-avisos-list"></div>
+    </div>
+
+    <details id="agenda-card" open style="display:none;margin-bottom:22px;border:1px solid var(--grey-line);border-radius:14px;background:var(--bg-panel);">
+      <summary style="cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">📅 Mi agenda · próximos 14 días
+        <span style="display:flex;gap:8px;"><button class="btn sm ghost" onclick="event.preventDefault();loadAgendaCard()">Actualizar</button><button class="btn sm ghost" onclick="event.preventDefault();openCalOverlay()">Vincular</button></span></summary>
+      <div id="agenda-card-body" style="padding:0 16px 14px;max-height:340px;overflow:auto;"></div>
+    </details>
+
     <div class="resumen-kpis" id="resumen-kpis"></div>
 
     <div class="resumen-alert-card" id="resumen-msgs-card" style="display:none;">
@@ -1311,6 +1315,7 @@
           <button class="resumen-tile" onclick="openTransferenciasOverlay()">🏦<span>Transferencias</span></button>
           <button class="resumen-tile" onclick="openPricesOverlay()">🏷️<span>Precios</span></button>
           <button class="resumen-tile" onclick="openFiscalOverlay()">📊<span>Fiscalidad</span></button>
+          <button class="resumen-tile" onclick="openContratacionesOverlay()">✍️<span>Gastos recurrentes</span></button>
           <button class="resumen-tile" onclick="openTrukiOverlay()">🧮<span>TruKi</span></button>
         </div>
       </div>
@@ -1318,9 +1323,8 @@
         <div class="resumen-group-title">Operaciones</div>
         <div class="resumen-tiles">
           <button class="resumen-tile" onclick="openStatsOverlay()">📈<span>Estadísticas</span></button>
-          <button class="resumen-tile" onclick="openContratacionesOverlay()">✍️<span>Contrataciones</span></button>
           <button class="resumen-tile" onclick="openTeamOverlay()">🧑‍🤝‍🧑<span>Equipo</span></button>
-          <button class="resumen-tile" onclick="openAuditOverlay()">🔒<span>Auditoría</span></button>
+          <button class="resumen-tile" onclick="openAuditOverlay()">🔒<span>Auditoría de seguridad</span></button>
         </div>
       </div>
       <div class="resumen-group">
@@ -1334,11 +1338,6 @@
 
   <div class="layout" id="clientes-view" style="display:none;">
     <div class="list-panel">
-      <details id="agenda-card" open style="display:none;margin-bottom:16px;border:1px solid var(--grey-line);border-radius:14px;background:var(--bg-panel);">
-        <summary style="cursor:pointer;padding:12px 16px;font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">📅 Mi agenda · próximos 14 días
-          <span style="display:flex;gap:8px;"><button class="btn sm ghost" onclick="event.preventDefault();loadAgendaCard()">Actualizar</button><button class="btn sm ghost" onclick="event.preventDefault();openCalOverlay()">Vincular</button></span></summary>
-        <div id="agenda-card-body" style="padding:0 16px 14px;max-height:340px;overflow:auto;"></div>
-      </details>
       <div class="stats-bar" id="stats-bar"></div>
       <div class="list-head">
         <h2>Clientes</h2>
@@ -1861,14 +1860,14 @@ function renderBell(counts) {
   const items = document.getElementById('bell-items');
   const orderedKeys = ['peticiones', 'transferencias', 'conversaciones', 'leads', 'cobros'];
   const withCount = orderedKeys.filter(k => counts[k] > 0);
-  if (!withCount.length) { items.innerHTML = '<div class="bell-empty">Todo al día — nada pendiente de revisar.</div>'; return; }
-  items.innerHTML = withCount.map(k => {
+  items.innerHTML = !withCount.length ? '<div class="bell-empty">Todo al día — nada pendiente de revisar.</div>' : withCount.map(k => {
     const [title, sub] = BELL_LABELS[k](counts[k]);
     return `<button type="button" class="bell-item" onclick="handleBellItemClick('${k}')" style="width:100%;background:none;border:none;font-family:inherit;cursor:pointer;">
       <div class="bi-count">${counts[k]}</div>
       <div class="bi-text"><div class="bi-title">${title}</div><div class="bi-sub">${sub}</div></div>
     </button>`;
   }).join('');
+  renderResumenAvisos(withCount, counts);
 }
 
 function handleBellItemClick(key) {
@@ -1877,7 +1876,23 @@ function handleBellItemClick(key) {
   else if (key === 'transferencias') openTransferenciasOverlay();
   else if (key === 'cobros') openCobrosOverlay();
   else if (key === 'peticiones') openPeticionesOverlay();
-  else if (key === 'leads') { document.getElementById('filter-status').value = 'nuevo'; renderClients(); }
+  else if (key === 'leads') { showClientesView(); document.getElementById('filter-status').value = 'nuevo'; renderClients(); }
+}
+
+// ── Misma lista de avisos de la campana, pero puesta bien grande arriba del
+// todo en el Resumen — pedido explícito: "que de un vistazo vea lo más
+// importante", no solo enterarse si se le ocurre abrir la campanita. ──
+function renderResumenAvisos(withCount, counts) {
+  const card = document.getElementById('resumen-avisos-card');
+  const list = document.getElementById('resumen-avisos-list');
+  if (!isFounder || !withCount.length) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+  list.innerHTML = withCount.map(k => {
+    const [title, sub] = BELL_LABELS[k](counts[k]);
+    return `<div class="resumen-msg-item" onclick="handleBellItemClick('${k}')">
+      <div><div class="resumen-msg-who">${escapeHtml(title)}</div><div class="resumen-msg-preview">${escapeHtml(sub)}</div></div>
+    </div>`;
+  }).join('');
 }
 
 async function markConversacionesSeen() {
@@ -1927,21 +1942,8 @@ async function checkFounderStatus() {
   if (!user) return;
   const { data } = await sb.from('staff_roles').select('role').eq('user_id', user.id).maybeSingle();
   isFounder = !!(data && data.role === 'founder');
-  document.getElementById('team-btn').style.display = isFounder ? 'inline-block' : 'none';
-  document.getElementById('stats-btn').style.display = isFounder ? 'inline-block' : 'none';
-  document.getElementById('cal-btn').style.display = isFounder ? 'inline-block' : 'none';
   { const ac = document.getElementById('agenda-card'); if (ac) { ac.style.display = isFounder ? 'block' : 'none'; if (isFounder) loadAgendaCard(); } }
-  document.getElementById('activity-btn').style.display = isFounder ? 'inline-block' : 'none';
-  document.getElementById('truki-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('new-client-btn').style.display = isFounder ? 'inline-block' : 'none';
-  document.getElementById('quotes-btn').style.display = isFounder ? 'inline-block' : 'none';
-  document.getElementById('facturas-btn').style.display = isFounder ? 'inline-block' : 'none';
-  document.getElementById('prices-btn').style.display = isFounder ? 'inline-block' : 'none';
-  document.getElementById('fiscal-btn').style.display = isFounder ? 'inline-block' : 'none';
-  document.getElementById('contrataciones-btn').style.display = isFounder ? 'inline-block' : 'none';
-  document.getElementById('cobros-btn').style.display = isFounder ? 'inline-block' : 'none';
-  document.getElementById('transferencias-btn').style.display = isFounder ? 'inline-block' : 'none';
-  document.getElementById('audit-btn').style.display = isFounder ? 'inline-block' : 'none';
   document.getElementById('resumen-tile-activity').style.display = isFounder ? 'flex' : 'none';
   document.getElementById('resumen-tile-cal').style.display = isFounder ? 'flex' : 'none';
   document.getElementById('resumen-group-dinero').style.display = isFounder ? 'block' : 'none';
