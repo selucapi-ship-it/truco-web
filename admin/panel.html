@@ -295,7 +295,7 @@
   /* ── ESTADÍSTICAS (overlay, founder-only) ── */
   #stats-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
   #stats-btn:hover{border-color:var(--gold);color:var(--gold);}
-  #stats-overlay,#activity-overlay,#chat-conv-overlay,#cal-overlay,#auditorias-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
+  #stats-overlay,#activity-overlay,#chat-conv-overlay,#cal-overlay,#auditorias-overlay,#conversaciones-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
   .aud-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;}
   .aud-card{background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:14px;padding:16px;cursor:pointer;transition:transform .15s,border-color .15s;display:flex;flex-direction:column;gap:6px;text-align:left;}
   .aud-card:hover{transform:translateY(-2px);border-color:var(--blue);}
@@ -517,7 +517,7 @@
   input,select,textarea{font-size:16px!important;}
   .toolbar,.filters,.list-head{flex-wrap:wrap;}
   .stats-box{padding:22px 14px;border-radius:14px;}
-  #stats-overlay,#activity-overlay,#chat-conv-overlay{padding:14px 8px;}
+  #stats-overlay,#activity-overlay,#chat-conv-overlay,#conversaciones-overlay{padding:14px 8px;}
   .client-cards{grid-template-columns:1fr;}
   table{display:block;overflow-x:auto;max-width:100%;}
   .btn{padding:9px 12px;}
@@ -1307,6 +1307,7 @@
         <div class="resumen-tiles">
           <button class="resumen-tile" onclick="showClientesView()">👥<span>Clientes</span></button>
           <button class="resumen-tile" onclick="openAuditoriasOverlay()">🎯<span>Auditorías</span></button>
+          <button class="resumen-tile" id="resumen-tile-conv" onclick="openConversacionesOverlay()" style="display:none;">💬<span>Conversaciones</span></button>
           <button class="resumen-tile" id="resumen-tile-activity" onclick="openActivityOverlay()" style="display:none;">📈<span>Interacciones</span></button>
           <button class="resumen-tile" id="resumen-tile-cal" onclick="openCalOverlay()" style="display:none;">📅<span>Calendario</span></button>
         </div>
@@ -1385,6 +1386,14 @@
       <div id="loading-state">Cargando...</div>
       <div id="empty-state" style="display:none;">Todavía no hay ningún cliente registrado.</div>
       <div id="clients-cards" class="client-cards" style="display:none;"></div>
+    </div>
+  </div>
+
+  <div id="conversaciones-overlay" onclick="if(event.target===this)closeConversacionesOverlay()">
+    <div class="stats-box">
+      <button class="stats-close" onclick="closeConversacionesOverlay()">✕</button>
+      <h2>Conversaciones</h2>
+      <p style="color:var(--grey);font-size:.82rem;margin:0 0 18px;max-width:640px;">Visitantes y contactos que todavía no tienen ficha propia — en cuanto uno se convierte en cliente, su historial pasa a vivir en su ficha.</p>
 
       <div class="anon-section" id="anon-section">
         <div class="timeline-title">Conversaciones del chat</div>
@@ -1962,6 +1971,7 @@ async function checkFounderStatus() {
   isFounder = !!(data && data.role === 'founder');
   { const ac = document.getElementById('agenda-card'); if (ac) { ac.style.display = isFounder ? 'block' : 'none'; if (isFounder) loadAgendaCard(); } }
   document.getElementById('new-client-btn').style.display = isFounder ? 'inline-block' : 'none';
+  document.getElementById('resumen-tile-conv').style.display = isFounder ? 'flex' : 'none';
   document.getElementById('resumen-tile-activity').style.display = isFounder ? 'flex' : 'none';
   document.getElementById('resumen-tile-cal').style.display = isFounder ? 'flex' : 'none';
   document.getElementById('resumen-group-dinero').style.display = isFounder ? 'block' : 'none';
@@ -2044,6 +2054,13 @@ function clearCalId() {
 // (interactions.source='auditoria', ver index.html#submitBookingForm) y aún
 // no son ni cliente ni descartado. Pinchar una tarjeta abre su ficha
 // directamente en la pestaña Auditoría, lista con el guion de la llamada. ──
+function openConversacionesOverlay() {
+  document.getElementById('conversaciones-overlay').style.display = 'block';
+}
+function closeConversacionesOverlay() {
+  document.getElementById('conversaciones-overlay').style.display = 'none';
+}
+
 function openAuditoriasOverlay() {
   document.getElementById('auditorias-overlay').style.display = 'block';
   loadAuditoriasProspectos();
