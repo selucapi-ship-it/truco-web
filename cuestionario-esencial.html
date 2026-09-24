@@ -225,13 +225,18 @@ const questClientId = questParams.get('client') || '';
 
   // El cuestionario nunca es genérico: solo se preguntan la agenda y el
   // asistente de IA si esas automatizaciones se han marcado de verdad para
-  // este cliente en el panel — si no, sección 1 (siempre necesaria para
-  // montar cualquier web) es todo lo que se le pide.
-  const automations = (questParams.get('automations') || '').split(',').map(s => s.trim()).filter(Boolean);
-  const wantsAgenda = automations.includes('reservas');
-  const wantsIA = automations.includes('whatsapp') || automations.includes('web-ia');
-  if (!wantsAgenda) document.getElementById('section-agenda').hidden = true;
-  if (!wantsIA) document.getElementById('section-ia').hidden = true;
+  // este cliente en el panel. PERO un enlace ya enviado sin ?automations= en
+  // absoluto (generado antes de que este parámetro existiera, o pegado a
+  // mano) no debe degradarse con el tiempo — solo se recorta cuando el
+  // parámetro está presente de verdad (aunque venga vacío, que es la marca
+  // explícita de "nada seleccionado" desde el botón del panel).
+  if (questParams.has('automations')) {
+    const automations = questParams.get('automations').split(',').map(s => s.trim()).filter(Boolean);
+    const wantsAgenda = automations.includes('reservas');
+    const wantsIA = automations.includes('whatsapp') || automations.includes('web-ia');
+    if (!wantsAgenda) document.getElementById('section-agenda').hidden = true;
+    if (!wantsIA) document.getElementById('section-ia').hidden = true;
+  }
 
   document.querySelectorAll('.section:not([hidden])').forEach((sec, i) => {
     const tag = sec.querySelector('.section-tag');
