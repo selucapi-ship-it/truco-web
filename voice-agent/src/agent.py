@@ -11,8 +11,10 @@ import requests
 from dotenv import load_dotenv
 from google.genai import types
 from livekit import agents, rtc
-from livekit.agents import AgentServer, AgentSession, Agent, RunContext, function_tool
-from livekit.agents.voice import AudioConfig, BackgroundAudioPlayer, BuiltinAudioClip
+from livekit.agents import (
+    AgentServer, AgentSession, Agent, RunContext, function_tool,
+    AudioConfig, BackgroundAudioPlayer, BuiltinAudioClip,
+)
 from livekit.plugins import google
 from pydantic import Field
 

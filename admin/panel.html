@@ -110,18 +110,16 @@
   #filters-clear{background:none;border:1px solid var(--grey-line);color:var(--grey);font-size:.72rem;padding:7px 11px;border-radius:7px;cursor:pointer;}
   #filters-clear:hover{border-color:var(--red);color:var(--red);}
 
-  .table-wrap{overflow-x:auto;border:1px solid var(--grey-line);border-radius:14px;box-shadow:var(--shadow-card);}
-  table{width:100%;min-width:640px;border-collapse:collapse;font-size:.82rem;}
-  thead tr{background:var(--bg-panel);}
-  th{text-align:left;color:var(--grey);font-family:var(--font-m);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;padding:11px 12px;border-bottom:1px solid var(--grey-line);}
-  td{padding:12px;border-bottom:1px solid var(--grey-line);}
-  tbody tr{cursor:pointer;transition:background .15s;background:var(--bg-panel);}
-  tbody tr:nth-child(even){background:#231f27;}
-  tbody tr:hover{background:var(--blue-dim);}
-  tbody tr.active{background:var(--blue-dim);box-shadow:inset 3px 0 0 var(--blue);}
-  tbody tr:last-child td{border-bottom:none;}
-  .client-name-cell{display:flex;align-items:center;gap:10px;}
-  .client-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(160deg,var(--gold-dim),var(--bg-card));border:1px solid rgba(217,168,63,.25);color:var(--gold-light);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:.72rem;font-weight:700;flex-shrink:0;}
+  .client-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+  .client-card{background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:14px;padding:14px 16px;cursor:pointer;transition:transform .15s,border-color .15s;box-shadow:var(--shadow-card);}
+  .client-card:hover{transform:translateY(-2px);border-color:var(--blue);}
+  .client-card.active{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold);}
+  .client-card-top{display:flex;align-items:center;gap:10px;}
+  .client-card-names{flex:1;min-width:0;}
+  .client-card-name{font-family:var(--font-b);font-weight:700;color:var(--white);font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .client-card-negocio{color:var(--grey);font-size:.76rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .client-card-meta{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-top:10px;padding-top:10px;border-top:1px solid var(--grey-line);font-size:.74rem;color:var(--grey);}
+  .client-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(160deg,var(--gold-dim),var(--bg-card));border:1px solid rgba(217,168,63,.25);color:var(--gold-light);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:.76rem;font-weight:700;flex-shrink:0;}
   .status-badge{font-family:var(--font-m);font-size:.6rem;padding:3px 9px;border-radius:12px;text-transform:uppercase;letter-spacing:.04em;border:1px solid transparent;}
   .cobro-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--grey-line);}
   .cobro-dot.activa{background:var(--green);}
@@ -515,21 +513,8 @@
   .toolbar,.filters,.list-head{flex-wrap:wrap;}
   .stats-box{padding:22px 14px;border-radius:14px;}
   #stats-overlay,#activity-overlay,#chat-conv-overlay{padding:14px 8px;}
-  .table-wrap{border:none;box-shadow:none;overflow:visible;}
-  #clients-table,#clients-table tbody{display:block!important;width:100%!important;min-width:0!important;max-width:100%;}
-  #clients-table thead{display:none!important;}
-  #clients-table tr{display:grid!important;width:100%;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:12px;padding:11px 13px;margin-bottom:8px;}
-  #clients-table tr.active{border-color:var(--gold);}
-  #clients-table td{display:block!important;width:auto!important;min-width:0;border:none;padding:0;font-size:.8rem;color:var(--grey);overflow-wrap:anywhere;}
-  #clients-table td:nth-child(1){grid-column:1;color:var(--white);font-size:.92rem;font-weight:700;}
-  #clients-table td:nth-child(2){grid-column:1;}
-  #clients-table td:nth-child(3){grid-column:1;}
-  #clients-table td:nth-child(4){display:none!important;}
-  #clients-table td:nth-child(5){grid-column:2;grid-row:1;justify-self:end;}
-  #clients-table td:nth-child(6){display:none!important;}
-  #clients-table td:nth-child(7){grid-column:2;grid-row:2 / span 2;justify-self:end;align-self:end;font-size:.72rem;}
-  #clients-table td:nth-child(7)::after{content:' int.';}
-  table:not(#clients-table){display:block;overflow-x:auto;max-width:100%;}
+  .client-cards{grid-template-columns:1fr;}
+  table{display:block;overflow-x:auto;max-width:100%;}
   .btn{padding:9px 12px;}
   .chat-conv-meta-row{gap:6px;}
   .list-panel{min-width:0;max-width:100%;overflow-x:hidden;box-sizing:border-box;}
@@ -1380,14 +1365,7 @@
       </div>
       <div id="loading-state">Cargando...</div>
       <div id="empty-state" style="display:none;">Todavía no hay ningún cliente registrado.</div>
-      <div class="table-wrap">
-      <table id="clients-table" style="display:none;">
-        <thead>
-          <tr><th>Nombre</th><th>Negocio</th><th>Contacto</th><th>Sector</th><th>Status</th><th>Cobro</th><th>Interacciones</th></tr>
-        </thead>
-        <tbody id="clients-tbody"></tbody>
-      </table>
-      </div>
+      <div id="clients-cards" class="client-cards" style="display:none;"></div>
 
       <div class="anon-section" id="anon-section">
         <div class="timeline-title">Conversaciones del chat</div>
@@ -4101,29 +4079,35 @@ function renderClients() {
   };
   filtered.sort(sorters[fSort] || sorters.updated_desc);
 
-  const tbody = document.getElementById('clients-tbody');
-  const table = document.getElementById('clients-table');
+  const box = document.getElementById('clients-cards');
   const empty = document.getElementById('empty-state');
   if (!filtered.length) {
-    table.style.display = 'none';
+    box.style.display = 'none';
     empty.style.display = 'block';
     empty.textContent = allClients.length ? 'Ningún cliente coincide con la búsqueda/filtros.' : 'Todavía no hay ningún cliente registrado.';
     return;
   }
   empty.style.display = 'none';
-  table.style.display = 'table';
-  tbody.innerHTML = filtered.map(c => {
+  box.style.display = 'grid';
+  box.innerHTML = filtered.map(c => {
     const count = (c.interactions && c.interactions[0] && c.interactions[0].count) || 0;
     const initials = (c.nombre || c.email || '?').trim().slice(0, 2).toUpperCase();
-    return `<tr class="${c.id === selectedClientId ? 'active' : ''}" onclick="openFicha('${c.id}')">
-      <td><div class="client-name-cell"><div class="client-avatar">${escapeHtml(initials)}</div>${escapeHtml(c.nombre || '—')}</div></td>
-      <td>${escapeHtml(c.negocio || '—')}</td>
-      <td>${escapeHtml(c.email || c.telefono || '—')}</td>
-      <td>${escapeHtml(c.tipo || '—')}</td>
-      <td><span class="status-badge status-${c.status}">${c.status}</span></td>
-      <td><span class="cobro-dot${c.domiciliacion_activa ? ' activa' : ''}" title="${c.domiciliacion_activa ? 'Domiciliado' : 'Sin domiciliar'}"></span></td>
-      <td>${count}</td>
-    </tr>`;
+    return `<div class="client-card${c.id === selectedClientId ? ' active' : ''}" onclick="openFicha('${c.id}')">
+      <div class="client-card-top">
+        <div class="client-avatar">${escapeHtml(initials)}</div>
+        <div class="client-card-names">
+          <div class="client-card-name">${escapeHtml(c.nombre || '—')}</div>
+          <div class="client-card-negocio">${escapeHtml(c.negocio || '—')}</div>
+        </div>
+        <span class="status-badge status-${c.status}">${c.status}</span>
+      </div>
+      <div class="client-card-meta">
+        <span>${escapeHtml(c.email || c.telefono || '—')}</span>
+        ${c.tipo ? `<span>${escapeHtml(c.tipo)}</span>` : ''}
+        <span>${count} interacc.</span>
+        <span class="cobro-dot${c.domiciliacion_activa ? ' activa' : ''}" title="${c.domiciliacion_activa ? 'Domiciliado' : 'Sin domiciliar'}"></span>
+      </div>
+    </div>`;
   }).join('');
 }
 
