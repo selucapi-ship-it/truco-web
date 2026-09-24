@@ -131,6 +131,11 @@ exports.handler = async function (event) {
     await transporter.sendMail({
       from: SMTP_FROM || SMTP_USER,
       to: destinatario,
+      // Copia oculta al founder en todo lo que sale por aquí (presupuestos,
+      // facturas, cuestionario esencial) — así queda constancia en su propia
+      // bandeja de qué se mandó y a quién, sin depender de mirar el "Enviados"
+      // de una cuenta que ni siquiera procesa el envío real (va por Brevo).
+      bcc: 'trucotechnology@gmail.com',
       subject: asunto,
       text: textoFinal,
       html: htmlFinal,
