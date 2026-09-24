@@ -1797,6 +1797,7 @@ async function showApp() {
   // volvería vacía por RLS, así que preguntarlo sería trabajo de más).
   document.getElementById('anon-section').style.display = isFounder ? 'block' : 'none';
   document.getElementById('whatsapp-jose-section').style.display = isFounder ? 'block' : 'none';
+  document.getElementById('voice-calls-section').style.display = isFounder ? 'block' : 'none';
   if (isFounder) {
     // loadVoiceCalls() NO se lanza aquí a propósito: solo hace falta dentro
     // del apartado "Conversaciones" (openConversacionesOverlay), a diferencia
