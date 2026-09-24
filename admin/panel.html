@@ -821,23 +821,38 @@
           </div>
         </div>
 
-        <div class="quotes-actions">
-          <button class="btn sm" onclick="guardarPresupuesto()">Guardar</button>
-          <button class="btn sm ghost" onclick="verPdfPresupuesto()">Ver PDF</button>
-          <button class="btn sm ghost" onclick="descargarPdfPresupuesto()">Descargar PDF</button>
-          <button class="btn sm ghost" onclick="enviarPresupuestoEmail()">Enviar por email</button>
-          <select id="q-estado" onchange="cambiarEstadoPresupuesto()" style="max-width:150px;">
-            <option value="borrador">Borrador</option>
-            <option value="enviado">Enviado</option>
-            <option value="aceptado">Aceptado</option>
-            <option value="rechazado">Rechazado</option>
-            <option value="pagado">Pagado</option>
-          </select>
-          <button class="btn sm ghost" onclick="generarEnlacePago()">Generar enlace de pago</button>
-          <button class="btn sm ghost" onclick="emitirFacturaDesdePresupuesto()">Emitir factura</button>
-          <button id="quote-delete-btn" class="btn sm ghost danger" onclick="eliminarPresupuesto()" style="display:none;">Eliminar</button>
+        <div style="margin-top:16px;">
+          <div class="card-tag">1 · Presupuesto</div>
+          <div class="quotes-actions">
+            <button class="btn sm" onclick="guardarPresupuesto()">Guardar</button>
+            <button class="btn sm ghost" onclick="verPdfPresupuesto()">Ver PDF</button>
+            <button class="btn sm ghost" onclick="descargarPdfPresupuesto()">Descargar PDF</button>
+            <button class="btn sm ghost" onclick="enviarPresupuestoEmail()">Enviar por email</button>
+            <select id="q-estado" onchange="cambiarEstadoPresupuesto()" style="max-width:150px;">
+              <option value="borrador">Borrador</option>
+              <option value="enviado">Enviado</option>
+              <option value="aceptado">Aceptado</option>
+              <option value="rechazado">Rechazado</option>
+              <option value="pagado">Pagado</option>
+            </select>
+          </div>
         </div>
-        <div id="quote-pago-url" class="empty-mini" style="margin-top:8px;"></div>
+
+        <div style="margin-top:18px;">
+          <div class="card-tag">2 · Cobro y factura (cuando lo acepte)</div>
+          <div class="quotes-actions">
+            <button class="btn sm ghost" onclick="generarEnlacePago()">Generar enlace de pago</button>
+            <button class="btn sm ghost" onclick="emitirFacturaDesdePresupuesto()">Emitir factura</button>
+          </div>
+          <div id="quote-pago-url-row" style="display:none;align-items:center;gap:8px;margin-top:10px;">
+            <span id="quote-pago-url" class="empty-mini" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:320px;"></span>
+            <button class="btn sm ghost" onclick="copiarEnlacePago()">📋 Copiar enlace</button>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;">
+          <button id="quote-delete-btn" class="btn sm ghost danger" onclick="eliminarPresupuesto()" style="display:none;">Eliminar presupuesto</button>
+        </div>
       </div>
     </div>
   </div>
@@ -3319,7 +3334,7 @@ function nuevoPresupuesto() {
   document.getElementById('quote-form-title').textContent = 'Nuevo presupuesto';
   ['q-nombre', 'q-email', 'q-telefono', 'q-negocio', 'q-nif', 'q-domicilio', 'q-notas', 'q-descuento-pct', 'q-descuento-motivo'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('q-estado').value = 'borrador';
-  document.getElementById('quote-pago-url').textContent = '';
+  renderQuotePagoUrl(null);
   document.getElementById('quote-delete-btn').style.display = 'none';
   renderQuoteLineas();
   renderIncludedSolutionsPicker();
@@ -3342,7 +3357,7 @@ function cargarPresupuestoEnFormulario(id) {
   document.getElementById('q-descuento-pct').value = q.descuento_pct || '';
   document.getElementById('q-descuento-motivo').value = q.descuento_motivo || '';
   document.getElementById('q-estado').value = q.estado || 'borrador';
-  document.getElementById('quote-pago-url').textContent = q.stripe_checkout_url ? 'Enlace de pago: ' + q.stripe_checkout_url : '';
+  renderQuotePagoUrl(q.stripe_checkout_url || null);
   document.getElementById('quote-delete-btn').style.display = 'inline-block';
   quoteLineas = Array.isArray(q.lineas) ? q.lineas.slice() : [];
   const deptoLinea = quoteLineas.find(l => l.tipo === 'departamento');
@@ -3589,11 +3604,30 @@ async function generarEnlacePago() {
     });
     const data = await resp.json();
     if (!data.ok) { alert('No se pudo generar el enlace (' + (data.reason || 'error') + ').'); return; }
-    document.getElementById('quote-pago-url').textContent = 'Enlace de pago: ' + data.url;
+    renderQuotePagoUrl(data.url);
     await loadQuotesList();
   } catch (e) {
     alert('Error de conexión al generar el enlace de pago.');
   }
+}
+
+function renderQuotePagoUrl(url) {
+  const row = document.getElementById('quote-pago-url-row');
+  const span = document.getElementById('quote-pago-url');
+  if (!url) { row.style.display = 'none'; span.textContent = ''; span.dataset.url = ''; return; }
+  span.textContent = url;
+  span.dataset.url = url;
+  row.style.display = 'flex';
+}
+
+function copiarEnlacePago() {
+  const url = document.getElementById('quote-pago-url').dataset.url;
+  if (!url) return;
+  navigator.clipboard.writeText(url).then(() => {
+    toast('Enlace copiado.');
+  }).catch(() => {
+    alert('No se pudo copiar automáticamente. Enlace: ' + url);
+  });
 }
 
 // ── FACTURAS (founder-only) ─────────────────────────────────────────────────
