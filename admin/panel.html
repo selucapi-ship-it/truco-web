@@ -1553,6 +1553,12 @@
 
         <div class="ficha-tab-panel" data-tab-panel="auditoria" style="display:none;">
           <div class="card">
+            <div class="card-tag">Cliente sin tiempo para la llamada</div>
+            <p style="color:var(--grey);font-size:.82rem;margin:0 0 14px;">Genera un enlace personalizado con las preguntas esenciales (negocio, agenda, IA/WhatsApp) para que lo rellene por su cuenta. Sus respuestas aparecen solas abajo, en el Guion de auditoría.</p>
+            <button class="btn" onclick="enviarCuestionarioEsencial()">🔗 Generar y enviar cuestionario esencial</button>
+          </div>
+
+          <div class="card">
             <div class="card-tag">Lo que elige el cliente</div>
             <p style="color:var(--grey);font-size:.82rem;margin:0 0 14px;">Marca lo que va aceptando durante la llamada. Al pulsar "Generar presupuesto" te lleva a Presupuestos ya con esto metido, listo para revisar y enviar.</p>
             <div class="ficha-row" style="border:none;padding-top:0;">
@@ -3592,6 +3598,55 @@ async function enviarPresupuestoEmail() {
     alert('Presupuesto enviado a ' + destinatario + '.');
   } catch (e) {
     alert('Error de conexión al enviar el correo.');
+  }
+}
+
+// El cuestionario esencial (cuestionario-esencial.html) es la vía de escape
+// para cuando la llamada de auditoría no puede pasar de largo (cliente sin
+// tiempo, urgencias, etc.) — genera un enlace personalizado por parámetros de
+// URL (sin dato nuevo en Supabase por cliente) y lo manda con el mismo envío
+// genérico que ya usan los presupuestos/facturas.
+async function enviarCuestionarioEsencial() {
+  if (!selectedClientId) return;
+  const client = allClients.find(c => c.id === selectedClientId);
+  if (!client) { alert('No se encuentra el cliente.'); return; }
+  const destinatario = prompt('¿A qué email se lo mando?', client.email || '');
+  if (!destinatario) return;
+  const tierLabels = { start: 'Start™', basic: 'Basic™', lite: 'Lite™', pro: 'Pro™' };
+  const tierSelect = document.getElementById('audit-tier-select');
+  const tier = tierLabels[tierSelect ? tierSelect.value : ''] || 'tu Departamento';
+  const nombre = client.negocio || client.nombre || '';
+  const params = new URLSearchParams({
+    client: client.id,
+    nombre,
+    tier,
+    incluye: 'Web profesional a medida + IA para WhatsApp',
+  });
+  const url = `${window.location.origin}/cuestionario-esencial.html?${params.toString()}`;
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const sendResp = await fetch('/.netlify/functions/send-quote-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({
+        destinatario,
+        asunto: `${nombre ? nombre + ' — ' : ''}Cuestionario para montar tu web`,
+        mensaje: `Hola${client.nombre ? ' ' + client.nombre : ''},\n\nPara ir montando ya tu web, necesitamos que nos cuentes unos pocos datos esenciales — no lleva más de 10-15 minutos. En cuanto los tengamos, empezamos a construir.`,
+        enlace_pago: url,
+        enlace_intro: 'Para rellenarlo, copia y pega este enlace en tu navegador:',
+        boton_texto: 'Rellenar el cuestionario →',
+      })
+    });
+    const sendData = await sendResp.json();
+    if (!sendData.ok) {
+      alert(sendData.reason === 'not_configured'
+        ? 'El envío por email no está configurado todavía en este sitio (falta el SMTP) — copia el enlace y mándalo tú por ahora:\n\n' + url
+        : 'No se pudo enviar el correo. Enlace: ' + url);
+      return;
+    }
+    alert('Cuestionario enviado a ' + destinatario + '.');
+  } catch (e) {
+    alert('Error de conexión al enviar el correo. Enlace: ' + url);
   }
 }
 

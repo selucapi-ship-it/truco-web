@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Cuestionario esencial — TRUCO technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#16151a; --bg-panel:#201f24; --bg-card:#403d47;
+  --blue:#2f7bff; --blue-dim:rgba(47,123,255,.1);
+  --gold:#d9a83f; --gold-dim:rgba(217,168,63,.12);
+  --white:#f2f0ea; --grey:#b5b2bc; --grey-line:#3d3b42; --green:#22c55e;
+  --font-display:'Playfair Display',Georgia,serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--white);font-family:var(--font-body);line-height:1.6;padding-block:0 60px;}
+h1,h2,h3{font-family:var(--font-display);line-height:1.2;letter-spacing:-.01em;text-wrap:balance;}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px;}
+
+header{background:linear-gradient(165deg,var(--bg-panel),var(--bg));border-bottom:1px solid var(--grey-line);padding:36px 0 34px;}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:26px;}
+.t-mark{width:38px;height:38px;border:1.5px solid var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;color:var(--gold);font-size:20px;font-weight:700;background:linear-gradient(160deg,var(--bg-panel),var(--bg));flex-shrink:0;}
+.brand b{font-family:var(--font-display);font-size:1.05rem;}
+.brand b span{color:var(--blue);}
+.brand small{display:block;color:var(--grey);font-size:.72rem;letter-spacing:.04em;}
+
+.eyebrow{display:inline-flex;align-items:center;gap:7px;background:var(--gold-dim);border:1px solid rgba(217,168,63,.25);border-radius:20px;padding:5px 13px 5px 10px;font-family:var(--font-mono);font-size:.65rem;letter-spacing:.09em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.eyebrow::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);}
+h1{font-size:1.9rem;margin-bottom:12px;}
+header p{color:var(--grey);font-size:.96rem;max-width:56ch;}
+header p b{color:var(--white);}
+
+.meta-row{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;font-size:.8rem;color:var(--grey);}
+.meta-row b{color:var(--white);font-weight:600;}
+
+main{padding-top:40px;}
+.section{margin-bottom:44px;}
+.section-tag{display:inline-flex;align-items:center;gap:7px;background:var(--blue-dim);border:1px solid rgba(47,123,255,.28);border-radius:20px;padding:5px 13px 5px 10px;font-family:var(--font-mono);font-size:.65rem;letter-spacing:.09em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;}
+.section-tag::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--blue);}
+.section h2{font-size:1.3rem;margin-bottom:6px;}
+.section-note{color:var(--grey);font-size:.86rem;margin-bottom:22px;max-width:58ch;}
+
+.q{margin-bottom:22px;}
+.q label{display:block;font-size:.92rem;font-weight:600;color:var(--white);margin-bottom:4px;}
+.q .req{color:var(--gold);}
+.q .hint{font-size:.78rem;color:var(--grey);font-style:italic;margin-bottom:8px;line-height:1.5;}
+.q textarea,.q input[type=text]{width:100%;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:10px;padding:12px 14px;color:var(--white);font-family:var(--font-body);font-size:.9rem;resize:vertical;outline:none;transition:border-color .15s;}
+.q textarea{min-height:64px;}
+.q textarea:focus,.q input:focus{border-color:var(--blue);}
+.q textarea::placeholder,.q input::placeholder{color:#6f6c78;}
+
+.logo-drop{border:1.5px dashed var(--grey-line);border-radius:12px;padding:22px;text-align:center;background:var(--bg-panel);cursor:pointer;transition:border-color .15s;}
+.logo-drop:hover{border-color:var(--gold);}
+.logo-drop input{display:none;}
+.logo-drop .ic{font-size:1.6rem;margin-bottom:6px;}
+.logo-drop .main{font-size:.88rem;color:var(--white);font-weight:600;}
+.logo-drop .sub{font-size:.76rem;color:var(--grey);margin-top:3px;}
+#logo-filename{margin-top:10px;font-size:.8rem;color:var(--green);display:none;}
+
+.submit-bar{padding:26px 0 4px;margin-top:8px;}
+.submit-btn{width:100%;background:linear-gradient(135deg,var(--gold),#c99530);color:#181410;border:none;border-radius:12px;padding:16px;font-family:var(--font-body);font-size:1rem;font-weight:700;cursor:pointer;transition:transform .15s;}
+.submit-btn:hover{transform:translateY(-1px);}
+.submit-note{text-align:center;font-size:.76rem;color:var(--grey);margin-top:10px;}
+
+.draft-banner{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#ff9d9d;border-radius:10px;padding:10px 14px;font-size:.78rem;margin-bottom:28px;font-family:var(--font-mono);}
+
+@media(max-width:480px){h1{font-size:1.55rem;}.wrap{padding:0 16px;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <div class="t-mark">T</div>
+      <div><b>TRUCO<span>technology</span></b><small>Tu Departamento Tecnológico</small></div>
+    </div>
+    <div class="eyebrow">Cuestionario esencial</div>
+    <h1 id="ques-title">Vamos a montar tu web</h1>
+    <p>Solo lo <b>imprescindible</b> para empezar a construir ya — nada exhaustivo. Cuando esté montado, te mandamos un enlace para verlo y en una auditoría corta terminamos de afinar los detalles. 10-15 minutos, cuando puedas.</p>
+    <div class="meta-row" id="ques-meta">
+      <span><b>Departamento:</b> <span id="meta-tier">—</span></span>
+      <span><b>Incluye:</b> <span id="meta-incluye">—</span></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div id="ques-error" class="draft-banner" style="display:none;">⚠ Este enlace no es válido o ha caducado. Escríbenos y te mandamos uno nuevo.</div>
+
+  <div class="section">
+    <div class="section-tag">1 · Tu negocio</div>
+    <h2>Lo básico para construir tu web</h2>
+    <p class="section-note">Con esto ya tenemos de sobra para maquetar la web entera. Lo demás (fotos definitivas, textos finales, ajustes) lo cerramos en la auditoría de después.</p>
+
+    <div class="q" data-pregunta-id="we1">
+      <label>Nombre comercial exacto <span class="req">*</span></label>
+      <div class="hint">Tal cual debe aparecer en la web — puede no ser idéntico a la razón social de la factura.</div>
+      <input type="text" id="ques-we1" placeholder="Ej: Aerion Instalaciones">
+    </div>
+
+    <div class="q" data-pregunta-id="we2">
+      <label>¿A qué os dedicáis exactamente? <span class="req">*</span></label>
+      <div class="hint">"Instalaciones" es muy amplio — sé todo lo concreto que puedas: eléctricas, climatización, fontanería, gas, domótica, industriales...</div>
+      <textarea placeholder="Ej: Instalaciones eléctricas para vivienda y comunidades, boletines, urgencias 24h..."></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="we3-zona">
+      <label>¿Dónde trabajáis? <span class="req">*</span></label>
+      <div class="hint">Dirección si atendéis en local, o "solo a domicilio" + la zona/ciudades donde dais servicio (para que Google os encuentre ahí).</div>
+      <textarea placeholder="Ej: A domicilio en Alcantarilla, Murcia capital y alrededores (20 km)"></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="we11">
+      <label>En una frase: ¿qué hacéis y por qué elegiros a vosotros? <span class="req">*</span></label>
+      <div class="hint">Esto va en grande en el Inicio. Añade 2-3 puntos fuertes: rapidez, garantía, precio, años de experiencia, urgencias...</div>
+      <textarea placeholder="Ej: Instalaciones eléctricas de confianza en Murcia. +15 años de experiencia, boletines al día, presupuesto sin compromiso."></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="we12">
+      <label>Servicios principales <span class="req">*</span></label>
+      <div class="hint">Lista breve, uno por línea — con esto montamos el apartado de Servicios.</div>
+      <textarea placeholder="Ej:&#10;Instalación eléctrica de vivienda nueva&#10;Boletín eléctrico (CIE)&#10;Reparaciones y urgencias&#10;Domótica básica"></textarea>
+    </div>
+
+    <div class="q">
+      <label>Logo</label>
+      <div class="hint">Si no tienes uno todavía, dinos qué colores os representan y lo resolvemos nosotros.</div>
+      <label class="logo-drop" for="logo-input">
+        <input type="file" id="logo-input" accept="image/*,.pdf,.ai,.eps">
+        <div class="ic">📎</div>
+        <div class="main">Subir logo (o boceto/PDF)</div>
+        <div class="sub">PNG, JPG, PDF o AI — la mejor calidad que tengas</div>
+      </label>
+      <div id="logo-filename"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-tag">2 · Tu agenda</div>
+    <h2>Para que el asistente pueda reservarte citas de verdad</h2>
+    <p class="section-note">Tu Basic™ incluye el calendario integrado — cuando un cliente pida cita por WhatsApp o por el chat de tu web, se apunta sola en tu Google Calendar, sin que nadie tenga que hacer nada a mano.</p>
+
+    <div class="q" data-pregunta-id="cal1">
+      <label>Comparte tu Google Calendar con nosotros <span class="req">*</span></label>
+      <div class="hint">Entra en Google Calendar → ajustes de tu calendario → «Compartir con determinadas personas» → añade <code style="color:var(--gold);">truco-voice-agent@truco-voice-agent.iam.gserviceaccount.com</code> con permiso «Realizar cambios en los eventos». No hace falta darnos tu contraseña ni acceso a tu cuenta, solo ese calendario en concreto.</div>
+      <input type="text" placeholder="Confirma aquí cuando lo hayas compartido (ej: hecho / mi correo de Google es...)">
+    </div>
+
+    <div class="q" data-pregunta-id="cal2">
+      <label>¿Qué servicios se pueden reservar y cuánto dura cada uno? <span class="req">*</span></label>
+      <div class="hint">Ej: "Visita de diagnóstico — 30 min", "Instalación — depende del trabajo, no reservable online". Si solo tienes un tipo de cita, dinos la duración habitual.</div>
+      <textarea placeholder="Ej: Visita de diagnóstico/presupuesto — 30 min"></textarea>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-tag">3 · Tu asistente de IA</div>
+    <h2>El mismo cerebro para el chat de tu web y tu WhatsApp</h2>
+    <p class="section-note">Es un único asistente que responde igual en los dos sitios — no son respuestas de plantilla tipo "pulsa 1 para...": con lo que nos cuentes aquí lo <b>entrenamos</b> para que hable como alguien más de tu empresa, con tu tono y tus respuestas reales. Cuanto más natural y real sea lo que nos des, más natural sonará él.</p>
+
+    <div class="q" data-pregunta-id="wa1">
+      <label>¿Qué tono debe usar? <span class="req">*</span></label>
+      <div class="hint">Si no lo tienes claro, usamos "profesional y cercano" por defecto.</div>
+      <input type="text" placeholder="Ej: cercano pero profesional, como hablarías tú a un cliente">
+    </div>
+
+    <div class="q" data-pregunta-id="wa3">
+      <label>Horario real de atención <span class="req">*</span></label>
+      <input type="text" placeholder="Ej: L-V 8:00-18:00, urgencias 24h">
+    </div>
+
+    <div class="q" data-pregunta-id="wa4">
+      <label>¿Puede dar precios orientativos, o prefieres que siempre derive a "te lo confirmamos"? <span class="req">*</span></label>
+      <textarea placeholder="Ej: puede dar precio de la visita/diagnóstico (ej. 30€), el resto siempre a presupuesto"></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="wa2">
+      <label>Las preguntas que más te repiten tus clientes (5-10) + la respuesta real <span class="req">*</span></label>
+      <div class="hint">Esta es la más importante de todas — no busques la "respuesta perfecta", cuéntanoslo tal cual se lo dirías tú a un cliente por teléfono. Con eso aprende a hablar como vosotros.</div>
+      <textarea placeholder="Ej:&#10;¿Hacéis urgencias? → Sí, 24h, con recargo nocturno&#10;¿Dais presupuesto sin compromiso? → Sí, gratis y sin compromiso&#10;¿Trabajáis en comunidades? → Sí, con seguro de responsabilidad civil" style="min-height:110px;"></textarea>
+    </div>
+  </div>
+
+  <div class="submit-bar" id="submit-bar">
+    <button class="submit-btn" type="button" id="submit-btn" onclick="enviarCuestionario()">Enviar mis respuestas</button>
+    <p class="submit-note">Se lo enviamos automáticamente al equipo de TRUCO en cuanto lo mandes.</p>
+  </div>
+
+  <div class="submit-bar" id="submit-ok" style="display:none;flex-direction:column;align-items:center;text-align:center;">
+    <div style="font-size:2.2rem;color:var(--gold);line-height:1;">✓</div>
+    <p class="submit-note" style="font-size:1rem;color:var(--white);margin-top:12px;">Recibido — gracias. En cuanto lo revisemos te escribimos con los siguientes pasos.</p>
+  </div>
+
+</main>
+
+<script>
+let pendingLogoBase64 = null;
+let pendingLogoFilename = null;
+
+const questParams = new URLSearchParams(window.location.search);
+const questClientId = questParams.get('client') || '';
+
+(function initFromParams(){
+  const nombre = questParams.get('nombre');
+  const tier = questParams.get('tier') || 'Basic™';
+  const incluye = questParams.get('incluye') || 'Web profesional a medida + IA para WhatsApp';
+  if (nombre) {
+    document.getElementById('ques-title').textContent = 'Vamos a montar la web de ' + nombre;
+    document.getElementById('ques-we1').value = nombre;
+  }
+  document.getElementById('meta-tier').textContent = tier;
+  document.getElementById('meta-incluye').textContent = incluye;
+  if (!questClientId) {
+    document.getElementById('ques-error').style.display = 'block';
+    document.getElementById('submit-bar').style.display = 'none';
+  }
+})();
+
+document.getElementById('logo-input').addEventListener('change', function(){
+  const file = this.files[0];
+  const out = document.getElementById('logo-filename');
+  if (!file) return;
+  out.textContent = '✓ ' + file.name;
+  out.style.display = 'block';
+  pendingLogoFilename = file.name;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const maxDim = 1200;
+      let w = img.width, h = img.height;
+      if (w > maxDim || h > maxDim) { const s = maxDim / Math.max(w, h); w = Math.round(w * s); h = Math.round(h * s); }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      pendingLogoBase64 = canvas.toDataURL('image/jpeg', 0.7);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+async function enviarCuestionario() {
+  if (!questClientId) return;
+  const campos = document.querySelectorAll('[data-pregunta-id]');
+  const respuestas = [];
+  let faltan = [];
+  campos.forEach(campo => {
+    const id = campo.getAttribute('data-pregunta-id');
+    const input = campo.querySelector('input, textarea');
+    const valor = input ? input.value.trim() : '';
+    const esObligatoria = !!campo.querySelector('.req');
+    if (esObligatoria && !valor) faltan.push(campo.querySelector('label').textContent.replace('*', '').trim());
+    if (valor) respuestas.push({ pregunta_id: id, respuesta: valor });
+  });
+  if (faltan.length) {
+    alert('Faltan por rellenar:\n\n' + faltan.join('\n'));
+    return;
+  }
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  try {
+    const resp = await fetch('/.netlify/functions/save-cuestionario-esencial', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        client_id: questClientId,
+        respuestas,
+        logo_base64: pendingLogoBase64,
+        logo_filename: pendingLogoFilename,
+      }),
+    });
+    const data = await resp.json().catch(() => ({}));
+    if (!resp.ok || data.ok === false) throw new Error(data.reason || 'error');
+    document.getElementById('submit-bar').style.display = 'none';
+    document.getElementById('submit-ok').style.display = 'flex';
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  } catch (e) {
+    alert('No se pudo enviar — revisa tu conexión e inténtalo otra vez. Si sigue sin funcionar, escríbenos directamente.');
+    btn.disabled = false;
+    btn.textContent = 'Enviar mis respuestas';
+  }
+}
+</script>
+</body>
+</html>

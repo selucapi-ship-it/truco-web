@@ -78,17 +78,24 @@ exports.handler = async function (event) {
   }
 
   const destinatario = (payload.destinatario || '').trim();
-  const adjuntoBase64 = payload.pdf_base64;
+  const adjuntoBase64 = payload.pdf_base64 || null;
   const asunto = (payload.asunto || 'Presupuesto — TRUCO technology').slice(0, 200);
   const mensaje = (payload.mensaje || 'Adjunto el presupuesto solicitado. Cualquier duda, respondemos encantados.').slice(0, 2000);
   const enlacePago = payload.enlace_pago ? String(payload.enlace_pago).slice(0, 500) : '';
+  // Texto del botón/enlace — por defecto el de siempre (pago de presupuestos),
+  // pero reutilizable para otros enlaces (ej. el cuestionario esencial) sin
+  // que suene a que hay que pagar algo.
+  const botonTexto = payload.boton_texto ? String(payload.boton_texto).slice(0, 80) : 'Aceptar y pagar de forma segura →';
+  const enlaceIntro = payload.enlace_intro ? String(payload.enlace_intro).slice(0, 200) : 'Para aceptarlo y pagar de forma segura, copia y pega este enlace en tu navegador:';
   // Reutilizado tal cual por enviarFacturaEmail() en admin/panel.html (mismo
   // envío genérico de "PDF adjunto + mensaje", solo cambia qué PDF y qué
   // nombre de archivo lleva) — nunca cambia el nombre por defecto para no
-  // romper la llamada ya existente de presupuestos.
+  // romper la llamada ya existente de presupuestos. El PDF es OPCIONAL desde
+  // que se reutiliza también para enlaces sin documento adjunto (ej. el
+  // cuestionario esencial) — solo destinatario es obligatorio.
   const filename = payload.filename ? String(payload.filename).replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 150) : 'presupuesto-truco.pdf';
-  if (!destinatario || !adjuntoBase64) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Falta destinatario o el PDF' }) };
+  if (!destinatario) {
+    return { statusCode: 400, body: JSON.stringify({ error: 'Falta el destinatario' }) };
   }
 
   try {
@@ -99,11 +106,11 @@ exports.handler = async function (event) {
       auth: { user: SMTP_USER, pass: SMTP_PASS }
     });
 
-    const textoFinal = mensaje + (enlacePago ? `\n\nPara aceptarlo y pagar de forma segura, copia y pega este enlace en tu navegador:\n${enlacePago}` : '');
+    const textoFinal = mensaje + (enlacePago ? `\n\n${enlaceIntro}\n${enlacePago}` : '');
 
     const botonPago = enlacePago ? `
       <div style="margin:26px 0;text-align:center;">
-        <a href="${enlacePago}" style="background:#d9a83f;color:#11162a;text-decoration:none;font-weight:700;font-size:15px;padding:14px 30px;border-radius:8px;display:inline-block;">Aceptar y pagar de forma segura →</a>
+        <a href="${enlacePago}" style="background:#d9a83f;color:#11162a;text-decoration:none;font-weight:700;font-size:15px;padding:14px 30px;border-radius:8px;display:inline-block;">${escapeHtmlEmail(botonTexto)}</a>
       </div>
       <p style="color:#8a8a8a;font-size:12px;line-height:1.5;">Si el botón no funciona, copia y pega este enlace en tu navegador:<br><a href="${enlacePago}" style="color:#2f7bff;word-break:break-all;">${enlacePago}</a></p>
     ` : '';
@@ -127,11 +134,11 @@ exports.handler = async function (event) {
       subject: asunto,
       text: textoFinal,
       html: htmlFinal,
-      attachments: [{
+      attachments: adjuntoBase64 ? [{
         filename,
         content: Buffer.from(adjuntoBase64, 'base64'),
         contentType: 'application/pdf'
-      }]
+      }] : []
     });
 
     return { statusCode: 200, body: JSON.stringify({ ok: true }) };
