@@ -110,7 +110,7 @@ exports.handler = async function (event) {
           unit_amount: amountCents,
           product_data: {
             name: 'Presupuesto TRUCO — ' + (quote.negocio || quote.nombre_contacto || 'servicio contratado'),
-            description: (quote.lineas || []).map(l => l.descripcion).filter(Boolean).slice(0, 5).join(', ').slice(0, 500) || undefined,
+            description: 'Ref. ' + (quote.numero ? 'P' + String(quote.numero).padStart(4, '0') : quoteId.slice(0, 8)) + ' · IVA incluido',
           },
         },
         quantity: 1,
