@@ -1825,7 +1825,7 @@ async function showApp() {
 // transferencia, un cobro o un lead.
 async function loadNotifications() {
   if (!isFounder) return;
-  const counts = { conversaciones: 0, transferencias: 0, cobros: 0, leads: 0, peticiones: 0 };
+  const counts = { conversaciones: 0, transferencias: 0, cobros: 0, leads: 0, peticiones: 0, cerca_limite: 0, checkouts_abandonados: 0 };
 
   try {
     const { data: stateRow } = await sb.from('panel_notification_state').select('last_seen_at').eq('category', 'conversaciones').maybeSingle();
@@ -1853,6 +1853,16 @@ async function loadNotifications() {
     counts.leads = count || 0;
   } catch (e) { /* 0 */ }
 
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch('/.netlify/functions/founder-weekly-digest', { headers: { Authorization: 'Bearer ' + session.access_token } });
+    const data = await resp.json();
+    if (data.ok) {
+      counts.cerca_limite = (data.digest.cerca_o_supera_limite || []).length;
+      counts.checkouts_abandonados = data.digest.checkouts_abandonados_semana || 0;
+    }
+  } catch (e) { /* 0 */ }
+
   renderBell(counts);
 }
 
@@ -1862,16 +1872,19 @@ const BELL_LABELS = {
   leads: n => [`${n} lead${n === 1 ? '' : 's'} nuevo${n === 1 ? '' : 's'} sin contactar`, 'Aún no les has escrito'],
   cobros: n => [`${n} cobro${n === 1 ? '' : 's'} pendiente${n === 1 ? '' : 's'}`, 'Domiciliación bancaria de este mes'],
   peticiones: n => [`${n} petición${n === 1 ? '' : 'es'} de clientes`, 'Esperan tu visto bueno'],
+  cerca_limite: n => [`${n} cliente${n === 1 ? '' : 's'} cerca de su límite de uso`, 'Puede haber cargo extra o interesa subirle de Departamento'],
+  checkouts_abandonados: n => [`${n} compra${n === 1 ? '' : 's'} empezada${n === 1 ? '' : 's'} sin terminar esta semana`, 'Alguien llegó al pago y no lo completó'],
 };
 
 function renderBell(counts) {
-  const total = counts.conversaciones + counts.transferencias + counts.cobros + counts.leads + (counts.peticiones || 0);
+  const total = counts.conversaciones + counts.transferencias + counts.cobros + counts.leads + (counts.peticiones || 0)
+    + (counts.cerca_limite || 0) + (counts.checkouts_abandonados || 0);
   const badge = document.getElementById('bell-badge');
   badge.textContent = total > 99 ? '99+' : String(total);
   badge.classList.toggle('show', total > 0);
 
   const items = document.getElementById('bell-items');
-  const orderedKeys = ['peticiones', 'transferencias', 'conversaciones', 'leads', 'cobros'];
+  const orderedKeys = ['peticiones', 'transferencias', 'conversaciones', 'leads', 'cobros', 'cerca_limite', 'checkouts_abandonados'];
   const withCount = orderedKeys.filter(k => counts[k] > 0);
   items.innerHTML = !withCount.length ? '<div class="bell-empty">Todo al día — nada pendiente de revisar.</div>' : withCount.map(k => {
     const [title, sub] = BELL_LABELS[k](counts[k]);
@@ -1890,6 +1903,7 @@ function handleBellItemClick(key) {
   else if (key === 'cobros') openCobrosOverlay();
   else if (key === 'peticiones') openPeticionesOverlay();
   else if (key === 'leads') { showClientesView(); document.getElementById('filter-status').value = 'nuevo'; renderClients(); }
+  else if (key === 'cerca_limite' || key === 'checkouts_abandonados') openStatsOverlay();
 }
 
 // ── Misma lista de avisos de la campana, pero puesta bien grande arriba del
