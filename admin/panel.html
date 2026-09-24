@@ -2051,10 +2051,9 @@ function clearCalId() {
   renderCalFrame('');
 }
 
-// ── AUDITORÍAS RESERVADAS — prospectos que han reservado desde la web
-// (interactions.source='auditoria', ver index.html#submitBookingForm) y aún
-// no son ni cliente ni descartado. Pinchar una tarjeta abre su ficha
-// directamente en la pestaña Auditoría, lista con el guion de la llamada. ──
+// ── CONVERSACIONES — chat web, WhatsApp (Jose) y llamadas de voz de gente que
+// todavía no tiene ficha propia. Vivía apelotonado dentro de la columna de
+// Clientes; ahora es su propio apartado, cargado bajo demanda al abrirlo. ──
 function openConversacionesOverlay() {
   document.getElementById('conversaciones-overlay').style.display = 'block';
   loadVoiceCalls();
@@ -2065,6 +2064,10 @@ function closeConversacionesOverlay() {
   document.getElementById('conversaciones-overlay').style.display = 'none';
 }
 
+// ── AUDITORÍAS RESERVADAS — prospectos que han reservado desde la web
+// (interactions.source='auditoria', ver index.html#submitBookingForm) y aún
+// no son ni cliente ni descartado. Pinchar una tarjeta abre su ficha
+// directamente en la pestaña Auditoría, lista con el guion de la llamada. ──
 function openAuditoriasOverlay() {
   document.getElementById('auditorias-overlay').style.display = 'block';
   loadAuditoriasProspectos();
