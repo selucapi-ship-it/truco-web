@@ -143,7 +143,7 @@ main{padding-top:40px;}
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" id="section-agenda">
     <div class="section-tag">2 · Tu agenda</div>
     <h2>Para que el asistente pueda reservarte citas de verdad</h2>
     <p class="section-note">Tu Basic™ incluye el calendario integrado — cuando un cliente pida cita por WhatsApp o por el chat de tu web, se apunta sola en tu Google Calendar, sin que nadie tenga que hacer nada a mano.</p>
@@ -161,7 +161,7 @@ main{padding-top:40px;}
     </div>
   </div>
 
-  <div class="section">
+  <div class="section" id="section-ia">
     <div class="section-tag">3 · Tu asistente de IA</div>
     <h2>El mismo cerebro para el chat de tu web y tu WhatsApp</h2>
     <p class="section-note">Es un único asistente que responde igual en los dos sitios — no son respuestas de plantilla tipo "pulsa 1 para...": con lo que nos cuentes aquí lo <b>entrenamos</b> para que hable como alguien más de tu empresa, con tu tono y tus respuestas reales. Cuanto más natural y real sea lo que nos des, más natural sonará él.</p>
@@ -210,8 +210,8 @@ const questClientId = questParams.get('client') || '';
 
 (function initFromParams(){
   const nombre = questParams.get('nombre');
-  const tier = questParams.get('tier') || 'Basic™';
-  const incluye = questParams.get('incluye') || 'Web profesional a medida + IA para WhatsApp';
+  const tier = questParams.get('tier') || 'Sin Departamento';
+  const incluye = questParams.get('incluye') || 'Web profesional a medida';
   if (nombre) {
     document.getElementById('ques-title').textContent = 'Vamos a montar la web de ' + nombre;
     document.getElementById('ques-we1').value = nombre;
@@ -222,6 +222,23 @@ const questClientId = questParams.get('client') || '';
     document.getElementById('ques-error').style.display = 'block';
     document.getElementById('submit-bar').style.display = 'none';
   }
+
+  // El cuestionario nunca es genérico: solo se preguntan la agenda y el
+  // asistente de IA si esas automatizaciones se han marcado de verdad para
+  // este cliente en el panel — si no, sección 1 (siempre necesaria para
+  // montar cualquier web) es todo lo que se le pide.
+  const automations = (questParams.get('automations') || '').split(',').map(s => s.trim()).filter(Boolean);
+  const wantsAgenda = automations.includes('reservas');
+  const wantsIA = automations.includes('whatsapp') || automations.includes('web-ia');
+  if (!wantsAgenda) document.getElementById('section-agenda').hidden = true;
+  if (!wantsIA) document.getElementById('section-ia').hidden = true;
+
+  document.querySelectorAll('.section:not([hidden])').forEach((sec, i) => {
+    const tag = sec.querySelector('.section-tag');
+    if (!tag) return;
+    const label = tag.textContent.split('·').slice(1).join('·').trim();
+    tag.textContent = (i + 1) + ' · ' + label;
+  });
 })();
 
 document.getElementById('logo-input').addEventListener('change', function(){
@@ -250,7 +267,7 @@ document.getElementById('logo-input').addEventListener('change', function(){
 
 async function enviarCuestionario() {
   if (!questClientId) return;
-  const campos = document.querySelectorAll('[data-pregunta-id]');
+  const campos = document.querySelectorAll('.section:not([hidden]) [data-pregunta-id]');
   const respuestas = [];
   let faltan = [];
   campos.forEach(campo => {
