@@ -323,8 +323,6 @@
   .stats-table td{padding:7px 4px;border-bottom:1px solid var(--grey-line);}
 
   /* ── TRUKI (overlay, founder-only) ── */
-  #truki-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
-  #truki-btn:hover{border-color:var(--gold);color:var(--gold);}
   #truki-overlay,#settings-overlay,#contrataciones-overlay,#cobros-overlay,#transferencias-overlay,#peticiones-overlay,#audit-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
   .truki-box{width:100%;max-width:920px;margin:0 auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:18px;padding:30px 32px;box-shadow:var(--shadow-card);}
   .truki-box h2{font-family:var(--font-d);font-size:1.5rem;margin:0 0 6px;letter-spacing:-.01em;}
@@ -337,8 +335,7 @@
   .truki-row .tr-counts b{color:var(--white);}
   .truki-status{font-family:var(--font-m);font-size:.6rem;text-transform:uppercase;padding:2px 8px;border-radius:10px;letter-spacing:.03em;}
   .truki-status.active{background:rgba(34,197,94,.15);color:var(--green);}
-  .truki-status.suspended,.truki-status.failed{background:rgba(239,68,68,.12);color:var(--red);}
-  .truki-status.provisioning{background:rgba(217,168,63,.15);color:var(--gold);}
+  .truki-status.suspended{background:rgba(239,68,68,.12);color:var(--red);}
   .truki-error{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:8px 10px;margin-top:6px;font-size:.72rem;color:#ff8a80;line-height:1.5;width:100%;}
 
   /* ── TruKi: consola real (sidebar de empresas + detalle), no solo lista ── */
@@ -362,8 +359,6 @@
   .truki-section-title{font-family:var(--font-m);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin:22px 0 8px;}
 
   /* ── PRESUPUESTOS (overlay, founder-only) ── */
-  #quotes-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
-  #quotes-btn:hover{border-color:var(--gold);color:var(--gold);}
   #quotes-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
   .quotes-layout{display:grid;grid-template-columns:280px 1fr;gap:0;width:100%;max-width:980px;margin:0 auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:18px;box-shadow:var(--shadow-card);overflow:hidden;}
   @media(max-width:760px){.quotes-layout{grid-template-columns:1fr;}}
@@ -390,18 +385,11 @@
   .quotes-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:14px;}
   /* ── FACTURAS (overlay, founder-only) — reutiliza las clases .quotes-* de
      arriba a propósito, mismo lenguaje visual, solo cambia el contenido ── */
-  #facturas-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
-  #facturas-btn:hover{border-color:var(--gold);color:var(--gold);}
   #facturas-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
   .factura-badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.68rem;font-family:var(--font-m);text-transform:uppercase;}
   .factura-badge.emitida{background:rgba(47,123,255,.15);color:var(--blue);}
   .factura-badge.rectificada{background:rgba(217,168,63,.15);color:var(--gold);}
   .factura-badge.anulada{background:rgba(255,255,255,.08);color:var(--grey);}
-  #prices-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
-  #prices-btn:hover{border-color:var(--gold);color:var(--gold);}
-  #fiscal-btn,#contrataciones-btn,#cobros-btn,#transferencias-btn,#audit-btn,#activity-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
-  #contrataciones-btn:hover,#cobros-btn:hover,#transferencias-btn:hover,#audit-btn:hover,#activity-btn:hover{border-color:var(--gold);color:var(--gold);}
-  #fiscal-btn:hover{border-color:var(--gold);color:var(--gold);}
   #prices-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
   #fiscal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);z-index:200;overflow-y:auto;padding:36px 20px;}
   .periodo-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:9px 16px;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;}
@@ -621,7 +609,7 @@
     <div class="stats-box">
       <button class="stats-close" onclick="closeActivityOverlay()">✕</button>
       <h2>Interacciones y Actividad</h2>
-      <p style="color:var(--grey);font-size:.82rem;margin:-8px 0 20px;">Qué está haciendo la gente en tu web: conversaciones, páginas más vistas, botones más pulsados, y qué merece la pena revisar.</p>
+      <p style="color:var(--grey);font-size:.82rem;margin:-8px 0 20px;">Qué está haciendo la gente en tu web: páginas más vistas, botones más pulsados, y qué merece la pena revisar. (Para leer o responder conversaciones concretas de chat/WhatsApp/llamadas, es el tile "💬 Conversaciones".)</p>
       <div class="stats-grid">
         <div class="stats-card wide">
           <h3>Actividad reciente del chat y del asistente de voz</h3>
@@ -1333,12 +1321,6 @@
           <button class="resumen-tile" onclick="openAuditOverlay()">🔒<span>Auditoría de seguridad</span></button>
         </div>
       </div>
-      <div class="resumen-group">
-        <div class="resumen-group-title">Tu cuenta</div>
-        <div class="resumen-tiles">
-          <button class="resumen-tile" onclick="openSettingsOverlay()">⚙️<span>Ajustes</span></button>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -1816,9 +1798,13 @@ async function showApp() {
   document.getElementById('anon-section').style.display = isFounder ? 'block' : 'none';
   document.getElementById('whatsapp-jose-section').style.display = isFounder ? 'block' : 'none';
   if (isFounder) {
+    // loadVoiceCalls() NO se lanza aquí a propósito: solo hace falta dentro
+    // del apartado "Conversaciones" (openConversacionesOverlay), a diferencia
+    // de chat/WhatsApp que alimentan también la tarjeta "Mensajes nuevos" de
+    // Resumen — cargarla siempre sería una consulta de más en cada login sin
+    // ningún uso hasta que se abra ese apartado.
     await Promise.all([loadChatSessions(), loadWhatsappJoseSessions()]);
     renderResumenMessages();
-    loadVoiceCalls();
   }
   loadClients();
   showResumenView();
@@ -2056,6 +2042,9 @@ function clearCalId() {
 // directamente en la pestaña Auditoría, lista con el guion de la llamada. ──
 function openConversacionesOverlay() {
   document.getElementById('conversaciones-overlay').style.display = 'block';
+  loadVoiceCalls();
+  loadChatSessions();
+  loadWhatsappJoseSessions();
 }
 function closeConversacionesOverlay() {
   document.getElementById('conversaciones-overlay').style.display = 'none';
@@ -5422,7 +5411,7 @@ function renderTrukiDetalle(data) {
       <button class="btn sm" onclick="trukiGuardarEdicionEmpresa('${emp.id}')">Guardar cambios</button>
     </div>
 
-    <div class="truki-section-title">Equipo</div>
+    <div class="truki-section-title">Equipo de esta empresa</div>
     ${equipoHtml}
 
     <div class="truki-section-title">Últimas facturas y presupuestos</div>
