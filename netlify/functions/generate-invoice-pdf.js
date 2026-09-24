@@ -297,6 +297,16 @@ exports.handler = async function (event) {
     page.drawText(totalVal, { x: totalsX + totalsW - display.widthOfTextAtSize(totalVal, 15), y: y - 19, size: 15, font: display, color: offwhite });
     y -= 48;
 
+    // ── Forma de pago — para quien pague por transferencia en vez de con el
+    // enlace de tarjeta, el IBAN tiene que estar en la propia factura o no
+    // sabe dónde ingresar. Cuenta fija de TRUCOtechnology, igual en todas
+    // las facturas. ──
+    if (y < 80) { page = pdf.addPage([595.28, 841.89]); y = height - 60; }
+    page.drawText(tracked('Forma de pago'), { x: 40, y, size: 7, font: mono, color: grey });
+    y -= 13;
+    page.drawText('Transferencia a ES57 0182 1294 1502 0516 4770 (BBVA) · Titular: Jose Luis Robles Capitán', { x: 40, y, size: 8.3, font: body, color: dark });
+    y -= 20;
+
     // ── Notas ──
     if (factura.notas) {
       if (y < 90) { page = pdf.addPage([595.28, 841.89]); y = height - 60; }
