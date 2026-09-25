@@ -222,17 +222,17 @@
   .audit-q .hint{font-size:.72rem;color:var(--grey);font-style:italic;margin-bottom:6px;}
   .audit-q textarea{width:100%;min-height:44px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:8px;padding:8px 10px;color:var(--white);font-family:var(--font-b);font-size:.82rem;resize:vertical;}
   .audit-q textarea:focus{border-color:var(--blue);outline:none;}
-  .ficha-name-input{font-family:var(--font-d);font-size:1.45rem;margin:0 0 6px;letter-spacing:-.01em;background:none;border:1px solid transparent;border-radius:6px;color:var(--white);padding:2px 6px;width:100%;max-width:420px;display:block;}
+  .ficha-name-input{font-family:var(--font-d);font-size:1.45rem;margin:0 0 6px;letter-spacing:-.01em;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:6px;color:var(--white);padding:4px 8px;width:100%;max-width:420px;display:block;}
   .ficha-badges{display:flex;flex-wrap:wrap;gap:0;align-items:center;}
-  .ficha-negocio-input{color:var(--grey);font-size:.85rem;margin-bottom:14px;background:none;border:1px solid transparent;border-radius:6px;padding:2px 6px;width:100%;max-width:420px;display:block;font-family:var(--font-b);}
-  .ficha-name-input:hover,.ficha-negocio-input:hover{border-color:var(--grey-line);}
+  .ficha-negocio-input{color:var(--white);font-size:.85rem;margin-bottom:14px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:6px;padding:4px 8px;width:100%;max-width:420px;display:block;font-family:var(--font-b);}
+  .ficha-name-input:hover,.ficha-negocio-input:hover{border-color:var(--blue);}
   .ficha-name-input:focus,.ficha-negocio-input:focus{border-color:var(--blue);outline:none;background:var(--bg-card);}
   .tier-badge{display:inline-block;background:var(--blue-dim);border:1px solid var(--blue);color:var(--blue-light);font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:20px;margin-bottom:8px;}
   .ficha-row{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;padding:9px 0;border-bottom:1px solid var(--grey-line);gap:12px;}
   .ficha-row:last-of-type{border-bottom:none;}
   .ficha-row span:first-child{color:var(--grey);flex-shrink:0;}
-  .ficha-row input[type=text],.ficha-row input[type=email],.ficha-row input[type=tel]{background:none;border:1px solid transparent;border-radius:6px;color:var(--white);padding:4px 8px;text-align:right;font-family:var(--font-b);font-size:.82rem;width:100%;max-width:260px;}
-  .ficha-row input:hover{border-color:var(--grey-line);}
+  .ficha-row input[type=text],.ficha-row input[type=email],.ficha-row input[type=tel]{background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:6px;color:var(--white);padding:6px 10px;text-align:right;font-family:var(--font-b);font-size:.82rem;width:100%;max-width:260px;cursor:text;}
+  .ficha-row input:hover{border-color:var(--blue);}
   .ficha-row input:focus{border-color:var(--blue);outline:none;background:var(--bg-card);text-align:left;}
   select#status-select,select#stage-select{background:var(--bg-card);border:1px solid var(--grey-line);color:var(--white);font-family:var(--font-m);font-size:.75rem;padding:5px 8px;border-radius:6px;}
   .churn-risk-badge{display:inline-block;background:rgba(239,68,68,.12);border:1px solid var(--red);color:var(--red);font-size:.7rem;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:8px;}
@@ -1515,6 +1515,7 @@
             <div class="ficha-row"><span>Fecha de baja</span><span id="ficha-baja"></span></div>
             <div class="ficha-row"><span>Acceso al portal</span><span id="ficha-portal-status"></span></div>
             <button id="invite-portal-btn" onclick="invitePortal()" class="btn sm block ghost" style="margin-top:12px;">Invitar al portal</button>
+            <div id="invite-portal-hint" class="empty-mini" style="margin-top:8px;display:none;">Añade un email arriba y guárdalo — sin email no hay dónde mandarle la invitación.</div>
           </div>
         </div>
 
@@ -4829,16 +4830,19 @@ async function openFicha(id, tab) {
   }
 
   const inviteBtn = document.getElementById('invite-portal-btn');
+  const invitePortalHint = document.getElementById('invite-portal-hint');
   const portalStatus = document.getElementById('ficha-portal-status');
   if (client.auth_user_id) {
     portalStatus.textContent = 'Activado';
     inviteBtn.style.display = 'none';
+    invitePortalHint.style.display = 'none';
   } else {
     portalStatus.textContent = 'Sin activar';
     // invite-client.js ahora exige sesión founder por dentro — se oculta
     // también aquí para no dejar un botón que a un colaborador solo le
     // daría un "No autorizado" al pulsarlo.
     inviteBtn.style.display = client.email && isFounder ? 'block' : 'none';
+    invitePortalHint.style.display = !client.email && isFounder ? 'block' : 'none';
   }
 
   const waDigits = (client.telefono || '').replace(/\D/g, '');
