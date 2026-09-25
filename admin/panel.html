@@ -1521,8 +1521,11 @@
 
         <div class="ficha-tab-panel" data-tab-panel="actividad" style="display:none;">
           <div class="card">
-            <div class="card-tag">Mensaje a su portal</div>
-            <p style="color:var(--grey);font-size:.78rem;margin:-6px 0 12px;">Un mensaje directo tuyo, distinto de la petición/chat de socio — el cliente lo ve en su portal.</p>
+            <div class="card-tag" style="display:flex;justify-content:space-between;align-items:center;width:100%;">
+              <span>Tu gestor personal (el cliente lo ve así)</span>
+              <button type="button" class="btn sm ghost" onclick="loadClientMessages(selectedClientId)">🔄 Actualizar</button>
+            </div>
+            <p style="color:var(--grey);font-size:.78rem;margin:-6px 0 12px;">Le sale como "Habla directamente con tu gestor humano de TRUCOtechnology" — para problemas o cosas concretas, no para cambios del día a día (eso ya lo cubre el chat de socio).</p>
             <div id="ficha-client-messages" style="max-height:260px;overflow-y:auto;margin-bottom:12px;"><div class="empty-mini">Cargando…</div></div>
             <div class="add-note">
               <input type="text" id="client-message-input" placeholder="Escribe un mensaje para el cliente..." onkeydown="if(event.key==='Enter')sendClientMessage()">

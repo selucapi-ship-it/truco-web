@@ -344,14 +344,17 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 
   <div class="grid">
     <div class="card chat-card">
-      <div class="card-tag">Mensajes de tu Departamento</div>
-      <h2>Habla directamente con Jose</h2>
+      <div class="card-tag" style="display:flex;justify-content:space-between;align-items:center;">
+        <span>Tu gestor personal</span>
+        <button type="button" onclick="loadClientMsg()" style="background:none;border:none;color:var(--gold);font-size:.7rem;cursor:pointer;font-family:var(--font-mono);">🔄 Actualizar</button>
+      </div>
+      <h2>Habla directamente con tu gestor humano de TRUCOtechnology</h2>
       <div id="client-msg-log" class="chat-log-plain"></div>
       <div class="chat-input-row">
-        <input type="text" id="client-msg-input" placeholder="Escribe tu mensaje…" onkeydown="if(event.key==='Enter')sendClientMsg()">
+        <input type="text" id="client-msg-input" placeholder="Escribe aquí lo que necesitas resolver…" onkeydown="if(event.key==='Enter')sendClientMsg()">
         <button id="client-msg-send-btn" onclick="sendClientMsg()">Enviar</button>
       </div>
-      <div class="chat-hint">Esto sí lo lee una persona — para dudas rápidas o del día a día, mejor el chat de socio de abajo (te responde al momento).</div>
+      <div class="chat-hint">No es un chat abierto ni un bot — es tu gestor de cuenta, una persona real, para problemas o cosas concretas que resolver. Para cambios del día a día (horarios, precios, respuestas del asistente...) usa el chat de socio de abajo, que es más rápido.</div>
     </div>
   </div>
 
