@@ -1377,6 +1377,9 @@
           <option value="interacciones_desc">Más interacciones</option>
           <option value="nombre_asc">Nombre A-Z</option>
         </select>
+        <label style="display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--grey);white-space:nowrap;">
+          <input type="checkbox" id="filter-churn" onchange="renderClients()" style="width:auto;"> ⚠ Solo en riesgo de fuga
+        </label>
         <button id="filters-clear" class="btn sm ghost" onclick="clearFilters()">Limpiar</button>
       </div>
       <div id="loading-state">Cargando...</div>
@@ -2293,6 +2296,15 @@ async function crearClienteManual() {
   const tier = document.getElementById('nc-tier').value;
   const solutions = Array.from(document.querySelectorAll('#nc-solutions input:checked')).map(el => el.value);
   if (!email) { alert('El email es obligatorio.'); return; }
+
+  const duplicado = allClients.find(c =>
+    (c.email && c.email.toLowerCase() === email.toLowerCase()) ||
+    (telefono && c.telefono && c.telefono.replace(/\s/g, '') === telefono.replace(/\s/g, ''))
+  );
+  if (duplicado) {
+    const coincide = duplicado.email && duplicado.email.toLowerCase() === email.toLowerCase() ? 'el email' : 'el teléfono';
+    if (!confirm(`Ya existe "${duplicado.nombre || duplicado.email}" con ${coincide} igual — ¿crear otro cliente distinto de todas formas?`)) return;
+  }
 
   const { data, error } = await sb.rpc('create_client_manual', {
     p_nombre: nombre || null, p_email: email, p_telefono: telefono || null,
@@ -4131,6 +4143,7 @@ function clearFilters() {
   document.getElementById('filter-sector').value = '';
   document.getElementById('filter-tier').value = '';
   document.getElementById('filter-sort').value = 'updated_desc';
+  document.getElementById('filter-churn').checked = false;
   renderClients();
 }
 
@@ -4312,6 +4325,7 @@ function renderClients() {
   const fSector = document.getElementById('filter-sector').value;
   const fTier = document.getElementById('filter-tier').value;
   const fSort = document.getElementById('filter-sort').value;
+  const fChurn = document.getElementById('filter-churn').checked;
 
   let filtered = !q ? allClients.slice() : allClients.filter(c =>
     [c.nombre, c.email, c.negocio, c.telefono, c.tipo].some(v => (v || '').toLowerCase().includes(q))
@@ -4319,6 +4333,7 @@ function renderClients() {
   if (fStatus) filtered = filtered.filter(c => c.status === fStatus);
   if (fSector) filtered = filtered.filter(c => c.tipo === fSector);
   if (fTier) filtered = filtered.filter(c => c.arranque_tier === fTier);
+  if (fChurn) filtered = filtered.filter(c => c.churn_risk);
 
   const interCount = c => (c.interactions && c.interactions[0] && c.interactions[0].count) || 0;
   const sorters = {
@@ -4359,6 +4374,7 @@ function renderClients() {
         <span>${escapeHtml(c.email || c.telefono || '—')}</span>
         ${c.tipo ? `<span>${escapeHtml(c.tipo)}</span>` : ''}
         <span>${count} interacc.</span>
+        <span title="${new Date(c.updated_at).toLocaleString('es-ES')}">${timeAgo(c.updated_at)}</span>
         <span class="cobro-dot${c.domiciliacion_activa ? ' activa' : ''}" title="${c.domiciliacion_activa ? 'Domiciliado' : 'Sin domiciliar'}"></span>
       </div>
     </div>`;
