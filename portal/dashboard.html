@@ -342,7 +342,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
     </div>
   </div>
 
-  <div class="grid">
+  <div class="grid" id="client-msg-card" style="display:none;">
     <div class="card chat-card">
       <div class="card-tag" style="display:flex;justify-content:space-between;align-items:center;">
         <span>Tu gestor personal</span>
@@ -350,11 +350,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
       </div>
       <h2>Habla directamente con tu gestor humano de TRUCOtechnology</h2>
       <div id="client-msg-log" class="chat-log-plain"></div>
-      <div class="chat-input-row">
+      <div class="chat-input-row" id="client-msg-input-row">
         <input type="text" id="client-msg-input" placeholder="Escribe aquí lo que necesitas resolver…" onkeydown="if(event.key==='Enter')sendClientMsg()">
         <button id="client-msg-send-btn" onclick="sendClientMsg()">Enviar</button>
       </div>
-      <div class="chat-hint">No es un chat abierto ni un bot — es tu gestor de cuenta, una persona real, para problemas o cosas concretas que resolver. Para cambios del día a día (horarios, precios, respuestas del asistente...) usa el chat de socio de abajo, que es más rápido.</div>
+      <div class="chat-hint" id="client-msg-hint">No es un chat abierto ni un bot — es tu gestor de cuenta, una persona real, para problemas o cosas concretas que resolver. Para cambios del día a día (horarios, precios, respuestas del asistente...) usa el chat de socio de abajo, que es más rápido.</div>
     </div>
   </div>
 
@@ -587,6 +587,7 @@ async function doLogout() {
 }
 
 let myClientId = null;
+let myChatDirectoActivo = false;
 async function loadClient() {
   const { data: client, error } = await sb.from('clients').select('*, client_solutions(*)').single();
   if (error || !client) {
@@ -594,6 +595,7 @@ async function loadClient() {
     return;
   }
   myClientId = client.id;
+  myChatDirectoActivo = !!client.chat_directo_activo;
   loadClientMsg();
   document.getElementById('login-gate').style.display = 'none';
   document.getElementById('app').style.display = 'block';
@@ -830,10 +832,24 @@ function appendMsg(role, text) {
 // lo lee y contesta una persona de verdad, sin pasar por el asistente de IA). ──
 async function loadClientMsg() {
   if (!myClientId) return;
+  const card = document.getElementById('client-msg-card');
   const log = document.getElementById('client-msg-log');
   const { data, error } = await sb.from('client_messages').select('sender, body, created_at').eq('client_id', myClientId).order('created_at', { ascending: true });
+  const hayHistorial = !error && data && data.length;
+  // Si tu gestor no lo ha abierto y nunca has hablado con él por aquí, no
+  // hay nada que enseñar — la tarjeta se queda oculta del todo. Si ya
+  // hablasteis antes y ahora está cerrado, sigues viendo lo de siempre,
+  // solo que no puedes escribir uno nuevo hasta que se reabra.
+  if (!myChatDirectoActivo && !hayHistorial) { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+
+  document.getElementById('client-msg-input-row').style.display = myChatDirectoActivo ? 'flex' : 'none';
+  document.getElementById('client-msg-hint').textContent = myChatDirectoActivo
+    ? 'No es un chat abierto ni un bot — es tu gestor de cuenta, una persona real, para problemas o cosas concretas que resolver. Para cambios del día a día (horarios, precios, respuestas del asistente...) usa el chat de socio de abajo, que es más rápido.'
+    : 'Esta conversación está cerrada ahora mismo — tu gestor la reabrirá si hace falta seguir hablando. Puedes ver lo anterior, pero no escribir un mensaje nuevo.';
+
   if (error) { log.innerHTML = '<div class="empty-note">No se pudo cargar.</div>'; return; }
-  if (!data || !data.length) { log.innerHTML = '<div class="empty-note">Todavía no hay mensajes.</div>'; return; }
+  if (!hayHistorial) { log.innerHTML = '<div class="empty-note">Todavía no hay mensajes.</div>'; return; }
   log.innerHTML = data.map(m => {
     const role = m.sender === 'client' ? 'user' : 'bot';
     return `<div class="msg-row ${role}">
@@ -845,7 +861,7 @@ async function loadClientMsg() {
 }
 
 async function sendClientMsg() {
-  if (!myClientId) return;
+  if (!myClientId || !myChatDirectoActivo) return;
   const input = document.getElementById('client-msg-input');
   const body = input.value.trim();
   if (!body) return;

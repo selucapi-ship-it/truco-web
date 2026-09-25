@@ -1525,7 +1525,11 @@
               <span>Tu gestor personal (el cliente lo ve así)</span>
               <button type="button" class="btn sm ghost" onclick="loadClientMessages(selectedClientId)">🔄 Actualizar</button>
             </div>
-            <p style="color:var(--grey);font-size:.78rem;margin:-6px 0 12px;">Le sale como "Habla directamente con tu gestor humano de TRUCOtechnology" — para problemas o cosas concretas, no para cambios del día a día (eso ya lo cubre el chat de socio).</p>
+            <p style="color:var(--grey);font-size:.78rem;margin:-6px 0 12px;">Le sale como "Habla directamente con tu gestor humano de TRUCOtechnology" — para problemas o cosas concretas, no para cambios del día a día (eso ya lo cubre el chat de socio). Tú decides cuándo lo tiene disponible: ábrelo cuando le respondas a una petición o un error, y ciérralo cuando esté resuelto — o déjalo abierto si es un cliente que no da guerra.</p>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+              <span id="chat-directo-status" style="font-size:.78rem;color:var(--grey);"></span>
+              <button type="button" class="btn sm" id="chat-directo-toggle-btn" onclick="toggleChatDirecto()" style="margin-left:auto;"></button>
+            </div>
             <div id="ficha-client-messages" style="max-height:260px;overflow-y:auto;margin-bottom:12px;"><div class="empty-mini">Cargando…</div></div>
             <div class="add-note">
               <input type="text" id="client-message-input" placeholder="Escribe un mensaje para el cliente..." onkeydown="if(event.key==='Enter')sendClientMessage()">
@@ -4900,6 +4904,7 @@ async function openFicha(id, tab) {
   await loadFichaAutomations(id);
   await loadFichaEconomics(id);
   await loadClientMessages(id);
+  renderChatDirectoToggle(client);
 }
 
 // ── Mensaje directo al portal del cliente — distinto del chat de socio (que
@@ -4932,6 +4937,32 @@ async function sendClientMessage() {
   if (error) { alert('No se pudo enviar: ' + error.message); return; }
   input.value = '';
   loadClientMessages(selectedClientId);
+}
+
+// Lo abres tú cuando hace falta (ej. vas a responder a una petición/error) y
+// lo cierras cuando esté resuelto — no un canal siempre disponible para
+// todos los clientes, que con muchos sería inmanejable. Mientras está
+// cerrado el cliente sigue viendo el historial, solo no puede escribir uno
+// nuevo (esto además está reforzado en la política RLS, no es solo de cara).
+function renderChatDirectoToggle(client) {
+  const statusEl = document.getElementById('chat-directo-status');
+  const btn = document.getElementById('chat-directo-toggle-btn');
+  const abierto = !!client.chat_directo_activo;
+  statusEl.textContent = abierto ? '🟢 Chat abierto para él' : '⚪ Chat cerrado';
+  btn.textContent = abierto ? 'Cerrar chat' : 'Abrir chat';
+  btn.className = 'btn sm ' + (abierto ? 'ghost' : '');
+}
+
+async function toggleChatDirecto() {
+  if (!selectedClientId) return;
+  const client = allClients.find(c => c.id === selectedClientId);
+  if (!client) return;
+  const nuevoEstado = !client.chat_directo_activo;
+  const { error } = await sb.from('clients').update({ chat_directo_activo: nuevoEstado }).eq('id', selectedClientId);
+  if (error) { alert('No se pudo cambiar: ' + error.message); return; }
+  client.chat_directo_activo = nuevoEstado;
+  renderChatDirectoToggle(client);
+  toast(nuevoEstado ? 'Chat abierto para el cliente' : 'Chat cerrado');
 }
 
 // contract_started_at + permanencia_meses + gift_period_days — misma fórmula
