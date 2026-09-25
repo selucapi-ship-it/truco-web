@@ -126,7 +126,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
 .usage-tile-note{font-size:.75rem;color:#ff8a80;margin-top:10px;line-height:1.5;}
 .usage-tile-note b{color:#fff;}
 .chat-card{grid-column:1/-1;}
-#chat-log{max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;margin-bottom:14px;padding-right:4px;}
+#chat-log,.chat-log-plain{max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;margin-bottom:14px;padding-right:4px;}
 .msg-row{display:flex;gap:9px;align-items:flex-end;max-width:82%;}
 .msg-row.user{align-self:flex-end;flex-direction:row-reverse;}
 .msg-avatar{width:24px;height:24px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:.68rem;font-weight:700;}
@@ -339,6 +339,19 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
         <button id="task-send-btn" onclick="sendTask()">Enviar petición</button>
       </div>
       <div id="task-list" class="task-list"><div class="empty-note">Aún no has enviado ninguna petición.</div></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card chat-card">
+      <div class="card-tag">Mensajes de tu Departamento</div>
+      <h2>Habla directamente con Jose</h2>
+      <div id="client-msg-log" class="chat-log-plain"></div>
+      <div class="chat-input-row">
+        <input type="text" id="client-msg-input" placeholder="Escribe tu mensaje…" onkeydown="if(event.key==='Enter')sendClientMsg()">
+        <button id="client-msg-send-btn" onclick="sendClientMsg()">Enviar</button>
+      </div>
+      <div class="chat-hint">Esto sí lo lee una persona — para dudas rápidas o del día a día, mejor el chat de socio de abajo (te responde al momento).</div>
     </div>
   </div>
 
@@ -570,12 +583,15 @@ async function doLogout() {
   window.location.href = 'login.html';
 }
 
+let myClientId = null;
 async function loadClient() {
   const { data: client, error } = await sb.from('clients').select('*, client_solutions(*)').single();
   if (error || !client) {
     document.getElementById('login-gate').textContent = 'No pudimos cargar tu ficha. Escríbenos si el problema continúa.';
     return;
   }
+  myClientId = client.id;
+  loadClientMsg();
   document.getElementById('login-gate').style.display = 'none';
   document.getElementById('app').style.display = 'block';
 
@@ -805,6 +821,38 @@ function appendMsg(role, text) {
   row.appendChild(bubble);
   log.appendChild(row);
   log.scrollTop = log.scrollHeight;
+}
+
+// ── Mensajes directos con Jose — distinto del chat de socio de arriba (esto
+// lo lee y contesta una persona de verdad, sin pasar por el asistente de IA). ──
+async function loadClientMsg() {
+  if (!myClientId) return;
+  const log = document.getElementById('client-msg-log');
+  const { data, error } = await sb.from('client_messages').select('sender, body, created_at').eq('client_id', myClientId).order('created_at', { ascending: true });
+  if (error) { log.innerHTML = '<div class="empty-note">No se pudo cargar.</div>'; return; }
+  if (!data || !data.length) { log.innerHTML = '<div class="empty-note">Todavía no hay mensajes.</div>'; return; }
+  log.innerHTML = data.map(m => {
+    const role = m.sender === 'client' ? 'user' : 'bot';
+    return `<div class="msg-row ${role}">
+      <div class="msg-avatar">${m.sender === 'client' ? USER_AVATAR_SVG : 'T'}</div>
+      <div class="msg">${escapeHtml(m.body)}</div>
+    </div>`;
+  }).join('');
+  log.scrollTop = log.scrollHeight;
+}
+
+async function sendClientMsg() {
+  if (!myClientId) return;
+  const input = document.getElementById('client-msg-input');
+  const body = input.value.trim();
+  if (!body) return;
+  const btn = document.getElementById('client-msg-send-btn');
+  btn.disabled = true;
+  const { error } = await sb.from('client_messages').insert({ client_id: myClientId, sender: 'client', body });
+  btn.disabled = false;
+  if (error) { alert('No se pudo enviar. Inténtalo de nuevo.'); return; }
+  input.value = '';
+  loadClientMsg();
 }
 
 function escapeHtml(s) {

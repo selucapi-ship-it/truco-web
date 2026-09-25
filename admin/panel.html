@@ -1521,6 +1521,16 @@
 
         <div class="ficha-tab-panel" data-tab-panel="actividad" style="display:none;">
           <div class="card">
+            <div class="card-tag">Mensaje a su portal</div>
+            <p style="color:var(--grey);font-size:.78rem;margin:-6px 0 12px;">Un mensaje directo tuyo, distinto de la petición/chat de socio — el cliente lo ve en su portal.</p>
+            <div id="ficha-client-messages" style="max-height:260px;overflow-y:auto;margin-bottom:12px;"><div class="empty-mini">Cargando…</div></div>
+            <div class="add-note">
+              <input type="text" id="client-message-input" placeholder="Escribe un mensaje para el cliente..." onkeydown="if(event.key==='Enter')sendClientMessage()">
+              <button class="btn sm" onclick="sendClientMessage()">Enviar</button>
+            </div>
+          </div>
+
+          <div class="card">
             <div class="card-tag">Tareas</div>
             <div id="ficha-tasks"><div class="empty-mini">Cargando…</div></div>
             <div class="add-task">
@@ -4886,6 +4896,39 @@ async function openFicha(id, tab) {
   await loadFichaTasks(id);
   await loadFichaAutomations(id);
   await loadFichaEconomics(id);
+  await loadClientMessages(id);
+}
+
+// ── Mensaje directo al portal del cliente — distinto del chat de socio (que
+// es un asistente de IA, no llega a Jose de verdad) y de las peticiones
+// (que son del cliente hacia ti). Esto es founder → cliente, sin intermediarios.
+async function loadClientMessages(clientId) {
+  const box = document.getElementById('ficha-client-messages');
+  if (!box) return;
+  box.innerHTML = '<div class="empty-mini">Cargando…</div>';
+  const { data, error } = await sb.from('client_messages').select('sender, body, created_at').eq('client_id', clientId).order('created_at', { ascending: true });
+  if (error) { box.innerHTML = '<div class="empty-mini">No se pudo cargar.</div>'; return; }
+  if (!data || !data.length) { box.innerHTML = '<div class="empty-mini">Todavía no le has escrito nada.</div>'; return; }
+  box.style.display = 'flex';
+  box.style.flexDirection = 'column';
+  box.style.gap = '10px';
+  box.innerHTML = data.map(m => `
+    <div class="chat-bubble ${m.sender === 'founder' ? 'user' : 'bot'}">
+      ${escapeHtml(m.body)}
+      <div style="font-size:.68rem;color:var(--grey);margin-top:4px;">${m.sender === 'founder' ? 'Tú' : 'Cliente'} · ${new Date(m.created_at).toLocaleString('es-ES')}</div>
+    </div>`).join('');
+  box.scrollTop = box.scrollHeight;
+}
+
+async function sendClientMessage() {
+  if (!selectedClientId) return;
+  const input = document.getElementById('client-message-input');
+  const body = input.value.trim();
+  if (!body) return;
+  const { error } = await sb.from('client_messages').insert({ client_id: selectedClientId, sender: 'founder', body });
+  if (error) { alert('No se pudo enviar: ' + error.message); return; }
+  input.value = '';
+  loadClientMessages(selectedClientId);
 }
 
 // contract_started_at + permanencia_meses + gift_period_days — misma fórmula
