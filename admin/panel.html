@@ -443,6 +443,7 @@
   .fiscal-caveat{background:rgba(217,168,63,.08);border:1px solid rgba(217,168,63,.3);border-radius:10px;padding:12px 16px;color:var(--grey);font-size:.82rem;line-height:1.55;margin-bottom:22px;}
   .fiscal-caveat b{color:var(--gold);}
   .fiscal-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:13px 4px;border-bottom:1px solid var(--grey-line);font-size:.85rem;flex-wrap:wrap;}
+  .fiscal-row.falta-factura{border-left:3px solid var(--red);padding-left:10px;background:rgba(239,68,68,.05);}
   .fiscal-row:last-child{border-bottom:none;}
   .fiscal-row .fr-main{color:var(--white);font-weight:600;}
   .fiscal-row .fr-meta{color:var(--grey);font-size:.75rem;font-family:var(--font-m);margin-top:2px;}
@@ -2644,17 +2645,20 @@ async function loadFiscalResumen() {
 
   const ingresos = data.ingresos_lista || [];
   document.getElementById('fiscal-income-count').textContent = ingresos.length + ' entradas';
-  document.getElementById('fiscal-income-list').innerHTML = ingresos.map(i => `
-    <div class="fiscal-row">
-      <div><div class="fr-main">${escapeHtml(i.concepto)}${i.anulado ? ' <span style="color:var(--red);">(anulado)</span>' : ''}</div>
+  document.getElementById('fiscal-income-list').innerHTML = ingresos.map(i => {
+    const faltaFactura = !i.anulado && !i.tiene_justificante;
+    return `
+    <div class="fiscal-row${faltaFactura ? ' falta-factura' : ''}">
+      <div><div class="fr-main">${faltaFactura ? '<span style="color:var(--red);" title="Falta factura/justificante">*</span> ' : ''}${escapeHtml(i.concepto)}${i.anulado ? ' <span style="color:var(--red);">(anulado)</span>' : ''}</div>
       <div class="fr-meta">${i.fecha} · ${i.origen}${i.cliente ? ' · ' + escapeHtml(i.cliente) : ''}</div></div>
       <div class="fr-nums">
         <span>Base ${eurFromCents(i.base_cents)}</span><span>IVA ${eurFromCents(i.iva_cents)}</span><span><b>${eurFromCents(i.total_cents)}</b></span>
         ${i.tiene_justificante
           ? `<button class="btn sm ghost" onclick="verJustificanteIngreso('${i.id}')">📎 Ver</button>`
-          : `<label class="btn sm ghost" style="cursor:pointer;">📎 Adjuntar<input type="file" accept="image/*,.pdf" style="display:none;" onchange="adjuntarJustificanteIngreso('${i.id}', this)"></label>`}
+          : `<label class="btn sm danger" style="cursor:pointer;">* Falta factura<input type="file" accept="image/*,.pdf" style="display:none;" onchange="adjuntarJustificanteIngreso('${i.id}', this)"></label>`}
       </div>
-    </div>`).join('') || '<div class="empty-mini">Sin ingresos en este trimestre.</div>';
+    </div>`;
+  }).join('') || '<div class="empty-mini">Sin ingresos en este trimestre.</div>';
 
   const gastos = data.gastos_lista || [];
   document.getElementById('fiscal-expense-count').textContent = gastos.length + ' entradas';
