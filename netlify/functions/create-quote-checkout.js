@@ -116,6 +116,11 @@ exports.handler = async function (event) {
         quantity: 1,
       }],
       customer_email: quote.email_contacto || undefined,
+      // Igual que create-checkout.js: necesario para que stripe-webhook.js
+      // pueda emitir la factura sola en cuanto se confirme este pago.
+      customer_creation: 'always',
+      billing_address_collection: 'required',
+      tax_id_collection: { enabled: true },
       success_url: origin + '/bienvenida.html?presupuesto=' + encodeURIComponent(quoteId) + '&session_id={CHECKOUT_SESSION_ID}',
       cancel_url: origin + '/pago.html?cancelado=1',
       metadata: {

@@ -190,6 +190,15 @@ exports.handler = async function (event) {
         },
       ],
       customer_email: customerEmail,
+      // Necesario para emitir la factura sola en cuanto se confirma el pago
+      // (ver stripe-webhook.js): sin esto no tenemos NIF ni dirección fiscal
+      // del cliente, y una factura sin esos datos no vale para declarar.
+      // customer_creation:'always' es obligatorio para que el NIF pueda
+      // guardarse (tax_id_collection cuelga de un Customer, no de la sesión
+      // suelta) incluso en modo 'payment' de un solo pago.
+      customer_creation: 'always',
+      billing_address_collection: 'required',
+      tax_id_collection: { enabled: true },
       success_url: origin + '/bienvenida.html?plan=' + encodeURIComponent(planKey) + '&session_id={CHECKOUT_SESSION_ID}',
       cancel_url: origin + '/pago.html?cancelado=1',
       metadata: {

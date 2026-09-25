@@ -30,6 +30,53 @@ const ARRANQUE_PERMANENCIA_MESES = { start: 12, basic: 12, lite: 12, pro: 12 };
 const PROYECTO_SOLO_GIFT_DAYS = 30; // web-lite / esencial-lite (proyecto sin Digitaliza)
 const PROYECTO_CON_DIGITALIZA_GIFT_DAYS = 90; // cualquier combinación que incluya Digitaliza
 
+// Emite la factura real (con su sellado tipo VeriFactu) en cuanto se
+// confirma el pago — para eso create-checkout.js/create-quote-checkout.js
+// piden ya NIF y dirección fiscal en el propio checkout de Stripe
+// (billing_address_collection + tax_id_collection). Si por lo que sea
+// Stripe no llega a recogerlos (el comprador los saltó, un método de pago
+// que no los soporta...), se deja SIN emitir a propósito: una factura real
+// con el NIF vacío o mal no se puede arreglar sin una rectificativa formal,
+// así que es mejor que quede pendiente (se ve como "falta factura" en
+// Fiscalidad, con su aviso en rojo) que emitirla mal. Nunca bloquea el
+// webhook — el pago y el alta del cliente ya están bien pase lo que pase aquí.
+async function emitirFacturaAutomatica({ supabaseUrl, headers, session, clientId, concepto }) {
+  try {
+    const cd = session.customer_details || {};
+    const nombre = cd.name || null;
+    const email = cd.email || null;
+    const taxIds = Array.isArray(cd.tax_ids) ? cd.tax_ids : [];
+    const nif = taxIds.length && taxIds[0].value ? taxIds[0].value : null;
+    const addr = cd.address;
+    const domicilio = addr
+      ? [addr.line1, addr.line2, addr.postal_code, addr.city, addr.state, addr.country].filter(Boolean).join(', ')
+      : null;
+    if (!nombre || !nif || !domicilio || typeof session.amount_total !== 'number') return;
+
+    const totalEur = session.amount_total / 100;
+    const baseImponible = Math.round((totalEur / 1.21) * 100) / 100; // el sitio entero cobra IVA incluido al 21%
+
+    await fetch(`${supabaseUrl}/rest/v1/rpc/emitir_factura`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        p_serie: 'A',
+        p_cliente_nombre: nombre,
+        p_cliente_nif: nif,
+        p_cliente_domicilio: domicilio,
+        p_cliente_email: email,
+        p_lineas: [{ descripcion: concepto, precio: baseImponible }],
+        p_concepto: concepto,
+        p_client_id: clientId || null,
+        p_tipo_iva: 21,
+      }),
+    });
+  } catch (err) {
+    // Igual que el resto de pasos best-effort de este archivo: un fallo aquí
+    // no debe hacer fallar el webhook de Stripe.
+  }
+}
+
 function planShape(planKey, arranqueTier) {
   if (!planKey) return { plan_type: null, arranque_tier: null, permanencia_meses: null, gift_period_days: null };
   if (planKey.startsWith('arranque-')) {
@@ -110,9 +157,9 @@ exports.handler = async function (event) {
           // llamada no tiene ningún usuario logueado detrás): crea/enlaza el
           // cliente, adjunta sus soluciones, marca el presupuesto pagado y
           // registra el pago real.
-          await fetch(`${supabaseUrl}/rest/v1/rpc/confirm_quote_payment`, {
+          const confirmResp = await fetch(`${supabaseUrl}/rest/v1/rpc/confirm_quote_payment`, {
             method: 'POST',
-            headers,
+            headers: { ...headers, Prefer: 'return=representation' },
             body: JSON.stringify({
               p_quote_id: quoteId,
               p_nombre: quote.nombre_contacto,
@@ -125,6 +172,11 @@ exports.handler = async function (event) {
               p_stripe_customer_id: session.customer || null,
               p_amount_total_cents: typeof session.amount_total === 'number' ? session.amount_total : null,
             }),
+          });
+          const quoteClientId = confirmResp.ok ? await confirmResp.json() : null;
+          await emitirFacturaAutomatica({
+            supabaseUrl, headers, session, clientId: quoteClientId,
+            concepto: 'Presupuesto ' + (quote.numero ? 'P' + String(quote.numero).padStart(4, '0') : quoteId.slice(0, 8)) + ' — ' + (quote.negocio || quote.nombre_contacto || 'servicio contratado'),
           });
         }
       } catch (err) {
@@ -192,6 +244,12 @@ exports.handler = async function (event) {
       // No bloquear la confirmación del webhook a Stripe por un fallo aquí —
       // el pago ya se ha cobrado, esto solo actualiza el CRM.
     }
+
+    const planDisplayNamesFactura = { start: 'Departamento Start™', basic: 'Departamento Basic™', lite: 'Departamento Lite™', pro: 'Departamento Pro™' };
+    await emitirFacturaAutomatica({
+      supabaseUrl, headers, session, clientId,
+      concepto: 'Alta ' + (planDisplayNamesFactura[arranqueTier] || planKey || 'Departamento Tecnológico'),
+    });
 
     // Contador de plazas de fundador: solo baja 1 plaza cuando el pago
     // confirmado por Stripe se hizo realmente al precio de fundador (lo
