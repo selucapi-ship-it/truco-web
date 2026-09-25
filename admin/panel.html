@@ -432,6 +432,9 @@
   .fiscal-stat-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;opacity:.8;}
   .fiscal-stat-card.iva::before{background:var(--blue);}
   .fiscal-stat-card.irpf::before{background:var(--gold);}
+  .fiscal-stat-card.green::before{background:var(--green);}
+  .fiscal-stat-card.red::before{background:var(--red);}
+  .fiscal-stat-card.gold::before{background:var(--gold);}
   .fiscal-stat-card .n{font-family:var(--font-d);font-size:1.7rem;font-weight:800;line-height:1.1;color:var(--white);}
   .fiscal-stat-card .l{font-family:var(--font-b,inherit);font-size:.76rem;color:var(--grey);margin-top:6px;}
   .fiscal-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
@@ -988,6 +991,19 @@
 
       <div id="fiscal-deadline-banner-wrap"></div>
 
+      <details class="fiscal-card pasos" style="cursor:default;">
+        <summary style="cursor:pointer;font-family:var(--font-d);font-size:1.05rem;color:var(--white);">📋 Pasos para presentar este trimestre</summary>
+        <ol style="margin:14px 0 0;padding-left:20px;color:var(--grey);font-size:.85rem;line-height:2;">
+          <li>Revisa la lista de <b>Ingresos</b> de abajo — que no falte ningún cobro real del trimestre.</li>
+          <li>Revisa la lista de <b>Gastos</b> — añade lo que falte y comprueba el % deducible de cada uno.</li>
+          <li>Mira el aviso de <b>coherencia con facturas</b> si aparece — significa que hay un cobro sin factura emitida, o al revés.</li>
+          <li>Entra en la <a href="https://sede.agenciatributaria.gob.es" target="_blank" rel="noopener" style="color:var(--gold);">Sede Electrónica de la AEAT</a> y presenta el Modelo 303 (y el 130 si toca) con estos números.</li>
+          <li>Vuelve aquí y registra el resultado real en <b>«Declaraciones presentadas»</b>, abajo del todo — así el trimestre siguiente parte del dato correcto.</li>
+        </ol>
+      </details>
+
+      <div id="fiscal-coherencia-wrap"></div>
+
       <div class="fiscal-card periodo">
         <div class="fiscal-card-head">
           <h3>Periodo</h3>
@@ -1004,6 +1020,9 @@
           <button class="periodo-btn" id="periodo-btn-4" onclick="elegirTrimestreFiscal(4)">T4 · Oct-Dic</button>
           <button class="fiscal-btn gold" style="margin-left:auto;" onclick="exportFiscalExcel()">📥 Generar Excel del trimestre</button>
         </div>
+
+        <div class="fiscal-summary-heading">En plata — este trimestre</div>
+        <div class="fiscal-stats-grid" id="fiscal-summary-claro"></div>
 
         <div class="fiscal-summary-heading">IVA — Modelo 303 (este trimestre)</div>
         <div class="fiscal-stats-grid" id="fiscal-summary-iva"></div>
@@ -1022,6 +1041,7 @@
           <div class="fiscal-field"><label for="fi-concepto">Concepto</label><input type="text" id="fi-concepto" placeholder="Ej. Transferencia cliente X"></div>
           <div class="fiscal-field"><label for="fi-total">Total € (con IVA)</label><input type="number" id="fi-total" placeholder="0,00"></div>
           <div class="fiscal-field"><label for="fi-iva-pct">% IVA</label><input type="number" id="fi-iva-pct" value="21"></div>
+          <div class="fiscal-field"><label for="fi-justificante">Factura/justificante</label><input type="file" id="fi-justificante" accept="image/*,.pdf" onchange="handleIncomeJustificante(this)"></div>
         </div>
         <button class="fiscal-btn green" onclick="addFiscalIncomeManual()">＋ Añadir ingreso manual</button>
         <div id="fiscal-income-list" style="margin-top:14px;"></div>
@@ -2591,6 +2611,24 @@ async function loadFiscalResumen() {
   fiscalLastResumen = data;
   document.getElementById('fiscal-periodo-label').textContent = data.periodo ? (data.periodo.desde + ' → ' + data.periodo.hasta) : '';
 
+  const claroGrid = document.getElementById('fiscal-summary-claro');
+  claroGrid.innerHTML = [
+    { l: 'Ganancias (sin IVA)', n: eurFromCents(data.base_devengada_cents), cls: 'green' },
+    { l: 'Gastos deducibles', n: eurFromCents(data.base_deducible_cents), cls: 'red' },
+    { l: 'Beneficio del trimestre', n: eurFromCents(data.beneficio_trimestre_cents), cls: 'gold' },
+  ].map(s => `<div class="fiscal-stat-card ${s.cls}"><div class="n">${s.n}</div><div class="l">${s.l}</div></div>`).join('');
+
+  const cohWrap = document.getElementById('fiscal-coherencia-wrap');
+  const ingresosNoAnulados = (data.ingresos_lista || []).filter(i => !i.anulado);
+  const facturasInfo = data.facturas_emitidas_periodo || { count: 0, total_cents: 0 };
+  if (ingresosNoAnulados.length !== facturasInfo.count) {
+    cohWrap.innerHTML = `<div class="fiscal-caveat" style="border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.07);">
+      <b>⚠ No cuadra con tus facturas emitidas.</b> Este trimestre hay <b>${ingresosNoAnulados.length}</b> ingreso${ingresosNoAnulados.length === 1 ? '' : 's'} contado${ingresosNoAnulados.length === 1 ? '' : 's'} para Hacienda, pero <b>${facturasInfo.count}</b> factura${facturasInfo.count === 1 ? '' : 's'} emitida${facturasInfo.count === 1 ? '' : 's'} de verdad en Facturas. Si vendiste algo sin emitir su factura correspondiente, hazlo antes de presentar — tus facturas llevan sellado (tipo VeriFactu) y Hacienda puede cruzarlas.
+    </div>`;
+  } else {
+    cohWrap.innerHTML = '';
+  }
+
   ivaGrid.innerHTML = [
     { l: 'IVA devengado', n: eurFromCents(data.iva_devengado_cents) },
     { l: 'IVA deducible', n: eurFromCents(data.iva_deducible_cents) },
@@ -2610,7 +2648,12 @@ async function loadFiscalResumen() {
     <div class="fiscal-row">
       <div><div class="fr-main">${escapeHtml(i.concepto)}${i.anulado ? ' <span style="color:var(--red);">(anulado)</span>' : ''}</div>
       <div class="fr-meta">${i.fecha} · ${i.origen}${i.cliente ? ' · ' + escapeHtml(i.cliente) : ''}</div></div>
-      <div class="fr-nums"><span>Base ${eurFromCents(i.base_cents)}</span><span>IVA ${eurFromCents(i.iva_cents)}</span><span><b>${eurFromCents(i.total_cents)}</b></span></div>
+      <div class="fr-nums">
+        <span>Base ${eurFromCents(i.base_cents)}</span><span>IVA ${eurFromCents(i.iva_cents)}</span><span><b>${eurFromCents(i.total_cents)}</b></span>
+        ${i.tiene_justificante
+          ? `<button class="btn sm ghost" onclick="verJustificanteIngreso('${i.id}')">📎 Ver</button>`
+          : `<label class="btn sm ghost" style="cursor:pointer;">📎 Adjuntar<input type="file" accept="image/*,.pdf" style="display:none;" onchange="adjuntarJustificanteIngreso('${i.id}', this)"></label>`}
+      </div>
     </div>`).join('') || '<div class="empty-mini">Sin ingresos en este trimestre.</div>';
 
   const gastos = data.gastos_lista || [];
@@ -2623,6 +2666,35 @@ async function loadFiscalResumen() {
     </div>`).join('') || '<div class="empty-mini">Sin gastos en este trimestre.</div>';
 }
 
+let pendingIncomeJustificante = null;
+let pendingIncomeJustificanteFilename = null;
+function handleIncomeJustificante(input) {
+  const file = input.files[0];
+  if (!file) return;
+  pendingIncomeJustificanteFilename = file.name;
+  if (file.type === 'application/pdf') {
+    const reader = new FileReader();
+    reader.onload = e => { pendingIncomeJustificante = e.target.result; };
+    reader.readAsDataURL(file);
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const maxDim = 1400;
+      let w = img.width, h = img.height;
+      if (w > maxDim || h > maxDim) { const s = maxDim / Math.max(w, h); w = Math.round(w * s); h = Math.round(h * s); }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      pendingIncomeJustificante = canvas.toDataURL('image/jpeg', .8);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
 async function addFiscalIncomeManual() {
   const concepto = document.getElementById('fi-concepto').value.trim();
   const totalEur = parseFloat(document.getElementById('fi-total').value || '0');
@@ -2633,12 +2705,67 @@ async function addFiscalIncomeManual() {
     concepto,
     total_cents: Math.round(totalEur * 100),
     iva_pct: parseFloat(document.getElementById('fi-iva-pct').value || '21'),
+    justificante_base64: pendingIncomeJustificante,
+    justificante_filename: pendingIncomeJustificanteFilename,
   };
   const { error } = await sb.from('fiscal_income').insert(payload);
+  pendingIncomeJustificante = null;
+  pendingIncomeJustificanteFilename = null;
+  document.getElementById('fi-justificante').value = '';
   if (error) { alert('No se pudo guardar el ingreso: ' + error.message); return; }
   document.getElementById('fi-concepto').value = '';
   document.getElementById('fi-total').value = '';
   loadFiscalResumen();
+}
+
+// Para ingresos ya existentes (ej. los que llegan solos de Stripe) que
+// todavía no tienen justificante adjunto — mismo input que al crear uno
+// nuevo, pero apuntando a una fila ya guardada.
+async function adjuntarJustificanteIngreso(id, input) {
+  const file = input.files[0];
+  if (!file) return;
+  const filename = file.name;
+  const reader = new FileReader();
+  const leer = () => new Promise((resolve, reject) => {
+    reader.onload = e => resolve(e.target.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+  let dataUrl = await leer();
+  if (file.type !== 'application/pdf') {
+    dataUrl = await new Promise(resolve => {
+      const img = new Image();
+      img.onload = () => {
+        const maxDim = 1400;
+        let w = img.width, h = img.height;
+        if (w > maxDim || h > maxDim) { const s = maxDim / Math.max(w, h); w = Math.round(w * s); h = Math.round(h * s); }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', .8));
+      };
+      img.src = dataUrl;
+    });
+  }
+  const { error } = await sb.from('fiscal_income').update({ justificante_base64: dataUrl, justificante_filename: filename }).eq('id', id);
+  if (error) { alert('No se pudo adjuntar: ' + error.message); return; }
+  toast('Justificante adjuntado');
+  loadFiscalResumen();
+}
+
+function verJustificanteIngreso(id) {
+  const ingresos = (fiscalLastResumen && fiscalLastResumen.ingresos_lista) || [];
+  // El resumen solo trae si TIENE justificante, no el archivo en sí (sería
+  // mucho peso para cada carga) — se pide la fila puntual justo al pedirlo.
+  sb.from('fiscal_income').select('justificante_base64, justificante_filename').eq('id', id).single().then(({ data }) => {
+    if (!data || !data.justificante_base64) { alert('No se pudo abrir el justificante.'); return; }
+    const w = window.open('');
+    if (data.justificante_base64.startsWith('data:application/pdf')) {
+      w.document.write(`<iframe src="${data.justificante_base64}" style="border:none;width:100vw;height:100vh;"></iframe>`);
+    } else {
+      w.document.write(`<img src="${data.justificante_base64}" style="max-width:100%;">`);
+    }
+  });
 }
 
 let pendingReceiptBase64 = null;
