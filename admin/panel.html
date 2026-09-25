@@ -126,6 +126,7 @@
   .client-card-meta{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-top:10px;padding-top:10px;border-top:1px solid var(--grey-line);font-size:.74rem;color:var(--grey);}
   .client-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(160deg,var(--gold-dim),var(--bg-card));border:1px solid rgba(217,168,63,.25);color:var(--gold-light);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:.76rem;font-weight:700;flex-shrink:0;}
   .status-badge{font-family:var(--font-m);font-size:.6rem;padding:3px 9px;border-radius:12px;text-transform:uppercase;letter-spacing:.04em;border:1px solid transparent;}
+  .tier-badge-sm{font-family:var(--font-m);font-size:.6rem;font-weight:700;padding:3px 9px;border-radius:12px;letter-spacing:.04em;background:var(--blue-dim);color:var(--blue-light);border:1px solid var(--blue);flex-shrink:0;}
   .cobro-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--grey-line);}
   .cobro-dot.activa{background:var(--green);}
   .status-nuevo{background:rgba(47,123,255,.15);color:var(--blue-light);border-color:rgba(47,123,255,.25);}
@@ -169,9 +170,16 @@
 
   /* ── RESUMEN (pantalla principal) ── */
   #resumen-view{max-width:1100px;margin:0 auto;padding:28px 20px 60px;}
-  .resumen-kpis{display:flex;gap:14px;margin-bottom:22px;flex-wrap:wrap;}
-  .resumen-kpis .stat-card{min-width:150px;padding:18px 20px;}
-  .resumen-kpis .stat-card .n{font-size:2.1rem;}
+  .dash-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:26px;}
+  .dash-card{background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:14px;padding:16px 18px;cursor:pointer;transition:transform .15s,border-color .15s;display:flex;flex-direction:column;gap:4px;text-align:left;}
+  .dash-card:hover{transform:translateY(-2px);border-color:var(--blue);}
+  .dash-card.urgent{border-color:rgba(239,68,68,.3);}
+  .dash-card-title{font-family:var(--font-m);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);}
+  .dash-card.urgent .dash-card-title{color:var(--red);}
+  .dash-card-main{font-family:var(--font-d);font-size:1.7rem;font-weight:800;color:var(--white);line-height:1.15;}
+  .dash-card-sub{color:var(--grey);font-size:.76rem;line-height:1.35;min-height:2.6em;}
+  .dash-card-chart{margin:2px -4px -4px;line-height:0;}
+  .dash-card-chart svg{width:100%;height:auto;}
   .resumen-alert-card{background:linear-gradient(165deg,rgba(239,68,68,.08),var(--bg-panel) 55%);border:1px solid rgba(239,68,68,.3);border-radius:16px;padding:22px 24px;margin-bottom:26px;box-shadow:var(--shadow-card);}
   .resumen-alert-card h2{font-family:var(--font-d);font-size:1.15rem;margin:6px 0 14px;}
   .resumen-msg-item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--grey-line);cursor:pointer;}
@@ -214,12 +222,18 @@
   .audit-q .hint{font-size:.72rem;color:var(--grey);font-style:italic;margin-bottom:6px;}
   .audit-q textarea{width:100%;min-height:44px;background:var(--bg-panel);border:1px solid var(--grey-line);border-radius:8px;padding:8px 10px;color:var(--white);font-family:var(--font-b);font-size:.82rem;resize:vertical;}
   .audit-q textarea:focus{border-color:var(--blue);outline:none;}
-  .ficha-name{font-family:var(--font-d);font-size:1.45rem;margin:0 0 6px;letter-spacing:-.01em;}
-  .ficha-badges{display:flex;flex-wrap:wrap;gap:0;}
-  .ficha-negocio{color:var(--grey);font-size:.85rem;margin-bottom:14px;}
-  .ficha-row{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;padding:9px 0;border-bottom:1px solid var(--grey-line);}
+  .ficha-name-input{font-family:var(--font-d);font-size:1.45rem;margin:0 0 6px;letter-spacing:-.01em;background:none;border:1px solid transparent;border-radius:6px;color:var(--white);padding:2px 6px;width:100%;max-width:420px;display:block;}
+  .ficha-badges{display:flex;flex-wrap:wrap;gap:0;align-items:center;}
+  .ficha-negocio-input{color:var(--grey);font-size:.85rem;margin-bottom:14px;background:none;border:1px solid transparent;border-radius:6px;padding:2px 6px;width:100%;max-width:420px;display:block;font-family:var(--font-b);}
+  .ficha-name-input:hover,.ficha-negocio-input:hover{border-color:var(--grey-line);}
+  .ficha-name-input:focus,.ficha-negocio-input:focus{border-color:var(--blue);outline:none;background:var(--bg-card);}
+  .tier-badge{display:inline-block;background:var(--blue-dim);border:1px solid var(--blue);color:var(--blue-light);font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:20px;margin-bottom:8px;}
+  .ficha-row{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;padding:9px 0;border-bottom:1px solid var(--grey-line);gap:12px;}
   .ficha-row:last-of-type{border-bottom:none;}
-  .ficha-row span:first-child{color:var(--grey);}
+  .ficha-row span:first-child{color:var(--grey);flex-shrink:0;}
+  .ficha-row input[type=text],.ficha-row input[type=email],.ficha-row input[type=tel]{background:none;border:1px solid transparent;border-radius:6px;color:var(--white);padding:4px 8px;text-align:right;font-family:var(--font-b);font-size:.82rem;width:100%;max-width:260px;}
+  .ficha-row input:hover{border-color:var(--grey-line);}
+  .ficha-row input:focus{border-color:var(--blue);outline:none;background:var(--bg-card);text-align:left;}
   select#status-select,select#stage-select{background:var(--bg-card);border:1px solid var(--grey-line);color:var(--white);font-family:var(--font-m);font-size:.75rem;padding:5px 8px;border-radius:6px;}
   .churn-risk-badge{display:inline-block;background:rgba(239,68,68,.12);border:1px solid var(--red);color:var(--red);font-size:.7rem;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:8px;}
   .renewal-badge{display:inline-block;background:rgba(217,168,63,.14);border:1px solid var(--gold);color:var(--gold);font-size:.7rem;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:8px;margin-left:6px;}
@@ -259,11 +273,10 @@
   .add-task input:focus{border-color:var(--blue);}
   .empty-mini{color:var(--grey);font-size:.78rem;padding:6px 0;}
 
-  /* ── EQUIPO (overlay) ── */
-  #team-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
+  #resumen-btn{background:none;border:1px solid var(--blue);color:var(--blue);padding:8px 14px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;margin-right:8px;}
+  #resumen-btn:hover{background:var(--blue-dim);}
   #settings-btn{background:none;border:1px solid var(--grey-line);color:var(--grey);padding:8px 14px;border-radius:8px;font-size:.8rem;cursor:pointer;margin-right:8px;}
   #settings-btn:hover{border-color:var(--gold);color:var(--gold);}
-  #team-btn:hover{border-color:var(--gold);color:var(--gold);}
   #team-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;padding:20px;}
   .team-box{width:100%;max-width:460px;max-height:80vh;overflow-y:auto;background:linear-gradient(165deg,var(--bg-panel),var(--bg-card));border:1px solid var(--grey-line);border-radius:16px;padding:26px;box-shadow:var(--shadow-card);}
   .team-box h2{font-family:var(--font-d);font-size:1.2rem;margin:0 0 6px;}
@@ -1281,7 +1294,7 @@
       <div id="agenda-card-body" style="padding:0 16px 14px;max-height:340px;overflow:auto;"></div>
     </details>
 
-    <div class="resumen-kpis" id="resumen-kpis"></div>
+    <div class="dash-cards" id="dash-cards"></div>
 
     <div class="resumen-alert-card" id="resumen-msgs-card" style="display:none;">
       <div class="card-tag">Mensajes nuevos</div>
@@ -1327,6 +1340,7 @@
   <div class="layout" id="clientes-view" style="display:none;">
     <div class="list-panel">
       <div class="stats-bar" id="stats-bar"></div>
+      <button class="btn sm ghost" onclick="showResumenView()" style="margin-bottom:14px;">← Volver a Resumen</button>
       <div class="list-head">
         <h2>Clientes</h2>
         <div style="display:flex;gap:8px;">
@@ -1337,7 +1351,7 @@
       </div>
       <div class="filters-bar">
         <select id="filter-status" onchange="renderClients()">
-          <option value="">Status: todos</option>
+          <option value="">Estado: todos</option>
           <option value="nuevo">Nuevo</option>
           <option value="contactado">Contactado</option>
           <option value="propuesta_enviada">Propuesta enviada</option>
@@ -1423,12 +1437,13 @@
     <div class="ficha-panel">
       <div id="ficha-content" style="display:none;">
         <div class="ficha-header">
-          <div class="ficha-name" id="ficha-nombre"></div>
+          <input type="text" id="ficha-nombre" class="ficha-name-input" placeholder="Nombre" onblur="guardarCampoCliente('nombre', this.value)">
           <div class="ficha-badges">
             <span class="churn-risk-badge" id="churn-risk-badge" style="display:none;">⚠ Riesgo de fuga — encuesta de satisfacción ≤3</span>
             <span class="renewal-badge" id="renewal-badge" style="display:none;">↻ Renovación próxima</span>
+            <span class="tier-badge" id="ficha-tier-badge" style="display:none;"></span>
           </div>
-          <div class="ficha-negocio" id="ficha-negocio"></div>
+          <input type="text" id="ficha-negocio" class="ficha-negocio-input" placeholder="Nombre del negocio" onblur="guardarCampoCliente('negocio', this.value)">
           <div class="contact-actions" id="contact-actions"></div>
         </div>
 
@@ -1443,16 +1458,16 @@
         <div class="ficha-tab-panel" data-tab-panel="info">
           <div class="card">
             <div class="card-tag">Datos de contacto</div>
-            <div class="ficha-row"><span>Email</span><span id="ficha-email"></span></div>
-            <div class="ficha-row"><span>Teléfono</span><span id="ficha-telefono"></span></div>
-            <div class="ficha-row"><span>Sector</span><span id="ficha-tipo"></span></div>
-            <div class="ficha-row"><span>NIF/CIF</span><span id="ficha-nif"></span></div>
+            <div class="ficha-row"><span>Email</span><input type="email" id="ficha-email" placeholder="Sin email" onblur="guardarCampoCliente('email', this.value)"></div>
+            <div class="ficha-row"><span>Teléfono</span><input type="tel" id="ficha-telefono" placeholder="Sin teléfono" onblur="guardarCampoCliente('telefono', this.value)"></div>
+            <div class="ficha-row"><span>Sector</span><input type="text" id="ficha-tipo" placeholder="Sin especificar" onblur="guardarCampoCliente('tipo', this.value)"></div>
+            <div class="ficha-row"><span>NIF/CIF</span><input type="text" id="ficha-nif" placeholder="Sin NIF/CIF" onblur="guardarCampoCliente('nif', this.value)"></div>
           </div>
 
           <div class="card">
             <div class="card-tag">Ciclo de vida</div>
             <div class="ficha-row">
-              <span>Status</span>
+              <span>Estado</span>
               <select id="status-select" onchange="updateStatus()">
                 <option value="nuevo">Nuevo</option>
                 <option value="contactado">Contactado</option>
@@ -1548,6 +1563,8 @@
             <button id="deactivate-client-btn" class="btn block danger" onclick="deactivateClient()" style="display:none;">Dar de baja</button>
             <button id="reactivate-client-btn" class="btn block green" onclick="reactivateClient()" style="display:none;">Reactivar cliente</button>
             <button id="rgpd-btn" class="btn block ghost" onclick="requestRgpdErasure()" style="display:none;">Solicitar borrado RGPD</button>
+            <p style="color:var(--grey);font-size:.76rem;margin:14px 0 8px;">Esto borra el registro entero de la base de datos — para limpiar clientes de prueba, no para clientes reales (para esos, usa "Dar de baja" o RGPD arriba).</p>
+            <button id="delete-client-btn" class="btn block danger" onclick="deleteClient()">🗑 Borrar cliente por completo</button>
           </div>
         </div>
 
@@ -4133,8 +4150,6 @@ function renderStats() {
     `<div class="stat-card"><div class="n">${s.n}</div><div class="l">${s.l}</div></div>`
   ).join('');
   document.getElementById('stats-bar').innerHTML = html;
-  const resumenKpis = document.getElementById('resumen-kpis');
-  if (resumenKpis) resumenKpis.innerHTML = html;
 }
 
 // ── RESUMEN (pantalla principal) — reemplaza a la tabla de Clientes como
@@ -4143,6 +4158,93 @@ function renderStats() {
 function showResumenView() {
   document.getElementById('resumen-view').style.display = 'block';
   document.getElementById('clientes-view').style.display = 'none';
+  loadDashCards();
+}
+
+// ── Tarjetas de "de un vistazo" de Resumen — una por área (Clientes,
+// Auditorías, Fiscalidad, Ingresos, Interacciones), con lo más importante y
+// reciente de cada una. Pedido explícito: nada de listas largas aquí, solo
+// el número que importa + una frase + (cuando aporta) un mini gráfico. ──
+async function loadDashCards() {
+  const box = document.getElementById('dash-cards');
+  if (!isFounder || !box) return;
+  box.innerHTML = '<div class="empty-mini">Cargando…</div>';
+
+  const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  const [statsRes, auditRes, incomeRes] = await Promise.all([
+    sb.rpc('founder_dashboard_stats'),
+    sb.from('interactions').select('client_id, created_at, clients(status)').eq('source', 'auditoria').order('created_at', { ascending: false }).limit(200),
+    sb.from('fiscal_income').select('fecha, concepto, total_cents').eq('anulado', false).order('fecha', { ascending: false }).limit(1),
+  ]);
+  const stats = statsRes.data || {};
+
+  // Auditorías pendientes de cerrar — mismo criterio que loadAuditoriasProspectos().
+  const vistos = new Set();
+  let auditPend = 0, auditSemana = 0;
+  for (const fila of (auditRes.data || [])) {
+    const c = fila.clients;
+    if (!c || vistos.has(fila.client_id)) continue;
+    vistos.add(fila.client_id);
+    if (['cliente', 'descartado', 'baja'].includes(c.status)) continue;
+    auditPend++;
+    if (new Date(fila.created_at).getTime() >= weekAgo) auditSemana++;
+  }
+
+  const fiscalW = nextFiscalDeadline();
+  const diasFiscal = Math.ceil((fiscalW.close - Date.now()) / 86400000);
+
+  const totalClientes = Object.values(stats.por_status || {}).reduce((s, v) => s + v, 0);
+  const nuevosSinContactar = (stats.por_status || {}).nuevo || 0;
+
+  const ingresosMes = (stats.ingresos_por_mes || []).slice(-1)[0];
+  const ultimoIngreso = (incomeRes.data || [])[0];
+
+  const interaccionesSemana = [...chatSessionsData, ...whatsappJoseSessionsData]
+    .filter(s => new Date(s.last_seen).getTime() >= weekAgo).length;
+
+  const altasChart = svgBarChart((stats.altas_por_mes || []).slice(-6).map(m => ({ label: m.mes.slice(2), value: m.n })), { width: 180, height: 50, color: 'var(--blue)' });
+  const ingresosChart = svgBarChart((stats.ingresos_por_mes || []).slice(-6).map(m => ({ label: m.mes.slice(2), value: Math.round(m.total_cents / 100) })), { width: 180, height: 50, color: 'var(--gold)' });
+
+  const cards = [
+    {
+      title: 'Clientes', onclick: 'showClientesView()',
+      main: totalClientes,
+      sub: nuevosSinContactar ? `${nuevosSinContactar} nuevo${nuevosSinContactar === 1 ? '' : 's'} sin contactar` : 'Ninguno nuevo sin contactar',
+      chart: altasChart,
+    },
+    {
+      title: 'Auditorías', onclick: 'openAuditoriasOverlay()', urgent: auditPend > 0,
+      main: auditPend,
+      sub: auditPend
+        ? `Pendientes de cerrar · ${auditSemana} reservada${auditSemana === 1 ? '' : 's'} esta semana`
+        : 'Nada pendiente de cerrar',
+    },
+    {
+      title: 'Fiscalidad', onclick: 'openFiscalOverlay()', urgent: diasFiscal <= 15,
+      main: diasFiscal >= 0 ? `${diasFiscal}d` : '—',
+      sub: `Para presentar el trimestral (${fiscalW.close.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' })})`,
+    },
+    {
+      title: 'Ingresos este mes', onclick: 'openFiscalOverlay()',
+      main: ingresosMes ? eurFromCents(ingresosMes.total_cents) : eurFromCents(0),
+      sub: ultimoIngreso ? `Último ingreso: ${escapeHtml(ultimoIngreso.concepto || 'sin concepto')} · ${eurFromCents(ultimoIngreso.total_cents)}` : 'Sin ingresos registrados',
+      chart: ingresosChart,
+    },
+    {
+      title: 'Interacciones web', onclick: 'openConversacionesOverlay()',
+      main: interaccionesSemana,
+      sub: 'Conversaciones (chat + WhatsApp) esta semana',
+    },
+  ];
+
+  box.innerHTML = cards.map(c => `
+    <div class="dash-card${c.urgent ? ' urgent' : ''}" onclick="${c.onclick}">
+      <div class="dash-card-title">${escapeHtml(c.title)}</div>
+      <div class="dash-card-main">${c.main}</div>
+      <div class="dash-card-sub">${c.sub}</div>
+      ${c.chart ? `<div class="dash-card-chart">${c.chart}</div>` : ''}
+    </div>
+  `).join('');
 }
 function showClientesView() {
   document.getElementById('resumen-view').style.display = 'none';
@@ -4238,6 +4340,8 @@ function renderClients() {
   }
   empty.style.display = 'none';
   box.style.display = 'grid';
+  const STATUS_LABELS_CARD = { nuevo: 'Nuevo', contactado: 'Contactado', propuesta_enviada: 'Propuesta enviada', negociando: 'Negociando', cliente: 'Cliente', descartado: 'Descartado', baja: 'De baja' };
+  const TIER_LABELS_CARD = { start: 'START', basic: 'BASIC', lite: 'LITE', pro: 'PRO' };
   box.innerHTML = filtered.map(c => {
     const count = (c.interactions && c.interactions[0] && c.interactions[0].count) || 0;
     const initials = (c.nombre || c.email || '?').trim().slice(0, 2).toUpperCase();
@@ -4248,7 +4352,8 @@ function renderClients() {
           <div class="client-card-name">${escapeHtml(c.nombre || '—')}</div>
           <div class="client-card-negocio">${escapeHtml(c.negocio || '—')}</div>
         </div>
-        <span class="status-badge status-${c.status}">${c.status}</span>
+        <span class="status-badge status-${c.status}">${STATUS_LABELS_CARD[c.status] || c.status}</span>
+        ${c.arranque_tier && TIER_LABELS_CARD[c.arranque_tier] ? `<span class="tier-badge-sm">${TIER_LABELS_CARD[c.arranque_tier]}</span>` : ''}
       </div>
       <div class="client-card-meta">
         <span>${escapeHtml(c.email || c.telefono || '—')}</span>
@@ -4506,6 +4611,22 @@ function closeFichaOverlay() {
   renderClients();
 }
 
+// Guardado inline de los datos básicos del cliente (nombre, negocio, email,
+// teléfono, sector, NIF) — se dispara solo al salir del campo (onblur), sin
+// botón "Guardar" aparte, igual que ya funciona en las respuestas de auditoría.
+const CAMPOS_CLIENTE_EDITABLES = new Set(['nombre', 'negocio', 'email', 'telefono', 'tipo', 'nif']);
+async function guardarCampoCliente(campo, valor) {
+  if (!selectedClientId || !CAMPOS_CLIENTE_EDITABLES.has(campo)) return;
+  const client = allClients.find(c => c.id === selectedClientId);
+  const valorLimpio = valor.trim();
+  if (client && (client[campo] || '') === valorLimpio) return; // sin cambios reales
+  const { error } = await sb.from('clients').update({ [campo]: valorLimpio || null }).eq('id', selectedClientId);
+  if (error) { alert('No se pudo guardar: ' + error.message); return; }
+  if (client) client[campo] = valorLimpio || null;
+  toast('Guardado');
+  if (campo === 'nombre' || campo === 'negocio') renderClients();
+}
+
 async function openFicha(id, tab) {
   selectedClientId = id;
   showClientesView();
@@ -4521,12 +4642,20 @@ async function openFicha(id, tab) {
   fichaOverlay.style.display = 'block';
   fichaOverlay.scrollTop = 0;
   switchFichaTab(tab || 'info');
-  document.getElementById('ficha-nombre').textContent = client.nombre || 'Sin nombre';
-  document.getElementById('ficha-negocio').textContent = client.negocio || '';
-  document.getElementById('ficha-email').textContent = client.email || '—';
-  document.getElementById('ficha-telefono').textContent = client.telefono || '—';
-  document.getElementById('ficha-tipo').textContent = client.tipo || '—';
-  document.getElementById('ficha-nif').textContent = client.nif || '—';
+  document.getElementById('ficha-nombre').value = client.nombre || '';
+  document.getElementById('ficha-negocio').value = client.negocio || '';
+  document.getElementById('ficha-email').value = client.email || '';
+  document.getElementById('ficha-telefono').value = client.telefono || '';
+  document.getElementById('ficha-tipo').value = client.tipo || '';
+  document.getElementById('ficha-nif').value = client.nif || '';
+  const tierBadge = document.getElementById('ficha-tier-badge');
+  const tierLabelsBadge = { start: 'START', basic: 'BASIC', lite: 'LITE', pro: 'PRO' };
+  if (client.arranque_tier && tierLabelsBadge[client.arranque_tier]) {
+    tierBadge.textContent = tierLabelsBadge[client.arranque_tier];
+    tierBadge.style.display = 'inline-block';
+  } else {
+    tierBadge.style.display = 'none';
+  }
   document.getElementById('ficha-desde').textContent = new Date(client.created_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
   document.getElementById('ficha-alta').textContent = client.contract_started_at
     ? new Date(client.contract_started_at).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })
@@ -4804,6 +4933,25 @@ async function requestRgpdErasure() {
   const { error } = await sb.rpc('anonymize_client', { p_client_id: selectedClientId, p_request_id: reqData.id });
   if (error) { alert('No se pudo anonimizar: ' + error.message); return; }
   toast('Cliente anonimizado.');
+  closeFichaOverlay();
+  await loadClients();
+}
+
+// Borrado duro de verdad — pensado para limpiar clientes de prueba, no para
+// clientes reales (para esos existen "Dar de baja" y el borrado RGPD de
+// arriba, que no destruyen el historial). Las tablas de pagos/facturas/
+// fiscalidad guardan sus propios datos (SET NULL en vez de CASCADE), así que
+// borrar un cliente real no borra su historial de facturación — pero sí
+// pierde el vínculo, por eso pide escribir el nombre exacto para confirmar.
+async function deleteClient() {
+  if (!selectedClientId) return;
+  const client = allClients.find(c => c.id === selectedClientId);
+  const nombre = client ? (client.nombre || client.email || 'este cliente') : 'este cliente';
+  const escrito = prompt(`Esto borra a "${nombre}" de la base de datos PARA SIEMPRE (tareas, notas, automatizaciones, accesos...) — no se puede deshacer. Si tiene facturas o pagos reales, esos se conservan pero sueltos, sin cliente asociado. Para confirmar, escribe su nombre exacto: ${nombre}`);
+  if (escrito !== nombre) { if (escrito !== null) alert('No coincide con el nombre — no se ha borrado nada.'); return; }
+  const { error } = await sb.from('clients').delete().eq('id', selectedClientId);
+  if (error) { alert('No se pudo borrar: ' + error.message); return; }
+  toast('Cliente borrado.');
   closeFichaOverlay();
   await loadClients();
 }
