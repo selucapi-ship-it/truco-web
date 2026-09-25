@@ -128,6 +128,28 @@ async function enviarRespuestaWhatsapp(phoneNumberId, destinatario, texto, token
   return true;
 }
 
+// Guarda el intercambio completo (turno del usuario + turno del bot) para
+// que el propio cliente pueda verlo en su portal — ver
+// supabase/migration_client_whatsapp_messages.sql. Distinto de
+// registrarInteraccion(), que solo deja una nota resumida para el founder.
+async function guardarConversacionCliente(supabaseUrl, serviceKey, clientId, telefono, nombre, textoUsuario, respuesta) {
+  try {
+    const resp = await fetch(`${supabaseUrl}/rest/v1/client_whatsapp_messages`, {
+      method: 'POST',
+      headers: { ...authHeaders(serviceKey), Prefer: 'return=minimal' },
+      body: JSON.stringify([
+        { client_id: clientId, telefono, nombre: nombre || null, role: 'user', body: textoUsuario },
+        { client_id: clientId, telefono, nombre: nombre || null, role: 'bot', body: respuesta },
+      ]),
+    });
+    if (!resp.ok) {
+      console.error('[WHATSAPP_CLIENT_BOT] No se pudo guardar la conversación del cliente', resp.status, await resp.text());
+    }
+  } catch (e) {
+    console.error('[WHATSAPP_CLIENT_BOT] No se pudo guardar la conversación del cliente', e.message);
+  }
+}
+
 async function registrarInteraccion(supabaseUrl, serviceKey, clientId, nota) {
   try {
     const resp = await fetch(`${supabaseUrl}/rest/v1/interactions`, {
@@ -289,6 +311,7 @@ export default async (req) => {
     if (!respuesta) return new Response('ok', { status: 200 });
 
     await enviarRespuestaWhatsapp(phoneNumberId, mensaje.from, respuesta, cfg.meta_access_token);
+    await guardarConversacionCliente(supabaseUrl, serviceKey, cfg.client_id, mensaje.from, value?.contacts?.[0]?.profile?.name, textoUsuario, respuesta);
     await registrarInteraccion(supabaseUrl, serviceKey, cfg.client_id, `WhatsApp — cliente escribió: "${textoUsuario}" — bot respondió: "${respuesta}"`);
     await crmCapture({
       clientId: cfg.client_id, source: 'whatsapp', kind: 'mensaje',

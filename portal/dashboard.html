@@ -358,6 +358,18 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 clam
     </div>
   </div>
 
+  <div class="grid" id="client-wa-card" style="display:none;">
+    <div class="card chat-card">
+      <div class="card-tag" style="display:flex;justify-content:space-between;align-items:center;">
+        <span>Tu WhatsApp con IA</span>
+        <button type="button" onclick="loadClientWa()" style="background:none;border:none;color:var(--gold);font-size:.7rem;cursor:pointer;font-family:var(--font-mono);">🔄 Actualizar</button>
+      </div>
+      <h2>Conversaciones de tu asistente de WhatsApp</h2>
+      <div id="client-wa-log" class="chat-log-plain"></div>
+      <div class="chat-hint">Solo lectura — aquí ves lo que tus clientes hablan con tu asistente de IA en tu número de WhatsApp dedicado. Ese número no se puede usar también en un móvil, así que esta es la forma de verlo.</div>
+    </div>
+  </div>
+
   <div class="grid">
     <div class="card chat-card">
       <div class="card-tag">Tu chat de socio</div>
@@ -619,6 +631,7 @@ async function loadClient() {
 
   const ownedKeys = new Set(owned.map(s => s.solution_key));
   const missing = CATALOG.filter(c => !ownedKeys.has(c.key));
+  if (ownedKeys.has('whatsapp')) { document.getElementById('client-wa-card').style.display = 'block'; loadClientWa(); }
   const offersList = document.getElementById('offers-list');
   offersList.innerHTML = missing.length
     ? missing.map(c => '<div class="offer-row"><span class="sol-name">' + escapeHtml(c.name) + '</span><span class="offer-price">' + (c.desde ? 'desde ' : '') + c.price + ' € + IVA</span><a class="offer-cta" href="../pago.html">Añadir →</a></div>').join('')
@@ -872,6 +885,26 @@ async function sendClientMsg() {
   if (error) { alert('No se pudo enviar. Inténtalo de nuevo.'); return; }
   input.value = '';
   loadClientMsg();
+}
+
+// ── Conversaciones del WhatsApp con IA (solo si tiene 'whatsapp' contratado,
+// gateado por RLS en client_whatsapp_messages, no solo por esconder la
+// tarjeta) — ver supabase/migration_client_whatsapp_messages.sql. ──
+async function loadClientWa() {
+  if (!myClientId) return;
+  const log = document.getElementById('client-wa-log');
+  const { data, error } = await sb.from('client_whatsapp_messages').select('telefono, nombre, role, body, created_at').eq('client_id', myClientId).order('created_at', { ascending: true }).limit(200);
+  if (error) { log.innerHTML = '<div class="empty-note">No se pudo cargar.</div>'; return; }
+  if (!data || !data.length) { log.innerHTML = '<div class="empty-note">Todavía no hay conversaciones.</div>'; return; }
+  log.innerHTML = data.map(m => {
+    const role = m.role === 'user' ? 'user' : 'bot';
+    const quien = m.role === 'user' ? escapeHtml(m.nombre || m.telefono) : 'Tu asistente';
+    return `<div class="msg-row ${role}">
+      <div class="msg-avatar">${m.role === 'user' ? USER_AVATAR_SVG : 'T'}</div>
+      <div class="msg"><b style="display:block;font-size:.68rem;opacity:.6;margin-bottom:2px;">${quien}</b>${escapeHtml(m.body)}</div>
+    </div>`;
+  }).join('');
+  log.scrollTop = log.scrollHeight;
 }
 
 function escapeHtml(s) {
