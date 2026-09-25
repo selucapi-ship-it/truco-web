@@ -96,7 +96,7 @@ main{padding-top:40px;}
   <div id="ques-error" class="draft-banner" style="display:none;">⚠ Este enlace no es válido o ha caducado. Escríbenos y te mandamos uno nuevo.</div>
 
   <div class="section">
-    <div class="section-tag">1 · Tu negocio</div>
+    <div class="section-tag" data-label="Tu negocio"></div>
     <h2>Lo básico para construir tu web</h2>
     <p class="section-note">Con esto ya tenemos de sobra para maquetar la web entera. Lo demás (fotos definitivas, textos finales, ajustes) lo cerramos en la auditoría de después.</p>
 
@@ -144,7 +144,7 @@ main{padding-top:40px;}
   </div>
 
   <div class="section" id="section-agenda">
-    <div class="section-tag">2 · Tu agenda</div>
+    <div class="section-tag" data-label="Tu agenda"></div>
     <h2>Para que el asistente pueda reservarte citas de verdad</h2>
     <p class="section-note">Tu Basic™ incluye el calendario integrado — cuando un cliente pida cita por WhatsApp o por el chat de tu web, se apunta sola en tu Google Calendar, sin que nadie tenga que hacer nada a mano.</p>
 
@@ -162,7 +162,7 @@ main{padding-top:40px;}
   </div>
 
   <div class="section" id="section-ia">
-    <div class="section-tag">3 · Tu asistente de IA</div>
+    <div class="section-tag" data-label="Tu asistente de IA"></div>
     <h2>El mismo cerebro para el chat de tu web y tu WhatsApp</h2>
     <p class="section-note">Es un único asistente que responde igual en los dos sitios — no son respuestas de plantilla tipo "pulsa 1 para...": con lo que nos cuentes aquí lo <b>entrenamos</b> para que hable como alguien más de tu empresa, con tu tono y tus respuestas reales. Cuanto más natural y real sea lo que nos des, más natural sonará él.</p>
 
@@ -186,6 +186,235 @@ main{padding-top:40px;}
       <label>Las preguntas que más te repiten tus clientes (5-10) + la respuesta real <span class="req">*</span></label>
       <div class="hint">Esta es la más importante de todas — no busques la "respuesta perfecta", cuéntanoslo tal cual se lo dirías tú a un cliente por teléfono. Con eso aprende a hablar como vosotros.</div>
       <textarea placeholder="Ej:&#10;¿Hacéis urgencias? → Sí, 24h, con recargo nocturno&#10;¿Dais presupuesto sin compromiso? → Sí, gratis y sin compromiso&#10;¿Trabajáis en comunidades? → Sí, con seguro de responsabilidad civil" style="min-height:110px;"></textarea>
+    </div>
+  </div>
+
+  <div class="section" id="section-llamadas">
+    <div class="section-tag" data-label="Tu asistente de voz"></div>
+    <h2>Para que conteste al teléfono como alguien de tu equipo</h2>
+    <p class="section-note">Igual que el de WhatsApp, pero por llamada — cuanto más real sea lo que nos cuentes, más natural sonará.</p>
+
+    <div class="q" data-pregunta-id="ll1">
+      <label>¿Mantienes tu número de toda la vida, o quieres uno nuevo solo para la IA? <span class="req">*</span></label>
+      <div class="hint">Si no lo tienes claro, recomendamos desviar tu número actual — es menos cambio y más barato.</div>
+      <input type="text" placeholder="Ej: mantener mi número actual">
+    </div>
+
+    <div class="q" data-pregunta-id="ll2">
+      <label>¿Qué debe poder hacer por teléfono? <span class="req">*</span></label>
+      <div class="hint">Solo informar, o también agendar cita directamente, tomar un pedido, filtrar urgencias...</div>
+      <textarea placeholder="Ej: informar de horarios y precios, y agendar cita si el cliente quiere"></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="ll3">
+      <label>Tono y personalidad de la voz <span class="req">*</span></label>
+      <input type="text" placeholder="Ej: cercana y tranquila, nada robótica">
+    </div>
+
+    <div class="q" data-pregunta-id="ll4">
+      <label>¿Cómo debe identificarse siempre al descolgar? <span class="req">*</span></label>
+      <div class="hint">Por defecto usamos: "Hola, soy [nombre], el asistente de [tu negocio], ¿en qué puedo ayudarte?".</div>
+      <input type="text" placeholder="Ej: como el de por defecto, o dinos otro saludo">
+    </div>
+
+    <div class="q" data-pregunta-id="ll5">
+      <label>¿En qué casos debe pasar la llamada a una persona en vez de seguir sola? <span class="req">*</span></label>
+      <textarea placeholder="Ej: quejas, presupuestos grandes, o cualquier cosa fuera de lo habitual"></textarea>
+    </div>
+  </div>
+
+  <div class="section" id="section-correo">
+    <div class="section-tag" data-label="Tu asistente de correo"></div>
+    <h2>Respuestas por email con tu tono y tus datos reales</h2>
+
+    <div class="q" data-pregunta-id="co1">
+      <label>¿Prefieres que las respuestas queden en borrador para revisarlas, o que se envíen solas? <span class="req">*</span></label>
+      <div class="hint">Si no lo tienes claro, empezamos siempre en modo borrador — tú das el visto bueno antes de que salga nada.</div>
+      <input type="text" placeholder="Ej: borrador para revisar, de momento">
+    </div>
+
+    <div class="q" data-pregunta-id="co2">
+      <label>Preguntas reales que sueles recibir por correo, con su respuesta <span class="req">*</span></label>
+      <div class="hint">Si no tienes ninguna a mano, reenvíanos 5-10 correos reales de los últimos meses en vez de escribir esto.</div>
+      <textarea style="min-height:110px;" placeholder="Ej:&#10;¿Cuánto tardáis en responder un presupuesto? → 24-48h laborables&#10;¿Trabajáis fuera de la ciudad? → Sí, hasta 30km sin coste extra"></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="co3">
+      <label>Firma que quieres que aparezca al final de cada respuesta <span class="req">*</span></label>
+      <textarea placeholder="Ej: Un saludo, equipo de [tu negocio] — teléfono, web"></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="co4">
+      <label>Tono de las respuestas <span class="req">*</span></label>
+      <input type="text" placeholder="Ej: formal pero cercano">
+    </div>
+  </div>
+
+  <div class="section" id="section-firma">
+    <div class="section-tag" data-label="Firma digital"></div>
+    <h2>Para firmar documentos sin imprimir ni escanear nada</h2>
+
+    <div class="q" data-pregunta-id="fd1">
+      <label>¿Qué tipo de documentos vas a firmar más? <span class="req">*</span></label>
+      <input type="text" placeholder="Ej: presupuestos y contratos de instalación">
+    </div>
+
+    <div class="q" data-pregunta-id="fd2">
+      <label>¿Dónde quieres el botón de firma en tu web? <span class="req">*</span></label>
+      <div class="hint">Si no lo tienes claro, lo ponemos como burbuja flotante, igual que el chat.</div>
+      <input type="text" placeholder="Ej: burbuja flotante en todas las páginas">
+    </div>
+
+    <div class="q" data-pregunta-id="fd3">
+      <label>¿Quieres que te avisemos por email cada vez que alguien firma algo? <span class="req">*</span></label>
+      <input type="text" placeholder="Ej: sí, a mi email habitual">
+    </div>
+  </div>
+
+  <div class="section" id="section-ciberseguridad">
+    <div class="section-tag" data-label="Ciberseguridad"></div>
+    <h2>Para dejar tu web y tu correo bien protegidos</h2>
+
+    <div class="q" data-pregunta-id="cy1">
+      <label>¿Quién más tiene acceso de administrador a tu web o tu correo hoy? <span class="req">*</span></label>
+      <textarea placeholder="Ej: solo yo, o yo y mi socio/empleado X"></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="cy2">
+      <label>¿Has tenido algún incidente de seguridad antes? <span class="req">*</span></label>
+      <textarea placeholder="Ej: no, nunca — o cuéntanos qué pasó"></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="cy3">
+      <label>¿Qué datos sensibles manejas? <span class="req">*</span></label>
+      <div class="hint">Piensa en concreto: pagos online, datos de salud, datos de menores, historiales de clientes...</div>
+      <textarea placeholder="Ej: datos de pago de clientes a través de la web"></textarea>
+    </div>
+  </div>
+
+  <div class="section" id="section-automatizaciones">
+    <div class="section-tag" data-label="Tu automatización a medida"></div>
+    <h2>Para automatizar esa tarea que os quita tiempo</h2>
+
+    <div class="q" data-pregunta-id="fm1">
+      <label>Describe paso a paso lo que hacéis hoy a mano para esto <span class="req">*</span></label>
+      <div class="hint">Cuanto más al detalle, mejor — no des por hecho nada, cuéntalo como si se lo explicaras a alguien que no sabe nada de tu negocio.</div>
+      <textarea style="min-height:110px;" placeholder="Ej: cuando llega un pedido por WhatsApp, lo copio a mano en una hoja de Excel y..."></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="fm2">
+      <label>¿Qué herramientas usáis ya en el día a día? <span class="req">*</span></label>
+      <textarea placeholder="Ej: Gmail, Excel, WhatsApp Business, un CRM..."></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="fm3">
+      <label>¿Con qué frecuencia ocurre este proceso? <span class="req">*</span></label>
+      <input type="text" placeholder="Ej: varias veces al día">
+    </div>
+
+    <div class="q" data-pregunta-id="fm4">
+      <label>Si algo fallara alguna vez, ¿a quién hay que avisar y cómo? <span class="req">*</span></label>
+      <input type="text" placeholder="Ej: avisarme a mí por WhatsApp">
+    </div>
+  </div>
+
+  <div class="section" id="section-truki">
+    <div class="section-tag" data-label="Facturación (TruKi)"></div>
+    <h2>Para emitir presupuestos y facturas en segundos</h2>
+
+    <div class="q" data-pregunta-id="tk1">
+      <label>Datos fiscales completos <span class="req">*</span></label>
+      <div class="hint">Razón social exacta, NIF/CIF/DNI, dirección fiscal completa, y si aplicas algún IVA distinto al 21% en algún caso.</div>
+      <textarea style="min-height:90px;"></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="tk2">
+      <label>Numeración de facturas y presupuestos <span class="req">*</span></label>
+      <div class="hint">Serie que quieres usar. Si ya facturas con otro programa, ¿en qué número hay que continuar para no repetir?</div>
+      <textarea></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="tk3">
+      <label>Catálogo inicial de precios <span class="req">*</span></label>
+      <div class="hint">Materiales habituales + precio unitario, y precio de la hora de mano de obra (si tienes varios tipos, dinos cada uno).</div>
+      <textarea style="min-height:90px;"></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="tk4">
+      <label>¿Necesitas presupuestos y facturas, o solo uno? ¿Cuánta gente lo va a usar? <span class="req">*</span></label>
+      <textarea></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="tk5">
+      <label>¿Facturas a particulares, empresas, o ambos? <span class="req">*</span></label>
+      <div class="hint">Si tienes clientes recurrentes que quieras precargar ya, dínoslos aquí.</div>
+      <textarea></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="tk6">
+      <label>Contacto de tu gestoría/contable <span class="req">*</span></label>
+      <div class="hint">Quién lleva tu contabilidad/impuestos y su email, para el envío automático de informes.</div>
+      <input type="text" placeholder="Ej: mi gestoría, email@gestoria.es">
+    </div>
+  </div>
+
+  <div class="section" id="section-crm">
+    <div class="section-tag" data-label="Tu CRM"></div>
+    <h2>Para llevar a tus clientes y leads sin perder nada</h2>
+
+    <div class="q" data-pregunta-id="cr1">
+      <label>¿Qué información necesitas ver de un cliente de un vistazo? <span class="req">*</span></label>
+      <textarea placeholder="Ej: nombre, teléfono, qué nos ha comprado, última vez que hablamos"></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="cr2">
+      <label>¿Cómo gestionas hoy tus leads y oportunidades? <span class="req">*</span></label>
+      <textarea placeholder="Ej: en una libreta, en Excel, no llevo ningún control..."></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="cr3">
+      <label>¿Quién del equipo lo va a usar, y qué debe ver cada uno? <span class="req">*</span></label>
+      <textarea></textarea>
+    </div>
+  </div>
+
+  <div class="section" id="section-docs">
+    <div class="section-tag" data-label="Automatización de documentos"></div>
+    <h2>Para generar ese documento que repites siempre, en segundos</h2>
+
+    <div class="q" data-pregunta-id="dc1">
+      <label>¿Qué documento se repite más en tu día a día? <span class="req">*</span></label>
+      <input type="text" placeholder="Ej: presupuestos, contratos, informes de visita">
+    </div>
+
+    <div class="q" data-pregunta-id="dc2">
+      <label>¿De dónde salen hoy los datos que rellenan ese documento? <span class="req">*</span></label>
+      <textarea placeholder="Ej: los copio a mano de un WhatsApp o de una llamada"></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="dc3">
+      <label>¿En qué formato lo necesitas? <span class="req">*</span></label>
+      <input type="text" placeholder="Ej: PDF">
+    </div>
+  </div>
+
+  <div class="section" id="section-integraciones">
+    <div class="section-tag" data-label="Integraciones"></div>
+    <h2>Para que tus herramientas se hablen entre sí</h2>
+
+    <div class="q" data-pregunta-id="in1">
+      <label>¿Qué herramientas quieres que "se hablen" entre sí? <span class="req">*</span></label>
+      <textarea placeholder="Ej: mi WhatsApp Business y mi Excel de pedidos"></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="in2">
+      <label>¿Qué información debe pasar de una a otra, y con qué frecuencia? <span class="req">*</span></label>
+      <textarea></textarea>
+    </div>
+
+    <div class="q" data-pregunta-id="in3">
+      <label>¿Qué trabajo manual te ahorrarías si esto ya estuviera conectado? <span class="req">*</span></label>
+      <textarea></textarea>
     </div>
   </div>
 
@@ -232,17 +461,35 @@ const questClientId = questParams.get('client') || '';
   // explícita de "nada seleccionado" desde el botón del panel).
   if (questParams.has('automations')) {
     const automations = questParams.get('automations').split(',').map(s => s.trim()).filter(Boolean);
-    const wantsAgenda = automations.includes('reservas');
-    const wantsIA = automations.includes('whatsapp') || automations.includes('web-ia');
-    if (!wantsAgenda) document.getElementById('section-agenda').hidden = true;
-    if (!wantsIA) document.getElementById('section-ia').hidden = true;
+    // Un automation_key del catálogo -> el id de sección que le corresponde.
+    // "whatsapp"/"web-ia" comparten la misma sección de IA (mismo cerebro,
+    // dos canales) — el resto es 1:1 con las preguntas específicas ya usadas
+    // en el Guion de auditoría (AUDIT_CHECKLIST de admin/panel.html).
+    const SECCION_POR_AUTOMATIZACION = {
+      reservas: 'section-agenda',
+      whatsapp: 'section-ia',
+      'web-ia': 'section-ia',
+      llamadas: 'section-llamadas',
+      'email-ia': 'section-correo',
+      firma: 'section-firma',
+      ciberseguridad: 'section-ciberseguridad',
+      automatizaciones: 'section-automatizaciones',
+      truki: 'section-truki',
+      crm: 'section-crm',
+      docs: 'section-docs',
+      integraciones: 'section-integraciones',
+    };
+    const seccionesQueVan = new Set(automations.map(a => SECCION_POR_AUTOMATIZACION[a]).filter(Boolean));
+    Object.values(SECCION_POR_AUTOMATIZACION).forEach(id => {
+      const sec = document.getElementById(id);
+      if (sec) sec.hidden = !seccionesQueVan.has(id);
+    });
   }
 
   document.querySelectorAll('.section:not([hidden])').forEach((sec, i) => {
     const tag = sec.querySelector('.section-tag');
     if (!tag) return;
-    const label = tag.textContent.split('·').slice(1).join('·').trim();
-    tag.textContent = (i + 1) + ' · ' + label;
+    tag.textContent = (i + 1) + ' · ' + (tag.dataset.label || '');
   });
 })();
 
