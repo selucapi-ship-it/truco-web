@@ -234,6 +234,10 @@ h1{font-family:var(--font-d);font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.15
 .cal2-day-panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 18px 16px;margin-bottom:18px;}
 .cal2-day-panel h4{font-family:var(--font-d);font-size:1.05rem;margin-bottom:8px;text-transform:capitalize;}
 .cal2-day-panel .empty{color:var(--grey);font-size:.86rem;}
+.day-note{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);}
+.day-note label{display:block;font-size:.76rem;color:var(--grey);margin-bottom:6px;}
+.day-note textarea{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--white);border-radius:8px;padding:9px 11px;font:inherit;font-size:.86rem;resize:vertical;margin-bottom:8px;}
+.saved-tick{margin-left:10px;font-size:.8rem;color:var(--gold);}
 @media(max-width:640px){
   .cal2-cell{min-height:44px;align-items:center;}
   .cal2-ev,.cal2-more{display:none;}
@@ -282,7 +286,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_dMe9-l4q9RvLgdUFRY3gWA_iIMilsXX';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const SERVICE_ACCOUNT = 'truco-voice-agent@truco-voice-agent.iam.gserviceaccount.com';
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-let client = null, settings = {}, citas = [];
+let client = null, settings = {}, citas = [], citasGoogle = [], dayNotes = {};
 
 async function boot() {
   const { data: { session } } = await sb.auth.getSession();
@@ -304,6 +308,19 @@ async function boot() {
   const to = new Date(from.getTime() + 60 * 864e5);
   const { data: rs } = await sb.from('reservas_creadas').select('*').gte('inicio', from.toISOString()).lt('inicio', to.toISOString()).order('inicio', { ascending: true });
   citas = rs || [];
+  // El contador "Citas hoy"/"en 7 días" tiene que contar lo mismo que ya se
+  // ve fusionado en el calendario visual (reservas de los asistentes +
+  // Google Calendar) — antes solo contaba reservas_creadas, así que un
+  // evento puesto a mano en Google (como este mismo, de prueba) aparecía en
+  // la rejilla pero no en el contador. Mismo rango de 60 días que arriba.
+  citasGoogle = [];
+  if (settings.calendar_id) {
+    try {
+      const r = await fetch(`/.netlify/functions/calendar-events?from=${encodeURIComponent(from.toISOString())}&to=${encodeURIComponent(to.toISOString())}`, { headers: { Authorization: 'Bearer ' + session.access_token } });
+      const d = await r.json();
+      if (d.ok) citasGoogle = d.events || [];
+    } catch (e) { /* el contador se queda solo con reservas_creadas si esto falla */ }
+  }
   gate.style.display = 'none'; document.getElementById('app').style.display = '';
   renderBrand(); renderAgenda(); renderCal(); renderIcs();
   initCalGrid();
@@ -324,13 +341,21 @@ function dayLabel(d) {
 }
 function renderAgenda() {
   const now = Date.now(), t0 = new Date(); t0.setHours(0, 0, 0, 0);
-  const hoy = citas.filter(c => dayKey(c.inicio) === dayKey(now)).length;
-  const sem = citas.filter(c => new Date(c.inicio) - now < 7 * 864e5 && new Date(c.inicio) >= t0).length;
-  const prox = citas.find(c => new Date(c.inicio) > now);
+  // Los 3 contadores cuentan lo mismo que ya se ve fusionado en el
+  // calendario visual (reservas de los asistentes + Google Calendar) — la
+  // lista de abajo, en cambio, se queda solo con reservas_creadas a
+  // propósito (es la única con nombre/teléfono para llamar/WhatsApp).
+  const todasFechas = [
+    ...citas.map(c => c.inicio),
+    ...citasGoogle.map(e => e.start),
+  ];
+  const hoy = todasFechas.filter(f => dayKey(f) === dayKey(now)).length;
+  const sem = todasFechas.filter(f => new Date(f) - now < 7 * 864e5 && new Date(f) >= t0).length;
+  const proxFecha = todasFechas.filter(f => new Date(f) > now).sort((a, b) => new Date(a) - new Date(b))[0];
   document.getElementById('kpis').innerHTML = `
     <div class="kpi hot"><div class="n">${hoy}</div><div class="l">Citas hoy</div></div>
     <div class="kpi"><div class="n">${sem}</div><div class="l">Citas en 7 días</div></div>
-    <div class="kpi"><div class="n" style="font-size:1.4rem">${prox ? new Date(prox.inicio).toLocaleString('es-ES', { weekday: 'short', hour: '2-digit', minute: '2-digit' }) : '—'}</div><div class="l">Próxima cita</div></div>`;
+    <div class="kpi"><div class="n" style="font-size:1.4rem">${proxFecha ? new Date(proxFecha).toLocaleString('es-ES', { weekday: 'short', hour: '2-digit', minute: '2-digit' }) : '—'}</div><div class="l">Próxima cita</div></div>`;
   const list = citas.filter(c => new Date(c.fin || c.inicio) >= now - 36e5).slice(0, 40);
   if (!list.length) { document.getElementById('agendaHoy').innerHTML = '<h2>Próximas citas <span>agenda</span></h2><div class="t-row"><span class="why">Aún no tienes citas agendadas. Cuando tus asistentes reserven una, aparecerá aquí.</span></div>'; return; }
   let out = '<h2>Próximas citas <span>agendadas por tus asistentes</span></h2>', last = '';
@@ -437,12 +462,35 @@ function selectCalDay(ds) {
   document.querySelectorAll('.cal2-cell').forEach(c => c.classList.toggle('sel', c.dataset.date === ds));
   showCalDayPanel(ds);
 }
-function showCalDayPanel(ds) {
+const dsToIso = ds => { const d = new Date(ds); return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); };
+async function showCalDayPanel(ds) {
   const evs = eventsForDay(ds);
   const panel = document.getElementById('calDayPanel');
   const label = new Date(ds).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
-  if (!evs.length) { panel.innerHTML = `<h4>${esc(label)}</h4><p class="empty">Sin citas ni eventos este día.</p>`; return; }
-  panel.innerHTML = `<h4>${esc(label)}</h4>` + evs.map(e => `<div class="ap"><div class="h">${esc(e.time)}</div><div class="w"><b>${esc(e.title)}</b>${e.sub ? `<small>${esc(e.sub)}</small>` : ''}</div></div>`).join('');
+  const eventosHtml = evs.length
+    ? evs.map(e => `<div class="ap"><div class="h">${esc(e.time)}</div><div class="w"><b>${esc(e.title)}</b>${e.sub ? `<small>${esc(e.sub)}</small>` : ''}</div></div>`).join('')
+    : '<p class="empty">Sin citas ni eventos este día.</p>';
+  panel.innerHTML = `<h4>${esc(label)}</h4>${eventosHtml}
+    <div class="day-note">
+      <label for="dayNoteInput">Tu nota de este día</label>
+      <textarea id="dayNoteInput" rows="2" placeholder="Anota aquí lo que quieras recordar de este día...">${esc(dayNotes[ds] || '')}</textarea>
+      <button type="button" class="btn ghost" onclick="saveDayNote('${ds}')">Guardar nota</button>
+      <span id="dayNoteSaved" class="saved-tick"></span>
+    </div>`;
+  if (!(ds in dayNotes)) {
+    const { data } = await sb.from('client_day_notes').select('nota').eq('client_id', client.id).eq('fecha', dsToIso(ds)).maybeSingle();
+    dayNotes[ds] = (data && data.nota) || '';
+    if (calSelDate === ds) { const ta = document.getElementById('dayNoteInput'); if (ta) ta.value = dayNotes[ds]; }
+  }
+}
+async function saveDayNote(ds) {
+  const ta = document.getElementById('dayNoteInput');
+  const nota = ta.value;
+  const { error } = await sb.from('client_day_notes').upsert({ client_id: client.id, fecha: dsToIso(ds), nota, updated_at: new Date().toISOString() }, { onConflict: 'client_id,fecha' });
+  if (error) { alert('No se pudo guardar la nota.'); return; }
+  dayNotes[ds] = nota;
+  const tick = document.getElementById('dayNoteSaved');
+  if (tick) { tick.textContent = '✓ Guardado'; setTimeout(() => { if (tick) tick.textContent = ''; }, 2000); }
 }
 
 async function saveSettings(fields) {
