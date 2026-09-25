@@ -1,0 +1,23 @@
+Ultra-realistic vertical photograph, 9:16 aspect ratio, professional advertising photography (not illustration, not 3D render, not CGI, no cartoon style). Dark, moody background in near-black charcoal tone (#16151a) filling most of the frame, with warm golden accent lighting (#d9a83f) and cream-white highlights. Cinematic, high-end tech-meets-small-business advertising aesthetic, shallow depth of field, soft directional light, subtle film grain, sharp focus on the main subject.
+
+SCENE: A single continuous shop-counter moment, not a split composition, not a floating giant-number graphic, not dominoes, not flying papers, and no corkboard prop. Inside a small maritime supply shop / ship-chandlery workshop near the historic military port of Cartagena, Region of Murcia, on a rainy Friday afternoon in late September — the first real rain after a long, dry summer. Through the shop's front window in the background, heavy rain streaks down the glass in soft-focus vertical lines, and beyond it the blurred silhouette of grey naval ships, dockside cranes and a stormy charcoal sky over the port are just barely visible, everything toned down into deep charcoal shadow to keep the dark brand mood rather than a bright daylight photo. Sharply in focus in the foreground, the shop owner's weathered hands are busy coiling a length of rope and wrapping a small paper parcel on the wooden counter for an out-of-focus customer standing just at the edge of frame — hands fully occupied, unable to reach for a ringing phone. Just beside the hands, resting face-up on the counter, a smartphone glows with a warm golden light, its screen showing a clean, minimal WhatsApp-style chat: an incoming question bubble followed by an already-sent automatic reply bubble, with a small glowing label beside it reading "Respondido en 11 segundos" — a believable, elegantly integrated UI detail, not a giant floating number. Raindrops caught on the window glass pick up soft golden bokeh from the phone's glow, small warm highlights scattered across the cool, rain-blurred background. The upper portion of the frame is dark negative space reserved for text overlays.
+
+TEXT ELEMENTS (render these exactly, as clean, modern, minimal sans-serif typography, in Spanish, well-composed and legible, not distorted or garbled):
+
+1. Top of the image, small logo lockup: "TRUCO technology" in bold cream-white letters, with the smaller subtitle directly beneath it in gold: "Departamento Tecnológico".
+
+2. Just below the logo, a small pill-shaped label in gold outline with cream text reading: "VIERNES · LLUVIA Y 25°C EN CARTAGENA".
+
+3. Beneath that, a bold uppercase context label in gold, letter-spaced: "CUANDO LLUEVE, PREGUNTAN POR WHATSAPP ANTES DE SALIR".
+
+4. The main two-line headline in large bold cream-white letters, centered in the dark upper space, above the counter scene:
+"Si tardas en contestar,"
+"se queda en casa."
+
+5. Below the headline, a short italic quote-style line in smaller cream-white text: "Nosotros contestamos por ti en segundos."
+
+6. In the lower third of the image, near the edge of the counter beside the glowing phone, a small golden badge (rounded rectangle with a thin gold border) containing two lines of bold dark text on a gold background: "PRECIO FUNDADOR" and below it, smaller, "Plazas limitadas".
+
+7. At the very bottom of the image, centered, the closing line in cream-white bold text: "Paga una vez. Olvídate 365 días." and directly beneath it, in smaller gold text: "trucotechnology.com".
+
+STYLE: Photorealistic commercial photography, cool rain-blurred light from the window contrasted with the warm golden glow radiating from the phone's screen, deep charcoal-black shadows, high contrast, premium and trustworthy mood, minimal clutter, generous negative space around text for legibility, consistent brand palette of dark charcoal (#16151a), gold (#d9a83f), and cream white throughout. All text must be sharp, correctly spelled exactly as written above (including accents), high contrast against the dark background, and laid out with generous spacing so it reads clearly at Instagram Story size.
