@@ -47,4 +47,32 @@
   window.trucoTrackClick = function (buttonKey) {
     call('log_button_click', { p_button_key: buttonKey, p_page: location.pathname, p_session_id: sessionId() });
   };
+
+  // ── GOOGLE ANALYTICS 4 ──
+  // Único sitio donde vive el ID: todas las páginas cargan este fichero.
+  // Solo se carga si el visitante aceptó las cookies de análisis en el banner
+  // de index.html (misma lectura localStorage + cookie propia que allí).
+  const GA_MEASUREMENT_ID = 'G-L7GSH66RN6';
+
+  function consentAccepted() {
+    let v = null;
+    try { v = localStorage.getItem('cookie_consent'); } catch (e) {}
+    if (!v) { const m = document.cookie.match(/(?:^|; )cookie_consent=(accepted|rejected)/); if (m) v = m[1]; }
+    return v === 'accepted';
+  }
+
+  window.trucoLoadGA = function () {
+    if (window.gaLoaded) return;
+    window.gaLoaded = true;
+    const s = document.createElement('script');
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
+    s.async = true;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', GA_MEASUREMENT_ID);
+  };
+
+  if (consentAccepted()) window.trucoLoadGA();
 })();
