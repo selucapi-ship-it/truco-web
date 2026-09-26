@@ -1,0 +1,22 @@
+# Informe diario del agente — 2026-09-26
+
+Resumen: no se ha podido verificar hoy la coherencia de precios contra Supabase (la política de red del entorno bloquea `oxdopzvbrxdsjvzxmpxy.supabase.co`), así que el hallazgo de mayor prioridad es esa limitación, no un precio erróneo confirmado. El resto del sitio está sano: sin enlaces internos rotos en producción, sin placeholders legales pendientes, sin errores de sintaxis en los `<script>` tocados esta semana ni en `agent.py`, y sin conflictos de git. Se ha detectado una incoherencia real de precio en `digitaliza.html` y dos cambios normativos con fecha próxima que la web no refleja.
+
+## Alta prioridad
+
+- **No se pudo verificar el precio/plazas real de Supabase hoy.** El entorno de este agente bloqueó la salida de red a `oxdopzvbrxdsjvzxmpxy.supabase.co` (proxy devolvió 403 en `/rest/v1/tier_config_effective` y `/rest/v1/founding_spots`). No he podido comparar el valor real con los fallbacks de `founding-offer.js` (69/89, 149/149... etc.) ni comprobar si alguna plaza de fundador llegó a 0. Revisa manualmente el panel de Supabase o habilita ese dominio en el acceso de red del entorno para que el chequeo de mañana sí pueda hacerlo.
+- **`digitaliza.html:242`** — el rango del hero dice `350 € – 890 €`, pero los 12 precios reales mostrados más abajo en la misma página van de 350 € a 1.200 € (Flujos a medida, banda compleja) y 950 € (CRM). El 890 € parece un resto del precio "normal" antiguo de IA para Llamadas antes de la oferta de lanzamiento 2026 (ahora 690 €, ver `index.html:2226` y `solutions-pricing.js:15`) — la propia tarjeta de Llamadas en esa misma página (línea 349) ya muestra 690 €. El rango del hero contradice los datos de la página en la que vive.
+
+## Media prioridad
+
+- **VERI\*FACTU** — el RD-ley 15/2025 (2-dic-2025) aplazó otra vez las fechas: empresas obligadas desde el 1-ene-2027, autónomos desde el 1-jul-2027 (antes eran 2026). El sitio no menciona VERI\*FACTU en ningún sitio (comprobado por grep), así que no hay ninguna fecha errónea publicada, pero si en algún momento se añade contenido sobre esto (p.ej. para TruKi) debe usar 2027, no 2026.
+- **Factura electrónica B2B (Ley Crea y Crece)** — el reglamento (RD 238/2026) entra en vigor el 1-oct-2026, dentro de días. A partir de ahí empiezan a correr los plazos: empresas grandes (>8M€) desde oct-2027, pymes y autónomos desde oct-2028. El sitio no menciona esto tampoco, pero dado que TruKi es el producto de facturación de TRUCO, es el momento natural para que la web empiece a comunicarlo (oportunidad, no una corrección de un dato erróneo).
+- **Kit Digital** — el programa cerró todas sus convocatorias el 31-oct-2025 y no admite nuevas solicitudes; no hay fecha confirmada de reapertura (se especula sep-dic 2026). El sitio no menciona "Kit Digital" en ningún sitio (comprobado por grep), así que no hay ningún CTA desactualizado que corregir, solo indicarlo por si se planea usarlo en marketing.
+
+## Baja prioridad
+
+- Sin hallazgos en enlaces internos: todos los `href`/`src` que apuntan a ficheros del propio repo en la raíz, `departamentos/`, `sectores/`, `soluciones/`, `portal/`, `admin/` y `proyectos/` resuelven correctamente. Las únicas rutas rotas (25) están dentro de `scratch/` (carpeta de borradores/backups, no es parte del sitio publicado) — no se reportan como acción porque no afectan a producción.
+- Sin hallazgos en páginas legales: `terminos.html`, `privacidad.html`, `aviso-legal.html` y `cookies.html` tienen los datos de identidad completos (Jose Luis Robles Capitán, NIF 48523326L, email y teléfono reales) y ninguna fecha de "última actualización" supera los 6 meses (julio y septiembre de 2026).
+- Sin hallazgos en la lógica de precio en vivo del chat/voz: `netlify/functions/chat-ai.js`, `netlify/functions/portal-chat.js` y `voice-agent/src/agent.py` siguen consultando `tier_config_effective` y `founding_spots` en el momento de la conversación, con los mismos fallbacks (69/89, 149/169, 229/279, 449/549) y sin precios sueltos fuera de eso. No ha vuelto a aparecer la frase "permanencia de 12 meses"; la redacción correcta ("primer año pagado por adelantado") está intacta en los tres.
+- Sin hallazgos de sintaxis: los bloques `<script>` de todos los `.html` con commits en los últimos 7 días parsean sin error (`new Function`), y `voice-agent/src/agent.py` compila con `python -m py_compile`.
+- Sin hallazgos de estado de git: árbol de trabajo limpio, sin marcadores de conflicto (`<<<<<<<`/`=======`/`>>>>>>>`) en ningún fichero, sin cambios a medias.
