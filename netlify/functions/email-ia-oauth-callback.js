@@ -79,7 +79,7 @@ exports.handler = async function (event) {
   const stateSecret = process.env.EMAIL_IA_OAUTH_STATE_SECRET;
   const googleClientId = '468608076556-ag64c5hbk2cnkrg4acasrf4c4ctr179m.apps.googleusercontent.com';
   const googleClientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET;
-  const redirectUri = 'https://main--chic-salamander-e640e7.netlify.app/.netlify/functions/email-ia-oauth-callback';
+  const redirectUri = 'https://trucotechnology.com/.netlify/functions/email-ia-oauth-callback';
   const supabaseUrl = 'https://oxdopzvbrxdsjvzxmpxy.supabase.co';
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 

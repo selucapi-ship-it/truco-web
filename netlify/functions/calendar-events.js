@@ -6,11 +6,18 @@
 // Requisito: el calendario debe estar compartido con la cuenta de servicio (la misma que ya
 // usan las reservas y el asistente de voz) con permiso «Realizar cambios en los eventos».
 //
-// GET /.netlify/functions/calendar-events?days=14[&cal=<id>]   (Authorization: Bearer <sesión>)
-// GET /.netlify/functions/calendar-events?from=<ISO>&to=<ISO>[&cal=<id>]  (para un mes/rango concreto,
-//   usado por el calendario visual navegable del portal — from/to tienen prioridad sobre days si vienen los dos)
-//  - Cliente: siempre su calendar_id de crm_settings (el que mande el navegador se ignora).
-//  - Founder: ?cal=<id> o, si no, GOOGLE_CALENDAR_ID.
+// GET /.netlify/functions/calendar-events?days=14   (Authorization: Bearer <sesión>)
+// GET /.netlify/functions/calendar-events?from=<ISO>&to=<ISO>  (para un mes/rango concreto,
+//   usado por el calendario visual navegable del portal y del panel — from/to tienen
+//   prioridad sobre days si vienen los dos)
+//  - Cliente: siempre su calendar_id de crm_settings (un único calendario; el que mande
+//    el navegador se ignora). Respuesta igual que siempre: { ok, linked, events } o, si el
+//    calendario no está compartido, { ok:false, error:'not_shared', service_account, calendar }.
+//  - Founder: hasta 4 calendarios a la vez, los que tenga en founder_calendars (o, si no
+//    tiene ninguno vinculado todavía, ?cal=<id> / GOOGLE_CALENDAR_ID como respaldo). Con más
+//    de un calendario, cada evento lleva calendarId/calendarLabel/calendarColor para poder
+//    distinguirlos en la cuadrícula, y los fallos de un calendario concreto (no compartido)
+//    van en un array `errors` aparte en vez de tumbar la respuesta entera.
 
 const crypto = require('crypto');
 const { getServiceAccountB64 } = require('./lib/google-sa');
@@ -62,16 +69,26 @@ exports.handler = async function (event) {
   } catch (e) { /* cliente normal */ }
 
   const q = event.queryStringParameters || {};
-  let calId = null;
+  let calendars = []; // [{ calendar_id, label, color }]
   if (founder) {
-    calId = (q.cal || process.env.GOOGLE_CALENDAR_ID || '').trim();
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/founder_calendars?select=id,calendar_id,label,color&order=created_at.asc`, { headers: userHeaders }).catch(() => null);
+    const rows = r && r.ok ? await r.json() : [];
+    calendars = (rows || [])
+      .map((x) => ({ calendar_id: String(x.calendar_id || '').trim(), label: x.label || '', color: x.color || 'gold' }))
+      .filter((x) => x.calendar_id)
+      .slice(0, 4);
+    if (!calendars.length) {
+      const fallback = (q.cal || process.env.GOOGLE_CALENDAR_ID || '').trim();
+      if (fallback) calendars = [{ calendar_id: fallback, label: '', color: 'gold' }];
+    }
   } else {
     // RLS: solo devuelve la fila del propio cliente
     const s = await fetch(`${SUPABASE_URL}/rest/v1/crm_settings?select=calendar_id`, { headers: userHeaders }).catch(() => null);
     const rows = s && s.ok ? await s.json() : [];
-    calId = rows && rows[0] && rows[0].calendar_id ? String(rows[0].calendar_id).trim() : null;
+    const cid = rows && rows[0] && rows[0].calendar_id ? String(rows[0].calendar_id).trim() : null;
+    if (cid) calendars = [{ calendar_id: cid, label: '', color: 'gold' }];
   }
-  if (!calId) return json(200, { ok: true, linked: false, events: [] });
+  if (!calendars.length) return json(200, { ok: true, linked: false, events: [] });
 
   const sa = await cuentaServicio();
   if (!sa) return json(200, { ok: false, error: 'not_configured' });
@@ -91,21 +108,37 @@ exports.handler = async function (event) {
     timeMin = new Date(Date.now() - 6 * 3600 * 1000).toISOString();
     timeMax = new Date(Date.now() + days * 86400000).toISOString();
   }
-  const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calId)}/events?timeMin=${encodeURIComponent(timeMin)}&timeMax=${encodeURIComponent(timeMax)}&singleEvents=true&orderBy=startTime&maxResults=100`;
-  const g = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-  if (g.status === 403 || g.status === 404) {
-    return json(200, { ok: false, error: 'not_shared', service_account: sa.client_email, calendar: calId });
-  }
-  if (!g.ok) return json(200, { ok: false, error: 'google_error' });
-  const data = await g.json();
-  const events = (data.items || []).filter((e) => e.status !== 'cancelled').map((e) => ({
-    id: e.id,
-    title: e.summary || '(sin título)',
-    start: e.start && (e.start.dateTime || e.start.date),
-    end: e.end && (e.end.dateTime || e.end.date),
-    allDay: !!(e.start && e.start.date && !e.start.dateTime),
-    location: e.location || '',
-    link: e.htmlLink || '',
+
+  const results = await Promise.all(calendars.map(async (c) => {
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(c.calendar_id)}/events?timeMin=${encodeURIComponent(timeMin)}&timeMax=${encodeURIComponent(timeMax)}&singleEvents=true&orderBy=startTime&maxResults=100`;
+    const g = await fetch(url, { headers: { Authorization: `Bearer ${token}` } }).catch(() => null);
+    if (!g) return { cal: c, error: 'google_error' };
+    if (g.status === 403 || g.status === 404) return { cal: c, error: 'not_shared' };
+    if (!g.ok) return { cal: c, error: 'google_error' };
+    const data = await g.json();
+    const events = (data.items || []).filter((e) => e.status !== 'cancelled').map((e) => ({
+      id: e.id,
+      title: e.summary || '(sin título)',
+      start: e.start && (e.start.dateTime || e.start.date),
+      end: e.end && (e.end.dateTime || e.end.date),
+      allDay: !!(e.start && e.start.date && !e.start.dateTime),
+      location: e.location || '',
+      link: e.htmlLink || '',
+      calendarId: c.calendar_id,
+      calendarLabel: c.label,
+      calendarColor: c.color,
+    }));
+    return { cal: c, events };
   }));
-  return json(200, { ok: true, linked: true, calendar: calId, events });
+
+  // Compatibilidad: con un único calendario (siempre el caso del cliente, y el caso más
+  // común del founder) el fallo se sigue reportando en la raíz tal cual esperaban ya
+  // portal/calendario.html y el propio panel antes de soportar varios calendarios.
+  if (calendars.length === 1 && results[0].error) {
+    return json(200, { ok: false, error: results[0].error, service_account: sa.client_email, calendar: calendars[0].calendar_id });
+  }
+
+  const events = results.flatMap((r) => r.events || []).sort((a, b) => new Date(a.start) - new Date(b.start));
+  const errors = results.filter((r) => r.error).map((r) => ({ calendar: r.cal.calendar_id, label: r.cal.label, error: r.error }));
+  return json(200, { ok: true, linked: true, calendars: calendars.map((c) => ({ id: c.calendar_id, label: c.label, color: c.color })), events, errors, service_account: sa.client_email });
 };
